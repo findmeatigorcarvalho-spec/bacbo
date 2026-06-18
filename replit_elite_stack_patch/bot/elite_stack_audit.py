@@ -20,9 +20,11 @@ import os
 from datetime import datetime, timezone
 
 import early_result_audit
+import martingale_audit
 import omni_score
 import result_lag_miner
 import room_cleaner
+import truth_verifier
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -39,6 +41,8 @@ def build_audit(db_path: str = DB_PATH, recent: int = 100) -> dict:
 
     early_report = early_result_audit.save_report(db_path=db_path)
     lag_report = result_lag_miner.save_report(db_path=db_path)
+    martingale_report = martingale_audit.save_report(db_path=db_path)
+    truth_report = truth_verifier.save_report(db_path=db_path)
 
     strongest_rooms = [
         row for row in room_report["rooms"]
@@ -77,11 +81,19 @@ def build_audit(db_path: str = DB_PATH, recent: int = 100) -> dict:
             "lag5": lag_report["lag5"],
             "best_lag": lag_report["best_lag"],
         },
+        "martingale_summary": {
+            "overall": martingale_report["overall"],
+            "top_rooms": martingale_report["by_room"][:10],
+            "top_room_color": martingale_report["by_room_color"][:10],
+        },
+        "truth_summary": truth_report,
         "next_steps": [
             "Review cleanup_actions, then run room_cleaner.py --apply if correct.",
             "Use strongest_rooms as the first Elite Stack source whitelist.",
             "Only promote early-result cells with high oracle_safe_pct and strong WR.",
             "Use result_lag_summary to validate/deny the lag-5 repeat hypothesis before live betting it.",
+            "Use martingale_summary to allow gale only where recovery is proven.",
+            "Use truth_summary to keep direct Twin225 truth separate from Telegram/DB inferred truth.",
             "Wire omni_score.score_signal into signal_handler before final fire.",
             "Run Telegram live discovery only after stale/weak rooms are cleaned.",
         ],
@@ -123,6 +135,8 @@ def main() -> int:
             "omni_summary": audit["omni_summary"]["verdict_counts"],
             "early_result_summary": audit["early_result_summary"],
             "result_lag_summary": audit["result_lag_summary"],
+            "martingale_summary": audit["martingale_summary"]["overall"],
+            "truth_verdict": audit["truth_summary"]["verdict"],
         },
         indent=2,
         ensure_ascii=False,

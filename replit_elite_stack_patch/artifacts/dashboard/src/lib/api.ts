@@ -104,6 +104,8 @@ export const api = {
   eliteStackAudit:   () => req<any>("GET", "/bot/elite-stack-audit"),
   roomCleanerReport: () => req<any>("GET", "/bot/room-cleaner-report"),
   omniScoreReport:   () => req<any>("GET", "/bot/omni-score-report"),
+  martingaleAudit:   () => req<any>("GET", "/bot/martingale-audit"),
+  truthVerification: () => req<any>("GET", "/bot/truth-verification"),
   brtHourWr:   () => req<any>("GET", "/bot/brt-hour-wr"),
   exportSignalsUrl: () => `${API}/bot/export-signals?token=${token()}`,
   exportBankrollUrl: () => `${API}/bot/export-bankroll?token=${token()}`,

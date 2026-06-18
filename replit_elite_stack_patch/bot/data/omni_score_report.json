@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-18T20:41:50.170190+00:00",
+  "generated_at": "2026-06-18T21:10:32.819511+00:00",
   "count": 50,
   "verdict_counts": {
     "FIRE": 14,
@@ -133,7 +133,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:34 msg7d=5178"
+          "evidence": "last=2026-06-18 18:19:34 msg7d=5163"
         }
       ],
       "penalties": []
@@ -198,7 +198,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5800"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5781"
         }
       ],
       "penalties": []
@@ -263,7 +263,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4740"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4722"
         }
       ],
       "penalties": []
@@ -588,7 +588,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5781"
         }
       ],
       "penalties": []
@@ -653,7 +653,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5781"
         }
       ],
       "penalties": []
@@ -693,7 +693,7 @@
           "name": "room_color_raw_wr30",
           "points": -2.319999999999999,
           "weight": 0.8,
-          "evidence": "49.1% n=26011"
+          "evidence": "49.1% n=25994"
         },
         {
           "name": "room_hour_color_wr30",
@@ -735,7 +735,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:16:30 msg7d=1190"
+          "evidence": "last=2026-06-18 18:16:30 msg7d=1186"
         }
       ],
       "penalties": []
@@ -758,7 +758,7 @@
           "name": "room_color_raw_wr30",
           "points": -2.319999999999999,
           "weight": 0.8,
-          "evidence": "49.1% n=26011"
+          "evidence": "49.1% n=25994"
         },
         {
           "name": "room_hour_color_wr30",
@@ -800,7 +800,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:16:30 msg7d=1190"
+          "evidence": "last=2026-06-18 18:16:30 msg7d=1186"
         }
       ],
       "penalties": []
@@ -823,7 +823,7 @@
           "name": "room_color_raw_wr30",
           "points": -2.319999999999999,
           "weight": 0.8,
-          "evidence": "49.1% n=26011"
+          "evidence": "49.1% n=25994"
         },
         {
           "name": "room_hour_color_wr30",
@@ -865,7 +865,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:16:30 msg7d=1190"
+          "evidence": "last=2026-06-18 18:16:30 msg7d=1186"
         }
       ],
       "penalties": []
@@ -1190,7 +1190,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5781"
         }
       ],
       "penalties": []
@@ -1255,7 +1255,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5781"
         }
       ],
       "penalties": []
@@ -1320,7 +1320,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4740"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4722"
         }
       ],
       "penalties": []
@@ -1385,7 +1385,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5781"
         }
       ],
       "penalties": []
@@ -1450,7 +1450,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5781"
         }
       ],
       "penalties": []
@@ -1515,7 +1515,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4722"
         }
       ],
       "penalties": []
@@ -1580,7 +1580,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4722"
         }
       ],
       "penalties": []
@@ -1645,7 +1645,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:01:52 msg7d=3828"
+          "evidence": "last=2026-06-18 02:01:52 msg7d=3814"
         }
       ],
       "penalties": []
@@ -1956,7 +1956,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4722"
         }
       ],
       "penalties": []
@@ -2021,7 +2021,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5780"
         }
       ],
       "penalties": []
@@ -2086,7 +2086,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5780"
         }
       ],
       "penalties": []
@@ -2168,7 +2168,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5780"
         }
       ],
       "penalties": []
@@ -2250,7 +2250,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5780"
         }
       ],
       "penalties": []
@@ -2315,7 +2315,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5780"
         }
       ],
       "penalties": []
@@ -2380,7 +2380,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4722"
         }
       ],
       "penalties": []
@@ -2445,7 +2445,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4722"
         }
       ],
       "penalties": []
@@ -2510,7 +2510,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5780"
         }
       ],
       "penalties": []
@@ -2598,7 +2598,7 @@
           "name": "room_color_raw_wr30",
           "points": 3.3600000000000025,
           "weight": 0.8,
-          "evidence": "56.2% n=32735"
+          "evidence": "56.2% n=32725"
         },
         {
           "name": "room_hour_color_wr30",
@@ -2640,7 +2640,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:18:27 msg7d=4305"
+          "evidence": "last=2026-06-18 18:18:27 msg7d=4292"
         }
       ],
       "penalties": []

@@ -2,6 +2,8 @@ interface EngineTabProps {
   engineHealthQ: any;
   resultLagQ?: any;
   eliteStackQ?: any;
+  martingaleAuditQ?: any;
+  truthVerificationQ?: any;
 }
 
 function pctColor(v: number | null | undefined, good = 70): string {
@@ -12,15 +14,82 @@ function pctColor(v: number | null | undefined, good = 70): string {
   return "text-red-400";
 }
 
-export default function EngineTab({ engineHealthQ, resultLagQ, eliteStackQ }: EngineTabProps) {
+export default function EngineTab({
+  engineHealthQ,
+  resultLagQ,
+  eliteStackQ,
+  martingaleAuditQ,
+  truthVerificationQ,
+}: EngineTabProps) {
   const lagData = resultLagQ?.data;
   const lag5 = lagData?.lag5;
   const bestLag = lagData?.best_lag;
   const elite = eliteStackQ?.data;
+  const martingale = martingaleAuditQ?.data;
+  const truth = truthVerificationQ?.data;
 
   return (
     <div className="space-y-4">
       <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">🧠 Engine Health</h2>
+
+      <div className="bg-gray-800/60 border border-gray-700 rounded-2xl p-4">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">✅ Truth Verification</p>
+          {truth?.generated_at && <span className="text-[10px] text-gray-600">{new Date(truth.generated_at).toLocaleString()}</span>}
+        </div>
+        {truthVerificationQ?.isLoading ? (
+          <p className="text-gray-500 text-sm">Loading truth status…</p>
+        ) : truth?.missing ? (
+          <p className="text-yellow-400 text-xs">Report missing. Run <code>cd bot && python elite_stack_audit.py</code>.</p>
+        ) : truth ? (
+          <div className="grid gap-2 sm:grid-cols-3">
+            <div className="bg-gray-900/60 rounded-xl p-3">
+              <p className="text-xs text-gray-500 uppercase">Current truth level</p>
+              <p className={`text-sm font-black ${truth.verdict === "DIRECT_CASINO_VERIFIED" ? "text-emerald-400" : "text-yellow-400"}`}>
+                {truth.verdict === "DIRECT_CASINO_VERIFIED" ? "Direct casino" : "DB inferred only"}
+              </p>
+            </div>
+            <div className="bg-gray-900/60 rounded-xl p-3">
+              <p className="text-xs text-gray-500 uppercase">Direct rows</p>
+              <p className="text-xl font-black text-cyan-300">{truth.truth_levels?.direct_casino_rows_recent ?? 0}</p>
+              <p className="text-[10px] text-gray-600">recent Twin225 rows</p>
+            </div>
+            <div className="bg-gray-900/60 rounded-xl p-3">
+              <p className="text-xs text-gray-500 uppercase">Inferred rows</p>
+              <p className="text-xl font-black text-blue-300">{truth.truth_levels?.inferred_from_bot_db_recent ?? 0}</p>
+              <p className="text-[10px] text-gray-600">from bot/Telegram DB</p>
+            </div>
+          </div>
+        ) : (
+          <p className="text-gray-500 text-sm">No truth report yet.</p>
+        )}
+      </div>
+
+      <div className="bg-gray-800/60 border border-gray-700 rounded-2xl p-4">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">♻️ Martingale / Gale Audit</p>
+          {martingale?.generated_at && <span className="text-[10px] text-gray-600">{new Date(martingale.generated_at).toLocaleString()}</span>}
+        </div>
+        {martingaleAuditQ?.isLoading ? (
+          <p className="text-gray-500 text-sm">Loading martingale audit…</p>
+        ) : martingale?.missing ? (
+          <p className="text-yellow-400 text-xs">Report missing. Run <code>cd bot && python elite_stack_audit.py</code>.</p>
+        ) : martingale?.overall ? (
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+              <div className="bg-gray-900/60 rounded-xl p-2"><p className={`text-lg font-bold ${pctColor(martingale.overall.g0_wr, 70)}`}>{martingale.overall.g0_wr}%</p><p className="text-xs text-gray-500">G0 WR</p></div>
+              <div className="bg-gray-900/60 rounded-xl p-2"><p className={`text-lg font-bold ${pctColor(martingale.overall.final_wr, 75)}`}>{martingale.overall.final_wr}%</p><p className="text-xs text-gray-500">Final WR</p></div>
+              <div className="bg-gray-900/60 rounded-xl p-2"><p className={`text-lg font-bold ${pctColor(martingale.overall.recovery_wr, 40)}`}>{martingale.overall.recovery_wr}%</p><p className="text-xs text-gray-500">Recovery WR</p></div>
+              <div className="bg-gray-900/60 rounded-xl p-2"><p className="text-lg font-bold text-white">{martingale.overall.total}</p><p className="text-xs text-gray-500">signals</p></div>
+            </div>
+            <p className={`text-xs font-semibold ${martingale.overall.verdict === "ALLOW_MARTINGALE" ? "text-green-400" : martingale.overall.verdict === "SHADOW_MARTINGALE" ? "text-yellow-400" : "text-red-400"}`}>
+              Verdict: {martingale.overall.verdict}
+            </p>
+          </div>
+        ) : (
+          <p className="text-gray-500 text-sm">No martingale report yet.</p>
+        )}
+      </div>
 
       <div className="bg-gray-800/60 border border-gray-700 rounded-2xl p-4">
         <div className="flex items-center justify-between mb-3">

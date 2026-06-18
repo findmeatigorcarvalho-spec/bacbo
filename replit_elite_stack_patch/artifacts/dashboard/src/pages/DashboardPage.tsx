@@ -170,6 +170,8 @@ export default function DashboardPage() {
   const engineHealthQ = useQuery({ queryKey: ["engineHealth"],   queryFn: api.engineHealth, enabled: tab === "engine", refetchInterval: tab === "engine" ? 15_000 : false });
   const resultLagQ    = useQuery({ queryKey: ["resultLagPatterns"], queryFn: api.resultLagPatterns, enabled: tab === "engine", refetchInterval: tab === "engine" ? 120_000 : false });
   const eliteStackQ   = useQuery({ queryKey: ["eliteStackAudit"], queryFn: api.eliteStackAudit, enabled: tab === "engine", refetchInterval: tab === "engine" ? 120_000 : false });
+  const martingaleAuditQ = useQuery({ queryKey: ["martingaleAudit"], queryFn: api.martingaleAudit, enabled: tab === "engine", refetchInterval: tab === "engine" ? 120_000 : false });
+  const truthVerificationQ = useQuery({ queryKey: ["truthVerification"], queryFn: api.truthVerification, enabled: tab === "engine", refetchInterval: tab === "engine" ? 120_000 : false });
   const trendsQ       = useQuery({ queryKey: ["trends"],         queryFn: () => api.trends(9999), enabled: tab === "dashboard", refetchInterval: 60_000 });
   const heatmapQ      = useQuery({ queryKey: ["heatmap"],        queryFn: () => api.heatmap(9999), enabled: tab === "heatmap" || tab === "dashboard", refetchInterval: 60_000 });
   const dailyStatsQ   = useQuery({ queryKey: ["dailyStats"],     queryFn: api.dailyStats,          enabled: tab === "dashboard", refetchInterval: 60_000 });
@@ -645,7 +647,13 @@ export default function DashboardPage() {
         )}
 
         {tab === "engine" && (
-          <EngineTab engineHealthQ={engineHealthQ} resultLagQ={resultLagQ} eliteStackQ={eliteStackQ} />
+          <EngineTab
+            engineHealthQ={engineHealthQ}
+            resultLagQ={resultLagQ}
+            eliteStackQ={eliteStackQ}
+            martingaleAuditQ={martingaleAuditQ}
+            truthVerificationQ={truthVerificationQ}
+          />
         )}
 
         {tab === "heatmap" && (

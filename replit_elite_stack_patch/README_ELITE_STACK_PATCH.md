@@ -28,6 +28,15 @@ It adds four safe, read-only-by-default tools:
      outcomes
    - writes `bot/data/result_lag_patterns.json`
 
+6. `bot/martingale_audit.py`
+   - audits G0/G1/G2/G3 recovery value
+   - writes `bot/data/martingale_audit.json`
+
+7. `bot/truth_verifier.py`
+   - separates direct Twin225/casino truth from bot/Telegram DB-inferred truth
+   - creates future direct-result tables
+   - writes `bot/data/truth_verification_report.json`
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -35,12 +44,14 @@ It also patches the dashboard/API:
   - adds `/api/bot/elite-stack-audit`
   - adds `/api/bot/room-cleaner-report`
   - adds `/api/bot/omni-score-report`
+  - adds `/api/bot/martingale-audit`
+  - adds `/api/bot/truth-verification`
 - `artifacts/dashboard/src/lib/api.ts`
   - adds frontend methods for those endpoints
 - `artifacts/dashboard/src/pages/DashboardPage.tsx`
   - fetches the new reports for the Engine tab
 - `artifacts/dashboard/src/components/tabs/EngineTab.tsx`
-  - shows the lag-5 pattern panel and Elite Stack summary
+  - shows truth verification, martingale, lag-5 pattern, and Elite Stack summary
 
 Run in Replit Shell:
 

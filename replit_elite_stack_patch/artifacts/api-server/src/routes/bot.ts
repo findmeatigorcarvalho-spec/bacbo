@@ -2568,6 +2568,14 @@ router.get("/bot/omni-score-report", authMiddleware, (_req, res) => {
   return res.json(readBotDataReport("omni_score_report.json"));
 });
 
+router.get("/bot/martingale-audit", authMiddleware, (_req, res) => {
+  return res.json(readBotDataReport("martingale_audit.json"));
+});
+
+router.get("/bot/truth-verification", authMiddleware, (_req, res) => {
+  return res.json(readBotDataReport("truth_verification_report.json"));
+});
+
 // ── Floor Monitor ─────────────────────────────────────────────────────────────
 router.get("/bot/floors", authMiddleware, (_req, res) => {
   try {
