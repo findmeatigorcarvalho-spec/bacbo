@@ -1,0 +1,2212 @@
+{
+  "generated_at": "2026-06-18T20:35:05.214338+00:00",
+  "room_summary": {
+    "generated_at": "2026-06-18T20:33:54.587478+00:00",
+    "total_rooms": 66,
+    "active_unmuted": 40,
+    "muted": 26,
+    "by_action": {
+      "DOWNGRADE_WEAK": 3,
+      "KEEP": 38,
+      "MUTE_STALE": 23,
+      "RETEST_MUTED": 2
+    },
+    "by_tier": {
+      "G0": 30,
+      "G1": 6,
+      "G2": 20,
+      "G3": 10
+    }
+  },
+  "strongest_rooms": [
+    {
+      "handle": "@IsaDados",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 48391,
+      "last_msg": "2026-06-17 16:31:07",
+      "msg_7d": 1665,
+      "msg_30d": 7485,
+      "raw_n30": 32100,
+      "raw_wr30": 52.9,
+      "fired_n7": 51,
+      "fired_wr7": 88.1,
+      "flags": [],
+      "action": "KEEP",
+      "reason": "fresh_or_insufficient_negative_evidence"
+    },
+    {
+      "handle": "@robobacbodados",
+      "is_muted": 0,
+      "gale_tier": "G2",
+      "quarantine_until": null,
+      "msg_n": 52368,
+      "last_msg": "2026-06-18 18:19:35",
+      "msg_7d": 3813,
+      "msg_30d": 16626,
+      "raw_n30": 69425,
+      "raw_wr30": 59.1,
+      "fired_n7": 128,
+      "fired_wr7": 87.4,
+      "flags": [],
+      "action": "KEEP",
+      "reason": "fresh_or_insufficient_negative_evidence"
+    },
+    {
+      "handle": "@RQDADOS1",
+      "is_muted": 0,
+      "gale_tier": "G1",
+      "quarantine_until": null,
+      "msg_n": 59564,
+      "last_msg": "2026-06-18 18:18:27",
+      "msg_7d": 4308,
+      "msg_30d": 16244,
+      "raw_n30": 63679,
+      "raw_wr30": 56.1,
+      "fired_n7": 136,
+      "fired_wr7": 83.7,
+      "flags": [],
+      "action": "KEEP",
+      "reason": "fresh_or_insufficient_negative_evidence"
+    },
+    {
+      "handle": "@bacboBRL",
+      "is_muted": 0,
+      "gale_tier": "G2",
+      "quarantine_until": null,
+      "msg_n": 169967,
+      "last_msg": "2026-06-18 12:48:14",
+      "msg_7d": 482,
+      "msg_30d": 2088,
+      "raw_n30": 9467,
+      "raw_wr30": 53.7,
+      "fired_n7": 26,
+      "fired_wr7": 80.8,
+      "flags": [],
+      "action": "KEEP",
+      "reason": "fresh_or_insufficient_negative_evidence"
+    },
+    {
+      "handle": "@martinswinbacbo",
+      "is_muted": 0,
+      "gale_tier": "G2",
+      "quarantine_until": null,
+      "msg_n": 43037,
+      "last_msg": "2026-06-18 18:16:47",
+      "msg_7d": 3034,
+      "msg_30d": 13229,
+      "raw_n30": 62389,
+      "raw_wr30": 53.5,
+      "fired_n7": 77,
+      "fired_wr7": 80.5,
+      "flags": [],
+      "action": "KEEP",
+      "reason": "fresh_or_insufficient_negative_evidence"
+    },
+    {
+      "handle": "@rigosinais",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 29011,
+      "last_msg": "2026-06-17 16:30:45",
+      "msg_7d": 1665,
+      "msg_30d": 7558,
+      "raw_n30": 33686,
+      "raw_wr30": 52.8,
+      "fired_n7": 120,
+      "fired_wr7": 77.8,
+      "flags": [],
+      "action": "KEEP",
+      "reason": "fresh_or_insufficient_negative_evidence"
+    },
+    {
+      "handle": "@robofreebacbo24horass",
+      "is_muted": 0,
+      "gale_tier": "G1",
+      "quarantine_until": null,
+      "msg_n": 118714,
+      "last_msg": "2026-06-18 02:01:45",
+      "msg_7d": 3387,
+      "msg_30d": 16759,
+      "raw_n30": 56064,
+      "raw_wr30": 51.9,
+      "fired_n7": 275,
+      "fired_wr7": 77.2,
+      "flags": [],
+      "action": "KEEP",
+      "reason": "fresh_or_insufficient_negative_evidence"
+    },
+    {
+      "handle": "@DadosBacBoBR",
+      "is_muted": 0,
+      "gale_tier": "G1",
+      "quarantine_until": null,
+      "msg_n": 21391,
+      "last_msg": "2026-06-18 18:16:30",
+      "msg_7d": 1191,
+      "msg_30d": 5598,
+      "raw_n30": 47779,
+      "raw_wr30": 48.4,
+      "fired_n7": 206,
+      "fired_wr7": 75.0,
+      "flags": [
+        "RAW_30D_LT50"
+      ],
+      "action": "KEEP",
+      "reason": "fresh_or_insufficient_negative_evidence"
+    }
+  ],
+  "cleanup_actions": [
+    {
+      "handle": "@bacbob2xbet",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 49818,
+      "last_msg": "2026-06-18 18:19:34",
+      "msg_7d": 5182,
+      "msg_30d": 20853,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 252,
+      "fired_wr7": 61.8,
+      "flags": [
+        "FIRED_7D_LT70"
+      ],
+      "action": "DOWNGRADE_WEAK",
+      "reason": "fired_wr7=61.8 n=252"
+    },
+    {
+      "handle": "@M8SINAIS",
+      "is_muted": 0,
+      "gale_tier": "G2",
+      "quarantine_until": null,
+      "msg_n": 38205,
+      "last_msg": "2026-06-18 16:36:34",
+      "msg_7d": 2408,
+      "msg_30d": 9560,
+      "raw_n30": 35602,
+      "raw_wr30": 50.5,
+      "fired_n7": 230,
+      "fired_wr7": 66.0,
+      "flags": [
+        "FIRED_7D_LT70"
+      ],
+      "action": "DOWNGRADE_WEAK",
+      "reason": "fired_wr7=66.0 n=230"
+    },
+    {
+      "handle": "@sinal_bac_bo",
+      "is_muted": 0,
+      "gale_tier": "G2",
+      "quarantine_until": null,
+      "msg_n": 188776,
+      "last_msg": "2026-06-17 20:18:00",
+      "msg_7d": 4568,
+      "msg_30d": 20238,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 133,
+      "fired_wr7": 57.7,
+      "flags": [
+        "FIRED_7D_LT70"
+      ],
+      "action": "DOWNGRADE_WEAK",
+      "reason": "fired_wr7=57.7 n=133"
+    },
+    {
+      "handle": "@-1003938072966",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 0,
+      "last_msg": null,
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@acessobacbovip",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 34701,
+      "last_msg": "2024-07-10T04:14:10+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@bacbo_sinais",
+      "is_muted": 0,
+      "gale_tier": "G2",
+      "quarantine_until": null,
+      "msg_n": 7,
+      "last_msg": "2026-01-08T15:40:50+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 1254,
+      "raw_wr30": 38.2,
+      "fired_n7": 15,
+      "fired_wr7": 0.0,
+      "flags": [
+        "STALE_NO_7D_MSG",
+        "RAW_30D_LT50"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@bacbobg",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 1590,
+      "last_msg": "2025-11-25T00:50:17+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@bacbodomilhao",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 433416,
+      "last_msg": "2025-03-07T19:09:23+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@bacbojvr",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 4,
+      "last_msg": "2023-11-01T14:52:10+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@bacbomilionariof",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 2322,
+      "last_msg": "2024-06-03T19:35:03+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@bacboorigpix321",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 2278,
+      "last_msg": "2023-12-28T18:45:23+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@bacbopremiumdados",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 19987,
+      "last_msg": "2024-01-25T03:58:01+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@bacbopremiumm",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 75865,
+      "last_msg": "2024-05-08T21:17:17+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@bacbosinaisrobo",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 733,
+      "last_msg": "2025-09-09T18:34:35+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@bossbacboo",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 2263,
+      "last_msg": "2024-04-24T15:30:32+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@donbacbo",
+      "is_muted": 0,
+      "gale_tier": "G2",
+      "quarantine_until": null,
+      "msg_n": 1820,
+      "last_msg": "2026-05-07 17:06:25",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@dzbabcbo",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 5404,
+      "last_msg": "2024-08-06T14:19:35+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@fksinaisbacbovip",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 2074,
+      "last_msg": "2024-04-23T17:00:23+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@greenbacbovip",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 42504,
+      "last_msg": "2024-01-17T11:13:56+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@lightningbacbog2",
+      "is_muted": 0,
+      "gale_tier": "G2",
+      "quarantine_until": null,
+      "msg_n": 47018,
+      "last_msg": "2025-12-24T18:43:05+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@salavipbacboo",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 11131,
+      "last_msg": "2023-08-04T19:08:02+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@sinaisbacbosemgale",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 4025,
+      "last_msg": "2026-05-07 20:11:53",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@sinaisdadosbacbo",
+      "is_muted": 0,
+      "gale_tier": "G2",
+      "quarantine_until": null,
+      "msg_n": 92998,
+      "last_msg": "2025-11-13T21:45:29+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@sinaisgratissmart",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 2186,
+      "last_msg": "2023-07-13T22:50:52+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@superbocbosinaivip",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 1676,
+      "last_msg": "2024-01-17T11:13:57+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 0,
+      "raw_wr30": null,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@tomonio",
+      "is_muted": 0,
+      "gale_tier": "G0",
+      "quarantine_until": null,
+      "msg_n": 10,
+      "last_msg": "2025-06-22T13:01:00+00:00",
+      "msg_7d": 0,
+      "msg_30d": 0,
+      "raw_n30": 1571,
+      "raw_wr30": 43.2,
+      "fired_n7": 0,
+      "fired_wr7": null,
+      "flags": [
+        "STALE_NO_7D_MSG",
+        "RAW_30D_LT50"
+      ],
+      "action": "MUTE_STALE",
+      "reason": "no_messages_in_last_7d"
+    },
+    {
+      "handle": "@bacbobrasileiro01",
+      "is_muted": 1,
+      "gale_tier": "G0",
+      "quarantine_until": "2026-06-18 19:25:12",
+      "msg_n": 336260,
+      "last_msg": "2026-06-18 18:17:00",
+      "msg_7d": 3689,
+      "msg_30d": 17521,
+      "raw_n30": 63072,
+      "raw_wr30": 55.3,
+      "fired_n7": 444,
+      "fired_wr7": 70.0,
+      "flags": [],
+      "action": "RETEST_MUTED",
+      "reason": "muted_but_recent_fired_wr=70.0 n=444"
+    },
+    {
+      "handle": "@sinaisbacboangola",
+      "is_muted": 1,
+      "gale_tier": "G2",
+      "quarantine_until": "2026-06-18 18:50:40",
+      "msg_n": 260079,
+      "last_msg": "2026-06-18 02:01:52",
+      "msg_7d": 3832,
+      "msg_30d": 17897,
+      "raw_n30": 62455,
+      "raw_wr30": 51.4,
+      "fired_n7": 238,
+      "fired_wr7": 78.9,
+      "flags": [],
+      "action": "RETEST_MUTED",
+      "reason": "muted_but_recent_fired_wr=78.9 n=238"
+    }
+  ],
+  "omni_summary": {
+    "recent_scored": 50,
+    "verdict_counts": {
+      "FIRE": 14,
+      "SHADOW": 14,
+      "WAIT": 14,
+      "BLOCK": 8
+    },
+    "top": [
+      {
+        "score": 100.0,
+        "verdict": "FIRE",
+        "room": "bacboaovivovip",
+        "color": "red",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAY10",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 0.10999999999999376,
+            "weight": 1.2,
+            "evidence": "70.1% n=446"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 2.0800000000000014,
+            "weight": 0.8,
+            "evidence": "54.6% n=21811"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -5.740000000000002,
+            "weight": 1.3,
+            "evidence": "H17 50.9% n=1169"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": 4.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAY10 76.3% n=312"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": -0.8400000000000034,
+            "weight": 0.5,
+            "evidence": "red 70.6% n=1992"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 25.0,
+            "weight": 1.1,
+            "evidence": "100.0% n=8 gates=g3_predictor_hard,solo_proven_room_main"
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 3.18,
+            "weight": 0.7,
+            "evidence": "edge=1.59 BRB×1.7 · burst43%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 100.0,
+        "verdict": "FIRE",
+        "room": "robofreebacbo24horass",
+        "color": "blue",
+        "signal_kind": "SEQUENCE",
+        "source_floor": "LIVE",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 7.9200000000000035,
+            "weight": 1.2,
+            "evidence": "77.2% n=275"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": -0.23999999999999774,
+            "weight": 0.8,
+            "evidence": "51.7% n=24938"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -6.3,
+            "weight": 1.3,
+            "evidence": "H17 50.5% n=728"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": 10.700000000000003,
+            "weight": 1.0,
+            "evidence": "SEQUENCE 80.7% n=671"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": 13.5,
+            "weight": 1.0,
+            "evidence": "LIVE 85.5% n=430"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": 2.2200000000000015,
+            "weight": 0.5,
+            "evidence": "blue 75.7% n=1658"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 4.14,
+            "weight": 0.7,
+            "evidence": "edge=2.07 RRR×2.5 · burst49%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 02:01:45 msg7d=3387"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 94.93,
+        "verdict": "FIRE",
+        "room": "bacboaovivovip",
+        "color": "blue",
+        "signal_kind": "SEQUENCE",
+        "source_floor": "LIVE",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 0.10999999999999376,
+            "weight": 1.2,
+            "evidence": "70.1% n=446"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 1.3600000000000023,
+            "weight": 0.8,
+            "evidence": "53.7% n=26603"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -6.019999999999996,
+            "weight": 1.3,
+            "evidence": "H18 50.7% n=948"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": 10.700000000000003,
+            "weight": 1.0,
+            "evidence": "SEQUENCE 80.7% n=671"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": 13.5,
+            "weight": 1.0,
+            "evidence": "LIVE 85.5% n=430"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": 2.2200000000000015,
+            "weight": 0.5,
+            "evidence": "blue 75.7% n=1658"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "0.0% n=1 gates=solo_proven_room_main"
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 3.18,
+            "weight": 0.7,
+            "evidence": "edge=1.59 BRB×1.7 · burst43%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 94.34,
+        "verdict": "FIRE",
+        "room": "bacboaovivovip",
+        "color": "red",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 0.10999999999999376,
+            "weight": 1.2,
+            "evidence": "70.1% n=446"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 2.0800000000000014,
+            "weight": 0.8,
+            "evidence": "54.6% n=21811"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -5.740000000000002,
+            "weight": 1.3,
+            "evidence": "H17 50.9% n=1169"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": -0.8400000000000034,
+            "weight": 0.5,
+            "evidence": "red 70.6% n=1992"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 25.0,
+            "weight": 1.1,
+            "evidence": "100.0% n=8 gates=g3_predictor_hard,solo_proven_room_main"
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 3.18,
+            "weight": 0.7,
+            "evidence": "edge=1.59 BRB×1.7 · burst43%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 94.34,
+        "verdict": "FIRE",
+        "room": "bacboaovivovip",
+        "color": "red",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 0.10999999999999376,
+            "weight": 1.2,
+            "evidence": "70.1% n=446"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 2.0800000000000014,
+            "weight": 0.8,
+            "evidence": "54.6% n=21811"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -5.740000000000002,
+            "weight": 1.3,
+            "evidence": "H17 50.9% n=1169"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": -0.8400000000000034,
+            "weight": 0.5,
+            "evidence": "red 70.6% n=1992"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 25.0,
+            "weight": 1.1,
+            "evidence": "100.0% n=8 gates=g3_predictor_hard,solo_proven_room_main"
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 3.18,
+            "weight": 0.7,
+            "evidence": "edge=1.59 BRB×1.7 · burst43%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 90.94,
+        "verdict": "FIRE",
+        "room": "bacbobrasileiro01",
+        "color": "blue",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 0.0,
+            "weight": 1.2,
+            "evidence": "70.0% n=444"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 1.8399999999999979,
+            "weight": 0.8,
+            "evidence": "54.3% n=29081"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -7.699999999999999,
+            "weight": 1.3,
+            "evidence": "H17 49.5% n=1587"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": 2.2200000000000015,
+            "weight": 0.5,
+            "evidence": "blue 75.7% n=1658"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 25.0,
+            "weight": 1.1,
+            "evidence": "100.0% n=5 gates=streak_gate,solo_proven_room_main"
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 0.24,
+            "weight": 0.7,
+            "evidence": "edge=0.12 no edge"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 18:17:00 msg7d=3689"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 90.94,
+        "verdict": "FIRE",
+        "room": "bacbobrasileiro01",
+        "color": "blue",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 0.0,
+            "weight": 1.2,
+            "evidence": "70.0% n=444"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 1.8399999999999979,
+            "weight": 0.8,
+            "evidence": "54.3% n=29081"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -7.699999999999999,
+            "weight": 1.3,
+            "evidence": "H17 49.5% n=1587"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": 2.2200000000000015,
+            "weight": 0.5,
+            "evidence": "blue 75.7% n=1658"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 25.0,
+            "weight": 1.1,
+            "evidence": "100.0% n=5 gates=streak_gate,solo_proven_room_main"
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 0.24,
+            "weight": 0.7,
+            "evidence": "edge=0.12 no edge"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 18:17:00 msg7d=3689"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 87.11,
+        "verdict": "FIRE",
+        "room": "robofreebacbo24horass",
+        "color": "red",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 7.9200000000000035,
+            "weight": 1.2,
+            "evidence": "77.2% n=275"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 0.08000000000000114,
+            "weight": 0.8,
+            "evidence": "52.1% n=31126"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": 3.3599999999999977,
+            "weight": 1.3,
+            "evidence": "H17 57.4% n=1245"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": -0.8400000000000034,
+            "weight": 0.5,
+            "evidence": "red 70.6% n=1992"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 4.14,
+            "weight": 0.7,
+            "evidence": "edge=2.07 RRR×2.5 · burst49%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 02:01:45 msg7d=3387"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 87.11,
+        "verdict": "FIRE",
+        "room": "robofreebacbo24horass",
+        "color": "red",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 7.9200000000000035,
+            "weight": 1.2,
+            "evidence": "77.2% n=275"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 0.08000000000000114,
+            "weight": 0.8,
+            "evidence": "52.1% n=31126"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": 3.3599999999999977,
+            "weight": 1.3,
+            "evidence": "H17 57.4% n=1245"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": -0.8400000000000034,
+            "weight": 0.5,
+            "evidence": "red 70.6% n=1992"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 4.14,
+            "weight": 0.7,
+            "evidence": "edge=2.07 RRR×2.5 · burst49%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 02:01:45 msg7d=3387"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 87.11,
+        "verdict": "FIRE",
+        "room": "robofreebacbo24horass",
+        "color": "red",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 7.9200000000000035,
+            "weight": 1.2,
+            "evidence": "77.2% n=275"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 0.08000000000000114,
+            "weight": 0.8,
+            "evidence": "52.1% n=31126"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": 3.3599999999999977,
+            "weight": 1.3,
+            "evidence": "H17 57.4% n=1245"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": -0.8400000000000034,
+            "weight": 0.5,
+            "evidence": "red 70.6% n=1992"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 4.14,
+            "weight": 0.7,
+            "evidence": "edge=2.07 RRR×2.5 · burst49%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 02:01:45 msg7d=3387"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 86.46,
+        "verdict": "FIRE",
+        "room": "rqdados1",
+        "color": "red",
+        "signal_kind": "GOLDEN",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 15.070000000000004,
+            "weight": 1.2,
+            "evidence": "83.7% n=136"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 3.3600000000000025,
+            "weight": 0.8,
+            "evidence": "56.2% n=32745"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -1.8199999999999958,
+            "weight": 1.3,
+            "evidence": "H16 53.7% n=1817"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -4.0,
+            "weight": 1.0,
+            "evidence": "GOLDEN 66.0% n=390"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": -0.8400000000000034,
+            "weight": 0.5,
+            "evidence": "red 70.6% n=1992"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 1.1,
+            "weight": 0.7,
+            "evidence": "edge=0.55 RRR×1.7"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 18:18:27 msg7d=4308"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 83.31,
+        "verdict": "FIRE",
+        "room": "rqdados",
+        "color": "red",
+        "signal_kind": "GOLDEN",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 4.95,
+            "weight": 1.2,
+            "evidence": "74.5% n=56"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 5.280000000000001,
+            "weight": 0.8,
+            "evidence": "58.6% n=32408"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": 4.199999999999999,
+            "weight": 1.3,
+            "evidence": "H16 58.0% n=1739"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -4.0,
+            "weight": 1.0,
+            "evidence": "GOLDEN 66.0% n=390"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": -0.8400000000000034,
+            "weight": 0.5,
+            "evidence": "red 70.6% n=1992"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 0.58,
+            "weight": 0.7,
+            "evidence": "edge=0.29 no edge"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 18:19:32 msg7d=2643"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 82.79,
+        "verdict": "FIRE",
+        "room": "sinaisbacboangola",
+        "color": "blue",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 9.790000000000006,
+            "weight": 1.2,
+            "evidence": "78.9% n=238"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": -0.4,
+            "weight": 0.8,
+            "evidence": "51.5% n=30459"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -1.5400000000000018,
+            "weight": 1.3,
+            "evidence": "H16 53.9% n=1591"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": 2.2200000000000015,
+            "weight": 0.5,
+            "evidence": "blue 75.7% n=1658"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 2.22,
+            "weight": 0.7,
+            "evidence": "edge=1.11 RRR×2.3"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 02:01:52 msg7d=3831"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 82.39,
+        "verdict": "FIRE",
+        "room": "umgalesalabacbo123",
+        "color": "blue",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAY10",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 4.95,
+            "weight": 1.2,
+            "evidence": "74.5% n=267"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 0.5600000000000023,
+            "weight": 0.8,
+            "evidence": "52.7% n=19803"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -4.199999999999999,
+            "weight": 1.3,
+            "evidence": "H16 52.0% n=1247"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": 4.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAY10 76.3% n=312"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": 2.2200000000000015,
+            "weight": 0.5,
+            "evidence": "blue 75.7% n=1658"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 4.36,
+            "weight": 0.7,
+            "evidence": "edge=2.18 RRR×1.9 · burst60%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 02:02:58 msg7d=4743"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 76.33,
+        "verdict": "SHADOW",
+        "room": "rqdados",
+        "color": "blue",
+        "signal_kind": "GOLDEN",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 4.95,
+            "weight": 1.2,
+            "evidence": "74.5% n=56"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 3.519999999999999,
+            "weight": 0.8,
+            "evidence": "56.4% n=33536"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -1.259999999999998,
+            "weight": 1.3,
+            "evidence": "H16 54.1% n=1973"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -4.0,
+            "weight": 1.0,
+            "evidence": "GOLDEN 66.0% n=390"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": 2.2200000000000015,
+            "weight": 0.5,
+            "evidence": "blue 75.7% n=1658"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 0.58,
+            "weight": 0.7,
+            "evidence": "edge=0.29 no edge"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 18:19:32 msg7d=2643"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 75.83,
+        "verdict": "SHADOW",
+        "room": "robofreebacbo24horass",
+        "color": "blue",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 7.9200000000000035,
+            "weight": 1.2,
+            "evidence": "77.2% n=275"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": -0.23999999999999774,
+            "weight": 0.8,
+            "evidence": "51.7% n=24938"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -6.3,
+            "weight": 1.3,
+            "evidence": "H17 50.5% n=728"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": 2.2200000000000015,
+            "weight": 0.5,
+            "evidence": "blue 75.7% n=1658"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 4.14,
+            "weight": 0.7,
+            "evidence": "edge=2.07 RRR×2.5 · burst49%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 02:01:45 msg7d=3387"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 75.83,
+        "verdict": "SHADOW",
+        "room": "robofreebacbo24horass",
+        "color": "blue",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 7.9200000000000035,
+            "weight": 1.2,
+            "evidence": "77.2% n=275"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": -0.23999999999999774,
+            "weight": 0.8,
+            "evidence": "51.7% n=24938"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -6.3,
+            "weight": 1.3,
+            "evidence": "H17 50.5% n=728"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": 2.2200000000000015,
+            "weight": 0.5,
+            "evidence": "blue 75.7% n=1658"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 4.14,
+            "weight": 0.7,
+            "evidence": "edge=2.07 RRR×2.5 · burst49%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 02:01:45 msg7d=3387"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 75.79,
+        "verdict": "SHADOW",
+        "room": "umgalesalabacbo123",
+        "color": "blue",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 4.95,
+            "weight": 1.2,
+            "evidence": "74.5% n=267"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 0.5600000000000023,
+            "weight": 0.8,
+            "evidence": "52.7% n=19803"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -4.199999999999999,
+            "weight": 1.3,
+            "evidence": "H16 52.0% n=1247"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": 2.2200000000000015,
+            "weight": 0.5,
+            "evidence": "blue 75.7% n=1658"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "None% n=0 gates="
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 4.36,
+            "weight": 0.7,
+            "evidence": "edge=2.18 RRR×1.9 · burst60%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 02:02:58 msg7d=4743"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 75.24,
+        "verdict": "SHADOW",
+        "room": "bacboaovivovip",
+        "color": "blue",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAY10",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 0.10999999999999376,
+            "weight": 1.2,
+            "evidence": "70.1% n=446"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": 1.3600000000000023,
+            "weight": 0.8,
+            "evidence": "53.7% n=26603"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -0.419999999999996,
+            "weight": 1.3,
+            "evidence": "H16 54.7% n=2301"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": 4.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAY10 76.3% n=312"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": 2.2200000000000015,
+            "weight": 0.5,
+            "evidence": "blue 75.7% n=1658"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": -5.519999999999993,
+            "weight": 1.1,
+            "evidence": "65.4% n=26 gates=timing_gate,solo_proven_room_main"
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 3.18,
+            "weight": 0.7,
+            "evidence": "edge=1.59 BRB×1.7 · burst43%"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          }
+        ],
+        "penalties": []
+      },
+      {
+        "score": 74.49,
+        "verdict": "SHADOW",
+        "room": "dadosbacbobr",
+        "color": "red",
+        "signal_kind": "SOLO_ELITE",
+        "source_floor": "MAR19",
+        "dimensions": [
+          {
+            "name": "room_recent_fired_wr",
+            "points": 5.5,
+            "weight": 1.2,
+            "evidence": "75.0% n=206"
+          },
+          {
+            "name": "room_color_raw_wr30",
+            "points": -2.319999999999999,
+            "weight": 0.8,
+            "evidence": "49.1% n=26011"
+          },
+          {
+            "name": "room_hour_color_wr30",
+            "points": -0.7,
+            "weight": 1.3,
+            "evidence": "H17 54.5% n=736"
+          },
+          {
+            "name": "signal_kind_g0_wr7",
+            "points": -1.0,
+            "weight": 1.0,
+            "evidence": "SOLO_ELITE 69.0% n=2412"
+          },
+          {
+            "name": "source_floor_wr7",
+            "points": -2.299999999999997,
+            "weight": 1.0,
+            "evidence": "MAR19 69.7% n=2374"
+          },
+          {
+            "name": "global_color_bias7",
+            "points": -0.8400000000000034,
+            "weight": 0.5,
+            "evidence": "red 70.6% n=1992"
+          },
+          {
+            "name": "blocked_rescue_shadow_wr",
+            "points": 0.0,
+            "weight": 1.1,
+            "evidence": "0.0% n=1 gates=color_acc_all_weak"
+          },
+          {
+            "name": "room_dna_edge",
+            "points": 0.54,
+            "weight": 0.7,
+            "evidence": "edge=0.27 no edge"
+          },
+          {
+            "name": "freshness",
+            "points": 5.0,
+            "weight": 0.8,
+            "evidence": "last=2026-06-18 18:16:30 msg7d=1191"
+          }
+        ],
+        "penalties": []
+      }
+    ]
+  },
+  "early_result_summary": {
+    "days": 7,
+    "n": 3367,
+    "wins": 2506,
+    "losses": 660,
+    "ties": 201,
+    "wr": 79.2,
+    "avg_secs": 16.1,
+    "min_secs": 0.0,
+    "max_secs": 6560.8,
+    "oracle_safe_n": 526,
+    "oracle_safe_pct": 15.6,
+    "fast_n": 424,
+    "late_risk_n": 2417,
+    "thresholds": {
+      "oracle_safe_secs": 20.0,
+      "fast_secs": 5.0
+    }
+  },
+  "top_early_cells": [
+    {
+      "group_key": "SOLO_ELITE:MAR19",
+      "n": 1656,
+      "wins": 1194,
+      "losses": 380,
+      "ties": 82,
+      "wr": 75.9,
+      "avg_secs": 15.8,
+      "min_secs": 0.0,
+      "max_secs": 399.4,
+      "oracle_safe_n": 297,
+      "fast_n": 180,
+      "late_risk_n": 1179,
+      "oracle_safe_pct": 17.9
+    },
+    {
+      "group_key": "SOLO_ELITE:MAY10",
+      "n": 273,
+      "wins": 207,
+      "losses": 49,
+      "ties": 17,
+      "wr": 80.9,
+      "avg_secs": 16.9,
+      "min_secs": 0.0,
+      "max_secs": 239.9,
+      "oracle_safe_n": 47,
+      "fast_n": 63,
+      "late_risk_n": 163,
+      "oracle_safe_pct": 17.2
+    },
+    {
+      "group_key": "GOLDEN:MAR19",
+      "n": 296,
+      "wins": 213,
+      "losses": 71,
+      "ties": 12,
+      "wr": 75.0,
+      "avg_secs": 32.5,
+      "min_secs": 0.6,
+      "max_secs": 6560.8,
+      "oracle_safe_n": 47,
+      "fast_n": 46,
+      "late_risk_n": 203,
+      "oracle_safe_pct": 15.9
+    },
+    {
+      "group_key": "SEQUENCE:MAR19",
+      "n": 211,
+      "wins": 174,
+      "losses": 31,
+      "ties": 6,
+      "wr": 84.9,
+      "avg_secs": 22.5,
+      "min_secs": 0.3,
+      "max_secs": 285.0,
+      "oracle_safe_n": 44,
+      "fast_n": 40,
+      "late_risk_n": 127,
+      "oracle_safe_pct": 20.9
+    },
+    {
+      "group_key": "SOLO_ELITE:LIVE",
+      "n": 65,
+      "wins": 51,
+      "losses": 8,
+      "ties": 6,
+      "wr": 86.4,
+      "avg_secs": 33.2,
+      "min_secs": 0.7,
+      "max_secs": 227.3,
+      "oracle_safe_n": 19,
+      "fast_n": 14,
+      "late_risk_n": 32,
+      "oracle_safe_pct": 29.2
+    },
+    {
+      "group_key": "PLATINUM:MAR20",
+      "n": 131,
+      "wins": 108,
+      "losses": 19,
+      "ties": 4,
+      "wr": 85.0,
+      "avg_secs": 8.2,
+      "min_secs": 0.3,
+      "max_secs": 184.4,
+      "oracle_safe_n": 14,
+      "fast_n": 16,
+      "late_risk_n": 101,
+      "oracle_safe_pct": 10.7
+    },
+    {
+      "group_key": "SOLO_ELITE:MAR20",
+      "n": 120,
+      "wins": 95,
+      "losses": 18,
+      "ties": 7,
+      "wr": 84.1,
+      "avg_secs": 7.6,
+      "min_secs": 0.6,
+      "max_secs": 192.2,
+      "oracle_safe_n": 10,
+      "fast_n": 9,
+      "late_risk_n": 101,
+      "oracle_safe_pct": 8.3
+    },
+    {
+      "group_key": "SEQUENCE:JUN12A",
+      "n": 41,
+      "wins": 25,
+      "losses": 13,
+      "ties": 3,
+      "wr": 65.8,
+      "avg_secs": 20.5,
+      "min_secs": 0.5,
+      "max_secs": 259.8,
+      "oracle_safe_n": 8,
+      "fast_n": 12,
+      "late_risk_n": 21,
+      "oracle_safe_pct": 19.5
+    },
+    {
+      "group_key": "GOLDEN:MAR20",
+      "n": 45,
+      "wins": 33,
+      "losses": 11,
+      "ties": 1,
+      "wr": 75.0,
+      "avg_secs": 11.2,
+      "min_secs": 1.8,
+      "max_secs": 162.5,
+      "oracle_safe_n": 7,
+      "fast_n": 5,
+      "late_risk_n": 33,
+      "oracle_safe_pct": 15.6
+    },
+    {
+      "group_key": "SEQUENCE:JUN12B",
+      "n": 33,
+      "wins": 20,
+      "losses": 10,
+      "ties": 3,
+      "wr": 66.7,
+      "avg_secs": 19.4,
+      "min_secs": 0.5,
+      "max_secs": 259.8,
+      "oracle_safe_n": 5,
+      "fast_n": 10,
+      "late_risk_n": 18,
+      "oracle_safe_pct": 15.2
+    },
+    {
+      "group_key": "SOLO_ELITE:ULTIMATE",
+      "n": 23,
+      "wins": 19,
+      "losses": 3,
+      "ties": 1,
+      "wr": 86.4,
+      "avg_secs": 16.6,
+      "min_secs": 0.6,
+      "max_secs": 179.6,
+      "oracle_safe_n": 4,
+      "fast_n": 3,
+      "late_risk_n": 16,
+      "oracle_safe_pct": 17.4
+    },
+    {
+      "group_key": "SEQUENCE:MAY19",
+      "n": 18,
+      "wins": 13,
+      "losses": 4,
+      "ties": 1,
+      "wr": 76.5,
+      "avg_secs": 16.7,
+      "min_secs": 0.7,
+      "max_secs": 132.6,
+      "oracle_safe_n": 4,
+      "fast_n": 0,
+      "late_risk_n": 14,
+      "oracle_safe_pct": 22.2
+    }
+  ],
+  "next_steps": [
+    "Review cleanup_actions, then run room_cleaner.py --apply if correct.",
+    "Use strongest_rooms as the first Elite Stack source whitelist.",
+    "Only promote early-result cells with high oracle_safe_pct and strong WR.",
+    "Wire omni_score.score_signal into signal_handler before final fire.",
+    "Run Telegram live discovery only after stale/weak rooms are cleaned."
+  ]
+}
