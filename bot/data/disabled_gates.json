@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "updated_at": "2026-06-18T18:12:49.643594+00:00",
+  "runtime_disabled": [
+    "m8sinais_lead_anchor",
+    "solo_red_death_minute_gate",
+    "streak_reversal"
+  ],
+  "retired_gates": [],
+  "retest_candidates": [],
+  "audit_log": []
+}
