@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from types import MappingProxyType
 
-from bot.engine_gate_registry import EngineGateRegistry
+from bot.config.registry import EngineGateRegistry
 
 
 class EngineGateRegistryTest(unittest.TestCase):

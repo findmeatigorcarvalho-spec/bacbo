@@ -20,7 +20,6 @@ class EngineGateRegistry:
         self.lock_file_path = file_path + ".lock"
 
         self._thread_lock = threading.RLock()
-
         self._runtime_disabled: FrozenSet[str] = frozenset()
         self._raw_config: Dict[str, Any] = {}
         self._dirty = False
@@ -32,14 +31,16 @@ class EngineGateRegistry:
     def _validate_gate_name(gate_name: str) -> str:
         if not isinstance(gate_name, str):
             raise TypeError("gate_name must be string")
+
         gate_name = gate_name.strip()
         if not gate_name:
             raise ValueError("gate_name cannot be empty")
+
         return gate_name
 
     @staticmethod
     def _normalize_gates(gates: Iterable[str]) -> Set[str]:
-        return {EngineGateRegistry._validate_gate_name(g) for g in gates}
+        return {EngineGateRegistry._validate_gate_name(gate) for gate in gates}
 
     def _publish_state(
         self,
@@ -76,12 +77,22 @@ class EngineGateRegistry:
 
         if version >= 2:
             runtime = cfg.get("runtime_disabled", [])
+            if not isinstance(runtime, list):
+                runtime = []
+
             runtime_set = frozenset(
-                self._validate_gate_name(x) for x in runtime if isinstance(x, str) and x.strip()
+                self._validate_gate_name(gate)
+                for gate in runtime
+                if isinstance(gate, str) and gate.strip()
             )
         else:
             legacy_disabled = cfg.get("disabled", [])
             legacy_manual = cfg.get("manual_disabled", [])
+
+            if not isinstance(legacy_disabled, list):
+                legacy_disabled = []
+            if not isinstance(legacy_manual, list):
+                legacy_manual = []
 
             runtime_set = frozenset(
                 {
@@ -89,14 +100,14 @@ class EngineGateRegistry:
                     for item in legacy_disabled
                     if isinstance(item, dict)
                     and isinstance(item.get("gate"), str)
-                    and item.get("gate", "").strip()
+                    and item["gate"].strip()
                 }
                 | {
                     self._validate_gate_name(item["gate"])
                     for item in legacy_manual
                     if isinstance(item, dict)
                     and isinstance(item.get("gate"), str)
-                    and item.get("gate", "").strip()
+                    and item["gate"].strip()
                 }
             )
 
@@ -126,15 +137,20 @@ class EngineGateRegistry:
 
     def _transaction(self, fn: Callable[[], Any]) -> Any:
         lock_file = open(self.lock_file_path, "a", encoding="utf-8")
+
         try:
             fcntl.flock(lock_file, fcntl.LOCK_EX)
+
             with self._thread_lock:
                 self._load_unlocked()
                 before = self._runtime_disabled
+
                 result = fn()
+
                 if self._runtime_disabled != before or self._dirty:
                     self._save_atomic_unlocked()
                     self._dirty = False
+
                 return result
         finally:
             try:
@@ -143,38 +159,50 @@ class EngineGateRegistry:
                 lock_file.close()
 
     def _disable_gate(self, gate: str) -> None:
-        g = self._validate_gate_name(gate)
-        if g in self._runtime_disabled:
+        gate = self._validate_gate_name(gate)
+
+        if gate in self._runtime_disabled:
             return
-        new = set(self._runtime_disabled)
-        new.add(g)
-        self._publish_state(self._raw_config, frozenset(new), dirty=True)
+
+        new_disabled = set(self._runtime_disabled)
+        new_disabled.add(gate)
+
+        self._publish_state(self._raw_config, frozenset(new_disabled), dirty=True)
 
     def _enable_gate(self, gate: str) -> None:
-        g = self._validate_gate_name(gate)
-        if g not in self._runtime_disabled:
+        gate = self._validate_gate_name(gate)
+
+        if gate not in self._runtime_disabled:
             return
-        new = set(self._runtime_disabled)
-        new.remove(g)
-        self._publish_state(self._raw_config, frozenset(new), dirty=True)
+
+        new_disabled = set(self._runtime_disabled)
+        new_disabled.remove(gate)
+
+        self._publish_state(self._raw_config, frozenset(new_disabled), dirty=True)
 
     def _bulk_disable(self, gates: Iterable[str]) -> None:
         normalized = self._normalize_gates(gates)
         diff = normalized - self._runtime_disabled
+
         if not diff:
             return
-        new = set(self._runtime_disabled)
-        new.update(diff)
-        self._publish_state(self._raw_config, frozenset(new), dirty=True)
+
+        new_disabled = set(self._runtime_disabled)
+        new_disabled.update(diff)
+
+        self._publish_state(self._raw_config, frozenset(new_disabled), dirty=True)
 
     def _bulk_enable(self, gates: Iterable[str]) -> None:
         normalized = self._normalize_gates(gates)
         diff = normalized & self._runtime_disabled
+
         if not diff:
             return
-        new = set(self._runtime_disabled)
-        new.difference_update(diff)
-        self._publish_state(self._raw_config, frozenset(new), dirty=True)
+
+        new_disabled = set(self._runtime_disabled)
+        new_disabled.difference_update(diff)
+
+        self._publish_state(self._raw_config, frozenset(new_disabled), dirty=True)
 
     def disable_gate(self, gate: str) -> None:
         self._transaction(lambda: self._disable_gate(gate))
@@ -190,28 +218,35 @@ class EngineGateRegistry:
 
     def _save_atomic_unlocked(self) -> None:
         doc = dict(self._raw_config)
+
         doc["schema_version"] = self.CURRENT_SCHEMA_VERSION
         doc["runtime_disabled"] = sorted(self._runtime_disabled)
         doc["updated_at"] = datetime.now(timezone.utc).isoformat()
+
         doc.pop("disabled", None)
         doc.pop("manual_disabled", None)
+
         doc.setdefault("retired_gates", [])
         doc.setdefault("retest_candidates", [])
         doc.setdefault("audit_log", [])
 
         dir_name = os.path.dirname(self.file_path) or "."
         fd, tmp_path = tempfile.mkstemp(prefix="gates_", suffix=".json", dir=dir_name)
+
         try:
             with os.fdopen(fd, "w", encoding="utf-8") as f:
                 json.dump(doc, f, indent=2, ensure_ascii=False)
                 f.write("\n")
                 f.flush()
                 os.fsync(f.fileno())
+
             os.replace(tmp_path, self.file_path)
             self._publish_state(doc, frozenset(doc["runtime_disabled"]), dirty=False)
+
         except Exception as e:
             try:
                 os.unlink(tmp_path)
             except FileNotFoundError:
                 pass
+
             raise IOError(f"Atomic save failed: {e}") from e
