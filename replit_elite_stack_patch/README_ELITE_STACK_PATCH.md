@@ -23,6 +23,25 @@ It adds four safe, read-only-by-default tools:
 4. `bot/elite_stack_audit.py`
    - runs all three tools and writes `bot/data/elite_stack_audit.json`
 
+5. `bot/result_lag_miner.py`
+   - mines the "same result around 5 rounds later" pattern from resolved
+     outcomes
+   - writes `bot/data/result_lag_patterns.json`
+
+It also patches the dashboard/API:
+
+- `artifacts/api-server/src/routes/bot.ts`
+  - adds `/api/bot/result-lag-patterns`
+  - adds `/api/bot/elite-stack-audit`
+  - adds `/api/bot/room-cleaner-report`
+  - adds `/api/bot/omni-score-report`
+- `artifacts/dashboard/src/lib/api.ts`
+  - adds frontend methods for those endpoints
+- `artifacts/dashboard/src/pages/DashboardPage.tsx`
+  - fetches the new reports for the Engine tab
+- `artifacts/dashboard/src/components/tabs/EngineTab.tsx`
+  - shows the lag-5 pattern panel and Elite Stack summary
+
 Run in Replit Shell:
 
 ```bash

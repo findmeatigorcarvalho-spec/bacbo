@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-06-18T20:35:05.214338+00:00",
+  "generated_at": "2026-06-18T20:41:50.382821+00:00",
   "room_summary": {
-    "generated_at": "2026-06-18T20:33:54.587478+00:00",
+    "generated_at": "2026-06-18T20:40:40.684674+00:00",
     "total_rooms": 66,
     "active_unmuted": 40,
     "muted": 26,
@@ -27,8 +27,8 @@
       "msg_n": 48391,
       "last_msg": "2026-06-17 16:31:07",
       "msg_7d": 1665,
-      "msg_30d": 7485,
-      "raw_n30": 32100,
+      "msg_30d": 7484,
+      "raw_n30": 32093,
       "raw_wr30": 52.9,
       "fired_n7": 51,
       "fired_wr7": 88.1,
@@ -43,9 +43,9 @@
       "quarantine_until": null,
       "msg_n": 52368,
       "last_msg": "2026-06-18 18:19:35",
-      "msg_7d": 3813,
-      "msg_30d": 16626,
-      "raw_n30": 69425,
+      "msg_7d": 3811,
+      "msg_30d": 16624,
+      "raw_n30": 69413,
       "raw_wr30": 59.1,
       "fired_n7": 128,
       "fired_wr7": 87.4,
@@ -60,9 +60,9 @@
       "quarantine_until": null,
       "msg_n": 59564,
       "last_msg": "2026-06-18 18:18:27",
-      "msg_7d": 4308,
-      "msg_30d": 16244,
-      "raw_n30": 63679,
+      "msg_7d": 4305,
+      "msg_30d": 16239,
+      "raw_n30": 63652,
       "raw_wr30": 56.1,
       "fired_n7": 136,
       "fired_wr7": 83.7,
@@ -94,9 +94,9 @@
       "quarantine_until": null,
       "msg_n": 43037,
       "last_msg": "2026-06-18 18:16:47",
-      "msg_7d": 3034,
-      "msg_30d": 13229,
-      "raw_n30": 62389,
+      "msg_7d": 3032,
+      "msg_30d": 13226,
+      "raw_n30": 62373,
       "raw_wr30": 53.5,
       "fired_n7": 77,
       "fired_wr7": 80.5,
@@ -112,8 +112,8 @@
       "msg_n": 29011,
       "last_msg": "2026-06-17 16:30:45",
       "msg_7d": 1665,
-      "msg_30d": 7558,
-      "raw_n30": 33686,
+      "msg_30d": 7557,
+      "raw_n30": 33651,
       "raw_wr30": 52.8,
       "fired_n7": 120,
       "fired_wr7": 77.8,
@@ -145,8 +145,8 @@
       "quarantine_until": null,
       "msg_n": 21391,
       "last_msg": "2026-06-18 18:16:30",
-      "msg_7d": 1191,
-      "msg_30d": 5598,
+      "msg_7d": 1190,
+      "msg_30d": 5597,
       "raw_n30": 47779,
       "raw_wr30": 48.4,
       "fired_n7": 206,
@@ -166,7 +166,7 @@
       "quarantine_until": null,
       "msg_n": 49818,
       "last_msg": "2026-06-18 18:19:34",
-      "msg_7d": 5182,
+      "msg_7d": 5178,
       "msg_30d": 20853,
       "raw_n30": 0,
       "raw_wr30": null,
@@ -185,9 +185,9 @@
       "quarantine_until": null,
       "msg_n": 38205,
       "last_msg": "2026-06-18 16:36:34",
-      "msg_7d": 2408,
-      "msg_30d": 9560,
-      "raw_n30": 35602,
+      "msg_7d": 2405,
+      "msg_30d": 9556,
+      "raw_n30": 35566,
       "raw_wr30": 50.5,
       "fired_n7": 230,
       "fired_wr7": 66.0,
@@ -204,7 +204,7 @@
       "quarantine_until": null,
       "msg_n": 188776,
       "last_msg": "2026-06-17 20:18:00",
-      "msg_7d": 4568,
+      "msg_7d": 4564,
       "msg_30d": 20238,
       "raw_n30": 0,
       "raw_wr30": null,
@@ -679,8 +679,8 @@
       "quarantine_until": "2026-06-18 18:50:40",
       "msg_n": 260079,
       "last_msg": "2026-06-18 02:01:52",
-      "msg_7d": 3832,
-      "msg_30d": 17897,
+      "msg_7d": 3828,
+      "msg_30d": 17894,
       "raw_n30": 62455,
       "raw_wr30": 51.4,
       "fired_n7": 238,
@@ -759,7 +759,7 @@
             "name": "freshness",
             "points": 5.0,
             "weight": 0.8,
-            "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+            "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
           }
         ],
         "penalties": []
@@ -889,7 +889,7 @@
             "name": "freshness",
             "points": 5.0,
             "weight": 0.8,
-            "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+            "evidence": "last=2026-06-18 18:19:52 msg7d=5800"
           }
         ],
         "penalties": []
@@ -954,7 +954,7 @@
             "name": "freshness",
             "points": 5.0,
             "weight": 0.8,
-            "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+            "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
           }
         ],
         "penalties": []
@@ -1019,7 +1019,7 @@
             "name": "freshness",
             "points": 5.0,
             "weight": 0.8,
-            "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+            "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
           }
         ],
         "penalties": []
@@ -1367,7 +1367,7 @@
             "name": "room_color_raw_wr30",
             "points": 3.3600000000000025,
             "weight": 0.8,
-            "evidence": "56.2% n=32745"
+            "evidence": "56.2% n=32735"
           },
           {
             "name": "room_hour_color_wr30",
@@ -1409,7 +1409,7 @@
             "name": "freshness",
             "points": 5.0,
             "weight": 0.8,
-            "evidence": "last=2026-06-18 18:18:27 msg7d=4308"
+            "evidence": "last=2026-06-18 18:18:27 msg7d=4305"
           }
         ],
         "penalties": []
@@ -1539,7 +1539,7 @@
             "name": "freshness",
             "points": 5.0,
             "weight": 0.8,
-            "evidence": "last=2026-06-18 02:01:52 msg7d=3831"
+            "evidence": "last=2026-06-18 02:01:52 msg7d=3828"
           }
         ],
         "penalties": []
@@ -1604,7 +1604,7 @@
             "name": "freshness",
             "points": 5.0,
             "weight": 0.8,
-            "evidence": "last=2026-06-18 02:02:58 msg7d=4743"
+            "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
           }
         ],
         "penalties": []
@@ -1864,7 +1864,7 @@
             "name": "freshness",
             "points": 5.0,
             "weight": 0.8,
-            "evidence": "last=2026-06-18 02:02:58 msg7d=4743"
+            "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
           }
         ],
         "penalties": []
@@ -1929,7 +1929,7 @@
             "name": "freshness",
             "points": 5.0,
             "weight": 0.8,
-            "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+            "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
           }
         ],
         "penalties": []
@@ -1994,7 +1994,7 @@
             "name": "freshness",
             "points": 5.0,
             "weight": 0.8,
-            "evidence": "last=2026-06-18 18:16:30 msg7d=1191"
+            "evidence": "last=2026-06-18 18:16:30 msg7d=1190"
           }
         ],
         "penalties": []
@@ -2202,10 +2202,125 @@
       "oracle_safe_pct": 22.2
     }
   ],
+  "result_lag_summary": {
+    "stream_n": 20000,
+    "lag5": {
+      "lag": 5,
+      "samples": 18993,
+      "repeat_count": 11443,
+      "repeat_pct": 60.25,
+      "opposite_before_repeat_count": 2874,
+      "opposite_before_repeat_pct": 25.12,
+      "repeat_wr_if_bet_repeat": 60.25,
+      "examples": [
+        {
+          "base_id": 18399,
+          "target_id": 18404,
+          "base_ts": "2026-05-19 21:03:11",
+          "target_ts": "2026-05-19 21:05:54",
+          "actual": "red",
+          "previous_actual": "blue",
+          "lag": 5
+        },
+        {
+          "base_id": 18404,
+          "target_id": 18409,
+          "base_ts": "2026-05-19 21:05:54",
+          "target_ts": "2026-05-19 21:06:47",
+          "actual": "red",
+          "previous_actual": "blue",
+          "lag": 5
+        },
+        {
+          "base_id": 18406,
+          "target_id": 18411,
+          "base_ts": "2026-05-19 21:06:46",
+          "target_ts": "2026-05-19 21:06:48",
+          "actual": "blue",
+          "previous_actual": "red",
+          "lag": 5
+        },
+        {
+          "base_id": 18436,
+          "target_id": 18441,
+          "base_ts": "2026-05-19 21:11:33",
+          "target_ts": "2026-05-19 21:22:39",
+          "actual": "red",
+          "previous_actual": "blue",
+          "lag": 5
+        },
+        {
+          "base_id": 18443,
+          "target_id": 18448,
+          "base_ts": "2026-05-19 21:23:05",
+          "target_ts": "2026-05-19 21:25:22",
+          "actual": "red",
+          "previous_actual": "blue",
+          "lag": 5
+        },
+        {
+          "base_id": 18444,
+          "target_id": 18449,
+          "base_ts": "2026-05-19 21:25:19",
+          "target_ts": "2026-05-19 21:25:22",
+          "actual": "blue",
+          "previous_actual": "red",
+          "lag": 5
+        },
+        {
+          "base_id": 18445,
+          "target_id": 18450,
+          "base_ts": "2026-05-19 21:25:20",
+          "target_ts": "2026-05-19 21:25:25",
+          "actual": "red",
+          "previous_actual": "blue",
+          "lag": 5
+        },
+        {
+          "base_id": 18454,
+          "target_id": 18467,
+          "base_ts": "2026-05-19 21:25:25",
+          "target_ts": "2026-05-19 21:28:50",
+          "actual": "red",
+          "previous_actual": "blue",
+          "lag": 5
+        },
+        {
+          "base_id": 18531,
+          "target_id": 18536,
+          "base_ts": "2026-05-19 21:45:29",
+          "target_ts": "2026-05-19 21:51:55",
+          "actual": "red",
+          "previous_actual": "blue",
+          "lag": 5
+        },
+        {
+          "base_id": 18551,
+          "target_id": 18565,
+          "base_ts": "2026-05-19 21:56:17",
+          "target_ts": "2026-05-19 22:00:25",
+          "actual": "blue",
+          "previous_actual": "red",
+          "lag": 5
+        }
+      ]
+    },
+    "best_lag": {
+      "lag": 1,
+      "samples": 18997,
+      "repeat_count": 13052,
+      "repeat_pct": 68.71,
+      "opposite_before_repeat_count": 0,
+      "opposite_before_repeat_pct": 0.0,
+      "repeat_wr_if_bet_repeat": 68.71,
+      "examples": []
+    }
+  },
   "next_steps": [
     "Review cleanup_actions, then run room_cleaner.py --apply if correct.",
     "Use strongest_rooms as the first Elite Stack source whitelist.",
     "Only promote early-result cells with high oracle_safe_pct and strong WR.",
+    "Use result_lag_summary to validate/deny the lag-5 repeat hypothesis before live betting it.",
     "Wire omni_score.score_signal into signal_handler before final fire.",
     "Run Telegram live discovery only after stale/weak rooms are cleaned."
   ]

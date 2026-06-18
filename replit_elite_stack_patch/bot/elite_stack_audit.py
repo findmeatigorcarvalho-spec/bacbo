@@ -21,6 +21,7 @@ from datetime import datetime, timezone
 
 import early_result_audit
 import omni_score
+import result_lag_miner
 import room_cleaner
 
 
@@ -37,6 +38,7 @@ def build_audit(db_path: str = DB_PATH, recent: int = 100) -> dict:
     omni_report = omni_score.save_report(omni_results)
 
     early_report = early_result_audit.save_report(db_path=db_path)
+    lag_report = result_lag_miner.save_report(db_path=db_path)
 
     strongest_rooms = [
         row for row in room_report["rooms"]
@@ -70,10 +72,16 @@ def build_audit(db_path: str = DB_PATH, recent: int = 100) -> dict:
         },
         "early_result_summary": early_report["overall"],
         "top_early_cells": top_early_cells,
+        "result_lag_summary": {
+            "stream_n": lag_report["stream_n"],
+            "lag5": lag_report["lag5"],
+            "best_lag": lag_report["best_lag"],
+        },
         "next_steps": [
             "Review cleanup_actions, then run room_cleaner.py --apply if correct.",
             "Use strongest_rooms as the first Elite Stack source whitelist.",
             "Only promote early-result cells with high oracle_safe_pct and strong WR.",
+            "Use result_lag_summary to validate/deny the lag-5 repeat hypothesis before live betting it.",
             "Wire omni_score.score_signal into signal_handler before final fire.",
             "Run Telegram live discovery only after stale/weak rooms are cleaned.",
         ],
@@ -114,6 +122,7 @@ def main() -> int:
             "cleanup_actions_count": len(audit["cleanup_actions"]),
             "omni_summary": audit["omni_summary"]["verdict_counts"],
             "early_result_summary": audit["early_result_summary"],
+            "result_lag_summary": audit["result_lag_summary"],
         },
         indent=2,
         ensure_ascii=False,

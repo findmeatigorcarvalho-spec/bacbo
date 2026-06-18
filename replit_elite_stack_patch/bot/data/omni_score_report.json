@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-18T20:35:05.173897+00:00",
+  "generated_at": "2026-06-18T20:41:50.170190+00:00",
   "count": 50,
   "verdict_counts": {
     "FIRE": 14,
@@ -133,7 +133,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:34 msg7d=5182"
+          "evidence": "last=2026-06-18 18:19:34 msg7d=5178"
         }
       ],
       "penalties": []
@@ -198,7 +198,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5800"
         }
       ],
       "penalties": []
@@ -263,7 +263,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4743"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4740"
         }
       ],
       "penalties": []
@@ -588,7 +588,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
         }
       ],
       "penalties": []
@@ -653,7 +653,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
         }
       ],
       "penalties": []
@@ -735,7 +735,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:16:30 msg7d=1191"
+          "evidence": "last=2026-06-18 18:16:30 msg7d=1190"
         }
       ],
       "penalties": []
@@ -800,7 +800,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:16:30 msg7d=1191"
+          "evidence": "last=2026-06-18 18:16:30 msg7d=1190"
         }
       ],
       "penalties": []
@@ -865,7 +865,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:16:30 msg7d=1191"
+          "evidence": "last=2026-06-18 18:16:30 msg7d=1190"
         }
       ],
       "penalties": []
@@ -1190,7 +1190,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
         }
       ],
       "penalties": []
@@ -1255,7 +1255,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
         }
       ],
       "penalties": []
@@ -1320,7 +1320,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4743"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4740"
         }
       ],
       "penalties": []
@@ -1385,7 +1385,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
         }
       ],
       "penalties": []
@@ -1450,7 +1450,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5799"
         }
       ],
       "penalties": []
@@ -1515,7 +1515,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4743"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
         }
       ],
       "penalties": []
@@ -1580,7 +1580,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4743"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
         }
       ],
       "penalties": []
@@ -1645,7 +1645,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:01:52 msg7d=3831"
+          "evidence": "last=2026-06-18 02:01:52 msg7d=3828"
         }
       ],
       "penalties": []
@@ -1956,7 +1956,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4743"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
         }
       ],
       "penalties": []
@@ -2021,7 +2021,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
         }
       ],
       "penalties": []
@@ -2086,7 +2086,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
         }
       ],
       "penalties": []
@@ -2168,7 +2168,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
         }
       ],
       "penalties": []
@@ -2250,7 +2250,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
         }
       ],
       "penalties": []
@@ -2315,7 +2315,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
         }
       ],
       "penalties": []
@@ -2380,7 +2380,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4743"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
         }
       ],
       "penalties": []
@@ -2445,7 +2445,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 02:02:58 msg7d=4743"
+          "evidence": "last=2026-06-18 02:02:58 msg7d=4739"
         }
       ],
       "penalties": []
@@ -2510,7 +2510,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:19:52 msg7d=5804"
+          "evidence": "last=2026-06-18 18:19:52 msg7d=5798"
         }
       ],
       "penalties": []
@@ -2598,7 +2598,7 @@
           "name": "room_color_raw_wr30",
           "points": 3.3600000000000025,
           "weight": 0.8,
-          "evidence": "56.2% n=32745"
+          "evidence": "56.2% n=32735"
         },
         {
           "name": "room_hour_color_wr30",
@@ -2640,7 +2640,7 @@
           "name": "freshness",
           "points": 5.0,
           "weight": 0.8,
-          "evidence": "last=2026-06-18 18:18:27 msg7d=4308"
+          "evidence": "last=2026-06-18 18:18:27 msg7d=4305"
         }
       ],
       "penalties": []
