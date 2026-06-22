@@ -20,11 +20,14 @@ import os
 from datetime import datetime, timezone
 
 import early_result_audit
+import g0_offset_oracle
 import martingale_audit
 import omni_score
 import result_lag_miner
 import room_cleaner
+import tri_brain_score
 import truth_verifier
+import volume_frontier
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -43,6 +46,9 @@ def build_audit(db_path: str = DB_PATH, recent: int = 100) -> dict:
     lag_report = result_lag_miner.save_report(db_path=db_path)
     martingale_report = martingale_audit.save_report(db_path=db_path)
     truth_report = truth_verifier.save_report(db_path=db_path)
+    volume_report = volume_frontier.save_report(db_path=db_path)
+    g0_offset_report = g0_offset_oracle.save_report(db_path=db_path)
+    tri_brain_report = tri_brain_score.save_report(db_path=db_path, limit=recent)
 
     strongest_rooms = [
         row for row in room_report["rooms"]
@@ -87,6 +93,17 @@ def build_audit(db_path: str = DB_PATH, recent: int = 100) -> dict:
             "top_room_color": martingale_report["by_room_color"][:10],
         },
         "truth_summary": truth_report,
+        "volume_frontier_summary": volume_report["summary"],
+        "g0_offset_oracle_summary": {
+            "summary": g0_offset_report["summary"],
+            "top_cells": g0_offset_report["top_cells"][:12],
+        },
+        "tri_brain_summary": {
+            "scored_n": tri_brain_report["scored_n"],
+            "verdict_counts": tri_brain_report["verdict_counts"],
+            "verdict_stats": tri_brain_report["verdict_stats"],
+            "top_fire_candidates": tri_brain_report["top_fire_candidates"][:12],
+        },
         "next_steps": [
             "Review cleanup_actions, then run room_cleaner.py --apply if correct.",
             "Use strongest_rooms as the first Elite Stack source whitelist.",
@@ -94,6 +111,9 @@ def build_audit(db_path: str = DB_PATH, recent: int = 100) -> dict:
             "Use result_lag_summary to validate/deny the lag-5 repeat hypothesis before live betting it.",
             "Use martingale_summary to allow gale only where recovery is proven.",
             "Use truth_summary to keep direct Twin225 truth separate from Telegram/DB inferred truth.",
+            "Use volume_frontier_summary to set honest volume/WR expectations.",
+            "Use g0_offset_oracle_summary for future-offset boosts, especially SEQUENCE/LIVE/BLUE.",
+            "Use tri_brain_summary to promote FIRE_COLOR_G0 only after shadow validation.",
             "Wire omni_score.score_signal into signal_handler before final fire.",
             "Run Telegram live discovery only after stale/weak rooms are cleaned.",
         ],
@@ -137,6 +157,8 @@ def main() -> int:
             "result_lag_summary": audit["result_lag_summary"],
             "martingale_summary": audit["martingale_summary"]["overall"],
             "truth_verdict": audit["truth_summary"]["verdict"],
+            "volume_frontier": audit["volume_frontier_summary"]["threshold_frontier"],
+            "tri_brain": audit["tri_brain_summary"]["verdict_stats"],
         },
         indent=2,
         ensure_ascii=False,

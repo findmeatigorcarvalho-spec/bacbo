@@ -42,6 +42,16 @@ It adds four safe, read-only-by-default tools:
    - proves which daily signal volumes have actually happened at each WR band
    - writes `bot/data/volume_frontier_report.json`
 
+9. `bot/g0_offset_oracle.py`
+   - mines future-round continuation after G0 wins
+   - finds cells like SEQUENCE/LIVE/BLUE offset 1-6
+   - writes `bot/data/g0_offset_oracle_report.json`
+
+10. `bot/tri_brain_score.py`
+   - scores win/loss/tie brains separately
+   - produces FIRE_COLOR_G0 / SHADOW_COLOR / SHADOW_TIE / BLOCK_LOSS_RISK
+   - writes `bot/data/tri_brain_report.json`
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -64,6 +74,8 @@ Run in Replit Shell:
 cd bot
 python elite_stack_audit.py
 python volume_frontier.py
+python g0_offset_oracle.py
+python tri_brain_score.py
 ```
 
 Optional room cleanup after reviewing the report:
