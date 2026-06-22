@@ -37,6 +37,11 @@ It adds four safe, read-only-by-default tools:
    - creates future direct-result tables
    - writes `bot/data/truth_verification_report.json`
 
+8. `bot/volume_frontier.py`
+   - audits the true volume-vs-WR frontier since day one
+   - proves which daily signal volumes have actually happened at each WR band
+   - writes `bot/data/volume_frontier_report.json`
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -58,6 +63,7 @@ Run in Replit Shell:
 ```bash
 cd bot
 python elite_stack_audit.py
+python volume_frontier.py
 ```
 
 Optional room cleanup after reviewing the report:

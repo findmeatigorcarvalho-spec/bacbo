@@ -1,0 +1,3227 @@
+{
+  "generated_at": "2026-06-22T16:47:14.483993+00:00",
+  "summary": {
+    "max_fired_day": {
+      "d": "2026-05-19",
+      "total": 3427,
+      "wins": 2635,
+      "losses": 731,
+      "ties": 61,
+      "wr": 78.28,
+      "g0_wr": 77.96
+    },
+    "best_wr_day_n100": {
+      "d": "2026-03-21",
+      "total": 283,
+      "wins": 262,
+      "losses": 18,
+      "ties": 3,
+      "wr": 93.57,
+      "g0_wr": 93.57
+    },
+    "threshold_frontier": [
+      {
+        "wr_threshold": 70,
+        "max_daily": 3427,
+        "days": 53
+      },
+      {
+        "wr_threshold": 75,
+        "max_daily": 3427,
+        "days": 39
+      },
+      {
+        "wr_threshold": 80,
+        "max_daily": 2532,
+        "days": 28
+      },
+      {
+        "wr_threshold": 85,
+        "max_daily": 646,
+        "days": 10
+      },
+      {
+        "wr_threshold": 90,
+        "max_daily": 283,
+        "days": 5
+      },
+      {
+        "wr_threshold": 95,
+        "max_daily": 17,
+        "days": 1
+      },
+      {
+        "wr_threshold": 98,
+        "max_daily": 17,
+        "days": 1
+      }
+    ],
+    "historic_truth": "DB does not show 1200+/day at 98% WR. 1200-3500/day exists in 70-84% regimes unless a new direct early-result oracle is proven."
+  },
+  "daily_fired": [
+    {
+      "d": "2026-03-19",
+      "total": 21,
+      "wins": 17,
+      "losses": 2,
+      "ties": 2,
+      "wr": 89.47,
+      "g0_wr": 89.47
+    },
+    {
+      "d": "2026-03-20",
+      "total": 604,
+      "wins": 481,
+      "losses": 98,
+      "ties": 25,
+      "wr": 83.07,
+      "g0_wr": 83.07
+    },
+    {
+      "d": "2026-03-21",
+      "total": 283,
+      "wins": 262,
+      "losses": 18,
+      "ties": 3,
+      "wr": 93.57,
+      "g0_wr": 93.57
+    },
+    {
+      "d": "2026-03-22",
+      "total": 29,
+      "wins": 20,
+      "losses": 9,
+      "ties": 0,
+      "wr": 68.97,
+      "g0_wr": 68.97
+    },
+    {
+      "d": "2026-03-23",
+      "total": 100,
+      "wins": 64,
+      "losses": 32,
+      "ties": 4,
+      "wr": 66.67,
+      "g0_wr": 66.67
+    },
+    {
+      "d": "2026-03-24",
+      "total": 8,
+      "wins": 4,
+      "losses": 4,
+      "ties": 0,
+      "wr": 50.0,
+      "g0_wr": 50.0
+    },
+    {
+      "d": "2026-03-25",
+      "total": 30,
+      "wins": 16,
+      "losses": 14,
+      "ties": 0,
+      "wr": 53.33,
+      "g0_wr": 53.33
+    },
+    {
+      "d": "2026-03-29",
+      "total": 3,
+      "wins": 0,
+      "losses": 3,
+      "ties": 0,
+      "wr": 0.0,
+      "g0_wr": 0.0
+    },
+    {
+      "d": "2026-04-03",
+      "total": 221,
+      "wins": 133,
+      "losses": 78,
+      "ties": 10,
+      "wr": 63.03,
+      "g0_wr": 63.03
+    },
+    {
+      "d": "2026-04-04",
+      "total": 228,
+      "wins": 107,
+      "losses": 113,
+      "ties": 8,
+      "wr": 48.64,
+      "g0_wr": 48.64
+    },
+    {
+      "d": "2026-04-05",
+      "total": 36,
+      "wins": 13,
+      "losses": 20,
+      "ties": 3,
+      "wr": 39.39,
+      "g0_wr": 39.39
+    },
+    {
+      "d": "2026-04-06",
+      "total": 27,
+      "wins": 13,
+      "losses": 13,
+      "ties": 1,
+      "wr": 50.0,
+      "g0_wr": 50.0
+    },
+    {
+      "d": "2026-04-07",
+      "total": 2,
+      "wins": 0,
+      "losses": 2,
+      "ties": 0,
+      "wr": 0.0,
+      "g0_wr": 0.0
+    },
+    {
+      "d": "2026-04-10",
+      "total": 2,
+      "wins": 1,
+      "losses": 1,
+      "ties": 0,
+      "wr": 50.0,
+      "g0_wr": 50.0
+    },
+    {
+      "d": "2026-04-16",
+      "total": 32,
+      "wins": 17,
+      "losses": 14,
+      "ties": 1,
+      "wr": 54.84,
+      "g0_wr": 54.84
+    },
+    {
+      "d": "2026-04-17",
+      "total": 8,
+      "wins": 4,
+      "losses": 4,
+      "ties": 0,
+      "wr": 50.0,
+      "g0_wr": 50.0
+    },
+    {
+      "d": "2026-04-18",
+      "total": 90,
+      "wins": 56,
+      "losses": 31,
+      "ties": 3,
+      "wr": 64.37,
+      "g0_wr": 57.47
+    },
+    {
+      "d": "2026-04-19",
+      "total": 65,
+      "wins": 56,
+      "losses": 6,
+      "ties": 3,
+      "wr": 90.32,
+      "g0_wr": 54.84
+    },
+    {
+      "d": "2026-04-20",
+      "total": 17,
+      "wins": 17,
+      "losses": 0,
+      "ties": 0,
+      "wr": 100.0,
+      "g0_wr": 47.06
+    },
+    {
+      "d": "2026-04-21",
+      "total": 227,
+      "wins": 186,
+      "losses": 20,
+      "ties": 21,
+      "wr": 90.29,
+      "g0_wr": 52.43
+    },
+    {
+      "d": "2026-04-22",
+      "total": 173,
+      "wins": 132,
+      "losses": 27,
+      "ties": 14,
+      "wr": 83.02,
+      "g0_wr": 62.89
+    },
+    {
+      "d": "2026-04-23",
+      "total": 167,
+      "wins": 111,
+      "losses": 43,
+      "ties": 13,
+      "wr": 72.08,
+      "g0_wr": 54.55
+    },
+    {
+      "d": "2026-04-24",
+      "total": 235,
+      "wins": 185,
+      "losses": 33,
+      "ties": 17,
+      "wr": 84.86,
+      "g0_wr": 57.8
+    },
+    {
+      "d": "2026-04-25",
+      "total": 120,
+      "wins": 96,
+      "losses": 21,
+      "ties": 3,
+      "wr": 82.05,
+      "g0_wr": 64.1
+    },
+    {
+      "d": "2026-04-26",
+      "total": 188,
+      "wins": 157,
+      "losses": 23,
+      "ties": 8,
+      "wr": 87.22,
+      "g0_wr": 64.44
+    },
+    {
+      "d": "2026-04-27",
+      "total": 287,
+      "wins": 210,
+      "losses": 51,
+      "ties": 26,
+      "wr": 80.46,
+      "g0_wr": 62.07
+    },
+    {
+      "d": "2026-04-28",
+      "total": 286,
+      "wins": 221,
+      "losses": 50,
+      "ties": 15,
+      "wr": 81.55,
+      "g0_wr": 54.61
+    },
+    {
+      "d": "2026-04-29",
+      "total": 116,
+      "wins": 90,
+      "losses": 20,
+      "ties": 6,
+      "wr": 81.82,
+      "g0_wr": 60.91
+    },
+    {
+      "d": "2026-04-30",
+      "total": 170,
+      "wins": 145,
+      "losses": 15,
+      "ties": 10,
+      "wr": 90.63,
+      "g0_wr": 71.25
+    },
+    {
+      "d": "2026-05-01",
+      "total": 101,
+      "wins": 76,
+      "losses": 11,
+      "ties": 14,
+      "wr": 87.36,
+      "g0_wr": 59.77
+    },
+    {
+      "d": "2026-05-02",
+      "total": 109,
+      "wins": 79,
+      "losses": 11,
+      "ties": 19,
+      "wr": 87.78,
+      "g0_wr": 68.89
+    },
+    {
+      "d": "2026-05-03",
+      "total": 115,
+      "wins": 60,
+      "losses": 48,
+      "ties": 7,
+      "wr": 55.56,
+      "g0_wr": 46.3
+    },
+    {
+      "d": "2026-05-04",
+      "total": 292,
+      "wins": 222,
+      "losses": 45,
+      "ties": 25,
+      "wr": 83.15,
+      "g0_wr": 66.67
+    },
+    {
+      "d": "2026-05-05",
+      "total": 286,
+      "wins": 170,
+      "losses": 90,
+      "ties": 26,
+      "wr": 65.38,
+      "g0_wr": 60.77
+    },
+    {
+      "d": "2026-05-06",
+      "total": 190,
+      "wins": 99,
+      "losses": 76,
+      "ties": 15,
+      "wr": 56.57,
+      "g0_wr": 52.57
+    },
+    {
+      "d": "2026-05-07",
+      "total": 77,
+      "wins": 53,
+      "losses": 21,
+      "ties": 3,
+      "wr": 71.62,
+      "g0_wr": 54.05
+    },
+    {
+      "d": "2026-05-08",
+      "total": 957,
+      "wins": 691,
+      "losses": 209,
+      "ties": 57,
+      "wr": 76.78,
+      "g0_wr": 71.33
+    },
+    {
+      "d": "2026-05-09",
+      "total": 626,
+      "wins": 447,
+      "losses": 147,
+      "ties": 32,
+      "wr": 75.25,
+      "g0_wr": 71.89
+    },
+    {
+      "d": "2026-05-10",
+      "total": 1461,
+      "wins": 1014,
+      "losses": 354,
+      "ties": 93,
+      "wr": 74.12,
+      "g0_wr": 69.81
+    },
+    {
+      "d": "2026-05-11",
+      "total": 1422,
+      "wins": 981,
+      "losses": 305,
+      "ties": 136,
+      "wr": 76.28,
+      "g0_wr": 71.38
+    },
+    {
+      "d": "2026-05-12",
+      "total": 747,
+      "wins": 483,
+      "losses": 203,
+      "ties": 61,
+      "wr": 70.41,
+      "g0_wr": 67.2
+    },
+    {
+      "d": "2026-05-13",
+      "total": 662,
+      "wins": 440,
+      "losses": 166,
+      "ties": 56,
+      "wr": 72.61,
+      "g0_wr": 69.8
+    },
+    {
+      "d": "2026-05-14",
+      "total": 775,
+      "wins": 524,
+      "losses": 197,
+      "ties": 54,
+      "wr": 72.68,
+      "g0_wr": 70.18
+    },
+    {
+      "d": "2026-05-15",
+      "total": 1034,
+      "wins": 749,
+      "losses": 217,
+      "ties": 68,
+      "wr": 77.54,
+      "g0_wr": 74.64
+    },
+    {
+      "d": "2026-05-16",
+      "total": 508,
+      "wins": 372,
+      "losses": 95,
+      "ties": 41,
+      "wr": 79.66,
+      "g0_wr": 78.16
+    },
+    {
+      "d": "2026-05-17",
+      "total": 1483,
+      "wins": 1106,
+      "losses": 292,
+      "ties": 85,
+      "wr": 79.11,
+      "g0_wr": 78.83
+    },
+    {
+      "d": "2026-05-18",
+      "total": 390,
+      "wins": 256,
+      "losses": 101,
+      "ties": 33,
+      "wr": 71.71,
+      "g0_wr": 71.71
+    },
+    {
+      "d": "2026-05-19",
+      "total": 3427,
+      "wins": 2635,
+      "losses": 731,
+      "ties": 61,
+      "wr": 78.28,
+      "g0_wr": 77.96
+    },
+    {
+      "d": "2026-05-20",
+      "total": 2532,
+      "wins": 1964,
+      "losses": 372,
+      "ties": 196,
+      "wr": 84.08,
+      "g0_wr": 83.86
+    },
+    {
+      "d": "2026-05-21",
+      "total": 2088,
+      "wins": 1646,
+      "losses": 326,
+      "ties": 116,
+      "wr": 83.47,
+      "g0_wr": 83.32
+    },
+    {
+      "d": "2026-05-22",
+      "total": 1686,
+      "wins": 1394,
+      "losses": 282,
+      "ties": 10,
+      "wr": 83.17,
+      "g0_wr": 83.11
+    },
+    {
+      "d": "2026-05-23",
+      "total": 646,
+      "wins": 536,
+      "losses": 74,
+      "ties": 36,
+      "wr": 87.87,
+      "g0_wr": 87.7
+    },
+    {
+      "d": "2026-05-24",
+      "total": 1791,
+      "wins": 1426,
+      "losses": 281,
+      "ties": 84,
+      "wr": 83.54,
+      "g0_wr": 83.54
+    },
+    {
+      "d": "2026-05-25",
+      "total": 542,
+      "wins": 421,
+      "losses": 95,
+      "ties": 26,
+      "wr": 81.59,
+      "g0_wr": 81.2
+    },
+    {
+      "d": "2026-05-26",
+      "total": 2121,
+      "wins": 1656,
+      "losses": 343,
+      "ties": 122,
+      "wr": 82.84,
+      "g0_wr": 82.69
+    },
+    {
+      "d": "2026-05-27",
+      "total": 2149,
+      "wins": 1630,
+      "losses": 384,
+      "ties": 135,
+      "wr": 80.93,
+      "g0_wr": 80.59
+    },
+    {
+      "d": "2026-05-28",
+      "total": 448,
+      "wins": 342,
+      "losses": 95,
+      "ties": 11,
+      "wr": 78.26,
+      "g0_wr": 78.26
+    },
+    {
+      "d": "2026-05-29",
+      "total": 267,
+      "wins": 203,
+      "losses": 38,
+      "ties": 26,
+      "wr": 84.23,
+      "g0_wr": 84.23
+    },
+    {
+      "d": "2026-05-30",
+      "total": 836,
+      "wins": 645,
+      "losses": 179,
+      "ties": 12,
+      "wr": 78.28,
+      "g0_wr": 78.03
+    },
+    {
+      "d": "2026-05-31",
+      "total": 890,
+      "wins": 695,
+      "losses": 171,
+      "ties": 24,
+      "wr": 80.25,
+      "g0_wr": 80.25
+    },
+    {
+      "d": "2026-06-01",
+      "total": 596,
+      "wins": 459,
+      "losses": 106,
+      "ties": 31,
+      "wr": 81.24,
+      "g0_wr": 81.24
+    },
+    {
+      "d": "2026-06-02",
+      "total": 202,
+      "wins": 115,
+      "losses": 58,
+      "ties": 29,
+      "wr": 66.47,
+      "g0_wr": 65.9
+    },
+    {
+      "d": "2026-06-03",
+      "total": 51,
+      "wins": 29,
+      "losses": 17,
+      "ties": 5,
+      "wr": 63.04,
+      "g0_wr": 63.04
+    },
+    {
+      "d": "2026-06-04",
+      "total": 42,
+      "wins": 19,
+      "losses": 22,
+      "ties": 1,
+      "wr": 46.34,
+      "g0_wr": 46.34
+    },
+    {
+      "d": "2026-06-05",
+      "total": 68,
+      "wins": 46,
+      "losses": 20,
+      "ties": 2,
+      "wr": 69.7,
+      "g0_wr": 69.7
+    },
+    {
+      "d": "2026-06-06",
+      "total": 764,
+      "wins": 541,
+      "losses": 200,
+      "ties": 23,
+      "wr": 73.01,
+      "g0_wr": 71.39
+    },
+    {
+      "d": "2026-06-07",
+      "total": 925,
+      "wins": 643,
+      "losses": 245,
+      "ties": 37,
+      "wr": 72.41,
+      "g0_wr": 71.17
+    },
+    {
+      "d": "2026-06-08",
+      "total": 1515,
+      "wins": 1000,
+      "losses": 445,
+      "ties": 70,
+      "wr": 69.2,
+      "g0_wr": 67.82
+    },
+    {
+      "d": "2026-06-09",
+      "total": 1180,
+      "wins": 836,
+      "losses": 314,
+      "ties": 30,
+      "wr": 72.7,
+      "g0_wr": 71.3
+    },
+    {
+      "d": "2026-06-10",
+      "total": 1109,
+      "wins": 792,
+      "losses": 296,
+      "ties": 21,
+      "wr": 72.79,
+      "g0_wr": 71.97
+    },
+    {
+      "d": "2026-06-11",
+      "total": 193,
+      "wins": 127,
+      "losses": 59,
+      "ties": 7,
+      "wr": 68.28,
+      "g0_wr": 64.52
+    },
+    {
+      "d": "2026-06-12",
+      "total": 478,
+      "wins": 294,
+      "losses": 150,
+      "ties": 34,
+      "wr": 66.22,
+      "g0_wr": 62.16
+    },
+    {
+      "d": "2026-06-13",
+      "total": 462,
+      "wins": 324,
+      "losses": 117,
+      "ties": 21,
+      "wr": 73.47,
+      "g0_wr": 71.43
+    },
+    {
+      "d": "2026-06-14",
+      "total": 605,
+      "wins": 439,
+      "losses": 124,
+      "ties": 42,
+      "wr": 77.98,
+      "g0_wr": 76.73
+    },
+    {
+      "d": "2026-06-15",
+      "total": 608,
+      "wins": 445,
+      "losses": 124,
+      "ties": 39,
+      "wr": 78.21,
+      "g0_wr": 76.98
+    },
+    {
+      "d": "2026-06-16",
+      "total": 469,
+      "wins": 313,
+      "losses": 133,
+      "ties": 23,
+      "wr": 70.18,
+      "g0_wr": 68.61
+    },
+    {
+      "d": "2026-06-17",
+      "total": 733,
+      "wins": 489,
+      "losses": 211,
+      "ties": 33,
+      "wr": 69.86,
+      "g0_wr": 68.86
+    },
+    {
+      "d": "2026-06-18",
+      "total": 295,
+      "wins": 209,
+      "losses": 77,
+      "ties": 9,
+      "wr": 73.08,
+      "g0_wr": 71.68
+    }
+  ],
+  "fired_plus_blocked_supply": [
+    {
+      "d": "2026-05-19",
+      "fired": 3427,
+      "blocked": 6512,
+      "supply": 9939,
+      "fired_wr": 78.28,
+      "blocked_wr": 60.72,
+      "supply_wr": 66.77
+    },
+    {
+      "d": "2026-05-26",
+      "fired": 2121,
+      "blocked": 3123,
+      "supply": 5244,
+      "fired_wr": 82.84,
+      "blocked_wr": 69.15,
+      "supply_wr": 74.64
+    },
+    {
+      "d": "2026-05-20",
+      "fired": 2532,
+      "blocked": 1431,
+      "supply": 3963,
+      "fired_wr": 84.08,
+      "blocked_wr": 62.47,
+      "supply_wr": 76.13
+    },
+    {
+      "d": "2026-05-08",
+      "fired": 957,
+      "blocked": 2685,
+      "supply": 3642,
+      "fired_wr": 76.78,
+      "blocked_wr": 56.93,
+      "supply_wr": 62.14
+    },
+    {
+      "d": "2026-05-11",
+      "fired": 1422,
+      "blocked": 1742,
+      "supply": 3164,
+      "fired_wr": 76.28,
+      "blocked_wr": 55.12,
+      "supply_wr": 64.33
+    },
+    {
+      "d": "2026-06-08",
+      "fired": 1515,
+      "blocked": 1337,
+      "supply": 2852,
+      "fired_wr": 69.2,
+      "blocked_wr": 61.37,
+      "supply_wr": 65.52
+    },
+    {
+      "d": "2026-05-27",
+      "fired": 2149,
+      "blocked": 702,
+      "supply": 2851,
+      "fired_wr": 80.93,
+      "blocked_wr": 81.03,
+      "supply_wr": 80.96
+    },
+    {
+      "d": "2026-05-10",
+      "fired": 1461,
+      "blocked": 1051,
+      "supply": 2512,
+      "fired_wr": 74.12,
+      "blocked_wr": 60.85,
+      "supply_wr": 68.72
+    },
+    {
+      "d": "2026-05-21",
+      "fired": 2088,
+      "blocked": 312,
+      "supply": 2400,
+      "fired_wr": 83.47,
+      "blocked_wr": 68.84,
+      "supply_wr": 81.58
+    },
+    {
+      "d": "2026-05-24",
+      "fired": 1791,
+      "blocked": 556,
+      "supply": 2347,
+      "fired_wr": 83.54,
+      "blocked_wr": 70.09,
+      "supply_wr": 80.28
+    },
+    {
+      "d": "2026-05-22",
+      "fired": 1686,
+      "blocked": 466,
+      "supply": 2152,
+      "fired_wr": 83.17,
+      "blocked_wr": 52.15,
+      "supply_wr": 76.42
+    },
+    {
+      "d": "2026-04-27",
+      "fired": 287,
+      "blocked": 1852,
+      "supply": 2139,
+      "fired_wr": 80.46,
+      "blocked_wr": 49.48,
+      "supply_wr": 53.56
+    },
+    {
+      "d": "2026-05-15",
+      "fired": 1034,
+      "blocked": 1080,
+      "supply": 2114,
+      "fired_wr": 77.54,
+      "blocked_wr": 58.49,
+      "supply_wr": 67.87
+    },
+    {
+      "d": "2026-04-28",
+      "fired": 286,
+      "blocked": 1821,
+      "supply": 2107,
+      "fired_wr": 81.55,
+      "blocked_wr": 44.96,
+      "supply_wr": 50.0
+    },
+    {
+      "d": "2026-05-17",
+      "fired": 1483,
+      "blocked": 561,
+      "supply": 2044,
+      "fired_wr": 79.11,
+      "blocked_wr": 52.72,
+      "supply_wr": 71.64
+    },
+    {
+      "d": "2026-04-24",
+      "fired": 235,
+      "blocked": 1641,
+      "supply": 1876,
+      "fired_wr": 84.86,
+      "blocked_wr": 46.46,
+      "supply_wr": 51.19
+    },
+    {
+      "d": "2026-06-07",
+      "fired": 925,
+      "blocked": 882,
+      "supply": 1807,
+      "fired_wr": 72.41,
+      "blocked_wr": 61.24,
+      "supply_wr": 67.0
+    },
+    {
+      "d": "2026-06-09",
+      "fired": 1180,
+      "blocked": 458,
+      "supply": 1638,
+      "fired_wr": 72.7,
+      "blocked_wr": 67.95,
+      "supply_wr": 71.38
+    },
+    {
+      "d": "2026-05-14",
+      "fired": 775,
+      "blocked": 860,
+      "supply": 1635,
+      "fired_wr": 72.68,
+      "blocked_wr": 59.64,
+      "supply_wr": 65.91
+    },
+    {
+      "d": "2026-05-12",
+      "fired": 747,
+      "blocked": 846,
+      "supply": 1593,
+      "fired_wr": 70.41,
+      "blocked_wr": 43.73,
+      "supply_wr": 56.27
+    },
+    {
+      "d": "2026-04-25",
+      "fired": 120,
+      "blocked": 1444,
+      "supply": 1564,
+      "fired_wr": 82.05,
+      "blocked_wr": 52.33,
+      "supply_wr": 54.66
+    },
+    {
+      "d": "2026-06-10",
+      "fired": 1109,
+      "blocked": 434,
+      "supply": 1543,
+      "fired_wr": 72.79,
+      "blocked_wr": 64.87,
+      "supply_wr": 70.56
+    },
+    {
+      "d": "2026-05-13",
+      "fired": 662,
+      "blocked": 749,
+      "supply": 1411,
+      "fired_wr": 72.61,
+      "blocked_wr": 59.2,
+      "supply_wr": 65.53
+    },
+    {
+      "d": "2026-04-30",
+      "fired": 170,
+      "blocked": 1126,
+      "supply": 1296,
+      "fired_wr": 90.63,
+      "blocked_wr": 52.3,
+      "supply_wr": 57.21
+    },
+    {
+      "d": "2026-05-30",
+      "fired": 836,
+      "blocked": 308,
+      "supply": 1144,
+      "fired_wr": 78.28,
+      "blocked_wr": 85.71,
+      "supply_wr": 80.3
+    },
+    {
+      "d": "2026-05-01",
+      "fired": 101,
+      "blocked": 1030,
+      "supply": 1131,
+      "fired_wr": 87.36,
+      "blocked_wr": 53.16,
+      "supply_wr": 56.07
+    },
+    {
+      "d": "2026-05-09",
+      "fired": 626,
+      "blocked": 471,
+      "supply": 1097,
+      "fired_wr": 75.25,
+      "blocked_wr": 62.21,
+      "supply_wr": 69.75
+    },
+    {
+      "d": "2026-04-29",
+      "fired": 116,
+      "blocked": 934,
+      "supply": 1050,
+      "fired_wr": 81.82,
+      "blocked_wr": 56.61,
+      "supply_wr": 59.41
+    },
+    {
+      "d": "2026-06-06",
+      "fired": 764,
+      "blocked": 281,
+      "supply": 1045,
+      "fired_wr": 73.01,
+      "blocked_wr": 52.71,
+      "supply_wr": 67.77
+    },
+    {
+      "d": "2026-05-23",
+      "fired": 646,
+      "blocked": 381,
+      "supply": 1027,
+      "fired_wr": 87.87,
+      "blocked_wr": 70.55,
+      "supply_wr": 81.64
+    },
+    {
+      "d": "2026-04-19",
+      "fired": 65,
+      "blocked": 943,
+      "supply": 1008,
+      "fired_wr": 90.32,
+      "blocked_wr": 54.51,
+      "supply_wr": 56.88
+    },
+    {
+      "d": "2026-05-25",
+      "fired": 542,
+      "blocked": 433,
+      "supply": 975,
+      "fired_wr": 81.59,
+      "blocked_wr": 70.86,
+      "supply_wr": 76.72
+    },
+    {
+      "d": "2026-06-17",
+      "fired": 733,
+      "blocked": 234,
+      "supply": 967,
+      "fired_wr": 69.86,
+      "blocked_wr": 51.58,
+      "supply_wr": 65.47
+    },
+    {
+      "d": "2026-05-31",
+      "fired": 890,
+      "blocked": 48,
+      "supply": 938,
+      "fired_wr": 80.25,
+      "blocked_wr": 97.92,
+      "supply_wr": 81.18
+    },
+    {
+      "d": "2026-04-23",
+      "fired": 167,
+      "blocked": 652,
+      "supply": 819,
+      "fired_wr": 72.08,
+      "blocked_wr": 51.89,
+      "supply_wr": 55.98
+    },
+    {
+      "d": "2026-04-21",
+      "fired": 227,
+      "blocked": 570,
+      "supply": 797,
+      "fired_wr": 90.29,
+      "blocked_wr": 49.8,
+      "supply_wr": 61.42
+    },
+    {
+      "d": "2026-04-26",
+      "fired": 188,
+      "blocked": 597,
+      "supply": 785,
+      "fired_wr": 87.22,
+      "blocked_wr": 56.34,
+      "supply_wr": 63.77
+    },
+    {
+      "d": "2026-06-14",
+      "fired": 605,
+      "blocked": 151,
+      "supply": 756,
+      "fired_wr": 77.98,
+      "blocked_wr": 69.78,
+      "supply_wr": 76.35
+    },
+    {
+      "d": "2026-05-16",
+      "fired": 508,
+      "blocked": 234,
+      "supply": 742,
+      "fired_wr": 79.66,
+      "blocked_wr": 59.36,
+      "supply_wr": 73.18
+    },
+    {
+      "d": "2026-06-01",
+      "fired": 596,
+      "blocked": 146,
+      "supply": 742,
+      "fired_wr": 81.24,
+      "blocked_wr": 79.31,
+      "supply_wr": 80.85
+    },
+    {
+      "d": "2026-06-15",
+      "fired": 608,
+      "blocked": 122,
+      "supply": 730,
+      "fired_wr": 78.21,
+      "blocked_wr": 40.34,
+      "supply_wr": 71.66
+    },
+    {
+      "d": "2026-06-16",
+      "fired": 469,
+      "blocked": 239,
+      "supply": 708,
+      "fired_wr": 70.18,
+      "blocked_wr": 53.92,
+      "supply_wr": 65.08
+    },
+    {
+      "d": "2026-04-18",
+      "fired": 90,
+      "blocked": 596,
+      "supply": 686,
+      "fired_wr": 64.37,
+      "blocked_wr": 54.94,
+      "supply_wr": 56.21
+    },
+    {
+      "d": "2026-05-02",
+      "fired": 109,
+      "blocked": 557,
+      "supply": 666,
+      "fired_wr": 87.78,
+      "blocked_wr": 55.15,
+      "supply_wr": 60.17
+    },
+    {
+      "d": "2026-05-18",
+      "fired": 390,
+      "blocked": 229,
+      "supply": 619,
+      "fired_wr": 71.71,
+      "blocked_wr": 46.08,
+      "supply_wr": 62.39
+    },
+    {
+      "d": "2026-06-12",
+      "fired": 478,
+      "blocked": 138,
+      "supply": 616,
+      "fired_wr": 66.22,
+      "blocked_wr": 67.39,
+      "supply_wr": 66.49
+    },
+    {
+      "d": "2026-03-20",
+      "fired": 604,
+      "blocked": 0,
+      "supply": 604,
+      "fired_wr": 83.07,
+      "blocked_wr": null,
+      "supply_wr": 83.07
+    },
+    {
+      "d": "2026-05-07",
+      "fired": 77,
+      "blocked": 517,
+      "supply": 594,
+      "fired_wr": 71.62,
+      "blocked_wr": 55.09,
+      "supply_wr": 57.22
+    },
+    {
+      "d": "2026-06-13",
+      "fired": 462,
+      "blocked": 83,
+      "supply": 545,
+      "fired_wr": 73.47,
+      "blocked_wr": 56.0,
+      "supply_wr": 70.93
+    },
+    {
+      "d": "2026-05-28",
+      "fired": 448,
+      "blocked": 86,
+      "supply": 534,
+      "fired_wr": 78.26,
+      "blocked_wr": 71.76,
+      "supply_wr": 77.2
+    },
+    {
+      "d": "2026-04-04",
+      "fired": 228,
+      "blocked": 272,
+      "supply": 500,
+      "fired_wr": 48.64,
+      "blocked_wr": 58.54,
+      "supply_wr": 53.86
+    },
+    {
+      "d": "2026-04-17",
+      "fired": 8,
+      "blocked": 489,
+      "supply": 497,
+      "fired_wr": 50.0,
+      "blocked_wr": 52.99,
+      "supply_wr": 52.94
+    },
+    {
+      "d": "2026-05-05",
+      "fired": 286,
+      "blocked": 75,
+      "supply": 361,
+      "fired_wr": 65.38,
+      "blocked_wr": 64.71,
+      "supply_wr": 65.24
+    },
+    {
+      "d": "2026-04-22",
+      "fired": 173,
+      "blocked": 185,
+      "supply": 358,
+      "fired_wr": 83.02,
+      "blocked_wr": 52.1,
+      "supply_wr": 67.18
+    },
+    {
+      "d": "2026-04-20",
+      "fired": 17,
+      "blocked": 333,
+      "supply": 350,
+      "fired_wr": 100.0,
+      "blocked_wr": 55.95,
+      "supply_wr": 58.23
+    },
+    {
+      "d": "2026-06-18",
+      "fired": 295,
+      "blocked": 55,
+      "supply": 350,
+      "fired_wr": 73.08,
+      "blocked_wr": 63.46,
+      "supply_wr": 71.6
+    },
+    {
+      "d": "2026-05-04",
+      "fired": 292,
+      "blocked": 55,
+      "supply": 347,
+      "fired_wr": 83.15,
+      "blocked_wr": 45.28,
+      "supply_wr": 76.88
+    },
+    {
+      "d": "2026-05-06",
+      "fired": 190,
+      "blocked": 147,
+      "supply": 337,
+      "fired_wr": 56.57,
+      "blocked_wr": 57.25,
+      "supply_wr": 56.87
+    },
+    {
+      "d": "2026-05-03",
+      "fired": 115,
+      "blocked": 185,
+      "supply": 300,
+      "fired_wr": 55.56,
+      "blocked_wr": 50.87,
+      "supply_wr": 52.67
+    },
+    {
+      "d": "2026-05-29",
+      "fired": 267,
+      "blocked": 32,
+      "supply": 299,
+      "fired_wr": 84.23,
+      "blocked_wr": 43.75,
+      "supply_wr": 79.49
+    },
+    {
+      "d": "2026-03-21",
+      "fired": 283,
+      "blocked": 0,
+      "supply": 283,
+      "fired_wr": 93.57,
+      "blocked_wr": null,
+      "supply_wr": 93.57
+    },
+    {
+      "d": "2026-06-11",
+      "fired": 193,
+      "blocked": 81,
+      "supply": 274,
+      "fired_wr": 68.28,
+      "blocked_wr": 70.31,
+      "supply_wr": 68.8
+    },
+    {
+      "d": "2026-04-03",
+      "fired": 221,
+      "blocked": 0,
+      "supply": 221,
+      "fired_wr": 63.03,
+      "blocked_wr": null,
+      "supply_wr": 63.03
+    },
+    {
+      "d": "2026-06-02",
+      "fired": 202,
+      "blocked": 16,
+      "supply": 218,
+      "fired_wr": 66.47,
+      "blocked_wr": 50.0,
+      "supply_wr": 65.08
+    },
+    {
+      "d": "2026-03-23",
+      "fired": 100,
+      "blocked": 0,
+      "supply": 100,
+      "fired_wr": 66.67,
+      "blocked_wr": null,
+      "supply_wr": 66.67
+    },
+    {
+      "d": "2026-04-16",
+      "fired": 32,
+      "blocked": 45,
+      "supply": 77,
+      "fired_wr": 54.84,
+      "blocked_wr": 52.27,
+      "supply_wr": 53.33
+    },
+    {
+      "d": "2026-06-05",
+      "fired": 68,
+      "blocked": 0,
+      "supply": 68,
+      "fired_wr": 69.7,
+      "blocked_wr": null,
+      "supply_wr": 69.7
+    },
+    {
+      "d": "2026-06-03",
+      "fired": 51,
+      "blocked": 0,
+      "supply": 51,
+      "fired_wr": 63.04,
+      "blocked_wr": null,
+      "supply_wr": 63.04
+    },
+    {
+      "d": "2026-06-04",
+      "fired": 42,
+      "blocked": 0,
+      "supply": 42,
+      "fired_wr": 46.34,
+      "blocked_wr": null,
+      "supply_wr": 46.34
+    },
+    {
+      "d": "2026-04-05",
+      "fired": 36,
+      "blocked": 2,
+      "supply": 38,
+      "fired_wr": 39.39,
+      "blocked_wr": 0.0,
+      "supply_wr": 37.14
+    },
+    {
+      "d": "2026-04-06",
+      "fired": 27,
+      "blocked": 10,
+      "supply": 37,
+      "fired_wr": 50.0,
+      "blocked_wr": 77.78,
+      "supply_wr": 57.14
+    },
+    {
+      "d": "2026-03-25",
+      "fired": 30,
+      "blocked": 0,
+      "supply": 30,
+      "fired_wr": 53.33,
+      "blocked_wr": null,
+      "supply_wr": 53.33
+    },
+    {
+      "d": "2026-03-22",
+      "fired": 29,
+      "blocked": 0,
+      "supply": 29,
+      "fired_wr": 68.97,
+      "blocked_wr": null,
+      "supply_wr": 68.97
+    },
+    {
+      "d": "2026-03-19",
+      "fired": 21,
+      "blocked": 0,
+      "supply": 21,
+      "fired_wr": 89.47,
+      "blocked_wr": null,
+      "supply_wr": 89.47
+    },
+    {
+      "d": "2026-04-10",
+      "fired": 2,
+      "blocked": 7,
+      "supply": 9,
+      "fired_wr": 50.0,
+      "blocked_wr": 42.86,
+      "supply_wr": 44.44
+    },
+    {
+      "d": "2026-03-24",
+      "fired": 8,
+      "blocked": 0,
+      "supply": 8,
+      "fired_wr": 50.0,
+      "blocked_wr": null,
+      "supply_wr": 50.0
+    },
+    {
+      "d": "2026-04-07",
+      "fired": 2,
+      "blocked": 4,
+      "supply": 6,
+      "fired_wr": 0.0,
+      "blocked_wr": 0.0,
+      "supply_wr": 0.0
+    },
+    {
+      "d": "2026-03-29",
+      "fired": 3,
+      "blocked": 0,
+      "supply": 3,
+      "fired_wr": 0.0,
+      "blocked_wr": null,
+      "supply_wr": 0.0
+    }
+  ],
+  "floor_frontier": [
+    {
+      "floor": "MAR19",
+      "d": "2026-06-08",
+      "total": 1222,
+      "wins": 804,
+      "losses": 359,
+      "ties": 59,
+      "wr": 69.13,
+      "g0_wr": 67.67
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-05-10",
+      "total": 1074,
+      "wins": 743,
+      "losses": 263,
+      "ties": 68,
+      "wr": 73.86,
+      "g0_wr": 69.58
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-09",
+      "total": 1020,
+      "wins": 724,
+      "losses": 271,
+      "ties": 25,
+      "wr": 72.76,
+      "g0_wr": 71.26
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-19",
+      "total": 982,
+      "wins": 748,
+      "losses": 219,
+      "ties": 15,
+      "wr": 77.35,
+      "g0_wr": 76.63
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-10",
+      "total": 974,
+      "wins": 691,
+      "losses": 266,
+      "ties": 17,
+      "wr": 72.2,
+      "g0_wr": 71.58
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-05-11",
+      "total": 924,
+      "wins": 635,
+      "losses": 187,
+      "ties": 102,
+      "wr": 77.25,
+      "g0_wr": 73.48
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-26",
+      "total": 772,
+      "wins": 589,
+      "losses": 143,
+      "ties": 40,
+      "wr": 80.46,
+      "g0_wr": 80.05
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-24",
+      "total": 768,
+      "wins": 610,
+      "losses": 121,
+      "ties": 37,
+      "wr": 83.45,
+      "g0_wr": 83.45
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-27",
+      "total": 759,
+      "wins": 588,
+      "losses": 141,
+      "ties": 30,
+      "wr": 80.66,
+      "g0_wr": 80.11
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-07",
+      "total": 725,
+      "wins": 501,
+      "losses": 193,
+      "ties": 31,
+      "wr": 72.19,
+      "g0_wr": 70.89
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-20",
+      "total": 706,
+      "wins": 551,
+      "losses": 125,
+      "ties": 30,
+      "wr": 81.51,
+      "g0_wr": 81.36
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-05-08",
+      "total": 678,
+      "wins": 490,
+      "losses": 150,
+      "ties": 38,
+      "wr": 76.56,
+      "g0_wr": 72.97
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-06",
+      "total": 663,
+      "wins": 467,
+      "losses": 176,
+      "ties": 20,
+      "wr": 72.63,
+      "g0_wr": 70.76
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-21",
+      "total": 658,
+      "wins": 511,
+      "losses": 111,
+      "ties": 36,
+      "wr": 82.15,
+      "g0_wr": 81.99
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-22",
+      "total": 605,
+      "wins": 495,
+      "losses": 104,
+      "ties": 6,
+      "wr": 82.64,
+      "g0_wr": 82.47
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-05-09",
+      "total": 538,
+      "wins": 380,
+      "losses": 129,
+      "ties": 29,
+      "wr": 74.66,
+      "g0_wr": 71.32
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-05-15",
+      "total": 523,
+      "wins": 371,
+      "losses": 115,
+      "ties": 37,
+      "wr": 76.34,
+      "g0_wr": 73.05
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-17",
+      "total": 467,
+      "wins": 307,
+      "losses": 147,
+      "ties": 13,
+      "wr": 67.62,
+      "g0_wr": 66.74
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-25",
+      "total": 435,
+      "wins": 346,
+      "losses": 69,
+      "ties": 20,
+      "wr": 83.37,
+      "g0_wr": 83.13
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-31",
+      "total": 422,
+      "wins": 337,
+      "losses": 78,
+      "ties": 7,
+      "wr": 81.2,
+      "g0_wr": 81.2
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-05-12",
+      "total": 404,
+      "wins": 267,
+      "losses": 105,
+      "ties": 32,
+      "wr": 71.77,
+      "g0_wr": 68.01
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-05-14",
+      "total": 399,
+      "wins": 266,
+      "losses": 101,
+      "ties": 32,
+      "wr": 72.48,
+      "g0_wr": 70.57
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-30",
+      "total": 389,
+      "wins": 306,
+      "losses": 75,
+      "ties": 8,
+      "wr": 80.31,
+      "g0_wr": 79.79
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-12",
+      "total": 388,
+      "wins": 227,
+      "losses": 141,
+      "ties": 20,
+      "wr": 61.68,
+      "g0_wr": 57.61
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-14",
+      "total": 384,
+      "wins": 277,
+      "losses": 90,
+      "ties": 17,
+      "wr": 75.48,
+      "g0_wr": 74.66
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-15",
+      "total": 372,
+      "wins": 275,
+      "losses": 76,
+      "ties": 21,
+      "wr": 78.35,
+      "g0_wr": 76.64
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-06-01",
+      "total": 367,
+      "wins": 294,
+      "losses": 67,
+      "ties": 6,
+      "wr": 81.44,
+      "g0_wr": 81.44
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-05-11",
+      "total": 344,
+      "wins": 224,
+      "losses": 99,
+      "ties": 21,
+      "wr": 69.35,
+      "g0_wr": 61.61
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-05-13",
+      "total": 330,
+      "wins": 209,
+      "losses": 103,
+      "ties": 18,
+      "wr": 66.99,
+      "g0_wr": 63.46
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-23",
+      "total": 316,
+      "wins": 253,
+      "losses": 50,
+      "ties": 13,
+      "wr": 83.5,
+      "g0_wr": 83.17
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-16",
+      "total": 303,
+      "wins": 225,
+      "losses": 62,
+      "ties": 16,
+      "wr": 78.4,
+      "g0_wr": 76.66
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-05-10",
+      "total": 301,
+      "wins": 208,
+      "losses": 74,
+      "ties": 19,
+      "wr": 73.76,
+      "g0_wr": 70.21
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-16",
+      "total": 289,
+      "wins": 182,
+      "losses": 93,
+      "ties": 14,
+      "wr": 66.18,
+      "g0_wr": 65.45
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-13",
+      "total": 268,
+      "wins": 174,
+      "losses": 84,
+      "ties": 10,
+      "wr": 67.44,
+      "g0_wr": 64.73
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-06-08",
+      "total": 263,
+      "wins": 172,
+      "losses": 81,
+      "ties": 10,
+      "wr": 67.98,
+      "g0_wr": 66.8
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-18",
+      "total": 258,
+      "wins": 189,
+      "losses": 54,
+      "ties": 15,
+      "wr": 77.78,
+      "g0_wr": 77.78
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-05-14",
+      "total": 223,
+      "wins": 138,
+      "losses": 71,
+      "ties": 14,
+      "wr": 66.03,
+      "g0_wr": 61.24
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-17",
+      "total": 214,
+      "wins": 165,
+      "losses": 36,
+      "ties": 13,
+      "wr": 82.09,
+      "g0_wr": 80.1
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-18",
+      "total": 206,
+      "wins": 142,
+      "losses": 59,
+      "ties": 5,
+      "wr": 70.65,
+      "g0_wr": 69.15
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-05-12",
+      "total": 181,
+      "wins": 93,
+      "losses": 76,
+      "ties": 12,
+      "wr": 55.03,
+      "g0_wr": 52.07
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-11",
+      "total": 177,
+      "wins": 116,
+      "losses": 54,
+      "ties": 7,
+      "wr": 68.24,
+      "g0_wr": 64.12
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-06-07",
+      "total": 175,
+      "wins": 126,
+      "losses": 45,
+      "ties": 4,
+      "wr": 73.68,
+      "g0_wr": 73.1
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-05-13",
+      "total": 170,
+      "wins": 106,
+      "losses": 50,
+      "ties": 14,
+      "wr": 67.95,
+      "g0_wr": 64.74
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-05-15",
+      "total": 167,
+      "wins": 108,
+      "losses": 51,
+      "ties": 8,
+      "wr": 67.92,
+      "g0_wr": 64.78
+    },
+    {
+      "floor": "AITEST_LIVE",
+      "d": "2026-05-19",
+      "total": 148,
+      "wins": 116,
+      "losses": 30,
+      "ties": 2,
+      "wr": 79.45,
+      "g0_wr": 79.45
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-06-09",
+      "total": 130,
+      "wins": 89,
+      "losses": 37,
+      "ties": 4,
+      "wr": 70.63,
+      "g0_wr": 69.84
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-06-10",
+      "total": 118,
+      "wins": 90,
+      "losses": 26,
+      "ties": 2,
+      "wr": 77.59,
+      "g0_wr": 75.86
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-06-02",
+      "total": 117,
+      "wins": 68,
+      "losses": 42,
+      "ties": 7,
+      "wr": 61.82,
+      "g0_wr": 60.91
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-28",
+      "total": 107,
+      "wins": 77,
+      "losses": 26,
+      "ties": 4,
+      "wr": 74.76,
+      "g0_wr": 74.76
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-05-08",
+      "total": 95,
+      "wins": 67,
+      "losses": 22,
+      "ties": 6,
+      "wr": 75.28,
+      "g0_wr": 71.91
+    },
+    {
+      "floor": "LIVE",
+      "d": "2026-05-08",
+      "total": 87,
+      "wins": 67,
+      "losses": 16,
+      "ties": 4,
+      "wr": 80.72,
+      "g0_wr": 68.67
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-15",
+      "total": 85,
+      "wins": 61,
+      "losses": 19,
+      "ties": 5,
+      "wr": 76.25,
+      "g0_wr": 75.0
+    },
+    {
+      "floor": "ULTIMATE",
+      "d": "2026-05-16",
+      "total": 83,
+      "wins": 60,
+      "losses": 16,
+      "ties": 7,
+      "wr": 78.95,
+      "g0_wr": 77.63
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-06-06",
+      "total": 78,
+      "wins": 52,
+      "losses": 24,
+      "ties": 2,
+      "wr": 68.42,
+      "g0_wr": 68.42
+    },
+    {
+      "floor": "MAY10",
+      "d": "2026-06-17",
+      "total": 76,
+      "wins": 52,
+      "losses": 18,
+      "ties": 6,
+      "wr": 74.29,
+      "g0_wr": 72.86
+    },
+    {
+      "floor": "AITEST_LIVE",
+      "d": "2026-05-26",
+      "total": 75,
+      "wins": 52,
+      "losses": 18,
+      "ties": 5,
+      "wr": 74.29,
+      "g0_wr": 74.29
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-05-09",
+      "total": 66,
+      "wins": 51,
+      "losses": 13,
+      "ties": 2,
+      "wr": 79.69,
+      "g0_wr": 75.0
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-06-14",
+      "total": 65,
+      "wins": 53,
+      "losses": 9,
+      "ties": 3,
+      "wr": 85.48,
+      "g0_wr": 83.87
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-06-17",
+      "total": 64,
+      "wins": 41,
+      "losses": 20,
+      "ties": 3,
+      "wr": 67.21,
+      "g0_wr": 65.57
+    },
+    {
+      "floor": "LIVE",
+      "d": "2026-05-10",
+      "total": 60,
+      "wins": 47,
+      "losses": 10,
+      "ties": 3,
+      "wr": 82.46,
+      "g0_wr": 78.95
+    },
+    {
+      "floor": "ULTIMATE",
+      "d": "2026-05-17",
+      "total": 57,
+      "wins": 46,
+      "losses": 8,
+      "ties": 3,
+      "wr": 85.19,
+      "g0_wr": 85.19
+    },
+    {
+      "floor": "LIVE",
+      "d": "2026-05-16",
+      "total": 57,
+      "wins": 41,
+      "losses": 11,
+      "ties": 5,
+      "wr": 78.85,
+      "g0_wr": 76.92
+    },
+    {
+      "floor": "MAY10",
+      "d": "2026-06-15",
+      "total": 55,
+      "wins": 43,
+      "losses": 10,
+      "ties": 2,
+      "wr": 81.13,
+      "g0_wr": 79.25
+    },
+    {
+      "floor": "AITEST_LIVE",
+      "d": "2026-05-20",
+      "total": 54,
+      "wins": 38,
+      "losses": 12,
+      "ties": 4,
+      "wr": 76.0,
+      "g0_wr": 72.0
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-06-15",
+      "total": 53,
+      "wins": 39,
+      "losses": 13,
+      "ties": 1,
+      "wr": 75.0,
+      "g0_wr": 75.0
+    },
+    {
+      "floor": "MAY10",
+      "d": "2026-06-13",
+      "total": 53,
+      "wins": 37,
+      "losses": 13,
+      "ties": 3,
+      "wr": 74.0,
+      "g0_wr": 74.0
+    },
+    {
+      "floor": "LIVE",
+      "d": "2026-05-11",
+      "total": 52,
+      "wins": 44,
+      "losses": 3,
+      "ties": 5,
+      "wr": 93.62,
+      "g0_wr": 89.36
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-06-16",
+      "total": 52,
+      "wins": 41,
+      "losses": 10,
+      "ties": 1,
+      "wr": 80.39,
+      "g0_wr": 78.43
+    }
+  ],
+  "high_volume_good_floors": [
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-26",
+      "total": 772,
+      "wins": 589,
+      "losses": 143,
+      "ties": 40,
+      "wr": 80.46,
+      "g0_wr": 80.05
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-24",
+      "total": 768,
+      "wins": 610,
+      "losses": 121,
+      "ties": 37,
+      "wr": 83.45,
+      "g0_wr": 83.45
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-27",
+      "total": 759,
+      "wins": 588,
+      "losses": 141,
+      "ties": 30,
+      "wr": 80.66,
+      "g0_wr": 80.11
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-20",
+      "total": 706,
+      "wins": 551,
+      "losses": 125,
+      "ties": 30,
+      "wr": 81.51,
+      "g0_wr": 81.36
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-21",
+      "total": 658,
+      "wins": 511,
+      "losses": 111,
+      "ties": 36,
+      "wr": 82.15,
+      "g0_wr": 81.99
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-22",
+      "total": 605,
+      "wins": 495,
+      "losses": 104,
+      "ties": 6,
+      "wr": 82.64,
+      "g0_wr": 82.47
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-25",
+      "total": 435,
+      "wins": 346,
+      "losses": 69,
+      "ties": 20,
+      "wr": 83.37,
+      "g0_wr": 83.13
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-31",
+      "total": 422,
+      "wins": 337,
+      "losses": 78,
+      "ties": 7,
+      "wr": 81.2,
+      "g0_wr": 81.2
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-30",
+      "total": 389,
+      "wins": 306,
+      "losses": 75,
+      "ties": 8,
+      "wr": 80.31,
+      "g0_wr": 79.79
+    },
+    {
+      "floor": "MAR19",
+      "d": "2026-06-15",
+      "total": 372,
+      "wins": 275,
+      "losses": 76,
+      "ties": 21,
+      "wr": 78.35,
+      "g0_wr": 76.64
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-06-01",
+      "total": 367,
+      "wins": 294,
+      "losses": 67,
+      "ties": 6,
+      "wr": 81.44,
+      "g0_wr": 81.44
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-23",
+      "total": 316,
+      "wins": 253,
+      "losses": 50,
+      "ties": 13,
+      "wr": 83.5,
+      "g0_wr": 83.17
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-16",
+      "total": 303,
+      "wins": 225,
+      "losses": 62,
+      "ties": 16,
+      "wr": 78.4,
+      "g0_wr": 76.66
+    },
+    {
+      "floor": "ELITE_V2",
+      "d": "2026-05-17",
+      "total": 214,
+      "wins": 165,
+      "losses": 36,
+      "ties": 13,
+      "wr": 82.09,
+      "g0_wr": 80.1
+    },
+    {
+      "floor": "AITEST_LIVE",
+      "d": "2026-05-19",
+      "total": 148,
+      "wins": 116,
+      "losses": 30,
+      "ties": 2,
+      "wr": 79.45,
+      "g0_wr": 79.45
+    },
+    {
+      "floor": "LIVE",
+      "d": "2026-05-08",
+      "total": 87,
+      "wins": 67,
+      "losses": 16,
+      "ties": 4,
+      "wr": 80.72,
+      "g0_wr": 68.67
+    },
+    {
+      "floor": "ULTIMATE",
+      "d": "2026-05-16",
+      "total": 83,
+      "wins": 60,
+      "losses": 16,
+      "ties": 7,
+      "wr": 78.95,
+      "g0_wr": 77.63
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-05-09",
+      "total": 66,
+      "wins": 51,
+      "losses": 13,
+      "ties": 2,
+      "wr": 79.69,
+      "g0_wr": 75.0
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-06-14",
+      "total": 65,
+      "wins": 53,
+      "losses": 9,
+      "ties": 3,
+      "wr": 85.48,
+      "g0_wr": 83.87
+    },
+    {
+      "floor": "LIVE",
+      "d": "2026-05-10",
+      "total": 60,
+      "wins": 47,
+      "losses": 10,
+      "ties": 3,
+      "wr": 82.46,
+      "g0_wr": 78.95
+    },
+    {
+      "floor": "ULTIMATE",
+      "d": "2026-05-17",
+      "total": 57,
+      "wins": 46,
+      "losses": 8,
+      "ties": 3,
+      "wr": 85.19,
+      "g0_wr": 85.19
+    },
+    {
+      "floor": "LIVE",
+      "d": "2026-05-16",
+      "total": 57,
+      "wins": 41,
+      "losses": 11,
+      "ties": 5,
+      "wr": 78.85,
+      "g0_wr": 76.92
+    },
+    {
+      "floor": "MAY10",
+      "d": "2026-06-15",
+      "total": 55,
+      "wins": 43,
+      "losses": 10,
+      "ties": 2,
+      "wr": 81.13,
+      "g0_wr": 79.25
+    },
+    {
+      "floor": "LIVE",
+      "d": "2026-05-11",
+      "total": 52,
+      "wins": 44,
+      "losses": 3,
+      "ties": 5,
+      "wr": 93.62,
+      "g0_wr": 89.36
+    },
+    {
+      "floor": "MAR20",
+      "d": "2026-06-16",
+      "total": 52,
+      "wins": 41,
+      "losses": 10,
+      "ties": 1,
+      "wr": 80.39,
+      "g0_wr": 78.43
+    }
+  ],
+  "recent_room_candidates": [
+    {
+      "room": "robobacbodados",
+      "total": 59,
+      "wins": 52,
+      "losses": 7,
+      "ties": 0,
+      "wr": 88.14,
+      "blue_pct": 86.4
+    },
+    {
+      "room": "bacbobrl",
+      "total": 16,
+      "wins": 14,
+      "losses": 2,
+      "ties": 0,
+      "wr": 87.5,
+      "blue_pct": 75.0
+    },
+    {
+      "room": "isadados",
+      "total": 23,
+      "wins": 16,
+      "losses": 3,
+      "ties": 4,
+      "wr": 84.21,
+      "blue_pct": 39.1
+    },
+    {
+      "room": "sinaisbacboangola",
+      "total": 105,
+      "wins": 81,
+      "losses": 24,
+      "ties": 0,
+      "wr": 77.14,
+      "blue_pct": 41.0
+    },
+    {
+      "room": "dadosbacbobr",
+      "total": 72,
+      "wins": 53,
+      "losses": 16,
+      "ties": 3,
+      "wr": 76.81,
+      "blue_pct": 41.7
+    },
+    {
+      "room": "rigosinais",
+      "total": 78,
+      "wins": 49,
+      "losses": 15,
+      "ties": 14,
+      "wr": 76.56,
+      "blue_pct": 62.8
+    },
+    {
+      "room": "rqdados1",
+      "total": 40,
+      "wins": 29,
+      "losses": 9,
+      "ties": 2,
+      "wr": 76.32,
+      "blue_pct": 35.0
+    },
+    {
+      "room": "martinswinbacbo",
+      "total": 33,
+      "wins": 25,
+      "losses": 8,
+      "ties": 0,
+      "wr": 75.76,
+      "blue_pct": 81.8
+    },
+    {
+      "room": "umgalesalabacbo123",
+      "total": 158,
+      "wins": 118,
+      "losses": 38,
+      "ties": 2,
+      "wr": 75.64,
+      "blue_pct": 37.3
+    },
+    {
+      "room": "robofreebacbo24horass",
+      "total": 141,
+      "wins": 104,
+      "losses": 35,
+      "ties": 2,
+      "wr": 74.82,
+      "blue_pct": 53.2
+    },
+    {
+      "room": "rqdados",
+      "total": 35,
+      "wins": 26,
+      "losses": 9,
+      "ties": 0,
+      "wr": 74.29,
+      "blue_pct": 40.0
+    },
+    {
+      "room": "bacbobrasileiro01",
+      "total": 229,
+      "wins": 159,
+      "losses": 65,
+      "ties": 5,
+      "wr": 70.98,
+      "blue_pct": 57.6
+    },
+    {
+      "room": "coringadados",
+      "total": 104,
+      "wins": 69,
+      "losses": 29,
+      "ties": 6,
+      "wr": 70.41,
+      "blue_pct": 53.8
+    },
+    {
+      "room": "bacboaovivovip",
+      "total": 191,
+      "wins": 117,
+      "losses": 55,
+      "ties": 19,
+      "wr": 68.02,
+      "blue_pct": 62.3
+    },
+    {
+      "room": "m8sinais",
+      "total": 100,
+      "wins": 56,
+      "losses": 31,
+      "ties": 13,
+      "wr": 64.37,
+      "blue_pct": 55.0
+    },
+    {
+      "room": "bacbob2xbet",
+      "total": 110,
+      "wins": 62,
+      "losses": 48,
+      "ties": 0,
+      "wr": 56.36,
+      "blue_pct": 2.7
+    },
+    {
+      "room": "sinal_bac_bo",
+      "total": 51,
+      "wins": 25,
+      "losses": 24,
+      "ties": 2,
+      "wr": 51.02,
+      "blue_pct": 13.7
+    }
+  ],
+  "gate_release_candidates": [
+    {
+      "gate_reason": "auto_vault_block",
+      "n": 13668,
+      "blocked_wins": 8749,
+      "losses_saved": 4552,
+      "ties": 367,
+      "blocked_wr": 65.8,
+      "net_bad_if_positive": 4197
+    },
+    {
+      "gate_reason": "color_acc_all_weak",
+      "n": 4591,
+      "blocked_wins": 2332,
+      "losses_saved": 1930,
+      "ties": 329,
+      "blocked_wr": 54.7,
+      "net_bad_if_positive": 402
+    },
+    {
+      "gate_reason": "solo_proven_room_main",
+      "n": 3274,
+      "blocked_wins": 1691,
+      "losses_saved": 1336,
+      "ties": 247,
+      "blocked_wr": 55.9,
+      "net_bad_if_positive": 355
+    },
+    {
+      "gate_reason": "g3_predictor_hard",
+      "n": 1487,
+      "blocked_wins": 813,
+      "losses_saved": 569,
+      "ties": 105,
+      "blocked_wr": 58.8,
+      "net_bad_if_positive": 244
+    },
+    {
+      "gate_reason": "golden_hour_block",
+      "n": 2610,
+      "blocked_wins": 1310,
+      "losses_saved": 1122,
+      "ties": 178,
+      "blocked_wr": 53.9,
+      "net_bad_if_positive": 188
+    },
+    {
+      "gate_reason": "streak_gate",
+      "n": 288,
+      "blocked_wins": 207,
+      "losses_saved": 78,
+      "ties": 3,
+      "blocked_wr": 72.6,
+      "net_bad_if_positive": 129
+    },
+    {
+      "gate_reason": "bad_coalition_pair",
+      "n": 873,
+      "blocked_wins": 467,
+      "losses_saved": 345,
+      "ties": 61,
+      "blocked_wr": 57.5,
+      "net_bad_if_positive": 122
+    },
+    {
+      "gate_reason": "post_loss_cooldown",
+      "n": 815,
+      "blocked_wins": 447,
+      "losses_saved": 326,
+      "ties": 42,
+      "blocked_wr": 57.8,
+      "net_bad_if_positive": 121
+    },
+    {
+      "gate_reason": "kind_suspended",
+      "n": 465,
+      "blocked_wins": 280,
+      "losses_saved": 162,
+      "ties": 23,
+      "blocked_wr": 63.3,
+      "net_bad_if_positive": 118
+    },
+    {
+      "gate_reason": "timing_gate",
+      "n": 985,
+      "blocked_wins": 514,
+      "losses_saved": 397,
+      "ties": 74,
+      "blocked_wr": 56.4,
+      "net_bad_if_positive": 117
+    },
+    {
+      "gate_reason": "platinum_cold_pair",
+      "n": 798,
+      "blocked_wins": 436,
+      "losses_saved": 326,
+      "ties": 36,
+      "blocked_wr": 57.2,
+      "net_bad_if_positive": 110
+    },
+    {
+      "gate_reason": "hard_fva_ceiling",
+      "n": 185,
+      "blocked_wins": 135,
+      "losses_saved": 39,
+      "ties": 11,
+      "blocked_wr": 77.6,
+      "net_bad_if_positive": 96
+    },
+    {
+      "gate_reason": "platinum_dupe_guard",
+      "n": 1023,
+      "blocked_wins": 530,
+      "losses_saved": 447,
+      "ties": 46,
+      "blocked_wr": 54.2,
+      "net_bad_if_positive": 83
+    },
+    {
+      "gate_reason": "coalition_dedup",
+      "n": 808,
+      "blocked_wins": 415,
+      "losses_saved": 334,
+      "ties": 59,
+      "blocked_wr": 55.4,
+      "net_bad_if_positive": 81
+    },
+    {
+      "gate_reason": "timing_gate_accum",
+      "n": 738,
+      "blocked_wins": 375,
+      "losses_saved": 301,
+      "ties": 62,
+      "blocked_wr": 55.5,
+      "net_bad_if_positive": 74
+    },
+    {
+      "gate_reason": "golden_loss_contagion",
+      "n": 280,
+      "blocked_wins": 167,
+      "losses_saved": 112,
+      "ties": 1,
+      "blocked_wr": 59.9,
+      "net_bad_if_positive": 55
+    },
+    {
+      "gate_reason": "golden_coal_penalty",
+      "n": 641,
+      "blocked_wins": 330,
+      "losses_saved": 276,
+      "ties": 35,
+      "blocked_wr": 54.5,
+      "net_bad_if_positive": 54
+    },
+    {
+      "gate_reason": "platinum_pair_hour_block",
+      "n": 493,
+      "blocked_wins": 256,
+      "losses_saved": 205,
+      "ties": 32,
+      "blocked_wr": 55.5,
+      "net_bad_if_positive": 51
+    },
+    {
+      "gate_reason": "room_quality_gate",
+      "n": 311,
+      "blocked_wins": 158,
+      "losses_saved": 121,
+      "ties": 32,
+      "blocked_wr": 56.6,
+      "net_bad_if_positive": 37
+    },
+    {
+      "gate_reason": "golden_2room_min",
+      "n": 128,
+      "blocked_wins": 81,
+      "losses_saved": 44,
+      "ties": 3,
+      "blocked_wr": 64.8,
+      "net_bad_if_positive": 37
+    },
+    {
+      "gate_reason": "hard_solo_block",
+      "n": 212,
+      "blocked_wins": 118,
+      "losses_saved": 84,
+      "ties": 10,
+      "blocked_wr": 58.4,
+      "net_bad_if_positive": 34
+    },
+    {
+      "gate_reason": "session_stop_loss",
+      "n": 132,
+      "blocked_wins": 78,
+      "losses_saved": 45,
+      "ties": 9,
+      "blocked_wr": 63.4,
+      "net_bad_if_positive": 33
+    },
+    {
+      "gate_reason": "room_hour_block",
+      "n": 196,
+      "blocked_wins": 109,
+      "losses_saved": 76,
+      "ties": 11,
+      "blocked_wr": 58.9,
+      "net_bad_if_positive": 33
+    },
+    {
+      "gate_reason": "duplicate_color_guard",
+      "n": 149,
+      "blocked_wins": 87,
+      "losses_saved": 54,
+      "ties": 8,
+      "blocked_wr": 61.7,
+      "net_bad_if_positive": 33
+    },
+    {
+      "gate_reason": "platinum_momentum_gate",
+      "n": 266,
+      "blocked_wins": 144,
+      "losses_saved": 112,
+      "ties": 10,
+      "blocked_wr": 56.3,
+      "net_bad_if_positive": 32
+    },
+    {
+      "gate_reason": "g3_predictor_soft",
+      "n": 198,
+      "blocked_wins": 108,
+      "losses_saved": 76,
+      "ties": 14,
+      "blocked_wr": 58.7,
+      "net_bad_if_positive": 32
+    },
+    {
+      "gate_reason": "platinum_hour_block",
+      "n": 183,
+      "blocked_wins": 100,
+      "losses_saved": 70,
+      "ties": 13,
+      "blocked_wr": 58.8,
+      "net_bad_if_positive": 30
+    },
+    {
+      "gate_reason": "same_round_gate",
+      "n": 97,
+      "blocked_wins": 59,
+      "losses_saved": 32,
+      "ties": 6,
+      "blocked_wr": 64.8,
+      "net_bad_if_positive": 27
+    },
+    {
+      "gate_reason": "color_hour_block",
+      "n": 123,
+      "blocked_wins": 69,
+      "losses_saved": 42,
+      "ties": 12,
+      "blocked_wr": 62.2,
+      "net_bad_if_positive": 27
+    },
+    {
+      "gate_reason": "peak_minute_gate",
+      "n": 515,
+      "blocked_wins": 257,
+      "losses_saved": 235,
+      "ties": 23,
+      "blocked_wr": 52.2,
+      "net_bad_if_positive": 22
+    },
+    {
+      "gate_reason": "adaptive_score",
+      "n": 51,
+      "blocked_wins": 34,
+      "losses_saved": 16,
+      "ties": 1,
+      "blocked_wr": 68.0,
+      "net_bad_if_positive": 18
+    },
+    {
+      "gate_reason": "solo_global_hour_block",
+      "n": 344,
+      "blocked_wins": 166,
+      "losses_saved": 151,
+      "ties": 27,
+      "blocked_wr": 52.4,
+      "net_bad_if_positive": 15
+    },
+    {
+      "gate_reason": "poison_room_coalition_df",
+      "n": 61,
+      "blocked_wins": 34,
+      "losses_saved": 21,
+      "ties": 6,
+      "blocked_wr": 61.8,
+      "net_bad_if_positive": 13
+    },
+    {
+      "gate_reason": "momentum_lll",
+      "n": 153,
+      "blocked_wins": 73,
+      "losses_saved": 60,
+      "ties": 20,
+      "blocked_wr": 54.9,
+      "net_bad_if_positive": 13
+    },
+    {
+      "gate_reason": "ai_gate",
+      "n": 29,
+      "blocked_wins": 20,
+      "losses_saved": 9,
+      "ties": 0,
+      "blocked_wr": 69.0,
+      "net_bad_if_positive": 11
+    },
+    {
+      "gate_reason": "global_dangerous_hour",
+      "n": 75,
+      "blocked_wins": 42,
+      "losses_saved": 32,
+      "ties": 1,
+      "blocked_wr": 56.8,
+      "net_bad_if_positive": 10
+    },
+    {
+      "gate_reason": "room_hour_block_platinum",
+      "n": 100,
+      "blocked_wins": 51,
+      "losses_saved": 42,
+      "ties": 7,
+      "blocked_wr": 54.8,
+      "net_bad_if_positive": 9
+    },
+    {
+      "gate_reason": "pending_signal_exists",
+      "n": 385,
+      "blocked_wins": 188,
+      "losses_saved": 179,
+      "ties": 18,
+      "blocked_wr": 51.2,
+      "net_bad_if_positive": 9
+    },
+    {
+      "gate_reason": "loss_cooldown",
+      "n": 103,
+      "blocked_wins": 52,
+      "losses_saved": 43,
+      "ties": 8,
+      "blocked_wr": 54.7,
+      "net_bad_if_positive": 9
+    },
+    {
+      "gate_reason": "solo_proven_room",
+      "n": 31,
+      "blocked_wins": 18,
+      "losses_saved": 10,
+      "ties": 3,
+      "blocked_wr": 64.3,
+      "net_bad_if_positive": 8
+    },
+    {
+      "gate_reason": "death_minute_gate",
+      "n": 75,
+      "blocked_wins": 40,
+      "losses_saved": 32,
+      "ties": 3,
+      "blocked_wr": 55.6,
+      "net_bad_if_positive": 8
+    },
+    {
+      "gate_reason": "momentum_xll",
+      "n": 225,
+      "blocked_wins": 109,
+      "losses_saved": 103,
+      "ties": 13,
+      "blocked_wr": 51.4,
+      "net_bad_if_positive": 6
+    },
+    {
+      "gate_reason": "kingmaker_veto",
+      "n": 98,
+      "blocked_wins": 49,
+      "losses_saved": 43,
+      "ties": 6,
+      "blocked_wr": 53.3,
+      "net_bad_if_positive": 6
+    },
+    {
+      "gate_reason": "platinum_dow_block",
+      "n": 42,
+      "blocked_wins": 23,
+      "losses_saved": 18,
+      "ties": 1,
+      "blocked_wr": 56.1,
+      "net_bad_if_positive": 5
+    },
+    {
+      "gate_reason": "3win_recovery",
+      "n": 29,
+      "blocked_wins": 15,
+      "losses_saved": 10,
+      "ties": 4,
+      "blocked_wr": 60.0,
+      "net_bad_if_positive": 5
+    },
+    {
+      "gate_reason": "solo_room_color_block",
+      "n": 88,
+      "blocked_wins": 45,
+      "losses_saved": 41,
+      "ties": 2,
+      "blocked_wr": 52.3,
+      "net_bad_if_positive": 4
+    },
+    {
+      "gate_reason": "coalition_rwr_stripped",
+      "n": 25,
+      "blocked_wins": 13,
+      "losses_saved": 9,
+      "ties": 3,
+      "blocked_wr": 59.1,
+      "net_bad_if_positive": 4
+    },
+    {
+      "gate_reason": "accum_solo_gale",
+      "n": 25,
+      "blocked_wins": 14,
+      "losses_saved": 10,
+      "ties": 1,
+      "blocked_wr": 58.3,
+      "net_bad_if_positive": 4
+    },
+    {
+      "gate_reason": "platt_midconf_block",
+      "n": 79,
+      "blocked_wins": 38,
+      "losses_saved": 35,
+      "ties": 6,
+      "blocked_wr": 52.1,
+      "net_bad_if_positive": 3
+    },
+    {
+      "gate_reason": "golden_color_hour_block",
+      "n": 62,
+      "blocked_wins": 29,
+      "losses_saved": 26,
+      "ties": 7,
+      "blocked_wr": 52.7,
+      "net_bad_if_positive": 3
+    },
+    {
+      "gate_reason": "solo_dangerous_hour",
+      "n": 44,
+      "blocked_wins": 22,
+      "losses_saved": 21,
+      "ties": 1,
+      "blocked_wr": 51.2,
+      "net_bad_if_positive": 1
+    },
+    {
+      "gate_reason": "golden_dow_cell_block",
+      "n": 28,
+      "blocked_wins": 13,
+      "losses_saved": 12,
+      "ties": 3,
+      "blocked_wr": 52.0,
+      "net_bad_if_positive": 1
+    },
+    {
+      "gate_reason": "exact_toxic_pair",
+      "n": 21,
+      "blocked_wins": 10,
+      "losses_saved": 9,
+      "ties": 2,
+      "blocked_wr": 52.6,
+      "net_bad_if_positive": 1
+    },
+    {
+      "gate_reason": "elite_color_acc_floor",
+      "n": 77,
+      "blocked_wins": 35,
+      "losses_saved": 35,
+      "ties": 7,
+      "blocked_wr": 50.0,
+      "net_bad_if_positive": 0
+    },
+    {
+      "gate_reason": "solo_color_hour_block",
+      "n": 162,
+      "blocked_wins": 73,
+      "losses_saved": 75,
+      "ties": 14,
+      "blocked_wr": 49.3,
+      "net_bad_if_positive": -2
+    },
+    {
+      "gate_reason": "global_hour_dow_hard",
+      "n": 30,
+      "blocked_wins": 14,
+      "losses_saved": 16,
+      "ties": 0,
+      "blocked_wr": 46.7,
+      "net_bad_if_positive": -2
+    },
+    {
+      "gate_reason": "rate_limit_global",
+      "n": 872,
+      "blocked_wins": 411,
+      "losses_saved": 414,
+      "ties": 47,
+      "blocked_wr": 49.8,
+      "net_bad_if_positive": -3
+    },
+    {
+      "gate_reason": "accum_solo_tier",
+      "n": 143,
+      "blocked_wins": 66,
+      "losses_saved": 69,
+      "ties": 8,
+      "blocked_wr": 48.9,
+      "net_bad_if_positive": -3
+    },
+    {
+      "gate_reason": "m8sinais_lead_anchor",
+      "n": 21,
+      "blocked_wins": 7,
+      "losses_saved": 13,
+      "ties": 1,
+      "blocked_wr": 35.0,
+      "net_bad_if_positive": -6
+    },
+    {
+      "gate_reason": "entry_confirmed_hour_block",
+      "n": 816,
+      "blocked_wins": 377,
+      "losses_saved": 383,
+      "ties": 56,
+      "blocked_wr": 49.6,
+      "net_bad_if_positive": -6
+    },
+    {
+      "gate_reason": "solo_conf_floor",
+      "n": 130,
+      "blocked_wins": 57,
+      "losses_saved": 64,
+      "ties": 9,
+      "blocked_wr": 47.1,
+      "net_bad_if_positive": -7
+    },
+    {
+      "gate_reason": "hard_block_strip_insufficient",
+      "n": 339,
+      "blocked_wins": 156,
+      "losses_saved": 163,
+      "ties": 20,
+      "blocked_wr": 48.9,
+      "net_bad_if_positive": -7
+    },
+    {
+      "gate_reason": "accum_post_adj_floor",
+      "n": 107,
+      "blocked_wins": 48,
+      "losses_saved": 57,
+      "ties": 2,
+      "blocked_wr": 45.7,
+      "net_bad_if_positive": -9
+    },
+    {
+      "gate_reason": "solo_threshold",
+      "n": 191,
+      "blocked_wins": 79,
+      "losses_saved": 89,
+      "ties": 23,
+      "blocked_wr": 47.0,
+      "net_bad_if_positive": -10
+    },
+    {
+      "gate_reason": "sniper_weight",
+      "n": 111,
+      "blocked_wins": 45,
+      "losses_saved": 55,
+      "ties": 11,
+      "blocked_wr": 45.0,
+      "net_bad_if_positive": -10
+    },
+    {
+      "gate_reason": "g0_recovery_gate",
+      "n": 656,
+      "blocked_wins": 303,
+      "losses_saved": 313,
+      "ties": 40,
+      "blocked_wr": 49.2,
+      "net_bad_if_positive": -10
+    },
+    {
+      "gate_reason": "solo_red_death_minute_gate",
+      "n": 25,
+      "blocked_wins": 6,
+      "losses_saved": 18,
+      "ties": 1,
+      "blocked_wr": 25.0,
+      "net_bad_if_positive": -12
+    },
+    {
+      "gate_reason": "dynamic_threshold_bad_hour",
+      "n": 613,
+      "blocked_wins": 288,
+      "losses_saved": 303,
+      "ties": 22,
+      "blocked_wr": 48.7,
+      "net_bad_if_positive": -15
+    },
+    {
+      "gate_reason": "gale_filter",
+      "n": 878,
+      "blocked_wins": 402,
+      "losses_saved": 418,
+      "ties": 58,
+      "blocked_wr": 49.0,
+      "net_bad_if_positive": -16
+    },
+    {
+      "gate_reason": "seq_flip_back",
+      "n": 111,
+      "blocked_wins": 41,
+      "losses_saved": 59,
+      "ties": 11,
+      "blocked_wr": 41.0,
+      "net_bad_if_positive": -18
+    },
+    {
+      "gate_reason": "solo_dow_dead",
+      "n": 112,
+      "blocked_wins": 44,
+      "losses_saved": 63,
+      "ties": 5,
+      "blocked_wr": 41.1,
+      "net_bad_if_positive": -19
+    },
+    {
+      "gate_reason": "consec_loss_shield",
+      "n": 104,
+      "blocked_wins": 38,
+      "losses_saved": 58,
+      "ties": 8,
+      "blocked_wr": 39.6,
+      "net_bad_if_positive": -20
+    },
+    {
+      "gate_reason": "streak_reversal",
+      "n": 761,
+      "blocked_wins": 282,
+      "losses_saved": 439,
+      "ties": 40,
+      "blocked_wr": 39.1,
+      "net_bad_if_positive": -157
+    }
+  ],
+  "recommended_system_changes": [
+    "Replace blanket hour hard-blocks with scored hour risk/advisory where possible.",
+    "Do not let every blocked signal fire; blocked-supply WR is usually far below fired WR.",
+    "Use floor-local dedup for independent floors, but keep same-round opposite-color safety lock.",
+    "Favor LIVE, ELITE_V2, MAY20-MAY27 peak stack, and current 7d LIVE/MAY19/MAY10/MAR21 cells.",
+    "Use room whitelist weighted by recent performance: robobacbodados, isadados, sinaisbacboangola, dadosbacbobr, rigosinais, martinswinbacbo, rqdados/rqdados1.",
+    "Downgrade weak current rooms: bacbob2xbet, sinal_bac_bo, weak m8sinais cells.",
+    "Keep martingale disabled unless room/color/floor recovery report says ALLOW_MARTINGALE.",
+    "Build direct Twin225 result capture; without direct truth, 98% claims remain unverified."
+  ]
+}\n
