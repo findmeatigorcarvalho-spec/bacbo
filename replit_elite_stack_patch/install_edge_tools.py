@@ -48,11 +48,7 @@ def patch_signal_handler() -> None:
         print("EdgePolicy already installed in signal_handler.py")
         return
 
-    needle = """  # ── Cross-color window block ──────────────────────────────────────────────
-  # If any pipeline fired for a DIFFERENT color within _BET_WINDOW_SECS, block.
-  # User is already in a bet — don't send the opposite color mid-window.
-  if _cross_color_blocked(w_color):
-"""
+    needle = "  if _cross_color_blocked(w_color):\n"
     insert = """  # ── Edge Live Policy (SNIPER / WATCH / LOSS-RISK) ─────────────────────────
   # EDGE_POLICY_MODE:
   #   shadow    = observe only; never blocks
@@ -88,7 +84,10 @@ def patch_signal_handler() -> None:
 
 """
     if needle not in s:
-        raise SystemExit("Could not find patch location in signal_handler.py")
+        raise SystemExit(
+            "Could not find patch location in signal_handler.py "
+            "(missing line: if _cross_color_blocked(w_color):)"
+        )
     p.write_text(s.replace(needle, insert + needle))
     print("EdgePolicy installed in signal_handler.py")
 
