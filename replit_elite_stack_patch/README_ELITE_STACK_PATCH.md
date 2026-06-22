@@ -52,6 +52,11 @@ It adds four safe, read-only-by-default tools:
    - produces FIRE_COLOR_G0 / SHADOW_COLOR / SHADOW_TIE / BLOCK_LOSS_RISK
    - writes `bot/data/tri_brain_report.json`
 
+11. `bot/edge_whitelist_engine.py`
+   - combines elite room/hour/color cells, floor/kind/hour/color cells,
+     G0 offset oracle, Tri-Brain verdicts, and loss-risk cells
+   - writes `bot/data/edge_whitelist_engine.json`
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -76,6 +81,7 @@ python elite_stack_audit.py
 python volume_frontier.py
 python g0_offset_oracle.py
 python tri_brain_score.py
+python edge_whitelist_engine.py
 ```
 
 Optional room cleanup after reviewing the report:
