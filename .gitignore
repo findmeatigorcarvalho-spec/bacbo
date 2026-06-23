@@ -1,2 +1,5 @@
 __pycache__/
 *.py[cod]
+
+# EngineGateRegistry file-lock artifact
+*.json.lock
