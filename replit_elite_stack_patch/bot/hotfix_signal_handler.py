@@ -26,27 +26,30 @@ def patch_remaining(path: Path = SIGNAL_HANDLER, dry_run: bool = False) -> list[
     source = path.read_text(errors="ignore")
     changes: list[str] = []
 
-    if "_remaining = 0.0  # hotfix default" in source:
+    if "_remaining = locals().get('_remaining', 0.0)  # hotfix default" in source:
         return changes
 
-    fn_marker = "async def _on_message_inner(event):"
-    if fn_marker in source:
-        source = source.replace(
-            fn_marker,
-            fn_marker + "\n    _remaining = 0.0  # hotfix default; accumulator branch may overwrite",
-            1,
-        )
-        changes.append("inserted _remaining default at _on_message_inner start")
-    else:
-        needle = "_post_hold_window = _remaining - _ACCUM_HOLD_SECS"
-        if needle not in source:
-            raise SystemExit("could not find _on_message_inner marker or _post_hold_window needle")
-        source = source.replace(
-            needle,
-            "_remaining = locals().get('_remaining', 0.0)  # hotfix default\n    " + needle,
-            1,
-        )
-        changes.append("inserted _remaining default before _post_hold_window")
+    # Remove the first-generation hotfix if it was applied with the wrong
+    # indentation. The safer patch below inserts immediately before the use site.
+    lines = [
+        line for line in source.splitlines()
+        if "_remaining = 0.0  # hotfix default" not in line
+    ]
+
+    needle = "_post_hold_window = _remaining - _ACCUM_HOLD_SECS"
+    out: list[str] = []
+    inserted = False
+    for line in lines:
+        if not inserted and needle in line:
+            indent = line[:len(line) - len(line.lstrip())]
+            out.append(f"{indent}_remaining = locals().get('_remaining', 0.0)  # hotfix default")
+            inserted = True
+            changes.append("inserted _remaining default before _post_hold_window")
+        out.append(line)
+
+    if not inserted:
+        raise SystemExit("could not find _post_hold_window needle")
+    source = "\n".join(out) + "\n"
 
     if changes and not dry_run:
         backup = path.with_suffix(path.suffix + f".bak_hotfix_{int(time.time())}")
