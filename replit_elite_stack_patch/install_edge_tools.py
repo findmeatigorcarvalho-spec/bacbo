@@ -49,7 +49,10 @@ def patch_signal_handler() -> None:
 
     s = p.read_text()
     if "[EdgePolicy]" in s and "from edge_live_policy import evaluate" in s:
-        print("EdgePolicy already installed in signal_handler.py")
+        if patch_existing_edge_policy_legacy(p, s):
+            print("EdgePolicy already installed; legacy warning path verified/upgraded")
+        else:
+            print("EdgePolicy already installed in signal_handler.py")
         return
 
     needle = "  if _cross_color_blocked(w_color):\n"
@@ -104,6 +107,53 @@ def patch_signal_handler() -> None:
             "Run the diagnostic scanner and send the await send(...) snippets."
         )
     print(f"EdgePolicy shadow installed in signal_handler.py at {installed} send point(s)")
+
+
+def patch_existing_edge_policy_legacy(path: Path, source: str) -> bool:
+    """Upgrade an older EdgePolicy install so it appends legacy warnings."""
+    if "LEGACY_355_PAWTUCKET" in source:
+        return True
+
+    full_needle = '      _edge_reason = _edge_v.get("reason", "")\n\n      if _edge_action == "BLOCK":'
+    full_insert = '''      _edge_reason = _edge_v.get("reason", "")
+      _edge_warning = _edge_v.get("legacy_warning")
+      if _edge_warning:
+          log.info(f"[Legacy355] {_edge_warning}")
+          if isinstance(locals().get("msg"), str) and "LEGACY_355_PAWTUCKET" not in msg:
+              msg = msg + "\\n\\nWARNING LEGACY_355_PAWTUCKET\\n" + str(_edge_warning)
+
+      if _edge_action == "BLOCK":'''
+    if full_needle in source:
+        path.write_text(source.replace(full_needle, full_insert))
+        return True
+
+    lines = source.splitlines()
+    out: list[str] = []
+    installed = 0
+    pending_shadow_warning = False
+    for line in lines:
+        stripped = line.strip()
+        out.append(line)
+        if stripped.startswith("_edge_v = _edge_policy_eval("):
+            pending_shadow_warning = True
+        if pending_shadow_warning and stripped == "log.info(":
+            indent = line[:len(line) - len(line.lstrip())]
+            out.pop()
+            out.extend([
+                f'{indent}_edge_warning = _edge_v.get("legacy_warning")',
+                f'{indent}if _edge_warning:',
+                f'{indent}    log.info(f"[Legacy355] {{_edge_warning}}")',
+                f'{indent}    if isinstance(locals().get("msg"), str) and "LEGACY_355_PAWTUCKET" not in msg:',
+                f'{indent}        msg = msg + "\\n\\nWARNING LEGACY_355_PAWTUCKET\\n" + str(_edge_warning)',
+                line,
+            ])
+            installed += 1
+            pending_shadow_warning = False
+
+    if installed:
+        path.write_text("\n".join(out) + "\n")
+        return True
+    return False
 
 
 def patch_signal_handler_shadow(path: Path, source: str) -> int:
