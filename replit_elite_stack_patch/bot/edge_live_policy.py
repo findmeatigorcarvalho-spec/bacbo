@@ -20,7 +20,9 @@ from typing import Iterable
 
 _DIR = Path(__file__).resolve().parent
 _REPORT = _DIR / "data" / "edge_whitelist_engine.json"
+_FLOOR_FACTORY_REPORT = _DIR / "data" / "skyscraper_floor_factory_report.json"
 _CACHE = {"ts": 0.0, "data": None}
+_JSON_CACHE: dict[str, dict] = {}
 
 
 def _norm_room(room: str) -> str:
@@ -41,9 +43,60 @@ def _load() -> dict:
     return data
 
 
+def _load_json(path: Path) -> dict:
+    now = time.time()
+    cache_key = str(path)
+    cached = _JSON_CACHE.get(cache_key)
+    if cached and now - float(cached.get("ts", 0.0)) < 30:
+        return cached.get("data") or {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception:
+        data = {}
+    _JSON_CACHE[cache_key] = {"ts": now, "data": data}
+    return data
+
+
 def _mode() -> str:
     mode = os.environ.get("EDGE_POLICY_MODE", "shadow").strip().lower()
     return mode if mode in {"shadow", "precision", "volume"} else "shadow"
+
+
+def _key_from_floor_rule(item: dict) -> str | None:
+    family = str(item.get("family") or "").upper()
+    rule = item.get("rule") or {}
+    if not isinstance(rule, dict):
+        return None
+
+    color = str(rule.get("color") or "").strip().lower()
+    if not color:
+        return None
+
+    if family == "ROOM_HOUR_COLOR":
+        room = _norm_room(str(rule.get("room") or ""))
+        hour = rule.get("hour")
+        return f"{room}:H{int(hour)}:{color}" if room and hour is not None else None
+
+    if family == "FLOOR_KIND_HOUR_COLOR":
+        floor = str(rule.get("floor") or "LIVE").strip().upper()
+        kind = str(rule.get("kind") or "").strip().upper()
+        hour = rule.get("hour")
+        return f"{floor}:{kind}:H{int(hour)}:{color}" if kind and hour is not None else None
+
+    if family == "G0_OFFSET":
+        kind = str(rule.get("kind") or "").strip().upper()
+        floor = str(rule.get("floor") or "LIVE").strip().upper()
+        return f"{kind}:{floor}:{color}" if kind else None
+
+    if family == "LOSS_RISK":
+        room = _norm_room(str(rule.get("room") or ""))
+        floor = str(rule.get("floor") or "LIVE").strip().upper()
+        kind = str(rule.get("kind") or "").strip().upper()
+        hour = rule.get("hour")
+        if room and kind and hour is not None:
+            return f"{room}:{floor}:{kind}:H{int(hour)}:{color}"
+    return None
 
 
 def _cell_sets(data: dict) -> tuple[set[str], set[str], set[str]]:
@@ -65,6 +118,23 @@ def _cell_sets(data: dict) -> tuple[set[str], set[str], set[str]]:
         key = item.get("cell")
         if key:
             loss.add(str(key))
+
+    factory = _load_json(_FLOOR_FACTORY_REPORT)
+    for section in ("precision", "balanced"):
+        for item in factory.get(section, []):
+            key = _key_from_floor_rule(item)
+            if key:
+                elite.add(key)
+
+    for item in factory.get("volume", []):
+        key = _key_from_floor_rule(item)
+        if key:
+            watch.add(key)
+
+    for item in factory.get("blocked", []):
+        key = _key_from_floor_rule(item)
+        if key:
+            loss.add(key)
 
     return elite, watch, loss
 

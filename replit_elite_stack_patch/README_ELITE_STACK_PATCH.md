@@ -57,6 +57,21 @@ It adds four safe, read-only-by-default tools:
      G0 offset oracle, Tri-Brain verdicts, and loss-risk cells
    - writes `bot/data/edge_whitelist_engine.json`
 
+12. `bot/floor_stack_registry.py`
+   - classifies historical floors/camadas into PRECISION, BALANCED, VOLUME,
+     SHADOW, and BLOCK lanes
+   - writes `bot/data/floor_stack_registry_report.json`
+
+13. `bot/skyscraper_floor_factory.py`
+   - generates new virtual floors from peak days, room/hour/color cells,
+     floor/kind/hour/color cells, G0 offsets, and loss-risk cells
+   - writes `bot/data/skyscraper_floor_factory_report.json`
+
+14. `bot/skyscraper_stack.py`
+   - combines the best floors, generated floors, room cells, martingale,
+     timing, and truth warnings into one stack blueprint
+   - writes `bot/data/skyscraper_stack_report.json`
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -76,17 +91,33 @@ It also patches the dashboard/API:
 Run in Replit Shell:
 
 ```bash
-cd bot
-python elite_stack_audit.py
-python volume_frontier.py
-python g0_offset_oracle.py
-python tri_brain_score.py
-python edge_whitelist_engine.py
+cd ~/workspace
+python -u install_edge_tools.py
+export EDGE_POLICY_MODE=shadow
+```
+
+The installer downloads the tools, patches `bot/signal_handler.py`, compiles
+the patched files, and regenerates the fast reports. If your `signal_handler.py`
+is an older version, it installs EdgePolicy in shadow-only mode so it logs
+ALLOW/BLOCK decisions without changing live signal flow.
+
+Manual report refresh:
+
+```bash
+cd ~/workspace
+python -u bot/elite_stack_audit.py --db bot/bacbo.db
+python -u bot/volume_frontier.py --db bot/bacbo.db
+python -u bot/g0_offset_oracle.py --db bot/bacbo.db
+python -u bot/tri_brain_score.py --db bot/bacbo.db
+python -u bot/edge_whitelist_engine.py --db bot/bacbo.db
+python -u bot/floor_stack_registry.py --db bot/bacbo.db
+python -u bot/skyscraper_floor_factory.py --db bot/bacbo.db
+python -u bot/skyscraper_stack.py --db bot/bacbo.db
 ```
 
 Optional room cleanup after reviewing the report:
 
 ```bash
-cd bot
-python room_cleaner.py --apply
+cd ~/workspace
+python -u bot/room_cleaner.py --db bot/bacbo.db --apply
 ```
