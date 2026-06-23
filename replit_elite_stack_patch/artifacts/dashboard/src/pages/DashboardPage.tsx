@@ -69,6 +69,35 @@ function outcomeBadge(result: any): string {
   return g > 0 ? `G${g}` : "G0";
 }
 
+function actualColorFromSignal(signal: any): string {
+  const color = String(signal?.color || signal?.predictedColor || "").toLowerCase();
+  const outcome = String(signal?.outcome || "").toLowerCase();
+  if (signal?.actualColor) return String(signal.actualColor).toLowerCase();
+  if (outcome === "tie") return "tie";
+  if (outcome === "win") return color || "unknown";
+  if (outcome === "loss") {
+    if (color === "blue") return "red";
+    if (color === "red") return "blue";
+  }
+  return color || "unknown";
+}
+
+function normalizeVisualResult(raw: any): any | null {
+  if (!raw) return null;
+  const firedAt = raw.firedAt ?? raw.fired_at ?? raw.time ?? raw.ts ?? null;
+  const resolvedAt = raw.resolvedAt ?? raw.resolved_at ?? null;
+  const wonAtGale = raw.wonAtGale ?? raw.won_at_gale ?? raw.gale_depth ?? raw.gale ?? 0;
+  return {
+    ...raw,
+    firedAt,
+    resolvedAt,
+    wonAtGale,
+    secsToResult: raw.secsToResult ?? raw.secs_to_result ?? null,
+    actualColor: actualColorFromSignal(raw),
+    outcome: raw.outcome ?? "win",
+  };
+}
+
 export default function DashboardPage() {
   const [, setLoc] = useLocation();
   const { toast } = useToast();
@@ -404,6 +433,17 @@ export default function DashboardPage() {
 
   const s = statusQ.data;
   const b = bankrollQ.data;
+  const historySignals = histQ.data?.signals ?? [];
+  const analyticsSequence = analyticsQ.data?.sequence ?? [];
+  const latestVisualResult = normalizeVisualResult(
+    s?.lastResolved
+      ?? historySignals.find((x: any) => x?.outcome && x.outcome !== "pending")
+      ?? analyticsSequence[analyticsSequence.length - 1]
+  );
+  const recentVisualResults = (
+    (s?.recentResults?.length ? s.recentResults : historySignals.filter((x: any) => x?.outcome && x.outcome !== "pending"))
+      ?? []
+  ).slice(0, 10).map(normalizeVisualResult).filter(Boolean);
   const cooldownActive = (s?.lossStreak ?? 0) >= LOSS_COOLDOWN_THRESHOLD;
   const tiePressure = (s?.tiePressureRounds ?? 0) >= TIE_PRESSURE_THRESHOLD;
   const todayWr = s?.accuracy?.wr ?? null;
@@ -558,35 +598,35 @@ export default function DashboardPage() {
       )}
 
       <main className="max-w-lg mx-auto px-4 py-4 space-y-4 pb-8">
-        {s?.lastResolved && (
+        {latestVisualResult && (
           <div className="bg-gray-800/70 border border-gray-700 rounded-2xl p-3 shadow-lg">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-[10px] text-gray-500 uppercase tracking-wider">Last Result</p>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className={`px-3 py-1 rounded-xl border text-sm font-black ${resultColorClasses(s.lastResolved.actualColor)}`}>
-                    {resultLabel(s.lastResolved.actualColor)}
+                  <span className={`px-3 py-1 rounded-xl border text-sm font-black ${resultColorClasses(latestVisualResult.actualColor)}`}>
+                    {resultLabel(latestVisualResult.actualColor)}
                   </span>
                   <span className={`px-2 py-1 rounded-lg text-xs font-bold ${
-                    s.lastResolved.outcome === "loss" ? "bg-red-900/60 text-red-300" :
-                    s.lastResolved.outcome === "tie" ? "bg-yellow-900/60 text-yellow-300" :
+                    latestVisualResult.outcome === "loss" ? "bg-red-900/60 text-red-300" :
+                    latestVisualResult.outcome === "tie" ? "bg-yellow-900/60 text-yellow-300" :
                     "bg-emerald-900/60 text-emerald-300"
                   }`}>
-                    {s.lastResolved.outcome === "win" ? "✅" : s.lastResolved.outcome === "loss" ? "❌" : "🟡"} {outcomeBadge(s.lastResolved)}
+                    {latestVisualResult.outcome === "win" ? "✅" : latestVisualResult.outcome === "loss" ? "❌" : "🟡"} {outcomeBadge(latestVisualResult)}
                   </span>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-xs font-semibold text-cyan-300">{formatResultSeconds(s.lastResolved)}</p>
+                <p className="text-xs font-semibold text-cyan-300">{formatResultSeconds(latestVisualResult)}</p>
                 <p className="text-[10px] text-gray-500">
-                  fired {parseUtc(s.lastResolved.firedAt)?.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) ?? "—"}
+                  fired {parseUtc(latestVisualResult.firedAt)?.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) ?? "—"}
                 </p>
               </div>
             </div>
-            {(s.recentResults ?? []).length > 0 && (
+            {recentVisualResults.length > 0 && (
               <div className="flex gap-1.5 overflow-x-auto mt-3 pb-1">
-                {(s.recentResults ?? []).slice(0, 10).map((r: any) => (
-                  <div key={r.id} className={`shrink-0 min-w-[42px] rounded-xl border px-2 py-1 text-center ${resultColorClasses(r.actualColor)}`}>
+                {recentVisualResults.map((r: any, i: number) => (
+                  <div key={r.id ?? i} className={`shrink-0 min-w-[42px] rounded-xl border px-2 py-1 text-center ${resultColorClasses(r.actualColor)}`}>
                     <p className="text-[10px] font-black leading-tight">{resultLabel(r.actualColor)[0]}</p>
                     <p className="text-[9px] leading-tight opacity-90">{outcomeBadge(r)}</p>
                   </div>
