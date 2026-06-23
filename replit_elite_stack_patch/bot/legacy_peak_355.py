@@ -1,9 +1,10 @@
 """
-legacy_peak_355.py - Pawtucket 3:55am legacy/oracle window miner.
+legacy_peak_355.py - Pawtucket legacy/oracle moving-window miner.
 
 This keeps the special old config visible without blindly trusting it.
-It mines signals fired around 3:30-3:59am America/New_York time and emits
-candidate keys that the live policy can tag with a special warning.
+It mines strong local time windows across the whole America/New_York day and
+emits candidate keys that the live policy can tag with a special warning only
+when the current live signal is inside that matching window.
 
 Output:
   bot/data/legacy_peak_355_report.json
@@ -15,7 +16,7 @@ import json
 import os
 import sqlite3
 from dataclasses import asdict, dataclass
-from datetime import datetime, time as dtime, timezone
+from datetime import datetime, time as dtime, timedelta, timezone
 from typing import Any
 from zoneinfo import ZoneInfo
 
@@ -34,6 +35,8 @@ class LegacyCell:
     signal_kind: str
     color: str
     room: str | None
+    window_start: str
+    window_end: str
     n: int
     wins: int
     losses: int
@@ -77,6 +80,14 @@ def _in_window(local_dt: datetime, start: dtime, end: dtime) -> bool:
     return start <= current <= end
 
 
+def _slot_window(local_dt: datetime, slot_minutes: int) -> tuple[str, str]:
+    slot = max(5, int(slot_minutes))
+    minute = (local_dt.minute // slot) * slot
+    start = local_dt.replace(minute=minute, second=0, microsecond=0)
+    end = start + timedelta(minutes=slot) - timedelta(minutes=1)
+    return start.strftime("%H:%M"), end.strftime("%H:%M")
+
+
 def _pct(num: int, den: int) -> float | None:
     if den <= 0:
         return None
@@ -99,7 +110,7 @@ def _tier(n: int, wr: float | None, g0_wr: float | None, avg_secs: float | None)
 def _warning(tier: str) -> str:
     if tier == "LEGACY_ORACLE_CANDIDATE":
         return (
-            "LEGACY_355_PAWTUCKET: old 3:55am config match; possible early G0/offset edge. "
+            "LEGACY_355_PAWTUCKET: old moving-window config match; possible early G0/offset edge. "
             "Use G0-only unless direct Twin225 truth confirms pre-bet timing."
         )
     if tier == "LEGACY_WATCH":
@@ -110,7 +121,7 @@ def _warning(tier: str) -> str:
     return "LEGACY_355_PAWTUCKET SHADOW: archived old-window pattern; learn only."
 
 
-def _make_cell(key_type: str, key: str, rows: list[sqlite3.Row]) -> LegacyCell:
+def _make_cell(key_type: str, key: str, window_start: str, window_end: str, rows: list[sqlite3.Row]) -> LegacyCell:
     wins = sum(1 for r in rows if r["outcome"] == "win")
     losses = sum(1 for r in rows if r["outcome"] == "loss")
     ties = sum(1 for r in rows if r["outcome"] == "tie")
@@ -129,6 +140,8 @@ def _make_cell(key_type: str, key: str, rows: list[sqlite3.Row]) -> LegacyCell:
         signal_kind=str(first["signal_kind"] or "").upper(),
         color=str(first["color"] or "").lower(),
         room=_norm_room(first["rooms_agreed"]) or None,
+        window_start=window_start,
+        window_end=window_end,
         n=len(rows),
         wins=wins,
         losses=losses,
@@ -147,13 +160,13 @@ def build_report(
     end: str = "03:59",
     tz_name: str = TZ_NAME,
     min_n: int = 5,
+    dynamic_windows: bool = True,
+    slot_minutes: int = 30,
 ) -> dict[str, Any]:
     start_time = dtime.fromisoformat(start)
     end_time = dtime.fromisoformat(end)
     tz = ZoneInfo(tz_name)
 
-    # Pull only likely UTC hours for the local 03:xx window. This handles both
-    # daylight saving and standard time without scanning the whole table.
     with _connect(db_path) as conn:
         rows = conn.execute(
             """
@@ -162,20 +175,23 @@ def build_report(
             FROM consensus_signals
             WHERE outcome IN ('win','loss','tie')
               AND color IN ('blue','red')
-              AND CAST(strftime('%H', fired_at) AS INT) IN (7, 8)
             ORDER BY fired_at DESC
             """
         ).fetchall()
 
-    grouped: dict[tuple[str, str], list[sqlite3.Row]] = {}
+    grouped: dict[tuple[str, str, str, str], list[sqlite3.Row]] = {}
     total_window_rows = 0
     for row in rows:
         fired_utc = _parse_utc(row["fired_at"])
         if fired_utc is None:
             continue
         local_dt = fired_utc.astimezone(tz)
-        if not _in_window(local_dt, start_time, end_time):
-            continue
+        if dynamic_windows:
+            window_start, window_end = _slot_window(local_dt, slot_minutes)
+        else:
+            if not _in_window(local_dt, start_time, end_time):
+                continue
+            window_start, window_end = start, end
 
         total_window_rows += 1
         floor = str(row["source_floor"] or "LIVE").upper()
@@ -188,11 +204,11 @@ def build_report(
         if room:
             keys.append(("room_floor_kind_color", f"{room}:{floor}:{kind}:{color}"))
         for key_type, key in keys:
-            grouped.setdefault((key_type, key), []).append(row)
+            grouped.setdefault((key_type, key, window_start, window_end), []).append(row)
 
     cells = [
-        _make_cell(key_type, key, cell_rows)
-        for (key_type, key), cell_rows in grouped.items()
+        _make_cell(key_type, key, window_start, window_end, cell_rows)
+        for (key_type, key, window_start, window_end), cell_rows in grouped.items()
         if len(cell_rows) >= int(min_n)
     ]
     cells.sort(key=lambda c: (
@@ -212,15 +228,20 @@ def build_report(
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "timezone": tz_name,
-        "window_local": {"start": start, "end": end},
+        "mode": "dynamic_windows" if dynamic_windows else "fixed_window",
+        "window_local": (
+            {"slot_minutes": int(slot_minutes), "coverage": "all_day"}
+            if dynamic_windows else {"start": start, "end": end}
+        ),
         "summary": {
             "window_rows": total_window_rows,
             "candidate_cells": len(cells),
             "oracle_candidates": sum(1 for c in cells if c.legacy_tier == "LEGACY_ORACLE_CANDIDATE"),
             "watch_candidates": sum(1 for c in cells if c.legacy_tier == "LEGACY_WATCH"),
+            "unique_windows": len({(c.window_start, c.window_end) for c in cells}),
         },
         "legacy_warning": (
-            "SPECIAL LEGACY 3:55 PAWTUCKET WARNING: this signal matches the old config/time-window "
+            "SPECIAL LEGACY MOVING-WINDOW WARNING: this signal matches the old config/time-window "
             "that may have produced G0 wins before the casino result. Treat as G0-only and verify timing."
         ),
         "live_warning_keys": live_keys,
@@ -234,10 +255,20 @@ def save_report(
     end: str = "03:59",
     tz_name: str = TZ_NAME,
     min_n: int = 5,
+    dynamic_windows: bool = True,
+    slot_minutes: int = 30,
     path: str = REPORT_PATH,
 ) -> dict[str, Any]:
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    report = build_report(db_path, start=start, end=end, tz_name=tz_name, min_n=min_n)
+    report = build_report(
+        db_path,
+        start=start,
+        end=end,
+        tz_name=tz_name,
+        min_n=min_n,
+        dynamic_windows=dynamic_windows,
+        slot_minutes=slot_minutes,
+    )
     tmp = path + ".tmp"
     with open(tmp, "w", encoding="utf-8") as fh:
         json.dump(report, fh, indent=2, ensure_ascii=False)
@@ -247,15 +278,26 @@ def save_report(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Mine old 3:55am Pawtucket legacy config warnings")
+    parser = argparse.ArgumentParser(description="Mine old Pawtucket legacy moving-window warnings")
     parser.add_argument("--db", default=DB_PATH)
     parser.add_argument("--start", default="03:30")
     parser.add_argument("--end", default="03:59")
     parser.add_argument("--tz", default=TZ_NAME)
     parser.add_argument("--min-n", type=int, default=5)
+    parser.add_argument("--slot-minutes", type=int, default=30)
+    parser.add_argument("--fixed-window", action="store_true")
     parser.add_argument("--report", default=REPORT_PATH)
     args = parser.parse_args()
-    report = save_report(args.db, args.start, args.end, args.tz, args.min_n, args.report)
+    report = save_report(
+        args.db,
+        args.start,
+        args.end,
+        args.tz,
+        args.min_n,
+        dynamic_windows=not args.fixed_window,
+        slot_minutes=args.slot_minutes,
+        path=args.report,
+    )
     print(json.dumps({
         "generated_at": report["generated_at"],
         "timezone": report["timezone"],

@@ -322,7 +322,9 @@ def legacy_peak_355_floors(db_path: str) -> list[GeneratedFloor]:
             "kind": c.get("signal_kind"),
             "color": c.get("color"),
             "room": c.get("room"),
-            "window": "03:30-03:59 America/New_York",
+            "window_start": c.get("window_start"),
+            "window_end": c.get("window_end"),
+            "timezone": "America/New_York",
             "legacy_tier": c.get("legacy_tier"),
         }
         f = _mk(

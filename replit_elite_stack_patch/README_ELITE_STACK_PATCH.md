@@ -73,11 +73,12 @@ It adds four safe, read-only-by-default tools:
    - writes `bot/data/skyscraper_stack_report.json`
 
 15. `bot/legacy_peak_355.py`
-   - mines the old 3:30-3:59am Pawtucket window that may have produced
-     very early G0/offset results
+   - mines old Pawtucket moving time windows across the whole day that may
+     have produced very early G0/offset results
    - writes `bot/data/legacy_peak_355_report.json`
    - matching live signals get a `LEGACY_355_PAWTUCKET` warning added to
-     the signal text by the safe installer patch
+     the signal text only when the current local time is inside that mined
+     hot window
 
 It also patches the dashboard/API:
 
@@ -115,7 +116,7 @@ cd ~/workspace
 python -u bot/elite_stack_audit.py --db bot/bacbo.db
 python -u bot/volume_frontier.py --db bot/bacbo.db
 python -u bot/g0_offset_oracle.py --db bot/bacbo.db
-python -u bot/legacy_peak_355.py --db bot/bacbo.db
+python -u bot/legacy_peak_355.py --db bot/bacbo.db --slot-minutes 30
 python -u bot/tri_brain_score.py --db bot/bacbo.db
 python -u bot/edge_whitelist_engine.py --db bot/bacbo.db
 python -u bot/floor_stack_registry.py --db bot/bacbo.db
@@ -130,12 +131,13 @@ cd ~/workspace
 python -u bot/room_cleaner.py --db bot/bacbo.db --apply
 ```
 
-Legacy 3:55 warning controls:
+Legacy moving-window warning controls:
 
 ```bash
-# default: warnings are enabled only during 3:30-3:59am Pawtucket time
+# default: warnings are enabled when the signal matches its current mined
+# Pawtucket moving window from bot/data/legacy_peak_355_report.json
 export EDGE_LEGACY_355_WARN=1
 
-# testing only: force the warning matcher on outside that window
+# testing only: force the warning matcher on outside its mined window
 export EDGE_LEGACY_355_ALWAYS_WARN=1
 ```

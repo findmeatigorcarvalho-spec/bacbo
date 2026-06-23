@@ -66,15 +66,34 @@ def _mode() -> str:
     return mode if mode in {"shadow", "precision", "volume"} else "shadow"
 
 
-def _legacy_355_window() -> bool:
-    """Return true during the special Pawtucket 3:30-3:59am local window."""
+def _minutes(value: str) -> int | None:
+    try:
+        hour, minute = str(value).split(":", 1)
+        return int(hour) * 60 + int(minute)
+    except Exception:
+        return None
+
+
+def _active_legacy_window(item: dict, report: dict) -> bool:
     if os.environ.get("EDGE_LEGACY_355_ALWAYS_WARN", "").strip() == "1":
         return True
+    start = _minutes(str(item.get("window_start") or ""))
+    end = _minutes(str(item.get("window_end") or ""))
+    if start is None or end is None:
+        # Compatibility with older fixed 3:55 reports.
+        start = _minutes((report.get("window_local") or {}).get("start", "03:30"))
+        end = _minutes((report.get("window_local") or {}).get("end", "03:59"))
+    if start is None or end is None:
+        return False
     try:
-        local = datetime.now(timezone.utc).astimezone(ZoneInfo("America/New_York"))
-        return local.hour == 3 and 30 <= local.minute <= 59
+        tz_name = str(report.get("timezone") or "America/New_York")
+        local = datetime.now(timezone.utc).astimezone(ZoneInfo(tz_name))
+        current = local.hour * 60 + local.minute
     except Exception:
         return False
+    if start <= end:
+        return start <= current <= end
+    return current >= start or current <= end
 
 
 def _key_from_floor_rule(item: dict) -> str | None:
@@ -156,8 +175,6 @@ def _cell_sets(data: dict) -> tuple[set[str], set[str], set[str]]:
 def _legacy_355_warning(kind: str, color: str, floor: str, rooms: list[str]) -> str | None:
     if os.environ.get("EDGE_LEGACY_355_WARN", "1").strip().lower() in {"0", "false", "no"}:
         return None
-    if not _legacy_355_window():
-        return None
 
     report = _load_json(_LEGACY_355_REPORT)
     live_keys = report.get("live_warning_keys", [])
@@ -174,12 +191,15 @@ def _legacy_355_warning(kind: str, color: str, floor: str, rooms: list[str]) -> 
         key = str(item.get("key") or "")
         if key not in candidates:
             continue
+        if not _active_legacy_window(item, report):
+            continue
         warning = str(item.get("warning") or report.get("legacy_warning") or "")
         tier = str(item.get("legacy_tier") or "LEGACY_355_PAWTUCKET")
         wr = item.get("wr")
         g0_wr = item.get("g0_wr")
         n = item.get("n")
-        stats = f"{tier} key={key} n={n} wr={wr} g0={g0_wr}"
+        window = f"{item.get('window_start', '?')}-{item.get('window_end', '?')} {report.get('timezone', 'America/New_York')}"
+        stats = f"{tier} key={key} window={window} n={n} wr={wr} g0={g0_wr}"
         return f"{warning} | {stats}".strip()
     return None
 
