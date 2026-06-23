@@ -93,6 +93,11 @@ It adds four safe, read-only-by-default tools:
    - backs up `accuracy_blocks.json` and `ai_learned_rules.json` before edits
    - keeps whitelists/elite triplets/boosts; only removes stale block lists
 
+18. `bot/hotfix_signal_handler.py`
+   - patches known live `signal_handler.py` runtime crashes after backing up
+     the file
+   - currently fixes `_remaining` being read before assignment in DirectFire
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -149,6 +154,16 @@ old blocked hours/suspended kinds:
 cd ~/workspace
 python -u bot/unlock_signal_flow.py --dry-run
 python -u bot/unlock_signal_flow.py
+```
+
+Then restart `bacbo_royal_complete.py`.
+
+If logs show `UnboundLocalError: cannot access local variable '_remaining'`:
+
+```bash
+cd ~/workspace
+python -u bot/hotfix_signal_handler.py --dry-run
+python -u bot/hotfix_signal_handler.py
 ```
 
 Then restart `bacbo_royal_complete.py`.
