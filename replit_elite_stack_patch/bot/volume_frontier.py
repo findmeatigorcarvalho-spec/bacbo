@@ -260,7 +260,7 @@ def save_report(db_path: str = DB_PATH, path: str = REPORT_PATH) -> dict[str, An
     tmp = path + ".tmp"
     with open(tmp, "w", encoding="utf-8") as fh:
         json.dump(report, fh, indent=2, ensure_ascii=False)
-        fh.write("\\n")
+        fh.write("\n")
     os.replace(tmp, path)
     return report
 

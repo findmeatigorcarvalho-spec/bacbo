@@ -49,7 +49,14 @@ def patch_signal_handler() -> None:
         raise SystemExit("bot/signal_handler.py is missing. Restore it from full_replit_app.zip first.")
 
     s = p.read_text()
-    if "[EdgePolicy]" in s and "from edge_live_policy import evaluate" in s:
+    if "EdgePolicy/SHADOW" in s:
+        if patch_existing_edge_policy_legacy(p, s):
+            print("EdgePolicy shadow already installed; legacy warning path verified/upgraded")
+        else:
+            print("EdgePolicy shadow already installed in signal_handler.py")
+        return
+
+    if "EdgePolicy" in s and "edge_live_policy" in s:
         if patch_existing_edge_policy_legacy(p, s):
             print("EdgePolicy already installed; legacy warning path verified/upgraded")
         else:
@@ -160,6 +167,7 @@ def patch_existing_edge_policy_legacy(path: Path, source: str) -> bool:
 def patch_signal_handler_shadow(path: Path, source: str) -> int:
     """Install observe-only logging for older handlers with different gate layout."""
     if "EdgePolicy/SHADOW" in source:
+        patch_existing_edge_policy_legacy(path, source)
         print("EdgePolicy shadow already installed in signal_handler.py")
         return 1
 

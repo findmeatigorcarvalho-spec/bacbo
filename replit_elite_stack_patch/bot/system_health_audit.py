@@ -73,11 +73,21 @@ def _file_age_minutes(path: Path) -> float | None:
 def _json_ok(path: Path) -> tuple[bool, str]:
     if not path.exists():
         return False, "missing"
+    text = path.read_text(errors="ignore")
     try:
-        json.loads(path.read_text(errors="ignore"))
+        json.loads(text)
         age = _file_age_minutes(path)
         return True, f"valid json, age={age}m"
     except Exception as exc:
+        try:
+            decoder = json.JSONDecoder()
+            _obj, end = decoder.raw_decode(text)
+            trailing = text[end:].strip()
+            if trailing:
+                age = _file_age_minutes(path)
+                return True, f"valid first json with trailing data ({len(trailing)} chars), age={age}m"
+        except Exception:
+            pass
         return False, f"invalid json: {exc}"
 
 
@@ -100,6 +110,13 @@ def _scalar(conn: sqlite3.Connection, sql: str, params: tuple = ()) -> Any:
     if row is None:
         return None
     return row[0]
+
+
+def _columns(conn: sqlite3.Connection, table: str) -> set[str]:
+    try:
+        return {str(row["name"]) for row in conn.execute(f"PRAGMA table_info({table})").fetchall()}
+    except Exception:
+        return set()
 
 
 def check_runtime(env_file: dict[str, str]) -> list[Check]:
@@ -206,12 +223,13 @@ def check_reports() -> list[Check]:
         ok, detail = _json_ok(path)
         age = _file_age_minutes(path)
         stale = age is not None and age > 180
+        trailing = "trailing data" in detail
         checks.append(Check(
             "reports",
             name,
-            "WARN" if ok and stale else _status(ok),
+            "WARN" if ok and (stale or trailing) else _status(ok),
             detail + ("; stale" if stale else ""),
-            "Run python3 -u install_edge_tools.py or refresh the individual report." if (not ok or stale) else "",
+            "Run python3 -u install_edge_tools.py or refresh the individual report." if (not ok or stale or trailing) else "",
         ))
     return checks
 
@@ -265,15 +283,25 @@ def check_database(db_path: Path = DB_PATH) -> tuple[list[Check], dict[str, Any]
                 ))
 
             if _table_exists(conn, "channel_messages"):
-                metrics["messages_recent_1h"] = _scalar(
-                    conn,
-                    "SELECT COUNT(*) FROM channel_messages WHERE created_at >= datetime('now','-1 hour')",
-                ) or 0
+                cols = _columns(conn, "channel_messages")
+                ts_col = next(
+                    (c for c in ("created_at", "received_at", "message_at", "date", "timestamp", "ts") if c in cols),
+                    None,
+                )
+                if ts_col:
+                    metrics["messages_recent_1h"] = _scalar(
+                        conn,
+                        f"SELECT COUNT(*) FROM channel_messages WHERE {ts_col} >= datetime('now','-1 hour')",
+                    ) or 0
+                    detail = f"{metrics['messages_recent_1h']} messages in last hour via {ts_col}"
+                else:
+                    metrics["messages_recent_1h"] = _scalar(conn, "SELECT COUNT(*) FROM channel_messages") or 0
+                    detail = f"{metrics['messages_recent_1h']} total messages; no timestamp column found"
                 checks.append(Check(
                     "telegram",
                     "recent_channel_messages",
                     _status(metrics["messages_recent_1h"] > 0, warn=True),
-                    f"{metrics['messages_recent_1h']} messages in last hour",
+                    detail,
                     "If zero, Telegram tracking may be disconnected or room subscriptions failed.",
                 ))
     except Exception as exc:
