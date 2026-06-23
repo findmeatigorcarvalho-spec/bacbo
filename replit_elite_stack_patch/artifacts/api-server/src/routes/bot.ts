@@ -2576,6 +2576,10 @@ router.get("/bot/truth-verification", authMiddleware, (_req, res) => {
   return res.json(readBotDataReport("truth_verification_report.json"));
 });
 
+router.get("/bot/system-health-audit", authMiddleware, (_req, res) => {
+  return res.json(readBotDataReport("system_health_audit.json"));
+});
+
 // ── Floor Monitor ─────────────────────────────────────────────────────────────
 router.get("/bot/floors", authMiddleware, (_req, res) => {
   try {

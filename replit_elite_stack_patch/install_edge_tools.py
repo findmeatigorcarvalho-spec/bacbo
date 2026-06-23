@@ -19,6 +19,7 @@ FILES = [
     "bot/skyscraper_stack.py",
     "bot/floor_stack_registry.py",
     "bot/legacy_peak_355.py",
+    "bot/system_health_audit.py",
     "bot/tri_brain_score.py",
     "bot/g0_offset_oracle.py",
     "bot/volume_frontier.py",
@@ -244,6 +245,7 @@ def run_fast_reports() -> None:
         ["floor_stack_registry.py", "--db", str(db), "--report", str(BOT / "data/floor_stack_registry_report.json")],
         ["skyscraper_floor_factory.py", "--db", str(db), "--days", "30", "--report", str(BOT / "data/skyscraper_floor_factory_report.json")],
         ["skyscraper_stack.py", "--db", str(db), "--days", "30", "--report", str(BOT / "data/skyscraper_stack_report.json")],
+        ["system_health_audit.py", "--db", str(db), "--report", str(BOT / "data/system_health_audit.json")],
     ]
     for cmd in commands:
         print("run", " ".join(cmd))

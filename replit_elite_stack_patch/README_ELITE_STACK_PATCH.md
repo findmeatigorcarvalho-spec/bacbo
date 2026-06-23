@@ -80,6 +80,13 @@ It adds four safe, read-only-by-default tools:
      the signal text only when the current local time is inside that mined
      hot window
 
+16. `bot/system_health_audit.py`
+   - whole-app doctor for Telegram session, start files, signal hook,
+     EdgePolicy/Legacy warning, reports, DB activity, schedule/watchdog,
+     website/API patch files, and autonomous health
+   - writes `bot/data/system_health_audit.json`
+   - shown at the top of the dashboard Engine tab
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -122,6 +129,7 @@ python -u bot/edge_whitelist_engine.py --db bot/bacbo.db
 python -u bot/floor_stack_registry.py --db bot/bacbo.db
 python -u bot/skyscraper_floor_factory.py --db bot/bacbo.db
 python -u bot/skyscraper_stack.py --db bot/bacbo.db
+python -u bot/system_health_audit.py --db bot/bacbo.db
 ```
 
 Optional room cleanup after reviewing the report:

@@ -4,6 +4,7 @@ interface EngineTabProps {
   eliteStackQ?: any;
   martingaleAuditQ?: any;
   truthVerificationQ?: any;
+  systemHealthAuditQ?: any;
 }
 
 function pctColor(v: number | null | undefined, good = 70): string {
@@ -20,6 +21,7 @@ export default function EngineTab({
   eliteStackQ,
   martingaleAuditQ,
   truthVerificationQ,
+  systemHealthAuditQ,
 }: EngineTabProps) {
   const lagData = resultLagQ?.data;
   const lag5 = lagData?.lag5;
@@ -27,10 +29,58 @@ export default function EngineTab({
   const elite = eliteStackQ?.data;
   const martingale = martingaleAuditQ?.data;
   const truth = truthVerificationQ?.data;
+  const systemHealth = systemHealthAuditQ?.data;
 
   return (
     <div className="space-y-4">
       <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">🧠 Engine Health</h2>
+
+      <div className="bg-gray-800/60 border border-gray-700 rounded-2xl p-4">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">🩺 Whole App Doctor</p>
+          {systemHealth?.generated_at && <span className="text-[10px] text-gray-600">{new Date(systemHealth.generated_at).toLocaleString()}</span>}
+        </div>
+        {systemHealthAuditQ?.isLoading ? (
+          <p className="text-gray-500 text-sm">Loading system health audit…</p>
+        ) : systemHealth?.missing ? (
+          <p className="text-yellow-400 text-xs">Report missing. Run <code>python3 -u bot/system_health_audit.py --db bot/bacbo.db</code>.</p>
+        ) : systemHealth ? (
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center">
+              <div className="bg-gray-900/60 rounded-xl p-2">
+                <p className={`text-lg font-black ${
+                  systemHealth.summary?.verdict === "OK" ? "text-emerald-400" :
+                  systemHealth.summary?.verdict === "WATCH" ? "text-yellow-400" : "text-red-400"
+                }`}>{systemHealth.summary?.verdict ?? "—"}</p>
+                <p className="text-xs text-gray-500">verdict</p>
+              </div>
+              <div className="bg-gray-900/60 rounded-xl p-2"><p className="text-lg font-bold text-emerald-400">{systemHealth.summary?.counts?.OK ?? 0}</p><p className="text-xs text-gray-500">OK</p></div>
+              <div className="bg-gray-900/60 rounded-xl p-2"><p className="text-lg font-bold text-yellow-400">{systemHealth.summary?.counts?.WARN ?? 0}</p><p className="text-xs text-gray-500">warn</p></div>
+              <div className="bg-gray-900/60 rounded-xl p-2"><p className="text-lg font-bold text-red-400">{systemHealth.summary?.counts?.FAIL ?? 0}</p><p className="text-xs text-gray-500">fail</p></div>
+              <div className="bg-gray-900/60 rounded-xl p-2"><p className="text-lg font-bold text-cyan-300">{systemHealth.metrics?.signals_recent_24h ?? 0}</p><p className="text-xs text-gray-500">24h signals</p></div>
+            </div>
+            {(systemHealth.priority_fixes ?? []).length > 0 ? (
+              <div className="space-y-1.5 max-h-52 overflow-y-auto">
+                {(systemHealth.priority_fixes ?? []).slice(0, 12).map((c: any, i: number) => (
+                  <div key={`${c.area}-${c.name}-${i}`} className="bg-gray-900/50 rounded-lg px-3 py-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className={`font-black ${c.status === "FAIL" ? "text-red-400" : "text-yellow-400"}`}>{c.status}</span>
+                      <span className="text-gray-400">{c.area}</span>
+                      <span className="text-gray-200 font-semibold">{c.name}</span>
+                    </div>
+                    <p className="text-gray-500 mt-0.5">{c.detail}</p>
+                    {c.fix && <p className="text-cyan-300 mt-0.5">Fix: {c.fix}</p>}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-emerald-400 text-xs">No priority fixes detected.</p>
+            )}
+          </div>
+        ) : (
+          <p className="text-gray-500 text-sm">No system health report yet.</p>
+        )}
+      </div>
 
       <div className="bg-gray-800/60 border border-gray-700 rounded-2xl p-4">
         <div className="flex items-center justify-between mb-3">

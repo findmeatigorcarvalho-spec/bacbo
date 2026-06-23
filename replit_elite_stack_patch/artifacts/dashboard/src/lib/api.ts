@@ -106,6 +106,7 @@ export const api = {
   omniScoreReport:   () => req<any>("GET", "/bot/omni-score-report"),
   martingaleAudit:   () => req<any>("GET", "/bot/martingale-audit"),
   truthVerification: () => req<any>("GET", "/bot/truth-verification"),
+  systemHealthAudit: () => req<any>("GET", "/bot/system-health-audit"),
   brtHourWr:   () => req<any>("GET", "/bot/brt-hour-wr"),
   exportSignalsUrl: () => `${API}/bot/export-signals?token=${token()}`,
   exportBankrollUrl: () => `${API}/bot/export-bankroll?token=${token()}`,

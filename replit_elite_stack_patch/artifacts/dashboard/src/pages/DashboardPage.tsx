@@ -172,6 +172,7 @@ export default function DashboardPage() {
   const eliteStackQ   = useQuery({ queryKey: ["eliteStackAudit"], queryFn: api.eliteStackAudit, enabled: tab === "engine", refetchInterval: tab === "engine" ? 120_000 : false });
   const martingaleAuditQ = useQuery({ queryKey: ["martingaleAudit"], queryFn: api.martingaleAudit, enabled: tab === "engine", refetchInterval: tab === "engine" ? 120_000 : false });
   const truthVerificationQ = useQuery({ queryKey: ["truthVerification"], queryFn: api.truthVerification, enabled: tab === "engine", refetchInterval: tab === "engine" ? 120_000 : false });
+  const systemHealthAuditQ = useQuery({ queryKey: ["systemHealthAudit"], queryFn: api.systemHealthAudit, enabled: tab === "engine", refetchInterval: tab === "engine" ? 60_000 : false });
   const trendsQ       = useQuery({ queryKey: ["trends"],         queryFn: () => api.trends(9999), enabled: tab === "dashboard", refetchInterval: 60_000 });
   const heatmapQ      = useQuery({ queryKey: ["heatmap"],        queryFn: () => api.heatmap(9999), enabled: tab === "heatmap" || tab === "dashboard", refetchInterval: 60_000 });
   const dailyStatsQ   = useQuery({ queryKey: ["dailyStats"],     queryFn: api.dailyStats,          enabled: tab === "dashboard", refetchInterval: 60_000 });
@@ -653,6 +654,7 @@ export default function DashboardPage() {
             eliteStackQ={eliteStackQ}
             martingaleAuditQ={martingaleAuditQ}
             truthVerificationQ={truthVerificationQ}
+            systemHealthAuditQ={systemHealthAuditQ}
           />
         )}
 
