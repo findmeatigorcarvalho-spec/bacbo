@@ -98,6 +98,13 @@ It adds four safe, read-only-by-default tools:
      the file
    - currently fixes `_remaining` being read before assignment in DirectFire
 
+19. `bot/hotfix_signal_flow_dampers.py`
+   - disables stale DirectFire score dampers after backing up
+     `signal_handler.py`
+   - targets old blocked-hour cards, H22 danger/damp penalties, probation
+     caps, and WeakTrap penalties when candidates reach `► Signal kind=...`
+     but never reach final send
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -164,6 +171,17 @@ If logs show `UnboundLocalError: cannot access local variable '_remaining'`:
 cd ~/workspace
 python -u bot/hotfix_signal_handler.py --dry-run
 python -u bot/hotfix_signal_handler.py
+```
+
+Then restart `bacbo_royal_complete.py`.
+
+If logs show `► Signal kind=...` but final sends still do not happen and old
+H22/danger/probation/weak-trap dampers reduce the score:
+
+```bash
+cd ~/workspace
+python -u bot/hotfix_signal_flow_dampers.py --dry-run
+python -u bot/hotfix_signal_flow_dampers.py
 ```
 
 Then restart `bacbo_royal_complete.py`.
