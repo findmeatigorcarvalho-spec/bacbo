@@ -64,6 +64,11 @@ def _clear_blockish_keys(data: Any) -> tuple[Any, list[str]]:
             for key, value in obj.items():
                 lk = str(key).lower()
                 current = f"{path}.{key}" if path else str(key)
+                if lk == "post_loss_cooldown_signals":
+                    out[key] = value if isinstance(value, int) else 1
+                    if out[key] != value:
+                        changed.append(f"{current}:{value!r}->1")
+                    continue
                 if any(part in lk for part in block_key_parts):
                     if value:
                         size = len(value) if hasattr(value, "__len__") else 1
@@ -113,7 +118,6 @@ def clear_ai_learned_rules(backup_dir: Path, dry_run: bool = False) -> list[str]
         "hour_rules_golden",
         "hour_rules_solo_elite",
         "day_of_week_block",
-        "post_loss_cooldown_signals",
     ]
     changed: list[str] = []
     for key in keys_to_clear:
@@ -122,6 +126,11 @@ def clear_ai_learned_rules(backup_dir: Path, dry_run: bool = False) -> list[str]
             size = len(value) if hasattr(value, "__len__") else 1
             changed.append(f"{path.name}:{key}:{size}")
             data[key] = [] if isinstance(value, list) else {}
+
+    cooldown_value = data.get("post_loss_cooldown_signals")
+    if not isinstance(cooldown_value, int) or cooldown_value != 1:
+        changed.append(f"{path.name}:post_loss_cooldown_signals:{cooldown_value!r}->1")
+        data["post_loss_cooldown_signals"] = 1
 
     # Keep whitelists, triplets, and confidence boosts. Only neutralize block lists.
     if changed and not dry_run:
