@@ -87,6 +87,12 @@ It adds four safe, read-only-by-default tools:
    - writes `bot/data/system_health_audit.json`
    - shown at the top of the dashboard Engine tab
 
+17. `bot/unlock_signal_flow.py`
+   - clears stale learned hour/schedule blockers when the bot is connected
+     and receiving Telegram messages but no new color signals are firing
+   - backs up `accuracy_blocks.json` and `ai_learned_rules.json` before edits
+   - keeps whitelists/elite triplets/boosts; only removes stale block lists
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -135,6 +141,17 @@ python -u bot/skyscraper_floor_factory.py --db bot/bacbo.db
 python -u bot/skyscraper_stack.py --db bot/bacbo.db
 python -u bot/system_health_audit.py --db bot/bacbo.db
 ```
+
+If Telegram is connected but no new color signals fire and startup logs show
+old blocked hours/suspended kinds:
+
+```bash
+cd ~/workspace
+python -u bot/unlock_signal_flow.py --dry-run
+python -u bot/unlock_signal_flow.py
+```
+
+Then restart `bacbo_royal_complete.py`.
 
 Optional room cleanup after reviewing the report:
 

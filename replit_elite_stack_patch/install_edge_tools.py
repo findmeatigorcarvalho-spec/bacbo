@@ -20,6 +20,7 @@ FILES = [
     "bot/floor_stack_registry.py",
     "bot/legacy_peak_355.py",
     "bot/system_health_audit.py",
+    "bot/unlock_signal_flow.py",
     "bot/tri_brain_score.py",
     "bot/g0_offset_oracle.py",
     "bot/volume_frontier.py",
