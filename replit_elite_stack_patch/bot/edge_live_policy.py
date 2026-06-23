@@ -14,13 +14,16 @@ from __future__ import annotations
 import json
 import os
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
+from zoneinfo import ZoneInfo
 
 
 _DIR = Path(__file__).resolve().parent
 _REPORT = _DIR / "data" / "edge_whitelist_engine.json"
 _FLOOR_FACTORY_REPORT = _DIR / "data" / "skyscraper_floor_factory_report.json"
+_LEGACY_355_REPORT = _DIR / "data" / "legacy_peak_355_report.json"
 _CACHE = {"ts": 0.0, "data": None}
 _JSON_CACHE: dict[str, dict] = {}
 
@@ -61,6 +64,17 @@ def _load_json(path: Path) -> dict:
 def _mode() -> str:
     mode = os.environ.get("EDGE_POLICY_MODE", "shadow").strip().lower()
     return mode if mode in {"shadow", "precision", "volume"} else "shadow"
+
+
+def _legacy_355_window() -> bool:
+    """Return true during the special Pawtucket 3:30-3:59am local window."""
+    if os.environ.get("EDGE_LEGACY_355_ALWAYS_WARN", "").strip() == "1":
+        return True
+    try:
+        local = datetime.now(timezone.utc).astimezone(ZoneInfo("America/New_York"))
+        return local.hour == 3 and 30 <= local.minute <= 59
+    except Exception:
+        return False
 
 
 def _key_from_floor_rule(item: dict) -> str | None:
@@ -139,6 +153,44 @@ def _cell_sets(data: dict) -> tuple[set[str], set[str], set[str]]:
     return elite, watch, loss
 
 
+def _legacy_355_warning(kind: str, color: str, floor: str, rooms: list[str]) -> str | None:
+    if os.environ.get("EDGE_LEGACY_355_WARN", "1").strip().lower() in {"0", "false", "no"}:
+        return None
+    if not _legacy_355_window():
+        return None
+
+    report = _load_json(_LEGACY_355_REPORT)
+    live_keys = report.get("live_warning_keys", [])
+    if not isinstance(live_keys, list):
+        return None
+
+    candidates = {f"{floor}:{kind}:{color}"}
+    for room in rooms:
+        candidates.add(f"{room}:{floor}:{kind}:{color}")
+
+    for item in live_keys:
+        if not isinstance(item, dict):
+            continue
+        key = str(item.get("key") or "")
+        if key not in candidates:
+            continue
+        warning = str(item.get("warning") or report.get("legacy_warning") or "")
+        tier = str(item.get("legacy_tier") or "LEGACY_355_PAWTUCKET")
+        wr = item.get("wr")
+        g0_wr = item.get("g0_wr")
+        n = item.get("n")
+        stats = f"{tier} key={key} n={n} wr={wr} g0={g0_wr}"
+        return f"{warning} | {stats}".strip()
+    return None
+
+
+def _verdict(action: str, reason: str, matched: list[str], mode: str, legacy_warning: str | None) -> dict:
+    out = {"action": action, "reason": reason, "matched": matched, "mode": mode}
+    if legacy_warning:
+        out["legacy_warning"] = legacy_warning
+    return out
+
+
 def evaluate(
     kind: str,
     color: str,
@@ -174,63 +226,71 @@ def evaluate(
     matched_elite = [c for c in candidates if c in elite]
     matched_watch = [c for c in candidates if c in watch]
     matched_loss = [c for c in candidates if c in loss]
+    legacy_warning = _legacy_355_warning(kind, color, floor, rooms)
 
     if mode == "shadow":
         if matched_loss:
-            return {
-                "action": "SHADOW_BLOCK",
-                "reason": "EDGE_LOSS_RISK " + ", ".join(matched_loss[:3]),
-                "matched": matched_loss,
-                "mode": mode,
-            }
+            return _verdict(
+                "SHADOW_BLOCK",
+                "EDGE_LOSS_RISK " + ", ".join(matched_loss[:3]),
+                matched_loss,
+                mode,
+                legacy_warning,
+            )
         if matched_elite:
-            return {
-                "action": "SHADOW_ALLOW",
-                "reason": "EDGE_SNIPER " + ", ".join(matched_elite[:3]),
-                "matched": matched_elite,
-                "mode": mode,
-            }
+            return _verdict(
+                "SHADOW_ALLOW",
+                "EDGE_SNIPER " + ", ".join(matched_elite[:3]),
+                matched_elite,
+                mode,
+                legacy_warning,
+            )
         if matched_watch:
-            return {
-                "action": "SHADOW_ALLOW",
-                "reason": "EDGE_WATCH " + ", ".join(matched_watch[:3]),
-                "matched": matched_watch,
-                "mode": mode,
-            }
-        return {"action": "SHADOW_ALLOW", "reason": "EDGE_NO_MATCH", "matched": [], "mode": mode}
+            return _verdict(
+                "SHADOW_ALLOW",
+                "EDGE_WATCH " + ", ".join(matched_watch[:3]),
+                matched_watch,
+                mode,
+                legacy_warning,
+            )
+        return _verdict("SHADOW_ALLOW", "EDGE_NO_MATCH", [], mode, legacy_warning)
 
     if matched_loss:
-        return {
-            "action": "BLOCK",
-            "reason": "EDGE_LOSS_RISK " + ", ".join(matched_loss[:3]),
-            "matched": matched_loss,
-            "mode": mode,
-        }
+        return _verdict(
+            "BLOCK",
+            "EDGE_LOSS_RISK " + ", ".join(matched_loss[:3]),
+            matched_loss,
+            mode,
+            legacy_warning,
+        )
 
     if matched_elite:
-        return {
-            "action": "ALLOW",
-            "reason": "EDGE_SNIPER " + ", ".join(matched_elite[:3]),
-            "matched": matched_elite,
-            "mode": mode,
-        }
+        return _verdict(
+            "ALLOW",
+            "EDGE_SNIPER " + ", ".join(matched_elite[:3]),
+            matched_elite,
+            mode,
+            legacy_warning,
+        )
 
     if matched_watch:
         if mode == "volume":
-            return {
-                "action": "ALLOW",
-                "reason": "EDGE_WATCH_VOLUME " + ", ".join(matched_watch[:3]),
-                "matched": matched_watch,
-                "mode": mode,
-            }
-        return {
-            "action": "BLOCK",
-            "reason": "EDGE_WATCH_SHADOW " + ", ".join(matched_watch[:3]),
-            "matched": matched_watch,
-            "mode": mode,
-        }
+            return _verdict(
+                "ALLOW",
+                "EDGE_WATCH_VOLUME " + ", ".join(matched_watch[:3]),
+                matched_watch,
+                mode,
+                legacy_warning,
+            )
+        return _verdict(
+            "BLOCK",
+            "EDGE_WATCH_SHADOW " + ", ".join(matched_watch[:3]),
+            matched_watch,
+            mode,
+            legacy_warning,
+        )
 
     if mode == "precision":
-        return {"action": "BLOCK", "reason": "EDGE_NOT_WHITELISTED", "matched": [], "mode": mode}
+        return _verdict("BLOCK", "EDGE_NOT_WHITELISTED", [], mode, legacy_warning)
 
-    return {"action": "ALLOW", "reason": "EDGE_NO_MATCH_VOLUME", "matched": [], "mode": mode}
+    return _verdict("ALLOW", "EDGE_NO_MATCH_VOLUME", [], mode, legacy_warning)

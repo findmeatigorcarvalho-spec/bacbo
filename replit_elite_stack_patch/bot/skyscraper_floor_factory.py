@@ -307,6 +307,44 @@ def g0_offset_floors(db_path: str) -> list[GeneratedFloor]:
     return out
 
 
+def legacy_peak_355_floors(db_path: str) -> list[GeneratedFloor]:
+    try:
+        import legacy_peak_355
+        report = legacy_peak_355.save_report(db_path=db_path)
+        cells = report.get("live_warning_keys", [])[:80]
+    except Exception:
+        cells = []
+
+    out = []
+    for c in cells:
+        rule = {
+            "floor": c.get("source_floor"),
+            "kind": c.get("signal_kind"),
+            "color": c.get("color"),
+            "room": c.get("room"),
+            "window": "03:30-03:59 America/New_York",
+            "legacy_tier": c.get("legacy_tier"),
+        }
+        f = _mk(
+            "LEGACY_355_PAWTUCKET",
+            "legacy_window",
+            rule,
+            int(c.get("n") or 0),
+            c.get("wr"),
+            c.get("g0_wr"),
+            c.get("avg_secs"),
+            None,
+            None,
+            None,
+        )
+        f.lane = "SHADOW"
+        f.weight = 0.75 if c.get("legacy_tier") == "LEGACY_ORACLE_CANDIDATE" else 0.25
+        f.action = "WARN_G0_ONLY_SHADOW_VALIDATE"
+        f.warning = str(c.get("warning") or "legacy 3:55 Pawtucket warning")
+        out.append(f)
+    return out
+
+
 def loss_risk_floors(conn: sqlite3.Connection, days: int) -> list[GeneratedFloor]:
     first_room = _first_room_expr()
     rows = _rows(conn, f"""
@@ -349,6 +387,7 @@ def build_report(db_path: str = DB_PATH, days: int = 30) -> dict[str, Any]:
         generated += room_hour_color_floors(conn, days)
         generated += floor_kind_hour_color_floors(conn, days)
         generated += g0_offset_floors(db_path)
+        generated += legacy_peak_355_floors(db_path)
         loss = loss_risk_floors(conn, days)
 
     # Force loss-risk family to BLOCK.
@@ -385,7 +424,7 @@ def build_report(db_path: str = DB_PATH, days: int = 30) -> dict[str, Any]:
             "precision": "fire if Tri-Brain OK and no loss-risk conflict",
             "balanced": "fire in Good-Fire Max when Tri-Brain OK",
             "volume": "fire in Volume Max if no loss-risk and no opposite conflict",
-            "shadow": "learn only until promoted",
+            "shadow": "learn only until promoted; LEGACY_355_PAWTUCKET only adds a signal warning",
             "block": "never fire unless direct casino truth overrides",
         },
         "direct_truth_warning": "All WR here is BOT_DB_INFERRED unless casino_round_results has direct Twin225 rows.",

@@ -18,6 +18,7 @@ FILES = [
     "bot/skyscraper_floor_factory.py",
     "bot/skyscraper_stack.py",
     "bot/floor_stack_registry.py",
+    "bot/legacy_peak_355.py",
     "bot/tri_brain_score.py",
     "bot/g0_offset_oracle.py",
     "bot/volume_frontier.py",
@@ -74,6 +75,11 @@ def patch_signal_handler() -> None:
       )
       _edge_action = _edge_v.get("action")
       _edge_reason = _edge_v.get("reason", "")
+      _edge_warning = _edge_v.get("legacy_warning")
+      if _edge_warning:
+          log.info(f"[Legacy355] {_edge_warning}")
+          if isinstance(locals().get("msg"), str) and "LEGACY_355_PAWTUCKET" not in msg:
+              msg = msg + "\\n\\nWARNING LEGACY_355_PAWTUCKET\\n" + str(_edge_warning)
 
       if _edge_action == "BLOCK":
           log.info(f"⛔ [EdgePolicy] {kind}/{w_color} BLOCKED — {_edge_reason} | rooms={agreeing}")
@@ -144,6 +150,11 @@ def patch_signal_handler_shadow(path: Path, source: str) -> int:
 {indent}            source_floor=_edge_floor,
 {indent}            hour_utc=_edge_hour,
 {indent}        )
+{indent}        _edge_warning = _edge_v.get("legacy_warning")
+{indent}        if _edge_warning:
+{indent}            log.info(f"[Legacy355] {{_edge_warning}}")
+{indent}            if isinstance(locals().get("msg"), str) and "LEGACY_355_PAWTUCKET" not in msg:
+{indent}                msg = msg + "\\n\\nWARNING LEGACY_355_PAWTUCKET\\n" + str(_edge_warning)
 {indent}        log.info(
 {indent}            f"✅ [EdgePolicy/SHADOW] {{_edge_kind}}/{{_edge_color}} "
 {indent}            f"{{_edge_v.get('action')}} — {{_edge_v.get('reason')}} | rooms={{_edge_rooms}}"
@@ -177,6 +188,7 @@ def run_fast_reports() -> None:
     commands = [
         ["volume_frontier.py", "--db", str(db), "--report", str(BOT / "data/volume_frontier_report.json")],
         ["g0_offset_oracle.py", "--db", str(db), "--days", "9999", "--max-offset", "6", "--report", str(BOT / "data/g0_offset_oracle_report.json")],
+        ["legacy_peak_355.py", "--db", str(db), "--report", str(BOT / "data/legacy_peak_355_report.json")],
         ["tri_brain_score.py", "--db", str(db), "--train-days", "9999", "--score-days", "7", "--limit", "500", "--report", str(BOT / "data/tri_brain_report.json")],
         ["edge_whitelist_engine.py", "--db", str(db), "--days", "30", "--report", str(BOT / "data/edge_whitelist_engine.json")],
         ["floor_stack_registry.py", "--db", str(db), "--report", str(BOT / "data/floor_stack_registry_report.json")],

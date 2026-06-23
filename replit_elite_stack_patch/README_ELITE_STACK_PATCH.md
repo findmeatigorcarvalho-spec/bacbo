@@ -72,6 +72,13 @@ It adds four safe, read-only-by-default tools:
      timing, and truth warnings into one stack blueprint
    - writes `bot/data/skyscraper_stack_report.json`
 
+15. `bot/legacy_peak_355.py`
+   - mines the old 3:30-3:59am Pawtucket window that may have produced
+     very early G0/offset results
+   - writes `bot/data/legacy_peak_355_report.json`
+   - matching live signals get a `LEGACY_355_PAWTUCKET` warning added to
+     the signal text by the safe installer patch
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -108,6 +115,7 @@ cd ~/workspace
 python -u bot/elite_stack_audit.py --db bot/bacbo.db
 python -u bot/volume_frontier.py --db bot/bacbo.db
 python -u bot/g0_offset_oracle.py --db bot/bacbo.db
+python -u bot/legacy_peak_355.py --db bot/bacbo.db
 python -u bot/tri_brain_score.py --db bot/bacbo.db
 python -u bot/edge_whitelist_engine.py --db bot/bacbo.db
 python -u bot/floor_stack_registry.py --db bot/bacbo.db
@@ -120,4 +128,14 @@ Optional room cleanup after reviewing the report:
 ```bash
 cd ~/workspace
 python -u bot/room_cleaner.py --db bot/bacbo.db --apply
+```
+
+Legacy 3:55 warning controls:
+
+```bash
+# default: warnings are enabled only during 3:30-3:59am Pawtucket time
+export EDGE_LEGACY_355_WARN=1
+
+# testing only: force the warning matcher on outside that window
+export EDGE_LEGACY_355_ALWAYS_WARN=1
 ```
