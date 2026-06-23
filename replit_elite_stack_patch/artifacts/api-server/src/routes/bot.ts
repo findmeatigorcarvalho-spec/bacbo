@@ -488,9 +488,41 @@ function queryBotStatus(db: DatabaseSync): object {
     FROM consensus_signals cs WHERE cs.outcome='pending' ORDER BY cs.id DESC LIMIT 1
   `).get() as any;
 
-  const lastResolved = db.prepare(`
-    SELECT id, outcome FROM consensus_signals WHERE outcome NOT IN ('pending') ORDER BY id DESC LIMIT 1
-  `).get() as any;
+  const recentResolved = db.prepare(`
+    SELECT id, signal_kind, color, outcome, fired_at, resolved_at,
+           secs_to_result, won_at_gale, rooms_agreed, source_floor
+    FROM consensus_signals
+    WHERE outcome NOT IN ('pending')
+    ORDER BY id DESC
+    LIMIT 10
+  `).all() as any[];
+  const lastResolved = recentResolved[0] || null;
+
+  function actualColor(row: any): string {
+    const color = String(row?.color || "").toLowerCase();
+    const outcome = String(row?.outcome || "").toLowerCase();
+    if (outcome === "tie") return "tie";
+    if (outcome === "win") return color || "unknown";
+    if (outcome === "loss") {
+      if (color === "blue") return "red";
+      if (color === "red") return "blue";
+    }
+    return color || "unknown";
+  }
+
+  const recentResults = recentResolved.map((row: any) => ({
+    id: row.id,
+    outcome: row.outcome,
+    signalKind: row.signal_kind,
+    predictedColor: row.color,
+    actualColor: actualColor(row),
+    firedAt: row.fired_at,
+    resolvedAt: row.resolved_at,
+    secsToResult: row.secs_to_result,
+    wonAtGale: row.won_at_gale,
+    rooms: row.rooms_agreed,
+    sourceFloor: row.source_floor,
+  }));
 
   const rooms = db.prepare(`
     SELECT r.handle, r.is_muted,
@@ -557,6 +589,8 @@ function queryBotStatus(db: DatabaseSync): object {
     lastPending: last || null,
     lastResolvedId: (lastResolved?.id ?? null) as number | null,
     lastOutcome: (lastResolved?.outcome ?? null) as string | null,
+    lastResolved: recentResults[0] || null,
+    recentResults,
     rooms,
     lossStreak,
     tiePressureRounds: tiePressure.cnt,

@@ -29,6 +29,46 @@ import FloorBattleTab from "@/components/tabs/FloorBattleTab";
 
 type TabKey = "live" | "dashboard" | "leaderboard" | "history" | "users" | "rooms" | "cycles" | "broadcast" | "engine" | "heatmap" | "bankroll" | "activity" | "g0" | "guide" | "floors" | "feed" | "battle";
 
+function parseUtc(value?: string | null): Date | null {
+  if (!value) return null;
+  const text = value.includes("Z") || value.includes("+") ? value : `${value}Z`;
+  const d = new Date(text);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function formatResultSeconds(result: any): string {
+  const direct = Number(result?.secsToResult);
+  if (Number.isFinite(direct) && direct >= 0) return `${Math.round(direct)}s from fire`;
+  const fired = parseUtc(result?.firedAt);
+  const resolved = parseUtc(result?.resolvedAt);
+  if (fired && resolved) {
+    const secs = Math.max(0, Math.round((resolved.getTime() - fired.getTime()) / 1000));
+    return `${secs}s from fire`;
+  }
+  return "timing pending";
+}
+
+function resultColorClasses(color?: string | null): string {
+  if (color === "blue") return "bg-blue-600/90 text-white border-blue-300/60";
+  if (color === "red") return "bg-red-600/90 text-white border-red-300/60";
+  if (color === "tie") return "bg-yellow-500/90 text-black border-yellow-200/70";
+  return "bg-gray-700 text-gray-200 border-gray-500";
+}
+
+function resultLabel(color?: string | null): string {
+  if (color === "blue") return "BLUE";
+  if (color === "red") return "RED";
+  if (color === "tie") return "TIE";
+  return "—";
+}
+
+function outcomeBadge(result: any): string {
+  if (result?.outcome === "tie") return "T";
+  if (result?.outcome === "loss") return "L";
+  const g = Number(result?.wonAtGale ?? 0);
+  return g > 0 ? `G${g}` : "G0";
+}
+
 export default function DashboardPage() {
   const [, setLoc] = useLocation();
   const { toast } = useToast();
@@ -518,6 +558,43 @@ export default function DashboardPage() {
       )}
 
       <main className="max-w-lg mx-auto px-4 py-4 space-y-4 pb-8">
+        {s?.lastResolved && (
+          <div className="bg-gray-800/70 border border-gray-700 rounded-2xl p-3 shadow-lg">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-[10px] text-gray-500 uppercase tracking-wider">Last Result</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className={`px-3 py-1 rounded-xl border text-sm font-black ${resultColorClasses(s.lastResolved.actualColor)}`}>
+                    {resultLabel(s.lastResolved.actualColor)}
+                  </span>
+                  <span className={`px-2 py-1 rounded-lg text-xs font-bold ${
+                    s.lastResolved.outcome === "loss" ? "bg-red-900/60 text-red-300" :
+                    s.lastResolved.outcome === "tie" ? "bg-yellow-900/60 text-yellow-300" :
+                    "bg-emerald-900/60 text-emerald-300"
+                  }`}>
+                    {s.lastResolved.outcome === "win" ? "✅" : s.lastResolved.outcome === "loss" ? "❌" : "🟡"} {outcomeBadge(s.lastResolved)}
+                  </span>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-xs font-semibold text-cyan-300">{formatResultSeconds(s.lastResolved)}</p>
+                <p className="text-[10px] text-gray-500">
+                  fired {parseUtc(s.lastResolved.firedAt)?.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) ?? "—"}
+                </p>
+              </div>
+            </div>
+            {(s.recentResults ?? []).length > 0 && (
+              <div className="flex gap-1.5 overflow-x-auto mt-3 pb-1">
+                {(s.recentResults ?? []).slice(0, 10).map((r: any) => (
+                  <div key={r.id} className={`shrink-0 min-w-[42px] rounded-xl border px-2 py-1 text-center ${resultColorClasses(r.actualColor)}`}>
+                    <p className="text-[10px] font-black leading-tight">{resultLabel(r.actualColor)[0]}</p>
+                    <p className="text-[9px] leading-tight opacity-90">{outcomeBadge(r)}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         {tab === "live" && (
           <LiveTab

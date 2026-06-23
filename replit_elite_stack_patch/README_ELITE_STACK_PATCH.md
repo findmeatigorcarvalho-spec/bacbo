@@ -90,6 +90,8 @@ It adds four safe, read-only-by-default tools:
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
+  - enriches `/api/bot/status` with `lastResolved` and `recentResults`
+    including actual result color and seconds from fired signal to result
   - adds `/api/bot/result-lag-patterns`
   - adds `/api/bot/elite-stack-audit`
   - adds `/api/bot/room-cleaner-report`
@@ -100,6 +102,8 @@ It also patches the dashboard/API:
   - adds frontend methods for those endpoints
 - `artifacts/dashboard/src/pages/DashboardPage.tsx`
   - fetches the new reports for the Engine tab
+  - restores a live visual result strip showing last result color, outcome
+    badge, and timing from fired signal to result
 - `artifacts/dashboard/src/components/tabs/EngineTab.tsx`
   - shows truth verification, martingale, lag-5 pattern, and Elite Stack summary
 
