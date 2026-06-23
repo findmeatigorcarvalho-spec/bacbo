@@ -1,12 +1,26 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-06-18T18:12:49.643594+00:00",
+  "updated_at": "2026-06-23T08:41:00.518393+00:00",
   "runtime_disabled": [
     "m8sinais_lead_anchor",
     "solo_red_death_minute_gate",
     "streak_reversal"
   ],
-  "retired_gates": [],
+  "retired_gates": [
+    "m8sinais_lead_anchor",
+    "solo_red_death_minute_gate",
+    "streak_reversal"
+  ],
   "retest_candidates": [],
-  "audit_log": []
+  "audit_log": [
+    {
+      "timestamp": "2026-06-23T08:41:00.518378+00:00",
+      "action": "retire",
+      "gates": [
+        "m8sinais_lead_anchor",
+        "solo_red_death_minute_gate",
+        "streak_reversal"
+      ]
+    }
+  ]
 }
