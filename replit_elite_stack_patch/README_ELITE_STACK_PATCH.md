@@ -111,6 +111,10 @@ It adds four safe, read-only-by-default tools:
    - optional volume mode sends selected `blocked_signals` from gates that
      ShadowMode says are costing money: `FALLBACK_SEND_BLOCKED=1`
 
+21. `bot/runtime_supervisor.py`
+   - keeps exactly one bot process and one fallback sender alive
+   - restarts either process on crash and writes logs to `logs/`
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -183,6 +187,13 @@ Volume fallback mode:
 ```bash
 cd ~/workspace
 FALLBACK_SEND_BLOCKED=1 FALLBACK_MIN_BLOCKED_SCORE=4.0 python -u bot/fallback_signal_sender.py
+```
+
+Recommended supervised runtime:
+
+```bash
+cd ~/workspace
+FALLBACK_SEND_BLOCKED=1 FALLBACK_MIN_BLOCKED_SCORE=6.0 python3 -u bot/runtime_supervisor.py
 ```
 
 If logs show `UnboundLocalError: cannot access local variable '_remaining'`:
