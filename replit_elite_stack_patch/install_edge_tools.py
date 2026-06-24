@@ -23,6 +23,7 @@ FILES = [
     "bot/unlock_signal_flow.py",
     "bot/hotfix_signal_handler.py",
     "bot/hotfix_signal_flow_dampers.py",
+    "bot/fallback_signal_sender.py",
     "bot/tri_brain_score.py",
     "bot/g0_offset_oracle.py",
     "bot/volume_frontier.py",

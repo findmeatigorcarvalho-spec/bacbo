@@ -105,6 +105,12 @@ It adds four safe, read-only-by-default tools:
      caps, and WeakTrap penalties when candidates reach `► Signal kind=...`
      but never reach final send
 
+20. `bot/fallback_signal_sender.py`
+   - sends Telegram cards from new `consensus_signals` rows when the native
+     Telegram card sender is broken
+   - optional volume mode sends selected `blocked_signals` from gates that
+     ShadowMode says are costing money: `FALLBACK_SEND_BLOCKED=1`
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -164,6 +170,20 @@ python -u bot/unlock_signal_flow.py
 ```
 
 Then restart `bacbo_royal_complete.py`.
+
+Fallback Telegram output:
+
+```bash
+cd ~/workspace
+python -u bot/fallback_signal_sender.py
+```
+
+Volume fallback mode:
+
+```bash
+cd ~/workspace
+FALLBACK_SEND_BLOCKED=1 FALLBACK_MIN_BLOCKED_SCORE=4.0 python -u bot/fallback_signal_sender.py
+```
 
 If logs show `UnboundLocalError: cannot access local variable '_remaining'`:
 
