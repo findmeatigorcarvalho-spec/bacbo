@@ -4,6 +4,7 @@ runtime_supervisor.py - keep the Replit bot and fallback sender alive.
 Starts and monitors:
   - bacbo_royal_complete.py
   - bot/fallback_signal_sender.py
+  - bot/fallback_result_sender.py
 
 It guarantees required environment variables/PYTHONPATH and restarts either
 process if it exits. Run from /home/runner/workspace:
@@ -68,6 +69,7 @@ def main() -> int:
     processes: dict[str, tuple[list[str], subprocess.Popen | None, float]] = {
         "bot_live": ([sys.executable, "-u", str(ROOT / "bacbo_royal_complete.py")], None, 0.0),
         "fallback_sender": ([sys.executable, "-u", str(BOT / "fallback_signal_sender.py")], None, 0.0),
+        "fallback_result_sender": ([sys.executable, "-u", str(BOT / "fallback_result_sender.py")], None, 0.0),
     }
     env["FALLBACK_SEND_BLOCKED"] = env.get("FALLBACK_SEND_BLOCKED", "1")
     env["FALLBACK_MIN_BLOCKED_SCORE"] = env.get("FALLBACK_MIN_BLOCKED_SCORE", "6.0")
