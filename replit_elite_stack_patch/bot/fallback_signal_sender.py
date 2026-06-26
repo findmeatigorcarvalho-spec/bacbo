@@ -33,6 +33,7 @@ BLOCK_STATE = HERE / "data/fallback_blocked_sender_state.txt"
 
 MIN_BLOCKED_SCORE = float(os.environ.get("FALLBACK_MIN_BLOCKED_SCORE", "4.0"))
 SEND_BLOCKED = os.environ.get("FALLBACK_SEND_BLOCKED", "0").strip() == "1"
+BLOCKED_LOOKBACK_HOURS = int(os.environ.get("FALLBACK_BLOCKED_LOOKBACK_HOURS", "24"))
 
 COSTING_MONEY_GATES = {
     "auto_vault_block",
@@ -52,8 +53,14 @@ COSTING_MONEY_GATES = {
     "solo_g3_cap",
     "kind_suspended",
     "platinum_hour_block",
+    "platinum_dow_block",
+    "platinum_pair_hour_block",
     "room_hour_block_platinum",
+    "golden_dow_cell_block",
     "coringa_hour_block",
+    "solo_conf_floor",
+    "solo_threshold",
+    "pending_signal_exists",
     "solo_red_death_minute_gate",
     "tight_g3_spread",
     "room_quality_gate",
@@ -131,7 +138,10 @@ async def main() -> None:
     client = TelegramClient(StringSession(session), int(api_id), api_hash)
     await client.connect()
     entity = await client.get_entity(target)
-    print(f"[FallbackSender] started target={target} send_blocked={SEND_BLOCKED} min_blocked_score={MIN_BLOCKED_SCORE}")
+    print(
+        f"[FallbackSender] started target={target} send_blocked={SEND_BLOCKED} "
+        f"min_blocked_score={MIN_BLOCKED_SCORE} blocked_lookback_h={BLOCKED_LOOKBACK_HOURS}"
+    )
 
     while True:
         try:
@@ -161,12 +171,12 @@ async def main() -> None:
                     SELECT id, blocked_at, signal_kind, color, rooms_agreed, score, gate_reason
                     FROM blocked_signals
                     WHERE id > ?
-                      AND blocked_at >= datetime('now','-2 hours')
+                      AND blocked_at >= datetime('now', ?)
                       AND score >= ?
                     ORDER BY id ASC
                     LIMIT 30
                     """,
-                    (last_bid, MIN_BLOCKED_SCORE),
+                    (last_bid, f"-{BLOCKED_LOOKBACK_HOURS} hours", MIN_BLOCKED_SCORE),
                 ).fetchall()
                 for row in blocked_rows:
                     gate = row["gate_reason"] or ""
