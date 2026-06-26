@@ -24,6 +24,7 @@ FILES = [
     "bot/hotfix_signal_handler.py",
     "bot/hotfix_signal_flow_dampers.py",
     "bot/fallback_signal_sender.py",
+    "bot/fallback_result_sender.py",
     "bot/runtime_supervisor.py",
     "bot/tri_brain_score.py",
     "bot/g0_offset_oracle.py",

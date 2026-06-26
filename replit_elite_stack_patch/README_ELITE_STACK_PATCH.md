@@ -111,7 +111,11 @@ It adds four safe, read-only-by-default tools:
    - optional volume mode sends selected `blocked_signals` from gates that
      ShadowMode says are costing money: `FALLBACK_SEND_BLOCKED=1`
 
-21. `bot/runtime_supervisor.py`
+21. `bot/fallback_result_sender.py`
+   - sends rich forensic result cards for resolved signals with BRT/EDT time
+     and `⏱ Intervalo: <seconds>`
+
+22. `bot/runtime_supervisor.py`
    - keeps exactly one bot process and one fallback sender alive
    - restarts either process on crash and writes logs to `logs/`
 
