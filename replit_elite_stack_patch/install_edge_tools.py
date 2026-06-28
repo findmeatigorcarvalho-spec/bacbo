@@ -23,6 +23,7 @@ FILES = [
     "bot/unlock_signal_flow.py",
     "bot/hotfix_signal_handler.py",
     "bot/hotfix_signal_flow_dampers.py",
+    "bot/hotfix_room_noise_filter.py",
     "bot/fallback_signal_sender.py",
     "bot/fallback_result_sender.py",
     "bot/runtime_supervisor.py",

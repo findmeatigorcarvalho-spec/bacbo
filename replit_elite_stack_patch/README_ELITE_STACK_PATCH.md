@@ -119,6 +119,11 @@ It adds four safe, read-only-by-default tools:
    - keeps exactly one bot process and one fallback sender alive
    - restarts either process on crash and writes logs to `logs/`
 
+23. `bot/hotfix_room_noise_filter.py`
+   - stops room-only chatter/status messages from being relayed to the main
+     chat and saves them to `bot/data/room_noise_messages.jsonl`
+   - examples: win-streak spam, scoreboards, ads, generic analyzing notices
+
 It also patches the dashboard/API:
 
 - `artifacts/api-server/src/routes/bot.ts`
@@ -217,6 +222,16 @@ H22/danger/probation/weak-trap dampers reduce the score:
 cd ~/workspace
 python -u bot/hotfix_signal_flow_dampers.py --dry-run
 python -u bot/hotfix_signal_flow_dampers.py
+```
+
+Then restart `bacbo_royal_complete.py`.
+
+If the main chat is flooded by room-only messages:
+
+```bash
+cd ~/workspace
+python -u bot/hotfix_room_noise_filter.py --dry-run
+python -u bot/hotfix_room_noise_filter.py
 ```
 
 Then restart `bacbo_royal_complete.py`.
