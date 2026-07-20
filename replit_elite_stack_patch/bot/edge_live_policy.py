@@ -5,9 +5,10 @@ Modes:
   shadow    = observe only; never blocks
   precision = SNIPER/ELITE cells fire; non-whitelist and loss-risk block
   volume    = SNIPER/ELITE + WATCH cells fire; loss-risk blocks
+  luxury    = all WR>=60 live-building floors fire; blocked floors + loss-risk block
 
 Set with:
-  EDGE_POLICY_MODE=shadow|precision|volume
+  EDGE_POLICY_MODE=shadow|precision|volume|luxury
 """
 from __future__ import annotations
 
@@ -24,6 +25,8 @@ _DIR = Path(__file__).resolve().parent
 _REPORT = _DIR / "data" / "edge_whitelist_engine.json"
 _FLOOR_FACTORY_REPORT = _DIR / "data" / "skyscraper_floor_factory_report.json"
 _LEGACY_355_REPORT = _DIR / "data" / "legacy_peak_355_report.json"
+_LUXURY_STACK_REPORT = _DIR / "data" / "luxury_building_stack.json"
+_FLOOR_REGISTRY_REPORT = _DIR / "data" / "floor_stack_registry_report.json"
 _CACHE = {"ts": 0.0, "data": None}
 _JSON_CACHE: dict[str, dict] = {}
 
@@ -63,7 +66,39 @@ def _load_json(path: Path) -> dict:
 
 def _mode() -> str:
     mode = os.environ.get("EDGE_POLICY_MODE", "shadow").strip().lower()
-    return mode if mode in {"shadow", "precision", "volume"} else "shadow"
+    return mode if mode in {"shadow", "precision", "volume", "luxury"} else "shadow"
+
+
+def _luxury_sets() -> tuple[set[str], set[str]]:
+    """Return (live_building floors, blocked floors) for luxury gate."""
+    live: set[str] = set()
+    blocked: set[str] = {"JUN12A", "JUN12B"}
+
+    lux = _load_json(_LUXURY_STACK_REPORT)
+    for name in lux.get("live_building_floors") or []:
+        if name:
+            live.add(str(name).strip().upper())
+    for name in lux.get("blocked_floors") or []:
+        if name:
+            blocked.add(str(name).strip().upper())
+
+    # Fallback to registry lanes if luxury stack not generated yet.
+    if not live:
+        reg = _load_json(_FLOOR_REGISTRY_REPORT)
+        for section in ("precision", "balanced", "volume", "live_building"):
+            for item in reg.get(section, []) or []:
+                if isinstance(item, dict) and item.get("floor"):
+                    live.add(str(item["floor"]).strip().upper())
+                elif isinstance(item, str):
+                    live.add(item.strip().upper())
+        for item in reg.get("blocked", []) or []:
+            if isinstance(item, dict) and item.get("floor"):
+                blocked.add(str(item["floor"]).strip().upper())
+
+    # Always keep core production floors if reports are empty.
+    if not live:
+        live.update({"LIVE", "ELITE_V2", "ULTIMATE"})
+    return live, blocked
 
 
 def _minutes(value: str) -> int | None:
@@ -247,8 +282,18 @@ def evaluate(
     matched_watch = [c for c in candidates if c in watch]
     matched_loss = [c for c in candidates if c in loss]
     legacy_warning = _legacy_355_warning(kind, color, floor, rooms)
+    live_floors, blocked_floors = _luxury_sets()
+    floor_gate = os.environ.get("EDGE_LUXURY_FLOOR_GATE", "1").strip() not in {"0", "false", "no"}
 
     if mode == "shadow":
+        if floor in blocked_floors:
+            return _verdict(
+                "SHADOW_BLOCK",
+                f"EDGE_FLOOR_BLOCKED {floor}",
+                [floor],
+                mode,
+                legacy_warning,
+            )
         if matched_loss:
             return _verdict(
                 "SHADOW_BLOCK",
@@ -275,11 +320,55 @@ def evaluate(
             )
         return _verdict("SHADOW_ALLOW", "EDGE_NO_MATCH", [], mode, legacy_warning)
 
+    # Hard floor blocks always apply outside shadow.
+    if floor in blocked_floors:
+        return _verdict(
+            "BLOCK",
+            f"EDGE_FLOOR_BLOCKED {floor}",
+            [floor],
+            mode,
+            legacy_warning,
+        )
+
     if matched_loss:
         return _verdict(
             "BLOCK",
             "EDGE_LOSS_RISK " + ", ".join(matched_loss[:3]),
             matched_loss,
+            mode,
+            legacy_warning,
+        )
+
+    # Luxury mode: every WR>=60 live-building floor can fire (plus sniper/watch cells).
+    if mode == "luxury":
+        if floor_gate and floor not in live_floors:
+            return _verdict(
+                "BLOCK",
+                f"EDGE_FLOOR_NOT_IN_LUXURY {floor}",
+                [floor],
+                mode,
+                legacy_warning,
+            )
+        if matched_elite:
+            return _verdict(
+                "ALLOW",
+                "EDGE_LUXURY_SNIPER " + ", ".join(matched_elite[:3]),
+                matched_elite,
+                mode,
+                legacy_warning,
+            )
+        if matched_watch:
+            return _verdict(
+                "ALLOW",
+                "EDGE_LUXURY_WATCH " + ", ".join(matched_watch[:3]),
+                matched_watch,
+                mode,
+                legacy_warning,
+            )
+        return _verdict(
+            "ALLOW",
+            f"EDGE_LUXURY_FLOOR {floor}",
+            [floor],
             mode,
             legacy_warning,
         )
@@ -312,5 +401,15 @@ def evaluate(
 
     if mode == "precision":
         return _verdict("BLOCK", "EDGE_NOT_WHITELISTED", [], mode, legacy_warning)
+
+    # volume mode also respects luxury floor allowlist when gate is on.
+    if floor_gate and live_floors and floor not in live_floors:
+        return _verdict(
+            "BLOCK",
+            f"EDGE_FLOOR_NOT_IN_LUXURY {floor}",
+            [floor],
+            mode,
+            legacy_warning,
+        )
 
     return _verdict("ALLOW", "EDGE_NO_MATCH_VOLUME", [], mode, legacy_warning)

@@ -1,0 +1,34 @@
+{
+  "live_floors": [
+    "AITEST_ULTIMATE",
+    "AITEST_APR20_MAX",
+    "MAY01",
+    "APR20",
+    "LIVE",
+    "APR27",
+    "ELITE_V2",
+    "ULTIMATE",
+    "AITEST_LIVE",
+    "APR22",
+    "APR26",
+    "APR20_MAX",
+    "MAY19",
+    "MAY10",
+    "MAR21",
+    "APR29",
+    "ELITE_V2_PEAK",
+    "MAR19",
+    "MAY11",
+    "MAR20",
+    "AITEST_MAR21",
+    "APR30",
+    "APR28",
+    "AITEST_APR20",
+    "MAY04",
+    "APR19"
+  ],
+  "blocked": [
+    "JUN12A",
+    "JUN12B"
+  ]
+}

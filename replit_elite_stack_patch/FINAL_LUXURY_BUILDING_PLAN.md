@@ -4,7 +4,7 @@
 - **Floor / camada** = engine config version (`LIVE`, `ELITE_V2`, `MAR19`…) — how the bot decides.
 - **Room** = Telegram source (`@rqdados`, `@IsaDados`…) — who feeds coalitions.
 - Latest Replit export: **26 floors** in DB · **79 rooms** in `rooms` table.
-- Live luxury lanes today: **12 floors**. Missing under ≥60% WR rule: **~14** shadow floors.
+- Live luxury lanes: **26 floors** (every WR≥60% n≥10). Blocked: JUN12A/JUN12B. Mode: `EDGE_POLICY_MODE=luxury`.
 
 ---
 

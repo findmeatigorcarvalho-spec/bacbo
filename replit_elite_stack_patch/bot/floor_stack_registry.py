@@ -36,6 +36,14 @@ PEAK_VOLUME = {
 }
 ELITE_CORE = {"ELITE_V2", "ULTIMATE"}
 
+# Hard-blocked floors — never live-fire regardless of sample WR.
+HARD_BLOCK_FLOORS = {"JUN12A", "JUN12B"}
+
+# Luxury building rule: early result cards fire before the live round, so
+# lifetime WR >= 60% with n >= 10 is worth stacking (not only recent_wr7).
+LUXURY_MIN_N = 10
+LUXURY_MIN_WR = 60.0
+
 
 @dataclass
 class FloorCell:
@@ -88,27 +96,46 @@ def classify_family(floor: str) -> str:
     return "OTHER"
 
 
-def choose_lane(family: str, total: int, final_wr: float | None, recent_n7: int, recent_wr7: float | None) -> str:
-    wr = final_wr or 0.0
-    current_wr = recent_wr7 if recent_n7 >= 10 and recent_wr7 is not None else wr
+def choose_lane(
+    family: str,
+    total: int,
+    final_wr: float | None,
+    recent_n7: int,
+    recent_wr7: float | None,
+    floor: str | None = None,
+) -> str:
+    """Lane selection for the luxury building.
 
-    # Known current weak floors.
-    if total >= 20 and current_wr < 65:
+    Uses lifetime WR as the promotion signal (early-result edge rule).
+    recent_wr7 only demotes into BLOCK when it is clearly broken (<55% on n>=20).
+    """
+    name = (floor or "").strip().upper()
+    if name in HARD_BLOCK_FLOORS:
         return "BLOCK"
 
+    wr = float(final_wr or 0.0)
+    recent = float(recent_wr7) if recent_n7 >= 10 and recent_wr7 is not None else None
+
+    # Actively bleeding floors — quarantine even if lifetime looked fine.
+    if recent is not None and recent_n7 >= 20 and recent < 55.0:
+        return "BLOCK"
+
+    # Lifetime too weak for luxury stack.
+    if total >= LUXURY_MIN_N and wr < LUXURY_MIN_WR:
+        return "BLOCK" if total >= 20 else "SHADOW"
+
     # Precision quality anchors.
-    if total >= 30 and current_wr >= 88:
+    if total >= 30 and wr >= 88.0:
         return "PRECISION"
 
-    # Stable quality/volume blend.
-    if total >= 100 and current_wr >= 80:
+    # Stable quality/volume blend (lower n bar so APR20/MAY01 stay balanced).
+    if total >= 50 and wr >= 80.0:
         return "BALANCED"
 
-    # Positive-edge volume expansion.
-    if total >= 100 and current_wr >= 70:
+    # Luxury volume: every good floor (WR>=60, n>=10) enters the live building.
+    if total >= LUXURY_MIN_N and wr >= LUXURY_MIN_WR:
         return "VOLUME"
 
-    # AITEST/MAX/PEAK variants with thin samples stay shadow.
     return "SHADOW"
 
 
@@ -198,7 +225,14 @@ def load_floors(db_path: str = DB_PATH) -> list[FloorCell]:
     for r in rows:
         floor = r["floor"]
         family = classify_family(floor)
-        lane = choose_lane(family, int(r["total"] or 0), r["final_wr"], int(r["recent_n7"] or 0), r["recent_wr7"])
+        lane = choose_lane(
+            family,
+            int(r["total"] or 0),
+            r["final_wr"],
+            int(r["recent_n7"] or 0),
+            r["recent_wr7"],
+            floor=floor,
+        )
         weight = lane_weight(lane, family, r["final_wr"])
         out.append(
             FloorCell(
@@ -247,12 +281,16 @@ def build_report(db_path: str = DB_PATH) -> dict[str, Any]:
         "shadow": [asdict(f) for f in floors if f.lane == "SHADOW"],
         "blocked": [asdict(f) for f in floors if f.lane == "BLOCK"],
         "all_floors": [asdict(f) for f in floors],
+        "live_building": [
+            asdict(f) for f in floors if f.lane in {"PRECISION", "BALANCED", "VOLUME"}
+        ],
         "stack_policy": {
             "precision": "High-WR anchors; can approve only if edge and Tri-Brain agree.",
             "balanced": "Main production stack; strong mix of volume and WR.",
-            "volume": "Aggressive positive-edge expansion; auto-tighten if bleeding.",
+            "volume": "Luxury WR>=60% early-result floors; live-fire in EDGE_POLICY_MODE=luxury|volume.",
             "shadow": "Learn only; no live fire until promoted.",
-            "blocked": "Do not live-fire unless future evidence repairs the cell.",
+            "blocked": "Do not live-fire (JUN12* hard-block + actively bleeding floors).",
+            "luxury_rule": f"Promote every floor with lifetime WR>={LUXURY_MIN_WR} and n>={LUXURY_MIN_N}; hard-block {sorted(HARD_BLOCK_FLOORS)}.",
         },
     }
 

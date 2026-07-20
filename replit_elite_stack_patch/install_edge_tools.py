@@ -18,6 +18,7 @@ FILES = [
     "bot/skyscraper_floor_factory.py",
     "bot/skyscraper_stack.py",
     "bot/floor_stack_registry.py",
+    "bot/luxury_building_stack.py",
     "bot/legacy_peak_355.py",
     "bot/system_health_audit.py",
     "bot/unlock_signal_flow.py",
@@ -258,6 +259,7 @@ def run_fast_reports() -> None:
         ["tri_brain_score.py", "--db", str(db), "--train-days", "9999", "--score-days", "7", "--limit", "500", "--report", str(BOT / "data/tri_brain_report.json")],
         ["edge_whitelist_engine.py", "--db", str(db), "--days", "30", "--report", str(BOT / "data/edge_whitelist_engine.json")],
         ["floor_stack_registry.py", "--db", str(db), "--report", str(BOT / "data/floor_stack_registry_report.json")],
+        ["luxury_building_stack.py", "--db", str(db), "--report", str(BOT / "data/luxury_building_stack.json")],
         ["skyscraper_floor_factory.py", "--db", str(db), "--days", "30", "--report", str(BOT / "data/skyscraper_floor_factory_report.json")],
         ["skyscraper_stack.py", "--db", str(db), "--days", "30", "--report", str(BOT / "data/skyscraper_stack_report.json")],
         ["system_health_audit.py", "--db", str(db), "--report", str(BOT / "data/system_health_audit.json")],
@@ -271,13 +273,17 @@ def main() -> int:
     download_files()
     patch_signal_handler()
     compile_check()
-    os.environ.setdefault("EDGE_POLICY_MODE", "shadow")
+    os.environ.setdefault("EDGE_POLICY_MODE", "luxury")
+    os.environ.setdefault("EDGE_LUXURY_FLOOR_GATE", "1")
     run_fast_reports()
     print(textwrap.dedent("""
     DONE.
-    EdgePolicy is installed. Start with:
+    EdgePolicy is installed. Luxury default:
+      export EDGE_POLICY_MODE=luxury
+      export EDGE_LUXURY_FLOOR_GATE=1
+    Or observe-only first:
       export EDGE_POLICY_MODE=shadow
-    Then restart the bot and watch logs for EdgePolicy.
+    Prefer: python3 -u install_luxury_building.py
     """).strip())
     return 0
 

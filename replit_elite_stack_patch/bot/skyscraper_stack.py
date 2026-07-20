@@ -279,11 +279,31 @@ def build_report(db_path: str = DB_PATH, days: int = 30) -> dict[str, Any]:
         "volume_frontier": frontier,
         "new_room_discovery_blueprints": discovery_blueprints(),
         "skyscraper_policy": {
-            "precision": "AITEST_APR20_MAX + AITEST_ULTIMATE + SNIPER cells + Tri-Brain FIRE",
-            "balanced": "LIVE + ELITE_V2 + ULTIMATE + APR20 + MAY01 + strong room cells",
-            "volume": "MAR20 + AITEST_LIVE + MAR21 + MAY10 + APR26 + non-loss-risk WATCH cells",
+            "precision": " + ".join(
+                [f["floor"] for f in floor_report.get("precision", [])] or ["AITEST_APR20_MAX", "AITEST_ULTIMATE"]
+            ) + " + SNIPER cells + Tri-Brain FIRE",
+            "balanced": " + ".join(
+                [f["floor"] for f in floor_report.get("balanced", [])]
+                or ["LIVE", "ELITE_V2", "ULTIMATE", "APR20", "MAY01"]
+            ) + " + strong room cells",
+            "volume": " + ".join(
+                [f["floor"] for f in floor_report.get("volume", [])]
+                or ["MAR19", "MAR20", "AITEST_LIVE", "MAR21", "MAY10", "APR26"]
+            ) + " + non-loss-risk WATCH cells (luxury WR>=60)",
+            "live_building": [
+                f["floor"]
+                for f in (
+                    floor_report.get("live_building")
+                    or (
+                        list(floor_report.get("precision", []))
+                        + list(floor_report.get("balanced", []))
+                        + list(floor_report.get("volume", []))
+                    )
+                )
+            ],
             "shadow": "All thin/stale/new rooms and floors until they prove themselves",
-            "block": "JUN12A/JUN12B current form, stale rooms, wrong-game rooms, loss-risk cells",
+            "block": "JUN12A/JUN12B + actively bleeding floors + loss-risk cells",
+            "mode": "EDGE_POLICY_MODE=luxury",
         },
         "expected": {
             "precision": "lower volume, highest WR",
