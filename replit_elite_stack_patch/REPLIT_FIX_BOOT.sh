@@ -8,9 +8,47 @@ python3 - <<'PY'
 from __future__ import annotations
 from pathlib import Path
 
-HELPER = '''
+APPEND_HELPER = '''
 # --- LUXURY_TZ_HELPERS (auto) ---
-from __future__ import annotations
+import os as _lux_os
+from datetime import datetime as _lux_datetime, timezone as _lux_timezone
+
+try:
+    from zoneinfo import ZoneInfo as _LuxZoneInfo
+except Exception:  # pragma: no cover
+    _LuxZoneInfo = None  # type: ignore
+
+_BOT_TZ = _lux_os.environ.get("BOT_TZ") or _lux_os.environ.get("TZ_NAME") or "America/Sao_Paulo"
+
+def _zone():
+    if _LuxZoneInfo is None:
+        return _lux_timezone.utc
+    try:
+        return _LuxZoneInfo(_BOT_TZ)
+    except Exception:
+        return _lux_timezone.utc
+
+def local_now():
+    return _lux_datetime.now(tz=_zone())
+
+def local_hour(dt=None):
+    """Local hour (0-23) in BOT_TZ (default America/Sao_Paulo / BRT)."""
+    if dt is None:
+        return local_now().hour
+    if getattr(dt, "tzinfo", None) is None:
+        dt = dt.replace(tzinfo=_lux_timezone.utc)
+    return dt.astimezone(_zone()).hour
+
+def today_iso(dt=None):
+    """Local calendar date YYYY-MM-DD in BOT_TZ."""
+    if dt is None:
+        return local_now().date().isoformat()
+    if getattr(dt, "tzinfo", None) is None:
+        dt = dt.replace(tzinfo=_lux_timezone.utc)
+    return dt.astimezone(_zone()).date().isoformat()
+'''
+
+STANDALONE = '''"""Timezone helpers for Bac Bo bot (BRT default)."""
 import os
 from datetime import datetime, timezone
 
@@ -33,7 +71,6 @@ def local_now():
     return datetime.now(tz=_zone())
 
 def local_hour(dt=None):
-    """Local hour (0-23) in BOT_TZ (default America/Sao_Paulo / BRT)."""
     if dt is None:
         return local_now().hour
     if getattr(dt, "tzinfo", None) is None:
@@ -41,7 +78,6 @@ def local_hour(dt=None):
     return dt.astimezone(_zone()).hour
 
 def today_iso(dt=None):
-    """Local calendar date YYYY-MM-DD in BOT_TZ."""
     if dt is None:
         return local_now().date().isoformat()
     if getattr(dt, "tzinfo", None) is None:
@@ -49,14 +85,24 @@ def today_iso(dt=None):
     return dt.astimezone(_zone()).date().isoformat()
 '''
 
-# Prefer bot/tz_utils.py on PYTHONPATH (supervisor puts bot first)
 bot_tz = Path("bot/tz_utils.py")
 root_tz = Path("tz_utils.py")
 
 def ensure(path: Path) -> None:
     if path.exists():
         txt = path.read_text(encoding="utf-8", errors="replace")
-        if "def local_hour" in txt and "def today_iso" in txt:
+        # Repair prior bad append that put from __future__ mid-file
+        if "LUXURY_TZ_HELPERS" in txt and "from __future__ import annotations" in txt.split("LUXURY_TZ_HELPERS", 1)[-1]:
+            bak = path.with_suffix(path.suffix + ".bak_broken_tz")
+            if not bak.exists():
+                bak.write_text(txt, encoding="utf-8")
+            # drop broken helper block + any mid-file future import from it
+            head = txt.split("# --- LUXURY_TZ_HELPERS (auto) ---", 1)[0].rstrip()
+            path.write_text(head + "\n\n" + APPEND_HELPER + "\n", encoding="utf-8")
+            print(f"repaired broken helper on {path}")
+            return
+        if "def local_hour" in txt and "def today_iso" in txt and "from __future__ import annotations" not in txt.split("def local_hour", 1)[0][-80:]:
+            # still verify importable below
             print(f"OK {path} already has local_hour/today_iso")
             return
         if "LUXURY_TZ_HELPERS" in txt:
@@ -65,26 +111,26 @@ def ensure(path: Path) -> None:
         bak = path.with_suffix(path.suffix + ".bak_pre_tz_fix")
         if not bak.exists():
             bak.write_text(txt, encoding="utf-8")
-        path.write_text(txt.rstrip() + "\n\n" + HELPER + "\n", encoding="utf-8")
+        path.write_text(txt.rstrip() + "\n\n" + APPEND_HELPER + "\n", encoding="utf-8")
         print(f"patched {path}")
     else:
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(HELPER.lstrip() + "\n", encoding="utf-8")
+        path.write_text(STANDALONE + "\n", encoding="utf-8")
         print(f"created {path}")
 
 ensure(bot_tz)
 ensure(root_tz)
 
-# smoke
+# Prefer bot/tz_utils on sys.path (matches supervisor PYTHONPATH)
 import sys
+for mod in list(sys.modules):
+    if mod == "tz_utils" or mod.startswith("tz_utils."):
+        del sys.modules[mod]
 sys.path.insert(0, "bot")
 sys.path.insert(0, ".")
-# force bot first
-import importlib
-if "tz_utils" in sys.modules:
-    del sys.modules["tz_utils"]
 import tz_utils
 assert hasattr(tz_utils, "local_hour") and hasattr(tz_utils, "today_iso")
+print("tz_utils file", getattr(tz_utils, "__file__", "?"))
 print("tz_utils.local_hour()", tz_utils.local_hour(), "today_iso()", tz_utils.today_iso())
 PY
 
