@@ -190,7 +190,7 @@ src = re.sub(
     src,
     flags=re.S,
 )
-n_wd = 0
+n_wd = [0]
 for var in ("_re", "_we"):
     pat = re.compile(
         rf"^([ \t]*)log\.error\(f\"\[Watchdog\] Reconnect failed: \{{{var}\}}\"\)\s*$",
@@ -199,9 +199,8 @@ for var in ("_re", "_we"):
 
     def make_repl(v: str):
         def repl(m: re.Match) -> str:
-            nonlocal n_wd
             ind = m.group(1)
-            n_wd += 1
+            n_wd[0] += 1
             return (
                 f"{ind}# --- LUXURY_WATCHDOG_DBLOCK (auto) ---\n"
                 f"{ind}if \"database is locked\" in str({v}).lower() or \"database is busy\" in str({v}).lower():\n"
@@ -214,7 +213,7 @@ for var in ("_re", "_we"):
 
     src, c = pat.subn(make_repl(var), src)
     print(f"watchdog_soft_{var}", c)
-print("watchdog_soft_total", n_wd)
+print("watchdog_soft_total", n_wd[0])
 
 # state name force
 if "LUXURY_STATE_NAME_FORCE" not in src or "state = _lux_state_mod" not in src:
