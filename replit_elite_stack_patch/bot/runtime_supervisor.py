@@ -97,9 +97,9 @@ def _stop(proc: subprocess.Popen | None) -> None:
 def main() -> int:
     env = _env()
     # Delay fallbacks so bacbo can take WAL ownership / finish boot before readers attach.
-    # FALLBACKS_ENABLED=0 keeps only bacbo on bacbo.db (stops multi-process lock storms).
-    fallbacks_enabled = env.get("FALLBACKS_ENABLED", "0").strip() not in ("0", "false", "False", "no", "")
-    fallback_delay = float(env.get("FALLBACK_START_DELAY_SECS", "45"))
+    # FALLBACKS_ENABLED=1 (default) delivers consensus/result cards to Telegram TARGET.
+    fallbacks_enabled = env.get("FALLBACKS_ENABLED", "1").strip() not in ("0", "false", "False", "no")
+    fallback_delay = float(env.get("FALLBACK_START_DELAY_SECS", "20"))
     boot_t0 = time.time()
     processes: dict[str, tuple[list[str], subprocess.Popen | None, float]] = {
         "bot_live": ([sys.executable, "-u", str(ROOT / "bacbo_royal_complete.py")], None, 0.0),

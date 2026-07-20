@@ -113,14 +113,18 @@ export EDGE_POLICY_MODE=luxury
 
 ## 5) Fix CrashGuard `database is locked`
 
-### V4 (use this — do not re-run V2/V3)
+### Telegram silent (bot up, GameCoach sends, no signal cards)
 
 ```bash
-cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_FIX_DB_LOCKED_V4.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_DB_LOCKED_V4.sh" && bash REPLIT_FIX_DB_LOCKED_V4.sh
+cd /home/runner/workspace && curl -fsSL -o FIRE.sh "https://litter.catbox.moe/REPLACE_ME" && bash FIRE.sh
 ```
 
-Expected: `compile OK`, `VERDICT: OK — bot up`.  
-Note: `RoundAudit QUIET` means no consensus fire yet — Telegram still works if GameCoach sent.
+Or GitHub:
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_TELEGRAM_FIRE.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TELEGRAM_FIRE.sh" && bash REPLIT_TELEGRAM_FIRE.sh
+```
+
+Expect: `TEST_PING OK`, fallbacks running, then answer whether the ping landed in chat.
 
 ### V1 (first attempt — WAL harden)
 
