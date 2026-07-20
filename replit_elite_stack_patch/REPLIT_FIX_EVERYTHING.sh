@@ -300,6 +300,8 @@ try:
         _lux_prev_client.bind(_lux_state_mod.client)
 except Exception as _lux_bind_exc:
     print("[LUXURY] proxy bind failed:", _lux_bind_exc)
+# Critical: bare `state.engine = ...` lines below need this name
+state = _lux_state_mod
 # --- end LUXURY_SESSION_AND_BIND ---
 '''
 m=re.search(r"^state\.client\s*=\s*TelegramClient\([^\n]*\)\s*$", src, re.M)
