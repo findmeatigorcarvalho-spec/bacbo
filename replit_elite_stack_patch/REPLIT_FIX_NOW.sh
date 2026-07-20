@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Bulletproof recovery: restore parseable bak, minimal patches only, restart.
-# Safe to re-run. Does NOT touch Watchdog except-bodies (that caused IndentationError).
+# Restore working luxury bacbo: keep SESSION_AND_BIND / re-apply if clean bak.
 set -euo pipefail
 cd /home/runner/workspace
 
@@ -15,13 +14,13 @@ pkill -9 -f 'fallback_signal_sender.py' 2>/dev/null || true
 pkill -9 -f 'fallback_result_sender.py' 2>/dev/null || true
 sleep 2
 
-echo "========== [2/4] download runtime bits =========="
+echo "========== [2/4] download =========="
 mkdir -p bot/data logs
 curl -fsSL -H "Cache-Control: no-cache" -o bot/lux_sqlite_harden.py "$BASE/bot/lux_sqlite_harden.py"
 curl -fsSL -H "Cache-Control: no-cache" -o bot/runtime_supervisor.py "$BASE/bot/runtime_supervisor.py"
 $PY -m py_compile bot/lux_sqlite_harden.py bot/runtime_supervisor.py
 
-echo "========== [3/4] restore bak + minimal patch =========="
+echo "========== [3/4] pick best source + patch =========="
 $PY <<'PY'
 import ast, re, sqlite3
 from pathlib import Path
@@ -34,69 +33,53 @@ def parses(t: str):
         ast.parse(t)
         return True, None
     except SyntaxError as e:
-        return False, e
+        return False, str(e)
 
-# Collect candidates: preferred names first, then all baks by mtime
-preferred = [
-    ROOT / "bacbo_royal_complete.py.bak_pre_state_fix",
-    ROOT / "bacbo_royal_complete.py.bak_pre_client_fix",
-    ROOT / "bacbo_royal_complete.py.bak_pre_v4",
-    ROOT / "bacbo_royal_complete.py.bak_pre_session_fix",
-]
+def score(path: Path, t: str) -> int:
+    """Higher = better luxury-ready source."""
+    s = 0
+    if "LUXURY_SESSION_AND_BIND" in t:
+        s += 100
+    if "state = _lux_state_mod" in t:
+        s += 50
+    if "LUXURY_GET_ENTITY_MONKEYPATCH" in t:
+        s += 40
+    if "LUXURY_SQLITE_HARDEN" in t:
+        s += 10
+    if path.name == "bacbo_royal_complete.py":
+        s += 5
+    # clean pre-state bak is worst if we have alternatives
+    if "bak_pre_state_fix" in path.name:
+        s -= 30
+    s += min(path.stat().st_size // 100000, 30)
+    return s
+
 cands = []
-for c in preferred:
-    if c.exists():
-        cands.append(c)
-for c in sorted(ROOT.glob("bacbo_royal_complete.py.bak*"), key=lambda x: x.stat().st_mtime, reverse=True):
-    if c not in cands:
-        cands.append(c)
-if p.exists():
-    cands.insert(0, p)  # try current first only if it parses
-
-src = None
-src_path = None
-for c in cands:
+for c in [p] + sorted(ROOT.glob("bacbo_royal_complete.py.bak*"), key=lambda x: x.stat().st_mtime, reverse=True):
+    if not c.exists():
+        continue
     t = c.read_text(encoding="utf-8", errors="replace")
     good, err = parses(t)
-    print("candidate", c.name, "OK" if good else f"BAD:{err}")
+    sc = score(c, t) if good else -10**9
+    print(f"candidate {c.name} parse={'OK' if good else 'BAD'} score={sc} {'' if good else err}")
     if good:
-        # Prefer files that already have luxury session bind / are large
-        src, src_path = t, c
-        # If this is current and good, use it; else keep looking for bak_pre_state_fix
-        if c.name == "bacbo_royal_complete.py.bak_pre_state_fix":
-            break
-        if c == p and good:
-            # current parses — still prefer bak_pre_state_fix if available later in loop
-            # but if we're first and good, remember and continue for preferred bak
-            if any(x.name == "bacbo_royal_complete.py.bak_pre_state_fix" and x.exists() for x in preferred):
-                continue
-            break
-        if "LUXURY_SESSION_AND_BIND" in t or "state = _lux_state_mod" in t or c.stat().st_size > 2_000_000:
-            # good enough working luxury file
-            if c.name.startswith("bacbo_royal_complete.py.bak"):
-                break
+        cands.append((sc, c, t))
 
-if src is None:
-    raise SystemExit("FATAL: no parseable bacbo or bak")
+if not cands:
+    raise SystemExit("FATAL: no parseable bacbo source")
 
-print("USING", src_path.name, "size", len(src))
-# Save broken current
+cands.sort(key=lambda x: x[0], reverse=True)
+sc, src_path, text = cands[0]
+print("USING", src_path.name, "score", sc, "size", len(text))
+
+# backup current
 if p.exists():
-    broken = ROOT / "bacbo_royal_complete.py.bak_broken_pre_fixnow2"
-    if not broken.exists():
-        broken.write_text(p.read_text(encoding="utf-8", errors="replace"), encoding="utf-8")
-        print("saved broken ->", broken.name)
+    bak = ROOT / "bacbo_royal_complete.py.bak_before_fixnow3"
+    if not bak.exists():
+        bak.write_text(p.read_text(encoding="utf-8", errors="replace"), encoding="utf-8")
 
-# Start clean from chosen source
-text = src
-
-# Remove ALL prior luxury auto patches that we will re-apply (safe markers only)
-for marker in (
-    "LUXURY_SQLITE_HARDEN",
-    "LUXURY_CRASHGUARD_DBLOCK",
-    "LUXURY_STATE_NAME_FORCE",
-    "LUXURY_DBLOCK_SOFT",
-):
+# Strip markers we re-apply (not SESSION_AND_BIND / GET_ENTITY if already present — refresh harden/force/crashguard only)
+for marker in ("LUXURY_SQLITE_HARDEN", "LUXURY_CRASHGUARD_DBLOCK", "LUXURY_STATE_NAME_FORCE"):
     text = re.sub(
         rf"\n# --- {marker} \(auto\) ---.*?--- end {marker} ---\n",
         "\n",
@@ -104,86 +87,142 @@ for marker in (
         flags=re.S,
     )
 
-# Strip V2 softwrap if present
-if "LUXURY_DBLOCK_SOFTWRAP" in text:
+# --- get_entity monkeypatch if missing ---
+if "LUXURY_GET_ENTITY_MONKEYPATCH" not in text:
+    monkey = r'''
+# --- LUXURY_GET_ENTITY_MONKEYPATCH (auto) ---
+try:
+    import json as _lux_json
+    from pathlib import Path as _LuxPath
+    from telethon import TelegramClient as _LuxTGClient
+    from telethon.tl.types import InputPeerUser, InputPeerChannel, InputPeerChat
+    from telethon.errors import FloodWaitError as _LuxFloodWait
+
+    def _lux_cache_rec(username):
+        try:
+            p = _LuxPath("/home/runner/workspace/bot/data/room_entity_cache.json")
+            data = _lux_json.loads(p.read_text(encoding="utf-8"))
+            m = data.get("by_username") or {}
+            key = str(username or "").strip().lower()
+            for k in (key, key.lstrip("@"), "@" + key.lstrip("@")):
+                if k in m:
+                    return m[k]
+        except Exception:
+            return None
+        return None
+
+    def _lux_input_peer(rec):
+        if not isinstance(rec, dict):
+            return None
+        et = rec.get("type")
+        ah = rec.get("access_hash")
+        raw = rec.get("raw_id")
+        peer_id = rec.get("peer_id")
+        if et == "channel" and raw is not None and ah is not None:
+            return InputPeerChannel(int(raw), int(ah))
+        if et == "user" and raw is not None and ah is not None:
+            return InputPeerUser(int(raw), int(ah))
+        if et == "chat" and raw is not None:
+            return InputPeerChat(int(raw))
+        if peer_id is not None:
+            return int(peer_id)
+        return None
+
+    _lux_orig_get_entity = _LuxTGClient.get_entity
+
+    async def _lux_get_entity(self, entity):
+        if not getattr(self, "_lux_dialogs_warmed", False):
+            try:
+                async for _ in self.iter_dialogs():
+                    pass
+            except Exception as e:
+                print("[LUXURY] dialog warm failed:", e)
+            self._lux_dialogs_warmed = True
+
+        if isinstance(entity, str) and not str(entity).lstrip("-").isdigit():
+            rec = _lux_cache_rec(entity)
+            if rec is not None:
+                inp = _lux_input_peer(rec)
+                if inp is not None:
+                    try:
+                        return await _lux_orig_get_entity(self, inp)
+                    except Exception as e1:
+                        try:
+                            return await _lux_orig_get_entity(self, int(rec["peer_id"]))
+                        except Exception as e2:
+                            print(f"[LUXURY] cache resolve failed for {entity}: {e1!r} / {e2!r}")
+                            raise
+            raise ValueError(f"LUXURY_SKIP_RESOLVE_USERNAME:{entity}")
+
+        try:
+            return await _lux_orig_get_entity(self, entity)
+        except _LuxFloodWait:
+            raise
+
+    _LuxTGClient.get_entity = _lux_get_entity  # type: ignore
+    print("[LUXURY] get_entity: dialog cache + InputPeer (no ResolveUsername for @rooms)")
+except Exception as _lux_mp_exc:
+    print("[LUXURY] get_entity monkeypatch skipped:", _lux_mp_exc)
+# --- end LUXURY_GET_ENTITY_MONKEYPATCH ---
+'''
     lines = text.splitlines(True)
-    out = []
-    i = 0
-    while i < len(lines):
-        if lines[i].lstrip().startswith("# LUXURY_DBLOCK_SOFTWRAP"):
-            indent = re.match(r"^([ \t]*)", lines[i]).group(1)
-            j = i + 1
-            while j < len(lines) and not re.match("^" + re.escape(indent) + r"else:\s*$", lines[j]):
-                j += 1
-            if j >= len(lines):
-                out.append(lines[i]); i += 1; continue
-            j += 1
-            while j < len(lines):
-                ln = lines[j]
-                if ln.strip() == "":
-                    out.append(ln); j += 1; continue
-                cur = re.match(r"^([ \t]*)", ln).group(1)
-                if len(cur) <= len(indent):
-                    break
-                out.append(ln[4:] if ln.startswith("    ") else ln)
-                j += 1
-            i = j
-            continue
-        out.append(lines[i]); i += 1
-    text = "".join(out)
-    print("stripped softwrap")
+    idx = 0
+    for i, ln in enumerate(lines[:120]):
+        if "telethon" in ln and (ln.startswith("import ") or ln.startswith("from ")):
+            idx = i + 1
+    if idx == 0:
+        idx = 30
+    lines.insert(idx, monkey + "\n")
+    text = "".join(lines)
+    print("injected GET_ENTITY monkeypatch")
 
-# Strip LUXURY_WATCHDOG_DBLOCK by restoring the log.error line only (line-based, safe)
-lines = text.splitlines(True)
-out = []
-i = 0
-while i < len(lines):
-    if "# --- LUXURY_WATCHDOG_DBLOCK (auto) ---" in lines[i]:
-        # skip until end marker; keep the log.error line inside else if present
-        j = i + 1
-        kept = None
-        while j < len(lines) and "# --- end LUXURY_WATCHDOG_DBLOCK ---" not in lines[j]:
-            if "Reconnect failed" in lines[j] and "log.error" in lines[j]:
-                # dedent to match surrounding except body (remove one level if under else)
-                ln = lines[j]
-                if ln.startswith("    "):
-                    # try to match indent of the marker line
-                    ind = re.match(r"^([ \t]*)", lines[i]).group(1)
-                    kept = ind + ln.lstrip()
-                else:
-                    kept = ln
-            j += 1
-        if j < len(lines) and "# --- end LUXURY_WATCHDOG_DBLOCK ---" in lines[j]:
-            j += 1
-        if kept:
-            out.append(kept if kept.endswith("\n") else kept + "\n")
-        else:
-            # synthesize
-            ind = re.match(r"^([ \t]*)", lines[i]).group(1)
-            out.append(ind + "log.error('[Watchdog] Reconnect failed')\n")
-        i = j
-        continue
-    out.append(lines[i]); i += 1
-text = "".join(out)
+# --- SESSION_AND_BIND if missing (THIS fixes state.client NameError) ---
+if "LUXURY_SESSION_AND_BIND" not in text:
+    bind = r'''
+# --- LUXURY_SESSION_AND_BIND (auto) ---
+try:
+    import os as _lux_os
+    from pathlib import Path as _LuxPath
+    _sf = _LuxPath("/home/runner/workspace/.telegram_session_string")
+    if _sf.exists():
+        _sv = _sf.read_text(errors="ignore").strip()
+        if len(_sv) > 50:
+            _lux_os.environ["TELEGRAM_SESSION_STRING"] = _sv
+            try:
+                from telethon.sessions import StringSession as _LuxSS
+                _session = _LuxSS(_sv)
+            except Exception:
+                pass
+except Exception as _lux_sess_exc:
+    print("[LUXURY] session force skipped:", _lux_sess_exc)
 
-good, err = parses(text)
-if not good:
-    print("after strip still bad:", err)
-    # fall back to raw chosen source with NO strips except harden later
-    text = src
-    for marker in ("LUXURY_SQLITE_HARDEN", "LUXURY_CRASHGUARD_DBLOCK", "LUXURY_STATE_NAME_FORCE"):
-        text = re.sub(
-            rf"\n# --- {marker} \(auto\) ---.*?--- end {marker} ---\n",
-            "\n",
-            text,
-            flags=re.S,
+import state as _lux_state_mod
+_lux_prev_client = getattr(_lux_state_mod, "client", None)
+_lux_state_mod.client = TelegramClient(_session, API_ID, API_HASH, sequential_updates=False)
+try:
+    if hasattr(_lux_prev_client, "bind"):
+        _lux_prev_client.bind(_lux_state_mod.client)
+except Exception as _lux_bind_exc:
+    print("[LUXURY] proxy bind failed:", _lux_bind_exc)
+state = _lux_state_mod
+# --- end LUXURY_SESSION_AND_BIND ---
+'''
+    m = re.search(r"^state\.client\s*=\s*TelegramClient\([^\n]*\)\s*$", text, re.M)
+    if not m:
+        raise SystemExit("missing state.client = TelegramClient(...) line to replace")
+    text = text[: m.start()] + bind + "\n" + text[m.end() :]
+    print("injected SESSION_AND_BIND (replaces state.client=)")
+else:
+    # ensure state= present inside bind
+    chunk = text.split("LUXURY_SESSION_AND_BIND", 1)[1][:900]
+    if "state = _lux_state_mod" not in chunk:
+        text = text.replace(
+            'print("[LUXURY] proxy bind failed:", _lux_bind_exc)\n# --- end LUXURY_SESSION_AND_BIND ---',
+            'print("[LUXURY] proxy bind failed:", _lux_bind_exc)\nstate = _lux_state_mod\n# --- end LUXURY_SESSION_AND_BIND ---',
         )
-    good, err = parses(text)
-    if not good:
-        raise SystemExit(f"cannot recover parseable source: {err}")
+        print("added state= into existing SESSION_AND_BIND")
 
-# --- minimal patches ---
-# 1) sqlite harden
+# --- sqlite harden ---
 harden = (
     "\n# --- LUXURY_SQLITE_HARDEN (auto) ---\n"
     "try:\n"
@@ -204,29 +243,18 @@ if idx == 0:
 lines.insert(idx, harden)
 text = "".join(lines)
 
-# 2) state name force before state.engine
-if not re.search(r"^state\s*=\s*_lux_state_mod\s*$", text, re.M):
-    force = (
-        "# --- LUXURY_STATE_NAME_FORCE (auto) ---\n"
-        "import state as _lux_state_mod\n"
-        "state = _lux_state_mod\n"
-        "# --- end LUXURY_STATE_NAME_FORCE ---\n"
-    )
-    if re.search(r"^state\.engine\s*=", text, re.M):
-        text = re.sub(r"^(state\.engine\s*=)", force + r"\1", text, count=1, flags=re.M)
-        print("state force inserted")
+# --- state force before state.engine ---
+force = (
+    "# --- LUXURY_STATE_NAME_FORCE (auto) ---\n"
+    "import state as _lux_state_mod\n"
+    "state = _lux_state_mod\n"
+    "# --- end LUXURY_STATE_NAME_FORCE ---\n"
+)
+if re.search(r"^state\.engine\s*=", text, re.M):
+    text = re.sub(r"^(state\.engine\s*=)", force + r"\1", text, count=1, flags=re.M)
+    print("state force before state.engine")
 
-# Ensure SESSION_AND_BIND assigns state=
-if "LUXURY_SESSION_AND_BIND" in text:
-    chunk = text.split("LUXURY_SESSION_AND_BIND", 1)[1][:1000]
-    if "state = _lux_state_mod" not in chunk:
-        text = text.replace(
-            'print("[LUXURY] proxy bind failed:", _lux_bind_exc)\n# --- end LUXURY_SESSION_AND_BIND ---',
-            'print("[LUXURY] proxy bind failed:", _lux_bind_exc)\nstate = _lux_state_mod\n# --- end LUXURY_SESSION_AND_BIND ---',
-        )
-        print("added state= to SESSION_AND_BIND")
-
-# 3) CrashGuard soft-skip — insert ONLY before the Bot crashed log.error, no except wrapping
+# --- CrashGuard soft DB lock ---
 if "LUXURY_CRASHGUARD_DBLOCK" not in text:
     m = re.search(
         r"^([ \t]*)log\.error\(\s*\n[ \t]*f\"\[CrashGuard\] Bot crashed \(attempt #\{_consecutive_failures\}\): \{exc\}\.",
@@ -245,18 +273,38 @@ if "LUXURY_CRASHGUARD_DBLOCK" not in text:
         )
         text = text[: m.start()] + block + text[m.start() :]
         print("injected CRASHGUARD_DBLOCK")
-    else:
-        print("WARN: CrashGuard pattern missing — skip")
 
 good, err = parses(text)
 if not good:
-    raise SystemExit(f"patched file invalid: {err}")
+    raise SystemExit(f"patched invalid: {err}")
+
+# Verify state is defined before first state.client / state.engine use at module level
+# Quick check: SESSION_AND_BIND or state = _lux must appear before state.client=
+pos_bind = text.find("state = _lux_state_mod")
+pos_client = text.find("state.client")
+# After bind replace, state.client assign is inside bind as _lux_state_mod.client
+if "LUXURY_SESSION_AND_BIND" not in text:
+    raise SystemExit("SESSION_AND_BIND missing after patch")
+if pos_bind < 0:
+    raise SystemExit("state = _lux_state_mod missing")
 
 p.write_text(text, encoding="utf-8")
-print("WROTE bacbo", p.stat().st_size)
+print("WROTE", p.stat().st_size)
+print("has_session_bind", "LUXURY_SESSION_AND_BIND" in text)
+print("has_get_entity", "LUXURY_GET_ENTITY_MONKEYPATCH" in text)
 print("has_harden", "LUXURY_SQLITE_HARDEN" in text)
-print("has_state", "state = _lux_state_mod" in text)
-print("has_crashguard", "LUXURY_CRASHGUARD_DBLOCK" in text)
+print("has_state_force", "LUXURY_STATE_NAME_FORCE" in text)
+
+# show lines around bind end
+lines = text.splitlines()
+for i, ln in enumerate(lines):
+    if "LUXURY_SESSION_AND_BIND" in ln or (ln.strip() == "state = _lux_state_mod" and i < 200):
+        a, b = max(0, i - 2), min(len(lines), i + 8)
+        print(f"----- {a+1}-{b} -----")
+        for j in range(a, b):
+            print(f"{j+1}: {lines[j][:140]}")
+        if "state = _lux_state_mod" in ln:
+            break
 
 db = ROOT / "bot" / "bacbo.db"
 if db.exists():
@@ -281,7 +329,7 @@ export EDGE_LUXURY_FLOOR_GATE=1
 export BOT_TZ=America/Sao_Paulo
 export PYTHONPATH="/home/runner/workspace/bot:/home/runner/workspace:${PYTHONPATH:-}"
 
-echo "===== FIX_NOW2 marker $(date -u +%Y-%m-%dT%H:%M:%SZ) =====" >> logs/bot_live.log
+echo "===== FIX_NOW3 marker $(date -u +%Y-%m-%dT%H:%M:%SZ) =====" >> logs/bot_live.log
 
 nohup env EDGE_POLICY_MODE=luxury EDGE_LUXURY_FLOOR_GATE=1 FALLBACKS_ENABLED=0 \
   BOT_TZ=America/Sao_Paulo \
@@ -291,35 +339,34 @@ nohup env EDGE_POLICY_MODE=luxury EDGE_LUXURY_FLOOR_GATE=1 FALLBACKS_ENABLED=0 \
   python3 -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
 echo "supervisor pid=$!"
 
-sleep 25
-echo "----- 25s -----"
+sleep 20
+echo "----- 20s -----"
 pgrep -af 'runtime_supervisor|bacbo_royal' || true
-grep -E 'sqlite harden|run_forever|NameError|IndentationError|SyntaxError|FIRED|GameCoach' logs/bot_live.log | tail -n 25 || true
-sleep 40
+sleep 35
 
 $PY <<'PY'
 from pathlib import Path
 import re, subprocess
 log = Path("logs/bot_live.log").read_text(errors="ignore")
-idx = log.rfind("===== FIX_NOW2 marker")
+idx = log.rfind("===== FIX_NOW3 marker")
 chunk = log[idx:] if idx >= 0 else log[-8000:]
-print("run_forever", "run_forever" in chunk)
+print("run_forever", "run_forever" in chunk or "starting run_forever()" in chunk)
 print("harden", "sqlite harden applied" in chunk)
-print("NameError", "NameError: name 'state'" in chunk)
-print("IndentationError", "IndentationError" in chunk)
-print("SyntaxError", "SyntaxError" in chunk)
+print("get_entity_patch", "get_entity: dialog cache" in chunk)
+print("NameError_state", "NameError: name 'state'" in chunk)
 print("CrashGuard", len(re.findall(r"\[CrashGuard\] Bot crashed", chunk)))
 print("--- procs ---")
 print(subprocess.getoutput("pgrep -af 'runtime_supervisor|bacbo_royal' || echo NONE"))
-print("--- last 22 ---")
-print("\n".join(Path("logs/bot_live.log").read_text(errors="ignore").splitlines()[-22:]))
+print("--- last 25 ---")
+print("\n".join(Path("logs/bot_live.log").read_text(errors="ignore").splitlines()[-25:]))
 procs = subprocess.getoutput("pgrep -af bacbo_royal || true")
-ok = ("run_forever" in chunk and "bacbo_royal" in procs
-      and "IndentationError" not in chunk and "NameError: name 'state'" not in chunk
-      and "SyntaxError" not in chunk)
+ok = (
+    ("run_forever" in chunk or "starting run_forever()" in chunk)
+    and "bacbo_royal" in procs
+    and "NameError: name 'state'" not in chunk
+)
 print("VERDICT:", "OK" if ok else "BAD — paste ALL output")
 PY
 
 echo
 echo "DONE. Paste ALL output."
-echo "IGNORE any command containing V3 or cf7303 or 571d09."
