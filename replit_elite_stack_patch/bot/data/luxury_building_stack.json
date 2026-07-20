@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-20T07:14:09.153807+00:00",
+  "generated_at": "2026-07-20T07:32:44.804016+00:00",
   "rule": {
     "min_wr": 60.0,
     "min_n": 10,
@@ -13,8 +13,8 @@
   "counts": {
     "live_building": 32,
     "precision": 2,
-    "balanced": 5,
-    "volume": 25,
+    "balanced": 6,
+    "volume": 24,
     "shadow": 44,
     "blocked": 2,
     "total_floors": 78,
@@ -65,7 +65,8 @@
       "ELITE_V2",
       "ULTIMATE",
       "APR20",
-      "MAY01"
+      "MAY01",
+      "JUN20"
     ],
     "VOLUME": [
       "MAR19",
@@ -89,7 +90,6 @@
       "APR19",
       "JUN10",
       "JUN19",
-      "JUN20",
       "JUN08",
       "JUN26",
       "JUN27"
@@ -1085,15 +1085,17 @@
       "max_day_wr": 78.96,
       "weight": 1.25,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 2908,
+      "historical_wr": 78.96
     },
     {
       "floor": "JUN20",
       "family": "PEAK_VOLUME",
-      "lane": "VOLUME",
+      "lane": "BALANCED",
       "total": 3003,
       "active_days": null,
       "first_seen": null,
@@ -1110,12 +1112,14 @@
       "max_day": "2026-06-20",
       "max_day_signals": 3003,
       "max_day_wr": 81.07,
-      "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "weight": 2.0,
+      "recommendation": "main_stack_live",
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 3003,
+      "historical_wr": 81.07
     },
     {
       "floor": "JUN08",
@@ -1139,10 +1143,12 @@
       "max_day_wr": 69.78,
       "weight": 1.0,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 5281,
+      "historical_wr": 69.78
     },
     {
       "floor": "JUN26",
@@ -1166,10 +1172,12 @@
       "max_day_wr": 78.51,
       "weight": 1.25,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 2637,
+      "historical_wr": 78.51
     },
     {
       "floor": "JUN27",
@@ -1193,10 +1201,12 @@
       "max_day_wr": 75.7,
       "weight": 1.0,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 3056,
+      "historical_wr": 75.7
     }
   ],
   "blocked_detail": [

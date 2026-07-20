@@ -149,6 +149,22 @@ def merge_floors(live_floors: list[dict[str, Any]], seed: dict[str, Any]) -> lis
     hard_block = set(seed.get("hard_block") or list(fsr.HARD_BLOCK_FLOORS))
     by: dict[str, dict[str, Any]] = {}
 
+    # Always materialize hard-blocks even if absent from thin live DB / seed floors.
+    for name in sorted(hard_block):
+        by[name] = {
+            "floor": name,
+            "family": fsr.classify_family(name),
+            "lane": "BLOCK",
+            "total": 0,
+            "final_wr": None,
+            "g0_wr": None,
+            "weight": -1.0,
+            "recommendation": fsr.recommendation("BLOCK"),
+            "seeded": True,
+            "force_live": False,
+            "seed_source": "hard_block",
+        }
+
     for item in live_floors:
         name = str(item.get("floor") or "").strip().upper()
         if not name:
@@ -357,11 +373,13 @@ def save_report(
     os.replace(tmp, path)
 
     # Always write allowlist for floor_tracker / policy
+    seed = load_seed(seed_path)
     allow = {
         "live_floors": report["live_building_floors"],
-        "blocked": report["blocked_floors"],
+        "blocked": report["blocked_floors"] or list(seed.get("hard_block") or ["JUN12A", "JUN12B"]),
         "peak_day_floors": [p.get("floor") for p in (report.get("peak_day_floors") or [])],
         "virtual_setups": [v.get("key") for v in (report.get("virtual_setups") or [])],
+        "gate_aliases": seed.get("gate_aliases") or {},
     }
     allow_path = os.path.join(os.path.dirname(path), "luxury_live_floors.json")
     with open(allow_path, "w", encoding="utf-8") as fh:

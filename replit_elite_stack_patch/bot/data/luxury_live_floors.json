@@ -53,5 +53,28 @@
     "SEQUENCE|BLUE",
     "PLATINUM|BLUE",
     "SEQUENCE"
-  ]
+  ],
+  "gate_aliases": {
+    "JUN19": "JUN19_peak",
+    "JUN20": "JUN20_peak",
+    "JUN08": "JUN08_peak",
+    "JUN10": "JUN10_peak",
+    "JUN26": "JUN26",
+    "JUN27": "JUN27_peak",
+    "MAY19": "MAY19_peak",
+    "MAY10": "MAY10_peak",
+    "MAY11": "MAY11_peak",
+    "MAY01": "MAY01_peak",
+    "APR19": "APR19_golden",
+    "APR20": "APR20_perfect",
+    "APR30": "APR30_peak",
+    "JUN12A": "JUN12_avalanche",
+    "JUN12B": "JUN12_eliteguard",
+    "ELITE_V2_PEAK": "ELITE_V2_PEAK",
+    "ELITE_V2": "ELITE_V2",
+    "ULTIMATE": "ULTIMATE",
+    "MAR19": "MAR19",
+    "MAR20": "MAR20",
+    "MAR21": "MAR21"
+  }
 }

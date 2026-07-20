@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-20T07:14:09.149406+00:00",
+  "generated_at": "2026-07-20T07:32:44.799815+00:00",
   "total_floors": 78,
   "lane_counts": {
-    "BALANCED": 5,
-    "VOLUME": 25,
-    "PRECISION": 2,
     "BLOCK": 2,
+    "BALANCED": 6,
+    "VOLUME": 24,
+    "PRECISION": 2,
     "SHADOW": 44
   },
   "precision": [
@@ -215,6 +215,35 @@
       "historical_g0_wr": 80.85,
       "peak_day_lock": false,
       "force_live": true
+    },
+    {
+      "floor": "JUN20",
+      "family": "PEAK_VOLUME",
+      "lane": "BALANCED",
+      "total": 3003,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 81.07,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-20",
+      "max_day_signals": 3003,
+      "max_day_wr": 81.07,
+      "weight": 2.0,
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true,
+      "historical_total": 3003,
+      "historical_wr": 81.07
     }
   ],
   "volume": [
@@ -840,37 +869,12 @@
       "max_day_wr": 78.96,
       "weight": 1.25,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
-    },
-    {
-      "floor": "JUN20",
-      "family": "PEAK_VOLUME",
-      "lane": "VOLUME",
-      "total": 3003,
-      "active_days": null,
-      "first_seen": null,
-      "last_seen": null,
-      "wins": null,
-      "losses": null,
-      "ties": null,
-      "g0_wins": null,
-      "final_wr": 81.07,
-      "g0_wr": null,
-      "recent_n7": 0,
-      "recent_wr7": null,
-      "recent_g0_wr7": null,
-      "max_day": "2026-06-20",
-      "max_day_signals": 3003,
-      "max_day_wr": 81.07,
-      "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
-      "seed_source": "telegram_good_cards",
-      "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 2908,
+      "historical_wr": 78.96
     },
     {
       "floor": "JUN08",
@@ -894,10 +898,12 @@
       "max_day_wr": 69.78,
       "weight": 1.0,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 5281,
+      "historical_wr": 69.78
     },
     {
       "floor": "JUN26",
@@ -921,10 +927,12 @@
       "max_day_wr": 78.51,
       "weight": 1.25,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 2637,
+      "historical_wr": 78.51
     },
     {
       "floor": "JUN27",
@@ -948,10 +956,12 @@
       "max_day_wr": 75.7,
       "weight": 1.0,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 3056,
+      "historical_wr": 75.7
     }
   ],
   "shadow": [
@@ -2064,6 +2074,54 @@
   ],
   "all_floors": [
     {
+      "floor": "JUN12A",
+      "family": "PEAK_VOLUME",
+      "lane": "BLOCK",
+      "total": 47,
+      "active_days": 7,
+      "first_seen": "2026-06-12 23:45:28",
+      "last_seen": "2026-06-18 16:42:56",
+      "wins": 27,
+      "losses": 17,
+      "ties": 3,
+      "g0_wins": 27,
+      "final_wr": 61.36,
+      "g0_wr": 61.36,
+      "recent_n7": 16,
+      "recent_wr7": 42.86,
+      "recent_g0_wr7": 42.86,
+      "max_day": "2026-06-15",
+      "max_day_signals": 14,
+      "max_day_wr": 78.57,
+      "weight": -1.0,
+      "recommendation": "block_or_shadow_until_repaired",
+      "seeded": false
+    },
+    {
+      "floor": "JUN12B",
+      "family": "PEAK_VOLUME",
+      "lane": "BLOCK",
+      "total": 36,
+      "active_days": 6,
+      "first_seen": "2026-06-13 12:49:15",
+      "last_seen": "2026-06-18 16:42:56",
+      "wins": 20,
+      "losses": 12,
+      "ties": 4,
+      "g0_wins": 20,
+      "final_wr": 62.5,
+      "g0_wr": 62.5,
+      "recent_n7": 15,
+      "recent_wr7": 33.33,
+      "recent_g0_wr7": 33.33,
+      "max_day": "2026-06-17",
+      "max_day_signals": 9,
+      "max_day_wr": 42.86,
+      "weight": -1.0,
+      "recommendation": "block_or_shadow_until_repaired",
+      "seeded": false
+    },
+    {
       "floor": "LIVE",
       "family": "LIVE",
       "lane": "BALANCED",
@@ -2495,54 +2553,6 @@
       "historical_g0_wr": 93.75,
       "peak_day_lock": false,
       "force_live": true
-    },
-    {
-      "floor": "JUN12A",
-      "family": "PEAK_VOLUME",
-      "lane": "BLOCK",
-      "total": 47,
-      "active_days": 7,
-      "first_seen": "2026-06-12 23:45:28",
-      "last_seen": "2026-06-18 16:42:56",
-      "wins": 27,
-      "losses": 17,
-      "ties": 3,
-      "g0_wins": 27,
-      "final_wr": 61.36,
-      "g0_wr": 61.36,
-      "recent_n7": 16,
-      "recent_wr7": 42.86,
-      "recent_g0_wr7": 42.86,
-      "max_day": "2026-06-15",
-      "max_day_signals": 14,
-      "max_day_wr": 78.57,
-      "weight": -1.0,
-      "recommendation": "block_or_shadow_until_repaired",
-      "seeded": false
-    },
-    {
-      "floor": "JUN12B",
-      "family": "PEAK_VOLUME",
-      "lane": "BLOCK",
-      "total": 36,
-      "active_days": 6,
-      "first_seen": "2026-06-13 12:49:15",
-      "last_seen": "2026-06-18 16:42:56",
-      "wins": 20,
-      "losses": 12,
-      "ties": 4,
-      "g0_wins": 20,
-      "final_wr": 62.5,
-      "g0_wr": 62.5,
-      "recent_n7": 15,
-      "recent_wr7": 33.33,
-      "recent_g0_wr7": 33.33,
-      "max_day": "2026-06-17",
-      "max_day_signals": 9,
-      "max_day_wr": 42.86,
-      "weight": -1.0,
-      "recommendation": "block_or_shadow_until_repaired",
-      "seeded": false
     },
     {
       "floor": "APR29",
@@ -3994,15 +4004,17 @@
       "max_day_wr": 78.96,
       "weight": 1.25,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 2908,
+      "historical_wr": 78.96
     },
     {
       "floor": "JUN20",
       "family": "PEAK_VOLUME",
-      "lane": "VOLUME",
+      "lane": "BALANCED",
       "total": 3003,
       "active_days": null,
       "first_seen": null,
@@ -4019,12 +4031,14 @@
       "max_day": "2026-06-20",
       "max_day_signals": 3003,
       "max_day_wr": 81.07,
-      "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "weight": 2.0,
+      "recommendation": "main_stack_live",
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 3003,
+      "historical_wr": 81.07
     },
     {
       "floor": "JUN08",
@@ -4048,10 +4062,12 @@
       "max_day_wr": 69.78,
       "weight": 1.0,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 5281,
+      "historical_wr": 69.78
     },
     {
       "floor": "JUN26",
@@ -4075,10 +4091,12 @@
       "max_day_wr": 78.51,
       "weight": 1.25,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 2637,
+      "historical_wr": 78.51
     },
     {
       "floor": "JUN27",
@@ -4102,10 +4120,12 @@
       "max_day_wr": 75.7,
       "weight": 1.0,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 3056,
+      "historical_wr": 75.7
     }
   ],
   "live_building": [
@@ -4936,15 +4956,17 @@
       "max_day_wr": 78.96,
       "weight": 1.25,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 2908,
+      "historical_wr": 78.96
     },
     {
       "floor": "JUN20",
       "family": "PEAK_VOLUME",
-      "lane": "VOLUME",
+      "lane": "BALANCED",
       "total": 3003,
       "active_days": null,
       "first_seen": null,
@@ -4961,12 +4983,14 @@
       "max_day": "2026-06-20",
       "max_day_signals": 3003,
       "max_day_wr": 81.07,
-      "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "weight": 2.0,
+      "recommendation": "main_stack_live",
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 3003,
+      "historical_wr": 81.07
     },
     {
       "floor": "JUN08",
@@ -4990,10 +5014,12 @@
       "max_day_wr": 69.78,
       "weight": 1.0,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 5281,
+      "historical_wr": 69.78
     },
     {
       "floor": "JUN26",
@@ -5017,10 +5043,12 @@
       "max_day_wr": 78.51,
       "weight": 1.25,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 2637,
+      "historical_wr": 78.51
     },
     {
       "floor": "JUN27",
@@ -5044,10 +5072,12 @@
       "max_day_wr": 75.7,
       "weight": 1.0,
       "recommendation": "volume_stack_live_if_tri_brain_ok",
-      "seeded": true,
+      "seeded": false,
       "seed_source": "telegram_good_cards",
       "peak_day_lock": true,
-      "force_live": true
+      "force_live": true,
+      "historical_total": 3056,
+      "historical_wr": 75.7
     }
   ],
   "stack_policy": {
