@@ -83,7 +83,7 @@ to `*_peak` gate files, restart supervisor.
 ```bash
 cd /home/runner/workspace && \
 curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_PEAK_LOCK_APPLY.sh \
-  "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/REPLACE_SHA/replit_elite_stack_patch/REPLIT_PEAK_LOCK_APPLY.sh" && \
+  "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/6a47ce9f310a525e006778d30a874a93d82807f1/replit_elite_stack_patch/REPLIT_PEAK_LOCK_APPLY.sh" && \
 bash REPLIT_PEAK_LOCK_APPLY.sh
 ```
 
