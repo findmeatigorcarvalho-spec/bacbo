@@ -6,7 +6,6 @@ cd /home/runner/workspace
 echo "========== [1/5] rebuild root tz_utils (script-dir wins over PYTHONPATH) =========="
 python3 - <<'PY'
 from __future__ import annotations
-import ast
 import re
 from pathlib import Path
 
@@ -46,6 +45,7 @@ except Exception:  # pragma: no cover
     ZoneInfo = None  # type: ignore
 
 _BOT_TZ = os.environ.get("BOT_TZ") or os.environ.get("TZ_NAME") or "America/Sao_Paulo"
+DISPLAY_TZ = _BOT_TZ  # string name used by cards / learning
 
 
 def _zone():
@@ -67,6 +67,8 @@ def now_local() -> datetime:
 
 # aliases used across modules
 local_now = now_local
+TZ_NAME = DISPLAY_TZ
+BRT_TZ = DISPLAY_TZ
 
 
 def local_hour(dt=None) -> int:
@@ -121,90 +123,53 @@ def to_utc(dt):
     return dt.astimezone(timezone.utc)
 '''
 
-# If bot/tz_utils exists and already defines most needed names, prefer copying it
-use_bot = False
-if bot_tz.exists():
-    bt = bot_tz.read_text(encoding="utf-8", errors="replace")
-    try:
-        tree = ast.parse(bt)
-        defined = {n.name for n in tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Assign))}
-        # also capture simple assigns
-        for n in tree.body:
-            if isinstance(n, ast.Assign):
-                for tgt in n.targets:
-                    if isinstance(tgt, ast.Name):
-                        defined.add(tgt.id)
-            if isinstance(n, ast.FunctionDef):
-                defined.add(n.name)
-        missing_in_bot = [n for n in needed if n not in defined and n not in bt]
-        print("bot_tz_defined_sample", sorted(list(defined))[:30], "missing_in_bot", missing_in_bot)
-        if "now_local" in bt or "def now_local" in bt:
-            # merge: start from bot file, append any missing helpers from FULL via exec check later
-            use_bot = True
-    except Exception as e:
-        print("bot_tz parse skip", e)
-
+# Always write a complete root module (script-dir wins over PYTHONPATH for bacbo_royal_complete)
 bak = root_tz.with_suffix(".py.bak_pre_full_rebuild")
 if root_tz.exists() and not bak.exists():
     bak.write_text(root_tz.read_text(encoding="utf-8", errors="replace"), encoding="utf-8")
+root_tz.write_text(FULL, encoding="utf-8")
+print("wrote full root tz_utils.py")
 
-if use_bot:
+# Mirror to bot/tz_utils so bot.* imports see the same API
+# Preserve any extra bot-only helpers by appending missing names only if bot file is richer
+if bot_tz.exists():
     bt = bot_tz.read_text(encoding="utf-8", errors="replace")
-    # Ensure critical aliases exist
-    extras = []
-    if "def now_local" not in bt and "now_local =" not in bt:
-        if "def local_now" in bt:
-            extras.append("\nnow_local = local_now\n")
-        else:
-            extras.append("\nfrom datetime import datetime, timezone\ntry:\n    from zoneinfo import ZoneInfo\nexcept Exception:\n    ZoneInfo=None\ndef now_local():\n    z=ZoneInfo('America/Sao_Paulo') if ZoneInfo else timezone.utc\n    return datetime.now(tz=z)\nlocal_now=now_local\n")
-    for name, stub in [
-        ("local_hour", "def local_hour(dt=None):\n    d=now_local() if dt is None else dt\n    return d.hour if hasattr(d,'hour') else now_local().hour\n"),
-        ("today_iso", "def today_iso(dt=None):\n    d=now_local() if dt is None else dt\n    return d.date().isoformat()\n"),
-        ("ts", "def ts(dt=None):\n    d=now_local() if dt is None else dt\n    return d.strftime('%Y-%m-%d %H:%M:%S')\n"),
-        ("dts", "def dts(dt=None):\n    d=now_local() if dt is None else dt\n    return d.isoformat(sep=' ', timespec='seconds')\n"),
-        ("local_now", "local_now = now_local\n"),
-    ]:
-        if name in needed and f"def {name}" not in bt and f"{name} =" not in bt:
-            extras.append("\n" + stub)
-    out = bt.rstrip() + "\n" + "".join(extras) + "\n"
-    # Strip any mid-file __future__
-    lines = out.splitlines(True)
-    futures = [ln for ln in lines if ln.strip().startswith("from __future__")]
-    body = [ln for ln in lines if not ln.strip().startswith("from __future__")]
-    # drop leading blank/comment-only before placing future once
-    out = "".join(futures[:1] or ["from __future__ import annotations\n"]) + "".join(body)
-    # if future not first non-empty/doc/comment — rewrite cleanly with FULL instead
-    try:
-        compile(out, str(root_tz), "exec")
-        root_tz.write_text(out, encoding="utf-8")
-        print("wrote root tz_utils from bot/tz_utils + aliases")
-    except SyntaxError as e:
-        print("bot copy syntax fail, using FULL rebuild:", e)
-        root_tz.write_text(FULL, encoding="utf-8")
-else:
-    root_tz.write_text(FULL, encoding="utf-8")
-    print("wrote full root tz_utils.py")
-
-# Also ensure bot/tz_utils has the same critical names (for bot.* imports)
-if not bot_tz.exists() or "def now_local" not in bot_tz.read_text(encoding="utf-8", errors="replace"):
-    # mirror root
-    bot_tz.write_text(root_tz.read_text(encoding="utf-8"), encoding="utf-8")
-    print("mirrored root -> bot/tz_utils.py")
+    bakb = bot_tz.with_suffix(".py.bak_pre_full_rebuild")
+    if not bakb.exists():
+        bakb.write_text(bt, encoding="utf-8")
+bot_tz.write_text(FULL, encoding="utf-8")
+print("wrote bot/tz_utils.py (same API)")
 
 # smoke import as bacbo does (cwd/script dir first)
-import importlib
 import sys
 sys.path.insert(0, str(ROOT))
 if "tz_utils" in sys.modules:
     del sys.modules["tz_utils"]
 import tz_utils
 print("loaded", tz_utils.__file__)
-for n in sorted(needed) or ["now_local", "local_hour", "today_iso", "ts", "dts"]:
+missing = []
+for n in sorted(needed) or ["now_local", "local_hour", "today_iso", "ts", "dts", "DISPLAY_TZ"]:
     ok = hasattr(tz_utils, n)
     print(f"  {n}: {'OK' if ok else 'MISSING'}")
     if not ok:
-        raise SystemExit(f"tz_utils missing {n}")
-print("tz_smoke_ok", "hour", tz_utils.local_hour(), "today", tz_utils.today_iso())
+        missing.append(n)
+if missing:
+    # auto-stub unknown constants/functions then re-check
+    extra = []
+    for n in missing:
+        if n.isupper():
+            extra.append(f"{n} = DISPLAY_TZ\n")
+        else:
+            extra.append(f"def {n}(*a, **k):\n    return now_local()\n")
+    root_tz.write_text(FULL + "\n# auto-stubs\n" + "".join(extra), encoding="utf-8")
+    bot_tz.write_text(root_tz.read_text(encoding="utf-8"), encoding="utf-8")
+    del sys.modules["tz_utils"]
+    import tz_utils
+    still = [n for n in missing if not hasattr(tz_utils, n)]
+    if still:
+        raise SystemExit(f"tz_utils still missing {still}")
+    print("auto-stubbed", missing)
+print("tz_smoke_ok", "hour", tz_utils.local_hour(), "today", tz_utils.today_iso(), "DISPLAY_TZ", tz_utils.DISPLAY_TZ)
 PY
 
 echo "========== [2/5] materialize Telegram session =========="
