@@ -47,7 +47,13 @@ def _env() -> dict[str, str]:
     _load_dotenv_file(ROOT / ".env", env)
     session_path = ROOT / ".telegram_session_string"
     if session_path.exists():
-        env["TELEGRAM_SESSION_STRING"] = session_path.read_text(errors="ignore").strip()
+        _sv = session_path.read_text(errors="ignore").strip()
+        if len(_sv) > 50:
+            env["TELEGRAM_SESSION_STRING"] = _sv
+        elif len((env.get("TELEGRAM_SESSION_STRING") or "").strip()) <= 50:
+            env.pop("TELEGRAM_SESSION_STRING", None)
+    if len((env.get("TELEGRAM_SESSION_STRING") or "").strip()) <= 50:
+        env.pop("TELEGRAM_SESSION_STRING", None)
     # Prefer luxury when luxury_building.env is present; otherwise keep caller/shadow.
     if (ROOT / "luxury_building.env").exists():
         env.setdefault("EDGE_POLICY_MODE", "luxury")
@@ -95,7 +101,7 @@ def main() -> int:
         "fallback_sender": ([sys.executable, "-u", str(BOT / "fallback_signal_sender.py")], None, 0.0),
         "fallback_result_sender": ([sys.executable, "-u", str(BOT / "fallback_result_sender.py")], None, 0.0),
     }
-    env["FALLBACK_SEND_BLOCKED"] = env.get("FALLBACK_SEND_BLOCKED", "1")
+    env["FALLBACK_SEND_BLOCKED"] = env.get("FALLBACK_SEND_BLOCKED", "0")
     env["FALLBACK_MIN_BLOCKED_SCORE"] = env.get("FALLBACK_MIN_BLOCKED_SCORE", "6.0")
 
     print("[Supervisor] starting. Logs in /home/runner/workspace/logs/")

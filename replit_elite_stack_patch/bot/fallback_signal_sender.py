@@ -149,6 +149,64 @@ def _load_telegram_session() -> str:
     )
 
 
+async def _resolve_target(client, target):
+    """Resolve Telegram target without hammering ResolveUsername (FloodWait)."""
+    import json
+
+    cache = HERE / "data" / "telegram_target_entity.json"
+    cache.parent.mkdir(parents=True, exist_ok=True)
+
+    if target is None:
+        raise RuntimeError("TARGET missing in config")
+    if isinstance(target, int) or (isinstance(target, str) and str(target).lstrip("-").isdigit()):
+        return await client.get_entity(int(target))
+
+    peer = os.environ.get("TELEGRAM_TARGET_PEER") or os.environ.get("TARGET_PEER_ID")
+    if peer and str(peer).lstrip("-").isdigit():
+        return await client.get_entity(int(peer))
+
+    if cache.exists():
+        try:
+            data = json.loads(cache.read_text())
+            if data.get("target") == str(target) and data.get("id") is not None:
+                return await client.get_entity(int(data["id"]))
+        except Exception:
+            pass
+
+    tnorm = str(target).lstrip("@").lower()
+    try:
+        async for dialog in client.iter_dialogs():
+            ent = dialog.entity
+            uname = (getattr(ent, "username", None) or "").lower()
+            title = (getattr(ent, "title", None) or getattr(ent, "first_name", None) or "").lower()
+            if uname == tnorm or title == tnorm or (tnorm and tnorm in uname):
+                try:
+                    cache.write_text(json.dumps({"target": str(target), "id": int(ent.id)}))
+                except Exception:
+                    pass
+                return ent
+    except Exception as exc:
+        print("[Fallback] dialogs scan failed:", exc)
+
+    try:
+        from telethon.errors import FloodWaitError
+    except Exception:  # pragma: no cover
+        FloodWaitError = Exception  # type: ignore
+    try:
+        ent = await client.get_entity(target)
+        try:
+            cache.write_text(json.dumps({"target": str(target), "id": int(ent.id)}))
+        except Exception:
+            pass
+        return ent
+    except FloodWaitError as exc:
+        print(
+            "[Fallback] FloodWait on ResolveUsername — set TELEGRAM_TARGET_PEER "
+            f"to numeric chat id. seconds={getattr(exc, 'seconds', '?')}"
+        )
+        raise
+
+
 async def main() -> None:
     load_env()
     api_id = os.getenv("TELEGRAM_API_ID")
@@ -158,7 +216,7 @@ async def main() -> None:
 
     client = TelegramClient(StringSession(session), int(api_id), api_hash)
     await client.connect()
-    entity = await client.get_entity(target)
+    entity = await _resolve_target(client, target)
     print(
         f"[FallbackSender] started target={target} send_blocked={SEND_BLOCKED} "
         f"min_blocked_score={MIN_BLOCKED_SCORE} blocked_lookback_h={BLOCKED_LOOKBACK_HOURS}"
