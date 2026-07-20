@@ -461,8 +461,9 @@ for fp in [Path("bacbo_royal_complete.py"), Path("bot/utils.py")]:
         return (
             f"{m.group(1)}"
             f"{ind}if 'LUXURY_SKIP_RESOLVE_USERNAME' in str({var}):\n"
-            f"{ind}    continue  # soft skip — not in dialog cache; do not ResolveUsername\n"
-            f"{ind}{m.group(4)}{m.group(5)}"
+            f"{ind}    pass  # soft skip — not in dialog cache; do not ResolveUsername\n"
+            f"{ind}else:\n"
+            f"{ind}    {m.group(4)}{m.group(5)}"
         )
     t3=re.sub(pat, repl, t2, count=20)
     # continue only valid in loops — if this breaks syntax, skip
