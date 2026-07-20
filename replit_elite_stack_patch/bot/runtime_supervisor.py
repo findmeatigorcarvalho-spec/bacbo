@@ -97,18 +97,29 @@ def _stop(proc: subprocess.Popen | None) -> None:
 def main() -> int:
     env = _env()
     # Delay fallbacks so bacbo can take WAL ownership / finish boot before readers attach.
+    # FALLBACKS_ENABLED=0 keeps only bacbo on bacbo.db (stops multi-process lock storms).
+    fallbacks_enabled = env.get("FALLBACKS_ENABLED", "0").strip() not in ("0", "false", "False", "no", "")
     fallback_delay = float(env.get("FALLBACK_START_DELAY_SECS", "45"))
     boot_t0 = time.time()
     processes: dict[str, tuple[list[str], subprocess.Popen | None, float]] = {
         "bot_live": ([sys.executable, "-u", str(ROOT / "bacbo_royal_complete.py")], None, 0.0),
-        "fallback_sender": ([sys.executable, "-u", str(BOT / "fallback_signal_sender.py")], None, 0.0),
-        "fallback_result_sender": ([sys.executable, "-u", str(BOT / "fallback_result_sender.py")], None, 0.0),
     }
+    if fallbacks_enabled:
+        processes["fallback_sender"] = (
+            [sys.executable, "-u", str(BOT / "fallback_signal_sender.py")],
+            None,
+            0.0,
+        )
+        processes["fallback_result_sender"] = (
+            [sys.executable, "-u", str(BOT / "fallback_result_sender.py")],
+            None,
+            0.0,
+        )
     env["FALLBACK_SEND_BLOCKED"] = env.get("FALLBACK_SEND_BLOCKED", "0")
     env["FALLBACK_MIN_BLOCKED_SCORE"] = env.get("FALLBACK_MIN_BLOCKED_SCORE", "6.0")
 
     print("[Supervisor] starting. Logs in /home/runner/workspace/logs/")
-    print(f"[Supervisor] fallback_start_delay_secs={fallback_delay}")
+    print(f"[Supervisor] fallbacks_enabled={fallbacks_enabled} fallback_start_delay_secs={fallback_delay}")
     try:
         while True:
             for name, (cmd, proc, last_start) in list(processes.items()):

@@ -111,22 +111,24 @@ export EDGE_POLICY_MODE=luxury
 
 ---
 
-## 5) Fix CrashGuard `database is locked` (run this next)
+## 5) Fix CrashGuard `database is locked`
 
-Bot reaches `run_forever()` then dies with:
-`[CrashGuard] Bot crashed ... database is locked`
+### V2 (use this if locks returned after V1)
 
-Do **not** re-run old `REPLIT_FIX_EVERYTHING` SHAs. Paste this only:
+If you still see `DBHeartbeat` / `CrashGuard` / `Watchdog Reconnect failed` with
+`database is locked` after V1, paste **V2** (bacbo-only, soft-skip reconnect):
+
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_FIX_DB_LOCKED_V2.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_DB_LOCKED_V2.sh" && bash REPLIT_FIX_DB_LOCKED_V2.sh
+```
+
+Expected: `FALLBACKS_ENABLED=0`, no fallback procs, `VERDICT: OK`, rooms still recv/fire.
+
+### V1 (first attempt — WAL harden)
 
 ```bash
 cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_FIX_DB_LOCKED.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_DB_LOCKED.sh" && bash REPLIT_FIX_DB_LOCKED.sh
 ```
-
-Expected:
-- `sqlite harden applied`
-- `journal_mode wal`
-- `VERDICT: OK — no post-fix DB lock CrashGuard`
-- fallbacks start ~45s after bot (by design)
 
 ---
 
