@@ -1,37 +1,35 @@
-# Luxury Building — Floor Decisions (LOCKED)
+# Luxury Building — Floor Decisions (LOCKED + SEEDED)
 
-Rule: result cards fire under their signal **before** the live Bac Bo round, so volume at **lifetime WR ≥ 60%** (n≥10) is worth stacking.
+Rule: result cards fire under their signal **before** the live Bac Bo round, so volume at **lifetime/historical WR ≥ 60%** (n≥10) is worth stacking.
 
-Generated stack: `bot/data/luxury_building_stack.json`  
-Runtime mode: `EDGE_POLICY_MODE=luxury`
+**Critical:** Live Replit `bacbo.db` is often truncated. Installer merges `historical_luxury_seed.json` so thin recent samples cannot wipe the building.
 
-## Counts
+## Counts (seeded)
 
 | Metric | n |
 |---|---:|
-| Floors registered | **73** |
-| **Live building (PRECISION+BALANCED+VOLUME)** | **26** |
-| Shadow (thin / unproven) | **45** |
-| Blocked | **2** (`JUN12A`, `JUN12B`) |
+| Live building floors | **32** (26 historical camadas + JUN08/10/19/20/26/27 peaks) |
+| Peak-day locks | JUN19 · JUN20 · JUN08 · JUN10 · JUN26 · JUN27 · MAY19 · MAY10 |
+| Hard blocked | JUN12A · JUN12B |
 
-## Live building — all 26 good floors
+## Why JUN19 / JUN20 matter
 
-### PRECISION (2)
-`AITEST_APR20_MAX` · `AITEST_ULTIMATE`
+Telegram good-card days (not previously named floors):
 
-### BALANCED (5)
-`LIVE` · `ELITE_V2` · `ULTIMATE` · `APR20` · `MAY01`
+| Day | good_fires | WR | G0 wins |
+|--|--:|--:|--:|
+| **2026-06-19** | 2908 | **78.96%** | 1592 |
+| **2026-06-20** | 3003 | **81.07%** | 1756 |
 
-### VOLUME (19) — newly promoted under WR≥60 rule
-`MAR19` · `MAR20` · `AITEST_LIVE` · `MAR21` · `MAY10` · `APR26` · `AITEST_MAR21` · `APR22` · `APR29` · `APR30` · `APR27` · `ELITE_V2_PEAK` · `APR28` · `MAY19` · `APR20_MAX` · `MAY11` · `AITEST_APR20` · `MAY04` · `APR19`
+Also seeded: JUN08 / JUN10 / JUN26 / JUN27 (monster G0 volume days).
 
-## Blocked — never fire
-`JUN12A` · `JUN12B`
+## Live building floors
 
-## Card policy
-**Keep:** `CD_FIRE_TIMER_BRT_EDT_APOSTAR`, `CD_RES_GREEN_G_BRT`, `CD_RES_RODADAS_TEMPO`, `CD_RES_BELL_GANHOU`, `RES_WIN_KIND`, `FIRE_GOLDEN`, `RES_GREEN_G0`  
-**Kill:** AUTO relay, `DO_NOT_BET_PASSED`, LOSS spam, streak chatter  
-**Bias:** SOLO_ELITE / SEQUENCE / GOLDEN / PLATINUM · **BLUE**
+`AITEST_ULTIMATE` · `AITEST_APR20_MAX` · `MAY01` · `APR20` · `LIVE` · `APR27` · `ELITE_V2` · `ULTIMATE` · `AITEST_LIVE` · `APR22` · `APR26` · `APR20_MAX` · `MAY19` · `MAY10` · `MAR21` · `APR29` · `ELITE_V2_PEAK` · `MAR19` · `MAY11` · `MAR20` · `AITEST_MAR21` · `APR30` · `APR28` · `AITEST_APR20` · `MAY04` · `APR19` · **`JUN19`** · **`JUN20`** · **`JUN08`** · **`JUN10`** · **`JUN26`** · **`JUN27`**
 
-## Install on Replit
-See `REPLIT_COMMANDS.md` — run `install_luxury_building.py` then `source luxury_building.env`.
+## Virtual setups (boosters)
+`SOLO_ELITE|BLUE` · `SEQUENCE|BLUE` · `GOLDEN|BLUE` · `PLATINUM|BLUE` · `SEQUENCE`
+
+## Install
+See `REPLIT_COMMANDS.md` — re-run `install_luxury_building.py` (must download seed).  
+Expect **~32 live floors**, not 1.

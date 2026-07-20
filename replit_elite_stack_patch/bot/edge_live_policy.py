@@ -27,6 +27,8 @@ _FLOOR_FACTORY_REPORT = _DIR / "data" / "skyscraper_floor_factory_report.json"
 _LEGACY_355_REPORT = _DIR / "data" / "legacy_peak_355_report.json"
 _LUXURY_STACK_REPORT = _DIR / "data" / "luxury_building_stack.json"
 _FLOOR_REGISTRY_REPORT = _DIR / "data" / "floor_stack_registry_report.json"
+_HISTORICAL_SEED = _DIR / "data" / "historical_luxury_seed.json"
+_LUXURY_LIVE_FLOORS = _DIR / "data" / "luxury_live_floors.json"
 _CACHE = {"ts": 0.0, "data": None}
 _JSON_CACHE: dict[str, dict] = {}
 
@@ -82,8 +84,33 @@ def _luxury_sets() -> tuple[set[str], set[str]]:
         if name:
             blocked.add(str(name).strip().upper())
 
+    allow = _load_json(_LUXURY_LIVE_FLOORS)
+    for name in allow.get("live_floors") or []:
+        if name:
+            live.add(str(name).strip().upper())
+    for name in allow.get("blocked") or []:
+        if name:
+            blocked.add(str(name).strip().upper())
+    for name in allow.get("peak_day_floors") or []:
+        if name:
+            live.add(str(name).strip().upper())
+
+    # Historical seed always contributes force-live floors (survives truncated DB).
+    seed = _load_json(_HISTORICAL_SEED)
+    for name in seed.get("hard_block") or []:
+        if name:
+            blocked.add(str(name).strip().upper())
+    for item in seed.get("floors") or []:
+        if isinstance(item, dict) and item.get("floor") and item.get("force_live", True):
+            live.add(str(item["floor"]).strip().upper())
+    for item in seed.get("peak_day_floors") or []:
+        if isinstance(item, dict) and item.get("floor"):
+            live.add(str(item["floor"]).strip().upper())
+        elif isinstance(item, str):
+            live.add(item.strip().upper())
+
     # Fallback to registry lanes if luxury stack not generated yet.
-    if not live:
+    if len(live) < 5:
         reg = _load_json(_FLOOR_REGISTRY_REPORT)
         for section in ("precision", "balanced", "volume", "live_building"):
             for item in reg.get(section, []) or []:
@@ -98,6 +125,9 @@ def _luxury_sets() -> tuple[set[str], set[str]]:
     # Always keep core production floors if reports are empty.
     if not live:
         live.update({"LIVE", "ELITE_V2", "ULTIMATE"})
+
+    # Hard blocks win.
+    live -= blocked
     return live, blocked
 
 

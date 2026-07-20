@@ -19,6 +19,7 @@ FILES = [
     "bot/skyscraper_stack.py",
     "bot/floor_stack_registry.py",
     "bot/luxury_building_stack.py",
+    "bot/data/historical_luxury_seed.json",
     "bot/legacy_peak_355.py",
     "bot/system_health_audit.py",
     "bot/unlock_signal_flow.py",

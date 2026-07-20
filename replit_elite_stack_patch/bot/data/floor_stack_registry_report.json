@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-20T06:55:07.469516+00:00",
-  "total_floors": 73,
+  "generated_at": "2026-07-20T07:14:09.149406+00:00",
+  "total_floors": 78,
   "lane_counts": {
     "BALANCED": 5,
-    "VOLUME": 19,
+    "VOLUME": 25,
     "PRECISION": 2,
     "BLOCK": 2,
-    "SHADOW": 45
+    "SHADOW": 44
   },
   "precision": [
     {
@@ -30,7 +30,15 @@
       "max_day_signals": 28,
       "max_day_wr": 92.59,
       "weight": 3.0,
-      "recommendation": "quality_anchor_live"
+      "recommendation": "quality_anchor_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 93,
+      "historical_wr": 92.13,
+      "historical_g0_wr": 92.13,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_ULTIMATE",
@@ -53,7 +61,15 @@
       "max_day_signals": 37,
       "max_day_wr": 97.3,
       "weight": 3.0,
-      "recommendation": "quality_anchor_live"
+      "recommendation": "quality_anchor_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 49,
+      "historical_wr": 93.75,
+      "historical_g0_wr": 93.75,
+      "peak_day_lock": false,
+      "force_live": true
     }
   ],
   "balanced": [
@@ -78,7 +94,11 @@
       "max_day_signals": 2151,
       "max_day_wr": 78.53,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 18786,
+      "historical_wr": 81.13,
+      "force_live": true
     },
     {
       "floor": "ELITE_V2",
@@ -101,7 +121,11 @@
       "max_day_signals": 982,
       "max_day_wr": 77.35,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 8522,
+      "historical_wr": 80.42,
+      "force_live": true
     },
     {
       "floor": "ULTIMATE",
@@ -124,7 +148,11 @@
       "max_day_signals": 83,
       "max_day_wr": 78.95,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 407,
+      "historical_wr": 80.16,
+      "force_live": true
     },
     {
       "floor": "APR20",
@@ -147,7 +175,15 @@
       "max_day_signals": 18,
       "max_day_wr": 80.0,
       "weight": 2.0,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 115,
+      "historical_wr": 81.48,
+      "historical_g0_wr": 81.48,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY01",
@@ -170,7 +206,15 @@
       "max_day_signals": 17,
       "max_day_wr": 85.71,
       "weight": 2.0,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 101,
+      "historical_wr": 82.98,
+      "historical_g0_wr": 80.85,
+      "peak_day_lock": false,
+      "force_live": true
     }
   ],
   "volume": [
@@ -195,7 +239,11 @@
       "max_day_signals": 1222,
       "max_day_wr": 69.13,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 12057,
+      "historical_wr": 72.28,
+      "force_live": true
     },
     {
       "floor": "MAR20",
@@ -218,7 +266,11 @@
       "max_day_signals": 344,
       "max_day_wr": 69.35,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 2637,
+      "historical_wr": 70.64,
+      "force_live": true
     },
     {
       "floor": "AITEST_LIVE",
@@ -241,7 +293,11 @@
       "max_day_signals": 148,
       "max_day_wr": 79.45,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 498,
+      "historical_wr": 79.66,
+      "force_live": true
     },
     {
       "floor": "MAR21",
@@ -264,7 +320,11 @@
       "max_day_signals": 32,
       "max_day_wr": 81.25,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 390,
+      "historical_wr": 76.15,
+      "force_live": true
     },
     {
       "floor": "MAY10",
@@ -287,7 +347,11 @@
       "max_day_signals": 76,
       "max_day_wr": 74.29,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 312,
+      "historical_wr": 76.27,
+      "force_live": true
     },
     {
       "floor": "APR26",
@@ -310,7 +374,15 @@
       "max_day_signals": 17,
       "max_day_wr": 81.25,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 101,
+      "historical_wr": 79.57,
+      "historical_g0_wr": 77.42,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_MAR21",
@@ -333,7 +405,15 @@
       "max_day_signals": 17,
       "max_day_wr": 66.67,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 96,
+      "historical_wr": 70.0,
+      "historical_g0_wr": 70.0,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR22",
@@ -356,7 +436,15 @@
       "max_day_signals": 13,
       "max_day_wr": 69.23,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 58,
+      "historical_wr": 79.63,
+      "historical_g0_wr": 75.93,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR29",
@@ -379,7 +467,15 @@
       "max_day_signals": 10,
       "max_day_wr": 80.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 34,
+      "historical_wr": 75.0,
+      "historical_g0_wr": 71.88,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR30",
@@ -402,7 +498,15 @@
       "max_day_signals": 13,
       "max_day_wr": 75.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 28,
+      "historical_wr": 69.23,
+      "historical_g0_wr": 57.69,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR27",
@@ -425,7 +529,15 @@
       "max_day_signals": 6,
       "max_day_wr": 83.33,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 23,
+      "historical_wr": 80.95,
+      "historical_g0_wr": 71.43,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "ELITE_V2_PEAK",
@@ -448,7 +560,15 @@
       "max_day_signals": 23,
       "max_day_wr": 73.91,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 23,
+      "historical_wr": 73.91,
+      "historical_g0_wr": 73.91,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR28",
@@ -471,7 +591,15 @@
       "max_day_signals": 9,
       "max_day_wr": 62.5,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 20,
+      "historical_wr": 68.42,
+      "historical_g0_wr": 57.89,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY19",
@@ -494,7 +622,15 @@
       "max_day_signals": 6,
       "max_day_wr": 83.33,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 19,
+      "historical_wr": 77.78,
+      "historical_g0_wr": 77.78,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR20_MAX",
@@ -517,7 +653,15 @@
       "max_day_signals": 5,
       "max_day_wr": 100.0,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 15,
+      "historical_wr": 78.57,
+      "historical_g0_wr": 78.57,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY11",
@@ -540,7 +684,15 @@
       "max_day_signals": 10,
       "max_day_wr": 70.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 15,
+      "historical_wr": 71.43,
+      "historical_g0_wr": 71.43,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_APR20",
@@ -563,7 +715,15 @@
       "max_day_signals": 6,
       "max_day_wr": 60.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 13,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 66.67,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY04",
@@ -586,7 +746,15 @@
       "max_day_signals": 3,
       "max_day_wr": 66.67,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 11,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 55.56,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR19",
@@ -609,7 +777,181 @@
       "max_day_signals": 4,
       "max_day_wr": 100.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 10,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 66.67,
+      "peak_day_lock": false,
+      "force_live": true
+    },
+    {
+      "floor": "JUN10",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 3,
+      "active_days": 2,
+      "first_seen": "2026-06-16 12:42:06",
+      "last_seen": "2026-06-17 20:35:47",
+      "wins": 3,
+      "losses": 0,
+      "ties": 0,
+      "g0_wins": 3,
+      "final_wr": 100.0,
+      "g0_wr": 100.0,
+      "recent_n7": 2,
+      "recent_wr7": 100.0,
+      "recent_g0_wr7": 100.0,
+      "max_day": "2026-06-10",
+      "max_day_signals": 4249,
+      "max_day_wr": 72.53,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "telegram_good_cards",
+      "historical_total": 4249,
+      "historical_wr": 72.53,
+      "historical_g0_wr": null,
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN19",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 2908,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 78.96,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-19",
+      "max_day_signals": 2908,
+      "max_day_wr": 78.96,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN20",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 3003,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 81.07,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-20",
+      "max_day_signals": 3003,
+      "max_day_wr": 81.07,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN08",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 5281,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 69.78,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-08",
+      "max_day_signals": 5281,
+      "max_day_wr": 69.78,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN26",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 2637,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 78.51,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-26",
+      "max_day_signals": 2637,
+      "max_day_wr": 78.51,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN27",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 3056,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 75.7,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-27",
+      "max_day_signals": 3056,
+      "max_day_wr": 75.7,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
     }
   ],
   "shadow": [
@@ -634,7 +976,8 @@
       "max_day_signals": 4,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAR21_MAX",
@@ -657,7 +1000,8 @@
       "max_day_signals": 5,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAR21_MAX",
@@ -680,7 +1024,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR24",
@@ -703,7 +1048,8 @@
       "max_day_signals": 8,
       "max_day_wr": 71.43,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR27",
@@ -726,7 +1072,8 @@
       "max_day_signals": 4,
       "max_day_wr": 66.67,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR21",
@@ -749,7 +1096,8 @@
       "max_day_signals": 3,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR30_MAX",
@@ -772,7 +1120,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR30_MAX",
@@ -795,7 +1144,8 @@
       "max_day_signals": 3,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR19_MAX",
@@ -818,7 +1168,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAY01_MAX",
@@ -841,7 +1192,8 @@
       "max_day_signals": 5,
       "max_day_wr": 25.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR26_MAX",
@@ -864,7 +1216,8 @@
       "max_day_signals": 5,
       "max_day_wr": 25.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR29",
@@ -887,7 +1240,8 @@
       "max_day_signals": 4,
       "max_day_wr": 66.67,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR22",
@@ -910,7 +1264,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR26",
@@ -933,7 +1288,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAY01",
@@ -956,7 +1312,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR22_MAX",
@@ -979,7 +1336,8 @@
       "max_day_signals": 4,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAY04_MAX",
@@ -1002,7 +1360,8 @@
       "max_day_signals": 4,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR21_MAX",
@@ -1025,7 +1384,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR24_MAX",
@@ -1048,7 +1408,8 @@
       "max_day_signals": 5,
       "max_day_wr": 40.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAR20_MAX",
@@ -1071,7 +1432,8 @@
       "max_day_signals": 5,
       "max_day_wr": 40.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAR19_MAX",
@@ -1094,7 +1456,8 @@
       "max_day_signals": 5,
       "max_day_wr": 33.33,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAY02_MAX",
@@ -1117,7 +1480,8 @@
       "max_day_signals": 5,
       "max_day_wr": 25.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR25_MAX",
@@ -1140,7 +1504,8 @@
       "max_day_signals": 3,
       "max_day_wr": 66.67,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR28_MAX",
@@ -1163,7 +1528,8 @@
       "max_day_signals": 2,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR25",
@@ -1186,7 +1552,8 @@
       "max_day_signals": 4,
       "max_day_wr": 66.67,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR29_MAX",
@@ -1209,7 +1576,8 @@
       "max_day_signals": 2,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR19_MAX",
@@ -1232,7 +1600,8 @@
       "max_day_signals": 2,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR21_MAX",
@@ -1255,30 +1624,8 @@
       "max_day_signals": 2,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
-    },
-    {
-      "floor": "JUN10",
-      "family": "PEAK_VOLUME",
-      "lane": "SHADOW",
-      "total": 3,
-      "active_days": 2,
-      "first_seen": "2026-06-16 12:42:06",
-      "last_seen": "2026-06-17 20:35:47",
-      "wins": 3,
-      "losses": 0,
-      "ties": 0,
-      "g0_wins": 3,
-      "final_wr": 100.0,
-      "g0_wr": 100.0,
-      "recent_n7": 2,
-      "recent_wr7": 100.0,
-      "recent_g0_wr7": 100.0,
-      "max_day": "2026-06-16",
-      "max_day_signals": 2,
-      "max_day_wr": 100.0,
-      "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY15",
@@ -1301,7 +1648,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "ULTIMATE_PEAK",
@@ -1324,7 +1672,8 @@
       "max_day_signals": 3,
       "max_day_wr": 66.67,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR27_MAX",
@@ -1347,7 +1696,8 @@
       "max_day_signals": 2,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAR19_MAX",
@@ -1370,7 +1720,8 @@
       "max_day_signals": 2,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY02_MAX",
@@ -1393,7 +1744,8 @@
       "max_day_signals": 2,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY17",
@@ -1416,7 +1768,8 @@
       "max_day_signals": 2,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY21",
@@ -1439,7 +1792,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY24",
@@ -1462,7 +1816,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR27_PEAK",
@@ -1485,7 +1840,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAR19",
@@ -1508,7 +1864,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR22_MAX",
@@ -1531,7 +1888,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR24_MAX",
@@ -1554,7 +1912,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR26_MAX",
@@ -1577,7 +1936,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY01_MAX",
@@ -1600,7 +1960,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY22",
@@ -1623,7 +1984,8 @@
       "max_day_signals": 1,
       "max_day_wr": 0.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "JUN09",
@@ -1646,7 +2008,8 @@
       "max_day_signals": 1,
       "max_day_wr": null,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     }
   ],
   "blocked": [
@@ -1671,7 +2034,8 @@
       "max_day_signals": 14,
       "max_day_wr": 78.57,
       "weight": -1.0,
-      "recommendation": "block_or_shadow_until_repaired"
+      "recommendation": "block_or_shadow_until_repaired",
+      "seeded": false
     },
     {
       "floor": "JUN12B",
@@ -1694,7 +2058,8 @@
       "max_day_signals": 9,
       "max_day_wr": 42.86,
       "weight": -1.0,
-      "recommendation": "block_or_shadow_until_repaired"
+      "recommendation": "block_or_shadow_until_repaired",
+      "seeded": false
     }
   ],
   "all_floors": [
@@ -1719,7 +2084,11 @@
       "max_day_signals": 2151,
       "max_day_wr": 78.53,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 18786,
+      "historical_wr": 81.13,
+      "force_live": true
     },
     {
       "floor": "MAR19",
@@ -1742,7 +2111,11 @@
       "max_day_signals": 1222,
       "max_day_wr": 69.13,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 12057,
+      "historical_wr": 72.28,
+      "force_live": true
     },
     {
       "floor": "ELITE_V2",
@@ -1765,7 +2138,11 @@
       "max_day_signals": 982,
       "max_day_wr": 77.35,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 8522,
+      "historical_wr": 80.42,
+      "force_live": true
     },
     {
       "floor": "MAR20",
@@ -1788,7 +2165,11 @@
       "max_day_signals": 344,
       "max_day_wr": 69.35,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 2637,
+      "historical_wr": 70.64,
+      "force_live": true
     },
     {
       "floor": "AITEST_LIVE",
@@ -1811,7 +2192,11 @@
       "max_day_signals": 148,
       "max_day_wr": 79.45,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 498,
+      "historical_wr": 79.66,
+      "force_live": true
     },
     {
       "floor": "ULTIMATE",
@@ -1834,7 +2219,11 @@
       "max_day_signals": 83,
       "max_day_wr": 78.95,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 407,
+      "historical_wr": 80.16,
+      "force_live": true
     },
     {
       "floor": "MAR21",
@@ -1857,7 +2246,11 @@
       "max_day_signals": 32,
       "max_day_wr": 81.25,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 390,
+      "historical_wr": 76.15,
+      "force_live": true
     },
     {
       "floor": "MAY10",
@@ -1880,7 +2273,11 @@
       "max_day_signals": 76,
       "max_day_wr": 74.29,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 312,
+      "historical_wr": 76.27,
+      "force_live": true
     },
     {
       "floor": "APR20",
@@ -1903,7 +2300,15 @@
       "max_day_signals": 18,
       "max_day_wr": 80.0,
       "weight": 2.0,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 115,
+      "historical_wr": 81.48,
+      "historical_g0_wr": 81.48,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY01",
@@ -1926,7 +2331,15 @@
       "max_day_signals": 17,
       "max_day_wr": 85.71,
       "weight": 2.0,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 101,
+      "historical_wr": 82.98,
+      "historical_g0_wr": 80.85,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR26",
@@ -1949,7 +2362,15 @@
       "max_day_signals": 17,
       "max_day_wr": 81.25,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 101,
+      "historical_wr": 79.57,
+      "historical_g0_wr": 77.42,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_MAR21",
@@ -1972,7 +2393,15 @@
       "max_day_signals": 17,
       "max_day_wr": 66.67,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 96,
+      "historical_wr": 70.0,
+      "historical_g0_wr": 70.0,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_APR20_MAX",
@@ -1995,7 +2424,15 @@
       "max_day_signals": 28,
       "max_day_wr": 92.59,
       "weight": 3.0,
-      "recommendation": "quality_anchor_live"
+      "recommendation": "quality_anchor_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 93,
+      "historical_wr": 92.13,
+      "historical_g0_wr": 92.13,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR22",
@@ -2018,7 +2455,15 @@
       "max_day_signals": 13,
       "max_day_wr": 69.23,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 58,
+      "historical_wr": 79.63,
+      "historical_g0_wr": 75.93,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_ULTIMATE",
@@ -2041,7 +2486,15 @@
       "max_day_signals": 37,
       "max_day_wr": 97.3,
       "weight": 3.0,
-      "recommendation": "quality_anchor_live"
+      "recommendation": "quality_anchor_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 49,
+      "historical_wr": 93.75,
+      "historical_g0_wr": 93.75,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "JUN12A",
@@ -2064,7 +2517,8 @@
       "max_day_signals": 14,
       "max_day_wr": 78.57,
       "weight": -1.0,
-      "recommendation": "block_or_shadow_until_repaired"
+      "recommendation": "block_or_shadow_until_repaired",
+      "seeded": false
     },
     {
       "floor": "JUN12B",
@@ -2087,7 +2541,8 @@
       "max_day_signals": 9,
       "max_day_wr": 42.86,
       "weight": -1.0,
-      "recommendation": "block_or_shadow_until_repaired"
+      "recommendation": "block_or_shadow_until_repaired",
+      "seeded": false
     },
     {
       "floor": "APR29",
@@ -2110,7 +2565,15 @@
       "max_day_signals": 10,
       "max_day_wr": 80.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 34,
+      "historical_wr": 75.0,
+      "historical_g0_wr": 71.88,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR30",
@@ -2133,7 +2596,15 @@
       "max_day_signals": 13,
       "max_day_wr": 75.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 28,
+      "historical_wr": 69.23,
+      "historical_g0_wr": 57.69,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR27",
@@ -2156,7 +2627,15 @@
       "max_day_signals": 6,
       "max_day_wr": 83.33,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 23,
+      "historical_wr": 80.95,
+      "historical_g0_wr": 71.43,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "ELITE_V2_PEAK",
@@ -2179,7 +2658,15 @@
       "max_day_signals": 23,
       "max_day_wr": 73.91,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 23,
+      "historical_wr": 73.91,
+      "historical_g0_wr": 73.91,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR28",
@@ -2202,7 +2689,15 @@
       "max_day_signals": 9,
       "max_day_wr": 62.5,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 20,
+      "historical_wr": 68.42,
+      "historical_g0_wr": 57.89,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY19",
@@ -2225,7 +2720,15 @@
       "max_day_signals": 6,
       "max_day_wr": 83.33,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 19,
+      "historical_wr": 77.78,
+      "historical_g0_wr": 77.78,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR20_MAX",
@@ -2248,7 +2751,15 @@
       "max_day_signals": 5,
       "max_day_wr": 100.0,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 15,
+      "historical_wr": 78.57,
+      "historical_g0_wr": 78.57,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY11",
@@ -2271,7 +2782,15 @@
       "max_day_signals": 10,
       "max_day_wr": 70.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 15,
+      "historical_wr": 71.43,
+      "historical_g0_wr": 71.43,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_APR20",
@@ -2294,7 +2813,15 @@
       "max_day_signals": 6,
       "max_day_wr": 60.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 13,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 66.67,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY02",
@@ -2317,7 +2844,8 @@
       "max_day_signals": 4,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY04",
@@ -2340,7 +2868,15 @@
       "max_day_signals": 3,
       "max_day_wr": 66.67,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 11,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 55.56,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR19",
@@ -2363,7 +2899,15 @@
       "max_day_signals": 4,
       "max_day_wr": 100.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 10,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 66.67,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAR21_MAX",
@@ -2386,7 +2930,8 @@
       "max_day_signals": 5,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAR21_MAX",
@@ -2409,7 +2954,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR24",
@@ -2432,7 +2978,8 @@
       "max_day_signals": 8,
       "max_day_wr": 71.43,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR27",
@@ -2455,7 +3002,8 @@
       "max_day_signals": 4,
       "max_day_wr": 66.67,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR21",
@@ -2478,7 +3026,8 @@
       "max_day_signals": 3,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR30_MAX",
@@ -2501,7 +3050,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR30_MAX",
@@ -2524,7 +3074,8 @@
       "max_day_signals": 3,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR19_MAX",
@@ -2547,7 +3098,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAY01_MAX",
@@ -2570,7 +3122,8 @@
       "max_day_signals": 5,
       "max_day_wr": 25.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR26_MAX",
@@ -2593,7 +3146,8 @@
       "max_day_signals": 5,
       "max_day_wr": 25.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR29",
@@ -2616,7 +3170,8 @@
       "max_day_signals": 4,
       "max_day_wr": 66.67,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR22",
@@ -2639,7 +3194,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR26",
@@ -2662,7 +3218,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAY01",
@@ -2685,7 +3242,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR22_MAX",
@@ -2708,7 +3266,8 @@
       "max_day_signals": 4,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAY04_MAX",
@@ -2731,7 +3290,8 @@
       "max_day_signals": 4,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR21_MAX",
@@ -2754,7 +3314,8 @@
       "max_day_signals": 5,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR24_MAX",
@@ -2777,7 +3338,8 @@
       "max_day_signals": 5,
       "max_day_wr": 40.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAR20_MAX",
@@ -2800,7 +3362,8 @@
       "max_day_signals": 5,
       "max_day_wr": 40.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAR19_MAX",
@@ -2823,7 +3386,8 @@
       "max_day_signals": 5,
       "max_day_wr": 33.33,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAY02_MAX",
@@ -2846,7 +3410,8 @@
       "max_day_signals": 5,
       "max_day_wr": 25.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR25_MAX",
@@ -2869,7 +3434,8 @@
       "max_day_signals": 3,
       "max_day_wr": 66.67,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR28_MAX",
@@ -2892,7 +3458,8 @@
       "max_day_signals": 2,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR25",
@@ -2915,7 +3482,8 @@
       "max_day_signals": 4,
       "max_day_wr": 66.67,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR29_MAX",
@@ -2938,7 +3506,8 @@
       "max_day_signals": 2,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR19_MAX",
@@ -2961,7 +3530,8 @@
       "max_day_signals": 2,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR21_MAX",
@@ -2984,12 +3554,13 @@
       "max_day_signals": 2,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "JUN10",
       "family": "PEAK_VOLUME",
-      "lane": "SHADOW",
+      "lane": "VOLUME",
       "total": 3,
       "active_days": 2,
       "first_seen": "2026-06-16 12:42:06",
@@ -3003,11 +3574,19 @@
       "recent_n7": 2,
       "recent_wr7": 100.0,
       "recent_g0_wr7": 100.0,
-      "max_day": "2026-06-16",
-      "max_day_signals": 2,
-      "max_day_wr": 100.0,
-      "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "max_day": "2026-06-10",
+      "max_day_signals": 4249,
+      "max_day_wr": 72.53,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "telegram_good_cards",
+      "historical_total": 4249,
+      "historical_wr": 72.53,
+      "historical_g0_wr": null,
+      "peak_day_lock": true,
+      "force_live": true
     },
     {
       "floor": "MAY15",
@@ -3030,7 +3609,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "ULTIMATE_PEAK",
@@ -3053,7 +3633,8 @@
       "max_day_signals": 3,
       "max_day_wr": 66.67,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR27_MAX",
@@ -3076,7 +3657,8 @@
       "max_day_signals": 2,
       "max_day_wr": 50.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAR19_MAX",
@@ -3099,7 +3681,8 @@
       "max_day_signals": 2,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY02_MAX",
@@ -3122,7 +3705,8 @@
       "max_day_signals": 2,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY17",
@@ -3145,7 +3729,8 @@
       "max_day_signals": 2,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY21",
@@ -3168,7 +3753,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY24",
@@ -3191,7 +3777,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_APR27_PEAK",
@@ -3214,7 +3801,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "AITEST_MAR19",
@@ -3237,7 +3825,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR22_MAX",
@@ -3260,7 +3849,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR24_MAX",
@@ -3283,7 +3873,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "APR26_MAX",
@@ -3306,7 +3897,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY01_MAX",
@@ -3329,7 +3921,8 @@
       "max_day_signals": 1,
       "max_day_wr": 100.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "MAY22",
@@ -3352,7 +3945,8 @@
       "max_day_signals": 1,
       "max_day_wr": 0.0,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
     },
     {
       "floor": "JUN09",
@@ -3375,7 +3969,143 @@
       "max_day_signals": 1,
       "max_day_wr": null,
       "weight": 0.0,
-      "recommendation": "shadow_learn_only"
+      "recommendation": "shadow_learn_only",
+      "seeded": false
+    },
+    {
+      "floor": "JUN19",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 2908,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 78.96,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-19",
+      "max_day_signals": 2908,
+      "max_day_wr": 78.96,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN20",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 3003,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 81.07,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-20",
+      "max_day_signals": 3003,
+      "max_day_wr": 81.07,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN08",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 5281,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 69.78,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-08",
+      "max_day_signals": 5281,
+      "max_day_wr": 69.78,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN26",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 2637,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 78.51,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-26",
+      "max_day_signals": 2637,
+      "max_day_wr": 78.51,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN27",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 3056,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 75.7,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-27",
+      "max_day_signals": 3056,
+      "max_day_wr": 75.7,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
     }
   ],
   "live_building": [
@@ -3400,7 +4130,11 @@
       "max_day_signals": 2151,
       "max_day_wr": 78.53,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 18786,
+      "historical_wr": 81.13,
+      "force_live": true
     },
     {
       "floor": "MAR19",
@@ -3423,7 +4157,11 @@
       "max_day_signals": 1222,
       "max_day_wr": 69.13,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 12057,
+      "historical_wr": 72.28,
+      "force_live": true
     },
     {
       "floor": "ELITE_V2",
@@ -3446,7 +4184,11 @@
       "max_day_signals": 982,
       "max_day_wr": 77.35,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 8522,
+      "historical_wr": 80.42,
+      "force_live": true
     },
     {
       "floor": "MAR20",
@@ -3469,7 +4211,11 @@
       "max_day_signals": 344,
       "max_day_wr": 69.35,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 2637,
+      "historical_wr": 70.64,
+      "force_live": true
     },
     {
       "floor": "AITEST_LIVE",
@@ -3492,7 +4238,11 @@
       "max_day_signals": 148,
       "max_day_wr": 79.45,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 498,
+      "historical_wr": 79.66,
+      "force_live": true
     },
     {
       "floor": "ULTIMATE",
@@ -3515,7 +4265,11 @@
       "max_day_signals": 83,
       "max_day_wr": 78.95,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 407,
+      "historical_wr": 80.16,
+      "force_live": true
     },
     {
       "floor": "MAR21",
@@ -3538,7 +4292,11 @@
       "max_day_signals": 32,
       "max_day_wr": 81.25,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 390,
+      "historical_wr": 76.15,
+      "force_live": true
     },
     {
       "floor": "MAY10",
@@ -3561,7 +4319,11 @@
       "max_day_signals": 76,
       "max_day_wr": 74.29,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 312,
+      "historical_wr": 76.27,
+      "force_live": true
     },
     {
       "floor": "APR20",
@@ -3584,7 +4346,15 @@
       "max_day_signals": 18,
       "max_day_wr": 80.0,
       "weight": 2.0,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 115,
+      "historical_wr": 81.48,
+      "historical_g0_wr": 81.48,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY01",
@@ -3607,7 +4377,15 @@
       "max_day_signals": 17,
       "max_day_wr": 85.71,
       "weight": 2.0,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 101,
+      "historical_wr": 82.98,
+      "historical_g0_wr": 80.85,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR26",
@@ -3630,7 +4408,15 @@
       "max_day_signals": 17,
       "max_day_wr": 81.25,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 101,
+      "historical_wr": 79.57,
+      "historical_g0_wr": 77.42,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_MAR21",
@@ -3653,7 +4439,15 @@
       "max_day_signals": 17,
       "max_day_wr": 66.67,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 96,
+      "historical_wr": 70.0,
+      "historical_g0_wr": 70.0,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_APR20_MAX",
@@ -3676,7 +4470,15 @@
       "max_day_signals": 28,
       "max_day_wr": 92.59,
       "weight": 3.0,
-      "recommendation": "quality_anchor_live"
+      "recommendation": "quality_anchor_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 93,
+      "historical_wr": 92.13,
+      "historical_g0_wr": 92.13,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR22",
@@ -3699,7 +4501,15 @@
       "max_day_signals": 13,
       "max_day_wr": 69.23,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 58,
+      "historical_wr": 79.63,
+      "historical_g0_wr": 75.93,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_ULTIMATE",
@@ -3722,7 +4532,15 @@
       "max_day_signals": 37,
       "max_day_wr": 97.3,
       "weight": 3.0,
-      "recommendation": "quality_anchor_live"
+      "recommendation": "quality_anchor_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 49,
+      "historical_wr": 93.75,
+      "historical_g0_wr": 93.75,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR29",
@@ -3745,7 +4563,15 @@
       "max_day_signals": 10,
       "max_day_wr": 80.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 34,
+      "historical_wr": 75.0,
+      "historical_g0_wr": 71.88,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR30",
@@ -3768,7 +4594,15 @@
       "max_day_signals": 13,
       "max_day_wr": 75.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 28,
+      "historical_wr": 69.23,
+      "historical_g0_wr": 57.69,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR27",
@@ -3791,7 +4625,15 @@
       "max_day_signals": 6,
       "max_day_wr": 83.33,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 23,
+      "historical_wr": 80.95,
+      "historical_g0_wr": 71.43,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "ELITE_V2_PEAK",
@@ -3814,7 +4656,15 @@
       "max_day_signals": 23,
       "max_day_wr": 73.91,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 23,
+      "historical_wr": 73.91,
+      "historical_g0_wr": 73.91,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR28",
@@ -3837,7 +4687,15 @@
       "max_day_signals": 9,
       "max_day_wr": 62.5,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 20,
+      "historical_wr": 68.42,
+      "historical_g0_wr": 57.89,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY19",
@@ -3860,7 +4718,15 @@
       "max_day_signals": 6,
       "max_day_wr": 83.33,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 19,
+      "historical_wr": 77.78,
+      "historical_g0_wr": 77.78,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR20_MAX",
@@ -3883,7 +4749,15 @@
       "max_day_signals": 5,
       "max_day_wr": 100.0,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 15,
+      "historical_wr": 78.57,
+      "historical_g0_wr": 78.57,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY11",
@@ -3906,7 +4780,15 @@
       "max_day_signals": 10,
       "max_day_wr": 70.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 15,
+      "historical_wr": 71.43,
+      "historical_g0_wr": 71.43,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_APR20",
@@ -3929,7 +4811,15 @@
       "max_day_signals": 6,
       "max_day_wr": 60.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 13,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 66.67,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY04",
@@ -3952,7 +4842,15 @@
       "max_day_signals": 3,
       "max_day_wr": 66.67,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 11,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 55.56,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR19",
@@ -3975,11 +4873,185 @@
       "max_day_signals": 4,
       "max_day_wr": 100.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 10,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 66.67,
+      "peak_day_lock": false,
+      "force_live": true
+    },
+    {
+      "floor": "JUN10",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 3,
+      "active_days": 2,
+      "first_seen": "2026-06-16 12:42:06",
+      "last_seen": "2026-06-17 20:35:47",
+      "wins": 3,
+      "losses": 0,
+      "ties": 0,
+      "g0_wins": 3,
+      "final_wr": 100.0,
+      "g0_wr": 100.0,
+      "recent_n7": 2,
+      "recent_wr7": 100.0,
+      "recent_g0_wr7": 100.0,
+      "max_day": "2026-06-10",
+      "max_day_signals": 4249,
+      "max_day_wr": 72.53,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "telegram_good_cards",
+      "historical_total": 4249,
+      "historical_wr": 72.53,
+      "historical_g0_wr": null,
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN19",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 2908,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 78.96,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-19",
+      "max_day_signals": 2908,
+      "max_day_wr": 78.96,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN20",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 3003,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 81.07,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-20",
+      "max_day_signals": 3003,
+      "max_day_wr": 81.07,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN08",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 5281,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 69.78,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-08",
+      "max_day_signals": 5281,
+      "max_day_wr": 69.78,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN26",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 2637,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 78.51,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-26",
+      "max_day_signals": 2637,
+      "max_day_wr": 78.51,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN27",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 3056,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 75.7,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-27",
+      "max_day_signals": 3056,
+      "max_day_wr": 75.7,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
     }
   ],
   "stack_policy": {
-    "luxury_rule": "Promote every floor with lifetime WR>=60.0 and n>=10; hard-block ['JUN12A', 'JUN12B']."
+    "luxury_rule": "Promote every floor with lifetime/historical WR>=60.0 and n>=10; hard-block ['JUN12A', 'JUN12B']; seed overrides thin truncated live DB."
   },
-  "source": "reclassified:data/floor_stack_registry_report.json"
+  "source": "merged_live_db_plus_historical_seed"
 }

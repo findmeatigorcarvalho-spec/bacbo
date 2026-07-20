@@ -32,6 +32,8 @@ FILES = [
     "bot/skyscraper_stack.py",
     "bot/floor_stack_registry.py",
     "bot/luxury_building_stack.py",
+    "bot/data/historical_luxury_seed.json",
+    "bot/data/luxury_live_floors.json",
     "bot/legacy_peak_355.py",
     "bot/system_health_audit.py",
     "bot/unlock_signal_flow.py",
@@ -153,6 +155,10 @@ def run_reports() -> dict:
     env = os.environ.copy()
     env["PYTHONPATH"] = str(BOT) + os.pathsep + env.get("PYTHONPATH", "")
 
+    seed = BOT / "data" / "historical_luxury_seed.json"
+    if not seed.exists():
+        raise SystemExit(f"missing seed {seed} — re-run installer download")
+
     cmds = []
     if db.exists():
         cmds.extend([
@@ -161,7 +167,12 @@ def run_reports() -> dict:
             [sys.executable, "-u", str(BOT / "skyscraper_floor_factory.py"), "--db", str(db), "--days", "30"],
             [sys.executable, "-u", str(BOT / "skyscraper_stack.py"), "--db", str(db), "--days", "30"],
         ])
-    cmds.append([sys.executable, "-u", str(BOT / "luxury_building_stack.py"), "--db", str(db)])
+    # ALWAYS rebuild luxury from seed + live DB (seed wins on thin truncated DBs).
+    cmds.append([
+        sys.executable, "-u", str(BOT / "luxury_building_stack.py"),
+        "--db", str(db),
+        "--seed", str(seed),
+    ])
 
     for cmd in cmds:
         print("run", " ".join(cmd))
@@ -184,20 +195,23 @@ def main() -> int:
     os.environ["EDGE_POLICY_MODE"] = "luxury"
     os.environ["EDGE_LUXURY_FLOOR_GATE"] = "1"
 
+    peaks = [p.get("floor") for p in (report.get("peak_day_floors") or [])]
+    warn = report.get("db_warning") or ""
     print(textwrap.dedent(f"""
     ============================================================
     LUXURY BUILDING INSTALLED
     live_floors={len(live)}
     floors={', '.join(live)}
+    peak_days={', '.join(peaks)}
     blocked={', '.join(report.get('blocked_floors') or [])}
+    {warn}
     ============================================================
     NEXT:
       source /home/runner/workspace/luxury_building.env
       # restart bot / supervisor so EDGE_POLICY_MODE=luxury is active
       python3 -u bot/runtime_supervisor.py   # optional
-    EXPORTS (paste after upload via YDRAY):
-      bash replit_pull_luxury_export.sh
-      bash replit_pull_may_jul.sh
+    EXPORTS (upload via YDRAY and paste links):
+      bash replit_pull_full_luxury_pack.sh
     """).strip())
     return 0
 

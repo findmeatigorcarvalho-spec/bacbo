@@ -1,26 +1,32 @@
 {
   "live_floors": [
+    "JUN10",
     "AITEST_ULTIMATE",
     "AITEST_APR20_MAX",
     "MAY01",
     "APR20",
     "LIVE",
+    "JUN20",
     "APR27",
     "ELITE_V2",
     "ULTIMATE",
     "AITEST_LIVE",
     "APR22",
     "APR26",
+    "JUN19",
     "APR20_MAX",
+    "JUN26",
     "MAY19",
     "MAY10",
     "MAR21",
+    "JUN27",
     "APR29",
     "ELITE_V2_PEAK",
     "MAR19",
     "MAY11",
     "MAR20",
     "AITEST_MAR21",
+    "JUN08",
     "APR30",
     "APR28",
     "AITEST_APR20",
@@ -30,5 +36,22 @@
   "blocked": [
     "JUN12A",
     "JUN12B"
+  ],
+  "peak_day_floors": [
+    "JUN19",
+    "JUN20",
+    "JUN08",
+    "JUN10",
+    "JUN26",
+    "JUN27",
+    "MAY19",
+    "MAY10"
+  ],
+  "virtual_setups": [
+    "SOLO_ELITE|BLUE",
+    "GOLDEN|BLUE",
+    "SEQUENCE|BLUE",
+    "PLATINUM|BLUE",
+    "SEQUENCE"
   ]
 }

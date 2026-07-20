@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-20T06:55:07.471788+00:00",
+  "generated_at": "2026-07-20T07:14:09.153807+00:00",
   "rule": {
     "min_wr": 60.0,
     "min_n": 10,
@@ -7,39 +7,48 @@
       "JUN12A",
       "JUN12B"
     ],
-    "note": "Early result cards before live round ⇒ WR>=60 volume is money."
+    "thin_live_n": 200,
+    "note": "Seed + peak-day floors survive truncated Replit DBs."
   },
   "counts": {
-    "live_building": 26,
+    "live_building": 32,
     "precision": 2,
     "balanced": 5,
-    "volume": 19,
-    "shadow": 45,
+    "volume": 25,
+    "shadow": 44,
     "blocked": 2,
-    "total_floors": 73
+    "total_floors": 78,
+    "seed_floors": 32,
+    "peak_day_floors": 8
   },
   "live_building_floors": [
+    "JUN10",
     "AITEST_ULTIMATE",
     "AITEST_APR20_MAX",
     "MAY01",
     "APR20",
     "LIVE",
+    "JUN20",
     "APR27",
     "ELITE_V2",
     "ULTIMATE",
     "AITEST_LIVE",
     "APR22",
     "APR26",
+    "JUN19",
     "APR20_MAX",
+    "JUN26",
     "MAY19",
     "MAY10",
     "MAR21",
+    "JUN27",
     "APR29",
     "ELITE_V2_PEAK",
     "MAR19",
     "MAY11",
     "MAR20",
     "AITEST_MAR21",
+    "JUN08",
     "APR30",
     "APR28",
     "AITEST_APR20",
@@ -77,7 +86,13 @@
       "MAY11",
       "AITEST_APR20",
       "MAY04",
-      "APR19"
+      "APR19",
+      "JUN10",
+      "JUN19",
+      "JUN20",
+      "JUN08",
+      "JUN26",
+      "JUN27"
     ]
   },
   "blocked_floors": [
@@ -113,7 +128,6 @@
     "AITEST_APR29_MAX",
     "APR19_MAX",
     "APR21_MAX",
-    "JUN10",
     "MAY15",
     "ULTIMATE_PEAK",
     "AITEST_APR27_MAX",
@@ -130,6 +144,118 @@
     "MAY01_MAX",
     "MAY22",
     "JUN09"
+  ],
+  "peak_day_floors": [
+    {
+      "floor": "JUN19",
+      "date": "2026-06-19",
+      "n": 2908,
+      "wr": 78.96,
+      "g0_wins": 1592,
+      "source": "telegram_good_cards",
+      "lane": "VOLUME"
+    },
+    {
+      "floor": "JUN20",
+      "date": "2026-06-20",
+      "n": 3003,
+      "wr": 81.07,
+      "g0_wins": 1756,
+      "source": "telegram_good_cards",
+      "lane": "VOLUME"
+    },
+    {
+      "floor": "JUN08",
+      "date": "2026-06-08",
+      "n": 5281,
+      "wr": 69.78,
+      "g0_wins": 2814,
+      "source": "telegram_good_cards",
+      "lane": "VOLUME"
+    },
+    {
+      "floor": "JUN10",
+      "date": "2026-06-10",
+      "n": 4249,
+      "wr": 72.53,
+      "g0_wins": 2358,
+      "source": "telegram_good_cards",
+      "lane": "VOLUME"
+    },
+    {
+      "floor": "JUN26",
+      "date": "2026-06-26",
+      "n": 2637,
+      "wr": 78.51,
+      "g0_wins": 1328,
+      "source": "telegram_good_cards",
+      "lane": "VOLUME"
+    },
+    {
+      "floor": "JUN27",
+      "date": "2026-06-27",
+      "n": 3056,
+      "wr": 75.7,
+      "g0_wins": 1524,
+      "source": "telegram_good_cards",
+      "lane": "VOLUME"
+    },
+    {
+      "floor": "MAY19",
+      "date": "2026-05-19",
+      "n": 3427,
+      "wr": 78.28,
+      "g0_wr": 77.96,
+      "source": "db_volume_frontier",
+      "lane": "VOLUME",
+      "note": "DB hard peak day"
+    },
+    {
+      "floor": "MAY10",
+      "date": "2026-05-10",
+      "n": 1461,
+      "wr": 74.12,
+      "g0_wr": 69.81,
+      "source": "db_volume_frontier",
+      "lane": "VOLUME"
+    }
+  ],
+  "virtual_setups": [
+    {
+      "key": "SOLO_ELITE|BLUE",
+      "wr": 84.92,
+      "g0_wr": 96.56,
+      "n": 5516,
+      "lane": "BALANCED"
+    },
+    {
+      "key": "GOLDEN|BLUE",
+      "wr": 81.3,
+      "g0_wr": 94.8,
+      "n": 2711,
+      "lane": "BALANCED"
+    },
+    {
+      "key": "SEQUENCE|BLUE",
+      "wr": 87.95,
+      "g0_wr": 100.0,
+      "n": 1975,
+      "lane": "PRECISION"
+    },
+    {
+      "key": "PLATINUM|BLUE",
+      "wr": 80.03,
+      "g0_wr": 94.04,
+      "n": 651,
+      "lane": "BALANCED"
+    },
+    {
+      "key": "SEQUENCE",
+      "wr": 80.22,
+      "g0_wr": 100.0,
+      "n": 4620,
+      "lane": "BALANCED"
+    }
   ],
   "live_building_detail": [
     {
@@ -153,7 +279,11 @@
       "max_day_signals": 2151,
       "max_day_wr": 78.53,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 18786,
+      "historical_wr": 81.13,
+      "force_live": true
     },
     {
       "floor": "MAR19",
@@ -176,7 +306,11 @@
       "max_day_signals": 1222,
       "max_day_wr": 69.13,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 12057,
+      "historical_wr": 72.28,
+      "force_live": true
     },
     {
       "floor": "ELITE_V2",
@@ -199,7 +333,11 @@
       "max_day_signals": 982,
       "max_day_wr": 77.35,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 8522,
+      "historical_wr": 80.42,
+      "force_live": true
     },
     {
       "floor": "MAR20",
@@ -222,7 +360,11 @@
       "max_day_signals": 344,
       "max_day_wr": 69.35,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 2637,
+      "historical_wr": 70.64,
+      "force_live": true
     },
     {
       "floor": "AITEST_LIVE",
@@ -245,7 +387,11 @@
       "max_day_signals": 148,
       "max_day_wr": 79.45,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 498,
+      "historical_wr": 79.66,
+      "force_live": true
     },
     {
       "floor": "ULTIMATE",
@@ -268,7 +414,11 @@
       "max_day_signals": 83,
       "max_day_wr": 78.95,
       "weight": 2.5,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": false,
+      "historical_total": 407,
+      "historical_wr": 80.16,
+      "force_live": true
     },
     {
       "floor": "MAR21",
@@ -291,7 +441,11 @@
       "max_day_signals": 32,
       "max_day_wr": 81.25,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 390,
+      "historical_wr": 76.15,
+      "force_live": true
     },
     {
       "floor": "MAY10",
@@ -314,7 +468,11 @@
       "max_day_signals": 76,
       "max_day_wr": 74.29,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": false,
+      "historical_total": 312,
+      "historical_wr": 76.27,
+      "force_live": true
     },
     {
       "floor": "APR20",
@@ -337,7 +495,15 @@
       "max_day_signals": 18,
       "max_day_wr": 80.0,
       "weight": 2.0,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 115,
+      "historical_wr": 81.48,
+      "historical_g0_wr": 81.48,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY01",
@@ -360,7 +526,15 @@
       "max_day_signals": 17,
       "max_day_wr": 85.71,
       "weight": 2.0,
-      "recommendation": "main_stack_live"
+      "recommendation": "main_stack_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 101,
+      "historical_wr": 82.98,
+      "historical_g0_wr": 80.85,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR26",
@@ -383,7 +557,15 @@
       "max_day_signals": 17,
       "max_day_wr": 81.25,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 101,
+      "historical_wr": 79.57,
+      "historical_g0_wr": 77.42,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_MAR21",
@@ -406,7 +588,15 @@
       "max_day_signals": 17,
       "max_day_wr": 66.67,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 96,
+      "historical_wr": 70.0,
+      "historical_g0_wr": 70.0,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_APR20_MAX",
@@ -429,7 +619,15 @@
       "max_day_signals": 28,
       "max_day_wr": 92.59,
       "weight": 3.0,
-      "recommendation": "quality_anchor_live"
+      "recommendation": "quality_anchor_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 93,
+      "historical_wr": 92.13,
+      "historical_g0_wr": 92.13,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR22",
@@ -452,7 +650,15 @@
       "max_day_signals": 13,
       "max_day_wr": 69.23,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 58,
+      "historical_wr": 79.63,
+      "historical_g0_wr": 75.93,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_ULTIMATE",
@@ -475,7 +681,15 @@
       "max_day_signals": 37,
       "max_day_wr": 97.3,
       "weight": 3.0,
-      "recommendation": "quality_anchor_live"
+      "recommendation": "quality_anchor_live",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 49,
+      "historical_wr": 93.75,
+      "historical_g0_wr": 93.75,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR29",
@@ -498,7 +712,15 @@
       "max_day_signals": 10,
       "max_day_wr": 80.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 34,
+      "historical_wr": 75.0,
+      "historical_g0_wr": 71.88,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR30",
@@ -521,7 +743,15 @@
       "max_day_signals": 13,
       "max_day_wr": 75.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 28,
+      "historical_wr": 69.23,
+      "historical_g0_wr": 57.69,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR27",
@@ -544,7 +774,15 @@
       "max_day_signals": 6,
       "max_day_wr": 83.33,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 23,
+      "historical_wr": 80.95,
+      "historical_g0_wr": 71.43,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "ELITE_V2_PEAK",
@@ -567,7 +805,15 @@
       "max_day_signals": 23,
       "max_day_wr": 73.91,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 23,
+      "historical_wr": 73.91,
+      "historical_g0_wr": 73.91,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR28",
@@ -590,7 +836,15 @@
       "max_day_signals": 9,
       "max_day_wr": 62.5,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 20,
+      "historical_wr": 68.42,
+      "historical_g0_wr": 57.89,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY19",
@@ -613,7 +867,15 @@
       "max_day_signals": 6,
       "max_day_wr": 83.33,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 19,
+      "historical_wr": 77.78,
+      "historical_g0_wr": 77.78,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR20_MAX",
@@ -636,7 +898,15 @@
       "max_day_signals": 5,
       "max_day_wr": 100.0,
       "weight": 1.25,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 15,
+      "historical_wr": 78.57,
+      "historical_g0_wr": 78.57,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY11",
@@ -659,7 +929,15 @@
       "max_day_signals": 10,
       "max_day_wr": 70.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 15,
+      "historical_wr": 71.43,
+      "historical_g0_wr": 71.43,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "AITEST_APR20",
@@ -682,7 +960,15 @@
       "max_day_signals": 6,
       "max_day_wr": 60.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 13,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 66.67,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "MAY04",
@@ -705,7 +991,15 @@
       "max_day_signals": 3,
       "max_day_wr": 66.67,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 11,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 55.56,
+      "peak_day_lock": false,
+      "force_live": true
     },
     {
       "floor": "APR19",
@@ -728,7 +1022,181 @@
       "max_day_signals": 4,
       "max_day_wr": 100.0,
       "weight": 1.0,
-      "recommendation": "volume_stack_live_if_tri_brain_ok"
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "historical_dump_registry",
+      "historical_total": 10,
+      "historical_wr": 66.67,
+      "historical_g0_wr": 66.67,
+      "peak_day_lock": false,
+      "force_live": true
+    },
+    {
+      "floor": "JUN10",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 3,
+      "active_days": 2,
+      "first_seen": "2026-06-16 12:42:06",
+      "last_seen": "2026-06-17 20:35:47",
+      "wins": 3,
+      "losses": 0,
+      "ties": 0,
+      "g0_wins": 3,
+      "final_wr": 100.0,
+      "g0_wr": 100.0,
+      "recent_n7": 2,
+      "recent_wr7": 100.0,
+      "recent_g0_wr7": 100.0,
+      "max_day": "2026-06-10",
+      "max_day_signals": 4249,
+      "max_day_wr": 72.53,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_override": true,
+      "seed_source": "telegram_good_cards",
+      "historical_total": 4249,
+      "historical_wr": 72.53,
+      "historical_g0_wr": null,
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN19",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 2908,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 78.96,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-19",
+      "max_day_signals": 2908,
+      "max_day_wr": 78.96,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN20",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 3003,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 81.07,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-20",
+      "max_day_signals": 3003,
+      "max_day_wr": 81.07,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN08",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 5281,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 69.78,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-08",
+      "max_day_signals": 5281,
+      "max_day_wr": 69.78,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN26",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 2637,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 78.51,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-26",
+      "max_day_signals": 2637,
+      "max_day_wr": 78.51,
+      "weight": 1.25,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
+    },
+    {
+      "floor": "JUN27",
+      "family": "PEAK_VOLUME",
+      "lane": "VOLUME",
+      "total": 3056,
+      "active_days": null,
+      "first_seen": null,
+      "last_seen": null,
+      "wins": null,
+      "losses": null,
+      "ties": null,
+      "g0_wins": null,
+      "final_wr": 75.7,
+      "g0_wr": null,
+      "recent_n7": 0,
+      "recent_wr7": null,
+      "recent_g0_wr7": null,
+      "max_day": "2026-06-27",
+      "max_day_signals": 3056,
+      "max_day_wr": 75.7,
+      "weight": 1.0,
+      "recommendation": "volume_stack_live_if_tri_brain_ok",
+      "seeded": true,
+      "seed_source": "telegram_good_cards",
+      "peak_day_lock": true,
+      "force_live": true
     }
   ],
   "blocked_detail": [
@@ -753,7 +1221,8 @@
       "max_day_signals": 14,
       "max_day_wr": 78.57,
       "weight": -1.0,
-      "recommendation": "block_or_shadow_until_repaired"
+      "recommendation": "block_or_shadow_until_repaired",
+      "seeded": false
     },
     {
       "floor": "JUN12B",
@@ -776,7 +1245,8 @@
       "max_day_signals": 9,
       "max_day_wr": 42.86,
       "weight": -1.0,
-      "recommendation": "block_or_shadow_until_repaired"
+      "recommendation": "block_or_shadow_until_repaired",
+      "seeded": false
     }
   ],
   "card_policy": {
@@ -816,9 +1286,5 @@
     "g0_only_money": true
   },
   "architecture": "peak_locked_parallel_towers",
-  "next_replit_steps": [
-    "Run install_luxury_building.py on Replit",
-    "Upload luxury_export_light.zip + may_jul_export.zip via YDRAY for peak-lock freeze",
-    "Start Twin225 casino_round_results capture for direct truth"
-  ]
+  "db_warning": null
 }
