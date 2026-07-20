@@ -15,6 +15,7 @@ DATA = BOT / "data"
 DATA.mkdir(parents=True, exist_ok=True)
 
 ALIASES = {
+    "LIVE": "ELITE_V2",
     "JUN19": "JUN19_peak", "JUN20": "JUN20_peak", "JUN08": "JUN08_peak", "JUN10": "JUN10_peak",
     "JUN26": "JUN26", "JUN27": "JUN27_peak", "MAY19": "MAY19_peak", "MAY10": "MAY10_peak",
     "MAY11": "MAY11_peak", "MAY01": "MAY01_peak", "APR19": "APR19_golden", "APR20": "APR20_perfect",
@@ -101,32 +102,31 @@ for k, v in sorted(ALIASES.items()):
 print(f"alias_gates_ok={ok} missing={miss}")
 PY
 
-echo "========== [2/6] patch floor_tracker to use peak gate aliases =========="
+echo "========== [2/6] expand floor allowlists (do NOT remap get_floor) =========="
 python3 - <<'PY'
 from pathlib import Path
+import re
 ft = Path('/home/runner/workspace/bot/floor_tracker.py')
 if not ft.exists():
     print('WARN: floor_tracker.py missing')
     raise SystemExit(0)
 src = ft.read_text(encoding='utf-8', errors='replace')
-marker = 'LUXURY_GATE_ALIAS_RESOLVE'
+# Remove any prior bad get_floor->gate-stem remap
+if 'LUXURY_GATE_ALIAS_RESOLVE' in src:
+    src = re.sub(r'\n# --- LUXURY_GATE_ALIAS_RESOLVE ---[\s\S]*\Z', '\n', src)
+    ft.write_text(src, encoding='utf-8')
+    print('removed bad get_floor remap from floor_tracker.py')
+marker = 'LUXURY_LIVE_FLOORS_EXPAND'
 if marker in src:
-    print('floor_tracker already has gate alias resolve')
+    print('floor_tracker already has live-floors expand')
 else:
     append = f'''
 
 # --- {marker} ---
+# Keep get_floor() LOGICAL. Peak gates are bound via _gates_<floor>.py loaders
+# and gate_alias_resolve.resolve_gate() at import time only.
 try:
-    from gate_alias_resolve import resolve_gate as _lux_resolve_gate, live_floors as _lux_live_floors
-    _orig_get_floor = globals().get('get_floor')
-    if callable(_orig_get_floor):
-        def get_floor(*a, **k):
-            f = _orig_get_floor(*a, **k)
-            try:
-                return _lux_resolve_gate(f)
-            except Exception:
-                return f
-    # expand enabled sets if present
+    from gate_alias_resolve import live_floors as _lux_live_floors
     _lux = set(_lux_live_floors())
     for _name in ('ENABLED_FLOORS', 'LIVE_FLOORS', 'ACTIVE_FLOORS', 'FLOOR_ALLOWLIST'):
         if _name in globals() and isinstance(globals()[_name], (set, list, tuple)):
@@ -137,12 +137,12 @@ try:
                 globals()[_name] = list(dict.fromkeys(list(_cur) + list(_lux)))
 except Exception as _lux_alias_exc:
     try:
-        print('luxury gate alias patch skipped:', _lux_alias_exc)
+        print('luxury live-floors expand skipped:', _lux_alias_exc)
     except Exception:
         pass
 '''
     ft.write_text(src + append)
-    print('patched floor_tracker.py with gate alias resolve')
+    print('patched floor_tracker.py with live-floors expand (logical floors kept)')
 PY
 
 echo "========== [3/6] persist EDGE_POLICY_MODE=luxury =========="

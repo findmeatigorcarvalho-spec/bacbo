@@ -73,25 +73,28 @@ Upload **all zips that exist** via YDRAY and paste the links here.
 
 ---
 
-## 3) Start firing to Telegram (luxury mode)
+## 3) Peak-lock + fire (run after uploads)
+
+Uploads done. Next: undo bad `get_floor`→gate-stem remap, bind logical floors
+to `*_peak` gate files, restart supervisor.
+
+**Use commit SHA** (branch raw URLs are often stale-cached on Replit):
 
 ```bash
-cd /home/runner/workspace
-source luxury_building.env
-
-# Make sure mode is luxury (not shadow)
-export EDGE_POLICY_MODE=luxury
-export EDGE_LUXURY_FLOOR_GATE=1
-export FALLBACK_SEND_BLOCKED=0
-
-# Restart your normal bot process (use whatever you already use), e.g.:
-#  - Stop/Start the Replit Run button
-#  - OR supervisor:
-python3 -u bot/runtime_supervisor.py
+cd /home/runner/workspace && \
+curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_PEAK_LOCK_APPLY.sh \
+  "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/REPLACE_SHA/replit_elite_stack_patch/REPLIT_PEAK_LOCK_APPLY.sh" && \
+bash REPLIT_PEAK_LOCK_APPLY.sh
 ```
 
+Expected:
+- `removed get_floor->gate-stem remap` (or already clean)
+- `JUN19 -> JUN19_peak LOCKED via loader` (and JUN20/LIVE/…)
+- `peak_lock_smoke_ok`
+- supervisor running
+
 Watch logs for:
-- `[EdgePolicy] ... ALLOW — EDGE_LUXURY_FLOOR ...`
+- `[EdgePolicy] ... ALLOW — EDGE_LUXURY_FLOOR ...` with logical floors (`JUN19`, not `JUN19_peak`)
 - `EDGE_FLOOR_BLOCKED JUN12A/JUN12B`
 
 ---

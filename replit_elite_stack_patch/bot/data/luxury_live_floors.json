@@ -47,24 +47,27 @@
     "MAY19",
     "MAY10"
   ],
-  "virtual_setups": [
-    "SOLO_ELITE|BLUE",
-    "GOLDEN|BLUE",
-    "SEQUENCE|BLUE",
-    "PLATINUM|BLUE",
-    "SEQUENCE"
-  ],
   "gate_aliases": {
+    "LIVE": "ELITE_V2",
     "JUN19": "JUN19_peak",
     "JUN20": "JUN20_peak",
     "JUN08": "JUN08_peak",
     "JUN10": "JUN10_peak",
     "JUN26": "JUN26",
     "JUN27": "JUN27_peak",
+    "JUN06": "JUN06_peak",
     "MAY19": "MAY19_peak",
     "MAY10": "MAY10_peak",
     "MAY11": "MAY11_peak",
     "MAY01": "MAY01_peak",
+    "MAY20": "MAY20_peak",
+    "MAY21": "MAY21_peak",
+    "MAY22": "MAY22_peak",
+    "MAY23": "MAY23_peak",
+    "MAY24": "MAY24_peak",
+    "MAY25": "MAY25_peak",
+    "MAY26": "MAY26_peak",
+    "MAY27": "MAY27_peak",
     "APR19": "APR19_golden",
     "APR20": "APR20_perfect",
     "APR30": "APR30_peak",
@@ -75,6 +78,26 @@
     "ULTIMATE": "ULTIMATE",
     "MAR19": "MAR19",
     "MAR20": "MAR20",
-    "MAR21": "MAR21"
-  }
+    "MAR21": "MAR21",
+    "APR22": "APR22",
+    "APR26": "APR27",
+    "APR27": "APR27",
+    "APR28": "APR28_complex",
+    "APR29": "APR29",
+    "AITEST_ULTIMATE": "ULTIMATE",
+    "AITEST_APR20_MAX": "APR20_perfect",
+    "AITEST_LIVE": "ELITE_V2",
+    "AITEST_APR20": "APR20_perfect",
+    "AITEST_MAR21": "MAR21",
+    "APR20_MAX": "APR20_perfect",
+    "MAY04": "MAY04"
+  },
+  "virtual_setups": [
+    "SOLO_ELITE|BLUE",
+    "GOLDEN|BLUE",
+    "SEQUENCE|BLUE",
+    "PLATINUM|BLUE",
+    "SEQUENCE"
+  ],
+  "peak_lock": true
 }
