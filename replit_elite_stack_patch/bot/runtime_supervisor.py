@@ -96,6 +96,9 @@ def _stop(proc: subprocess.Popen | None) -> None:
 
 def main() -> int:
     env = _env()
+    # Delay fallbacks so bacbo can take WAL ownership / finish boot before readers attach.
+    fallback_delay = float(env.get("FALLBACK_START_DELAY_SECS", "45"))
+    boot_t0 = time.time()
     processes: dict[str, tuple[list[str], subprocess.Popen | None, float]] = {
         "bot_live": ([sys.executable, "-u", str(ROOT / "bacbo_royal_complete.py")], None, 0.0),
         "fallback_sender": ([sys.executable, "-u", str(BOT / "fallback_signal_sender.py")], None, 0.0),
@@ -105,10 +108,13 @@ def main() -> int:
     env["FALLBACK_MIN_BLOCKED_SCORE"] = env.get("FALLBACK_MIN_BLOCKED_SCORE", "6.0")
 
     print("[Supervisor] starting. Logs in /home/runner/workspace/logs/")
+    print(f"[Supervisor] fallback_start_delay_secs={fallback_delay}")
     try:
         while True:
             for name, (cmd, proc, last_start) in list(processes.items()):
                 if proc is None or proc.poll() is not None:
+                    if name.startswith("fallback") and (time.time() - boot_t0) < fallback_delay:
+                        continue
                     if time.time() - last_start < 10:
                         time.sleep(10 - (time.time() - last_start))
                     print(f"[Supervisor] starting/restarting {name}")

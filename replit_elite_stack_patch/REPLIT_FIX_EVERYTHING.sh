@@ -165,7 +165,7 @@ p=ROOT/"bacbo_royal_complete.py"
 bak=ROOT/"bacbo_royal_complete.py.bak_pre_state_fix"
 shutil.copy2(bak, p)
 src=p.read_text(encoding="utf-8", errors="replace")
-for marker in ("LUXURY_STATE_INIT","LUXURY_SESSION_FILE_FORCE","LUXURY_BIND_PROXY","LUXURY_SESSION_AND_BIND","LUXURY_GET_ENTITY_MONKEYPATCH","LUXURY_COMMANDS_GUARD","LUXURY_ROOM_CACHE_RESOLVE"):
+for marker in ("LUXURY_STATE_INIT","LUXURY_SESSION_FILE_FORCE","LUXURY_BIND_PROXY","LUXURY_SESSION_AND_BIND","LUXURY_GET_ENTITY_MONKEYPATCH","LUXURY_COMMANDS_GUARD","LUXURY_ROOM_CACHE_RESOLVE","LUXURY_SQLITE_HARDEN","LUXURY_STATE_NAME_FORCE"):
     src=re.sub(rf"\n# --- {marker} \(auto\) ---.*?(?=\n# --- |\nstate\.client\s*=|\n# ──|\Z)", "\n", src, flags=re.S)
 src=re.sub(r"\nclass _LuxBotState:.*?\nstate = _LuxBotState\(\)\n+", "\n", src, flags=re.S)
 src=re.sub(r"\nimport state  # LUXURY:[^\n]*\n", "\n", src)
@@ -309,12 +309,55 @@ if not m:
     raise SystemExit("missing state.client assign")
 src=src[:m.start()]+bind+"\n"+src[m.end():]
 
-# Soft-catch LUXURY_SKIP in resolve loops if present — patch "Could not resolve" printers to ignore skip
-# (optional; ValueError will be caught by existing except)
+# Belt+suspenders: force bare `state` name immediately before state.engine =
+force = (
+    "# --- LUXURY_STATE_NAME_FORCE (auto) ---\n"
+    "import state as _lux_state_mod\n"
+    "state = _lux_state_mod\n"
+    "# --- end LUXURY_STATE_NAME_FORCE ---\n"
+)
+src = re.sub(
+    r"\n# --- LUXURY_STATE_NAME_FORCE \(auto\) ---.*?--- end LUXURY_STATE_NAME_FORCE ---\n",
+    "\n",
+    src,
+    flags=re.S,
+)
+src = re.sub(
+    r"^(state\.engine\s*=)",
+    force + r"\1",
+    src,
+    count=1,
+    flags=re.M,
+)
+
+# sqlite harden early (prevents CrashGuard database is locked)
+harden = '''
+# --- LUXURY_SQLITE_HARDEN (auto) ---
+try:
+    import lux_sqlite_harden  # noqa: F401
+    print("[LUXURY] sqlite harden applied (WAL/busy_timeout/min-timeout)")
+except Exception as _lux_sql_exc:
+    print("[LUXURY] sqlite harden skipped:", _lux_sql_exc)
+# --- end LUXURY_SQLITE_HARDEN ---
+'''
+lines = src.splitlines(True)
+hidx = 0
+for i, ln in enumerate(lines):
+    if "[BOOT] all imports OK" in ln or "[BOOT] stdlib imports OK" in ln:
+        hidx = i + 1
+        break
+if hidx == 0:
+    hidx = min(40, len(lines))
+lines.insert(hidx, harden if harden.startswith("\n") else "\n" + harden)
+src = "".join(lines)
 
 p.write_text(src, encoding="utf-8")
 ast.parse(src)
 print("bacbo OK", p.stat().st_size)
+if "state = _lux_state_mod" not in src:
+    raise SystemExit("state binding missing after patch")
+print("state binding present OK")
+print("sqlite harden present", "LUXURY_SQLITE_HARDEN" in src)
 PY
 
 echo "========== [5/8] state proxy + commands restore + fallbacks =========="
@@ -415,6 +458,30 @@ ubak=ROOT/"bot"/"utils.py.bak_pre_room_cache"
 if ubak.exists():
     shutil.copy2(ubak, ROOT/"bot"/"utils.py")
     print("utils restored from pre_room_cache bak")
+PY
+
+# Overwrite with hardened fallbacks/supervisor LAST (bak-patch above must not win)
+SHA="${LUXURY_PATCH_SHA:-cursor/add-engine-gate-registry-d5ba}"
+BASE="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${SHA}/replit_elite_stack_patch"
+curl -fsSL -H "Cache-Control: no-cache" -o bot/lux_sqlite_harden.py "$BASE/bot/lux_sqlite_harden.py"
+curl -fsSL -H "Cache-Control: no-cache" -o bot/runtime_supervisor.py "$BASE/bot/runtime_supervisor.py"
+curl -fsSL -H "Cache-Control: no-cache" -o bot/fallback_signal_sender.py "$BASE/bot/fallback_signal_sender.py"
+curl -fsSL -H "Cache-Control: no-cache" -o bot/fallback_result_sender.py "$BASE/bot/fallback_result_sender.py"
+$PY -m py_compile bot/lux_sqlite_harden.py bot/runtime_supervisor.py bot/fallback_signal_sender.py bot/fallback_result_sender.py
+$PY - <<'PY'
+import sqlite3
+from pathlib import Path
+ROOT=Path("/home/runner/workspace")
+db=ROOT/"bot"/"bacbo.db"
+if db.exists():
+    con=sqlite3.connect(str(db), timeout=60)
+    print("journal_mode", con.execute("PRAGMA journal_mode=WAL").fetchone()[0])
+    con.execute("PRAGMA busy_timeout=60000")
+    con.close()
+for rel in ["bot/oracle.db","bot/data/oracle.db","bot/data/oracle_mind.db"]:
+    p=ROOT/rel; p.parent.mkdir(parents=True, exist_ok=True)
+    if not p.exists():
+        sqlite3.connect(str(p)).close(); print("created", p)
 PY
 
 echo "========== [6/8] peak-lock loaders + allowlist =========="

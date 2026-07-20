@@ -111,7 +111,26 @@ export EDGE_POLICY_MODE=luxury
 
 ---
 
-## 5) Quick health checks
+## 5) Fix CrashGuard `database is locked` (run this next)
+
+Bot reaches `run_forever()` then dies with:
+`[CrashGuard] Bot crashed ... database is locked`
+
+Do **not** re-run old `REPLIT_FIX_EVERYTHING` SHAs. Paste this only:
+
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_FIX_DB_LOCKED.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_DB_LOCKED.sh" && bash REPLIT_FIX_DB_LOCKED.sh
+```
+
+Expected:
+- `sqlite harden applied`
+- `journal_mode wal`
+- `VERDICT: OK — no post-fix DB lock CrashGuard`
+- fallbacks start ~45s after bot (by design)
+
+---
+
+## 6) Quick health checks
 
 ```bash
 cd /home/runner/workspace
@@ -138,7 +157,7 @@ python3 -u bot/room_cleaner.py --db bot/bacbo.db || true
 
 ---
 
-## 6) If install_edge_tools alone (older path)
+## 7) If install_edge_tools alone (older path)
 
 ```bash
 cd /home/runner/workspace

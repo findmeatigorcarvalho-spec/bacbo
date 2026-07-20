@@ -22,12 +22,32 @@ from telethon import TelegramClient
 from telethon.sessions import StringSession
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:
+    import lux_sqlite_harden  # noqa: F401,E402
+except Exception:
+    pass
 import config  # noqa: E402
 
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 DB = HERE / "bacbo.db"
+
+
+def _db_ro() -> sqlite3.Connection:
+    """Short-lived read-only connection (does not block writers as hard)."""
+    uri = f"file:{DB}?mode=ro&cache=shared"
+    try:
+        conn = sqlite3.connect(uri, uri=True, timeout=60.0)
+    except Exception:
+        conn = sqlite3.connect(str(DB), timeout=60.0)
+    conn.row_factory = sqlite3.Row
+    try:
+        conn.execute("PRAGMA busy_timeout=60000")
+        conn.execute("PRAGMA query_only=ON")
+    except Exception:
+        pass
+    return conn
 STATE = HERE / "data/fallback_sender_state.txt"
 BLOCK_STATE = HERE / "data/fallback_blocked_sender_state.txt"
 
@@ -224,8 +244,7 @@ async def main() -> None:
 
     while True:
         try:
-            conn = sqlite3.connect(DB)
-            conn.row_factory = sqlite3.Row
+            conn = _db_ro()
 
             last_id = read_int(STATE)
             rows = conn.execute(
@@ -238,11 +257,6 @@ async def main() -> None:
                 """,
                 (last_id,),
             ).fetchall()
-            for row in rows:
-                await client.send_message(entity, fmt_consensus(row))
-                write_int(STATE, row["id"])
-                print("[FallbackSender] sent consensus", row["id"], row["signal_kind"], row["color"])
-
             if SEND_BLOCKED:
                 last_bid = read_int(BLOCK_STATE)
                 blocked_rows = conn.execute(
@@ -257,6 +271,16 @@ async def main() -> None:
                     """,
                     (last_bid, f"-{BLOCKED_LOOKBACK_HOURS} hours", MIN_BLOCKED_SCORE),
                 ).fetchall()
+            else:
+                blocked_rows = []
+            conn.close()
+
+            for row in rows:
+                await client.send_message(entity, fmt_consensus(row))
+                write_int(STATE, row["id"])
+                print("[FallbackSender] sent consensus", row["id"], row["signal_kind"], row["color"])
+
+            if SEND_BLOCKED:
                 for row in blocked_rows:
                     gate = row["gate_reason"] or ""
                     if gate in COSTING_MONEY_GATES:
@@ -265,8 +289,6 @@ async def main() -> None:
                     else:
                         print("[FallbackSender] skipped blocked", row["id"], gate)
                     write_int(BLOCK_STATE, row["id"])
-
-            conn.close()
         except Exception as exc:
             print("[FallbackSender] error:", repr(exc))
 

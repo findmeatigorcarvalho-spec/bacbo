@@ -17,6 +17,10 @@ from telethon import TelegramClient
 from telethon.sessions import StringSession
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:
+    import lux_sqlite_harden  # noqa: F401,E402
+except Exception:
+    pass
 import config  # noqa: E402
 
 
@@ -24,6 +28,21 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 DB = HERE / "bacbo.db"
 STATE = HERE / "data/fallback_result_sender_state.txt"
+
+
+def _db_ro() -> sqlite3.Connection:
+    uri = f"file:{DB}?mode=ro&cache=shared"
+    try:
+        conn = sqlite3.connect(uri, uri=True, timeout=60.0)
+    except Exception:
+        conn = sqlite3.connect(str(DB), timeout=60.0)
+    conn.row_factory = sqlite3.Row
+    try:
+        conn.execute("PRAGMA busy_timeout=60000")
+        conn.execute("PRAGMA query_only=ON")
+    except Exception:
+        pass
+    return conn
 
 
 def load_env() -> None:
@@ -214,8 +233,7 @@ async def main() -> None:
 
     while True:
         try:
-            conn = sqlite3.connect(DB)
-            conn.row_factory = sqlite3.Row
+            conn = _db_ro()
             rows = conn.execute(
                 """
                 SELECT id, fired_at, resolved_at, signal_kind, color, outcome,
