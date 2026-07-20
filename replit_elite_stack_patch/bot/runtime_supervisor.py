@@ -26,13 +26,37 @@ BOT = ROOT / "bot"
 LOG_DIR = ROOT / "logs"
 
 
+def _load_dotenv_file(path: Path, env: dict[str, str]) -> None:
+    if not path.exists():
+        return
+    for line in path.read_text(errors="ignore").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        if line.startswith("export "):
+            line = line[len("export ") :].strip()
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        env.setdefault(key, value)
+
+
 def _env() -> dict[str, str]:
     env = os.environ.copy()
+    _load_dotenv_file(ROOT / "luxury_building.env", env)
+    _load_dotenv_file(ROOT / ".env", env)
     session_path = ROOT / ".telegram_session_string"
     if session_path.exists():
         env["TELEGRAM_SESSION_STRING"] = session_path.read_text(errors="ignore").strip()
-    env.setdefault("EDGE_POLICY_MODE", "shadow")
+    # Prefer luxury when luxury_building.env is present; otherwise keep caller/shadow.
+    if (ROOT / "luxury_building.env").exists():
+        env.setdefault("EDGE_POLICY_MODE", "luxury")
+        env.setdefault("EDGE_LUXURY_FLOOR_GATE", "1")
+        env.setdefault("FALLBACK_SEND_BLOCKED", "0")
+    else:
+        env.setdefault("EDGE_POLICY_MODE", "shadow")
     env.setdefault("EDGE_LEGACY_355_WARN", "1")
+    env.setdefault("BOT_TZ", "America/Sao_Paulo")
     env["PYTHONPATH"] = f"{BOT}:{ROOT}:{env.get('PYTHONPATH', '')}"
     return env
 

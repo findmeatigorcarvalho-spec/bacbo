@@ -121,11 +121,32 @@ def fmt(row: sqlite3.Row) -> str:
     )
 
 
+def _load_telegram_session() -> str:
+    for key in (
+        "TELEGRAM_SESSION_STRING",
+        "TELEGRAM_STRING_SESSION",
+        "STRING_SESSION",
+        "TG_SESSION_STRING",
+    ):
+        value = (os.environ.get(key) or "").strip()
+        if len(value) > 50:
+            return value
+    for path in (ROOT / ".telegram_session_string", HERE / ".telegram_session_string"):
+        if path.exists():
+            value = path.read_text(errors="ignore").strip()
+            if len(value) > 50:
+                return value
+    raise FileNotFoundError(
+        "Telegram session missing. Set Replit Secret TELEGRAM_SESSION_STRING "
+        "or create /home/runner/workspace/.telegram_session_string"
+    )
+
+
 async def main() -> None:
     load_env()
     api_id = os.getenv("TELEGRAM_API_ID")
     api_hash = os.getenv("TELEGRAM_API_HASH")
-    session = (ROOT / ".telegram_session_string").read_text().strip()
+    session = _load_telegram_session()
     target = getattr(config, "TARGET", None)
 
     client = TelegramClient(StringSession(session), int(api_id), api_hash)
