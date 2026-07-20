@@ -7,7 +7,10 @@ Branch files are served from:
 
 ---
 
-## 1) Install luxury building (all WR≥60 floors) + EdgePolicy
+## 1) Install luxury building (seeded — includes JUN19/JUN20)
+
+Live `bacbo.db` is often truncated. Installer merges `historical_luxury_seed.json`
+so you still get the full building (not just LIVE).
 
 ```bash
 cd /home/runner/workspace
@@ -22,15 +25,31 @@ echo "EDGE_POLICY_MODE=$EDGE_POLICY_MODE"
 python3 - <<'PY'
 import json
 from pathlib import Path
-p=Path('bot/data/luxury_building_stack.json')
-d=json.loads(p.read_text())
-print('live', d['counts']['live_building'], d['live_building_floors'])
+d=json.loads(Path('bot/data/luxury_building_stack.json').read_text())
+print('counts', d['counts'])
+print('live', d['live_building_floors'])
+print('peaks', [p.get('floor') for p in d.get('peak_day_floors') or []])
 print('blocked', d['blocked_floors'])
-print('lanes', d['lanes'])
+need={'JUN19','JUN20','ELITE_V2','MAR19','MAY19'}
+print('missing', sorted(need-set(d['live_building_floors'])) or 'none')
 PY
 ```
 
-Expected: **~26 live floors**, blocked `JUN12A` `JUN12B`.
+Expected: **~32 live floors** including `JUN19` `JUN20` `JUN08` `JUN10` `JUN26` `JUN27`.  
+Blocked only `JUN12A` `JUN12B`. If you still see `live=1`, seed download failed — re-run.
+
+### Optional: create missing peak gates
+
+```bash
+cd /home/runner/workspace
+ls bot/_gates_*.py | sed 's|.*/_gates_||;s|\.py||' | sort
+for F in JUN19 JUN20 JUN08 JUN10 JUN26 JUN27; do
+  if [ ! -f "bot/_gates_${F}.py" ]; then
+    SRC=$(ls bot/_gates_MAY19.py bot/_gates_MAY10.py bot/_gates_ELITE_V2.py bot/_gates_LIVE.py 2>/dev/null | head -1)
+    [ -n "$SRC" ] && cp "$SRC" "bot/_gates_${F}.py" && echo "created _gates_${F}.py from $SRC"
+  fi
+done
+```
 
 ---
 
