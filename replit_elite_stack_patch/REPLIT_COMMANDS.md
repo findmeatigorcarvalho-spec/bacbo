@@ -113,16 +113,13 @@ export EDGE_POLICY_MODE=luxury
 
 ## 5) Fix CrashGuard `database is locked`
 
-### V2 (use this if locks returned after V1)
-
-If you still see `DBHeartbeat` / `CrashGuard` / `Watchdog Reconnect failed` with
-`database is locked` after V1, paste **V2** (bacbo-only, soft-skip reconnect):
+### V3 (use this now — V2 aborted before restart)
 
 ```bash
-cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_FIX_DB_LOCKED_V2.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_DB_LOCKED_V2.sh" && bash REPLIT_FIX_DB_LOCKED_V2.sh
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_FIX_DB_LOCKED_V3.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_DB_LOCKED_V3.sh" && bash REPLIT_FIX_DB_LOCKED_V3.sh
 ```
 
-Expected: `FALLBACKS_ENABLED=0`, no fallback procs, `VERDICT: OK`, rooms still recv/fire.
+Expected: `compile OK`, bacbo-only (no fallbacks), `VERDICT: OK`.
 
 ### V1 (first attempt — WAL harden)
 
