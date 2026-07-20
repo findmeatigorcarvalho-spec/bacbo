@@ -113,13 +113,14 @@ export EDGE_POLICY_MODE=luxury
 
 ## 5) Fix CrashGuard `database is locked`
 
-### V3 (use this now — V2 aborted before restart)
+### V4 (use this — do not re-run V2/V3)
 
 ```bash
-cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_FIX_DB_LOCKED_V3.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_DB_LOCKED_V3.sh" && bash REPLIT_FIX_DB_LOCKED_V3.sh
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_FIX_DB_LOCKED_V4.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_DB_LOCKED_V4.sh" && bash REPLIT_FIX_DB_LOCKED_V4.sh
 ```
 
-Expected: `compile OK`, bacbo-only (no fallbacks), `VERDICT: OK`.
+Expected: `compile OK`, `VERDICT: OK — bot up`.  
+Note: `RoundAudit QUIET` means no consensus fire yet — Telegram still works if GameCoach sent.
 
 ### V1 (first attempt — WAL harden)
 
