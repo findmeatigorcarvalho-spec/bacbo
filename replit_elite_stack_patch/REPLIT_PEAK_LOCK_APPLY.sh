@@ -373,11 +373,17 @@ ps aux | grep -E 'runtime_supervisor|bacbo_royal|fallback_' | grep -v grep || ec
 
 echo "========== [6/6] final verify =========="
 $PY <<'PY'
-import json, os
+import json, os, sys
 from pathlib import Path
-from gate_alias_resolve import resolve_gate
 
 root = Path("/home/runner/workspace")
+sys.path.insert(0, str(root))
+sys.path.insert(0, str(root / "bot"))
+try:
+    from gate_alias_resolve import resolve_gate
+except Exception:
+    from bot.gate_alias_resolve import resolve_gate
+
 allow = json.loads((root / "bot/data/luxury_live_floors.json").read_text())
 print("EDGE_POLICY_MODE", os.environ.get("EDGE_POLICY_MODE"))
 print("live", len(allow.get("live_floors") or []), "blocked", allow.get("blocked"))
@@ -392,6 +398,38 @@ for logical, stem in [("JUN19", "JUN19_peak"), ("JUN20", "JUN20_peak"), ("LIVE",
     lp = root / "bot" / f"_gates_{logical}.py"
     pp = root / "bot" / f"_gates_{stem}.py"
     print(f"  loader {logical}: exists={lp.exists()} peak={pp.exists()}")
+# fill missing MAY23_peak from nearest May peak if absent
+may23 = root / "bot" / "_gates_MAY23_peak.py"
+if not may23.exists():
+    for cand in ("MAY22_peak", "MAY24_peak", "MAY19_peak", "MAY10_peak"):
+        src = root / "bot" / f"_gates_{cand}.py"
+        if src.exists():
+            may23.write_text(
+                f'# AUTO stub peak — cloned from {cand} until real MAY23_peak exists\n'
+                f'from pathlib import Path\nimport runpy\n'
+                f'_PEAK = Path(__file__).with_name("_gates_{cand}.py")\n'
+                f'_g = runpy.run_path(str(_PEAK), run_name=__name__)\n'
+                f'globals().update({{k: v for k, v in _g.items() if not k.startswith("__")}})\n',
+                encoding="utf-8",
+            )
+            # also lock logical MAY23 loader if alias present
+            logical = root / "bot" / "_gates_MAY23.py"
+            logical.write_text(
+                '# AUTO peak-lock loader — logical floor MAY23 -> gate MAY23_peak\n'
+                'from pathlib import Path\nimport runpy\n'
+                '_PEAK = Path(__file__).with_name("_gates_MAY23_peak.py")\n'
+                'if not _PEAK.exists():\n'
+                '    raise ImportError(f"peak gate missing: {_PEAK}")\n'
+                '_g = runpy.run_path(str(_PEAK), run_name=__name__)\n'
+                'globals().update({k: v for k, v in _g.items() if not k.startswith("__")})\n',
+                encoding="utf-8",
+            )
+            print(f"filled MISSING MAY23_peak from {cand}")
+            break
+    else:
+        print("WARN: could not fill MAY23_peak")
+else:
+    print("MAY23_peak present")
 print("peak_lock_smoke_ok")
 PY
 
