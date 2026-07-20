@@ -1,22 +1,31 @@
 # Luxury Building — Floor Decisions
 
-Goal: high volume + high WR + high G0.  
-Sources: DB floor registry (73 floors) + Telegram chat good-card filter (Mar 17 → Jul 18).
+Rule (user): result cards fire under their signal **before** the live Bac Bo round, so volume at **WR ≥ 60%** is worth stacking (early win/loss known).  
+Sources: DB floor registry (73 floors) + Telegram good-card filter.
 
-## Replit pull (needed for fresh post-Jun18 data)
+## Counts
 
-Replit web app is offline from here. In **Replit Shell** run:
+| Metric | n |
+|---|---:|
+| Floors registered in system | **73** |
+| Already in live building (PRECISION+BALANCED+VOLUME) | **12** |
+| Missing to ADD (shadow, WR≥60%, n≥10) | **14** |
+| Shadow keep/out (thin or &lt;60%) | **45** |
+| Blocked (do not add) | **2** (JUN12A, JUN12B) |
+| Rooms total | **66** (40 unmuted / 26 muted) |
+| Live stack size after adds | **26** |
+
+## Replit pull (fixed — no sqlite3 binary needed)
 
 ```bash
 cd /home/runner/workspace
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/replit_pull_luxury_export.sh)" || bash replit_elite_stack_patch/replit_pull_luxury_export.sh
-ls -lah luxury_export_*.zip luxury_export_light.zip 2>/dev/null
+curl -fsSL -o replit_pull_luxury_export.sh \
+  https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/replit_pull_luxury_export.sh
+bash replit_pull_luxury_export.sh
+ls -lah luxury_export_light.zip
 ```
 
-Upload the zip via YDRAY and paste the link.
-
-If the script is not in the Replit project yet, create it from this repo file:
-`replit_elite_stack_patch/replit_pull_luxury_export.sh`
+Upload `luxury_export_light.zip` via YDRAY and paste the link.
 
 ## Telegram filter (good vs skip)
 
