@@ -186,22 +186,40 @@ class _AdoptedProc:
             return 1
 
 
-def _find_bacbo_pids() -> list[int]:
+def _cmdline(pid: int) -> str:
     try:
-        out = subprocess.check_output(
-            ["pgrep", "-f", "bacbo_royal_complete.py"],
-            text=True,
-        ).strip()
+        raw = Path(f"/proc/{pid}/cmdline").read_bytes()
+    except Exception:
+        return ""
+    return raw.replace(b"\0", b" ").decode("utf-8", "replace").strip()
+
+
+def _python_pids_with(needle: str) -> list[int]:
+    """List python PIDs whose /proc cmdline contains needle. Never use pgrep -f (self-match)."""
+    me = os.getpid()
+    found: list[int] = []
+    try:
+        for entry in Path("/proc").iterdir():
+            if not entry.name.isdigit():
+                continue
+            pid = int(entry.name)
+            if pid == me:
+                continue
+            cmd = _cmdline(pid)
+            if not cmd or needle not in cmd:
+                continue
+            if "python" not in cmd.lower():
+                continue
+            if any(x in cmd for x in ("pgrep", "pkill", "REPLIT_ONE_STACK", "ONE.sh")):
+                continue
+            found.append(pid)
     except Exception:
         return []
-    pids: list[int] = []
-    for line in out.splitlines():
-        line = line.strip()
-        if line.isdigit():
-            pid = int(line)
-            if pid != os.getpid():
-                pids.append(pid)
-    return pids
+    return sorted(found)
+
+
+def _find_bacbo_pids() -> list[int]:
+    return _python_pids_with("bacbo_royal_complete.py")
 
 
 def _find_bacbo_pid() -> int | None:
@@ -210,10 +228,11 @@ def _find_bacbo_pid() -> int | None:
 
 
 def _kill_pat(pat: str) -> None:
-    try:
-        subprocess.run(["pkill", "-9", "-f", pat], check=False, capture_output=True)
-    except Exception:
-        pass
+    for pid in _python_pids_with(pat):
+        try:
+            os.kill(pid, signal.SIGKILL)
+        except Exception:
+            pass
 
 
 def _reap_duplicates(*, single_outbox: bool) -> None:
@@ -232,12 +251,7 @@ def _reap_duplicates(*, single_outbox: bool) -> None:
     if single_outbox:
         _kill_pat("fallback_signal_sender.py")
         _kill_pat("fallback_result_sender.py")
-        # Keep a single outbox (oldest)
-        try:
-            out = subprocess.check_output(["pgrep", "-f", "telegram_outbox.py"], text=True).strip()
-            opids = sorted(int(x) for x in out.split() if x.isdigit() and int(x) != os.getpid())
-        except Exception:
-            opids = []
+        opids = _python_pids_with("telegram_outbox.py")
         if len(opids) > 1:
             for pid in opids[1:]:
                 try:
@@ -248,7 +262,9 @@ def _reap_duplicates(*, single_outbox: bool) -> None:
 
 
 def main() -> int:
-    lock_fd = _acquire_supervisor_lock()
+    lock = _acquire_supervisor_lock()
+    lock_fd = lock["fd"]
+    _singleton_sock = lock["sock"]  # noqa: F841 — must stay referenced
     env = _env()
     # Force single outbox whenever luxury building is installed.
     if (ROOT / "luxury_building.env").exists():
