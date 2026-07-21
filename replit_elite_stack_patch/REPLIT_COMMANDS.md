@@ -42,6 +42,16 @@ cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o BADGE.sh
 
 Expect: `post_badge_errors 0`, `badge=OK`, then non-LIVE `source_floor` on new fires.
 
+### Quiet after floor-rotate (no new consensus)
+
+Tag-only mode: engines keep LIVE ContextVar; DB/cards use JUN19+ tags.
+
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o FIREAGAIN.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIRE_AGAIN.sh" && bash FIREAGAIN.sh
+```
+
+Expect: `mode=tag`, `tag_floor` JUN19, then new FIRED rows with non-LIVE `source_floor`.
+
 ---
 
 ## 1) Install luxury building (seeded — includes JUN19/JUN20)
