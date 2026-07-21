@@ -3,6 +3,21 @@
 ## One-sentence goal
 Every **historically good floor/setup since March** (WR≥60%, real peak days) can **propose** fires using its **own frozen peak gates**, in parallel; a **global merge** sends **at most one money card per conflict window** to Telegram, with the **result card glued under that signal** — and **countdown** is a **separate lane** with its own peaks/setups.
 
+## Does this avoid losing profitable signals?
+**Best available design — yes, with one honest tradeoff:**
+
+| Situation | What happens | Value kept? |
+|---|---|---|
+| One tower ALLOWs, others quiet | That tower’s card sends | Yes |
+| Several towers ALLOW **same color** | Merge picks best (sniper > watch > peak > LIVE); **one** card | Yes — signal kept, no spam |
+| Two towers ALLOW **opposite colors** same window | Opposite-color **lock** → one wins | Yes for bankroll; you cannot bet both |
+| Tower would have fired but LIVE engine never proposed | v1 may miss it | **v2** isolated peak handlers fix this |
+
+v1 (shipping now): LIVE engine proposes + **all floors scored in EdgePolicy merge** + peak-lock loaders bound.  
+v2: each peak handler can propose independently into the merge queue.
+
+So: merge is how you **keep** multi-floor edge without destroying the account with red+blue doubles.
+
 ## What we are NOT doing
 - Not 32 independent bots spamming chat every round.
 - Not “only send after we know it won” (impossible pre-round; casino result comes after).

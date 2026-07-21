@@ -76,6 +76,20 @@ cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o TAG.sh "
 
 Expect: `tag_floor JUN19`, next outbox card `FLOOR: JUN19` (or next peak), `SCORE` from `final_score`/`confidence_pct`.
 
+### Wire peak-gate towers v1 (merge + peak-lock loaders)
+
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o WIRE.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_WIRE_TOWERS.sh" && bash WIRE.sh
+```
+
+Expect: `TOWER_MERGE` winner peak floor, `bacbo=1`, peak-lock loaders for JUN19→JUN19_peak. See `LUXURY_GOAL.md`.
+
+### Process hygiene (duplicates)
+
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o ONE.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_STACK.sh" && bash ONE.sh
+```
+
 ---
 
 ## 1) Install luxury building (seeded — includes JUN19/JUN20)

@@ -1,0 +1,196 @@
+"""
+lux_tower_merge.py — multi-floor EdgePolicy merge (v1).
+
+Goal (LUXURY_GOAL.md):
+  Every good live floor can ALLOW a candidate; we pick the best tower
+  to stamp on the fire so no WR>=60 floor is silently ignored.
+
+v1 scope (safe, shippable):
+  - Still ONE engine fire path (LIVE brain decides the signal exists)
+  - EdgePolicy is evaluated for ALL live-building floors (not just LIVE)
+  - Winner floor is stamped onto source_floor / state for cards+DB
+  - Opposite-color lock stays global AFTER this merge
+  - Peak-gate *loaders* (JUN19 -> JUN19_peak file) are installed separately;
+    full isolated peak-handler clones are v2
+
+Enable: LUXURY_TOWER_MERGE=1 (default on when luxury_building.env present)
+"""
+from __future__ import annotations
+
+import json
+import os
+import time
+from pathlib import Path
+from typing import Any
+
+HERE = Path(__file__).resolve().parent
+DATA = HERE / "data"
+_JSON = DATA / "luxury_live_floors.json"
+
+
+def _enabled() -> bool:
+    return os.environ.get("LUXURY_TOWER_MERGE", "1").strip() not in {"0", "false", "no"}
+
+
+def _load_floors() -> tuple[list[str], list[str], set[str]]:
+    """Return (priority_floors, all_live, blocked)."""
+    blocked = {"JUN12A", "JUN12B"}
+    peaks: list[str] = []
+    live: list[str] = []
+    try:
+        data = json.loads(_JSON.read_text(encoding="utf-8"))
+        blocked |= {str(x).upper() for x in (data.get("blocked") or [])}
+        peaks = [str(x).upper() for x in (data.get("peak_day_floors") or [])]
+        live = [
+            str(x).upper()
+            for x in (data.get("live_floors") or data.get("live_building_floors") or [])
+        ]
+    except Exception:
+        peaks = ["JUN19", "JUN20", "JUN08", "JUN10", "JUN26", "JUN27", "MAY19", "MAY10"]
+        live = list(peaks) + ["LIVE", "ELITE_V2", "MAR19", "MAR20", "MAR21"]
+
+    # Priority: peak days first, then remaining live (skip blocked / dupes)
+    ordered: list[str] = []
+    for name in peaks + live + ["LIVE"]:
+        if name in blocked:
+            continue
+        if name not in ordered:
+            ordered.append(name)
+    if not ordered:
+        ordered = ["LIVE"]
+    return peaks, ordered, blocked
+
+
+def _rank(verdict: dict[str, Any], floor: str, peaks: list[str]) -> tuple[int, int, str]:
+    """Higher tuple wins. Prefer sniper > watch > floor-allow; peak floors beat LIVE."""
+    action = str(verdict.get("action") or "")
+    reason = str(verdict.get("reason") or "")
+    if action not in {"ALLOW", "SHADOW_ALLOW"}:
+        return (-1, -1, floor)
+    tier = 1
+    if "SNIPER" in reason:
+        tier = 3
+    elif "WATCH" in reason:
+        tier = 2
+    peak_bonus = 2 if floor in peaks else (0 if floor == "LIVE" else 1)
+    return (tier, peak_bonus, floor)
+
+
+def merge_candidate(
+    *,
+    kind: str,
+    color: str,
+    agreeing_rooms: Any,
+    engine_floor: str = "LIVE",
+    hour_utc: int | None = None,
+) -> dict[str, Any]:
+    """
+    Evaluate EdgePolicy across all live floors; return merged verdict.
+
+    If ANY floor ALLOWs → ALLOW with winning floor.
+    If ALL BLOCK → BLOCK.
+    """
+    if not _enabled():
+        from edge_live_policy import evaluate
+
+        return evaluate(
+            kind=kind,
+            color=color,
+            agreeing_rooms=agreeing_rooms,
+            source_floor=engine_floor or "LIVE",
+            hour_utc=hour_utc,
+        )
+
+    from edge_live_policy import evaluate
+
+    peaks, floors, blocked = _load_floors()
+    hour = hour_utc if hour_utc is not None else time.gmtime().tm_hour
+
+    allows: list[tuple[tuple[int, int, str], dict[str, Any], str]] = []
+    blocks: list[tuple[str, str]] = []
+
+    for floor in floors:
+        if floor in blocked:
+            continue
+        try:
+            v = evaluate(
+                kind=kind,
+                color=color,
+                agreeing_rooms=agreeing_rooms,
+                source_floor=floor,
+                hour_utc=hour,
+            )
+        except Exception as exc:
+            blocks.append((floor, f"eval_error:{exc}"))
+            continue
+        action = str(v.get("action") or "")
+        if action in {"ALLOW", "SHADOW_ALLOW"}:
+            allows.append((_rank(v, floor, peaks), v, floor))
+        elif action in {"BLOCK", "SHADOW_BLOCK"}:
+            blocks.append((floor, str(v.get("reason") or action)))
+
+    if allows:
+        allows.sort(key=lambda x: x[0], reverse=True)
+        _score, best_v, best_floor = allows[0]
+        out = dict(best_v)
+        out["winner_floor"] = best_floor
+        out["tower_allows"] = [f for _, _, f in allows]
+        out["reason"] = f"TOWER_MERGE {best_floor} · {best_v.get('reason', '')}"
+        return out
+
+    # Nobody allowed
+    reason = "TOWER_MERGE_ALL_BLOCKED"
+    if blocks:
+        reason = f"TOWER_MERGE_ALL_BLOCKED · {blocks[0][0]}:{blocks[0][1]}"
+    return {
+        "action": "BLOCK",
+        "reason": reason,
+        "matched": [],
+        "mode": os.environ.get("EDGE_POLICY_MODE", "luxury"),
+        "legacy_warning": None,
+        "winner_floor": engine_floor or "LIVE",
+        "tower_allows": [],
+    }
+
+
+def apply_winner_to_state(winner_floor: str) -> None:
+    """Stamp winner onto state / lux tag so DB+cards see the tower floor."""
+    if not winner_floor:
+        return
+    floor = str(winner_floor).strip().upper()
+    try:
+        import sys
+
+        for name in ("state", "__main__", "bacbo_royal_complete"):
+            mod = sys.modules.get(name)
+            if mod is None:
+                continue
+            try:
+                setattr(mod, "_current_source_floor", floor)
+                setattr(mod, "_lux_tag_floor", floor)
+                setattr(mod, "_lux_tower_winner", floor)
+            except Exception:
+                pass
+            st = getattr(mod, "state", None)
+            if st is not None:
+                try:
+                    setattr(st, "_current_source_floor", floor)
+                    setattr(st, "_lux_tag_floor", floor)
+                    setattr(st, "_lux_tower_winner", floor)
+                except Exception:
+                    pass
+    except Exception:
+        pass
+    # Align rotator tag so outbox matches merge winner for this fire
+    try:
+        import lux_floor_rotate as lfr
+
+        with lfr._LOCK:
+            lfr._FLOOR = floor
+            floors = lfr._rotation_list()
+            if floor in floors:
+                lfr._IDX = floors.index(floor)
+            lfr._LAST_ADV = time.time()
+            lfr._sync_tag_state_unlocked(floor)
+    except Exception:
+        pass
