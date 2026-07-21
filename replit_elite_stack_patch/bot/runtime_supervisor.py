@@ -25,26 +25,45 @@ ROOT = Path("/home/runner/workspace")
 BOT = ROOT / "bot"
 LOG_DIR = ROOT / "logs"
 LOCK_PATH = BOT / "data" / "runtime_supervisor.lock"
+_SOCKET_NAME = "\0bacbo_luxury_supervisor_v1"  # abstract Unix socket (Linux)
 
 
-def _acquire_supervisor_lock() -> int:
-    """Exclusive flock — a second supervisor exits immediately (stops double stacks)."""
+def _acquire_supervisor_lock():
+    """Singleton: abstract Unix socket (reliable) + flock (belt). Second process exits."""
     import fcntl
+    import socket
 
     LOCK_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    try:
+        sock.bind(_SOCKET_NAME)
+    except OSError:
+        print("[Supervisor] EXIT — singleton socket busy (another supervisor is running)")
+        try:
+            sock.close()
+        except Exception:
+            pass
+        raise SystemExit(0)
+
     fd = os.open(str(LOCK_PATH), os.O_CREAT | os.O_RDWR, 0o644)
     try:
         fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
     except BlockingIOError:
+        print("[Supervisor] EXIT — flock busy (another supervisor holds the lock)")
+        try:
+            sock.close()
+        except Exception:
+            pass
         os.close(fd)
-        print("[Supervisor] EXIT — another runtime_supervisor already holds the lock")
         raise SystemExit(0)
     try:
         os.ftruncate(fd, 0)
         os.write(fd, f"{os.getpid()}\n".encode())
     except Exception:
         pass
-    return fd
+    # Keep sock alive for process lifetime (GC would release the bind).
+    return {"fd": fd, "sock": sock}
 
 # luxury_building.env must win over Replit Secrets / inherited shell values.
 _LUXURY_FORCE_KEYS = {
