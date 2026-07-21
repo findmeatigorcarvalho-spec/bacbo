@@ -88,14 +88,69 @@ def color_emoji(color: str) -> str:
     return "🔵" if color == "blue" else "🔴" if color == "red" else "🟡"
 
 
-def fmt_consensus(row: sqlite3.Row) -> str:
+def _tag_floor_name() -> str:
+    try:
+        from lux_floor_rotate import tag_floor
+
+        return str(tag_floor() or "LIVE")
+    except Exception:
+        return "LIVE"
+
+
+def _row_score(row: sqlite3.Row) -> float:
+    """Prefer real score columns — total_score is often 0/NULL on Replit DB."""
+    for key in ("total_score", "final_score", "confidence_pct", "calibrated_pct"):
+        try:
+            val = row[key]
+        except (IndexError, KeyError):
+            continue
+        if val is None:
+            continue
+        try:
+            f = float(val)
+        except Exception:
+            continue
+        if f != 0.0:
+            return f
+    return 0.0
+
+
+def _row_floor(row: sqlite3.Row) -> str:
+    """Tag-mode: engine ContextVar stays LIVE; cards show rotator floor."""
+    db_floor = (row["source_floor"] or "").strip().upper() if row["source_floor"] else ""
+    tag = _tag_floor_name().strip().upper()
+    if db_floor and db_floor != "LIVE":
+        return db_floor
+    return tag or db_floor or "LIVE"
+
+
+def _stamp_floor(signal_id: int, floor: str) -> None:
+    """Persist tag onto LIVE rows so DB matches the card."""
+    if not floor or floor == "LIVE":
+        return
+    try:
+        conn = sqlite3.connect(str(DB), timeout=30.0)
+        conn.execute("PRAGMA busy_timeout=30000")
+        conn.execute(
+            "UPDATE consensus_signals SET source_floor=? "
+            "WHERE id=? AND (source_floor IS NULL OR source_floor='' OR source_floor='LIVE')",
+            (floor, signal_id),
+        )
+        conn.commit()
+        conn.close()
+    except Exception as exc:
+        print("[Outbox] stamp_floor failed:", repr(exc))
+
+
+def fmt_consensus(row: sqlite3.Row, floor: str | None = None) -> str:
     color = (row["color"] or "").lower()
-    score = row["total_score"] or 0
+    score = _row_score(row)
+    floor_name = floor or _row_floor(row)
     return (
         "🚨 BAC BO SIGNAL 🚨\n\n"
         f"{color_emoji(color)} COLOR: {color.upper()}\n"
         f"🎯 MODE: {row['signal_kind'] or 'SIGNAL'}\n"
-        f"🏛 FLOOR: {row['source_floor'] or 'LIVE'}\n"
+        f"🏛 FLOOR: {floor_name}\n"
         "⚡ G0 ONLY\n"
         f"📊 SCORE: {score:.2f}\n"
         f"🏠 ROOMS: {row['rooms_agreed'] or 'engine'}\n\n"
@@ -282,22 +337,36 @@ async def main() -> None:
         try:
             conn = _db_ro()
             last_sig = read_int(SIG_STATE)
-            rows = conn.execute(
-                """
-                SELECT id, fired_at, signal_kind, color, rooms_agreed, source_floor, total_score
-                FROM consensus_signals
-                WHERE id > ? AND fired_at >= datetime('now','-2 hours')
-                ORDER BY id ASC
-                LIMIT 20
-                """,
-                (last_sig,),
-            ).fetchall()
+            # final_score / confidence_pct often hold the real number; total_score is 0.
+            try:
+                rows = conn.execute(
+                    """
+                    SELECT id, fired_at, signal_kind, color, rooms_agreed, source_floor,
+                           total_score, final_score, confidence_pct, calibrated_pct
+                    FROM consensus_signals
+                    WHERE id > ? AND fired_at >= datetime('now','-2 hours')
+                    ORDER BY id ASC
+                    LIMIT 20
+                    """,
+                    (last_sig,),
+                ).fetchall()
+            except sqlite3.OperationalError:
+                rows = conn.execute(
+                    """
+                    SELECT id, fired_at, signal_kind, color, rooms_agreed, source_floor, total_score
+                    FROM consensus_signals
+                    WHERE id > ? AND fired_at >= datetime('now','-2 hours')
+                    ORDER BY id ASC
+                    LIMIT 20
+                    """,
+                    (last_sig,),
+                ).fetchall()
 
             last_res = read_int(RES_STATE)
             results = conn.execute(
                 """
                 SELECT id, fired_at, resolved_at, signal_kind, color, outcome,
-                       won_at_gale, secs_to_result
+                       won_at_gale, secs_to_result, source_floor
                 FROM consensus_signals
                 WHERE id > ?
                   AND outcome IN ('win','loss','tie')
@@ -311,9 +380,19 @@ async def main() -> None:
 
             # Send signals first, then results for the same ids (card under signal).
             for row in rows:
-                await client.send_message(entity, fmt_consensus(row))
+                floor = _row_floor(row)
+                _stamp_floor(int(row["id"]), floor)
+                await client.send_message(entity, fmt_consensus(row, floor=floor))
                 write_int(SIG_STATE, row["id"])
-                print("[Outbox] sent signal", row["id"], row["signal_kind"], row["color"], row["source_floor"])
+                print(
+                    "[Outbox] sent signal",
+                    row["id"],
+                    row["signal_kind"],
+                    row["color"],
+                    floor,
+                    "score",
+                    _row_score(row),
+                )
 
             for row in results:
                 await client.send_message(entity, fmt_result(row))

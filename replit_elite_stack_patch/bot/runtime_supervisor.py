@@ -168,11 +168,22 @@ def main() -> int:
         f"[Supervisor] fallbacks_enabled={fallbacks_enabled} "
         f"single_outbox={single_outbox} fallback_start_delay_secs={fallback_delay}"
     )
+    if single_outbox:
+        # Kill legacy dual-fallback clients so they cannot steal the StringSession.
+        for pat in ("fallback_signal_sender.py", "fallback_result_sender.py"):
+            try:
+                subprocess.run(["pkill", "-9", "-f", pat], check=False, capture_output=True)
+            except Exception:
+                pass
+
+    def _is_delayed_sender(name: str) -> bool:
+        return name.startswith("fallback") or name == "telegram_outbox"
+
     try:
         while True:
             for name, (cmd, proc, last_start) in list(processes.items()):
                 if proc is None or proc.poll() is not None:
-                    if name.startswith("fallback") and (time.time() - boot_t0) < fallback_delay:
+                    if _is_delayed_sender(name) and (time.time() - boot_t0) < fallback_delay:
                         continue
                     if time.time() - last_start < 10:
                         time.sleep(10 - (time.time() - last_start))

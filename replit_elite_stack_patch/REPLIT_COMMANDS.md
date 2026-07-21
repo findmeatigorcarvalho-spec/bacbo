@@ -66,6 +66,16 @@ Expect in chat (within ~90s):
 
 Expect in shell: `TEST_PING OK`, `bacbo_proc` still alive at 120s, `outbox=1`.
 
+### Cards say FLOOR:LIVE / SCORE:0.00 (Telegram already up)
+
+Engine stays LIVE (tag mode). Outbox should stamp rotator floor + real score columns:
+
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o TAG.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TAG_SCORE.sh" && bash TAG.sh
+```
+
+Expect: `tag_floor JUN19`, next outbox card `FLOOR: JUN19` (or next peak), `SCORE` from `final_score`/`confidence_pct`.
+
 ---
 
 ## 1) Install luxury building (seeded — includes JUN19/JUN20)

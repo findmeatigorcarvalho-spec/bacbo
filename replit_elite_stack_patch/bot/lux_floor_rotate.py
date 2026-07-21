@@ -273,6 +273,41 @@ def rebind_database_tag_floor() -> int:
     return n
 
 
+def stamp_live_rows(limit: int = 40) -> int:
+    """Rewrite recent LIVE source_floor rows to current tag (engine stays LIVE)."""
+    floor = tag_floor()
+    if not floor or floor == "LIVE":
+        return 0
+    db = _DIR / "bacbo.db"
+    if not db.exists():
+        db = _DIR.parent / "bacbo.db"
+    if not db.exists():
+        return 0
+    try:
+        import sqlite3
+
+        con = sqlite3.connect(str(db), timeout=30.0)
+        con.execute("PRAGMA busy_timeout=30000")
+        cur = con.execute(
+            "UPDATE consensus_signals SET source_floor=? "
+            "WHERE id IN ("
+            "  SELECT id FROM consensus_signals "
+            "  WHERE (source_floor IS NULL OR source_floor='' OR source_floor='LIVE') "
+            "  ORDER BY id DESC LIMIT ?"
+            ")",
+            (floor, int(limit)),
+        )
+        n = cur.rowcount if cur.rowcount and cur.rowcount > 0 else 0
+        con.commit()
+        con.close()
+        if n:
+            print(f"[LUXURY] stamped source_floor={floor} on {n} recent LIVE rows")
+        return n
+    except Exception as exc:
+        print("[LUXURY] stamp_live_rows failed:", exc)
+        return 0
+
+
 def _timer_loop() -> None:
     while True:
         try:
@@ -280,6 +315,7 @@ def _timer_loop() -> None:
                 with _LOCK:
                     _maybe_advance_unlocked()
                 rebind_database_tag_floor()
+                stamp_live_rows(limit=20)
         except Exception:
             pass
         time.sleep(15.0)
