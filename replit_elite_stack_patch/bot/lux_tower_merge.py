@@ -98,9 +98,9 @@ def merge_candidate(
     If ALL BLOCK → BLOCK.
     """
     if not _enabled():
-        from edge_live_policy import evaluate
+        from edge_live_policy import evaluate_one
 
-        return evaluate(
+        return evaluate_one(
             kind=kind,
             color=color,
             agreeing_rooms=agreeing_rooms,
@@ -108,19 +108,19 @@ def merge_candidate(
             hour_utc=hour_utc,
         )
 
-    from edge_live_policy import evaluate
+    from edge_live_policy import evaluate_one
 
     peaks, floors, blocked = _load_floors()
     hour = hour_utc if hour_utc is not None else time.gmtime().tm_hour
 
-    allows: list[tuple[tuple[int, int, str], dict[str, Any], str]] = []
+    allows: list[tuple[tuple, dict[str, Any], str]] = []
     blocks: list[tuple[str, str]] = []
 
     for floor in floors:
         if floor in blocked:
             continue
         try:
-            v = evaluate(
+            v = evaluate_one(
                 kind=kind,
                 color=color,
                 agreeing_rooms=agreeing_rooms,

@@ -276,14 +276,14 @@ def _verdict(action: str, reason: str, matched: list[str], mode: str, legacy_war
     return out
 
 
-def evaluate(
+def evaluate_one(
     kind: str,
     color: str,
     agreeing_rooms: Iterable[str] | None,
     source_floor: str = "LIVE",
     hour_utc: int | None = None,
 ) -> dict:
-    """Return a live policy verdict for one candidate signal."""
+    """Return a live policy verdict for ONE floor (no tower merge)."""
     data = _load()
     mode = _mode()
     kind = (kind or "").strip().upper()
@@ -443,3 +443,40 @@ def evaluate(
         )
 
     return _verdict("ALLOW", "EDGE_NO_MATCH_VOLUME", [], mode, legacy_warning)
+
+
+def evaluate(
+    kind: str,
+    color: str,
+    agreeing_rooms: Iterable[str] | None,
+    source_floor: str = "LIVE",
+    hour_utc: int | None = None,
+) -> dict:
+    """Public EdgePolicy entry — tower-merge when LUXURY_TOWER_MERGE=1."""
+    merge_on = os.environ.get("LUXURY_TOWER_MERGE", "1").strip() not in {"0", "false", "no"}
+    if merge_on:
+        try:
+            from lux_tower_merge import apply_winner_to_state, merge_candidate
+
+            verdict = merge_candidate(
+                kind=kind,
+                color=color,
+                agreeing_rooms=agreeing_rooms,
+                engine_floor=source_floor or "LIVE",
+                hour_utc=hour_utc,
+            )
+            wf = verdict.get("winner_floor") or source_floor or "LIVE"
+            try:
+                apply_winner_to_state(str(wf))
+            except Exception:
+                pass
+            return verdict
+        except Exception:
+            pass
+    return evaluate_one(
+        kind=kind,
+        color=color,
+        agreeing_rooms=agreeing_rooms,
+        source_floor=source_floor,
+        hour_utc=hour_utc,
+    )
