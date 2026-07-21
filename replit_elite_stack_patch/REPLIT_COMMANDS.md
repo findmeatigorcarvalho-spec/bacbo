@@ -27,12 +27,7 @@ Expect: `proc_EDGE_POLICY_MODE luxury`, `json_live_floors` ~30+, `has_JUN19 True
 Luxury allowlist can be fine while `get_floor()` stays LIVE. Rotate logical floors (peak-first):
 
 ```bash
-cd /home/runner/workspace && curl -fsSL -o ROTATE.sh "https://litter.catbox.moe/PLACEHOLDER_ROTATE.sh" && bash ROTATE.sh
-```
-
-Or GitHub:
-```bash
-cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_FLOOR_ROTATE.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FLOOR_ROTATE.sh" && bash REPLIT_FLOOR_ROTATE.sh
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o ROTATE.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FLOOR_ROTATE.sh" && bash ROTATE.sh
 ```
 
 Expect: `[LUXURY] floor-rotate ON start=JUN19…`, `supervisor_count 1`, then new fires with non-LIVE `source_floor`.
