@@ -89,8 +89,10 @@ for path in (bacbo, sh):
 PY
 
 echo "========== [3/7] peak-lock loaders =========="
-# Peak-lock apply restarts supervisor mid-way; OK — we hard-reset at end.
+# Do NOT let peak-lock start a second supervisor — ONE_STACK owns the stack.
+export SKIP_SUPERVISOR_RESTART=1
 bash REPLIT_PEAK_LOCK_APPLY.sh || echo "WARN peak-lock apply status=$?"
+unset SKIP_SUPERVISOR_RESTART
 
 echo "========== [4/7] tower merge via edge_live_policy hook (safe) =========="
 # edge_live_policy.evaluate already wraps merge when LUXURY_TOWER_MERGE=1

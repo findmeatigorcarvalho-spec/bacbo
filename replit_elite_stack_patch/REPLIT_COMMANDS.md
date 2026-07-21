@@ -82,13 +82,22 @@ Expect: `tag_floor JUN19`, next outbox card `FLOOR: JUN19` (or next peak), `SCOR
 cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o WIRE.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_WIRE_TOWERS.sh" && bash WIRE.sh
 ```
 
-Expect: `TOWER_MERGE` winner peak floor, `bacbo=1`, peak-lock loaders for JUN19→JUN19_peak. See `LUXURY_GOAL.md`.
+Expect: `smoke_ok`, `winner JUN19`, then ONE_STACK `VERDICT OK` with n=1.
 
-### Process hygiene (duplicates)
+### Process hygiene only (duplicates / legacy fallbacks)
 
 ```bash
 cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o ONE.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_STACK.sh" && bash ONE.sh
 ```
+
+### Where files live (`workspace` vs `workspace/bot`)
+
+| Path | Role |
+|---|---|
+| `/home/runner/workspace/` | Project root: `bacbo_royal_complete.py`, `.env`, `luxury_building.env`, scripts |
+| `/home/runner/workspace/bot/` | Libraries: gates, EdgePolicy, outbox, database, floor_tracker |
+
+Both are correct. Engine entry is at **root**; modules are under **bot/** (on `PYTHONPATH`).
 
 ---
 

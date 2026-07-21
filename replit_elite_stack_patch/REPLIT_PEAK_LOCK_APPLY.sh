@@ -343,6 +343,7 @@ set -euo pipefail
 cd /home/runner/workspace
 source ./luxury_building.env
 export EDGE_POLICY_MODE=luxury EDGE_LUXURY_FLOOR_GATE=1 FALLBACK_SEND_BLOCKED=0
+export TELEGRAM_SINGLE_OUTBOX=1 FALLBACKS_ENABLED=1
 if [ -f bot/runtime_supervisor.py ]; then
   exec python3 -u bot/runtime_supervisor.py
 elif [ -f bot/bacbo_royal_complete.py ]; then
@@ -355,21 +356,29 @@ chmod +x /home/runner/workspace/start_luxury.sh
 source /home/runner/workspace/luxury_building.env
 echo "MODE=$EDGE_POLICY_MODE"
 
-pkill -f 'runtime_supervisor.py' 2>/dev/null || true
-pkill -f 'bacbo_royal_complete.py' 2>/dev/null || true
-pkill -f 'fallback_signal_sender.py' 2>/dev/null || true
-pkill -f 'fallback_result_sender.py' 2>/dev/null || true
-sleep 1
-if [ -f bot/runtime_supervisor.py ]; then
-  nohup env EDGE_POLICY_MODE=luxury EDGE_LUXURY_FLOOR_GATE=1 FALLBACK_SEND_BLOCKED=0 \
-    python3 -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
-  echo "started runtime_supervisor pid=$!"
-  sleep 2
-  tail -n 40 /tmp/luxury_supervisor.log || true
+# WIRE / ONE_STACK set SKIP_SUPERVISOR_RESTART=1 — peak-lock only binds gates.
+if [ "${SKIP_SUPERVISOR_RESTART:-0}" = "1" ]; then
+  echo "SKIP_SUPERVISOR_RESTART=1 — not starting supervisor here"
 else
-  echo "WARN: runtime_supervisor.py missing — press Replit Stop/Run"
+  pkill -f 'runtime_supervisor.py' 2>/dev/null || true
+  pkill -f 'bacbo_royal_complete.py' 2>/dev/null || true
+  pkill -f 'fallback_signal_sender.py' 2>/dev/null || true
+  pkill -f 'fallback_result_sender.py' 2>/dev/null || true
+  pkill -f 'telegram_outbox.py' 2>/dev/null || true
+  sleep 1
+  rm -f bot/data/runtime_supervisor.lock bot/data/telegram_outbox.lock 2>/dev/null || true
+  if [ -f bot/runtime_supervisor.py ]; then
+    nohup env EDGE_POLICY_MODE=luxury EDGE_LUXURY_FLOOR_GATE=1 FALLBACK_SEND_BLOCKED=0 \
+      TELEGRAM_SINGLE_OUTBOX=1 FALLBACKS_ENABLED=1 \
+      python3 -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
+    echo "started runtime_supervisor pid=$!"
+    sleep 2
+    tail -n 40 /tmp/luxury_supervisor.log || true
+  else
+    echo "WARN: runtime_supervisor.py missing — press Replit Stop/Run"
+  fi
+  ps aux | grep -E 'runtime_supervisor|bacbo_royal|fallback_|telegram_outbox' | grep -v grep || echo "(no bot procs yet)"
 fi
-ps aux | grep -E 'runtime_supervisor|bacbo_royal|fallback_' | grep -v grep || echo "(no bot procs yet)"
 
 echo "========== [6/6] final verify =========="
 $PY <<'PY'

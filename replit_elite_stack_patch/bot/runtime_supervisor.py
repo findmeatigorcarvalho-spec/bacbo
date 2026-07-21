@@ -24,6 +24,27 @@ from pathlib import Path
 ROOT = Path("/home/runner/workspace")
 BOT = ROOT / "bot"
 LOG_DIR = ROOT / "logs"
+LOCK_PATH = BOT / "data" / "runtime_supervisor.lock"
+
+
+def _acquire_supervisor_lock() -> int:
+    """Exclusive flock — a second supervisor exits immediately (stops double stacks)."""
+    import fcntl
+
+    LOCK_PATH.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(str(LOCK_PATH), os.O_CREAT | os.O_RDWR, 0o644)
+    try:
+        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        os.close(fd)
+        print("[Supervisor] EXIT — another runtime_supervisor already holds the lock")
+        raise SystemExit(0)
+    try:
+        os.ftruncate(fd, 0)
+        os.write(fd, f"{os.getpid()}\n".encode())
+    except Exception:
+        pass
+    return fd
 
 # luxury_building.env must win over Replit Secrets / inherited shell values.
 _LUXURY_FORCE_KEYS = {
@@ -169,10 +190,51 @@ def _find_bacbo_pid() -> int | None:
     return pids[0] if pids else None
 
 
+def _kill_pat(pat: str) -> None:
+    try:
+        subprocess.run(["pkill", "-9", "-f", pat], check=False, capture_output=True)
+    except Exception:
+        pass
+
+
+def _reap_duplicates(*, single_outbox: bool) -> None:
+    """Keep oldest bacbo/outbox; always kill legacy dual-fallback stealers."""
+    bacbos = _find_bacbo_pids()
+    if len(bacbos) > 1:
+        keep = min(bacbos)
+        for pid in bacbos:
+            if pid == keep:
+                continue
+            try:
+                os.kill(pid, signal.SIGKILL)
+                print(f"[Supervisor] killed extra bacbo pid={pid} keep={keep}")
+            except Exception:
+                pass
+    if single_outbox:
+        _kill_pat("fallback_signal_sender.py")
+        _kill_pat("fallback_result_sender.py")
+        # Keep a single outbox (oldest)
+        try:
+            out = subprocess.check_output(["pgrep", "-f", "telegram_outbox.py"], text=True).strip()
+            opids = sorted(int(x) for x in out.split() if x.isdigit() and int(x) != os.getpid())
+        except Exception:
+            opids = []
+        if len(opids) > 1:
+            for pid in opids[1:]:
+                try:
+                    os.kill(pid, signal.SIGKILL)
+                    print(f"[Supervisor] killed extra outbox pid={pid}")
+                except Exception:
+                    pass
+
+
 def main() -> int:
+    lock_fd = _acquire_supervisor_lock()
     env = _env()
+    # Force single outbox whenever luxury building is installed.
+    if (ROOT / "luxury_building.env").exists():
+        env["TELEGRAM_SINGLE_OUTBOX"] = "1"
     # Delay fallbacks so bacbo can take WAL ownership / finish boot before readers attach.
-    # FALLBACKS_ENABLED=1 (default) delivers consensus/result cards to Telegram TARGET.
     fallbacks_enabled = env.get("FALLBACKS_ENABLED", "1").strip() not in ("0", "false", "False", "no")
     single_outbox = env.get("TELEGRAM_SINGLE_OUTBOX", "1").strip() not in ("0", "false", "False", "no")
     fallback_delay = float(env.get("FALLBACK_START_DELAY_SECS", "20"))
@@ -180,17 +242,22 @@ def main() -> int:
     processes: dict[str, tuple[list[str], subprocess.Popen | _AdoptedProc | None, float]] = {
         "bot_live": ([sys.executable, "-u", str(ROOT / "bacbo_royal_complete.py")], None, 0.0),
     }
-    # Adopt already-running bacbo (TAG.sh / hot-fix) — do NOT spawn a second engine.
-    # If duplicates exist, keep the oldest PID and leave the rest (TAG cleanup should kill extras).
     existing_pids = _find_bacbo_pids()
     if existing_pids:
         keep = min(existing_pids)
         print(f"[Supervisor] adopting existing bacbo pid={keep} (seen={existing_pids})")
         processes["bot_live"] = (processes["bot_live"][0], _AdoptedProc(keep), time.time())
+        # Kill extras immediately
+        for pid in existing_pids:
+            if pid != keep:
+                try:
+                    os.kill(pid, signal.SIGKILL)
+                    print(f"[Supervisor] killed extra bacbo at boot pid={pid}")
+                except Exception:
+                    pass
 
     if fallbacks_enabled:
         if single_outbox and (BOT / "telegram_outbox.py").exists():
-            # One Telethon client only — avoids AuthKey / silent chat death.
             processes["telegram_outbox"] = (
                 [sys.executable, "-u", str(BOT / "telegram_outbox.py")],
                 None,
@@ -213,33 +280,26 @@ def main() -> int:
 
     print("[Supervisor] starting. Logs in /home/runner/workspace/logs/")
     print(
-        f"[Supervisor] fallbacks_enabled={fallbacks_enabled} "
+        f"[Supervisor] pid={os.getpid()} lock={LOCK_PATH} "
+        f"fallbacks_enabled={fallbacks_enabled} "
         f"single_outbox={single_outbox} fallback_start_delay_secs={fallback_delay}"
     )
     if single_outbox:
-        # Kill legacy dual-fallback clients so they cannot steal the StringSession.
-        for pat in ("fallback_signal_sender.py", "fallback_result_sender.py"):
-            try:
-                subprocess.run(["pkill", "-9", "-f", pat], check=False, capture_output=True)
-            except Exception:
-                pass
-        # Also ensure a single outbox (orphans from prior TAG runs).
-        try:
-            subprocess.run(["pkill", "-9", "-f", "telegram_outbox.py"], check=False, capture_output=True)
-        except Exception:
-            pass
+        _kill_pat("fallback_signal_sender.py")
+        _kill_pat("fallback_result_sender.py")
+        _kill_pat("telegram_outbox.py")
 
     def _is_delayed_sender(name: str) -> bool:
         return name.startswith("fallback") or name == "telegram_outbox"
 
     try:
+        tick = 0
         while True:
             for name, (cmd, proc, last_start) in list(processes.items()):
                 if proc is None or proc.poll() is not None:
                     if _is_delayed_sender(name) and (time.time() - boot_t0) < fallback_delay:
                         continue
                     if name == "bot_live":
-                        # Re-check before spawn — another supervisor/script may have started it.
                         existing = _find_bacbo_pid()
                         if existing:
                             print(f"[Supervisor] re-adopting bacbo pid={existing}")
@@ -250,11 +310,18 @@ def main() -> int:
                     print(f"[Supervisor] starting/restarting {name}")
                     proc = _start(name, cmd, env)
                     processes[name] = (cmd, proc, time.time())
+            tick += 1
+            if tick % 3 == 0:  # ~15s
+                _reap_duplicates(single_outbox=single_outbox)
             time.sleep(5)
     except KeyboardInterrupt:
         print("[Supervisor] stopping")
         for _, proc, _ in processes.values():
             _stop(proc)
+        try:
+            os.close(lock_fd)
+        except Exception:
+            pass
         return 0
 
 
