@@ -63,13 +63,24 @@ From chat forensics:
 
 Therefore countdown deserves **its own peak towers + merge rules**, not the same thresholds as FLASH/SEQUENCE normal cards.
 
+## Profit-max dual chat (locked)
+See **`PROFIT_MAX_MODEL.md`** — full rationale.
+
+| Chat | Sends | Glue |
+|--|--|--|
+| **Mr_iv4** | Money / floor proposers (Solo·Golden·Platinum·Sequence per floor) | Result card under signal (current Mr_iv4 UX) |
+| **Gunique** | Countdown **signal-fire** templates | Countdown **result** under that same CD fire |
+
+One outbox, two peers. Floors propose (v2); merge only ranks. CD result skin ≠ 91% magic — 91% is the countdown lane.
+
 ## Build order (right track)
 1. ~~Telegram path + single outbox~~ (done)
 2. ~~Stable one bacbo / one supervisor~~ (ONE_STACK)
-3. **Wire peak-gate towers** for all seeded good floors (March→Jun peaks, block JUN12*)
-4. **Global merge** + opposite-color lock + one outbox
-5. **Split countdown lane** (own peaks / own card templates)
-6. Native luxury cards (optional once merge is solid)
+3. **Shadow miss report** — blocked would-win per floor (proves the hole)
+4. **v2 parallel floor proposers** → money-lane merge (peak-day cadence)
+5. **Dual-peer outbox** — Mr_iv4 money + Gunique countdown
+6. **Countdown lane** own peaks + CD_FIRE→CD_RESULT glue on Gunique
+7. Native luxury cards (optional once glue + proposers solid)
 
 ## Blocked forever
 `JUN12A` · `JUN12B` · thin &lt;60% junk
