@@ -297,11 +297,19 @@ def apply() -> None:
     n = restore_floor_tracker_api()
     rb = rebind_database_tag_floor()
     if not _APPLIED:
+        # Defer timer so import during bacbo boot cannot race subscribe/DB.
+        def _start_timer() -> None:
+            try:
+                time.sleep(5.0)
+                t = threading.Thread(target=_timer_loop, name="lux-floor-rotate", daemon=True)
+                t.start()
+            except Exception as exc:
+                print("[LUXURY] floor-rotate timer failed:", exc)
+
         try:
-            t = threading.Thread(target=_timer_loop, name="lux-floor-rotate", daemon=True)
-            t.start()
+            threading.Thread(target=_start_timer, name="lux-floor-rotate-boot", daemon=True).start()
         except Exception as exc:
-            print("[LUXURY] floor-rotate timer failed:", exc)
+            print("[LUXURY] floor-rotate timer schedule failed:", exc)
         _APPLIED = True
     _get_floor_impl._lux_floor_rotate = True  # type: ignore[attr-defined]
     _get_floor_badge_impl._lux_floor_rotate = True  # type: ignore[attr-defined]
@@ -311,4 +319,6 @@ def apply() -> None:
     )
 
 
-apply()
+# Only auto-apply when not deferred
+if os.environ.get("LUXURY_FLOOR_ROTATE_DEFER_APPLY", "0").strip() not in {"1", "true", "yes"}:
+    apply()

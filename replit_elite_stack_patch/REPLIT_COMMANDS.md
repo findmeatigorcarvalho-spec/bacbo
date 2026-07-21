@@ -52,6 +52,14 @@ cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o FIREAGAI
 
 Expect: `mode=tag`, `tag_floor` JUN19, then new FIRED rows with non-LIVE `source_floor`.
 
+### Telegram silent + bacbo dies after subscribe
+
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o UP.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TELEGRAM_UP.sh" && bash UP.sh
+```
+
+Expect: `TEST_PING OK`, `bacbo_proc` still alive at 100s, then check chat for ping.
+
 ---
 
 ## 1) Install luxury building (seeded — includes JUN19/JUN20)
