@@ -1,10 +1,15 @@
 """
-Rotate logical source floors + restore missing floor_tracker API.
+Luxury floor tagging rotator.
 
-Replit often has a stripped floor_tracker (no get_floor_badge) and database.py
-does `from floor_tracker import get_floor` (bound name). Wrapping only
-floor_tracker.get_floor is not enough — we rebind get_floor in every loaded
-module and keep ContextVar set_floor() in sync.
+DEFAULT MODE = tag (safe):
+  - Engines keep ContextVar / wrap_floor behavior (usually LIVE).
+  - database.get_floor (rebound) returns rotator floor for source_floor column.
+  - get_floor_badge restored/works.
+  - Does NOT call set_floor() and does NOT wrap floor_tracker.get_floor
+    (wrapping/set_floor was desyncing the LIVE engine → quiet fires).
+
+MODE = override (env LUXURY_FLOOR_ROTATE_MODE=override):
+  - Also wraps floor_tracker.get_floor + set_floor sync (old behavior).
 """
 from __future__ import annotations
 
@@ -14,7 +19,7 @@ import sys
 import threading
 import time
 from pathlib import Path
-from typing import Any, Callable, Optional
+from typing import Any
 
 _DIR = Path(__file__).resolve().parent
 _JSON = _DIR / "data" / "luxury_live_floors.json"
@@ -25,7 +30,6 @@ _FLOOR = "LIVE"
 _LAST_ADV = 0.0
 _APPLIED = False
 
-# Minimal badge meta for peak / live floors (full postcard optional).
 _FLOOR_META = {
     "LIVE": {"label": "Live Engine", "peak_wr": None},
     "JUN19": {"label": "JUN 19 Peak", "peak_wr": 76.0},
@@ -49,6 +53,11 @@ _FLOOR_META = {
 
 def _enabled() -> bool:
     return os.environ.get("LUXURY_FLOOR_ROTATE", "1").strip() not in {"0", "false", "no"}
+
+
+def _mode() -> str:
+    m = (os.environ.get("LUXURY_FLOOR_ROTATE_MODE") or "tag").strip().lower()
+    return m if m in {"tag", "override"} else "tag"
 
 
 def _interval() -> float:
@@ -94,8 +103,8 @@ def advance(reason: str = "manual") -> str:
         _IDX = (_IDX + 1) % max(1, len(floors))
         _FLOOR = floors[_IDX]
         _LAST_ADV = time.time()
-        _sync_all_unlocked(_FLOOR)
-        print(f"[LUXURY] floor-rotate → {_FLOOR} ({reason}) idx={_IDX}/{len(floors)}")
+        _sync_tag_state_unlocked(_FLOOR)
+        print(f"[LUXURY] floor-rotate → {_FLOOR} ({reason}) idx={_IDX}/{len(floors)} mode={_mode()}")
         return _FLOOR
 
 
@@ -105,40 +114,37 @@ def _maybe_advance_unlocked() -> None:
     if _FLOOR not in floors:
         _FLOOR = floors[0]
         _IDX = 0
-        _sync_all_unlocked(_FLOOR)
         _LAST_ADV = time.time()
+        _sync_tag_state_unlocked(_FLOOR)
         return
     now = time.time()
     if _LAST_ADV <= 0:
         _LAST_ADV = now
-        _sync_all_unlocked(_FLOOR)
+        _sync_tag_state_unlocked(_FLOOR)
         return
     if now - _LAST_ADV >= _interval():
         _IDX = (_IDX + 1) % max(1, len(floors))
         _FLOOR = floors[_IDX]
         _LAST_ADV = now
-        _sync_all_unlocked(_FLOOR)
-        print(f"[LUXURY] floor-rotate → {_FLOOR} (timer) idx={_IDX}/{len(floors)}")
+        _sync_tag_state_unlocked(_FLOOR)
+        print(f"[LUXURY] floor-rotate → {_FLOOR} (timer) idx={_IDX}/{len(floors)} mode={_mode()}")
 
 
-def _get_floor_impl() -> str:
+def tag_floor() -> str:
+    """Floor name for DB source_floor / cards (rotator)."""
     if not _enabled():
-        try:
-            import floor_tracker as ft  # type: ignore
-
-            orig = getattr(ft, "_lux_orig_get_floor", None)
-            if callable(orig):
-                return str(orig() or "LIVE")
-        except Exception:
-            pass
         return "LIVE"
     return current_floor()
 
 
+def _get_floor_impl() -> str:
+    """Used by database.py rebind for source_floor writes."""
+    return tag_floor()
+
+
 def _get_floor_badge_impl() -> str:
-    fid = _get_floor_impl()
+    fid = tag_floor()
     meta = _FLOOR_META.get(fid) or {}
-    # Prefer module FLOOR_META if restored
     try:
         import floor_tracker as ft  # type: ignore
 
@@ -157,73 +163,36 @@ def _get_floor_badge_impl() -> str:
     return f"🏛️ **{fid} — {label}**"
 
 
-def _sync_all_unlocked(floor: str) -> None:
-    # Keep ContextVar / set_floor in sync so native get_floor() also works.
-    try:
-        import floor_tracker as ft  # type: ignore
-
-        sf = getattr(ft, "set_floor", None)
-        if callable(sf):
-            try:
-                sf(floor)
-            except Exception:
-                pass
-        for attr in ("CURRENT_FLOOR", "_CURRENT_FLOOR", "active_floor", "ACTIVE_FLOOR"):
-            if hasattr(ft, attr):
-                try:
-                    setattr(ft, attr, floor)
-                except Exception:
-                    pass
-    except Exception:
-        pass
+def _sync_tag_state_unlocked(floor: str) -> None:
+    # Tag-only: do NOT call set_floor() — that desyncs LIVE engine ContextVar.
     for name in ("state", "__main__", "bacbo_royal_complete"):
         mod = sys.modules.get(name)
         if mod is None:
             continue
         try:
             setattr(mod, "_current_source_floor", floor)
+            setattr(mod, "_lux_tag_floor", floor)
         except Exception:
             pass
         st = getattr(mod, "state", None)
         if st is not None:
             try:
                 setattr(st, "_current_source_floor", floor)
+                setattr(st, "_lux_tag_floor", floor)
             except Exception:
                 pass
+    if _mode() == "override":
+        try:
+            import floor_tracker as ft  # type: ignore
 
-
-def _rebind_get_floor_everywhere() -> int:
-    """Rebind get_floor in modules that did `from floor_tracker import get_floor`."""
-    n = 0
-    for mod in list(sys.modules.values()):
-        if mod is None:
-            continue
-        g = getattr(mod, "__dict__", None)
-        if not isinstance(g, dict):
-            continue
-        if "get_floor" in g and callable(g.get("get_floor")):
-            # Only rebind if it looks like floor get_floor (no args / from floor_tracker)
-            fn = g["get_floor"]
-            if getattr(fn, "_lux_floor_rotate", False):
-                continue
-            name = getattr(fn, "__module__", "") or ""
-            qn = getattr(fn, "__qualname__", "") or ""
-            if "floor_tracker" in name or qn in {"get_floor", "_get_floor_impl"} or name in {
-                "floor_tracker",
-                "bot.floor_tracker",
-            }:
-                g["get_floor"] = _get_floor_impl
-                n += 1
-        if "get_floor_badge" in g and callable(g.get("get_floor_badge")):
-            fnb = g["get_floor_badge"]
-            if not getattr(fnb, "_lux_floor_rotate", False):
-                g["get_floor_badge"] = _get_floor_badge_impl
-                n += 1
-    return n
+            sf = getattr(ft, "set_floor", None)
+            if callable(sf):
+                sf(floor)
+        except Exception:
+            pass
 
 
 def restore_floor_tracker_api() -> int:
-    """Add missing get_floor_badge / FLOOR_META on stripped Replit stubs."""
     n = 0
     try:
         import floor_tracker as ft  # type: ignore
@@ -235,31 +204,43 @@ def restore_floor_tracker_api() -> int:
         ft.FLOOR_META = dict(_FLOOR_META)  # type: ignore[attr-defined]
         n += 1
     else:
-        # merge missing keys
         meta = ft.FLOOR_META
         for k, v in _FLOOR_META.items():
             if k not in meta:
                 meta[k] = v
                 n += 1
 
-    # Preserve original get_floor before wrap
-    if not hasattr(ft, "_lux_orig_get_floor"):
-        orig = getattr(ft, "get_floor", None)
-        if callable(orig) and not getattr(orig, "_lux_floor_rotate", False):
-            ft._lux_orig_get_floor = orig  # type: ignore[attr-defined]
-
-    def _wrapped_get() -> str:
-        return _get_floor_impl()
-
-    _wrapped_get._lux_floor_rotate = True  # type: ignore[attr-defined]
-    ft.get_floor = _wrapped_get  # type: ignore[assignment]
-
+    # Always provide badge (AccumHold needs it)
     def _wrapped_badge() -> str:
         return _get_floor_badge_impl()
 
     _wrapped_badge._lux_floor_rotate = True  # type: ignore[attr-defined]
     ft.get_floor_badge = _wrapped_badge  # type: ignore[attr-defined]
     n += 1
+
+    # tag_floor helper for DB / callers
+    ft.tag_floor = tag_floor  # type: ignore[attr-defined]
+    ft.lux_tag_floor = tag_floor  # type: ignore[attr-defined]
+
+    if _mode() == "override":
+        if not hasattr(ft, "_lux_orig_get_floor"):
+            orig = getattr(ft, "get_floor", None)
+            if callable(orig) and not getattr(orig, "_lux_floor_rotate", False):
+                ft._lux_orig_get_floor = orig  # type: ignore[attr-defined]
+
+        def _wrapped_get() -> str:
+            return _get_floor_impl()
+
+        _wrapped_get._lux_floor_rotate = True  # type: ignore[attr-defined]
+        ft.get_floor = _wrapped_get  # type: ignore[assignment]
+        n += 1
+    else:
+        # tag mode: leave engine get_floor alone (ContextVar / wrap_floor)
+        # undo prior override wrap if we installed it
+        orig = getattr(ft, "_lux_orig_get_floor", None)
+        if callable(orig):
+            ft.get_floor = orig  # type: ignore[assignment]
+            n += 1
 
     # Expand allowlists if present
     lux = set(_rotation_list())
@@ -276,14 +257,29 @@ def restore_floor_tracker_api() -> int:
     return n
 
 
+def rebind_database_tag_floor() -> int:
+    """Ensure database.get_floor returns tag_floor() for source_floor writes."""
+    n = 0
+    for mod_name in ("database", "bot.database"):
+        mod = sys.modules.get(mod_name)
+        if mod is None:
+            continue
+        try:
+            mod.get_floor = _get_floor_impl  # type: ignore[attr-defined]
+            mod.get_floor_badge = _get_floor_badge_impl  # type: ignore[attr-defined]
+            n += 1
+        except Exception:
+            pass
+    return n
+
+
 def _timer_loop() -> None:
     while True:
         try:
             if _enabled():
                 with _LOCK:
                     _maybe_advance_unlocked()
-                # Rebind periodically — modules may import late
-                _rebind_get_floor_everywhere()
+                rebind_database_tag_floor()
         except Exception:
             pass
         time.sleep(15.0)
@@ -291,31 +287,27 @@ def _timer_loop() -> None:
 
 def apply() -> None:
     global _APPLIED, _FLOOR, _IDX, _LAST_ADV
-    if _APPLIED:
-        restore_floor_tracker_api()
-        _rebind_get_floor_everywhere()
-        return
     floors = _rotation_list()
     with _LOCK:
-        _FLOOR = floors[0]
-        _IDX = 0
-        _LAST_ADV = time.time()
+        if not _APPLIED:
+            _FLOOR = floors[0]
+            _IDX = 0
+            _LAST_ADV = time.time()
+        _sync_tag_state_unlocked(_FLOOR)
     n = restore_floor_tracker_api()
-    with _LOCK:
-        _sync_all_unlocked(_FLOOR)
-    rb = _rebind_get_floor_everywhere()
-    try:
-        t = threading.Thread(target=_timer_loop, name="lux-floor-rotate", daemon=True)
-        t.start()
-    except Exception as exc:
-        print("[LUXURY] floor-rotate timer failed:", exc)
-    _APPLIED = True
-    # mark wrapped helpers
+    rb = rebind_database_tag_floor()
+    if not _APPLIED:
+        try:
+            t = threading.Thread(target=_timer_loop, name="lux-floor-rotate", daemon=True)
+            t.start()
+        except Exception as exc:
+            print("[LUXURY] floor-rotate timer failed:", exc)
+        _APPLIED = True
     _get_floor_impl._lux_floor_rotate = True  # type: ignore[attr-defined]
     _get_floor_badge_impl._lux_floor_rotate = True  # type: ignore[attr-defined]
     print(
         f"[LUXURY] floor-rotate ON start={_FLOOR} floors={len(floors)} "
-        f"api_patches={n} rebinds={rb} every={_interval():.0f}s badge=OK"
+        f"mode={_mode()} api_patches={n} db_rebinds={rb} every={_interval():.0f}s badge=OK"
     )
 
 
