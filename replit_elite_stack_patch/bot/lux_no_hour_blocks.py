@@ -78,7 +78,16 @@ def sweep_loaded_gates() -> int:
     for name, mod in list(sys.modules.items()):
         if mod is None:
             continue
-        if "_gates_" in name or hasattr(mod, "_SOLO_COLOR_HOUR_BLOCK") or hasattr(mod, "_get_blocked_hours"):
+        lname = (name or "").lower()
+        interesting = (
+            "_gates_" in lname
+            or "gates" in lname
+            or hasattr(mod, "_SOLO_COLOR_HOUR_BLOCK")
+            or hasattr(mod, "_GOLDEN_BAD_UTC_HOURS")
+            or hasattr(mod, "_get_blocked_hours")
+            or hasattr(mod, "_COLOR_HOUR_BLOCK")
+        )
+        if interesting:
             total += neutralize_module(mod)
     return total
 

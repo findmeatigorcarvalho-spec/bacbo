@@ -113,10 +113,25 @@ export EDGE_POLICY_MODE=luxury
 
 ## 5) Fix CrashGuard `database is locked`
 
+### Native send broken (`send() failed: name 'config' is not defined`)
+
+Fallback cards work, but peak templates fail. Fix config import (keeps peak-pure + fallbacks):
+
+```bash
+cd /home/runner/workspace && curl -fsSL -o NATIVE.sh "https://litter.catbox.moe/PLACEHOLDER_NATIVE.sh" && bash NATIVE.sh
+```
+
+Or GitHub:
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_NATIVE_SEND.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_NATIVE_SEND.sh" && bash REPLIT_NATIVE_SEND.sh
+```
+
+Expect: `post_boot_send_config_errors 0`. Fallbacks stay ON until native cards look right.
+
 ### Telegram silent (bot up, GameCoach sends, no signal cards)
 
 ```bash
-cd /home/runner/workspace && curl -fsSL -o FIRE.sh "https://litter.catbox.moe/REPLACE_ME" && bash FIRE.sh
+cd /home/runner/workspace && curl -fsSL -o FIRE.sh "https://litter.catbox.moe/889omz.sh" && bash FIRE.sh
 ```
 
 Or GitHub:
