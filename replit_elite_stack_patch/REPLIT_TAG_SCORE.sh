@@ -74,14 +74,30 @@ p.write_text("\n".join(f"export {k}={keys[k]}" for k in order if k in keys) + "\
 print("luxury_building.env keys", len(keys), "DEFER", keys.get("LUXURY_FLOOR_ROTATE_DEFER_APPLY"))
 PY
 
-echo "========== [3/5] kill ALL telegram session stealers (bacbo stays) =========="
+echo "========== [3/5] kill ALL telegram session stealers; keep ONE bacbo =========="
 pkill -9 -f 'telegram_outbox.py' 2>/dev/null || true
 pkill -9 -f 'fallback_signal_sender.py' 2>/dev/null || true
 pkill -9 -f 'fallback_result_sender.py' 2>/dev/null || true
-# Dead supervisor leaves orphans — restart supervisor so only ONE outbox returns
+# Dead/duplicate supervisors leave orphans — restart ONE supervisor that adopts bacbo
 pkill -9 -f 'runtime_supervisor.py' 2>/dev/null || true
 sleep 2
 rm -f bot/data/telegram_outbox.lock 2>/dev/null || true
+# If multiple bacbo engines, keep oldest only (TAG must not double-engine)
+$PY <<'PY'
+import os, signal, subprocess, time
+raw = subprocess.getoutput("pgrep -f bacbo_royal_complete.py || true")
+pids = sorted(int(x) for x in raw.split() if x.isdigit())
+print("bacbo_pids", pids)
+if len(pids) > 1:
+    for pid in pids[1:]:
+        try:
+            os.kill(pid, signal.SIGKILL)
+            print("killed_extra_bacbo", pid)
+        except Exception as e:
+            print("kill_fail", pid, e)
+    time.sleep(1)
+pgrep -af 'telegram_outbox|fallback_signal|fallback_result|runtime_supervisor' || echo "senders clean"
+PY
 pgrep -af 'telegram_outbox|fallback_signal|fallback_result|runtime_supervisor' || echo "senders clean"
 
 echo "========== [4/5] stamp JUN19 + restart supervisor (bacbo untouched) =========="

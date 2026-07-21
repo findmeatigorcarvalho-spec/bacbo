@@ -146,23 +146,27 @@ class _AdoptedProc:
             return 1
 
 
-def _find_bacbo_pid() -> int | None:
+def _find_bacbo_pids() -> list[int]:
     try:
         out = subprocess.check_output(
             ["pgrep", "-f", "bacbo_royal_complete.py"],
             text=True,
         ).strip()
     except Exception:
-        return None
+        return []
+    pids: list[int] = []
     for line in out.splitlines():
         line = line.strip()
-        if not line.isdigit():
-            continue
-        pid = int(line)
-        if pid == os.getpid():
-            continue
-        return pid
-    return None
+        if line.isdigit():
+            pid = int(line)
+            if pid != os.getpid():
+                pids.append(pid)
+    return pids
+
+
+def _find_bacbo_pid() -> int | None:
+    pids = _find_bacbo_pids()
+    return pids[0] if pids else None
 
 
 def main() -> int:
@@ -177,10 +181,12 @@ def main() -> int:
         "bot_live": ([sys.executable, "-u", str(ROOT / "bacbo_royal_complete.py")], None, 0.0),
     }
     # Adopt already-running bacbo (TAG.sh / hot-fix) — do NOT spawn a second engine.
-    existing = _find_bacbo_pid()
-    if existing:
-        print(f"[Supervisor] adopting existing bacbo pid={existing}")
-        processes["bot_live"] = (processes["bot_live"][0], _AdoptedProc(existing), time.time())
+    # If duplicates exist, keep the oldest PID and leave the rest (TAG cleanup should kill extras).
+    existing_pids = _find_bacbo_pids()
+    if existing_pids:
+        keep = min(existing_pids)
+        print(f"[Supervisor] adopting existing bacbo pid={keep} (seen={existing_pids})")
+        processes["bot_live"] = (processes["bot_live"][0], _AdoptedProc(keep), time.time())
 
     if fallbacks_enabled:
         if single_outbox and (BOT / "telegram_outbox.py").exists():

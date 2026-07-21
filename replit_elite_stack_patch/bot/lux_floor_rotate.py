@@ -318,7 +318,8 @@ def _timer_loop() -> None:
                 with _LOCK:
                     _maybe_advance_unlocked()
                 rebind_database_tag_floor()
-                stamp_live_rows(limit=20)
+                # Do NOT stamp on timer — rotating stamps rewrite history (JUN19→JUN26 spam).
+                # Outbox stamps each new FIRED row at send time.
         except Exception:
             pass
         time.sleep(15.0)
