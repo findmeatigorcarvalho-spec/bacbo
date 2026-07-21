@@ -66,15 +66,30 @@ Blocked forever: `JUN12A`, `JUN12B`, thin &lt;60% junk, AUTO relay spam, `CD_FIR
 
 ---
 
+## Floor peak fidelity + strength rank (truth from result cards)
+
+Script: `bot/peak_fidelity_ranker.py` → `bot/data/peak_fidelity_ranker_report.json`
+
+- Cross-compare every live floor vs its **peak-day baseline** (n / WR / gate lock)
+- Rank by strength: peak WR · volume · G0 · live profit · **assertiveness**
+- Result-card truth: `loss on red` ⇒ actual **blue** ⇒ blue opinions right (and vice versa)
+- Multi-floor same color = more trust (coalition confirmation)
+- `VOLUME_GAP_VS_PEAK` / `NO_LIVE_ATTRIBUTION` = floor not presenting peak-day opinions in v1 stream → needs v2 proposers
+
+```bash
+python3 bot/peak_fidelity_ranker.py --db bot/bacbo.db
+```
+
 ## Build order (profit path)
 
 1. ~~Single stack + outbox online~~  
-2. **Shadow miss report** — per floor: would-ALLOW ∩ later win, vs what Telegram actually got (proves blocked G0)  
-3. **v2 parallel floor proposers** into money-lane merge (restores peak-day cadence)  
-4. **Dual-peer outbox** — `TELEGRAM_TARGET_PEER` = Mr_iv4, `TELEGRAM_COUNTDOWN_PEER` = Gunique  
-5. **Countdown lane** — own peak towers + CD_FIRE→CD_RESULT glue on Gunique  
-6. Money lane keeps result-under-signal on Mr_iv4 (current UX)  
-7. Native templates only after glue + proposers are solid  
+2. ~~Peak fidelity + floor strength ranker~~ (`peak_fidelity_ranker.py`)  
+3. **Shadow miss report** on full historical DB — per floor would-ALLOW ∩ win  
+4. **v2 parallel floor proposers** into money-lane merge (restores peak-day cadence)  
+5. **Dual-peer outbox** — `TELEGRAM_TARGET_PEER` = Mr_iv4, `TELEGRAM_COUNTDOWN_PEER` = Gunique  
+6. **Countdown lane** — own peak towers + CD_FIRE→CD_RESULT glue on Gunique  
+7. Money lane keeps result-under-signal on Mr_iv4 (current UX)  
+8. Native templates only after glue + proposers are solid  
 
 ---
 
