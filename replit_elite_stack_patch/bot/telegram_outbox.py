@@ -88,13 +88,56 @@ def color_emoji(color: str) -> str:
     return "🔵" if color == "blue" else "🔴" if color == "red" else "🟡"
 
 
-def _tag_floor_name() -> str:
-    try:
-        from lux_floor_rotate import tag_floor
+def _peak_from_json() -> str:
+    for path in (HERE / "data" / "luxury_live_floors.json", ROOT / "bot" / "data" / "luxury_live_floors.json"):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        peaks = [str(x).upper() for x in (data.get("peak_day_floors") or []) if str(x).strip()]
+        if peaks:
+            return peaks[0]
+        live = [
+            str(x).upper()
+            for x in (data.get("live_floors") or data.get("live_building_floors") or [])
+            if str(x).strip() and str(x).upper() != "LIVE"
+        ]
+        if live:
+            return live[0]
+    return "JUN19"
 
-        return str(tag_floor() or "LIVE")
-    except Exception:
-        return "LIVE"
+
+def _tag_floor_name() -> str:
+    """Always return a peak tag for cards — never stay stuck on LIVE in outbox."""
+    os.environ.setdefault("LUXURY_FLOOR_ROTATE", "1")
+    os.environ.setdefault("LUXURY_FLOOR_ROTATE_MODE", "tag")
+    # Outbox must label now; ignore DEFER inherited from luxury_building.env
+    os.environ["LUXURY_FLOOR_ROTATE_DEFER_APPLY"] = "0"
+    try:
+        import importlib
+        import lux_floor_rotate as lfr
+
+        # Force apply if rotator never initialized (DEFER / fresh import).
+        if not getattr(lfr, "_APPLIED", False):
+            try:
+                lfr.apply()
+            except Exception as exc:
+                print("[Outbox] lux_floor_rotate.apply failed:", repr(exc))
+        else:
+            # Ensure first-touch moved off LIVE
+            try:
+                with lfr._LOCK:
+                    if lfr._FLOOR == "LIVE" or lfr._LAST_ADV <= 0:
+                        lfr._LAST_ADV = 0.0
+                        lfr._maybe_advance_unlocked()
+            except Exception:
+                pass
+        tag = str(lfr.tag_floor() or "").strip().upper()
+        if tag and tag != "LIVE":
+            return tag
+    except Exception as exc:
+        print("[Outbox] tag_floor failed:", repr(exc))
+    return _peak_from_json()
 
 
 def _row_score(row: sqlite3.Row) -> float:
@@ -116,12 +159,12 @@ def _row_score(row: sqlite3.Row) -> float:
 
 
 def _row_floor(row: sqlite3.Row) -> str:
-    """Tag-mode: engine ContextVar stays LIVE; cards show rotator floor."""
+    """Tag-mode: engine ContextVar stays LIVE; cards show rotator / peak floor."""
     db_floor = (row["source_floor"] or "").strip().upper() if row["source_floor"] else ""
-    tag = _tag_floor_name().strip().upper()
     if db_floor and db_floor != "LIVE":
         return db_floor
-    return tag or db_floor or "LIVE"
+    tag = _tag_floor_name().strip().upper()
+    return tag if tag else "JUN19"
 
 
 def _stamp_floor(signal_id: int, floor: str) -> None:
@@ -290,6 +333,9 @@ async def _resolve_target(client, target):
 async def main() -> None:
     load_env()
     lock_fd = _acquire_lock()
+    # Ensure peak tag is ready before first card
+    boot_tag = _tag_floor_name()
+    print(f"[Outbox] boot_tag_floor={boot_tag}")
     api_id = os.getenv("TELEGRAM_API_ID") or os.getenv("API_ID")
     api_hash = os.getenv("TELEGRAM_API_HASH") or os.getenv("API_HASH")
     if not api_id or not api_hash:
@@ -318,7 +364,7 @@ async def main() -> None:
 
     print(
         f"[Outbox] ONLINE peer={getattr(entity, 'username', None) or peer} "
-        f"send_blocked={SEND_BLOCKED} pid={os.getpid()}"
+        f"send_blocked={SEND_BLOCKED} tag={boot_tag} pid={os.getpid()}"
     )
 
     if STARTUP_PING:
@@ -326,6 +372,7 @@ async def main() -> None:
             msg = await client.send_message(
                 entity,
                 "LUXURY OUTBOX ONLINE\n"
+                f"Tag floor: {boot_tag}\n"
                 "Single Telegram session owner.\n"
                 "Waiting for engine FIRED → signal/result cards.",
             )
