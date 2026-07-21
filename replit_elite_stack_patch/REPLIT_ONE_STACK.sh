@@ -36,8 +36,8 @@ if len(pids) > 1:
         except Exception as e:
             print("kill_fail", pid, e)
     time.sleep(1)
-raw2 = subprocess.getoutput("pgrep -f bacbo_royal_complete.py || true")
-print("bacbo_pids_after", [int(x) for x in raw2.split() if x.isdigit()])
+    raw2 = subprocess.getoutput("pgrep -f bacbo_royal_complete.py || true")
+    print("bacbo_pids_after", [int(x) for x in raw2.split() if x.isdigit()])
 elif not pids:
     print("WARN: no bacbo running — supervisor will start one")
 else:
