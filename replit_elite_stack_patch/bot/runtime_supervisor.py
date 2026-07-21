@@ -25,10 +25,28 @@ ROOT = Path("/home/runner/workspace")
 BOT = ROOT / "bot"
 LOG_DIR = ROOT / "logs"
 
+# luxury_building.env must win over Replit Secrets / inherited shell values.
+_LUXURY_FORCE_KEYS = {
+    "EDGE_POLICY_MODE",
+    "EDGE_LUXURY_FLOOR_GATE",
+    "EDGE_LEGACY_355_WARN",
+    "FALLBACK_SEND_BLOCKED",
+    "FALLBACKS_ENABLED",
+    "LUXURY_NO_HOUR_BLOCKS",
+    "LUXURY_LIVE_FLOORS",
+    "TELEGRAM_TARGET_PEER",
+}
 
-def _load_dotenv_file(path: Path, env: dict[str, str]) -> None:
+
+def _load_dotenv_file(
+    path: Path,
+    env: dict[str, str],
+    *,
+    force_keys: set[str] | None = None,
+) -> None:
     if not path.exists():
         return
+    force_keys = force_keys or set()
     for line in path.read_text(errors="ignore").splitlines():
         line = line.strip()
         if not line or line.startswith("#") or "=" not in line:
@@ -38,13 +56,17 @@ def _load_dotenv_file(path: Path, env: dict[str, str]) -> None:
         key, value = line.split("=", 1)
         key = key.strip()
         value = value.strip().strip('"').strip("'")
-        env.setdefault(key, value)
+        if key in force_keys:
+            env[key] = value
+        else:
+            env.setdefault(key, value)
 
 
 def _env() -> dict[str, str]:
     env = os.environ.copy()
-    _load_dotenv_file(ROOT / "luxury_building.env", env)
+    # Defaults first; luxury_building.env overwrites policy keys (fixes Secret=shadow).
     _load_dotenv_file(ROOT / ".env", env)
+    _load_dotenv_file(ROOT / "luxury_building.env", env, force_keys=_LUXURY_FORCE_KEYS)
     session_path = ROOT / ".telegram_session_string"
     if session_path.exists():
         _sv = session_path.read_text(errors="ignore").strip()
@@ -56,14 +78,24 @@ def _env() -> dict[str, str]:
         env.pop("TELEGRAM_SESSION_STRING", None)
     # Prefer luxury when luxury_building.env is present; otherwise keep caller/shadow.
     if (ROOT / "luxury_building.env").exists():
-        env.setdefault("EDGE_POLICY_MODE", "luxury")
+        mode = (env.get("EDGE_POLICY_MODE") or "luxury").strip().lower()
+        if mode not in {"luxury", "precision", "volume"}:
+            # Never stay observe-only shadow when luxury building is installed.
+            mode = "luxury"
+        env["EDGE_POLICY_MODE"] = mode
         env.setdefault("EDGE_LUXURY_FLOOR_GATE", "1")
         env.setdefault("FALLBACK_SEND_BLOCKED", "0")
+        env.setdefault("FALLBACKS_ENABLED", "1")
     else:
         env.setdefault("EDGE_POLICY_MODE", "shadow")
     env.setdefault("EDGE_LEGACY_355_WARN", "1")
     env.setdefault("BOT_TZ", "America/Sao_Paulo")
     env["PYTHONPATH"] = f"{BOT}:{ROOT}:{env.get('PYTHONPATH', '')}"
+    print(
+        f"[Supervisor] EDGE_POLICY_MODE={env.get('EDGE_POLICY_MODE')} "
+        f"FLOOR_GATE={env.get('EDGE_LUXURY_FLOOR_GATE')} "
+        f"FALLBACKS={env.get('FALLBACKS_ENABLED')}"
+    )
     return env
 
 
