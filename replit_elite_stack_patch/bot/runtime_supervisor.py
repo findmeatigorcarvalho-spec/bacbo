@@ -32,6 +32,7 @@ _LUXURY_FORCE_KEYS = {
     "EDGE_LEGACY_355_WARN",
     "FALLBACK_SEND_BLOCKED",
     "FALLBACKS_ENABLED",
+    "TELEGRAM_SINGLE_OUTBOX",
     "LUXURY_NO_HOUR_BLOCKS",
     "LUXURY_LIVE_FLOORS",
     "TELEGRAM_TARGET_PEER",
@@ -86,6 +87,7 @@ def _env() -> dict[str, str]:
         env.setdefault("EDGE_LUXURY_FLOOR_GATE", "1")
         env.setdefault("FALLBACK_SEND_BLOCKED", "0")
         env.setdefault("FALLBACKS_ENABLED", "1")
+        env.setdefault("TELEGRAM_SINGLE_OUTBOX", "1")
     else:
         env.setdefault("EDGE_POLICY_MODE", "shadow")
     env.setdefault("EDGE_LEGACY_355_WARN", "1")
@@ -94,7 +96,8 @@ def _env() -> dict[str, str]:
     print(
         f"[Supervisor] EDGE_POLICY_MODE={env.get('EDGE_POLICY_MODE')} "
         f"FLOOR_GATE={env.get('EDGE_LUXURY_FLOOR_GATE')} "
-        f"FALLBACKS={env.get('FALLBACKS_ENABLED')}"
+        f"FALLBACKS={env.get('FALLBACKS_ENABLED')} "
+        f"OUTBOX={env.get('TELEGRAM_SINGLE_OUTBOX')}"
     )
     return env
 
@@ -131,27 +134,40 @@ def main() -> int:
     # Delay fallbacks so bacbo can take WAL ownership / finish boot before readers attach.
     # FALLBACKS_ENABLED=1 (default) delivers consensus/result cards to Telegram TARGET.
     fallbacks_enabled = env.get("FALLBACKS_ENABLED", "1").strip() not in ("0", "false", "False", "no")
+    single_outbox = env.get("TELEGRAM_SINGLE_OUTBOX", "1").strip() not in ("0", "false", "False", "no")
     fallback_delay = float(env.get("FALLBACK_START_DELAY_SECS", "20"))
     boot_t0 = time.time()
     processes: dict[str, tuple[list[str], subprocess.Popen | None, float]] = {
         "bot_live": ([sys.executable, "-u", str(ROOT / "bacbo_royal_complete.py")], None, 0.0),
     }
     if fallbacks_enabled:
-        processes["fallback_sender"] = (
-            [sys.executable, "-u", str(BOT / "fallback_signal_sender.py")],
-            None,
-            0.0,
-        )
-        processes["fallback_result_sender"] = (
-            [sys.executable, "-u", str(BOT / "fallback_result_sender.py")],
-            None,
-            0.0,
-        )
+        if single_outbox and (BOT / "telegram_outbox.py").exists():
+            # One Telethon client only — avoids AuthKey / silent chat death.
+            processes["telegram_outbox"] = (
+                [sys.executable, "-u", str(BOT / "telegram_outbox.py")],
+                None,
+                0.0,
+            )
+        else:
+            processes["fallback_sender"] = (
+                [sys.executable, "-u", str(BOT / "fallback_signal_sender.py")],
+                None,
+                0.0,
+            )
+            processes["fallback_result_sender"] = (
+                [sys.executable, "-u", str(BOT / "fallback_result_sender.py")],
+                None,
+                0.0,
+            )
     env["FALLBACK_SEND_BLOCKED"] = env.get("FALLBACK_SEND_BLOCKED", "0")
     env["FALLBACK_MIN_BLOCKED_SCORE"] = env.get("FALLBACK_MIN_BLOCKED_SCORE", "6.0")
+    env["TELEGRAM_SINGLE_OUTBOX"] = "1" if single_outbox else "0"
 
     print("[Supervisor] starting. Logs in /home/runner/workspace/logs/")
-    print(f"[Supervisor] fallbacks_enabled={fallbacks_enabled} fallback_start_delay_secs={fallback_delay}")
+    print(
+        f"[Supervisor] fallbacks_enabled={fallbacks_enabled} "
+        f"single_outbox={single_outbox} fallback_start_delay_secs={fallback_delay}"
+    )
     try:
         while True:
             for name, (cmd, proc, last_start) in list(processes.items()):

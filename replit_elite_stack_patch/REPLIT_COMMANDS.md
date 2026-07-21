@@ -54,11 +54,17 @@ Expect: `mode=tag`, `tag_floor` JUN19, then new FIRED rows with non-LIVE `source
 
 ### Telegram silent + bacbo dies after subscribe
 
+**Do not re-run FIREAGAIN** — older versions early-injected floor-rotate and killed bacbo ~60s after subscribe. Use TELEGRAM_UP:
+
 ```bash
 cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o UP.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TELEGRAM_UP.sh" && bash UP.sh
 ```
 
-Expect: `TEST_PING OK`, `bacbo_proc` still alive at 100s, then check chat for ping.
+Expect in chat (within ~90s):
+1. `LUXURY TEST PING`
+2. `LUXURY OUTBOX ONLINE`
+
+Expect in shell: `TEST_PING OK`, `bacbo_proc` still alive at 120s, `outbox=1`.
 
 ---
 

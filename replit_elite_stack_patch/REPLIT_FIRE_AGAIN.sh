@@ -136,7 +136,7 @@ except Exception as _lux_gf_exc:
 else:
     print("WARN no database.py")
 
-# Ensure early lux_floor_rotate in bacbo
+# LATE+DEFER lux_floor_rotate (early inject kills bacbo ~60s after subscribe)
 bacbo = ROOT / "bacbo_royal_complete.py"
 bsrc = bacbo.read_text(encoding="utf-8", errors="replace")
 bsrc2 = re.sub(
@@ -144,31 +144,32 @@ bsrc2 = re.sub(
     "\n",
     bsrc,
 )
-early = '''
+late = '''
 # --- LUXURY_FLOOR_ROTATE (auto) ---
 try:
+    import os as _lux_os
     import sys as _lux_sys
     from pathlib import Path as _LuxP
+    _lux_os.environ.setdefault("LUXURY_FLOOR_ROTATE_DEFER_APPLY", "1")
+    _lux_os.environ.setdefault("LUXURY_FLOOR_ROTATE_APPLY_DELAY_SECS", "45")
+    _lux_os.environ.setdefault("LUXURY_FLOOR_ROTATE_MODE", "tag")
     _lux_sys.path.insert(0, str(_LuxP("/home/runner/workspace/bot")))
     import lux_floor_rotate  # noqa: F401
-    print("[LUXURY] floor-rotate early-load OK mode=tag")
+    print("[LUXURY] floor-rotate LATE+DEFER OK mode=tag")
 except Exception as _lux_fr_exc:
-    print("[LUXURY] floor-rotate early-load skipped:", _lux_fr_exc)
+    print("[LUXURY] floor-rotate LATE+DEFER skipped:", _lux_fr_exc)
 # --- end LUXURY_FLOOR_ROTATE ---
 '''
-lines = bsrc2.splitlines(True)
-idx = 0
-for i, ln in enumerate(lines[:100]):
-    s = ln.strip()
-    if not s or s.startswith("#") or s.startswith("from __future__") or s.startswith("import ") or s.startswith("from "):
-        idx = i + 1
-        continue
-    break
-lines.insert(idx, early + "\n")
-out = "".join(lines)
+m = re.search(r"^if __name__", bsrc2, re.M)
+if m:
+    out = bsrc2[: m.start()] + late + "\n" + bsrc2[m.start() :]
+    print("bacbo LATE inject before __main__")
+else:
+    out = bsrc2 + "\n" + late
+    print("bacbo LATE inject at EOF")
 ast.parse(out)
 bacbo.write_text(out, encoding="utf-8")
-print("bacbo early inject OK")
+print("bacbo LATE+DEFER inject OK")
 
 # smoke
 import sys

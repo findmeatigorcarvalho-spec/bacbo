@@ -319,6 +319,26 @@ def apply() -> None:
     )
 
 
-# Only auto-apply when not deferred
+# Only auto-apply when not deferred.
+# TELEGRAM_UP / late-inject set LUXURY_FLOOR_ROTATE_DEFER_APPLY=1 so bacbo can
+# finish subscribe before rotator threads touch modules.
 if os.environ.get("LUXURY_FLOOR_ROTATE_DEFER_APPLY", "0").strip() not in {"1", "true", "yes"}:
     apply()
+else:
+    def _deferred_apply() -> None:
+        try:
+            delay = float(os.environ.get("LUXURY_FLOOR_ROTATE_APPLY_DELAY_SECS", "45"))
+        except Exception:
+            delay = 45.0
+        time.sleep(max(5.0, delay))
+        try:
+            apply()
+            print(f"[LUXURY] floor-rotate deferred-apply OK after {delay:.0f}s")
+        except Exception as exc:
+            print("[LUXURY] floor-rotate deferred-apply failed:", exc)
+
+    try:
+        threading.Thread(target=_deferred_apply, name="lux-floor-rotate-defer", daemon=True).start()
+        print("[LUXURY] floor-rotate DEFER scheduled")
+    except Exception as exc:
+        print("[LUXURY] floor-rotate DEFER schedule failed:", exc)
