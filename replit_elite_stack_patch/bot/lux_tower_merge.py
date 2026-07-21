@@ -61,19 +61,21 @@ def _load_floors() -> tuple[list[str], list[str], set[str]]:
     return peaks, ordered, blocked
 
 
-def _rank(verdict: dict[str, Any], floor: str, peaks: list[str]) -> tuple[int, int, str]:
-    """Higher tuple wins. Prefer sniper > watch > floor-allow; peak floors beat LIVE."""
+def _rank(verdict: dict[str, Any], floor: str, peaks: list[str]) -> tuple[int, int, int, str]:
+    """Higher tuple wins. Prefer peak floors over LIVE, then sniper > watch > floor-allow."""
     action = str(verdict.get("action") or "")
     reason = str(verdict.get("reason") or "")
     if action not in {"ALLOW", "SHADOW_ALLOW"}:
-        return (-1, -1, floor)
+        return (-1, -1, -1, floor)
     tier = 1
     if "SNIPER" in reason:
         tier = 3
     elif "WATCH" in reason:
         tier = 2
-    peak_bonus = 2 if floor in peaks else (0 if floor == "LIVE" else 1)
-    return (tier, peak_bonus, floor)
+    # Attribution goal: stamp a real peak tower whenever it ALLOWs.
+    is_peak = 1 if floor in peaks else 0
+    is_named = 1 if floor not in {"LIVE", ""} else 0
+    return (is_peak, is_named, tier, floor)
 
 
 def merge_candidate(
