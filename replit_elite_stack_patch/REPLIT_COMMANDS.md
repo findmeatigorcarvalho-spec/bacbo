@@ -32,6 +32,16 @@ cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o ROTATE.s
 
 Expect: `[LUXURY] floor-rotate ON start=JUN19…`, `supervisor_count 1`, then new fires with non-LIVE `source_floor`.
 
+### AccumHold crash: `get_floor_badge` missing
+
+Stripped Replit `floor_tracker` + DB bound `get_floor` import. Fix badge + rebind:
+
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o BADGE.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_BADGE.sh" && bash BADGE.sh
+```
+
+Expect: `post_badge_errors 0`, `badge=OK`, then non-LIVE `source_floor` on new fires.
+
 ---
 
 ## 1) Install luxury building (seeded — includes JUN19/JUN20)
