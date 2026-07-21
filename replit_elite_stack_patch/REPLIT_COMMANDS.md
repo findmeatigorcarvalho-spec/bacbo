@@ -7,6 +7,23 @@ Branch files are served from:
 
 ---
 
+## 0) LIVE-only fires / EdgePolicy stuck in SHADOW
+
+Symptom: all `source_floor=LIVE`, logs show `[EdgePolicy/SHADOW]`, shell `EDGE_POLICY_MODE=None`.
+
+```bash
+cd /home/runner/workspace && curl -fsSL -o FLOORS.sh "https://litter.catbox.moe/PLACEHOLDER_FLOORS.sh" && bash FLOORS.sh
+```
+
+Or GitHub:
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_MULTI_FLOOR.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_MULTI_FLOOR.sh" && bash REPLIT_MULTI_FLOOR.sh
+```
+
+Expect: `proc_EDGE_POLICY_MODE luxury`, `json_live_floors` ~30+, `has_JUN19 True`.
+
+---
+
 ## 1) Install luxury building (seeded — includes JUN19/JUN20)
 
 Live `bacbo.db` is often truncated. Installer merges `historical_luxury_seed.json`
