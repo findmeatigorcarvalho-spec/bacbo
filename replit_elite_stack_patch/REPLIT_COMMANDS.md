@@ -12,7 +12,7 @@ Branch files are served from:
 Symptom: all `source_floor=LIVE`, logs show `[EdgePolicy/SHADOW]`, shell `EDGE_POLICY_MODE=None`.
 
 ```bash
-cd /home/runner/workspace && curl -fsSL -o FLOORS.sh "https://litter.catbox.moe/PLACEHOLDER_FLOORS2.sh" && bash FLOORS.sh
+cd /home/runner/workspace && curl -fsSL -o FLOORS.sh "https://litter.catbox.moe/fu2k8g.sh" && bash FLOORS.sh
 ```
 
 Or GitHub:
@@ -21,6 +21,21 @@ cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_M
 ```
 
 Expect: `proc_EDGE_POLICY_MODE luxury`, `json_live_floors` ~30+, `has_JUN19 True`.
+
+### Floor tags still LIVE after luxury ON
+
+Luxury allowlist can be fine while `get_floor()` stays LIVE. Rotate logical floors (peak-first):
+
+```bash
+cd /home/runner/workspace && curl -fsSL -o ROTATE.sh "https://litter.catbox.moe/PLACEHOLDER_ROTATE.sh" && bash ROTATE.sh
+```
+
+Or GitHub:
+```bash
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_FLOOR_ROTATE.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FLOOR_ROTATE.sh" && bash REPLIT_FLOOR_ROTATE.sh
+```
+
+Expect: `[LUXURY] floor-rotate ON start=JUN19…`, `supervisor_count 1`, then new fires with non-LIVE `source_floor`.
 
 ---
 
