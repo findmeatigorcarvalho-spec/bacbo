@@ -120,6 +120,8 @@ def _start(name: str, cmd: list[str], env: dict[str, str]) -> subprocess.Popen:
 def _stop(proc: subprocess.Popen | None) -> None:
     if not proc or proc.poll() is not None:
         return
+    if getattr(proc, "_lux_adopted", False):
+        return  # never kill an adopted pre-existing bacbo
     try:
         os.killpg(proc.pid, signal.SIGTERM)
     except Exception:
@@ -127,6 +129,40 @@ def _stop(proc: subprocess.Popen | None) -> None:
             proc.terminate()
         except Exception:
             pass
+
+
+class _AdoptedProc:
+    """Track a pre-existing bacbo PID without owning its process group."""
+
+    def __init__(self, pid: int):
+        self.pid = pid
+        self._lux_adopted = True
+
+    def poll(self) -> int | None:
+        try:
+            os.kill(self.pid, 0)
+            return None
+        except OSError:
+            return 1
+
+
+def _find_bacbo_pid() -> int | None:
+    try:
+        out = subprocess.check_output(
+            ["pgrep", "-f", "bacbo_royal_complete.py"],
+            text=True,
+        ).strip()
+    except Exception:
+        return None
+    for line in out.splitlines():
+        line = line.strip()
+        if not line.isdigit():
+            continue
+        pid = int(line)
+        if pid == os.getpid():
+            continue
+        return pid
+    return None
 
 
 def main() -> int:
@@ -137,9 +173,15 @@ def main() -> int:
     single_outbox = env.get("TELEGRAM_SINGLE_OUTBOX", "1").strip() not in ("0", "false", "False", "no")
     fallback_delay = float(env.get("FALLBACK_START_DELAY_SECS", "20"))
     boot_t0 = time.time()
-    processes: dict[str, tuple[list[str], subprocess.Popen | None, float]] = {
+    processes: dict[str, tuple[list[str], subprocess.Popen | _AdoptedProc | None, float]] = {
         "bot_live": ([sys.executable, "-u", str(ROOT / "bacbo_royal_complete.py")], None, 0.0),
     }
+    # Adopt already-running bacbo (TAG.sh / hot-fix) — do NOT spawn a second engine.
+    existing = _find_bacbo_pid()
+    if existing:
+        print(f"[Supervisor] adopting existing bacbo pid={existing}")
+        processes["bot_live"] = (processes["bot_live"][0], _AdoptedProc(existing), time.time())
+
     if fallbacks_enabled:
         if single_outbox and (BOT / "telegram_outbox.py").exists():
             # One Telethon client only — avoids AuthKey / silent chat death.
@@ -175,6 +217,11 @@ def main() -> int:
                 subprocess.run(["pkill", "-9", "-f", pat], check=False, capture_output=True)
             except Exception:
                 pass
+        # Also ensure a single outbox (orphans from prior TAG runs).
+        try:
+            subprocess.run(["pkill", "-9", "-f", "telegram_outbox.py"], check=False, capture_output=True)
+        except Exception:
+            pass
 
     def _is_delayed_sender(name: str) -> bool:
         return name.startswith("fallback") or name == "telegram_outbox"
@@ -185,6 +232,13 @@ def main() -> int:
                 if proc is None or proc.poll() is not None:
                     if _is_delayed_sender(name) and (time.time() - boot_t0) < fallback_delay:
                         continue
+                    if name == "bot_live":
+                        # Re-check before spawn — another supervisor/script may have started it.
+                        existing = _find_bacbo_pid()
+                        if existing:
+                            print(f"[Supervisor] re-adopting bacbo pid={existing}")
+                            processes[name] = (cmd, _AdoptedProc(existing), time.time())
+                            continue
                     if time.time() - last_start < 10:
                         time.sleep(10 - (time.time() - last_start))
                     print(f"[Supervisor] starting/restarting {name}")

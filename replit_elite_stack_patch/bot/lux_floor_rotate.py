@@ -111,14 +111,15 @@ def advance(reason: str = "manual") -> str:
 def _maybe_advance_unlocked() -> None:
     global _IDX, _FLOOR, _LAST_ADV
     floors = _rotation_list()
-    if _FLOOR not in floors:
-        _FLOOR = floors[0]
-        _IDX = 0
-        _LAST_ADV = time.time()
-        _sync_tag_state_unlocked(_FLOOR)
+    if not floors:
+        _FLOOR = "LIVE"
         return
     now = time.time()
-    if _LAST_ADV <= 0:
+    # First touch: always start on peak floor (floors[0]), never linger on LIVE
+    # just because LIVE is still in the rotation list (at the end).
+    if _LAST_ADV <= 0 or _FLOOR not in floors:
+        _FLOOR = floors[0]
+        _IDX = 0
         _LAST_ADV = now
         _sync_tag_state_unlocked(_FLOOR)
         return
@@ -297,8 +298,10 @@ def stamp_live_rows(limit: int = 40) -> int:
             ")",
             (floor, int(limit)),
         )
-        n = cur.rowcount if cur.rowcount and cur.rowcount > 0 else 0
         con.commit()
+        n = int(con.execute("SELECT changes()").fetchone()[0] or 0)
+        if n <= 0 and cur.rowcount and cur.rowcount > 0:
+            n = int(cur.rowcount)
         con.close()
         if n:
             print(f"[LUXURY] stamped source_floor={floor} on {n} recent LIVE rows")
