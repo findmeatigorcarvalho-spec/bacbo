@@ -223,13 +223,15 @@ def patch_signal_handler_shadow(path: Path, source: str) -> int:
 {indent}            log.info(f"[Legacy355] {{_edge_warning}}")
 {indent}            if isinstance(locals().get("msg"), str) and "LEGACY_355_PAWTUCKET" not in msg:
 {indent}                msg = msg + "\\n\\nWARNING LEGACY_355_PAWTUCKET\\n" + str(_edge_warning)
+{indent}        _edge_mode = (_edge_v.get("mode") or "shadow").upper()
+{indent}        _edge_act = _edge_v.get("action")
 {indent}        log.info(
-{indent}            f"✅ [EdgePolicy/SHADOW] {{_edge_kind}}/{{_edge_color}} "
-{indent}            f"{{_edge_v.get('action')}} — {{_edge_v.get('reason')}} | rooms={{_edge_rooms}}"
+{indent}            f"✅ [EdgePolicy/{{_edge_mode}}] {{_edge_kind}}/{{_edge_color}} "
+{indent}            f"{{_edge_act}} — {{_edge_v.get('reason')}} floor={{_edge_floor}} | rooms={{_edge_rooms}}"
 {indent}        )
 {indent}except Exception as _edge_exc:
 {indent}    try:
-{indent}        log.debug(f"[EdgePolicy/SHADOW] skipped due to error: {{_edge_exc}}")
+{indent}        log.debug(f"[EdgePolicy] skipped due to error: {{_edge_exc}}")
 {indent}    except Exception:
 {indent}        pass'''
             out.append(snippet)

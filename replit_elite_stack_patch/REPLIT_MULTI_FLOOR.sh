@@ -26,6 +26,7 @@ for rel in \
   bot/lux_no_hour_blocks.py \
   bot/lux_sqlite_harden.py \
   bot/lux_send_config_bind.py \
+  bot/lux_floor_expand.py \
   bot/fallback_signal_sender.py \
   bot/fallback_result_sender.py \
   bot/data/luxury_live_floors.json \
@@ -38,7 +39,7 @@ do
   curl -fsSL -H "Cache-Control: no-cache" -o "$rel" "$BASE/$rel"
 done
 chmod +x REPLIT_PEAK_LOCK_APPLY.sh
-$PY -m py_compile bot/runtime_supervisor.py bot/edge_live_policy.py bot/luxury_building_stack.py
+$PY -m py_compile bot/runtime_supervisor.py bot/edge_live_policy.py bot/luxury_building_stack.py bot/lux_floor_expand.py
 
 echo "========== [3/7] rebuild luxury floors from seed =========="
 $PY <<'PY'
@@ -100,14 +101,105 @@ if len(live) < 5:
     raise SystemExit("FAIL: live floor list too small after rebuild")
 PY
 
-echo "========== [4/7] peak-lock apply =========="
+echo "========== [4/8] peak-lock apply =========="
 bash REPLIT_PEAK_LOCK_APPLY.sh || {
   echo "WARN peak-lock script exited non-zero — continuing with floor JSON already written"
 }
 
-echo "========== [5/7] force luxury_building.env (overwrite shadow secrets) =========="
+echo "========== [5/8] expand floor_tracker allowlists + inject lux_floor_expand =========="
+$PY <<'PY'
+import re
+from pathlib import Path
+
+ROOT = Path("/home/runner/workspace")
+ft = ROOT / "bot" / "floor_tracker.py"
+if not ft.exists():
+    print("WARN: floor_tracker.py missing — skip expand patch")
+else:
+    src = ft.read_text(encoding="utf-8", errors="replace")
+    if "LUXURY_GATE_ALIAS_RESOLVE" in src:
+        src = re.sub(r"\n# --- LUXURY_GATE_ALIAS_RESOLVE ---[\s\S]*\Z", "\n", src)
+        print("removed bad get_floor remap")
+    marker = "LUXURY_LIVE_FLOORS_EXPAND"
+    if marker in src:
+        print("floor_tracker already has live-floors expand")
+    else:
+        append = f'''
+
+# --- {marker} ---
+# Keep get_floor() LOGICAL. Peak gates via _gates_<floor>.py loaders only.
+try:
+    from gate_alias_resolve import live_floors as _lux_live_floors
+    _lux = set(_lux_live_floors())
+    for _name in ("ENABLED_FLOORS", "LIVE_FLOORS", "ACTIVE_FLOORS", "FLOOR_ALLOWLIST", "FLOORS"):
+        if _name in globals() and isinstance(globals()[_name], (set, list, tuple)):
+            _cur = globals()[_name]
+            if isinstance(_cur, set):
+                globals()[_name] = set(_cur) | _lux
+            else:
+                globals()[_name] = list(dict.fromkeys(list(_cur) + list(_lux)))
+    print("[LUXURY] floor_tracker allowlists expanded with", len(_lux), "live floors")
+except Exception as _lux_alias_exc:
+    try:
+        print("luxury live-floors expand skipped:", _lux_alias_exc)
+    except Exception:
+        pass
+'''
+        src = src + append
+        print("patched floor_tracker.py with live-floors expand")
+    ft.write_text(src, encoding="utf-8")
+
+# Inject lux_floor_expand into bacbo (runtime widen even if floor_tracker already loaded)
+bacbo = ROOT / "bacbo_royal_complete.py"
+if bacbo.exists():
+    bsrc = bacbo.read_text(encoding="utf-8", errors="replace")
+    if "LUXURY_FLOOR_EXPAND" not in bsrc:
+        block = '''
+# --- LUXURY_FLOOR_EXPAND (auto) ---
+try:
+    import lux_floor_expand  # noqa: F401
+except Exception as _lux_fe_exc:
+    print("[LUXURY] floor-expand skipped:", _lux_fe_exc)
+# --- end LUXURY_FLOOR_EXPAND ---
+'''
+        m = re.search(r"# --- LUXURY_SEND_CONFIG_BIND", bsrc)
+        if m:
+            bsrc = bsrc[: m.start()] + block + "\n" + bsrc[m.start() :]
+        else:
+            m2 = re.search(r"^if __name__", bsrc, re.M)
+            if m2:
+                bsrc = bsrc[: m2.start()] + block + "\n" + bsrc[m2.start() :]
+            else:
+                bsrc = bsrc + "\n" + block
+        bacbo.write_text(bsrc, encoding="utf-8")
+        print("injected LUXURY_FLOOR_EXPAND into bacbo")
+    else:
+        print("bacbo already has LUXURY_FLOOR_EXPAND")
+
+# Probe get_floor if importable
+import sys
+sys.path.insert(0, str(ROOT / "bot"))
+sys.path.insert(0, str(ROOT))
+try:
+    import floor_tracker as ftmod
+    if hasattr(ftmod, "get_floor"):
+        print("get_floor_now", ftmod.get_floor())
+    for name in ("ENABLED_FLOORS", "LIVE_FLOORS", "ACTIVE_FLOORS", "FLOOR_ALLOWLIST"):
+        if hasattr(ftmod, name):
+            val = getattr(ftmod, name)
+            try:
+                n = len(val)
+            except Exception:
+                n = "?"
+            print(f"floor_tracker.{name}", n, "sample", list(val)[:8] if val is not None else None)
+except Exception as exc:
+    print("floor_tracker probe skipped:", exc)
+PY
+
+echo "========== [6/8] force luxury_building.env + .env (overwrite shadow secrets) =========="
 $PY <<PY
 import json
+import re
 from pathlib import Path
 ROOT = Path("/home/runner/workspace")
 allow = json.loads((ROOT / "bot/data/luxury_live_floors.json").read_text())
@@ -126,6 +218,25 @@ export LUXURY_LIVE_FLOORS={",".join(live)}
 """
 (ROOT / "luxury_building.env").write_text(body)
 print("wrote luxury_building.env floors", len(live), "peer", peer)
+
+# Also force .env so Replit Secrets / dotenv cannot keep shadow
+env_path = ROOT / ".env"
+lines = []
+if env_path.exists():
+    for ln in env_path.read_text(errors="ignore").splitlines():
+        if re.match(r"^\s*(export\s+)?(EDGE_POLICY_MODE|EDGE_LUXURY_FLOOR_GATE|FALLBACKS_ENABLED|FALLBACK_SEND_BLOCKED|LUXURY_NO_HOUR_BLOCKS)\s*=", ln):
+            continue
+        lines.append(ln)
+lines += [
+    "EDGE_POLICY_MODE=luxury",
+    "EDGE_LUXURY_FLOOR_GATE=1",
+    "FALLBACKS_ENABLED=1",
+    "FALLBACK_SEND_BLOCKED=0",
+    "LUXURY_NO_HOUR_BLOCKS=1",
+]
+env_path.write_text("\n".join(lines).rstrip() + "\n")
+print("forced .env luxury keys")
+
 # prove edge policy sees floors
 import sys
 sys.path.insert(0, str(ROOT / "bot"))
@@ -140,7 +251,7 @@ v = elp.evaluate("GOLDEN", "blue", ["@rqdados"], source_floor="JUN19")
 print("sample_verdict_JUN19", v)
 PY
 
-echo "========== [6/7] restart supervisor =========="
+echo "========== [7/8] restart supervisor =========="
 set -a
 # shellcheck disable=SC1091
 source ./luxury_building.env
@@ -160,7 +271,7 @@ nohup env EDGE_POLICY_MODE=luxury EDGE_LUXURY_FLOOR_GATE=1 FALLBACKS_ENABLED=1 \
   $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
 echo "supervisor pid=$!"
 
-echo "========== [7/7] settle 55s + verdict =========="
+echo "========== [8/8] settle 55s + verdict =========="
 sleep 25
 pgrep -af 'runtime_supervisor|bacbo_royal|fallback_' || echo NONE
 sleep 30
