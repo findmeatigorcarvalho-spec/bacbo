@@ -121,7 +121,7 @@ Module may already have `import config`; `send()` still NameErrors due to **func
 Use this (patches `send()` body + runtime bind; keeps peak-pure + fallbacks):
 
 ```bash
-cd /home/runner/workspace && curl -fsSL -o SENDFIX.sh "https://litter.catbox.moe/PLACEHOLDER_SENDFIX.sh" && bash SENDFIX.sh
+cd /home/runner/workspace && curl -fsSL -o SENDFIX.sh "https://litter.catbox.moe/i9m2dy.sh" && bash SENDFIX.sh
 ```
 
 Or GitHub:
