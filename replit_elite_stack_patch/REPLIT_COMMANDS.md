@@ -115,18 +115,21 @@ export EDGE_POLICY_MODE=luxury
 
 ### Native send broken (`send() failed: name 'config' is not defined`)
 
-Fallback cards work, but peak templates fail. Fix config import (keeps peak-pure + fallbacks):
+**Not** a “everything fires at once” issue — fallbacks already prove Telegram delivery.
+Module may already have `import config`; `send()` still NameErrors due to **function scope**.
+
+Use this (patches `send()` body + runtime bind; keeps peak-pure + fallbacks):
 
 ```bash
-cd /home/runner/workspace && curl -fsSL -o NATIVE.sh "https://litter.catbox.moe/jnla6d.sh" && bash NATIVE.sh
+cd /home/runner/workspace && curl -fsSL -o SENDFIX.sh "https://litter.catbox.moe/PLACEHOLDER_SENDFIX.sh" && bash SENDFIX.sh
 ```
 
 Or GitHub:
 ```bash
-cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_NATIVE_SEND.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_NATIVE_SEND.sh" && bash REPLIT_NATIVE_SEND.sh
+cd /home/runner/workspace && curl -fsSL -H "Cache-Control: no-cache" -o REPLIT_FIX_SEND_SCOPE.sh "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_SEND_SCOPE.sh" && bash REPLIT_FIX_SEND_SCOPE.sh
 ```
 
-Expect: `post_boot_send_config_errors 0`. Fallbacks stay ON until native cards look right.
+Expect: `post_boot_config_NameError 0`. Fallbacks stay ON until native cards look right.
 
 ### Telegram silent (bot up, GameCoach sends, no signal cards)
 
