@@ -51,7 +51,7 @@ Peak references (forensics): May 19 ≈ 3400+ fires @ ~78% · May 10 ≈ 500+ CD
    ┌─────────────────────┐                 ┌─────────────────────┐
    │ MONEY LANE (Mr_iv4) │                 │ COUNTDOWN LANE      │
    │ no-timer fire tmpls │                 │ timer/intervalo fire│
-   │ floor coalition     │                 │ → Gunique           │
+   │ floor coalition     │                 │ → @UNIQUE_g1        │
    │ result glued under  │                 │ CD result glued     │
    └──────────┬──────────┘                 └──────────┬──────────┘
               ▼                                         ▼
