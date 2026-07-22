@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T22:57:41.765738+00:00",
+  "generated_at": "2026-07-22T03:51:53.003398+00:00",
   "db_path": "/workspace/replit_exports/db/bot/bacbo.db",
   "note": "Peak baselines come from historical seed / peak_lock_config (day-one truth). Live Replit DB is often truncated \u2014 VOLUME_GAP / NO_LIVE_ATTRIBUTION means the floor is not presenting peak-day opinions in the attributed stream (v1 LIVE bottleneck), not that the peak day never happened. Result-card truth: loss on red \u21d2 actual blue \u21d2 blue side was right.",
   "truth_rule": {

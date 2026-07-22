@@ -1,0 +1,528 @@
+{
+  "generated_at": "2026-07-22T03:51:53.041329+00:00",
+  "db_path": "/workspace/replit_exports/db/bot/bacbo.db",
+  "counts": {
+    "fired_resolved": 1713,
+    "fired_wins": 1318,
+    "fired_g0": 1290,
+    "blocked_total": 374,
+    "blocked_wins_misses": 163,
+    "blocked_losses": 147,
+    "win_capture_rate_pct": 88.99
+  },
+  "blocked_wins_by_floor": {
+    "APR30": 9,
+    "APR28": 8,
+    "APR25": 8,
+    "APR21": 8,
+    "MAY01": 8,
+    "APR27": 7,
+    "APR22": 7,
+    "MAY02": 7,
+    "APR26": 7,
+    "MAY04": 7,
+    "APR29": 7,
+    "APR20": 6,
+    "ULTIMATE": 5,
+    "APR19": 4,
+    "APR24": 4,
+    "MAY08": 3,
+    "MAY09": 3,
+    "MAY12": 3,
+    "MAY13": 3,
+    "MAY14": 3,
+    "MAY16": 3,
+    "MAY25": 3,
+    "MAY30": 3,
+    "MAY31": 3,
+    "JUN01": 3,
+    "JUN06": 3,
+    "JUN07": 3,
+    "JUN14": 3,
+    "JUN15": 3,
+    "JUN17": 3,
+    "JUN19": 3,
+    "JUN20": 3,
+    "JUN27": 3,
+    "JUN28": 3,
+    "JUL02": 3,
+    "LIVE": 1
+  },
+  "blocked_wins_by_reason": {
+    "platinum_dupe_guard": 79,
+    "rate_limit_global": 15,
+    "duplicate_color_guard": 9,
+    "streak_reversal": 8,
+    "accum_post_adj_floor": 6,
+    "loss_cooldown": 6,
+    "platinum_cold_pair": 6,
+    "post_loss_cooldown": 5,
+    "momentum_xll": 4,
+    "ai_judge:hard_block_kind:PLATINUM": 4,
+    "solo_proven_room_main": 4,
+    "color_acc_all_weak": 3,
+    "room_hour_block_platinum": 3,
+    "dynamic_threshold_bad_hour": 2,
+    "conf_inversion_peak": 2,
+    "coalition_dedup": 1,
+    "g3_predictor_hard": 1,
+    "platinum_momentum_gate": 1,
+    "room_hour_block": 1,
+    "accuracy_guardian": 1,
+    "solo_room_color_block": 1,
+    "solo_threshold": 1
+  },
+  "blocked_wins_sample": [
+    {
+      "id": 373,
+      "kind": "PLATINUM",
+      "color": "red",
+      "floor": "APR30",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-19 21:06:14",
+      "score": 2.88
+    },
+    {
+      "id": 352,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR28",
+      "gate_reason": "momentum_xll",
+      "blocked_at": "2026-07-18 07:39:34",
+      "score": 6.56
+    },
+    {
+      "id": 353,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR27",
+      "gate_reason": "momentum_xll",
+      "blocked_at": "2026-07-18 07:39:34",
+      "score": 6.56
+    },
+    {
+      "id": 327,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "ULTIMATE",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 328,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY08",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 329,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY09",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 330,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY12",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 331,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY13",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 332,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY14",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 333,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY16",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 334,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY25",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 335,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY30",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 336,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY31",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 337,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "JUN01",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 338,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "JUN06",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 339,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "JUN07",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 340,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "JUN14",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 341,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "JUN15",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 342,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "JUN17",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 343,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "JUN19",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 344,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "JUN20",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 345,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "JUN27",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 346,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "JUN28",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 347,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "JUL02",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.85
+    },
+    {
+      "id": 348,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR22",
+      "gate_reason": "ai_judge:hard_block_kind:PLATINUM",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 3.91
+    },
+    {
+      "id": 349,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR28",
+      "gate_reason": "momentum_xll",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 6.56
+    },
+    {
+      "id": 350,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR25",
+      "gate_reason": "rate_limit_global",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 5.56
+    },
+    {
+      "id": 351,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR27",
+      "gate_reason": "momentum_xll",
+      "blocked_at": "2026-07-18 07:39:24",
+      "score": 6.56
+    },
+    {
+      "id": 318,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR20",
+      "gate_reason": "color_acc_all_weak",
+      "blocked_at": "2026-07-18 07:39:23",
+      "score": 3.91
+    },
+    {
+      "id": 319,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR30",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:23",
+      "score": 5.73
+    },
+    {
+      "id": 320,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR19",
+      "gate_reason": "color_acc_all_weak",
+      "blocked_at": "2026-07-18 07:39:23",
+      "score": 3.91
+    },
+    {
+      "id": 321,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR21",
+      "gate_reason": "color_acc_all_weak",
+      "blocked_at": "2026-07-18 07:39:23",
+      "score": 3.91
+    },
+    {
+      "id": 322,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY02",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:23",
+      "score": 5.73
+    },
+    {
+      "id": 323,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY01",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:23",
+      "score": 5.73
+    },
+    {
+      "id": 324,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR26",
+      "gate_reason": "post_loss_cooldown",
+      "blocked_at": "2026-07-18 07:39:23",
+      "score": 5.1
+    },
+    {
+      "id": 325,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY04",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-18 07:39:23",
+      "score": 6.03
+    },
+    {
+      "id": 326,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "APR29",
+      "gate_reason": "post_loss_cooldown",
+      "blocked_at": "2026-07-18 07:39:23",
+      "score": 5.73
+    },
+    {
+      "id": 275,
+      "kind": "GOLDEN",
+      "color": "blue",
+      "floor": "MAY02",
+      "gate_reason": "accum_post_adj_floor",
+      "blocked_at": "2026-07-17 14:37:14",
+      "score": 2.94
+    },
+    {
+      "id": 276,
+      "kind": "GOLDEN",
+      "color": "blue",
+      "floor": "MAY01",
+      "gate_reason": "accum_post_adj_floor",
+      "blocked_at": "2026-07-17 14:37:14",
+      "score": 2.94
+    },
+    {
+      "id": 277,
+      "kind": "GOLDEN",
+      "color": "blue",
+      "floor": "APR26",
+      "gate_reason": "accum_post_adj_floor",
+      "blocked_at": "2026-07-17 14:37:14",
+      "score": 2.94
+    },
+    {
+      "id": 278,
+      "kind": "GOLDEN",
+      "color": "blue",
+      "floor": "MAY04",
+      "gate_reason": "accum_post_adj_floor",
+      "blocked_at": "2026-07-17 14:37:14",
+      "score": 2.94
+    },
+    {
+      "id": 279,
+      "kind": "GOLDEN",
+      "color": "blue",
+      "floor": "APR29",
+      "gate_reason": "accum_post_adj_floor",
+      "blocked_at": "2026-07-17 14:37:14",
+      "score": 2.94
+    },
+    {
+      "id": 280,
+      "kind": "GOLDEN",
+      "color": "blue",
+      "floor": "APR25",
+      "gate_reason": "dynamic_threshold_bad_hour",
+      "blocked_at": "2026-07-17 14:37:14",
+      "score": 10.61
+    },
+    {
+      "id": 273,
+      "kind": "GOLDEN",
+      "color": "blue",
+      "floor": "LIVE",
+      "gate_reason": "coalition_dedup",
+      "blocked_at": "2026-07-17 14:37:13",
+      "score": 19.05
+    },
+    {
+      "id": 274,
+      "kind": "GOLDEN",
+      "color": "blue",
+      "floor": "APR30",
+      "gate_reason": "accum_post_adj_floor",
+      "blocked_at": "2026-07-17 14:37:13",
+      "score": 2.94
+    },
+    {
+      "id": 272,
+      "kind": "GOLDEN",
+      "color": "blue",
+      "floor": "APR28",
+      "gate_reason": "conf_inversion_peak",
+      "blocked_at": "2026-07-17 14:37:12",
+      "score": 12.3
+    },
+    {
+      "id": 271,
+      "kind": "SOLO_ELITE",
+      "color": "blue",
+      "floor": "APR21",
+      "gate_reason": "solo_proven_room_main",
+      "blocked_at": "2026-07-17 14:37:11",
+      "score": 10.35
+    },
+    {
+      "id": 192,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "ULTIMATE",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-17 14:25:15",
+      "score": 16.65
+    },
+    {
+      "id": 193,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY08",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-17 14:25:15",
+      "score": 16.65
+    },
+    {
+      "id": 194,
+      "kind": "PLATINUM",
+      "color": "blue",
+      "floor": "MAY09",
+      "gate_reason": "platinum_dupe_guard",
+      "blocked_at": "2026-07-17 14:25:15",
+      "score": 16.65
+    }
+  ],
+  "law": "blocked_win = missed user-facing opportunity unless intentionally hard-blocked"
+}

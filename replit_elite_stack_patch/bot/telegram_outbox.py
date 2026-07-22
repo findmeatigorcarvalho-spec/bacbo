@@ -362,8 +362,39 @@ async def main() -> None:
         print("[Outbox] resolve peer fallback:", exc)
         entity = await client.get_entity(int(peer))
 
+    # Dual-lane: money → Mr_iv4; countdown-timer fires → Gunique (if peer set).
+    cd_entity = None
+    cd_peer = (
+        os.environ.get("TELEGRAM_COUNTDOWN_PEER")
+        or os.environ.get("GUNIQUE_PEER")
+        or os.environ.get("TELEGRAM_GUNIQUE_PEER")
+        or ""
+    ).strip()
+    if cd_peer:
+        try:
+            if cd_peer.lstrip("-").isdigit():
+                cd_entity = await client.get_entity(int(cd_peer))
+            else:
+                cd_entity = await client.get_entity(cd_peer)
+            print(f"[Outbox] COUNTDOWN lane peer ready: {cd_peer}")
+        except Exception as exc:
+            print("[Outbox] COUNTDOWN peer resolve FAIL (money-only until fixed):", repr(exc))
+            cd_entity = None
+
+    def _lane_entity(signal_kind: str | None, text: str | None = None):
+        try:
+            from dual_lane_router import LANE_COUNTDOWN, route_lane
+
+            lane = route_lane(signal_kind=signal_kind, text=text)
+            if lane == LANE_COUNTDOWN and cd_entity is not None:
+                return cd_entity, lane
+            return entity, lane
+        except Exception:
+            return entity, "MONEY"
+
     print(
         f"[Outbox] ONLINE peer={getattr(entity, 'username', None) or peer} "
+        f"countdown_peer={cd_peer or 'UNSET'} "
         f"send_blocked={SEND_BLOCKED} tag={boot_tag} pid={os.getpid()}"
     )
 
@@ -426,10 +457,14 @@ async def main() -> None:
             conn.close()
 
             # Send signals first, then results for the same ids (card under signal).
+            # Lane sticky per signal id so result stays under its fire (same chat).
+            lane_by_id: dict[int, object] = {}
             for row in rows:
                 floor = _row_floor(row)
                 _stamp_floor(int(row["id"]), floor)
-                await client.send_message(entity, fmt_consensus(row, floor=floor))
+                dest, lane = _lane_entity(row["signal_kind"])
+                lane_by_id[int(row["id"])] = dest
+                await client.send_message(dest, fmt_consensus(row, floor=floor))
                 write_int(SIG_STATE, row["id"])
                 print(
                     "[Outbox] sent signal",
@@ -437,14 +472,47 @@ async def main() -> None:
                     row["signal_kind"],
                     row["color"],
                     floor,
+                    "lane",
+                    lane,
                     "score",
                     _row_score(row),
                 )
+                try:
+                    from zero_miss_ledger import record_proposal
+
+                    record_proposal(
+                        signal_id=row["id"],
+                        floors=[floor],
+                        color=str(row["color"] or ""),
+                        kind=str(row["signal_kind"] or ""),
+                        lane=lane,
+                        decision="SENT",
+                    )
+                except Exception:
+                    pass
 
             for row in results:
-                await client.send_message(entity, fmt_result(row))
+                dest = lane_by_id.get(int(row["id"]), entity)
+                # Prefer same lane as fire kind if we restarted mid-stream.
+                if int(row["id"]) not in lane_by_id:
+                    dest, _lane = _lane_entity(row["signal_kind"])
+                await client.send_message(dest, fmt_result(row))
                 write_int(RES_STATE, row["id"])
                 print("[Outbox] sent result", row["id"], row["outcome"], row["secs_to_result"])
+                try:
+                    from zero_miss_ledger import record_resolve
+
+                    pred = str(row["color"] or "")
+                    outc = str(row["outcome"] or "")
+                    record_resolve(
+                        signal_id=row["id"],
+                        outcome=outc,
+                        predicted=pred,
+                        actual=actual_color(pred, outc),
+                        g0=int(row["won_at_gale"] or 0) == 0 and outc == "win",
+                    )
+                except Exception:
+                    pass
         except Exception as exc:
             print("[Outbox] error:", repr(exc))
             # AuthKeyDuplicated / disconnect — exit so supervisor restarts cleanly

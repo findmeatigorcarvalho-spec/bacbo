@@ -63,6 +63,11 @@ From chat forensics:
 
 Therefore countdown deserves **its own peak towers + merge rules**, not the same thresholds as FLASH/SEQUENCE normal cards.
 
+## Profit organism (locked)
+See **`PROFIT_ORGANISM.md`** + **`PROFIT_MAX_MODEL.md`**.
+
+Living max-EV system: every floor ≥ peak day · dual lane · zero-miss · vault patterns · $/day projection.
+
 ## Profit-max dual chat (locked)
 See **`PROFIT_MAX_MODEL.md`** — full rationale.
 
