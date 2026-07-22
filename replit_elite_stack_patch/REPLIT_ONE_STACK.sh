@@ -22,12 +22,15 @@ for rel in \
   bot/runtime_supervisor.py \
   bot/telegram_outbox.py \
   bot/lux_floor_rotate.py \
+  bot/lux_tower_merge.py \
   bot/dual_lane_router.py \
   bot/zero_miss_ledger.py
 do
   curl -fsSL -H "Cache-Control: no-cache" -o "$rel" "$BASE/$rel" || true
 done
-$PY -m py_compile bot/runtime_supervisor.py bot/telegram_outbox.py bot/dual_lane_router.py
+$PY -m py_compile bot/runtime_supervisor.py bot/telegram_outbox.py bot/dual_lane_router.py bot/lux_tower_merge.py 2>/dev/null || \
+  $PY -m py_compile bot/runtime_supervisor.py bot/telegram_outbox.py bot/dual_lane_router.py
+
 
 if [ -f luxury_building.env ]; then
   grep -q 'TELEGRAM_SINGLE_OUTBOX' luxury_building.env || echo 'export TELEGRAM_SINGLE_OUTBOX=1' >> luxury_building.env

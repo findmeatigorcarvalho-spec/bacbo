@@ -26,10 +26,30 @@ from typing import Any
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 _JSON = DATA / "luxury_live_floors.json"
+_STRENGTH = DATA / "peak_fidelity_ranker_report.json"
+_strength_cache: dict[str, float] | None = None
 
 
 def _enabled() -> bool:
     return os.environ.get("LUXURY_TOWER_MERGE", "1").strip() not in {"0", "false", "no"}
+
+
+def _strength_map() -> dict[str, float]:
+    """Load floor strength scores (peak WR/G0 ranker) for merge priority."""
+    global _strength_cache
+    if _strength_cache is not None:
+        return _strength_cache
+    out: dict[str, float] = {}
+    try:
+        data = json.loads(_STRENGTH.read_text(encoding="utf-8"))
+        for row in data.get("ranking") or []:
+            fl = str(row.get("floor") or "").upper()
+            if fl:
+                out[fl] = float(row.get("strength_score") or 0.0)
+    except Exception:
+        out = {}
+    _strength_cache = out
+    return out
 
 
 def _load_floors() -> tuple[list[str], list[str], set[str]]:
@@ -49,7 +69,17 @@ def _load_floors() -> tuple[list[str], list[str], set[str]]:
         peaks = ["JUN19", "JUN20", "JUN08", "JUN10", "JUN26", "JUN27", "MAY19", "MAY10"]
         live = list(peaks) + ["LIVE", "ELITE_V2", "MAR19", "MAR20", "MAR21"]
 
-    # Priority: peak days first, then remaining live (skip blocked / dupes)
+    # Priority: strength rank (if report exists) among peaks, else peak_day order, then live.
+    strength = _strength_map()
+    if strength:
+        peaks_sorted = sorted(
+            [p for p in peaks if p not in blocked],
+            key=lambda f: strength.get(f, 0.0),
+            reverse=True,
+        )
+        if peaks_sorted:
+            peaks = peaks_sorted
+
     ordered: list[str] = []
     for name in peaks + live + ["LIVE"]:
         if name in blocked:
@@ -62,12 +92,11 @@ def _load_floors() -> tuple[list[str], list[str], set[str]]:
 
 
 def _rank(verdict: dict[str, Any], floor: str, peaks: list[str]) -> tuple:
-    """Higher tuple wins. Prefer peak floors over LIVE, then sniper > watch > floor-allow.
-    Among peaks, keep peak_day_floors order (JUN19 before JUN20 …)."""
+    """Higher tuple wins. Peak + strength_score + sniper/watch beat LIVE."""
     action = str(verdict.get("action") or "")
     reason = str(verdict.get("reason") or "")
     if action not in {"ALLOW", "SHADOW_ALLOW"}:
-        return (-1, -1, -1, -999, floor)
+        return (-1, -1, -1, -999.0, -999, floor)
     tier = 1
     if "SNIPER" in reason:
         tier = 3
@@ -75,12 +104,12 @@ def _rank(verdict: dict[str, Any], floor: str, peaks: list[str]) -> tuple:
         tier = 2
     is_peak = 1 if floor in peaks else 0
     is_named = 1 if floor not in {"LIVE", ""} else 0
-    # earlier in peaks list → larger peak_ord
+    strength = float(_strength_map().get(floor, 0.0))
     try:
         peak_ord = len(peaks) - peaks.index(floor) if floor in peaks else 0
     except Exception:
         peak_ord = 0
-    return (is_peak, is_named, tier, peak_ord, floor)
+    return (is_peak, is_named, tier, strength, peak_ord, floor)
 
 
 def merge_candidate(
