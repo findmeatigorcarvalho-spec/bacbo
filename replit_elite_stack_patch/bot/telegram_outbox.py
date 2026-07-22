@@ -526,6 +526,9 @@ async def main() -> None:
 
             if tick % HEARTBEAT_EVERY == 0:
                 try:
+                    abs_mx = conn.execute(
+                        "SELECT MAX(id), MAX(fired_at) FROM consensus_signals"
+                    ).fetchone()
                     mx = conn.execute(
                         "SELECT MAX(id), COUNT(*) FROM consensus_signals WHERE id > ?",
                         (last_sig,),
@@ -535,10 +538,15 @@ async def main() -> None:
                         "WHERE fired_at >= datetime('now','-30 minutes')"
                     ).fetchone()[0]
                     print(
-                        f"[Outbox] HEARTBEAT last_sig={last_sig} max_id={mx[0]} "
-                        f"pending={mx[1]} recent_30m={recent} pending_send={len(rows)} "
-                        f"pending_res={len(results)}"
+                        f"[Outbox] HEARTBEAT last_sig={last_sig} abs_max_id={abs_mx[0]} "
+                        f"abs_max_fired={abs_mx[1]} pending={mx[1]} recent_30m={recent} "
+                        f"pending_send={len(rows)} pending_res={len(results)}"
                     )
+                    if recent == 0 and (mx[1] or 0) == 0:
+                        print(
+                            "[Outbox] NOTE engine quiet — no new consensus rows; "
+                            "outbox is caught up (not a Telegram send failure)"
+                        )
                 except Exception as exc:
                     print("[Outbox] HEARTBEAT probe fail:", repr(exc))
 
