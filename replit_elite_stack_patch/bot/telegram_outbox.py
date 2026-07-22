@@ -48,6 +48,10 @@ STARTUP_PING = os.environ.get("TELEGRAM_OUTBOX_STARTUP_PING", "1").strip() not i
 SIGNAL_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_SIGNAL_LOOKBACK_HOURS", "48"))
 RESULT_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_RESULT_LOOKBACK_HOURS", "72"))
 HEARTBEAT_EVERY = int(os.environ.get("OUTBOX_HEARTBEAT_EVERY", "12"))  # ~60s at 5s sleep
+# Money cards also post to Gunique so @UNIQUE_g1 is never empty while CD lane waits for timer fires.
+MIRROR_MONEY_TO_GUNIQUE = os.environ.get("TELEGRAM_MIRROR_MONEY_TO_GUNIQUE", "1").strip().lower() not in {
+    "0", "false", "no", "off",
+}
 
 
 def _resolve_db() -> Path:
@@ -396,7 +400,7 @@ async def main() -> None:
         print("[Outbox] resolve peer fallback:", exc)
         entity = await client.get_entity(int(peer))
 
-    # Dual-lane: money → Mr_iv4; countdown-timer fires → Gunique (@UNIQUE_g1).
+    # Dual-lane: money → Mr_iv4 (+ mirror @UNIQUE_g1); countdown-timer → @UNIQUE_g1 only.
     cd_entity = None
     cd_peer = (
         os.environ.get("TELEGRAM_COUNTDOWN_PEER")
@@ -410,46 +414,69 @@ async def main() -> None:
                 cd_entity = await client.get_entity(int(cd_peer))
             else:
                 cd_entity = await client.get_entity(cd_peer)
-            print(f"[Outbox] COUNTDOWN lane peer ready: @{cd_peer}")
+            print(f"[Outbox] COUNTDOWN/Gunique peer ready: @{cd_peer}")
         except Exception as exc:
-            print("[Outbox] COUNTDOWN peer resolve FAIL (money-only until fixed):", repr(exc))
+            print("[Outbox] Gunique peer resolve FAIL:", repr(exc))
             cd_entity = None
 
-    def _lane_entity(signal_kind: str | None, text: str | None = None):
+    def _lane_dests(signal_kind: str | None, text: str | None = None):
+        """Return (primary_dest, lane_name, mirror_dests)."""
         try:
-            from dual_lane_router import LANE_COUNTDOWN, route_lane
+            from dual_lane_router import route_lane
 
             lane = route_lane(signal_kind=signal_kind, text=text)
-            if lane == LANE_COUNTDOWN and cd_entity is not None:
-                return cd_entity, lane
-            if lane == LANE_COUNTDOWN and cd_entity is None:
-                print("[Outbox] CD lane fallback → money peer (Gunique not ready)")
-                return entity, "MONEY_FALLBACK_FROM_CD"
-            return entity, lane
         except Exception as exc:
             print("[Outbox] lane route error:", repr(exc))
-            return entity, "MONEY"
+            lane = "MONEY"
+        if lane == "COUNTDOWN":
+            if cd_entity is not None:
+                return cd_entity, "COUNTDOWN", []
+            print("[Outbox] CD lane fallback → money peer (Gunique not ready)")
+            return entity, "MONEY_FALLBACK_FROM_CD", []
+        mirrors = []
+        if MIRROR_MONEY_TO_GUNIQUE and cd_entity is not None:
+            try:
+                if int(getattr(cd_entity, "id", 0) or 0) != int(getattr(entity, "id", 0) or 0):
+                    mirrors.append(cd_entity)
+            except Exception:
+                mirrors.append(cd_entity)
+        return entity, "MONEY", mirrors
+
+    async def _send_all(dests, body: str):
+        last = None
+        for dest in dests:
+            last = await client.send_message(dest, body)
+        return last
 
     print(
-        f"[Outbox] ONLINE peer={getattr(entity, 'username', None) or peer} "
-        f"countdown_peer={cd_peer or 'UNSET'} "
+        f"[Outbox] ONLINE money={getattr(entity, 'username', None) or peer} "
+        f"gunique=@{cd_peer or 'UNSET'} mirror_money={MIRROR_MONEY_TO_GUNIQUE} "
         f"send_blocked={SEND_BLOCKED} tag={boot_tag} pid={os.getpid()} db={DB}"
     )
 
     if STARTUP_PING:
+        ping = (
+            "LUXURY OUTBOX ONLINE\n"
+            f"Tag floor: {boot_tag}\n"
+            f"DB: {DB.name}\n"
+            f"Money→Mr_iv4 · Countdown→@{cd_peer or 'off'}\n"
+            f"Mirror money→Gunique: {MIRROR_MONEY_TO_GUNIQUE}\n"
+            "Waiting for engine FIRED → signal/result cards."
+        )
         try:
-            msg = await client.send_message(
-                entity,
-                "LUXURY OUTBOX ONLINE\n"
-                f"Tag floor: {boot_tag}\n"
-                f"DB: {DB.name}\n"
-                f"Countdown: @{cd_peer or 'off'}\n"
-                "Single Telegram session owner.\n"
-                "Waiting for engine FIRED → signal/result cards.",
-            )
-            print("[Outbox] startup ping OK id=", msg.id)
+            msg = await client.send_message(entity, ping)
+            print("[Outbox] startup ping Mr_iv4 OK id=", msg.id)
         except Exception as exc:
-            print("[Outbox] startup ping FAIL:", repr(exc))
+            print("[Outbox] startup ping Mr_iv4 FAIL:", repr(exc))
+        if cd_entity is not None:
+            try:
+                msg2 = await client.send_message(
+                    cd_entity,
+                    ping + "\n\n(@UNIQUE_g1 — money mirrors + countdown-timer lane)",
+                )
+                print("[Outbox] startup ping Gunique OK id=", msg2.id)
+            except Exception as exc:
+                print("[Outbox] startup ping Gunique FAIL:", repr(exc))
 
     try:
         conn0 = _db_ro()
@@ -552,14 +579,15 @@ async def main() -> None:
 
             conn.close()
 
-            lane_by_id: dict[int, object] = {}
+            lane_by_id: dict[int, tuple] = {}
             for row in rows:
                 try:
                     floor = _row_floor(row)
                     _stamp_floor(int(row["id"]), floor)
-                    dest, lane = _lane_entity(row["signal_kind"])
-                    lane_by_id[int(row["id"])] = dest
-                    await client.send_message(dest, fmt_consensus(row, floor=floor))
+                    dest, lane, mirrors = _lane_dests(row["signal_kind"])
+                    dests = [dest] + list(mirrors)
+                    lane_by_id[int(row["id"])] = (dest, lane, mirrors)
+                    await _send_all(dests, fmt_consensus(row, floor=floor))
                     write_int(SIG_STATE, row["id"])
                     print(
                         "[Outbox] sent signal",
@@ -569,6 +597,8 @@ async def main() -> None:
                         floor,
                         "lane",
                         lane,
+                        "mirrors",
+                        len(mirrors),
                         "score",
                         _row_score(row),
                     )
@@ -591,12 +621,24 @@ async def main() -> None:
 
             for row in results:
                 try:
-                    dest = lane_by_id.get(int(row["id"]), entity)
-                    if int(row["id"]) not in lane_by_id:
-                        dest, _lane = _lane_entity(row["signal_kind"])
-                    await client.send_message(dest, fmt_result(row))
+                    cached = lane_by_id.get(int(row["id"]))
+                    if cached:
+                        dest, lane, mirrors = cached
+                    else:
+                        dest, lane, mirrors = _lane_dests(row["signal_kind"])
+                    dests = [dest] + list(mirrors)
+                    await _send_all(dests, fmt_result(row))
                     write_int(RES_STATE, row["id"])
-                    print("[Outbox] sent result", row["id"], row["outcome"], row["secs_to_result"])
+                    print(
+                        "[Outbox] sent result",
+                        row["id"],
+                        row["outcome"],
+                        row["secs_to_result"],
+                        "lane",
+                        lane,
+                        "mirrors",
+                        len(mirrors),
+                    )
                     try:
                         from zero_miss_ledger import record_resolve
 
