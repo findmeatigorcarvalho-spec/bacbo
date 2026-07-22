@@ -32,7 +32,6 @@ import config  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
-DB = HERE / "bacbo.db"
 SIG_STATE = HERE / "data/fallback_sender_state.txt"
 RES_STATE = HERE / "data/fallback_result_sender_state.txt"
 LOCK = HERE / "data/telegram_outbox.lock"
@@ -45,6 +44,35 @@ STARTUP_PING = os.environ.get("TELEGRAM_OUTBOX_STARTUP_PING", "1").strip() not i
     "false",
     "no",
 }
+# Lookback must be wide: SQLite datetime('now') is UTC; engine fired_at can drift.
+SIGNAL_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_SIGNAL_LOOKBACK_HOURS", "48"))
+RESULT_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_RESULT_LOOKBACK_HOURS", "72"))
+HEARTBEAT_EVERY = int(os.environ.get("OUTBOX_HEARTBEAT_EVERY", "12"))  # ~60s at 5s sleep
+
+
+def _resolve_db() -> Path:
+    """Use the live engine DB (freshest bacbo.db), not a stale sibling copy."""
+    env = (os.environ.get("BACBO_DB") or os.environ.get("DB_PATH") or "").strip()
+    candidates: list[Path] = []
+    if env:
+        candidates.append(Path(env))
+    candidates.extend(
+        [
+            HERE / "bacbo.db",
+            ROOT / "bacbo.db",
+            HERE / "data" / "bacbo.db",
+            Path("/home/runner/workspace/bot/bacbo.db"),
+            Path("/home/runner/workspace/bacbo.db"),
+        ]
+    )
+    existing = [p for p in candidates if p.exists() and p.is_file()]
+    if not existing:
+        return HERE / "bacbo.db"
+    existing.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+    return existing[0]
+
+
+DB = _resolve_db()
 
 
 def load_env() -> None:
@@ -331,11 +359,17 @@ async def _resolve_target(client, target):
 
 
 async def main() -> None:
+    global DB
     load_env()
     lock_fd = _acquire_lock()
-    # Ensure peak tag is ready before first card
+    # Re-resolve after env load (BACBO_DB may appear in .env)
+    DB = _resolve_db()
     boot_tag = _tag_floor_name()
-    print(f"[Outbox] boot_tag_floor={boot_tag}")
+    print(f"[Outbox] boot_tag_floor={boot_tag} db={DB}")
+    if not DB.exists():
+        print(f"[Outbox] FATAL: DB missing at {DB}")
+        os.close(lock_fd)
+        return
     api_id = os.getenv("TELEGRAM_API_ID") or os.getenv("API_ID")
     api_hash = os.getenv("TELEGRAM_API_HASH") or os.getenv("API_HASH")
     if not api_id or not api_hash:
@@ -388,14 +422,18 @@ async def main() -> None:
             lane = route_lane(signal_kind=signal_kind, text=text)
             if lane == LANE_COUNTDOWN and cd_entity is not None:
                 return cd_entity, lane
+            if lane == LANE_COUNTDOWN and cd_entity is None:
+                print("[Outbox] CD lane fallback → money peer (Gunique not ready)")
+                return entity, "MONEY_FALLBACK_FROM_CD"
             return entity, lane
-        except Exception:
+        except Exception as exc:
+            print("[Outbox] lane route error:", repr(exc))
             return entity, "MONEY"
 
     print(
         f"[Outbox] ONLINE peer={getattr(entity, 'username', None) or peer} "
         f"countdown_peer={cd_peer or 'UNSET'} "
-        f"send_blocked={SEND_BLOCKED} tag={boot_tag} pid={os.getpid()}"
+        f"send_blocked={SEND_BLOCKED} tag={boot_tag} pid={os.getpid()} db={DB}"
     )
 
     if STARTUP_PING:
@@ -404,6 +442,8 @@ async def main() -> None:
                 entity,
                 "LUXURY OUTBOX ONLINE\n"
                 f"Tag floor: {boot_tag}\n"
+                f"DB: {DB.name}\n"
+                f"Countdown: @{cd_peer or 'off'}\n"
                 "Single Telegram session owner.\n"
                 "Waiting for engine FIRED → signal/result cards.",
             )
@@ -411,36 +451,61 @@ async def main() -> None:
         except Exception as exc:
             print("[Outbox] startup ping FAIL:", repr(exc))
 
+    try:
+        conn0 = _db_ro()
+        mx = conn0.execute("SELECT MAX(id), MAX(fired_at) FROM consensus_signals").fetchone()
+        conn0.close()
+        print(
+            f"[Outbox] db_max_id={mx[0]} db_max_fired={mx[1]} "
+            f"sig_state={read_int(SIG_STATE)} res_state={read_int(RES_STATE)}"
+        )
+    except Exception as exc:
+        print("[Outbox] db probe FAIL:", repr(exc))
+
+    tick = 0
     while True:
         try:
+            if SEND_BLOCKED:
+                if tick % HEARTBEAT_EVERY == 0:
+                    print("[Outbox] HEARTBEAT send_blocked=1 — not sending")
+                tick += 1
+                await asyncio.sleep(5)
+                continue
+
             conn = _db_ro()
             last_sig = read_int(SIG_STATE)
-            # final_score / confidence_pct often hold the real number; total_score is 0.
+            lookback_sig = f"-{SIGNAL_LOOKBACK_HOURS} hours"
             try:
                 rows = conn.execute(
                     """
                     SELECT id, fired_at, signal_kind, color, rooms_agreed, source_floor,
                            total_score, final_score, confidence_pct, calibrated_pct
                     FROM consensus_signals
-                    WHERE id > ? AND fired_at >= datetime('now','-2 hours')
+                    WHERE id > ?
+                      AND (
+                        fired_at IS NULL
+                        OR fired_at >= datetime('now', ?)
+                        OR id > ? - 50
+                      )
                     ORDER BY id ASC
-                    LIMIT 20
+                    LIMIT 30
                     """,
-                    (last_sig,),
+                    (last_sig, lookback_sig, last_sig),
                 ).fetchall()
             except sqlite3.OperationalError:
                 rows = conn.execute(
                     """
                     SELECT id, fired_at, signal_kind, color, rooms_agreed, source_floor, total_score
                     FROM consensus_signals
-                    WHERE id > ? AND fired_at >= datetime('now','-2 hours')
+                    WHERE id > ?
                     ORDER BY id ASC
-                    LIMIT 20
+                    LIMIT 30
                     """,
                     (last_sig,),
                 ).fetchall()
 
             last_res = read_int(RES_STATE)
+            lookback_res = f"-{RESULT_LOOKBACK_HOURS} hours"
             results = conn.execute(
                 """
                 SELECT id, fired_at, resolved_at, signal_kind, color, outcome,
@@ -448,78 +513,106 @@ async def main() -> None:
                 FROM consensus_signals
                 WHERE id > ?
                   AND outcome IN ('win','loss','tie')
-                  AND fired_at >= datetime('now','-24 hours')
+                  AND (
+                    fired_at IS NULL
+                    OR fired_at >= datetime('now', ?)
+                    OR id > ? - 50
+                  )
                 ORDER BY id ASC
-                LIMIT 20
+                LIMIT 30
                 """,
-                (last_res,),
+                (last_res, lookback_res, last_res),
             ).fetchall()
+
+            if tick % HEARTBEAT_EVERY == 0:
+                try:
+                    mx = conn.execute(
+                        "SELECT MAX(id), COUNT(*) FROM consensus_signals WHERE id > ?",
+                        (last_sig,),
+                    ).fetchone()
+                    recent = conn.execute(
+                        "SELECT COUNT(*) FROM consensus_signals "
+                        "WHERE fired_at >= datetime('now','-30 minutes')"
+                    ).fetchone()[0]
+                    print(
+                        f"[Outbox] HEARTBEAT last_sig={last_sig} max_id={mx[0]} "
+                        f"pending={mx[1]} recent_30m={recent} pending_send={len(rows)} "
+                        f"pending_res={len(results)}"
+                    )
+                except Exception as exc:
+                    print("[Outbox] HEARTBEAT probe fail:", repr(exc))
+
             conn.close()
 
-            # Send signals first, then results for the same ids (card under signal).
-            # Lane sticky per signal id so result stays under its fire (same chat).
             lane_by_id: dict[int, object] = {}
             for row in rows:
-                floor = _row_floor(row)
-                _stamp_floor(int(row["id"]), floor)
-                dest, lane = _lane_entity(row["signal_kind"])
-                lane_by_id[int(row["id"])] = dest
-                await client.send_message(dest, fmt_consensus(row, floor=floor))
-                write_int(SIG_STATE, row["id"])
-                print(
-                    "[Outbox] sent signal",
-                    row["id"],
-                    row["signal_kind"],
-                    row["color"],
-                    floor,
-                    "lane",
-                    lane,
-                    "score",
-                    _row_score(row),
-                )
                 try:
-                    from zero_miss_ledger import record_proposal
-
-                    record_proposal(
-                        signal_id=row["id"],
-                        floors=[floor],
-                        color=str(row["color"] or ""),
-                        kind=str(row["signal_kind"] or ""),
-                        lane=lane,
-                        decision="SENT",
+                    floor = _row_floor(row)
+                    _stamp_floor(int(row["id"]), floor)
+                    dest, lane = _lane_entity(row["signal_kind"])
+                    lane_by_id[int(row["id"])] = dest
+                    await client.send_message(dest, fmt_consensus(row, floor=floor))
+                    write_int(SIG_STATE, row["id"])
+                    print(
+                        "[Outbox] sent signal",
+                        row["id"],
+                        row["signal_kind"],
+                        row["color"],
+                        floor,
+                        "lane",
+                        lane,
+                        "score",
+                        _row_score(row),
                     )
-                except Exception:
-                    pass
+                    try:
+                        from zero_miss_ledger import record_proposal
+
+                        record_proposal(
+                            signal_id=row["id"],
+                            floors=[floor],
+                            color=str(row["color"] or ""),
+                            kind=str(row["signal_kind"] or ""),
+                            lane=str(lane),
+                            decision="SENT",
+                        )
+                    except Exception:
+                        pass
+                except Exception as exc:
+                    print("[Outbox] SEND SIGNAL FAIL id=", row["id"], repr(exc))
+                    break
 
             for row in results:
-                dest = lane_by_id.get(int(row["id"]), entity)
-                # Prefer same lane as fire kind if we restarted mid-stream.
-                if int(row["id"]) not in lane_by_id:
-                    dest, _lane = _lane_entity(row["signal_kind"])
-                await client.send_message(dest, fmt_result(row))
-                write_int(RES_STATE, row["id"])
-                print("[Outbox] sent result", row["id"], row["outcome"], row["secs_to_result"])
                 try:
-                    from zero_miss_ledger import record_resolve
+                    dest = lane_by_id.get(int(row["id"]), entity)
+                    if int(row["id"]) not in lane_by_id:
+                        dest, _lane = _lane_entity(row["signal_kind"])
+                    await client.send_message(dest, fmt_result(row))
+                    write_int(RES_STATE, row["id"])
+                    print("[Outbox] sent result", row["id"], row["outcome"], row["secs_to_result"])
+                    try:
+                        from zero_miss_ledger import record_resolve
 
-                    pred = str(row["color"] or "")
-                    outc = str(row["outcome"] or "")
-                    record_resolve(
-                        signal_id=row["id"],
-                        outcome=outc,
-                        predicted=pred,
-                        actual=actual_color(pred, outc),
-                        g0=int(row["won_at_gale"] or 0) == 0 and outc == "win",
-                    )
-                except Exception:
-                    pass
+                        pred = str(row["color"] or "")
+                        outc = str(row["outcome"] or "")
+                        record_resolve(
+                            signal_id=row["id"],
+                            outcome=outc,
+                            predicted=pred,
+                            actual=actual_color(pred, outc),
+                            g0=int(row["won_at_gale"] or 0) == 0 and outc == "win",
+                        )
+                    except Exception:
+                        pass
+                except Exception as exc:
+                    print("[Outbox] SEND RESULT FAIL id=", row["id"], repr(exc))
+                    break
         except Exception as exc:
             print("[Outbox] error:", repr(exc))
-            # AuthKeyDuplicated / disconnect — exit so supervisor restarts cleanly
             err = repr(exc)
             if "AuthKey" in err or "authorization key" in err.lower():
                 print("[Outbox] FATAL session conflict — exiting")
                 break
+        tick += 1
         await asyncio.sleep(5)
 
     try:
