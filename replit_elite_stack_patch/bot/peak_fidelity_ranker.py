@@ -87,15 +87,58 @@ def _parse_floor_list(raw: Any) -> list[str]:
 
 
 def _tower_index(peak_lock: dict, seed: dict, live: dict) -> list[dict[str, Any]]:
-    """One row per live floor with peak baseline + gate lock."""
-    towers = {str(t.get("floor", "")).upper(): t for t in (peak_lock.get("towers") or [])}
-    seed_by = {str(f.get("floor", "")).upper(): f for f in (seed.get("floors") or [])}
+    """One row per live floor with peak baseline + gate lock.
+
+    Accepts peak_lock['towers'] as:
+      - list[{floor, gate, peak_day, ...}]  (full config)
+      - dict[floor -> {gate, ...}]           (PEAK_LOCK_APPLY thin form)
+    """
+    raw_towers = peak_lock.get("towers") or []
+    towers: dict[str, dict[str, Any]] = {}
+    if isinstance(raw_towers, dict):
+        for k, v in raw_towers.items():
+            fl = str(k).upper()
+            if isinstance(v, dict):
+                row = dict(v)
+                row.setdefault("floor", fl)
+                row.setdefault("gate", v.get("gate") or fl)
+                towers[fl] = row
+            else:
+                towers[fl] = {"floor": fl, "gate": str(v)}
+    elif isinstance(raw_towers, list):
+        for t in raw_towers:
+            if isinstance(t, dict):
+                fl = str(t.get("floor", "")).upper()
+                if fl:
+                    towers[fl] = t
+            elif isinstance(t, str) and t.strip():
+                fl = t.strip().upper()
+                towers[fl] = {"floor": fl, "gate": fl}
+    seed_by = {
+        str(f.get("floor", "")).upper(): f
+        for f in (seed.get("floors") or [])
+        if isinstance(f, dict)
+    }
     aliases = dict(peak_lock.get("gate_aliases") or live.get("gate_aliases") or {})
+    # Thin peak_lock may only have towers dict of gate stems — fold into aliases
+    for fl, t in towers.items():
+        g = t.get("gate")
+        if g and fl not in aliases:
+            aliases[fl] = str(g)
     blocked = {
         str(x).upper()
-        for x in (live.get("blocked") or peak_lock.get("blocked") or seed.get("hard_block") or [])
+        for x in (
+            live.get("blocked")
+            or peak_lock.get("blocked")
+            or peak_lock.get("blocked_floors")
+            or seed.get("hard_block")
+            or []
+        )
     }
-    live_floors = [str(x).upper() for x in (live.get("live_floors") or peak_lock.get("live_building_floors") or [])]
+    live_floors = [
+        str(x).upper()
+        for x in (live.get("live_floors") or peak_lock.get("live_building_floors") or [])
+    ]
     if not live_floors:
         live_floors = sorted(set(towers) | set(seed_by))
 

@@ -111,12 +111,85 @@ allow = {
 }
 allow_path.write_text(json.dumps(allow, indent=2) + "\n")
 
+# Preserve rich tower rows (peak_day/n/wr) when present; only refresh gate stems.
+prior_cfg: dict = {}
+cfg_path = DATA / "peak_lock_config.json"
+if cfg_path.exists():
+    try:
+        prior_cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+    except Exception:
+        prior_cfg = {}
+
+prior_towers = prior_cfg.get("towers")
+tower_rows: list[dict] = []
+if isinstance(prior_towers, list):
+    for t in prior_towers:
+        if isinstance(t, dict) and t.get("floor"):
+            fl = str(t["floor"]).upper()
+            if fl in BLOCKED:
+                continue
+            row = dict(t)
+            row["floor"] = fl
+            if fl in ALIASES:
+                row["gate"] = ALIASES[fl]
+                row["gate_file"] = f"_gates_{ALIASES[fl]}.py"
+            tower_rows.append(row)
+elif isinstance(prior_towers, dict):
+    for fl, v in prior_towers.items():
+        fl = str(fl).upper()
+        if fl in BLOCKED:
+            continue
+        if isinstance(v, dict):
+            row = dict(v)
+            row["floor"] = fl
+            row["gate"] = ALIASES.get(fl) or row.get("gate") or fl
+        else:
+            row = {"floor": fl, "gate": ALIASES.get(fl) or str(v)}
+        row["gate_file"] = f"_gates_{row['gate']}.py"
+        tower_rows.append(row)
+
+# Ensure every live floor has a tower row (seed fills peak metrics when available)
+have = {str(t.get("floor", "")).upper() for t in tower_rows}
+seed_path = DATA / "historical_luxury_seed.json"
+seed_by = {}
+if seed_path.exists():
+    try:
+        for f in json.loads(seed_path.read_text()).get("floors") or []:
+            if isinstance(f, dict) and f.get("floor"):
+                seed_by[str(f["floor"]).upper()] = f
+    except Exception:
+        pass
+for fl in live_floors:
+    fl = str(fl).upper()
+    if fl in BLOCKED or fl in have:
+        continue
+    s = seed_by.get(fl) or {}
+    gate = ALIASES.get(fl, fl)
+    tower_rows.append(
+        {
+            "floor": fl,
+            "gate": gate,
+            "gate_file": f"_gates_{gate}.py",
+            "lane": s.get("lane") or "UNKNOWN",
+            "peak_day": s.get("max_day"),
+            "peak_n": s.get("max_day_signals") or s.get("total"),
+            "peak_wr": s.get("max_day_wr") or s.get("final_wr"),
+            "historical_wr": s.get("final_wr"),
+            "historical_n": s.get("total"),
+            "force_live": True,
+        }
+    )
+
 peak_cfg = {
     "mode": "luxury_peak_lock",
     "blocked_floors": BLOCKED,
-    "towers": {k: {"gate": v} for k, v in sorted(ALIASES.items()) if k not in BLOCKED},
+    "blocked": BLOCKED,
+    "gate_aliases": ALIASES,
+    "live_building_floors": live_floors,
+    "peak_day_floors": PEAKS,
+    "towers": tower_rows,  # list[dict] — ranker + merge expect this
 }
-(DATA / "peak_lock_config.json").write_text(json.dumps(peak_cfg, indent=2) + "\n")
+cfg_path.write_text(json.dumps(peak_cfg, indent=2) + "\n")
 (ROOT / "peak_lock_config.json").write_text(json.dumps(peak_cfg, indent=2) + "\n")
 
 helper = '''\
