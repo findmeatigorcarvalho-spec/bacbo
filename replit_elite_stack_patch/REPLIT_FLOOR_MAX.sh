@@ -31,7 +31,7 @@ for rel in \
 do
   curl -fsSL -H "Cache-Control: no-cache" -o "$rel" "$BASE/$rel" || echo "skip $rel"
 done
-$PY -m py_compile bot/lux_tower_merge.py bot/peak_fidelity_ranker.py bot/telegram_outbox.py bot/dual_lane_router.py
+$PY -m py_compile bot/lux_tower_merge.py bot/peak_fidelity_ranker.py bot/telegram_outbox.py bot/dual_lane_router.py bot/edge_live_policy.py
 
 echo "========== [2/7] peak-lock apply (no double supervisor) =========="
 export SKIP_SUPERVISOR_RESTART=1
@@ -76,9 +76,13 @@ print("env ok", p)
 PY
 
 echo "========== [4/7] peak fidelity rank (strength for merge) =========="
+# Re-fetch ranker in case peak-lock step corrupted it (old patcher bug).
+curl -fsSL -H "Cache-Control: no-cache" -o bot/peak_fidelity_ranker.py \
+  "$BASE/bot/peak_fidelity_ranker.py"
+$PY -m py_compile bot/peak_fidelity_ranker.py
 DB=bot/bacbo.db
 [ -f bot/bacbo.db ] || DB=bacbo.db
-$PY bot/peak_fidelity_ranker.py --db "$DB" || true
+$PY bot/peak_fidelity_ranker.py --db "$DB"
 $PY - <<'PY'
 import json
 from pathlib import Path

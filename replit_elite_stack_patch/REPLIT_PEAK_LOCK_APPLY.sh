@@ -270,24 +270,71 @@ except Exception:
             return x
 '''
 
+# NEVER patch these — they mention _gates_ in docs/paths but are not gate loaders.
+SKIP = {
+    "peak_fidelity_ranker.py",
+    "peak_fidelity_shadow_miss.py",
+    "profit_organism.py",
+    "zero_miss_ledger.py",
+    "dual_lane_router.py",
+    "telegram_outbox.py",
+    "lux_tower_merge.py",
+    "edge_live_policy.py",
+    "runtime_supervisor.py",
+    "gate_alias_resolve.py",
+    "lux_floor_rotate.py",
+}
+
+def insert_after_header(src: str, block: str) -> str:
+    """Insert after shebang / encoding / docstring / __future__ — never before __future__."""
+    lines = src.splitlines(True)
+    i = 0
+    if i < len(lines) and lines[i].startswith("#!"):
+        i += 1
+    if i < len(lines) and "coding" in lines[i] and lines[i].lstrip().startswith("#"):
+        i += 1
+    # module docstring
+    if i < len(lines) and lines[i].lstrip().startswith(('"""', "'''")):
+        quote = '"""' if '"""' in lines[i] else "'''"
+        if lines[i].count(quote) >= 2:
+            i += 1
+        else:
+            i += 1
+            while i < len(lines) and quote not in lines[i]:
+                i += 1
+            if i < len(lines):
+                i += 1
+    while i < len(lines) and (
+        lines[i].startswith("from __future__") or lines[i].strip() == ""
+    ):
+        i += 1
+    return "".join(lines[:i]) + block + "\n" + "".join(lines[i:])
+
 patched = []
 for p in Path("/home/runner/workspace/bot").glob("*.py"):
     if p.name.startswith("_gates_"):
         continue
+    if p.name in SKIP:
+        continue
+    # Only real gate loaders: import/open of _gates_*.py as a path
     try:
         t = p.read_text(encoding="utf-8", errors="replace")
     except Exception:
         continue
-    if "_gates_" not in t:
-        continue
     if marker in t:
         continue
-    # wrap f"_gates_{floor}.py" / "_gates_%s" patterns
-    newt = t
+    if not re.search(r'["_\']_gates_|_gates_\{|_gates_%s|_gates_\{\}', t):
+        continue
+    # Must look like a loader, not a mention in a comment/doc only
+    if "importlib" not in t and "exec(" not in t and "open(" not in t and "Path(" not in t:
+        if "load_gate" not in t and "get_gates" not in t:
+            continue
+
+    newt2 = t
     newt2 = re.sub(
         r'f(["\'])_gates_\{([^}]+)\}\.py\1',
         r'f"_gates_{_peak_resolve_gate(\2)}.py"',
-        newt,
+        newt2,
     )
     newt2 = re.sub(
         r'(["\'])_gates_%s\.py\1\s*%\s*\(([^)]+)\)',
@@ -301,19 +348,14 @@ for p in Path("/home/runner/workspace/bot").glob("*.py"):
     )
     if newt2 == t:
         continue
-    # prepend inject near top
-    if newt2.lstrip().startswith("from __future__"):
-        lines = newt2.splitlines(True)
-        # after first future import line
-        out = [lines[0]]
-        i = 1
-        while i < len(lines) and (lines[i].startswith("from __future__") or lines[i].strip() == ""):
-            out.append(lines[i]); i += 1
-        out.append(inject + "\n")
-        out.extend(lines[i:])
-        newt2 = "".join(out)
-    else:
-        newt2 = inject + "\n" + newt2
+    newt2 = insert_after_header(newt2, inject)
+    # Safety: __future__ must stay first among statements
+    if "from __future__" in newt2:
+        fut_i = newt2.find("from __future__")
+        inj_i = newt2.find(marker)
+        if inj_i != -1 and fut_i != -1 and inj_i < fut_i:
+            print("SKIP unsafe inject order", p.name)
+            continue
     bak = p.with_suffix(p.suffix + ".bak_pre_peak_lock")
     if not bak.exists():
         bak.write_text(t, encoding="utf-8")
@@ -324,15 +366,42 @@ print("patched_gate_loaders", patched or ["(none — loaders already via _gates_
 PY
 
 echo "========== [5/6] persist luxury env + restart =========="
-cat > /home/runner/workspace/luxury_building.env <<'EOF'
-export EDGE_POLICY_MODE=luxury
-export EDGE_LUXURY_FLOOR_GATE=1
-export FALLBACK_SEND_BLOCKED=0
-EOF
+# Merge keys — never wipe countdown/mirror/tower flags set by FLOOR_MAX / WAKE.
+$PY <<'PY'
+from pathlib import Path
+p = Path("/home/runner/workspace/luxury_building.env")
+text = p.read_text(errors="ignore") if p.exists() else ""
+want = {
+    "EDGE_POLICY_MODE": "luxury",
+    "EDGE_LUXURY_FLOOR_GATE": "1",
+    "FALLBACK_SEND_BLOCKED": "0",
+    "TELEGRAM_SINGLE_OUTBOX": "1",
+    "LUXURY_TOWER_MERGE": "1",
+    "LUXURY_NO_HOUR_BLOCKS": "1",
+}
+kept, seen = [], set()
+for ln in text.splitlines():
+    s = ln.strip()
+    if not s or s.startswith("#") or "=" not in s:
+        kept.append(ln)
+        continue
+    raw = s[7:].strip() if s.startswith("export ") else s
+    k = raw.split("=", 1)[0].strip()
+    if k in want:
+        kept.append(f"export {k}={want[k]}")
+        seen.add(k)
+    else:
+        kept.append(ln)
+for k, v in want.items():
+    if k not in seen:
+        kept.append(f"export {k}={v}")
+p.write_text("\n".join(kept).rstrip() + "\n")
+print("merged", p)
+PY
 if [ -f /home/runner/workspace/.env ]; then
   sed -i '/^EDGE_POLICY_MODE=/d;/^EDGE_LUXURY_FLOOR_GATE=/d;/^FALLBACK_SEND_BLOCKED=/d' /home/runner/workspace/.env || true
 fi
-cat >> /home/runner/workspace/.env <<'EOF'
+grep -q '^EDGE_POLICY_MODE=' /home/runner/workspace/.env 2>/dev/null || cat >> /home/runner/workspace/.env <<'EOF'
 EDGE_POLICY_MODE=luxury
 EDGE_LUXURY_FLOOR_GATE=1
 FALLBACK_SEND_BLOCKED=0
@@ -353,8 +422,11 @@ else
 fi
 EOF
 chmod +x /home/runner/workspace/start_luxury.sh
-source /home/runner/workspace/luxury_building.env
-echo "MODE=$EDGE_POLICY_MODE"
+set -a
+# shellcheck disable=SC1091
+source /home/runner/workspace/luxury_building.env || true
+set +a
+echo "MODE=${EDGE_POLICY_MODE:-unset}"
 
 # WIRE / ONE_STACK set SKIP_SUPERVISOR_RESTART=1 — peak-lock only binds gates.
 if [ "${SKIP_SUPERVISOR_RESTART:-0}" = "1" ]; then
