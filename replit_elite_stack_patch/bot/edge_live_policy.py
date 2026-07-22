@@ -68,7 +68,16 @@ def _load_json(path: Path) -> dict:
 
 def _mode() -> str:
     mode = os.environ.get("EDGE_POLICY_MODE", "shadow").strip().lower()
-    return mode if mode in {"shadow", "precision", "volume", "luxury"} else "shadow"
+    if mode not in {"shadow", "precision", "volume", "luxury"}:
+        mode = "shadow"
+    # Never stay observe-only when luxury building is installed on disk.
+    if mode == "shadow" and (
+        _LUXURY_LIVE_FLOORS.exists()
+        or (_DIR.parent / "luxury_building.env").exists()
+        or (Path("/home/runner/workspace") / "luxury_building.env").exists()
+    ):
+        return "luxury"
+    return mode
 
 
 def _luxury_sets() -> tuple[set[str], set[str]]:
