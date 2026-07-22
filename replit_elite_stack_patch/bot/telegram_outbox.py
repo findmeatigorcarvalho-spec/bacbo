@@ -362,21 +362,21 @@ async def main() -> None:
         print("[Outbox] resolve peer fallback:", exc)
         entity = await client.get_entity(int(peer))
 
-    # Dual-lane: money → Mr_iv4; countdown-timer fires → Gunique (if peer set).
+    # Dual-lane: money → Mr_iv4; countdown-timer fires → Gunique (@UNIQUE_g1).
     cd_entity = None
     cd_peer = (
         os.environ.get("TELEGRAM_COUNTDOWN_PEER")
         or os.environ.get("GUNIQUE_PEER")
         or os.environ.get("TELEGRAM_GUNIQUE_PEER")
-        or ""
-    ).strip()
+        or "UNIQUE_g1"
+    ).strip().lstrip("@")
     if cd_peer:
         try:
             if cd_peer.lstrip("-").isdigit():
                 cd_entity = await client.get_entity(int(cd_peer))
             else:
                 cd_entity = await client.get_entity(cd_peer)
-            print(f"[Outbox] COUNTDOWN lane peer ready: {cd_peer}")
+            print(f"[Outbox] COUNTDOWN lane peer ready: @{cd_peer}")
         except Exception as exc:
             print("[Outbox] COUNTDOWN peer resolve FAIL (money-only until fixed):", repr(exc))
             cd_entity = None

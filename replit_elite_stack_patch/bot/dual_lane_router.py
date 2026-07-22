@@ -12,7 +12,7 @@ COUNTDOWN lane (Gunique):
 
 Env:
   TELEGRAM_TARGET_PEER          — money peer (default 6774605259 / Mr_iv4)
-  TELEGRAM_COUNTDOWN_PEER       — Gunique peer/username (required for CD lane send)
+  TELEGRAM_COUNTDOWN_PEER       — Gunique (default UNIQUE_g1)
   LUXURY_DUAL_LANE=1            — enable routing (default on when set)
 """
 from __future__ import annotations
@@ -24,6 +24,8 @@ from typing import Any
 
 LANE_MONEY = "MONEY"
 LANE_COUNTDOWN = "COUNTDOWN"
+DEFAULT_MONEY_PEER = "6774605259"  # Mr_iv4
+DEFAULT_COUNTDOWN_PEER = "UNIQUE_g1"  # Gunique (@UNIQUE_g1)
 
 # Fire template has an explicit seconds/window countdown for the prediction to hit.
 _CD_FIRE = re.compile(
@@ -95,20 +97,31 @@ def route_lane(
     ) else LANE_MONEY
 
 
+def _norm_peer(raw: str | None) -> str | None:
+    if not raw:
+        return None
+    s = str(raw).strip()
+    if not s:
+        return None
+    if s.startswith("@"):
+        s = s[1:]
+    return s
+
+
 def peer_for_lane(lane: str) -> str | None:
-    """Return Telegram peer string for lane. MONEY always has default; CD may be unset."""
+    """Return Telegram peer string for lane (money=Mr_iv4, countdown=Gunique)."""
     lane = (lane or LANE_MONEY).upper()
     if lane == LANE_COUNTDOWN:
-        return (
+        return _norm_peer(
             os.environ.get("TELEGRAM_COUNTDOWN_PEER")
             or os.environ.get("GUNIQUE_PEER")
             or os.environ.get("TELEGRAM_GUNIQUE_PEER")
-            or None
+            or DEFAULT_COUNTDOWN_PEER
         )
-    return (
+    return _norm_peer(
         os.environ.get("TELEGRAM_TARGET_PEER")
         or os.environ.get("TARGET_PEER_ID")
-        or "6774605259"
+        or DEFAULT_MONEY_PEER
     )
 
 
@@ -130,11 +143,9 @@ def route_peer(
         "coalition": lane == LANE_MONEY,
         "glue_result_under_fire": True,
         "note": (
-            "countdown fire → Gunique; set TELEGRAM_COUNTDOWN_PEER"
-            if lane == LANE_COUNTDOWN and not peer
-            else "money coalition → Mr_iv4"
+            "money coalition → Mr_iv4"
             if lane == LANE_MONEY
-            else "countdown → Gunique"
+            else f"countdown → Gunique (@{peer})"
         ),
     }
 

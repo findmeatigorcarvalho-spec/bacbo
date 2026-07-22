@@ -7,6 +7,8 @@ PY=python3
 SHA="${LUXURY_PATCH_SHA:-cursor/add-engine-gate-registry-d5ba}"
 BASE="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${SHA}/replit_elite_stack_patch"
 PEER="${TELEGRAM_TARGET_PEER:-6774605259}"
+CD_PEER="${TELEGRAM_COUNTDOWN_PEER:-${GUNIQUE_PEER:-UNIQUE_g1}}"
+CD_PEER="${CD_PEER#@}"
 
 echo "========== [0/5] note =========="
 echo "Prior VERDICT BAD was often a false alarm: pgrep -f matches its own cmdline."
@@ -24,6 +26,10 @@ $PY -m py_compile bot/runtime_supervisor.py bot/telegram_outbox.py
 if [ -f luxury_building.env ]; then
   grep -q 'TELEGRAM_SINGLE_OUTBOX' luxury_building.env || echo 'export TELEGRAM_SINGLE_OUTBOX=1' >> luxury_building.env
   sed -i 's/^export TELEGRAM_SINGLE_OUTBOX=.*/export TELEGRAM_SINGLE_OUTBOX=1/' luxury_building.env || true
+  grep -q 'TELEGRAM_COUNTDOWN_PEER' luxury_building.env || echo "export TELEGRAM_COUNTDOWN_PEER=${CD_PEER}" >> luxury_building.env
+  sed -i "s/^export TELEGRAM_COUNTDOWN_PEER=.*/export TELEGRAM_COUNTDOWN_PEER=${CD_PEER}/" luxury_building.env || true
+  grep -q 'GUNIQUE_PEER' luxury_building.env || echo "export GUNIQUE_PEER=${CD_PEER}" >> luxury_building.env
+  sed -i "s/^export GUNIQUE_PEER=.*/export GUNIQUE_PEER=${CD_PEER}/" luxury_building.env || true
 fi
 
 echo "========== [2/5] HARD RESET =========="
@@ -88,6 +94,8 @@ set -a
 set +a
 export TELEGRAM_SESSION_STRING="$(tr -d '\n' < .telegram_session_string)"
 export TELEGRAM_TARGET_PEER="$PEER"
+export TELEGRAM_COUNTDOWN_PEER="$CD_PEER"
+export GUNIQUE_PEER="$CD_PEER"
 export TELEGRAM_SINGLE_OUTBOX=1
 export FALLBACKS_ENABLED=1
 export FALLBACK_START_DELAY_SECS=15
@@ -100,6 +108,8 @@ nohup env EDGE_POLICY_MODE=luxury EDGE_LUXURY_FLOOR_GATE=1 FALLBACKS_ENABLED=1 \
   LUXURY_FLOOR_ROTATE=1 LUXURY_FLOOR_ROTATE_MODE=tag LUXURY_FLOOR_ROTATE_DEFER_APPLY=0 \
   TELEGRAM_SESSION_STRING="$TELEGRAM_SESSION_STRING" \
   TELEGRAM_TARGET_PEER="$PEER" \
+  TELEGRAM_COUNTDOWN_PEER="$CD_PEER" \
+  GUNIQUE_PEER="$CD_PEER" \
   TELEGRAM_OUTBOX_STARTUP_PING=1 \
   PYTHONPATH="$PYTHONPATH" \
   $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &

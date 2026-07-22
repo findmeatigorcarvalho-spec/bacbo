@@ -76,6 +76,8 @@ _LUXURY_FORCE_KEYS = {
     "LUXURY_NO_HOUR_BLOCKS",
     "LUXURY_LIVE_FLOORS",
     "TELEGRAM_TARGET_PEER",
+    "TELEGRAM_COUNTDOWN_PEER",
+    "GUNIQUE_PEER",
 }
 
 
@@ -128,16 +130,21 @@ def _env() -> dict[str, str]:
         env.setdefault("FALLBACK_SEND_BLOCKED", "0")
         env.setdefault("FALLBACKS_ENABLED", "1")
         env.setdefault("TELEGRAM_SINGLE_OUTBOX", "1")
+        env.setdefault("TELEGRAM_COUNTDOWN_PEER", "UNIQUE_g1")
+        env.setdefault("GUNIQUE_PEER", "UNIQUE_g1")
     else:
         env.setdefault("EDGE_POLICY_MODE", "shadow")
     env.setdefault("EDGE_LEGACY_355_WARN", "1")
     env.setdefault("BOT_TZ", "America/Sao_Paulo")
+    env.setdefault("TELEGRAM_COUNTDOWN_PEER", "UNIQUE_g1")
+    env.setdefault("GUNIQUE_PEER", "UNIQUE_g1")
     env["PYTHONPATH"] = f"{BOT}:{ROOT}:{env.get('PYTHONPATH', '')}"
     print(
         f"[Supervisor] EDGE_POLICY_MODE={env.get('EDGE_POLICY_MODE')} "
         f"FLOOR_GATE={env.get('EDGE_LUXURY_FLOOR_GATE')} "
         f"FALLBACKS={env.get('FALLBACKS_ENABLED')} "
-        f"OUTBOX={env.get('TELEGRAM_SINGLE_OUTBOX')}"
+        f"OUTBOX={env.get('TELEGRAM_SINGLE_OUTBOX')} "
+        f"CD_PEER={env.get('TELEGRAM_COUNTDOWN_PEER')}"
     )
     return env
 

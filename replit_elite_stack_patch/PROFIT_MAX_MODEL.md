@@ -13,7 +13,7 @@ Source of truth: `PROFITABLE_CARD_TYPES.md` (Vany chat forensics → Jul 18).
 | Lane | Chat | What fires | Result glue | Why |
 |--|--|--|--|--|
 | **MONEY** | `@Mr_iv4` (peer `6774605259`) | Every good **floor/camada** can propose (Solo/Golden/Platinum/Sequence style, but per **floor**) → merge picks best when several agree | **Result card immediately under that signal** (Mr_iv4 style — including countdown-*looking* green/result templates you already use) | NORMAL_RESULT family ≈ **75% WR**, top profit (~9.3k). Peak-day pace returns when floors propose, not only LIVE. |
-| **COUNTDOWN** | **Gunique** (separate peer) | Every profitable **countdown signal-fire** template (`CD_FIRE_TIMER_BRT_EDT_APOSTAR` primary; light RUSH/QUANTUM) | **Countdown result under that same CD fire** (`CD_RES_GREEN_G_BRT`, `CD_RES_RODADAS_TEMPO`, `CD_RES_BELL_GANHOU`) | CD_RESULT ≈ **91% WR**; CD_FIRE is the volume engine (May 19) that becomes G0 when glued (May 10 ≈ 500 G0). |
+| **COUNTDOWN** | **@UNIQUE_g1** (Gunique) | Every profitable **countdown signal-fire** template (`CD_FIRE_TIMER_BRT_EDT_APOSTAR` primary; light RUSH/QUANTUM) | **Countdown result under that same CD fire** (`CD_RES_GREEN_G_BRT`, `CD_RES_RODADAS_TEMPO`, `CD_RES_BELL_GANHOU`) | CD_RESULT ≈ **91% WR**; CD_FIRE is the volume engine (May 19) that becomes G0 when glued (May 10 ≈ 500 G0). |
 
 One Telethon outbox process, **two target peers**, routed by card family. Never two session clients.
 

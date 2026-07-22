@@ -74,7 +74,7 @@ See **`PROFIT_MAX_MODEL.md`** — full rationale.
 | Chat | Sends | Glue |
 |--|--|--|
 | **Mr_iv4** | Money / floor proposers (Solo·Golden·Platinum·Sequence per floor) | Result card under signal (current Mr_iv4 UX) |
-| **Gunique** | Countdown **signal-fire** templates | Countdown **result** under that same CD fire |
+| **@UNIQUE_g1** (Gunique) | Countdown **signal-fire** templates | Countdown **result** under that same CD fire |
 
 One outbox, two peers. Floors propose (v2); merge only ranks. CD result skin ≠ 91% magic — 91% is the countdown lane.
 
