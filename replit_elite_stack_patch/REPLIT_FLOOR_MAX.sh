@@ -21,6 +21,7 @@ for rel in \
   bot/gate_alias_resolve.py \
   bot/telegram_outbox.py \
   bot/dual_lane_router.py \
+  bot/fire_origin.py \
   bot/runtime_supervisor.py \
   bot/lux_floor_rotate.py \
   bot/data/peak_lock_config.json \
@@ -31,7 +32,7 @@ for rel in \
 do
   curl -fsSL -H "Cache-Control: no-cache" -o "$rel" "$BASE/$rel" || echo "skip $rel"
 done
-$PY -m py_compile bot/lux_tower_merge.py bot/peak_fidelity_ranker.py bot/telegram_outbox.py bot/dual_lane_router.py bot/edge_live_policy.py
+$PY -m py_compile bot/lux_tower_merge.py bot/peak_fidelity_ranker.py bot/telegram_outbox.py bot/dual_lane_router.py bot/fire_origin.py bot/edge_live_policy.py
 
 echo "========== [2/7] peak-lock apply (no double supervisor) =========="
 export SKIP_SUPERVISOR_RESTART=1
