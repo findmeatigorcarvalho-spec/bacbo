@@ -41,7 +41,7 @@ Duration buckets seen (extracted Ns): includes **200–400s** (2,361) and **400s
 ### Peak timed-fire days (binge candidates)
 
 Highest **FIRE + timing** days include **19–27 May 2026** (e.g. 19 May ≈ 2,419 timed-fireish msgs).  
-**Fri 22 May → Sat 23 May** sits inside that countdown-dense week — matches the shape of your “Friday night → Saturday” countdown-only binge (500+ hits class). Catalog day totals use `DD.MM.YYYY` timestamps from Vany.
+**Fri 22 May 18:00 → Sat 23 May 14:00** (Vany timestamps): **1,774** msgs, **465** with timing markers, **382** hit-ish among those timed — back-to-back dense hours (18h–21h Fri strongest). Full days: 22 May **1,796** timing msgs, 23 May **773**, while peak countdown day **19 May = 3,033**. Catalog uses `DD.MM.YYYY`.
 
 ---
 
