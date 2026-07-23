@@ -1,22 +1,32 @@
 # Luxury Goal — Big Picture (aligned track)
 
 ## One-sentence goal
-Every **historically good floor/setup since March** (WR≥60%, real peak days) can **propose** fires using its **own frozen peak gates**, in parallel; a **global merge** sends **at most one money card per conflict window** to Telegram, with the **result card glued under that signal** — and **countdown** is a **separate lane** with its own peaks/setups.
+Every **historically good floor/setup since March** (WR≥60%, real peak days) can **propose** fires using its **own frozen peak gates**, in parallel — each replaying its peak-day free-fire stream — with a referee that only collapses **true** bankroll collisions; result glued under each fire; countdown a separate lane.
 
-## Does this avoid losing profitable signals?
-**Best available design — yes, with one honest tradeoff:**
+## SHOULD vs IS (read this when volume feels “slow”)
+See **`VOLUME_SHOULD_VS_IS.md`**.
 
-| Situation | What happens | Value kept? |
+- **SHOULD:** 30–36 peak floors each fire like their best solo day → day total ≈ **sum** of those streams (explosion).  
+- **IS (v1):** one LIVE proposer + N floor **scorers** + merge ≤1 → volume **cannot** explode no matter how many gates are “locked.”  
+- **FIX:** `v2_floor_proposers.py` + `VOLUME_MODE=EXPLOSION` (opposite-color lock only).
+
+## Modes (do not pretend they are the same)
+
+| Mode | Behavior |
+|------|----------|
+| **SAFE_MERGE** | ≤1 money card / conflict window — protects bankroll; **caps** volume |
+| **EXPLOSION** | Every peak floor free-fires; lock **only** opposite-color same window — **restores** peak-sum volume |
+
+v1 today is SAFE_MERGE + floor stickers. Your “why isn’t it exploding?” question is exactly that.
+
+| Situation | SAFE_MERGE | EXPLOSION |
 |---|---|---|
-| One tower ALLOWs, others quiet | That tower’s card sends | Yes |
-| Several towers ALLOW **same color** | Merge picks best (sniper > watch > peak > LIVE); **one** card | Yes — signal kept, no spam |
-| Two towers ALLOW **opposite colors** same window | Opposite-color **lock** → one wins | Yes for bankroll; you cannot bet both |
-| Tower would have fired but LIVE engine never proposed | v1 may miss it | **v2** isolated peak handlers fix this |
+| One tower ALLOWs | send | send |
+| Many same color | **one** card | **each floor’s** card (SOLO_FACT) unless same round-id coalesce |
+| Opposite colors same window | lock one | lock one |
+| Tower would fire but LIVE never proposed | **missed** | **v2 proposers fire it** |
 
-v1 (shipping now): LIVE engine proposes + **all floors scored in EdgePolicy merge** + peak-lock loaders bound.  
-v2: each peak handler can propose independently into the merge queue.
-
-So: merge is how you **keep** multi-floor edge without destroying the account with red+blue doubles.
+v2: `bot/v2_floor_proposers.py` — N proposers → referee(`VOLUME_MODE`) → outbox.
 
 ## What we are NOT doing
 - Not 32 independent bots spamming chat every round.

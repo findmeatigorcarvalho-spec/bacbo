@@ -25,12 +25,13 @@ for rel in \
   bot/lux_tower_merge.py \
   bot/dual_lane_router.py \
   bot/fire_origin.py \
+  bot/v2_floor_proposers.py \
   bot/zero_miss_ledger.py
 do
   curl -fsSL -H "Cache-Control: no-cache" -o "$rel" "$BASE/$rel" || true
 done
-$PY -m py_compile bot/runtime_supervisor.py bot/telegram_outbox.py bot/dual_lane_router.py bot/fire_origin.py bot/lux_tower_merge.py 2>/dev/null || \
-  $PY -m py_compile bot/runtime_supervisor.py bot/telegram_outbox.py bot/dual_lane_router.py bot/fire_origin.py
+$PY -m py_compile bot/runtime_supervisor.py bot/telegram_outbox.py bot/dual_lane_router.py bot/fire_origin.py bot/v2_floor_proposers.py bot/lux_tower_merge.py 2>/dev/null || \
+  $PY -m py_compile bot/runtime_supervisor.py bot/telegram_outbox.py bot/dual_lane_router.py bot/fire_origin.py bot/v2_floor_proposers.py
 
 
 if [ -f luxury_building.env ]; then

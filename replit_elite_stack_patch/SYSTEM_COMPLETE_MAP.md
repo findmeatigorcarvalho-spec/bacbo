@@ -69,13 +69,14 @@ No money→Gunique copy.
 
 ---
 
-## 5) Floors / towers / merge
+## 5) Floors / towers / volume modes
 
-- Each peak floor = frozen peak-day gates (propose machine).  
+- Each peak floor = frozen peak-day gates (**must PROPOSE**, not only score LIVE).  
 - Floors ≠ Telegram rooms.  
-- Parallel propose → merge ≤1 **money** decision per conflict window.  
-- Timed lane has its own merge / peaks.  
-- Opposite colors same window → lock one per lane.
+- See **`VOLUME_SHOULD_VS_IS.md`**: 36 scorers on 1 mouth ≠ 36 free peak days.  
+- `VOLUME_MODE=EXPLOSION` → free-fire peak streams; lock only opposite-color same window.  
+- `VOLUME_MODE=SAFE_MERGE` → ≤1 money card / window (caps volume on purpose).  
+- Module: `bot/v2_floor_proposers.py`.
 
 ---
 
