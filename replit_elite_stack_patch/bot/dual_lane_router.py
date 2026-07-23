@@ -19,16 +19,18 @@ MONEY     → Mr_iv4 (TELEGRAM_TARGET_PEER=6774605259)
   Examples: 🏆 GOLDEN SIGNAL — ENTER NOW, rooms consensus, ENTER NOW — N ROOM(S).
 
 COUNTDOWN → @UNIQUE_g1 (TELEGRAM_COUNTDOWN_PEER)
-  FIRE templates WITH timing on the SIGNAL of when to bet / when color hits.
-  Examples: JANELA: 1s, 🟢 1s 🟢, CD_FIRE_TIMER_*, Sinal Retido→Liberado + window,
-            classic countdown signal-fire skins (historically elite volume/WR).
+  FIRE templates with CLOCK A — ENTRY WINDOW (Ns to PLACE the bet).
+  Examples: JANELA: 1s/11s/17s para apostar, 🟢 1s 🟢, CD_FIRE_TIMER_*,
+            Sinal Retido→Liberado + entry window.
+  Clock A ≠ Clock C. Clock A is urgency to enter; not “how long until resolve.”
   Each still gets its OWN result cards glued under that fire in the SAME chat.
 
 RESULT families (never lane-select by themselves)
 ─────────────────────────────────────────────────
   Plain: G0/G1/G2 win/loss, "✅ WIN — SOLO_ELITE", "blue win on G0", forensic resumido
   Ops:   G1 EXPIROU, G2 MISS, session stop — still RESULTS; glue under parent fire
-  Timed metadata on results (Intervalo, ⏱ Ns, rodada clocks) is REPORTING, not FIRE timing.
+  Clock C on results (⏱ Intervalo fire→resolve) is REPORTING, never Clock A.
+  See TIMING_CLOCKS.md + fire_origin.py (COALITION vs SOLO_FACT).
 """
 from __future__ import annotations
 

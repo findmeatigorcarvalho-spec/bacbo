@@ -16,7 +16,20 @@ Default is now **`TELEGRAM_MIRROR_MONEY_TO_GUNIQUE=0`**.
 | 1 | Classify **ROLE**: `FIRE` (color coming / enter) vs `RESULT` (outcome / ops) |
 | 2 | Only **FIRE** chooses Telegram peer |
 | 3 | **RESULT** always posts in the **same chat as its parent FIRE** |
-| 4 | `⏱ Intervalo: XXs` on a result is **reporting**, never a countdown-fire detector |
+| 4 | `⏱ Intervalo: XXs` on a result is **Clock C (reporting)**, never Clock A |
+
+See also: `TIMING_CLOCKS.md` · `SYSTEM_COMPLETE_MAP.md` · `bot/fire_origin.py`
+
+### Clocks (do not collapse)
+
+| Clock | Meaning | Example |
+|-------|---------|---------|
+| **A** | Entry window — seconds to *place* bet | `JANELA: 1s` / `11s` / `17s` |
+| **B** | Hit ETA — when color is *expected* (if shown) | rare predictive window on fire |
+| **C** | Resolve span — fire→resolved duration | `⏱ Intervalo: 31.3s` on forensic |
+
+`1s/11s/17s` on a SOLO/CD fire = **Clock A**.  
+`Intervalo` on a result = **Clock C**. Same word “janela/window” in Portuguese chat does **not** mean the same machine.
 
 ---
 

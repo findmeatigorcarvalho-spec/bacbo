@@ -222,14 +222,34 @@ def fmt_consensus(row: sqlite3.Row, floor: str | None = None) -> str:
     color = (row["color"] or "").lower()
     score = _row_score(row)
     floor_name = floor or _row_floor(row)
+    rooms = row["rooms_agreed"] if "rooms_agreed" in row.keys() else None
+    origin_badge = "SIGNAL"
+    origin_note = ""
+    try:
+        from fire_origin import classify_origin
+
+        og = classify_origin(
+            rooms_agreed=rooms,
+            signal_kind=str(row["signal_kind"] or ""),
+            source_floor=floor_name,
+        )
+        origin_badge = og.get("badge") or origin_badge
+        if og.get("origin") == "SOLO_FACT":
+            origin_note = "📌 SOLO FACT WARNING — not multi-room consensus\n"
+        elif og.get("origin") == "COALITION":
+            origin_note = "🏛 COALITION DECISION — multi-room confirmed\n"
+    except Exception:
+        pass
     return (
         "🚨 BAC BO SIGNAL 🚨\n\n"
+        f"{origin_note}"
+        f"🏷 ORIGIN: {origin_badge}\n"
         f"{color_emoji(color)} COLOR: {color.upper()}\n"
         f"🎯 MODE: {row['signal_kind'] or 'SIGNAL'}\n"
         f"🏛 FLOOR: {floor_name}\n"
         "⚡ G0 ONLY\n"
         f"📊 SCORE: {score:.2f}\n"
-        f"🏠 ROOMS: {row['rooms_agreed'] or 'engine'}\n\n"
+        f"🏠 ROOMS: {rooms or 'engine'}\n\n"
         "⚠️ Outbox sender active"
     )
 
@@ -284,9 +304,22 @@ def fmt_result(row: sqlite3.Row) -> str:
     if outcome == "win":
         result_label = "G0 WIN" if gale == 0 else f"G{gale} WIN"
     elif outcome == "loss":
-        result_label = "LOSS"
+        result_label = f"G{gale} LOSS" if gale else "G0 LOSS"
     else:
         result_label = "TIE"
+    # Loud truth board: bet blue + lost ⇒ this G0 was red (for certainty / learning).
+    try:
+        from fire_origin import truth_from_outcome
+
+        truth_line = truth_from_outcome(predicted, outcome)["line"]
+        if gale and outcome in ("win", "loss"):
+            truth_line = truth_line.replace("LOST", f"LOST G{gale}").replace(
+                "WIN ·", f"WIN G{gale} ·"
+            )
+    except Exception:
+        truth_line = (
+            f"BET {predicted.upper()} → OUT {actual.upper()} · {result_label}"
+        )
     banner = actual_icon * 10
     return (
         f"{banner}\n"
@@ -294,11 +327,13 @@ def fmt_result(row: sqlite3.Row) -> str:
         f"{banner}\n"
         f"🔔 {result_icon} {result_label}  ·  #{row['id']}\n"
         f"🎲 Apostou: {pred_icon} {predicted.upper()}  →  Saiu: {actual_icon} {actual.upper()}\n"
+        f"🧭 {truth_line}\n"
         f"🔍 SINAL #{row['id']} — RESUMIDO FORENSE\n"
-        f"  Tipo: {row['signal_kind']} · Cor: {predicted.upper()}\n"
+        f"  Tipo: {row['signal_kind']} · Cor prevista: {predicted.upper()}\n"
+        f"  Cor que SAIU: {actual.upper()}\n"
         f"  Disparado: {row['fired_at']} UTC\n"
         f"  Resolvido: {row['resolved_at'] or ''} UTC\n"
-        f"  ⏱ Intervalo: {secs_txt}\n"
+        f"  ⏱ Intervalo (Clock C — fire→resolve): {secs_txt}\n"
         f"  Resultado: {result_icon} {result_label}\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         f"🏁 Aguarde o próximo sinal do bot"
