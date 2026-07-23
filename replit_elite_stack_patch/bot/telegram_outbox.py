@@ -48,9 +48,10 @@ STARTUP_PING = os.environ.get("TELEGRAM_OUTBOX_STARTUP_PING", "1").strip() not i
 SIGNAL_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_SIGNAL_LOOKBACK_HOURS", "48"))
 RESULT_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_RESULT_LOOKBACK_HOURS", "72"))
 HEARTBEAT_EVERY = int(os.environ.get("OUTBOX_HEARTBEAT_EVERY", "12"))  # ~60s at 5s sleep
-# Money cards also post to Gunique so @UNIQUE_g1 is never empty while CD lane waits for timer fires.
-MIRROR_MONEY_TO_GUNIQUE = os.environ.get("TELEGRAM_MIRROR_MONEY_TO_GUNIQUE", "1").strip().lower() not in {
-    "0", "false", "no", "off",
+# NEVER default-mirror. User wants TOTAL SEPARATION, not duplication:
+# MONEY fires → Mr_iv4 only; TIMED fires → @UNIQUE_g1 only; results glue under parent.
+MIRROR_MONEY_TO_GUNIQUE = os.environ.get("TELEGRAM_MIRROR_MONEY_TO_GUNIQUE", "0").strip().lower() in {
+    "1", "true", "yes", "on",
 }
 
 
@@ -400,7 +401,8 @@ async def main() -> None:
         print("[Outbox] resolve peer fallback:", exc)
         entity = await client.get_entity(int(peer))
 
-    # Dual-lane: money → Mr_iv4 (+ mirror @UNIQUE_g1); countdown-timer → @UNIQUE_g1 only.
+    # Dual-lane SEPARATION (no mirror): money FIRE → Mr_iv4; timed FIRE → @UNIQUE_g1;
+    # RESULT always same chat as parent fire (lane persisted by signal id).
     cd_entity = None
     cd_peer = (
         os.environ.get("TELEGRAM_COUNTDOWN_PEER")
@@ -414,17 +416,36 @@ async def main() -> None:
                 cd_entity = await client.get_entity(int(cd_peer))
             else:
                 cd_entity = await client.get_entity(cd_peer)
-            print(f"[Outbox] COUNTDOWN/Gunique peer ready: @{cd_peer}")
+            print(f"[Outbox] COUNTDOWN/Gunique peer ready: @{cd_peer} (SEPARATE lane, no money mirror)")
         except Exception as exc:
             print("[Outbox] Gunique peer resolve FAIL:", repr(exc))
             cd_entity = None
 
-    def _lane_dests(signal_kind: str | None, text: str | None = None):
-        """Return (primary_dest, lane_name, mirror_dests)."""
+    def _lane_dests(
+        signal_kind: str | None,
+        text: str | None = None,
+        *,
+        signal_id: int | None = None,
+        is_result: bool = False,
+    ):
+        """Return (primary_dest, lane_name, mirror_dests). Mirrors empty unless explicitly enabled."""
         try:
-            from dual_lane_router import route_lane
+            from dual_lane_router import (
+                parent_lane_for,
+                persist_fire_lane,
+                route_lane,
+            )
 
-            lane = route_lane(signal_kind=signal_kind, text=text)
+            parent = parent_lane_for(signal_id) if signal_id is not None else None
+            meta = {"is_result": is_result, "parent_lane": parent} if is_result else {}
+            lane = route_lane(
+                signal_kind=signal_kind,
+                text=text,
+                meta=meta,
+                parent_lane=parent,
+            )
+            if not is_result and signal_id is not None:
+                persist_fire_lane(signal_id, lane)
         except Exception as exc:
             print("[Outbox] lane route error:", repr(exc))
             lane = "MONEY"
@@ -451,29 +472,34 @@ async def main() -> None:
     print(
         f"[Outbox] ONLINE money={getattr(entity, 'username', None) or peer} "
         f"gunique=@{cd_peer or 'UNSET'} mirror_money={MIRROR_MONEY_TO_GUNIQUE} "
-        f"send_blocked={SEND_BLOCKED} tag={boot_tag} pid={os.getpid()} db={DB}"
+        f"separation=1 send_blocked={SEND_BLOCKED} tag={boot_tag} pid={os.getpid()} db={DB}"
     )
 
     if STARTUP_PING:
-        ping = (
-            "LUXURY OUTBOX ONLINE\n"
+        ping_money = (
+            "LUXURY OUTBOX ONLINE — MONEY LANE\n"
             f"Tag floor: {boot_tag}\n"
             f"DB: {DB.name}\n"
-            f"Money→Mr_iv4 · Countdown→@{cd_peer or 'off'}\n"
-            f"Mirror money→Gunique: {MIRROR_MONEY_TO_GUNIQUE}\n"
-            "Waiting for engine FIRED → signal/result cards."
+            "Lane: FIRE without bet-window/janela → Mr_iv4 ONLY\n"
+            "Results for those fires glue here (Intervalo on result ≠ countdown fire).\n"
+            "No mirror to @UNIQUE_g1."
+        )
+        ping_cd = (
+            "LUXURY OUTBOX ONLINE — TIMED/COUNTDOWN LANE\n"
+            f"Tag floor: {boot_tag}\n"
+            f"DB: {DB.name}\n"
+            "Lane: FIRE with JANELA / Ns para apostar / CD_FIRE → @UNIQUE_g1 ONLY\n"
+            "Those fires still get their OWN result cards here.\n"
+            "Not a money mirror — total separation."
         )
         try:
-            msg = await client.send_message(entity, ping)
+            msg = await client.send_message(entity, ping_money)
             print("[Outbox] startup ping Mr_iv4 OK id=", msg.id)
         except Exception as exc:
             print("[Outbox] startup ping Mr_iv4 FAIL:", repr(exc))
         if cd_entity is not None:
             try:
-                msg2 = await client.send_message(
-                    cd_entity,
-                    ping + "\n\n(@UNIQUE_g1 — money mirrors + countdown-timer lane)",
-                )
+                msg2 = await client.send_message(cd_entity, ping_cd)
                 print("[Outbox] startup ping Gunique OK id=", msg2.id)
             except Exception as exc:
                 print("[Outbox] startup ping Gunique FAIL:", repr(exc))
@@ -584,10 +610,16 @@ async def main() -> None:
                 try:
                     floor = _row_floor(row)
                     _stamp_floor(int(row["id"]), floor)
-                    dest, lane, mirrors = _lane_dests(row["signal_kind"])
+                    body = fmt_consensus(row, floor=floor)
+                    dest, lane, mirrors = _lane_dests(
+                        row["signal_kind"],
+                        text=body,
+                        signal_id=int(row["id"]),
+                        is_result=False,
+                    )
                     dests = [dest] + list(mirrors)
                     lane_by_id[int(row["id"])] = (dest, lane, mirrors)
-                    await _send_all(dests, fmt_consensus(row, floor=floor))
+                    await _send_all(dests, body)
                     write_int(SIG_STATE, row["id"])
                     print(
                         "[Outbox] sent signal",
@@ -621,13 +653,19 @@ async def main() -> None:
 
             for row in results:
                 try:
+                    res_body = fmt_result(row)
                     cached = lane_by_id.get(int(row["id"]))
                     if cached:
                         dest, lane, mirrors = cached
                     else:
-                        dest, lane, mirrors = _lane_dests(row["signal_kind"])
+                        dest, lane, mirrors = _lane_dests(
+                            row["signal_kind"],
+                            text=res_body,
+                            signal_id=int(row["id"]),
+                            is_result=True,
+                        )
                     dests = [dest] + list(mirrors)
-                    await _send_all(dests, fmt_result(row))
+                    await _send_all(dests, res_body)
                     write_int(RES_STATE, row["id"])
                     print(
                         "[Outbox] sent result",

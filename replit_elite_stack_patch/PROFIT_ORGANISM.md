@@ -13,7 +13,8 @@ This is not one bot script. It is a **living organism**: senses (rooms) → brai
 3. **Opposite color same window** = lock one (bankroll law).  
 4. **Lane split by FIRE template:**  
    - **No countdown-seconds on fire** → Mr_iv4 money coalition + result under (results may show countdown UX).  
-   - **Countdown-seconds / intervalo / janela on fire** → **Gunique** own bot/chat + CD result under that fire.  
+   - **Bet-window / janela / Ns-to-hit on the FIRE itself** → **@UNIQUE_g1** only + that fire’s own results under it.  
+   - **Result `⏱ Intervalo` is NOT a fire timer** — never mirror money cards into Gunique.  
 5. **Result card = truth:** loss on red ⇒ actual blue ⇒ blue opinions right (and vice versa).  
 6. **Never lose one winning opportunity** — zero-miss ledger tracks every proposal, block, send, resolve.
 

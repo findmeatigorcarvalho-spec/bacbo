@@ -52,7 +52,7 @@ want = {
     "FALLBACKS_ENABLED": "1",
     "TELEGRAM_COUNTDOWN_PEER": "UNIQUE_g1",
     "GUNIQUE_PEER": "UNIQUE_g1",
-    "TELEGRAM_MIRROR_MONEY_TO_GUNIQUE": "1",
+    "TELEGRAM_MIRROR_MONEY_TO_GUNIQUE": "0",
     "LUXURY_FLOOR_ROTATE": "1",
     "LUXURY_FLOOR_ROTATE_MODE": "tag",
     "LUXURY_FLOOR_ROTATE_DEFER_APPLY": "0",
@@ -141,6 +141,6 @@ grep -E 'sent signal|mirror|Gunique|ONLINE' logs/telegram_outbox.log 2>/dev/null
 
 echo
 echo "FLOOR_MAX DONE."
-echo "Expect: luxury mode, peak gates bound, merge prefers strongest peak, money→Mr_iv4+@UNIQUE_g1."
+echo "Expect: luxury mode, peak gates bound, merge prefers strongest peak; MONEY→Mr_iv4 ONLY; TIMED FIRE→@UNIQUE_g1 ONLY (no mirror)."
 echo "If volume_gap floors stay high: need v2 proposers (each floor originates fires)."
 echo "DONE."

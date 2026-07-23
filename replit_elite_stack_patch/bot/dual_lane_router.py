@@ -1,51 +1,101 @@
 #!/usr/bin/env python3
 """
-dual_lane_router.py — split fires by TEMPLATE (not by result card skin).
+dual_lane_router.py — TOTAL SEPARATION by card ROLE + fire template family.
 
-MONEY lane (Mr_iv4):
-  Signal-fire templates WITHOUT countdown-in-seconds / intervalo / janela / window timer.
-  Floor coalition applies. Result card under fire is OK even if result text has countdown UX.
+NOT a mirror. NOT "any text that mentions seconds."
 
-COUNTDOWN lane (Gunique):
-  Signal-fire templates WITH countdown-in-seconds for the hit (timer / intervalo / janela).
-  Own chat. CD result cards under those fires are OK / required for glue.
+═══════════════════════════════════════════════════════════════════
+SPLIT KEY (locked)
+═══════════════════════════════════════════════════════════════════
+1) Classify ROLE first: FIRE (color-coming / enter) vs RESULT (outcome).
+2) Only FIRE templates choose the Telegram lane.
+3) RESULT always inherits the parent FIRE's lane (same chat as the signal).
+4) Result metadata like "⏱ Intervalo: 31.3s" NEVER makes a card a countdown fire.
 
-Env:
-  TELEGRAM_TARGET_PEER          — money peer (default 6774605259 / Mr_iv4)
-  TELEGRAM_COUNTDOWN_PEER       — Gunique (default UNIQUE_g1)
-  LUXURY_DUAL_LANE=1            — enable routing (default on when set)
+LANES
+─────
+MONEY     → Mr_iv4 (TELEGRAM_TARGET_PEER=6774605259)
+  FIRE templates with NO bet-window / janela / Ns-to-hit on the SIGNAL itself.
+  Examples: 🏆 GOLDEN SIGNAL — ENTER NOW, rooms consensus, ENTER NOW — N ROOM(S).
+
+COUNTDOWN → @UNIQUE_g1 (TELEGRAM_COUNTDOWN_PEER)
+  FIRE templates WITH timing on the SIGNAL of when to bet / when color hits.
+  Examples: JANELA: 1s, 🟢 1s 🟢, CD_FIRE_TIMER_*, Sinal Retido→Liberado + window,
+            classic countdown signal-fire skins (historically elite volume/WR).
+  Each still gets its OWN result cards glued under that fire in the SAME chat.
+
+RESULT families (never lane-select by themselves)
+─────────────────────────────────────────────────
+  Plain: G0/G1/G2 win/loss, "✅ WIN — SOLO_ELITE", "blue win on G0", forensic resumido
+  Ops:   G1 EXPIROU, G2 MISS, session stop — still RESULTS; glue under parent fire
+  Timed metadata on results (Intervalo, ⏱ Ns, rodada clocks) is REPORTING, not FIRE timing.
 """
 from __future__ import annotations
 
+import json
 import os
 import re
+from pathlib import Path
 from typing import Any
 
 
 LANE_MONEY = "MONEY"
 LANE_COUNTDOWN = "COUNTDOWN"
-DEFAULT_MONEY_PEER = "6774605259"  # Mr_iv4
-DEFAULT_COUNTDOWN_PEER = "UNIQUE_g1"  # Gunique (@UNIQUE_g1)
+ROLE_FIRE = "FIRE"
+ROLE_RESULT = "RESULT"
+ROLE_UNKNOWN = "UNKNOWN"
 
-# Fire template has an explicit seconds/window countdown for the prediction to hit.
-_CD_FIRE = re.compile(
+DEFAULT_MONEY_PEER = "6774605259"  # Mr_iv4
+DEFAULT_COUNTDOWN_PEER = "UNIQUE_g1"  # @UNIQUE_g1
+
+# Persist fire→lane so results follow parent across outbox restarts.
+_LANE_STATE = Path(
+    os.environ.get(
+        "OUTBOX_LANE_STATE",
+        str(Path(__file__).resolve().parent / "data" / "outbox_lane_by_signal.json"),
+    )
+)
+
+# ── RESULT detectors (role first — never treat these as timed FIRES) ─────────
+_RESULT_KIND = {
+    "RESULT",
+    "NORMAL_RESULT",
+    "CD_RESULT",
+    "CD_RES",
+    "FORENSIC_RESULT",
+    "G0_WIN",
+    "G0_LOSS",
+    "G1_WIN",
+    "G1_LOSS",
+    "G2_WIN",
+    "G2_LOSS",
+    "G2_MISS",
+    "EXPIRE",
+    "EXPIRED",
+    "G1_EXPIROU",
+}
+_RESULT_BODY = re.compile(
     r"(?is)("
-    r"\bcountdown\b|"
-    r"\bintervalo\b|"
-    r"\bjanela\b|"
-    r"⏳|"
-    r"apostar\s+agora|"
-    r"em\s+\d{1,3}\s*(s|sec|secs|seg|segundos?|seconds?)\b|"
-    r"(?<!sem\s)\b\d{1,3}\s*(s|sec|secs|seg|segundos?|seconds?)\b|"
-    r"CD_FIRE_|"
-    r"COUNTDOWN_SIGNAL"
+    r"RESUMIDO\s+FORENSE|"
+    r"🔔\s*[✅❌🟡].*(GANHOU|PERDEU|G0\s*WIN|LOSS|TIE)|"
+    r"✅\s*WIN\s*—|"
+    r"❌\s*LOSS\s*—|"
+    r"GANHOU\s+NO\s+G[0-3]|"
+    r"G[0-3]\s*—\s*(Acertou|Recuperado)|"
+    r"G1\s+EXPIROU|"
+    r"G2\s+MISS|"
+    r"PERDA\s+TOTAL|"
+    r"⏱\s*Intervalo\s*:|"
+    r"Apostou\s*:|"
+    r"Sinal\s+#\d+\s+encerrado|"
+    r"Aguarde\s+o\s+próximo\s+sinal|"
+    r"PASSO\s+A\s+PASSO\s*—\s*O\s+QUE\s+FAZER\s+AGORA"
     r")"
 )
-# Explicit "no timer" money fires must never route to countdown.
-_NOT_CD = re.compile(r"(?is)\b(sem\s+timer|without\s+timer|no\s+countdown|sem\s+countdown)\b")
+_RESULT_TEMPLATE_PREFIX = ("CD_RES_", "RESULT_", "RES_", "FORENSIC_")
 
-# Kinds / tags that are always countdown-lane fires when present on the signal row.
-_CD_KINDS = {
+# ── TIMED FIRE detectors (timing ON the SIGNAL of when to bet / hit) ─────────
+_CD_FIRE_KINDS = {
     "COUNTDOWN",
     "COUNTDOWN_SIGNAL",
     "COUNTDOWN_SIGNAL_FIRE",
@@ -54,47 +104,42 @@ _CD_KINDS = {
     "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
     "CD_FIRE_QUANTUM_LOCK",
     "CD_FIRE_RUSH_NS_LEFT",
+    "TIMED_FIRE",
+    "WINDOW_FIRE",
+    "JANELA",
 }
-
-
-def is_countdown_fire(
-    *,
-    text: str | None = None,
-    signal_kind: str | None = None,
-    card_type: str | None = None,
-    meta: dict[str, Any] | None = None,
-) -> bool:
-    """True when the SIGNAL FIRE itself carries countdown-seconds / window timing."""
-    meta = meta or {}
-    kind = (signal_kind or meta.get("signal_kind") or meta.get("kind") or "").strip().upper()
-    ctype = (card_type or meta.get("card_type") or meta.get("template") or "").strip().upper()
-    if kind in _CD_KINDS or ctype in _CD_KINDS:
-        return True
-    if ctype.startswith("CD_FIRE") or "COUNTDOWN_SIGNAL" in ctype:
-        return True
-    # Explicit meta flag from engine
-    if str(meta.get("lane") or "").strip().upper() == LANE_COUNTDOWN:
-        return True
-    if meta.get("has_countdown_seconds") in (1, True, "1", "true", "yes"):
-        return True
-    body = text or meta.get("text") or meta.get("card_text") or ""
-    if body and _NOT_CD.search(str(body)):
-        return False
-    if body and _CD_FIRE.search(str(body)):
-        return True
-    return False
-
-
-def route_lane(
-    *,
-    text: str | None = None,
-    signal_kind: str | None = None,
-    card_type: str | None = None,
-    meta: dict[str, Any] | None = None,
-) -> str:
-    return LANE_COUNTDOWN if is_countdown_fire(
-        text=text, signal_kind=signal_kind, card_type=card_type, meta=meta
-    ) else LANE_MONEY
+_TIMED_FIRE_BODY = re.compile(
+    r"(?is)("
+    r"JANELA\s*:\s*\d+\s*s|"
+    r"\d{1,3}\s*s\s+para\s+apostar|"
+    r"🟢\s*\d{1,3}\s*s\s*🟢|"
+    r"Sinal\s+Retido\s*→\s*Liberado|"
+    r"CD_FIRE_|"
+    r"COUNTDOWN_SIGNAL|"
+    r"\bcountdown\b.*\b(apostar|signal|sinal)\b|"
+    r"⏳\s*\d{1,3}\s*s|"
+    r"em\s+\d{1,3}\s*(s|sec|secs|seg|segundos?|seconds?)\s+(para|left|restam)"
+    r")"
+)
+# Explicit money / no-timer fires
+_MONEY_FIRE_BODY = re.compile(
+    r"(?is)("
+    r"GOLDEN\s+SIGNAL\s*—\s*ENTER\s+NOW|"
+    r"ENTER\s+NOW\s*—\s*\d+\s*ROOM|"
+    r"Rooms?\s+in\s+consensus|"
+    r"CONFIRMED\s+ENTRY|"
+    r"sem\s+timer|without\s+timer|no\s+countdown|sem\s+countdown"
+    r")"
+)
+_MONEY_KINDS = {
+    "GOLDEN",
+    "PLATINUM",
+    "SEQUENCE",
+    "SOLO_ELITE",
+    "COALITION",
+    "CONSENSUS",
+    "ENTER_NOW",
+}
 
 
 def _norm_peer(raw: str | None) -> str | None:
@@ -108,8 +153,108 @@ def _norm_peer(raw: str | None) -> str | None:
     return s
 
 
+def classify_role(
+    *,
+    text: str | None = None,
+    signal_kind: str | None = None,
+    card_type: str | None = None,
+    meta: dict[str, Any] | None = None,
+) -> str:
+    """FIRE | RESULT | UNKNOWN — RESULT wins over naive 'has seconds' heuristics."""
+    meta = meta or {}
+    kind = (signal_kind or meta.get("signal_kind") or meta.get("kind") or "").strip().upper()
+    ctype = (card_type or meta.get("card_type") or meta.get("template") or "").strip().upper()
+    role_hint = str(meta.get("role") or meta.get("card_role") or "").strip().upper()
+    if role_hint in (ROLE_FIRE, ROLE_RESULT):
+        return role_hint
+    if kind in _RESULT_KIND or ctype in _RESULT_KIND:
+        return ROLE_RESULT
+    if any(ctype.startswith(p) for p in _RESULT_TEMPLATE_PREFIX):
+        return ROLE_RESULT
+    if meta.get("is_result") in (1, True, "1", "true", "yes"):
+        return ROLE_RESULT
+    if meta.get("is_fire") in (1, True, "1", "true", "yes"):
+        return ROLE_FIRE
+    body = str(text or meta.get("text") or meta.get("card_text") or "")
+    if body and _RESULT_BODY.search(body):
+        # Forensic / win-loss skins are results even if they also say Intervalo Ns
+        return ROLE_RESULT
+    if kind in _CD_FIRE_KINDS or ctype in _CD_FIRE_KINDS or ctype.startswith("CD_FIRE"):
+        return ROLE_FIRE
+    if kind in _MONEY_KINDS or (body and _MONEY_FIRE_BODY.search(body)):
+        return ROLE_FIRE
+    if body and _TIMED_FIRE_BODY.search(body):
+        return ROLE_FIRE
+    if kind or ctype or body:
+        return ROLE_FIRE  # default unknown engine rows = fire candidates
+    return ROLE_UNKNOWN
+
+
+def is_countdown_fire(
+    *,
+    text: str | None = None,
+    signal_kind: str | None = None,
+    card_type: str | None = None,
+    meta: dict[str, Any] | None = None,
+) -> bool:
+    """True ONLY when the SIGNAL FIRE itself carries bet-window / hit timing."""
+    meta = meta or {}
+    if classify_role(
+        text=text, signal_kind=signal_kind, card_type=card_type, meta=meta
+    ) == ROLE_RESULT:
+        return False  # Intervalo on results is reporting, not lane selection
+
+    kind = (signal_kind or meta.get("signal_kind") or meta.get("kind") or "").strip().upper()
+    ctype = (card_type or meta.get("card_type") or meta.get("template") or "").strip().upper()
+    if kind in _CD_FIRE_KINDS or ctype in _CD_FIRE_KINDS:
+        return True
+    if ctype.startswith("CD_FIRE") or "COUNTDOWN_SIGNAL" in ctype:
+        return True
+    if str(meta.get("lane") or "").strip().upper() == LANE_COUNTDOWN:
+        return True
+    if meta.get("has_countdown_seconds") in (1, True, "1", "true", "yes"):
+        return True
+    if meta.get("has_bet_window") in (1, True, "1", "true", "yes"):
+        return True
+
+    body = str(text or meta.get("text") or meta.get("card_text") or "")
+    if body and _MONEY_FIRE_BODY.search(body) and not _TIMED_FIRE_BODY.search(body):
+        return False
+    if body and _TIMED_FIRE_BODY.search(body):
+        return True
+    return False
+
+
+def route_lane(
+    *,
+    text: str | None = None,
+    signal_kind: str | None = None,
+    card_type: str | None = None,
+    meta: dict[str, Any] | None = None,
+    parent_lane: str | None = None,
+) -> str:
+    """
+    FIRE → MONEY or COUNTDOWN by template family.
+    RESULT → parent_lane if known, else MONEY (safe default; prefer persist_lane).
+    """
+    role = classify_role(
+        text=text, signal_kind=signal_kind, card_type=card_type, meta=meta
+    )
+    if role == ROLE_RESULT:
+        pl = (parent_lane or (meta or {}).get("parent_lane") or "").strip().upper()
+        if pl in (LANE_MONEY, LANE_COUNTDOWN):
+            return pl
+        return LANE_MONEY
+    return (
+        LANE_COUNTDOWN
+        if is_countdown_fire(
+            text=text, signal_kind=signal_kind, card_type=card_type, meta=meta
+        )
+        else LANE_MONEY
+    )
+
+
 def peer_for_lane(lane: str) -> str | None:
-    """Return Telegram peer string for lane (money=Mr_iv4, countdown=Gunique)."""
     lane = (lane or LANE_MONEY).upper()
     if lane == LANE_COUNTDOWN:
         return _norm_peer(
@@ -131,31 +276,156 @@ def route_peer(
     signal_kind: str | None = None,
     card_type: str | None = None,
     meta: dict[str, Any] | None = None,
+    parent_lane: str | None = None,
 ) -> dict[str, Any]:
-    lane = route_lane(
+    role = classify_role(
         text=text, signal_kind=signal_kind, card_type=card_type, meta=meta
+    )
+    lane = route_lane(
+        text=text,
+        signal_kind=signal_kind,
+        card_type=card_type,
+        meta=meta,
+        parent_lane=parent_lane,
     )
     peer = peer_for_lane(lane)
     return {
+        "role": role,
         "lane": lane,
         "peer": peer,
         "peer_ready": bool(peer),
-        "coalition": lane == LANE_MONEY,
+        "coalition": lane == LANE_MONEY and role != ROLE_RESULT,
         "glue_result_under_fire": True,
+        "mirror": False,
         "note": (
-            "money coalition → Mr_iv4"
-            if lane == LANE_MONEY
-            else f"countdown → Gunique (@{peer})"
+            "RESULT → same chat as parent fire"
+            if role == ROLE_RESULT
+            else (
+                "FIRE money/coalition (no bet-window on signal) → Mr_iv4 ONLY"
+                if lane == LANE_MONEY
+                else f"FIRE timed/janela/countdown → @{peer} ONLY"
+            )
         ),
     }
 
 
+# ── Persist fire lane so results never re-classify by Intervalo text ─────────
+
+def _load_lane_map() -> dict[str, str]:
+    try:
+        if _LANE_STATE.exists():
+            data = json.loads(_LANE_STATE.read_text(encoding="utf-8"))
+            if isinstance(data, dict):
+                return {str(k): str(v).upper() for k, v in data.items()}
+    except Exception:
+        pass
+    return {}
+
+
+def _save_lane_map(m: dict[str, str]) -> None:
+    try:
+        _LANE_STATE.parent.mkdir(parents=True, exist_ok=True)
+        # Cap growth — keep last 20k ids
+        if len(m) > 20000:
+            keys = sorted(m.keys(), key=lambda x: int(x) if str(x).isdigit() else 0)
+            m = {k: m[k] for k in keys[-20000:]}
+        _LANE_STATE.write_text(json.dumps(m), encoding="utf-8")
+    except Exception:
+        pass
+
+
+def persist_fire_lane(signal_id: int | str, lane: str) -> None:
+    lane = (lane or LANE_MONEY).upper()
+    if lane not in (LANE_MONEY, LANE_COUNTDOWN):
+        lane = LANE_MONEY
+    m = _load_lane_map()
+    m[str(signal_id)] = lane
+    _save_lane_map(m)
+
+
+def parent_lane_for(signal_id: int | str) -> str | None:
+    m = _load_lane_map()
+    v = m.get(str(signal_id))
+    if v in (LANE_MONEY, LANE_COUNTDOWN):
+        return v
+    return None
+
+
+def classify_card(
+    *,
+    text: str | None = None,
+    signal_kind: str | None = None,
+    card_type: str | None = None,
+    meta: dict[str, Any] | None = None,
+    signal_id: int | str | None = None,
+) -> dict[str, Any]:
+    """Full classification for audits / outbox."""
+    parent = parent_lane_for(signal_id) if signal_id is not None else None
+    info = route_peer(
+        text=text,
+        signal_kind=signal_kind,
+        card_type=card_type,
+        meta=meta,
+        parent_lane=parent,
+    )
+    info["signal_id"] = signal_id
+    info["parent_lane"] = parent
+    return info
+
+
 if __name__ == "__main__":
     demos = [
-        {"signal_kind": "SOLO_ELITE", "text": "🚨 BAC BO SIGNAL 🚨\n🔵 BLUE"},
-        {"signal_kind": "GOLDEN", "text": "SINAL GOLDEN — sem timer"},
-        {"card_type": "CD_FIRE_TIMER_BRT_EDT_APOSTAR", "text": "⏳ 45s apostar agora"},
-        {"signal_kind": "SEQUENCE", "text": "INTERVALO 30s janela"},
+        # MONEY FIRE — ENTER NOW, no janela on signal
+        {
+            "label": "GOLDEN ENTER NOW (money fire)",
+            "signal_kind": "GOLDEN",
+            "text": (
+                "🏆 GOLDEN SIGNAL — ENTER NOW 🏆\n"
+                "🎯 Enter: blue\nRooms in consensus (3):\n"
+                "⚡ ENTER NOW — 3 ROOM(S) CONFIRMED"
+            ),
+        },
+        # TIMED FIRE — janela on SIGNAL
+        {
+            "label": "SOLO ELITE 1s JANELA (countdown fire)",
+            "signal_kind": "SOLO_ELITE",
+            "text": (
+                "⏳ Sinal Retido → Liberado\n"
+                "🔴 JANELA: 1s para apostar\n"
+                "🟢 1s 🟢\n💎 SOLO ELITE — APOSTAR 🔴 VERMELHO"
+            ),
+        },
+        # RESULT with Intervalo — MUST NOT become countdown fire
+        {
+            "label": "Forensic G0 WIN (result; Intervalo is metadata)",
+            "signal_kind": "SEQUENCE",
+            "text": (
+                "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵\n"
+                "🔔 ✅ GANHOU  ·  #48950\n"
+                "🔍 SINAL #48950 — RESUMIDO FORENSE\n"
+                "  ⏱ Intervalo: 16.6s\n"
+                "  Resultado: ✅ G0 WIN\n"
+                "📋 ✅  GANHOU NO G0"
+            ),
+        },
+        # RESULT ops
+        {
+            "label": "G1 EXPIROU (result ops)",
+            "text": "⏰ G1 EXPIROU — VERIFICAR SUA MESA\nPASSO A PASSO — O QUE FAZER AGORA",
+        },
+        # Classic CD fire kind
+        {
+            "label": "CD_FIRE_TIMER kind",
+            "card_type": "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+            "text": "⏳ 45s apostar agora",
+        },
+        # Plain short result
+        {
+            "label": "WIN SOLO_ELITE short",
+            "text": "✅ WIN — SOLO_ELITE\n🏆 G0 — Acertou de primeira!",
+        },
     ]
     for d in demos:
-        print(d, "→", route_peer(**d))
+        label = d.pop("label")
+        print(f"\n=== {label} ===")
+        print(classify_card(**d))
