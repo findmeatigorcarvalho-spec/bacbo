@@ -8,9 +8,10 @@ People say “janela / window / intervalo / timing” for **different machines**
 
 Examples: `JANELA: 1s para apostar`, `🟢 1s 🟢`, `11s`, `17s`, classic CD_FIRE countdown-to-enter skins.
 
+- **Yes — `🟢 1s 🟢` ≈ “you have 1s to bet,” not “the hit arrives in 1s.”**
 - This is **not** “when the casino result will land as a future fact.”
 - This is **urgency to enter** (flash / retained→released / seconds left to click).
-- These fires → **@UNIQUE_g1** lane (historically elite when glued to their own results).
+- Important, but **not** the catalog start axis — see `COUNTDOWN_START_AXIS.md` (WITH_TIMING vs NO_TIMING on every fire+result).
 
 ## CLOCK B — HIT / COLOR-COMING ETA (optional, rare, predictive)
 
