@@ -18,6 +18,9 @@ BASE="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${SHA}/r
 PEER="${TELEGRAM_TARGET_PEER:-6774605259}"
 CD_PEER="${TELEGRAM_COUNTDOWN_PEER:-${GUNIQUE_PEER:-UNIQUE_g1}}"
 CD_PEER="${CD_PEER#@}"
+# Optional numeric bypass if username Resolve fails / FloodWaits:
+#   export TELEGRAM_GUNIQUE_PEER_ID=<chat_id>
+GUNIQUE_ID="${TELEGRAM_GUNIQUE_PEER_ID:-${GUNIQUE_PEER_ID:-${TELEGRAM_COUNTDOWN_PEER_ID:-}}}"
 
 echo "========== HUB MAX [1/4] refresh modules =========="
 mkdir -p bot/data logs
@@ -41,6 +44,10 @@ echo "========== HUB MAX [2/4] apply locks → luxury_building.env =========="
 export TELEGRAM_TARGET_PEER="$PEER"
 export TELEGRAM_COUNTDOWN_PEER="$CD_PEER"
 export GUNIQUE_PEER="$CD_PEER"
+if [ -n "$GUNIQUE_ID" ]; then
+  export TELEGRAM_GUNIQUE_PEER_ID="$GUNIQUE_ID"
+  export GUNIQUE_PEER_ID="$GUNIQUE_ID"
+fi
 export HUB_MAX=1
 export VOLUME_MODE=EXPLOSION
 export V2_PROPOSERS=1
@@ -57,6 +64,10 @@ echo "========== HUB MAX [3/4] ONE stack (gunique-first env) =========="
 export TELEGRAM_TARGET_PEER="$PEER"
 export TELEGRAM_COUNTDOWN_PEER="$CD_PEER"
 export GUNIQUE_PEER="$CD_PEER"
+if [ -n "$GUNIQUE_ID" ]; then
+  export TELEGRAM_GUNIQUE_PEER_ID="$GUNIQUE_ID"
+  export GUNIQUE_PEER_ID="$GUNIQUE_ID"
+fi
 export TELEGRAM_MIRROR_MONEY_TO_GUNIQUE=0
 export VOLUME_MODE=EXPLOSION
 export V2_PROPOSERS=1
@@ -66,6 +77,8 @@ bash REPLIT_ONE_STACK.sh
 echo "========== HUB MAX [4/4] verify =========="
 echo "Priority: 1=@${CD_PEER} (Gunique 24/7)  2=${PEER} (money)  3+=specialists"
 echo "Expect: mirror_money=False · VOLUME_MODE=EXPLOSION · HUB_MAX=1"
+echo "Gunique resolve: cache/dialogs/username · optional TELEGRAM_GUNIQUE_PEER_ID=${GUNIQUE_ID:-unset}"
+echo "After boot check: rg -n 'Gunique resolve|MONEY_FALLBACK|lane GUNIQUE' logs/telegram_outbox.log | tail -20"
 rg -n "HUB_MAX|VOLUME_MODE|GUNIQUE|COUNTDOWN_PEER|MIRROR" luxury_building.env 2>/dev/null | head -n 20 || true
 if [ -f bot/data/hub_max_status.json ]; then
   $PY - <<'PY'

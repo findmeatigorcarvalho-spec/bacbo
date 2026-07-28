@@ -374,6 +374,33 @@ def _acquire_lock() -> int:
     return fd
 
 
+def _clean_peer(raw: str | None) -> str:
+    s = (raw or "").strip().strip('"').strip("'").lstrip("@")
+    return s
+
+
+def _gunique_cache_path() -> Path:
+    return HERE / "data" / "telegram_gunique_entity.json"
+
+
+def _write_peer_cache(path: Path, target: str, ent) -> None:
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(
+                {
+                    "target": str(target),
+                    "id": int(ent.id),
+                    "username": getattr(ent, "username", None),
+                    "title": getattr(ent, "title", None)
+                    or getattr(ent, "first_name", None),
+                }
+            )
+        )
+    except Exception:
+        pass
+
+
 async def _resolve_target(client, target):
     cache = HERE / "data" / "telegram_target_entity.json"
     cache.parent.mkdir(parents=True, exist_ok=True)
@@ -392,11 +419,141 @@ async def _resolve_target(client, target):
     if target is None:
         raise RuntimeError("TARGET missing — set TELEGRAM_TARGET_PEER=6774605259")
     ent = await client.get_entity(target)
-    try:
-        cache.write_text(json.dumps({"target": str(target), "id": int(ent.id)}))
-    except Exception:
-        pass
+    _write_peer_cache(cache, str(target), ent)
     return ent
+
+
+async def _resolve_gunique(client, peer: str | None):
+    """Resolve @UNIQUE_g1 (Gunique) with cache → numeric id → dialogs → username variants.
+
+    Username ResolveUsername often fails / FloodWaits on cold sessions. Prefer cached
+    numeric id or an existing dialog so trust-first routing does not fall back to money.
+    """
+    cache = _gunique_cache_path()
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    peer = _clean_peer(peer) or "UNIQUE_g1"
+    errors: list[str] = []
+
+    # 1) Explicit numeric id wins (TELEGRAM_GUNIQUE_PEER_ID / COUNTDOWN_PEER_ID)
+    for env_key in (
+        "TELEGRAM_GUNIQUE_PEER_ID",
+        "GUNIQUE_PEER_ID",
+        "TELEGRAM_COUNTDOWN_PEER_ID",
+        "COUNTDOWN_PEER_ID",
+    ):
+        raw = _clean_peer(os.environ.get(env_key))
+        if raw and raw.lstrip("-").isdigit():
+            try:
+                ent = await client.get_entity(int(raw))
+                _write_peer_cache(cache, peer, ent)
+                print(f"[Outbox] Gunique resolve OK via {env_key}={raw} id={ent.id}")
+                return ent
+            except Exception as exc:
+                errors.append(f"{env_key}:{exc!r}")
+
+    # 2) Peer itself is numeric
+    if peer.lstrip("-").isdigit():
+        try:
+            ent = await client.get_entity(int(peer))
+            _write_peer_cache(cache, peer, ent)
+            print(f"[Outbox] Gunique resolve OK via numeric peer id={ent.id}")
+            return ent
+        except Exception as exc:
+            errors.append(f"numeric:{exc!r}")
+
+    # 3) Cached entity id (avoid ResolveUsername hammer)
+    if cache.exists():
+        try:
+            data = json.loads(cache.read_text())
+            cid = data.get("id")
+            if cid is not None:
+                ent = await client.get_entity(int(cid))
+                print(f"[Outbox] Gunique resolve OK via cache id={ent.id}")
+                return ent
+        except Exception as exc:
+            errors.append(f"cache:{exc!r}")
+
+    # 4) Dialog scan — session already knows the chat
+    want = peer.casefold()
+    aliases = {
+        want,
+        "unique_g1",
+        "gunique",
+        "g1 unique",
+        "g1_unique",
+        "unique g1",
+    }
+    try:
+        async for dialog in client.iter_dialogs(limit=400):
+            ent = dialog.entity
+            uname = (getattr(ent, "username", None) or "").casefold()
+            title = (
+                getattr(ent, "title", None)
+                or getattr(ent, "first_name", None)
+                or getattr(dialog, "name", None)
+                or ""
+            ).casefold()
+            if uname in aliases or title in aliases:
+                _write_peer_cache(cache, peer, ent)
+                print(
+                    f"[Outbox] Gunique resolve OK via dialogs "
+                    f"username={getattr(ent, 'username', None)} id={ent.id}"
+                )
+                return ent
+            # Fuzzy only for near-full username overlap (avoid short false hits)
+            if uname and len(uname) >= 6 and (want in uname or uname in want):
+                _write_peer_cache(cache, peer, ent)
+                print(
+                    f"[Outbox] Gunique resolve OK via dialogs~ "
+                    f"username={getattr(ent, 'username', None)} id={ent.id}"
+                )
+                return ent
+    except Exception as exc:
+        errors.append(f"dialogs:{exc!r}")
+        print("[Outbox] Gunique dialogs scan FAIL:", repr(exc))
+
+    # 5) Username ResolveUsername variants (last — can FloodWait)
+    variants = []
+    for v in (peer, peer.lower(), peer.upper(), f"@{peer}", "@UNIQUE_g1", "UNIQUE_g1"):
+        if v and v not in variants:
+            variants.append(v)
+    try:
+        from telethon.errors import FloodWaitError, UsernameNotOccupiedError
+    except Exception:  # pragma: no cover
+        FloodWaitError = Exception  # type: ignore
+        UsernameNotOccupiedError = Exception  # type: ignore
+
+    for cand in variants:
+        try:
+            ent = await client.get_entity(cand)
+            _write_peer_cache(cache, peer, ent)
+            print(
+                f"[Outbox] Gunique resolve OK via username {cand!r} id={ent.id}"
+            )
+            return ent
+        except FloodWaitError as exc:
+            errors.append(f"flood:{cand}:{getattr(exc, 'seconds', '?')}")
+            print(
+                "[Outbox] Gunique ResolveUsername FloodWait — set "
+                "TELEGRAM_GUNIQUE_PEER_ID=<numeric> seconds=",
+                getattr(exc, "seconds", "?"),
+            )
+            break
+        except UsernameNotOccupiedError as exc:
+            errors.append(f"uname:{cand}:{exc!r}")
+        except Exception as exc:
+            errors.append(f"get:{cand}:{exc!r}")
+
+    print(
+        "[Outbox] Gunique peer resolve FAIL peer=",
+        peer,
+        "tried=",
+        len(errors),
+        "last=",
+        errors[-3:] if errors else [],
+        "— high-trust fires will MONEY_FALLBACK until fixed",
+    )
+    return None
 
 
 async def main() -> None:
@@ -439,23 +596,23 @@ async def main() -> None:
 
     # Dual-lane SEPARATION (no mirror): money FIRE → Mr_iv4; timed FIRE → @UNIQUE_g1;
     # RESULT always same chat as parent fire (lane persisted by signal id).
-    cd_entity = None
-    cd_peer = (
+    cd_peer = _clean_peer(
         os.environ.get("TELEGRAM_COUNTDOWN_PEER")
         or os.environ.get("GUNIQUE_PEER")
         or os.environ.get("TELEGRAM_GUNIQUE_PEER")
         or "UNIQUE_g1"
-    ).strip().lstrip("@")
-    if cd_peer:
-        try:
-            if cd_peer.lstrip("-").isdigit():
-                cd_entity = await client.get_entity(int(cd_peer))
-            else:
-                cd_entity = await client.get_entity(cd_peer)
-            print(f"[Outbox] COUNTDOWN/Gunique peer ready: @{cd_peer} (SEPARATE lane, no money mirror)")
-        except Exception as exc:
-            print("[Outbox] Gunique peer resolve FAIL:", repr(exc))
-            cd_entity = None
+    )
+    cd_entity = await _resolve_gunique(client, cd_peer) if cd_peer else None
+    if cd_entity is not None:
+        print(
+            f"[Outbox] COUNTDOWN/Gunique peer ready: @{cd_peer} "
+            f"id={getattr(cd_entity, 'id', '?')} (SEPARATE lane, no money mirror)"
+        )
+    else:
+        print(
+            f"[Outbox] Gunique NOT READY peer=@{cd_peer} — will soft-retry; "
+            "set TELEGRAM_GUNIQUE_PEER_ID=<numeric> if FloodWait / UsernameNotOccupied"
+        )
 
     def _lane_dests(
         signal_kind: str | None,
@@ -478,6 +635,10 @@ async def main() -> None:
         if slot == "GUNIQUE":
             if cd_entity is not None:
                 return cd_entity, "GUNIQUE", []
+            print(
+                f"[Outbox] GUNIQUE ROUTE FAIL id={signal_id} peer=@{cd_peer} "
+                "→ MONEY_FALLBACK_FROM_GUNIQUE (entity unresolved)"
+            )
             return entity, "MONEY_FALLBACK_FROM_GUNIQUE", []
         if slot == "MONEY":
             return entity, "MONEY", []
@@ -505,7 +666,10 @@ async def main() -> None:
         if lane == "COUNTDOWN":
             if cd_entity is not None:
                 return cd_entity, "COUNTDOWN", []
-            print("[Outbox] CD lane fallback → money peer (Gunique not ready)")
+            print(
+                f"[Outbox] CD lane FAIL id={signal_id} peer=@{cd_peer} "
+                "→ MONEY_FALLBACK_FROM_CD (Gunique not ready)"
+            )
             return entity, "MONEY_FALLBACK_FROM_CD", []
         mirrors = []
         if MIRROR_MONEY_TO_GUNIQUE and cd_entity is not None:
@@ -570,8 +734,18 @@ async def main() -> None:
         print("[Outbox] db probe FAIL:", repr(exc))
 
     tick = 0
+    gunique_retry_every = max(1, int(os.environ.get("GUNIQUE_RESOLVE_RETRY_TICKS", "6")))
     while True:
         try:
+            # Soft-retry Gunique resolve so trust-first does not stay stuck on money fallback
+            if cd_entity is None and cd_peer and (tick % gunique_retry_every == 0):
+                print(f"[Outbox] Gunique soft-retry resolve @{cd_peer} tick={tick}")
+                cd_entity = await _resolve_gunique(client, cd_peer)
+                if cd_entity is not None:
+                    print(
+                        f"[Outbox] Gunique soft-retry OK id={getattr(cd_entity, 'id', '?')}"
+                    )
+
             if SEND_BLOCKED:
                 if tick % HEARTBEAT_EVERY == 0:
                     print("[Outbox] HEARTBEAT send_blocked=1 — not sending")
@@ -644,10 +818,16 @@ async def main() -> None:
                         "SELECT COUNT(*) FROM consensus_signals "
                         "WHERE fired_at >= datetime('now','-30 minutes')"
                     ).fetchone()[0]
+                    gstat = (
+                        f"ready id={getattr(cd_entity, 'id', '?')}"
+                        if cd_entity is not None
+                        else "UNRESOLVED→fallback"
+                    )
                     print(
                         f"[Outbox] HEARTBEAT last_sig={last_sig} abs_max_id={abs_mx[0]} "
                         f"abs_max_fired={abs_mx[1]} pending={mx[1]} recent_30m={recent} "
-                        f"pending_send={len(rows)} pending_res={len(results)}"
+                        f"pending_send={len(rows)} pending_res={len(results)} "
+                        f"gunique={gstat}"
                     )
                     if recent == 0 and (mx[1] or 0) == 0:
                         print(

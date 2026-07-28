@@ -99,12 +99,26 @@ def _upsert_env(path: Path, keys: dict[str, str]) -> None:
 def apply() -> dict:
     DATA.mkdir(parents=True, exist_ok=True)
     peer = os.environ.get("TELEGRAM_TARGET_PEER", "6774605259")
-    cd = (os.environ.get("TELEGRAM_COUNTDOWN_PEER") or os.environ.get("GUNIQUE_PEER") or "UNIQUE_g1").lstrip("@")
+    cd = (
+        os.environ.get("TELEGRAM_COUNTDOWN_PEER")
+        or os.environ.get("GUNIQUE_PEER")
+        or "UNIQUE_g1"
+    ).strip().strip('"').strip("'").lstrip("@")
     keys = dict(ENV_KEYS)
     keys["TELEGRAM_TARGET_PEER"] = peer
     keys["TELEGRAM_COUNTDOWN_PEER"] = cd
     keys["GUNIQUE_PEER"] = cd
     keys["HUB_CHAT_PRIORITY"] = f"{cd},{peer},SOLO,GOLDEN,SEQUENCE,MIX,OPS"
+    # Numeric id bypasses ResolveUsername FloodWait / UsernameNotOccupied
+    for id_key in (
+        "TELEGRAM_GUNIQUE_PEER_ID",
+        "GUNIQUE_PEER_ID",
+        "TELEGRAM_COUNTDOWN_PEER_ID",
+    ):
+        raw = (os.environ.get(id_key) or "").strip().strip('"').strip("'")
+        if raw and raw.lstrip("-").isdigit():
+            keys[id_key] = raw
+            break
 
     _upsert_env(ENV_PATH, keys)
     for k, v in keys.items():
