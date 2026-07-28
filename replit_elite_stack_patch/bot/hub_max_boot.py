@@ -18,10 +18,28 @@ from pathlib import Path
 
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent if (HERE.parent / "bacbo_royal_complete.py").exists() else Path.cwd()
 DATA = HERE / "data"
-ENV_PATH = ROOT / "luxury_building.env"
 STATUS = DATA / "hub_max_status.json"
+
+
+def _workspace_root() -> Path:
+    candidates = [
+        Path("/home/runner/workspace"),
+        HERE.parent.parent,  # repo root when nested
+        HERE.parent,
+        Path.cwd(),
+    ]
+    for c in candidates:
+        if (c / "bacbo_royal_complete.py").exists() or (c / "luxury_building.env").exists():
+            return c
+    # Replit default even if engine file name differs
+    if Path("/home/runner/workspace").is_dir():
+        return Path("/home/runner/workspace")
+    return Path.cwd()
+
+
+ROOT = _workspace_root()
+ENV_PATH = ROOT / "luxury_building.env"
 
 # Gunique first, then money, then specialists
 CHAT_PRIORITY = [
