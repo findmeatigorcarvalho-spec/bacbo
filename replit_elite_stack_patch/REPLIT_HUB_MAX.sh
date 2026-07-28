@@ -27,6 +27,8 @@ mkdir -p bot/data logs
 for rel in \
   bot/hub_max_boot.py \
   bot/hub_dispatch.py \
+  bot/hub_engine_route.py \
+  bot/lux_send_config_bind.py \
   bot/window_packer.py \
   bot/dual_lane_router.py \
   bot/fire_origin.py \
@@ -38,7 +40,38 @@ for rel in \
 do
   curl -fsSL -H "Cache-Control: no-cache" -o "$rel" "$BASE/$rel" || echo "skip $rel"
 done
-$PY -m py_compile bot/hub_max_boot.py bot/hub_dispatch.py bot/window_packer.py bot/dual_lane_router.py bot/fire_origin.py bot/telegram_outbox.py
+$PY -m py_compile bot/hub_max_boot.py bot/hub_dispatch.py bot/hub_engine_route.py bot/lux_send_config_bind.py bot/window_packer.py bot/dual_lane_router.py bot/fire_origin.py bot/telegram_outbox.py
+
+# Ensure bacbo loads send-route bind (engine owns original skins → Gunique/money)
+$PY - <<'PY'
+import re
+from pathlib import Path
+cands = [Path("bacbo_royal_complete.py"), Path("bacbo.py"), Path("bot/bacbo_royal_complete.py")]
+p = next((c for c in cands if c.exists()), None)
+if not p:
+    print("bacbo source not found — skip send-bind inject")
+else:
+    src = p.read_text(encoding="utf-8", errors="replace")
+    if "LUXURY_SEND_CONFIG_BIND" in src:
+        print("send-config-bind already injected in", p)
+    else:
+        block = '''
+# --- LUXURY_SEND_CONFIG_BIND (auto) ---
+try:
+    import lux_send_config_bind  # noqa: F401
+    print("[LUXURY] send-config-bind loaded (HUB engine route)")
+except Exception as _lux_scb_exc:
+    print("[LUXURY] send-config-bind skipped:", _lux_scb_exc)
+# --- end LUXURY_SEND_CONFIG_BIND ---
+'''
+        m = re.search(r"^if __name__", src, re.M)
+        if m:
+            src = src[: m.start()] + block + "\n" + src[m.start() :]
+        else:
+            src = src + "\n" + block
+        p.write_text(src, encoding="utf-8")
+        print("injected send-config-bind into", p)
+PY
 
 echo "========== HUB MAX [2/4] apply locks → luxury_building.env =========="
 export TELEGRAM_TARGET_PEER="$PEER"
@@ -56,6 +89,9 @@ export HUB_GUNIQUE_FIRST=1
 export HUB_CONFIG_SEPARATE=1
 export HUB_NO_SHRINK_GATES=1
 export HUB_ORIGINAL_CARD_SKINS=1
+export HUB_ENGINE_ROUTE=1
+export HUB_OUTBOX_FIRE_CARDS=0
+export HUB_OUTBOX_RESULT_CARDS=0
 export PACKER_REAL_COUNTDOWN_MAX=30
 $PY bot/hub_max_boot.py | tee logs/hub_max_boot.log
 
@@ -78,7 +114,9 @@ echo "========== HUB MAX [4/4] verify =========="
 echo "Priority: 1=@${CD_PEER} (Gunique 24/7)  2=${PEER} (money)  3+=specialists"
 echo "Expect: mirror_money=False · VOLUME_MODE=EXPLOSION · HUB_MAX=1"
 echo "Gunique resolve: cache/dialogs/username · optional TELEGRAM_GUNIQUE_PEER_ID=${GUNIQUE_ID:-unset}"
-echo "After boot check: rg -n 'Gunique resolve|MONEY_FALLBACK|lane GUNIQUE' logs/telegram_outbox.log | tail -20"
+echo "Anti-double: HUB_OUTBOX_FIRE_CARDS=0 (engine skins) · HUB_ENGINE_ROUTE=1 (send→Gunique/money)"
+echo "After boot check:"
+echo "  rg -n 'HUB-ROUTE|Gunique resolve|skip fire card|FATAL CONFIG' logs/*.log | tail -40"
 rg -n "HUB_MAX|VOLUME_MODE|GUNIQUE|COUNTDOWN_PEER|MIRROR" luxury_building.env 2>/dev/null | head -n 20 || true
 if [ -f bot/data/hub_max_status.json ]; then
   $PY - <<'PY'

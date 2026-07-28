@@ -56,6 +56,22 @@ MIRROR_MONEY_TO_GUNIQUE = os.environ.get("TELEGRAM_MIRROR_MONEY_TO_GUNIQUE", "0"
 HUB_MAX = os.environ.get("HUB_MAX", "0").strip() not in {"0", "false", "no", "off"}
 
 
+def _env_flag(name: str, default: str = "0") -> bool:
+    return os.environ.get(name, default).strip().lower() not in {"0", "false", "no", "off"}
+
+
+# When HUB_MAX: engine owns original rich skins; outbox must not duplicate fire cards.
+# Set HUB_OUTBOX_FIRE_CARDS=1 only for gap-fill / debug.
+HUB_OUTBOX_FIRE_CARDS = _env_flag(
+    "HUB_OUTBOX_FIRE_CARDS",
+    "1" if not HUB_MAX else "0",
+)
+HUB_OUTBOX_RESULT_CARDS = _env_flag(
+    "HUB_OUTBOX_RESULT_CARDS",
+    "1" if not HUB_MAX else "0",
+)
+
+
 def _resolve_db() -> Path:
     """Use the live engine DB (freshest bacbo.db), not a stale sibling copy."""
     env = (os.environ.get("BACBO_DB") or os.environ.get("DB_PATH") or "").strip()
@@ -613,6 +629,22 @@ async def main() -> None:
             f"[Outbox] Gunique NOT READY peer=@{cd_peer} — will soft-retry; "
             "set TELEGRAM_GUNIQUE_PEER_ID=<numeric> if FloodWait / UsernameNotOccupied"
         )
+    try:
+        mid = int(getattr(entity, "id", 0) or 0)
+        cid = int(getattr(cd_entity, "id", 0) or 0) if cd_entity is not None else 0
+        if mid and cid and mid == cid:
+            print(
+                "[Outbox] FATAL CONFIG: money peer id == Gunique peer id "
+                f"({mid}) — chats are NOT separated. Fix TELEGRAM_TARGET_PEER vs "
+                "TELEGRAM_COUNTDOWN_PEER / TELEGRAM_GUNIQUE_PEER_ID."
+            )
+    except Exception:
+        pass
+    print(
+        f"[Outbox] hub_card_policy fire_cards={int(HUB_OUTBOX_FIRE_CARDS)} "
+        f"result_cards={int(HUB_OUTBOX_RESULT_CARDS)} "
+        f"(HUB_MAX engine owns original skins when fire_cards=0)"
+    )
 
     def _lane_dests(
         signal_kind: str | None,
@@ -688,7 +720,10 @@ async def main() -> None:
 
     print(
         f"[Outbox] ONLINE money={getattr(entity, 'username', None) or peer} "
-        f"gunique=@{cd_peer or 'UNSET'} mirror_money={MIRROR_MONEY_TO_GUNIQUE} "
+        f"id={getattr(entity, 'id', '?')} "
+        f"gunique=@{cd_peer or 'UNSET'} "
+        f"gid={getattr(cd_entity, 'id', None) if cd_entity else 'UNRESOLVED'} "
+        f"mirror_money={MIRROR_MONEY_TO_GUNIQUE} "
         f"hub_max={HUB_MAX} separation=1 send_blocked={SEND_BLOCKED} "
         f"tag={boot_tag} pid={os.getpid()} db={DB}"
     )
@@ -696,18 +731,20 @@ async def main() -> None:
     if STARTUP_PING:
         ping_money = (
             "LUXURY OUTBOX ONLINE — MONEY CHAT (#2)\n"
+            f"DEST peer id: {getattr(entity, 'id', '?')}\n"
             f"Tag floor: {boot_tag}\n"
             f"DB: {DB.name}\n"
-            "Hub: lower-trust fires land here.\n"
-            "Results for those fires glue here.\n"
+            "Hub: engine routes low-trust / ops here.\n"
+            f"Outbox fire cards: {'ON' if HUB_OUTBOX_FIRE_CARDS else 'OFF (engine owns skins)'}\n"
             f"HUB_MAX={int(HUB_MAX)} · no mirror."
         )
         ping_cd = (
             "LUXURY OUTBOX ONLINE — GUNIQUE (#1) TRUST-FIRST\n"
+            f"DEST peer id: {getattr(cd_entity, 'id', '?')}\n"
             f"Tag floor: {boot_tag}\n"
             f"DB: {DB.name}\n"
-            "Priority #1 24/7 — high-TRUST fires fill here first.\n"
-            "Original-family skins · results glue under parent.\n"
+            "Priority #1 24/7 — high-TRUST original skins land here.\n"
+            "Engine send() is redirected here when HUB_ENGINE_ROUTE=1.\n"
             f"HUB_MAX={int(HUB_MAX)} · trust→Gunique · cascade→money."
         )
         try:
@@ -858,6 +895,18 @@ async def main() -> None:
                     floor = _row_floor(row)
                     _stamp_floor(int(row["id"]), floor)
                     score = _row_score(row)
+                    if HUB_MAX and not HUB_OUTBOX_FIRE_CARDS:
+                        # Engine already posted the original skin; do not double-card.
+                        write_int(SIG_STATE, row["id"])
+                        print(
+                            "[Outbox] HUB skip fire card (engine owns skin)",
+                            row["id"],
+                            row["signal_kind"],
+                            floor,
+                            "score",
+                            score,
+                        )
+                        continue
                     peer_slot = None
                     if HUB_MAX:
                         try:
@@ -884,6 +933,13 @@ async def main() -> None:
                         is_result=False,
                         peer_slot=peer_slot,
                     )
+                    if HUB_MAX:
+                        try:
+                            from hub_dispatch import stamp_route_label
+
+                            body = stamp_route_label(body, lane)
+                        except Exception:
+                            pass
                     dests = [dest] + list(mirrors)
                     lane_by_id[int(row["id"])] = (dest, lane, mirrors)
                     await _send_all(dests, body)
@@ -920,6 +976,14 @@ async def main() -> None:
 
             for row in results:
                 try:
+                    if HUB_MAX and not HUB_OUTBOX_RESULT_CARDS:
+                        write_int(RES_STATE, row["id"])
+                        print(
+                            "[Outbox] HUB skip result card (engine owns skin)",
+                            row["id"],
+                            row["outcome"],
+                        )
+                        continue
                     res_body = fmt_result(row)
                     cached = lane_by_id.get(int(row["id"]))
                     if cached:

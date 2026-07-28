@@ -190,6 +190,31 @@ def _row_get(row: Any, key: str, default: Any = None) -> Any:
         return default
 
 
+def stamp_route_label(body: str, actual_lane: str) -> str:
+    """Rewrite 📡 Route line to the real destination after resolve/fallback."""
+    lane = (actual_lane or "").upper()
+    if "FALLBACK" in lane:
+        label = "MONEY (Gunique unresolved — fallback)"
+    elif lane in {"GUNIQUE", "COUNTDOWN"}:
+        label = "GUNIQUE"
+    elif lane == "MONEY":
+        label = "MONEY"
+    else:
+        label = lane or "MONEY"
+    lines = str(body or "").splitlines()
+    out: list[str] = []
+    stamped = False
+    for ln in lines:
+        if ln.startswith("📡 Route:"):
+            out.append(f"📡 Route: {label}")
+            stamped = True
+        else:
+            out.append(ln)
+    if not stamped:
+        out.append(f"📡 Route: {label}")
+    return "\n".join(out)
+
+
 def fmt_original_fire(row: Any, *, floor: str, trust: dict[str, Any]) -> str:
     kind = str(_row_get(row, "signal_kind") or trust.get("kind") or "SIGNAL").upper()
     color = str(_row_get(row, "color") or trust.get("color") or "").lower()
@@ -212,7 +237,7 @@ def fmt_original_fire(row: Any, *, floor: str, trust: dict[str, Any]) -> str:
     trust_n = trust.get("trust")
     slot = trust.get("peer_slot")
 
-    if kind == "GOLDEN" or (origin == "COALITION" and kind in {"GOLDEN", "FLASH"}):
+    if kind == "GOLDEN":
         return (
             "🏆 GOLDEN SIGNAL — ENTER NOW 🏆\n"
             "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -223,13 +248,27 @@ def fmt_original_fire(row: Any, *, floor: str, trust: dict[str, Any]) -> str:
             f"📊 Score: {score:.0f} · Trust {trust_n}\n"
             f"🏛 Floor: {floor} · {origin}\n"
             f"🏠 Rooms: {rooms or '—'}\n"
-            f"📡 Route: {slot} (Gunique-first by trust)\n"
+            f"📡 Route: {slot}\n"
             "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
             "⚡ ENTER NOW\n"
             "_After result: /win · /loss · /tie_"
         )
 
-    if kind == "SOLO_ELITE" or (origin == "SOLO" and kind not in {"SEQUENCE", "GOLDEN"}):
+    if kind == "FLASH":
+        return (
+            "⚡ FLASH SIGNAL — ENTER NOW ⚡\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            f"🎯 Enter: {emoji} {color_label}\n"
+            f"📊 Score: {score:.0f} · Trust {trust_n}\n"
+            f"🏛 Floor: {floor} · {origin}\n"
+            f"🏠 Rooms: {rooms or '—'}\n"
+            f"📡 Route: {slot}\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            "⚡ ENTER NOW · G0 focus\n"
+            "_After result: /win · /loss · /tie_"
+        )
+
+    if kind == "SOLO_ELITE" or (origin == "SOLO" and kind not in {"SEQUENCE", "GOLDEN", "FLASH"}):
         return (
             "💎 SOLO ELITE SIGNAL 💎\n"
             "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
