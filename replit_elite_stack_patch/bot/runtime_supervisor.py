@@ -117,8 +117,24 @@ def _env() -> dict[str, str]:
             env["TELEGRAM_SESSION_STRING"] = _sv
         elif len((env.get("TELEGRAM_SESSION_STRING") or "").strip()) <= 50:
             env.pop("TELEGRAM_SESSION_STRING", None)
+    # Materialize file from env/secret so bacbo forks that only read the file can boot
+    _sess = (env.get("TELEGRAM_SESSION_STRING") or "").strip()
+    if len(_sess) > 50 and (
+        not session_path.exists()
+        or len(session_path.read_text(errors="ignore").strip()) <= 50
+    ):
+        try:
+            session_path.write_text(_sess + "\n", encoding="utf-8")
+            print(f"[Supervisor] wrote {session_path} from TELEGRAM_SESSION_STRING")
+        except Exception as exc:
+            print("[Supervisor] session file write skip:", repr(exc))
     if len((env.get("TELEGRAM_SESSION_STRING") or "").strip()) <= 50:
         env.pop("TELEGRAM_SESSION_STRING", None)
+        print(
+            "[Supervisor] WARN: no Telegram session "
+            "(set Secret TELEGRAM_SESSION_STRING or .telegram_session_string) "
+            "— bacbo will crash-loop"
+        )
     # Prefer luxury when luxury_building.env is present; otherwise keep caller/shadow.
     if (ROOT / "luxury_building.env").exists():
         mode = (env.get("EDGE_POLICY_MODE") or "luxury").strip().lower()

@@ -767,6 +767,19 @@ async def main() -> None:
             f"[Outbox] db_max_id={mx[0]} db_max_fired={mx[1]} "
             f"sig_state={read_int(SIG_STATE)} res_state={read_int(RES_STATE)}"
         )
+        # When outbox does not send fire/result cards, snap cursors to DB tip so we
+        # do not walk a thousand-row historical backlog printing skip lines.
+        tip = int(mx[0] or 0)
+        if tip > 0 and HUB_MAX and not HUB_OUTBOX_FIRE_CARDS:
+            cur = read_int(SIG_STATE)
+            if cur < tip:
+                write_int(SIG_STATE, tip)
+                print(f"[Outbox] HUB snap fire cursor {cur}→{tip} (engine owns skins)")
+        if tip > 0 and HUB_MAX and not HUB_OUTBOX_RESULT_CARDS:
+            cur = read_int(RES_STATE)
+            if cur < tip:
+                write_int(RES_STATE, tip)
+                print(f"[Outbox] HUB snap result cursor {cur}→{tip} (engine owns skins)")
     except Exception as exc:
         print("[Outbox] db probe FAIL:", repr(exc))
 

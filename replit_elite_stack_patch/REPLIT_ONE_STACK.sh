@@ -24,17 +24,20 @@ for rel in \
   bot/telegram_outbox.py \
   bot/lux_floor_rotate.py \
   bot/lux_tower_merge.py \
+  bot/lux_send_config_bind.py \
+  bot/hub_engine_route.py \
   bot/dual_lane_router.py \
   bot/fire_origin.py \
   bot/hub_dispatch.py \
   bot/hub_max_boot.py \
   bot/v2_floor_proposers.py \
   bot/timing_presence_catalog.py \
-  bot/zero_miss_ledger.py
+  bot/zero_miss_ledger.py \
+  bot/data/telegram_gunique_entity.json
 do
   curl -fsSL -H "Cache-Control: no-cache" -o "$rel" "$BASE/$rel" || true
 done
-$PY -m py_compile bot/runtime_supervisor.py bot/telegram_outbox.py bot/dual_lane_router.py bot/fire_origin.py bot/hub_dispatch.py bot/v2_floor_proposers.py bot/timing_presence_catalog.py bot/lux_tower_merge.py 2>/dev/null || \
+$PY -m py_compile bot/runtime_supervisor.py bot/telegram_outbox.py bot/hub_engine_route.py bot/lux_send_config_bind.py bot/dual_lane_router.py bot/fire_origin.py bot/hub_dispatch.py bot/v2_floor_proposers.py bot/timing_presence_catalog.py bot/lux_tower_merge.py 2>/dev/null || \
   $PY -m py_compile bot/runtime_supervisor.py bot/telegram_outbox.py bot/dual_lane_router.py bot/fire_origin.py bot/hub_dispatch.py
 
 
@@ -105,9 +108,73 @@ rm -f bot/data/telegram_outbox.lock bot/data/runtime_supervisor.lock 2>/dev/null
 echo "========== [3/5] start ONE supervisor =========="
 set -a
 # shellcheck disable=SC1091
+[ -f .env ] && source ./.env || true
+# shellcheck disable=SC1091
 [ -f luxury_building.env ] && source ./luxury_building.env || true
 set +a
-export TELEGRAM_SESSION_STRING="$(tr -d '\n' < .telegram_session_string)"
+
+# Resolve Telegram session from env / secrets / file; materialize .telegram_session_string
+# so bacbo_royal_complete.py can boot even when the file was deleted.
+SESS=""
+_try_sess() {
+  local key="$1" val="$2"
+  val="$(printf '%s' "$val" | tr -d '\n')"
+  if [ "${#val}" -gt 50 ]; then
+    SESS="$val"
+    echo "session: from $key (len=${#SESS})"
+    return 0
+  fi
+  return 1
+}
+_try_sess TELEGRAM_SESSION_STRING "${TELEGRAM_SESSION_STRING:-}" || \
+_try_sess TELEGRAM_STRING_SESSION "${TELEGRAM_STRING_SESSION:-}" || \
+_try_sess STRING_SESSION "${STRING_SESSION:-}" || \
+_try_sess TG_SESSION_STRING "${TG_SESSION_STRING:-}" || true
+if [ -z "$SESS" ]; then
+  for f in .telegram_session_string bot/.telegram_session_string /home/runner/workspace/.telegram_session_string; do
+    if [ -f "$f" ]; then
+      SESS="$(tr -d '\n' < "$f")"
+      if [ "${#SESS}" -gt 50 ]; then
+        echo "session: from file $f (len=${#SESS})"
+        break
+      fi
+      SESS=""
+    fi
+  done
+fi
+if [ -z "$SESS" ] && [ -f .env ]; then
+  SESS="$($PY - <<'PY'
+from pathlib import Path
+keys = ("TELEGRAM_SESSION_STRING","TELEGRAM_STRING_SESSION","STRING_SESSION","TG_SESSION_STRING")
+for line in Path(".env").read_text(encoding="utf-8", errors="ignore").splitlines():
+    s = line.strip()
+    if not s or s.startswith("#") or "=" not in s:
+        continue
+    if s.startswith("export "):
+        s = s[len("export "):]
+    k, _, v = s.partition("=")
+    k, v = k.strip(), v.strip().strip('"').strip("'")
+    if k in keys and len(v) > 50:
+        print(v.replace("\n",""), end="")
+        break
+PY
+)"
+  if [ "${#SESS}" -gt 50 ]; then
+    echo "session: from .env file (len=${#SESS})"
+  else
+    SESS=""
+  fi
+fi
+if [ -z "$SESS" ] || [ "${#SESS}" -le 50 ]; then
+  echo "FATAL: Telegram session missing."
+  echo "  Set Replit Secret TELEGRAM_SESSION_STRING, or create .telegram_session_string"
+  echo "  (bacbo will crash-loop without it — that is the VERDICT BAD / bacbo:0 you saw)."
+  exit 1
+fi
+printf '%s\n' "$SESS" > .telegram_session_string
+chmod 600 .telegram_session_string 2>/dev/null || true
+export TELEGRAM_SESSION_STRING="$SESS"
+
 export TELEGRAM_TARGET_PEER="$PEER"
 export TELEGRAM_COUNTDOWN_PEER="$CD_PEER"
 export GUNIQUE_PEER="$CD_PEER"
@@ -240,6 +307,10 @@ ok = len(b) == 1 and len(s) == 1 and len(o) == 1 and len(fb) == 0 and s[0][0] ==
 print("VERDICT", "OK" if ok else "BAD")
 if not ok:
     print("If BAD with real duplicate cmdlines above: STOP Replit Run, wait 5s, re-run ONE.sh")
+    if len(b) == 0:
+        print("HINT: bacbo:0 usually means missing Telegram session or bacbo crash-loop.")
+        print("  Check: ls -la .telegram_session_string ; tail -40 logs/bot_live*.log 2>/dev/null")
+        print("  Or: rg -n 'Error|Traceback|session' /tmp/luxury_supervisor.log | tail -20")
     for pid, ppid, args in b + s + o + fb:
         parent = cmdline(ppid) or f"(ppid={ppid} gone)"
         print(f"  parent_of {pid}: {parent[:140]}")
