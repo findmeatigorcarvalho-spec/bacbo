@@ -1,127 +1,112 @@
-# BLUEPRINT — Max signals · all floors · human-friendly · smart merge
+# BLUEPRINT — Hub dispatcher · ≤30s real countdown · elastic chats · zero loss
 
-## Your idea (locked)
+## Understanding (locked)
 
-A **35s countdown** fire does **not** mean “freeze the whole system for 35s.”
-
-It means: that **lane/chat** has an open card for ~35s.  
-In the **gaps** (e.g. +3s … +30s), **other families** can still fire — other chats, or even the same hub if bankroll-safe — so you **fit** volume into time instead of wasting it.
-
-That is resourceful: **time-multiplex + multi-chat + conflict-only merge.**
-
-```
-T=0     COUNTDOWN chat: ⏱ 35s fire (red)
-T=3s    SOLO chat:      SOLO ELITE blue  → OK (different chat / non-conflict rule)
-T=12s   SEQUENCE chat:  sequence red     → OK if same color or other room
-T=20s   HUB:            skip opposite-color money double
-T=35s   COUNTDOWN:      result glued under the 35s fire
-```
-
----
-
-## One-sentence system
-
-**Every floor ever built proposes freely at its peak gates → pack non-conflicting fires into time + chat slots → merge only true bankroll collisions → result always glued under its parent with no delay.**
-
----
-
-## Layer cake
+1. **Any window length is valid** (15s, 35s, 90s, 200s…) — 35 was only an example.  
+2. If a card’s timing window is **> 30s**, it is **not** a “real countdown fire” yet.  
+   - **Hold** it in the hub queue.  
+   - **Release** when remaining time is **≤ 30s** (best actionable window).  
+   - Card still **prints the original seconds** (e.g. “original 87s · live 28s”).  
+3. Inside a chat, pack whatever **fits best under that ≤30s** (and gaps).  
+4. **Not floors yet** — intake is **every signal type / system config / setup ever created**.  
+5. **One HUB brain** sees **every** signal. Hub **assigns** each to whichever chat is ready *right now* for timing + profit + WR + volume — **create as many chats as needed**.  
+6. Goal: **lose nothing**; route everything to the best slot.
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│ 1. SENSE     rooms / casino ticks                       │
-├─────────────────────────────────────────────────────────┤
-│ 2. PROPOSE   every peak floor/config (v2 EXPLOSION)     │
-│              SOLO · GOLDEN · SEQUENCE · PLATINUM · CD   │
-├─────────────────────────────────────────────────────────┤
-│ 3. PACK      WindowPacker — fit families into time gaps │
-├─────────────────────────────────────────────────────────┤
-│ 4. ROUTE     family → Telegram group (5–6 chats)        │
-├─────────────────────────────────────────────────────────┤
-│ 5. GLUE      result → same chat as parent fire (0 delay)│
-├─────────────────────────────────────────────────────────┤
-│ 6. LEARN     WR / G0 / $/room / missed-by-merge ledger  │
-└─────────────────────────────────────────────────────────┘
+ALL CONFIGS / SETUPS (every signal type ever)
+              │
+              ▼
+     ┌────────────────────┐
+     │   HUB (brain)      │  ← every signal enters here first
+     │  queue · hold>30s  │
+     │  score · dispatch  │
+     └─────────┬──────────┘
+               │ picks best chat at that moment
+     ┌─────────┼─────────┬─────────┬──────────┐
+     ▼         ▼         ▼         ▼          ▼
+  Chat A    Chat B    Chat C    Chat D   … Chat N
+  (elastic — spawn when capacity / family needs it)
+     │
+     └─ result glued under parent in THAT chat
 ```
 
 ---
 
-## Telegram layout (human-friendly max capture)
+## Real countdown rule (≤30s)
 
-| Chat | Families | Open-window rule |
-|------|----------|------------------|
-| **HUB** | 1 best “bet now” when needed | Strict: ≤1 opposite-color money decision / window |
-| **COUNTDOWN** | Clock-A / CD timer fires | Own 35s (etc.) window; **does not mute other chats** |
-| **SOLO** | SOLO_ELITE peak floors | Free-fire; pack into gaps |
-| **GOLDEN** | Coalition ENTER NOW | Free-fire; pack into gaps |
-| **SEQUENCE** | Sequence / high cadence | Free-fire; absorbs 1k–3k/day |
-| **OPS** (opt) | EXPIROU / forensic long | Never blocks money rooms |
+| Detected window | Hub action | What user sees on card |
+|-----------------|------------|-------------------------|
+| **≤ 30s** | Eligible to dispatch now as **real countdown fire** | Original secs (= live secs) |
+| **> 30s** | **HOLD** until remaining ≤ 30s (or better slot) | **Original** secs kept + optional live remaining |
+| No timing | Dispatch by family/profit/WR/volume fit | Normal ENTER NOW / solo / etc. |
 
-Humans: follow **HUB** to play safe; open **1–2 specialists** for max volume.  
-Never 32 chats. Never squash all into 2 if that kills packing.
+When released from hold at e.g. remaining 27s after original 87s:
 
----
-
-## WindowPacker — the “fit everything” brain
-
-### State per chat
-- `open_fires[]`: `{id, family, color, t0, window_secs, chat}`
-- Countdown example: `window_secs=35`
-
-### Admit a new candidate at time `t`
-1. **Route** to its family chat (not always HUB).  
-2. **Same chat + opposite color + overlapping window?** → merge lock (keep higher score).  
-3. **Same chat + same color + overlapping?** → allow short burst **or** coalesce (config).  
-4. **Different chat?** → **ALLOW** (your 3s–30s gap idea). Countdown open ≠ global silence.  
-5. **HUB only:** if any money color already open and candidate is opposite → block/hold for hub; specialists may still fire.  
-6. **Glue:** result for fire X only in X’s chat, under X, ASAP.
-
-### Conflict matrix (default)
-
-| A already open | B wants in | Same chat? | Action |
-|----------------|------------|------------|--------|
-| CD red 35s | SOLO blue | No | **FIRE** (pack gap) |
-| CD red 35s | CD blue | Yes | **LOCK** one |
-| HUB blue | HUB red | Yes | **LOCK** one |
-| SOLO red | GOLDEN red | No | **FIRE** both (two chats) |
-| SOLO red | SEQUENCE red | No | **FIRE** both |
-
-Profit comes from **packing**, not from **deleting** B every time A is open.
+```
+⏱ Original window: 87s
+⚡ Live countdown: 27s   ← real fire moment
+```
 
 ---
 
-## Merge philosophy (most profitable)
+## Hub dispatcher (zero loss)
 
-| Old (lossy) | Blueprint (max) |
-|-------------|-----------------|
-| One global ≤1 card / window | ≤1 only where **bankroll** collides |
-| Countdown freezes everything | Countdown occupies **its chat’s** window |
-| 36 floors → 1 mouth | 36 floors → 5 mouths + packer |
-| Mirror copies | Exclusive route, no mirrors |
+Every signal from every config hits the hub:
+
+1. **Classify** — family / kind / has_window / original_secs / color / score / WR priors  
+2. **If original_secs > 30** → `HOLD_UNTIL_REAL` (queue), do not burn a chat yet  
+3. **When ready** (≤30s or untimed) → **score all chats**:
+   - free slot vs opposite-color conflict  
+   - family affinity (prefer matching specialist if free)  
+   - current open-window fit (what packs under ≤30s best)  
+   - WR / volume / profit weight for that config  
+4. **Dispatch** to best chat; if none fit → **spawn new chat** (elastic) or short queue (never drop)  
+5. **Glue** result to same chat as parent  
+
+Hub is **intake + brain**, not necessarily the only human money view.  
+Optional **PLAY** chat = hub’s single “bet this” recommendation for bankroll.
 
 ---
 
-## Volume / WR / $ (what “most” means)
+## Elastic chats
 
-- **Volume:** sum of free floor streams packed into 5 chats (realistic same-day **~8k–20k** fires; binge days higher in COUNTDOWN+SEQUENCE).  
-- **WR:** keep peak floors’ own WR; don’t dilute by forcing bad merges.  
-- **$:** HUB protects bankroll; specialists print volume; raise stake only after glue+packer stable.  
+Start with specialists; **grow as needed**:
+
+| Chat role | Examples |
+|-----------|----------|
+| PLAY / money recommend | Hub’s best single bet |
+| Real countdown (≤30s releases) | Held>30s then released |
+| Solo configs | SOLO_ELITE setups |
+| Golden / coalition | Multi-room ENTER NOW |
+| Sequence / volume | High cadence |
+| Extra N | Spawn when packer says all chats saturated |
+
+**As many as needed** so nothing is deleted for lack of a slot.
 
 ---
 
-## Build order
+## Packing under ≤30s (your gap idea, generalized)
 
-1. `VOLUME_MODE=EXPLOSION` + v2 proposers (all floors)  
-2. 5 Telegram peers + `route_by_family`  
-3. **WindowPacker** (this blueprint)  
-4. Result glue by `parent_fire_id` → same peer  
-5. Per-chat dashboard: fires/day, WR, G0, gaps packed, merges locked  
+While Chat C has a **real** countdown open (e.g. 28s left):
+
+- Other configs can still go to Chat A/B/D… (**zero global mute**)  
+- Same chat: only lock on **opposite color** (or score replace)  
+- Hub keeps feeding whatever **fits** timing + profit + WR + volume  
+
+---
+
+## Order of build (your “not floors yet”)
+
+1. Catalog every **signal type / config / setup** ever (chrono museum path)  
+2. Hub intake + HOLD>30s + release≤30s + original secs on card  
+3. Elastic chat dispatch (zero loss)  
+4. Window packer conflicts  
+5. **Then** floors as parallel proposers into the same hub  
 
 ---
 
 ## Success test
 
-On a live countdown card (~35s):  
-you still see **other family fires in other chats** in the +3s…+30s band, each with their own result under them — **without** opposite-color doubles in HUB.
-
-If the system goes quiet for 35s every countdown, the packer is wrong.
+- 87s window arrives → **not** posted as frantic enter at 87s → held → posts near ≤30s with **original 87s** visible  
+- During that hold/open, **other** configs still appear in other chats  
+- No signal dropped because “only 2 chats” or “merge ate it”
