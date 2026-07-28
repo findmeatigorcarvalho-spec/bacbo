@@ -1,5 +1,40 @@
 # BLUEPRINT — Hub dispatcher · ≤30s real countdown · elastic chats · zero loss
 
+## THREE LOCKS (user — do not weaken)
+
+### 1) Every config is a separate full machine
+Each system / config / setup ever created:
+- **decides separate**
+- **analyzes separate**
+- **fires separate**
+- **no blocks / no gates** that shrink it vs its own best day
+
+Its live stream must match **that config’s most-volume day** — whether that day was **1** signal or **100,000**.  
+Not “merged average.” Not “allowed only if coalition.” Not silenced by another config’s loss.  
+Hub **routes** after they fire; hub does **not** veto peak-day volume.
+
+### 2) Original card templates — clean, don’t reinvent
+Keep each template’s **original version/skin**.  
+Only:
+- strip **unnecessary** noise
+- refresh **factual** fields (time, WR, score, color, result truth, original secs / live ≤30s)
+
+Do not replace day-one DNA with a generic outbox card.
+
+### 3) Chat priority — Gunique first, 24/7
+Fill in order (never starve #1):
+
+| Priority | Chat | Role |
+|---------:|------|------|
+| **1** | **@UNIQUE_g1 (Gunique)** | Most important — run **24 hours**, every second capacity; first fill |
+| **2** | Main money / bot chat (Mr_iv4 / PLAY) | Second fill |
+| **3+** | SOLO → GOLDEN → SEQUENCE → MIX → OPS → elastic | Rest of volume, in order |
+
+Hub still sees all configs. **Dispatch order** = Gunique first until its ~2–3/min (or binge) band is healthy, then cascade down.  
+Timed ≤30s release + packing still apply **inside** this priority.
+
+---
+
 ## ALL signals since day 1 (not countdown-only)
 
 Hub intakes **every signal from every system config / setup ever created** — SOLO, GOLDEN, SEQUENCE, PLATINUM, FLASH, timed, untimed, gale follow-ups, etc.  
