@@ -18,9 +18,9 @@ BASE="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${SHA}/r
 PEER="${TELEGRAM_TARGET_PEER:-6774605259}"
 CD_PEER="${TELEGRAM_COUNTDOWN_PEER:-${GUNIQUE_PEER:-UNIQUE_g1}}"
 CD_PEER="${CD_PEER#@}"
-# Optional numeric bypass if username Resolve fails / FloodWaits:
-#   export TELEGRAM_GUNIQUE_PEER_ID=<chat_id>
-GUNIQUE_ID="${TELEGRAM_GUNIQUE_PEER_ID:-${GUNIQUE_PEER_ID:-${TELEGRAM_COUNTDOWN_PEER_ID:-}}}"
+# Numeric id for @UNIQUE_g1 (resolved live 2026-07-28 via dialogs).
+# Override with export TELEGRAM_GUNIQUE_PEER_ID=<chat_id> if it ever changes.
+GUNIQUE_ID="${TELEGRAM_GUNIQUE_PEER_ID:-${GUNIQUE_PEER_ID:-${TELEGRAM_COUNTDOWN_PEER_ID:-5855678138}}}"
 
 echo "========== HUB MAX [1/4] refresh modules =========="
 mkdir -p bot/data logs
@@ -113,10 +113,10 @@ bash REPLIT_ONE_STACK.sh
 echo "========== HUB MAX [4/4] verify =========="
 echo "Priority: 1=@${CD_PEER} (Gunique 24/7)  2=${PEER} (money)  3+=specialists"
 echo "Expect: mirror_money=False · VOLUME_MODE=EXPLOSION · HUB_MAX=1"
-echo "Gunique resolve: cache/dialogs/username · optional TELEGRAM_GUNIQUE_PEER_ID=${GUNIQUE_ID:-unset}"
+echo "Gunique numeric id locked: TELEGRAM_GUNIQUE_PEER_ID=${GUNIQUE_ID}"
 echo "Anti-double: HUB_OUTBOX_FIRE_CARDS=0 (engine skins) · HUB_ENGINE_ROUTE=1 (send→Gunique/money)"
 echo "After boot check:"
-echo "  rg -n 'HUB-ROUTE|Gunique resolve|skip fire card|FATAL CONFIG' logs/*.log | tail -40"
+echo "  rg -n 'HUB-ROUTE|skip fire card|Gunique resolve OK|FATAL CONFIG|lane GUNIQUE' logs/*.log | tail -40"
 rg -n "HUB_MAX|VOLUME_MODE|GUNIQUE|COUNTDOWN_PEER|MIRROR" luxury_building.env 2>/dev/null | head -n 20 || true
 if [ -f bot/data/hub_max_status.json ]; then
   $PY - <<'PY'

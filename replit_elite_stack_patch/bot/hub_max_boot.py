@@ -60,6 +60,9 @@ ENV_KEYS = {
     "TELEGRAM_SINGLE_OUTBOX": "1",
     "TELEGRAM_COUNTDOWN_PEER": "UNIQUE_g1",
     "GUNIQUE_PEER": "UNIQUE_g1",
+    # @UNIQUE_g1 numeric — avoids ResolveUsername / MONEY_FALLBACK race
+    "TELEGRAM_GUNIQUE_PEER_ID": "5855678138",
+    "GUNIQUE_PEER_ID": "5855678138",
     "PACKER_REAL_COUNTDOWN_MAX": "30",
     "PACKER_HUB_CHAT": "PLAY",
     "HUB_CHAT_PRIORITY": "UNIQUE_g1,6774605259,SOLO,GOLDEN,SEQUENCE,MIX,OPS",
@@ -113,19 +116,44 @@ def apply() -> dict:
     keys["GUNIQUE_PEER"] = cd
     keys["HUB_CHAT_PRIORITY"] = f"{cd},{peer},SOLO,GOLDEN,SEQUENCE,MIX,OPS"
     # Numeric id bypasses ResolveUsername FloodWait / UsernameNotOccupied
+    gid = ""
     for id_key in (
         "TELEGRAM_GUNIQUE_PEER_ID",
         "GUNIQUE_PEER_ID",
         "TELEGRAM_COUNTDOWN_PEER_ID",
     ):
-        raw = (os.environ.get(id_key) or "").strip().strip('"').strip("'")
+        raw = (os.environ.get(id_key) or keys.get(id_key) or "").strip().strip('"').strip("'")
         if raw and raw.lstrip("-").isdigit():
-            keys[id_key] = raw
+            gid = raw
+            keys["TELEGRAM_GUNIQUE_PEER_ID"] = raw
+            keys["GUNIQUE_PEER_ID"] = raw
             break
+    if not gid:
+        gid = "5855678138"
+        keys["TELEGRAM_GUNIQUE_PEER_ID"] = gid
+        keys["GUNIQUE_PEER_ID"] = gid
 
     _upsert_env(ENV_PATH, keys)
     for k, v in keys.items():
         os.environ[k] = v
+
+    # Seed entity cache so outbox / engine route hit numeric id immediately
+    try:
+        cache = DATA / "telegram_gunique_entity.json"
+        cache.write_text(
+            json.dumps(
+                {
+                    "target": cd,
+                    "id": int(gid),
+                    "username": cd,
+                    "title": "Gunique",
+                }
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+    except Exception as exc:
+        print("[hub_max_boot] gunique cache seed skip:", repr(exc))
 
     # smoke packer
     packer_ok = False
