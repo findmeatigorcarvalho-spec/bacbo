@@ -21,17 +21,17 @@ Only:
 
 Do not replace day-one DNA with a generic outbox card.
 
-### 3) Chat priority — Gunique first, 24/7
+### 3) Chat priority — Gunique first by TRUST, 24/7
 Fill in order (never starve #1):
 
 | Priority | Chat | Role |
 |---------:|------|------|
-| **1** | **@UNIQUE_g1 (Gunique)** | Most important — run **24 hours**, every second capacity; first fill |
-| **2** | Main money / bot chat (Mr_iv4 / PLAY) | Second fill |
-| **3+** | SOLO → GOLDEN → SEQUENCE → MIX → OPS → elastic | Rest of volume, in order |
+| **1** | **@UNIQUE_g1 (Gunique)** | Highest-**TRUST** fires first — 24/7 |
+| **2** | Main money / bot chat (Mr_iv4 / PLAY) | Lower-trust / cascade |
+| **3+** | SOLO → GOLDEN → SEQUENCE → MIX → OPS → elastic | Rest of volume |
 
-Hub still sees all configs. **Dispatch order** = Gunique first until its ~2–3/min (or binge) band is healthy, then cascade down.  
-Timed ≤30s release + packing still apply **inside** this priority.
+**Trust** (kind + score + rooms + floor) decides Gunique vs money — not random dump.  
+`HUB_GUNIQUE_TRUST_MIN` (default **78**). Module: `bot/hub_dispatch.py` wired into outbox.
 
 ---
 

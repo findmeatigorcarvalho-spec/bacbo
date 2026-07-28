@@ -53,6 +53,7 @@ HEARTBEAT_EVERY = int(os.environ.get("OUTBOX_HEARTBEAT_EVERY", "12"))  # ~60s at
 MIRROR_MONEY_TO_GUNIQUE = os.environ.get("TELEGRAM_MIRROR_MONEY_TO_GUNIQUE", "0").strip().lower() in {
     "1", "true", "yes", "on",
 }
+HUB_MAX = os.environ.get("HUB_MAX", "0").strip() not in {"0", "false", "no", "off"}
 
 
 def _resolve_db() -> Path:
@@ -462,8 +463,25 @@ async def main() -> None:
         *,
         signal_id: int | None = None,
         is_result: bool = False,
+        peer_slot: str | None = None,
     ):
-        """Return (primary_dest, lane_name, mirror_dests). Mirrors empty unless explicitly enabled."""
+        """Return (primary_dest, lane_name, mirror_dests). Hub trust can force GUNIQUE/MONEY."""
+        # Hub trust / persisted parent slot wins when set
+        slot = (peer_slot or "").upper().strip()
+        if not slot and is_result and signal_id is not None:
+            try:
+                from hub_dispatch import parent_peer_slot
+
+                slot = parent_peer_slot(signal_id) or ""
+            except Exception:
+                slot = ""
+        if slot == "GUNIQUE":
+            if cd_entity is not None:
+                return cd_entity, "GUNIQUE", []
+            return entity, "MONEY_FALLBACK_FROM_GUNIQUE", []
+        if slot == "MONEY":
+            return entity, "MONEY", []
+
         try:
             from dual_lane_router import (
                 parent_lane_for,
@@ -507,25 +525,26 @@ async def main() -> None:
     print(
         f"[Outbox] ONLINE money={getattr(entity, 'username', None) or peer} "
         f"gunique=@{cd_peer or 'UNSET'} mirror_money={MIRROR_MONEY_TO_GUNIQUE} "
-        f"separation=1 send_blocked={SEND_BLOCKED} tag={boot_tag} pid={os.getpid()} db={DB}"
+        f"hub_max={HUB_MAX} separation=1 send_blocked={SEND_BLOCKED} "
+        f"tag={boot_tag} pid={os.getpid()} db={DB}"
     )
 
     if STARTUP_PING:
         ping_money = (
-            "LUXURY OUTBOX ONLINE — MONEY LANE\n"
+            "LUXURY OUTBOX ONLINE — MONEY CHAT (#2)\n"
             f"Tag floor: {boot_tag}\n"
             f"DB: {DB.name}\n"
-            "Lane: FIRE without bet-window/janela → Mr_iv4 ONLY\n"
-            "Results for those fires glue here (Intervalo on result ≠ countdown fire).\n"
-            "No mirror to @UNIQUE_g1."
+            "Hub: lower-trust fires land here.\n"
+            "Results for those fires glue here.\n"
+            f"HUB_MAX={int(HUB_MAX)} · no mirror."
         )
         ping_cd = (
-            "LUXURY OUTBOX ONLINE — TIMED/COUNTDOWN LANE\n"
+            "LUXURY OUTBOX ONLINE — GUNIQUE (#1) TRUST-FIRST\n"
             f"Tag floor: {boot_tag}\n"
             f"DB: {DB.name}\n"
-            "Lane: FIRE with JANELA / Ns para apostar / CD_FIRE → @UNIQUE_g1 ONLY\n"
-            "Those fires still get their OWN result cards here.\n"
-            "Not a money mirror — total separation."
+            "Priority #1 24/7 — high-TRUST fires fill here first.\n"
+            "Original-family skins · results glue under parent.\n"
+            f"HUB_MAX={int(HUB_MAX)} · trust→Gunique · cascade→money."
         )
         try:
             msg = await client.send_message(entity, ping_money)
@@ -640,17 +659,50 @@ async def main() -> None:
 
             conn.close()
 
+            # Hub catch-up throttle — avoid dumping 30 generic cards at once
+            if HUB_MAX:
+                try:
+                    from hub_dispatch import throttle_rows
+
+                    before = len(rows)
+                    rows = throttle_rows(rows)
+                    if before != len(rows):
+                        print(f"[Outbox] HUB throttle signals {before}→{len(rows)}")
+                    results = throttle_rows(results)
+                except Exception as exc:
+                    print("[Outbox] hub throttle skip:", repr(exc))
+
             lane_by_id: dict[int, tuple] = {}
             for row in rows:
                 try:
                     floor = _row_floor(row)
                     _stamp_floor(int(row["id"]), floor)
-                    body = fmt_consensus(row, floor=floor)
+                    score = _row_score(row)
+                    peer_slot = None
+                    if HUB_MAX:
+                        try:
+                            from hub_dispatch import dispatch_fire
+
+                            hub = dispatch_fire(row, floor=floor, score=score)
+                            body = hub["card_text"]
+                            peer_slot = hub.get("peer_slot")
+                            print(
+                                "[Outbox] HUB trust",
+                                row["id"],
+                                hub.get("trust"),
+                                hub.get("reason"),
+                            )
+                        except Exception as exc:
+                            print("[Outbox] hub_dispatch fail:", repr(exc))
+                            body = fmt_consensus(row, floor=floor)
+                    else:
+                        body = fmt_consensus(row, floor=floor)
                     dest, lane, mirrors = _lane_dests(
                         row["signal_kind"],
                         text=body,
                         signal_id=int(row["id"]),
                         is_result=False,
+                        peer_slot=peer_slot,
                     )
                     dests = [dest] + list(mirrors)
                     lane_by_id[int(row["id"])] = (dest, lane, mirrors)
@@ -667,7 +719,7 @@ async def main() -> None:
                         "mirrors",
                         len(mirrors),
                         "score",
-                        _row_score(row),
+                        score,
                     )
                     try:
                         from zero_miss_ledger import record_proposal
@@ -693,11 +745,20 @@ async def main() -> None:
                     if cached:
                         dest, lane, mirrors = cached
                     else:
+                        slot = None
+                        if HUB_MAX:
+                            try:
+                                from hub_dispatch import parent_peer_slot
+
+                                slot = parent_peer_slot(int(row["id"]))
+                            except Exception:
+                                slot = None
                         dest, lane, mirrors = _lane_dests(
                             row["signal_kind"],
                             text=res_body,
                             signal_id=int(row["id"]),
                             is_result=True,
+                            peer_slot=slot,
                         )
                     dests = [dest] + list(mirrors)
                     await _send_all(dests, res_body)

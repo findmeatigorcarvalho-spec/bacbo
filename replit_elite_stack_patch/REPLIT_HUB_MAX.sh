@@ -23,6 +23,7 @@ echo "========== HUB MAX [1/4] refresh modules =========="
 mkdir -p bot/data logs
 for rel in \
   bot/hub_max_boot.py \
+  bot/hub_dispatch.py \
   bot/window_packer.py \
   bot/dual_lane_router.py \
   bot/fire_origin.py \
@@ -34,7 +35,7 @@ for rel in \
 do
   curl -fsSL -H "Cache-Control: no-cache" -o "$rel" "$BASE/$rel" || echo "skip $rel"
 done
-$PY -m py_compile bot/hub_max_boot.py bot/window_packer.py bot/dual_lane_router.py bot/fire_origin.py
+$PY -m py_compile bot/hub_max_boot.py bot/hub_dispatch.py bot/window_packer.py bot/dual_lane_router.py bot/fire_origin.py bot/telegram_outbox.py
 
 echo "========== HUB MAX [2/4] apply locks → luxury_building.env =========="
 export TELEGRAM_TARGET_PEER="$PEER"
