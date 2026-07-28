@@ -357,9 +357,10 @@ def demo() -> None:
     print("solo @+3s:", p.intake(c_solo, now=t0 + 3))
 
     # After 60s elapsed → remaining 27s → real countdown release
-    print("release @+60s:", p.release_ready(now=t0 + 60))
-    for d in p.release_ready(now=t0 + 60):
-        print(" ", d)
+    released = p.release_ready(now=t0 + 60)
+    print("release @+60s:")
+    for d in released:
+        print(" ", d.action, d.reason, d.card_timing_note)
 
 
 if __name__ == "__main__":

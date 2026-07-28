@@ -1,5 +1,45 @@
 # BLUEPRINT — Hub dispatcher · ≤30s real countdown · elastic chats · zero loss
 
+## ALL signals since day 1 (not countdown-only)
+
+Hub intakes **every signal from every system config / setup ever created** — SOLO, GOLDEN, SEQUENCE, PLATINUM, FLASH, timed, untimed, gale follow-ups, etc.  
+Countdown ≤30s hold/release is **one rule inside** that pipe, not the whole design.
+
+### Volume if everything fires
+
+| Band | Signals/day | Global rate |
+|------|------------:|------------:|
+| Naive sum of personal best days | ~51,000 | ~36/min |
+| Realistic same-day free-fire | ~8,000–20,000 | ~6–14/min |
+| Aggressive packed day | ~25,000 | ~17/min |
+
+### How many chats (human + AI sweet spot)
+
+Target **~2–3 signals/min per chat** (readable, glueable, followable).
+
+| Total volume | Chats @ 2/min | Chats @ 2.5/min | Chats @ 3/min |
+|--------------|--------------:|----------------:|--------------:|
+| 8k/day | ~3 | ~2–3 | ~2 |
+| 12–18k/day | ~6–7 | ~5–6 | ~4–5 |
+| 20–25k/day | ~7–9 | ~6–7 | ~5–6 |
+| 51k naive ceiling | ~18 | ~14 | ~12 |
+
+**Best default: 7 chats** (expand to ~10–12 only on binge days).
+
+| # | Chat | What goes there | ~rate at 18k/day |
+|---|------|-----------------|------------------|
+| 1 | **PLAY** | Hub’s best single bet (bankroll) | ~1/min |
+| 2 | **SOLO** | All SOLO_ELITE / solo configs | ~2.5–3/min |
+| 3 | **GOLDEN** | GOLDEN + coalition ENTER NOW | ~2–2.5/min |
+| 4 | **SEQUENCE** | SEQUENCE / streak configs | ~2.5–3/min |
+| 5 | **TIMED** | Any timed card released at ≤30s live (original secs shown) | ~2–2.5/min |
+| 6 | **MIX** | Flash / early skins / overflow | ~1/min |
+| 7 | **OPS** | EXPIROU / long forensic / gale ops | ~0.5/min |
+
+Hub brain still sees **all**; these chats are **distribution**, so nothing is lost — overflow spawns MIX-2 etc. when a chat exceeds ~3/min.
+
+---
+
 ## Understanding (locked)
 
 1. **Any window length is valid** (15s, 35s, 90s, 200s…) — 35 was only an example.  
