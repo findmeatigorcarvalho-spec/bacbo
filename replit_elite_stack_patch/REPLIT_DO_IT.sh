@@ -81,6 +81,10 @@ chmod 600 .telegram_session_string 2>/dev/null || true
 export TELEGRAM_SESSION_STRING="$SESS"
 echo "wrote .telegram_session_string"
 
+echo "========== DO IT [0b/3] fix tz_utils (local_hour) =========="
+curl -fsSL -H "Cache-Control: no-cache" -o bot/fix_tz_utils.py "$BASE/bot/fix_tz_utils.py"
+$PY bot/fix_tz_utils.py
+
 echo "========== DO IT [1/3] pull latest HUBMAX =========="
 curl -fsSL -H "Cache-Control: no-cache" -o HUBMAX.sh "$BASE/REPLIT_HUB_MAX.sh"
 chmod +x HUBMAX.sh
