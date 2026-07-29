@@ -22,8 +22,26 @@ CD_PEER="${CD_PEER#@}"
 # Override with export TELEGRAM_GUNIQUE_PEER_ID=<chat_id> if it ever changes.
 GUNIQUE_ID="${TELEGRAM_GUNIQUE_PEER_ID:-${GUNIQUE_PEER_ID:-${TELEGRAM_COUNTDOWN_PEER_ID:-5855678138}}}"
 
-echo "========== HUB MAX [1/4] refresh modules =========="
+echo "========== HUB MAX [0/4] Telegram session =========="
 mkdir -p bot/data logs
+set -a
+# shellcheck disable=SC1091
+[ -f .env ] && source ./.env || true
+set +a
+SESS="$(printf '%s' "${TELEGRAM_SESSION_STRING:-${TELEGRAM_STRING_SESSION:-${STRING_SESSION:-${TG_SESSION_STRING:-}}}}" | tr -d '\n\r')"
+if [ "${#SESS}" -le 50 ] && [ -f .telegram_session_string ]; then
+  SESS="$(tr -d '\n\r' < .telegram_session_string)"
+fi
+if [ "${#SESS}" -gt 50 ]; then
+  printf '%s\n' "$SESS" > .telegram_session_string
+  chmod 600 .telegram_session_string 2>/dev/null || true
+  export TELEGRAM_SESSION_STRING="$SESS"
+  echo "session ready (len=${#SESS}) → .telegram_session_string"
+else
+  echo "WARN: no session in env/file yet — ONE_STACK will try harder / FATAL if still missing"
+fi
+
+echo "========== HUB MAX [1/4] refresh modules =========="
 for rel in \
   bot/hub_max_boot.py \
   bot/hub_dispatch.py \
