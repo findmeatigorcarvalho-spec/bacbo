@@ -108,6 +108,7 @@ needles = {
     "sup": "runtime_supervisor.py",
     "outbox": "telegram_outbox.py",
 }
+counts = {}
 for label, needle in needles.items():
     rows = []
     for p in Path("/proc").iterdir():
@@ -116,14 +117,29 @@ for label, needle in needles.items():
         cmd = cmdline(int(p.name))
         if needle in cmd and "python" in cmd.lower() and "REPLIT_" not in cmd:
             rows.append((p.name, cmd[:120]))
+    counts[label] = len(rows)
     print(f"{label}: {len(rows)}")
     for pid, cmd in rows:
         print(f"  pid={pid} {cmd}")
+if counts.get("bacbo", 0) == 0:
+    print("\n--- bacbo:0 → last bot_live crash ---")
+    bl = Path("logs/bot_live.log")
+    if bl.exists():
+        lines = bl.read_text(encoding="utf-8", errors="replace").splitlines()
+        for ln in lines[-60:]:
+            print(ln)
+    else:
+        print("(no logs/bot_live.log yet)")
 PY
 echo "--- session file ---"
 ls -la .telegram_session_string 2>/dev/null || echo "MISSING session file"
 echo "--- recent logs ---"
-rg -n 'HUB-ROUTE|snap fire cursor|Gunique resolve OK|session:|VERDICT|FATAL|WARN: no Telegram' \
-  logs/telegram_outbox.log /tmp/luxury_supervisor.log logs/*.log 2>/dev/null | tail -40 || true
+rg -n 'HUB-ROUTE|snap fire cursor|Gunique resolve OK|session:|VERDICT|FATAL|WARN: no Telegram|Traceback|Error' \
+  logs/telegram_outbox.log logs/bot_live.log /tmp/luxury_supervisor.log 2>/dev/null | tail -50 || true
 echo
 echo "DONE DO IT. Expect bacbo:1 + outbox:1 + Gunique id 5855678138 + HUB-ROUTE lines after next fire."
+if [ -f logs/bot_live.log ]; then
+  if ! pgrep -f 'bacbo_royal_complete.py' >/dev/null 2>&1; then
+    echo "NEXT: paste the Traceback from logs/bot_live.log (commands below)."
+  fi
+fi
