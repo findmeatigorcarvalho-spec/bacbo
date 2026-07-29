@@ -48,6 +48,7 @@ for rel in \
   bot/hub_engine_route.py \
   bot/lux_send_config_bind.py \
   bot/fix_tz_utils.py \
+  bot/fix_bacbo_state.py \
   bot/window_packer.py \
   bot/dual_lane_router.py \
   bot/fire_origin.py \
@@ -59,8 +60,9 @@ for rel in \
 do
   curl -fsSL -H "Cache-Control: no-cache" -o "$rel" "$BASE/$rel" || echo "skip $rel"
 done
-$PY -m py_compile bot/hub_max_boot.py bot/hub_dispatch.py bot/hub_engine_route.py bot/lux_send_config_bind.py bot/fix_tz_utils.py bot/window_packer.py bot/dual_lane_router.py bot/fire_origin.py bot/telegram_outbox.py
+$PY -m py_compile bot/hub_max_boot.py bot/hub_dispatch.py bot/hub_engine_route.py bot/lux_send_config_bind.py bot/fix_tz_utils.py bot/fix_bacbo_state.py bot/window_packer.py bot/dual_lane_router.py bot/fire_origin.py bot/telegram_outbox.py
 $PY bot/fix_tz_utils.py || echo "WARN: fix_tz_utils failed — bacbo may crash on local_hour"
+$PY bot/fix_bacbo_state.py || echo "WARN: fix_bacbo_state failed — bacbo may crash on NameError state"
 
 # Ensure bacbo loads send-route bind (engine owns original skins → Gunique/money)
 $PY - <<'PY'
