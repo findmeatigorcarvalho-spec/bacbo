@@ -17,6 +17,7 @@ import json
 import os
 import sqlite3
 import sys
+import time
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -729,35 +730,57 @@ async def main() -> None:
     )
 
     if STARTUP_PING:
-        ping_money = (
-            "LUXURY OUTBOX ONLINE — MONEY CHAT (#2)\n"
-            f"DEST peer id: {getattr(entity, 'id', '?')}\n"
-            f"Tag floor: {boot_tag}\n"
-            f"DB: {DB.name}\n"
-            "Hub: engine routes low-trust / ops here.\n"
-            f"Outbox fire cards: {'ON' if HUB_OUTBOX_FIRE_CARDS else 'OFF (engine owns skins)'}\n"
-            f"HUB_MAX={int(HUB_MAX)} · no mirror."
-        )
-        ping_cd = (
-            "LUXURY OUTBOX ONLINE — GUNIQUE (#1) TRUST-FIRST\n"
-            f"DEST peer id: {getattr(cd_entity, 'id', '?')}\n"
-            f"Tag floor: {boot_tag}\n"
-            f"DB: {DB.name}\n"
-            "Priority #1 24/7 — high-TRUST original skins land here.\n"
-            "Engine send() is redirected here when HUB_ENGINE_ROUTE=1.\n"
-            f"HUB_MAX={int(HUB_MAX)} · trust→Gunique · cascade→money."
-        )
+        # Throttle: do not spam OUTBOX ONLINE on every restart (default 6h)
+        ping_min = int(os.environ.get("TELEGRAM_OUTBOX_PING_MIN_SECS", "21600"))
+        ping_stamp = HERE / "data" / "outbox_startup_ping_at.txt"
+        do_ping = True
         try:
-            msg = await client.send_message(entity, ping_money)
-            print("[Outbox] startup ping Mr_iv4 OK id=", msg.id)
-        except Exception as exc:
-            print("[Outbox] startup ping Mr_iv4 FAIL:", repr(exc))
-        if cd_entity is not None:
+            if ping_min > 0 and ping_stamp.exists():
+                last = float(ping_stamp.read_text().strip() or "0")
+                age = time.time() - last
+                if age < ping_min:
+                    do_ping = False
+                    print(
+                        f"[Outbox] startup ping skipped "
+                        f"(last {age/60:.0f}m ago · min={ping_min/3600:.1f}h)"
+                    )
+        except Exception:
+            do_ping = True
+        if do_ping:
+            ping_money = (
+                "LUXURY OUTBOX ONLINE — MONEY CHAT (#2)\n"
+                f"DEST peer id: {getattr(entity, 'id', '?')}\n"
+                f"Tag floor: {boot_tag}\n"
+                f"DB: {DB.name}\n"
+                "Hub: engine routes low-trust / ops here.\n"
+                f"Outbox fire cards: {'ON' if HUB_OUTBOX_FIRE_CARDS else 'OFF (engine owns skins)'}\n"
+                f"HUB_MAX={int(HUB_MAX)} · no mirror."
+            )
+            ping_cd = (
+                "LUXURY OUTBOX ONLINE — GUNIQUE (#1) TRUST-FIRST\n"
+                f"DEST peer id: {getattr(cd_entity, 'id', '?')}\n"
+                f"Tag floor: {boot_tag}\n"
+                f"DB: {DB.name}\n"
+                "Priority #1 24/7 — high-TRUST original skins land here.\n"
+                "Engine send() is redirected here when HUB_ENGINE_ROUTE=1.\n"
+                f"HUB_MAX={int(HUB_MAX)} · trust→Gunique · cascade→money."
+            )
             try:
-                msg2 = await client.send_message(cd_entity, ping_cd)
-                print("[Outbox] startup ping Gunique OK id=", msg2.id)
+                msg = await client.send_message(entity, ping_money)
+                print("[Outbox] startup ping Mr_iv4 OK id=", msg.id)
             except Exception as exc:
-                print("[Outbox] startup ping Gunique FAIL:", repr(exc))
+                print("[Outbox] startup ping Mr_iv4 FAIL:", repr(exc))
+            if cd_entity is not None:
+                try:
+                    msg2 = await client.send_message(cd_entity, ping_cd)
+                    print("[Outbox] startup ping Gunique OK id=", msg2.id)
+                except Exception as exc:
+                    print("[Outbox] startup ping Gunique FAIL:", repr(exc))
+            try:
+                ping_stamp.parent.mkdir(parents=True, exist_ok=True)
+                ping_stamp.write_text(str(time.time()))
+            except Exception:
+                pass
 
     try:
         conn0 = _db_ro()
