@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Fix NameError: name 'state' is not defined in bacbo_royal_complete.py.
 
-A prior luxury patch left bare `state.client = TelegramClient(...)` without binding
-the module name `state`. Rewrite that assign to import state as module + alias.
+Handles several shapes left by prior luxury patches:
+  - bare:  state.client = TelegramClient(...)
+  - mod:   _lux_state_mod.client = TelegramClient(...)
+  - bind block present but missing `state = _lux_state_mod`
 """
 from __future__ import annotations
 
@@ -57,6 +59,46 @@ def _find_bacbo(root: Path) -> Path | None:
     return None
 
 
+def _dump_context(src: str, around: int = 146, window: int = 25) -> None:
+    lines = src.splitlines()
+    a = max(0, around - span - 1)
+    b = min(len(lines), around + span)
+    print(f"----- bacbo lines {a+1}-{b} -----")
+    for i in range(a, b):
+        print(f"{i+1}: {lines[i][:160]}")
+
+
+def _find_ctor(src: str) -> tuple[re.Match[str] | None, str]:
+    """Return (match, ctor_call) for the TelegramClient assignment."""
+    patterns = [
+        r"^state\.client\s*=\s*(TelegramClient\([^\n]*\))\s*$",
+        r"^_lux_state_mod\.client\s*=\s*(TelegramClient\([^\n]*\))\s*$",
+        r"^(?:state|_lux_state_mod)\.client\s*=\s*(TelegramClient\([^\n]*\))\s*$",
+    ]
+    for pat in patterns:
+        m = re.search(pat, src, re.M)
+        if m:
+            return m, m.group(1)
+    # looser: any line with TelegramClient( near client assign in first 400 lines
+    lines = src.splitlines()
+    for i, ln in enumerate(lines[:400]):
+        if "TelegramClient(" in ln and "client" in ln:
+            m2 = re.search(r"(TelegramClient\(.+\))", ln)
+            if m2:
+                # synthesize a match-like span for replacement of whole line
+                start = sum(len(x) + 1 for x in lines[:i])
+                end = start + len(ln)
+                class _M:
+                    def start(self_):  # noqa: N805
+                        return start
+
+                    def end(self_):  # noqa: N805
+                        return end
+
+                return _M(), m2.group(1)
+    return None, ""
+
+
 def apply(root: Path | None = None) -> dict:
     root = root or Path("/home/runner/workspace")
     if not (root / "bacbo_royal_complete.py").exists() and (Path.cwd() / "bacbo_royal_complete.py").exists():
@@ -67,79 +109,132 @@ def apply(root: Path | None = None) -> dict:
 
     src = path.read_text(encoding="utf-8", errors="replace")
     original = src
-    changed = []
+    changed: list[str] = []
 
-    # Strip old bind / force blocks so we can re-insert cleanly
-    src = re.sub(
+    # Already healthy?
+    if (
+        "state = _lux_state_mod" in src
+        and re.search(r"(state|_lux_state_mod)\.client\s*=\s*TelegramClient\(", src)
+        and "LUXURY_SESSION_AND_BIND" in src
+    ):
+        # Ensure force before state.engine
+        if re.search(r"^state\.engine\s*=", src, re.M) and "LUXURY_STATE_NAME_FORCE" not in src:
+            src = re.sub(
+                r"^(state\.engine\s*=)",
+                FORCE + r"\1",
+                src,
+                count=1,
+                flags=re.M,
+            )
+            changed.append("state_name_force_only")
+            ast.parse(src)
+            path.write_text(src, encoding="utf-8")
+        else:
+            print("[fix_bacbo_state] already OK", path)
+            return {"path": str(path), "changed": False, "reason": "already_bound"}
+
+    # Extract ctor BEFORE stripping bind block (bind may hold the only TelegramClient line)
+    m_pre, ctor = _find_ctor(src)
+    if not ctor:
+        # try inside existing bind without stripping
+        m_in = re.search(
+            r"_lux_state_mod\.client\s*=\s*(TelegramClient\([^\n]*\))",
+            src,
+        )
+        if m_in:
+            ctor = m_in.group(1)
+            m_pre = m_in
+
+    if not ctor:
+        print("[fix_bacbo_state] FAIL: no TelegramClient assign found")
+        _dump_context(src, around=146)
+        # also print every TelegramClient mention in first 250 lines
+        print("----- TelegramClient mentions (first 250 lines) -----")
+        for i, ln in enumerate(src.splitlines()[:250]):
+            if "TelegramClient" in ln or "state.client" in ln or "_lux_state_mod" in ln:
+                print(f"{i+1}: {ln[:160]}")
+        raise SystemExit("cannot find TelegramClient client assign — paste the dump above")
+
+    # Remove old bind/force, then insert a clean bind at the client assign site
+    src2 = re.sub(
         r"\n?# --- LUXURY_SESSION_AND_BIND \(auto\) ---.*?--- end LUXURY_SESSION_AND_BIND ---\n?",
         "\n",
         src,
         flags=re.S,
     )
-    src = re.sub(
+    src2 = re.sub(
         r"\n?# --- LUXURY_STATE_NAME_FORCE \(auto\) ---.*?--- end LUXURY_STATE_NAME_FORCE ---\n?",
         "\n",
-        src,
+        src2,
         flags=re.S,
     )
-    # Also strip the broken bare assign left by FIX_HARD strip
-    m = re.search(
-        r"^state\.client\s*=\s*(TelegramClient\([^\n]*\))\s*$",
-        src,
-        re.M,
-    )
-    if not m:
-        # maybe already using _lux_state_mod.client =
-        if "state = _lux_state_mod" in src and "_lux_state_mod.client = TelegramClient" in src:
-            ast.parse(src)
-            print("[fix_bacbo_state] already OK", path)
-            return {"path": str(path), "changed": False, "reason": "already_bound"}
-        raise SystemExit(
-            "cannot find state.client = TelegramClient(...) — inspect bacbo around line 146"
-        )
 
-    ctor = m.group(1)
+    m, ctor2 = _find_ctor(src2)
+    if ctor2:
+        ctor = ctor2
+        m_use = m
+    else:
+        # stripped the only assign — insert bind near former location / after session load
+        m_use = None
+
     bind = BIND.format(CTOR=ctor)
-    src = src[: m.start()] + bind + "\n" + src[m.end() :]
-    changed.append("session_and_bind")
+    if m_use is not None:
+        src2 = src2[: m_use.start()] + bind + "\n" + src2[m_use.end() :]
+        changed.append("session_and_bind_replace")
+    else:
+        # insert after "[BOOT] all imports OK" or before first state. usage
+        lines = src2.splitlines(True)
+        idx = 0
+        for i, ln in enumerate(lines):
+            if "[BOOT] all imports OK" in ln or "[Session] Loaded" in ln or "StringSession" in ln:
+                idx = i + 1
+        if idx == 0:
+            idx = min(80, len(lines))
+        lines.insert(idx, "\n" + bind + "\n")
+        src2 = "".join(lines)
+        changed.append("session_and_bind_insert")
 
-    # Belt+suspenders before first state.engine =
-    if re.search(r"^state\.engine\s*=", src, re.M):
-        src = re.sub(
-            r"^(state\.engine\s*=)",
-            FORCE + r"\1",
-            src,
-            count=1,
-            flags=re.M,
-        )
-        changed.append("state_name_force")
+    if re.search(r"^state\.engine\s*=", src2, re.M):
+        if "LUXURY_STATE_NAME_FORCE" not in src2:
+            src2 = re.sub(
+                r"^(state\.engine\s*=)",
+                FORCE + r"\1",
+                src2,
+                count=1,
+                flags=re.M,
+            )
+            changed.append("state_name_force")
 
-    # Ensure `import state` exists early (module must exist as bot/state.py or state.py)
-    if not re.search(r"^(import state\b|from state import\b)", src, re.M):
-        # insert after imports OK boot marker or near top
-        lines = src.splitlines(True)
+    if not re.search(r"^(import state\b|from state import\b|import state as )", src2, re.M):
+        lines = src2.splitlines(True)
         idx = 0
         for i, ln in enumerate(lines):
             if "[BOOT] all imports OK" in ln or "[BOOT] telethon imports OK" in ln:
                 idx = i + 1
                 break
         lines.insert(idx, "import state  # LUXURY: module must exist before client bind\n")
-        src = "".join(lines)
+        src2 = "".join(lines)
         changed.append("import_state")
 
-    ast.parse(src)
-    if "state = _lux_state_mod" not in src:
+    try:
+        ast.parse(src2)
+    except SyntaxError as exc:
+        print("[fix_bacbo_state] SYNTAX after patch:", exc)
+        _dump_context(src2, around=getattr(exc, "lineno", 146) or 146)
+        raise SystemExit("syntax error after state patch") from exc
+
+    if "state = _lux_state_mod" not in src2:
         raise SystemExit("state = _lux_state_mod missing after patch")
 
     bak = path.with_suffix(path.suffix + ".bak_pre_state_fix")
     if not bak.exists():
         bak.write_text(original, encoding="utf-8")
-    if src != original:
-        path.write_text(src, encoding="utf-8")
+    if src2 != original:
+        path.write_text(src2, encoding="utf-8")
 
-    # Verify state module importable
     sys.path.insert(0, str(root))
     sys.path.insert(0, str(root / "bot"))
+    state_file = None
     try:
         if "state" in sys.modules:
             del sys.modules["state"]
@@ -148,11 +243,11 @@ def apply(root: Path | None = None) -> dict:
         state_file = getattr(st, "__file__", "?")
     except Exception as exc:
         print("[fix_bacbo_state] WARN: import state failed:", repr(exc))
-        state_file = None
 
     out = {
         "path": str(path),
         "changed": changed,
+        "ctor": ctor[:80],
         "bytes": path.stat().st_size,
         "state_module": state_file,
         "has_bind": "LUXURY_SESSION_AND_BIND" in path.read_text(encoding="utf-8", errors="replace"),
