@@ -38,10 +38,16 @@ du -sh . bot bot_LEGACY_JULY_16 logs 2>/dev/null || true
 
 echo
 echo "========== [2/6] find every database file =========="
-# -size +1k skips empty placeholders
-mapfile -t DB_FILES < <(find . \
-  \( -path './.git/*' -o -path './node_modules/*' -o -path './.cache/*' \) -prune -o \
-  \( -name '*.db' -o -name '*.sqlite' -o -name '*.sqlite3' \) -type f -size +1k -print 2>/dev/null | sort)
+if [ "${ALL_DBS:-0}" = "1" ]; then
+  mapfile -t DB_FILES < <(find . \
+    \( -path './.git/*' -o -path './node_modules/*' -o -path './.cache/*' \) -prune -o \
+    \( -name '*.db' -o -name '*.sqlite' -o -name '*.sqlite3' \) -type f -size +1k -print 2>/dev/null | sort)
+else
+  mapfile -t DB_FILES < <(find . \
+    \( -path './.git/*' -o -path './node_modules/*' -o -path './.cache/*' \
+       -o -path './.gemini/*' -o -path './.local/*' \) -prune -o \
+    \( -name '*.db' -o -name '*.sqlite' -o -name '*.sqlite3' \) -type f -size +1k -print 2>/dev/null | sort)
+fi
 
 if [ "${#DB_FILES[@]}" -eq 0 ]; then
   echo "FATAL: no .db/.sqlite files found under $(pwd)"
@@ -59,25 +65,27 @@ echo "total db bytes: $(numfmt --to=iec-i --suffix=B "$TOTAL_DB" 2>/dev/null || 
 
 echo
 echo "========== [3/6] SQLite WAL checkpoint (merge -wal into .db) =========="
-python3 - <<'PY'
+if [ "${CHECKPOINT:-0}" != "1" ]; then
+  echo "CHECKPOINT=0 — skipping (set CHECKPOINT=1 to try; may hang on 3GB db)"
+else
+  DB_LIST="/tmp/bacbo_db_export_list_${STAMP}.txt"
+  printf '%s\n' "${DB_FILES[@]}" > "$DB_LIST"
+  timeout 120 python3 - <<PY || echo "WARN: checkpoint timed out — continuing with raw .db files"
 import sqlite3
 from pathlib import Path
-
-paths = """${DB_FILES[*]}""".split()
-if paths == ['']:
-    paths = []
-for raw in paths:
-    p = Path(raw)
-    if not p.exists() or p.suffix not in {'.db', '.sqlite', '.sqlite3'}:
+for line in Path("$DB_LIST").read_text().splitlines():
+    p = Path(line.strip())
+    if not p.exists() or "bacbo.db" not in p.name:
         continue
     try:
-        con = sqlite3.connect(str(p), timeout=120)
-        con.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+        con = sqlite3.connect(str(p), timeout=30)
+        con.execute("PRAGMA wal_checkpoint(PASSIVE)")
         con.close()
         print("checkpoint OK", p, p.stat().st_size)
     except Exception as e:
         print("checkpoint SKIP", p, repr(e))
 PY
+fi
 
 echo
 echo "========== [4/6] zip ALL databases (store, no recompress) =========="
