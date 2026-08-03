@@ -13,41 +13,47 @@ Variants of the *same* type (not new roles):
 
 No FIRE. No RESULT. No room relays yet in this window.
 
-## Era 1 — two pipes appear (after 19 Mar ~17:44 ONLINE)
-Starting ~17:46 same day, chat shows **two different roles**:
+## Era 1 — room news + ENTER NOW fires, **NO bot RESULT cards yet**
+**From ~19 Mar 17:46 → before ~19:52**
 
-### A) ROOM RELAY / “news” (`📡 @RoomHandle — timestamp`)
-Bot **forwards** tip-room chatter. Not an ENTER NOW fire.
+### A) ROOM_RELAY / “news” (`📡 @RoomHandle — …`)
+Forwarded tip-room lines. **Not** a bot FIRE. **Not** a bot RESULT.
+Subtypes seen: promo/invite, ANALISANDO, gale 1°/2°, MÃO PESADA, HORÁRIOS EMPATES,
+and later `✅ AUTO WIN @Room — …` / `🤑✅ GREEN` (still room relay, not bot result skin).
 
-Examples from chat:
-- invite / promo spam
-- `🚨 ANALISANDO 🚨`
-- `🔁 Estamos no 1° gale` / `2° gale`
-- `MÃO PESADA`
-- `🔰 HORÁRIOS EMPATES`
+### B) FIRE subtypes (bot ENTER NOW) — **no auto RESULT under them yet**
+Footer: `_After result: /win · /loss · /tie_` = **manual** — these fires **do not** get a
+bot RESULT card type in this window. That is intentional for the catalog: FIRE without RESULT type.
 
-Same role, many **news subtypes** (analisando, gale, promo, empates…).
+| First seen (chat) | Header | Notes |
+|-------------------|--------|-------|
+| 19 Mar **17:51:34** | `🏆 SIGNAL CONFIRMED — ENTER NOW` | First bot FIRE (2-room) |
+| 19 Mar **17:55:33** | `💎 SOLO ELITE SIGNAL` | **First SOLO** in chat (matches user) |
+| 19 Mar **18:25:17** | `💎 SOLO ELITE SIGNAL` | Solo again (history ✅) |
+| 19 Mar **19:52:03** | `🏆 GOLDEN SIGNAL — ENTER NOW` | **New FIRE type** (≠ SIGNAL CONFIRMED) |
 
-### B) BOT FIRE — ENTER NOW (money-style, no result-ETA countdown on card)
-Bot’s **own** signal card. Examples:
+## Era 2 — GOLDEN + first **bot RESULT** cards (~19 Mar 19:52)
+Same minute as first GOLDEN FIRE:
 
-| Fire subtype | Header in chat |
-|--------------|----------------|
-| Coalition / confirmed | `🏆 SIGNAL CONFIRMED — ENTER NOW` |
-| Solo | `💎 SOLO ELITE SIGNAL` |
+| Type | Example | Role |
+|------|---------|------|
+| FIRE | `🏆 GOLDEN SIGNAL — ENTER NOW` | Bot fire |
+| ROOM_RELAY | `✅ AUTO WIN @CoringaDados` + GREEN | Room news (not bot result skin) |
+| RESULT | `✅ WIN — SOLO_ELITE` + `G0 — Acertou de primeira!` + daily stats | **First bot RESULT type** |
 
-Both say `⚡ ENTER NOW` and `_After result: /win · /loss · /tie_` — early era = **manual result**, not auto result card yet.
+So: early SIGNAL CONFIRMED / SOLO fires can exist **without** a RESULT type;
+RESULT types appear as a **later** invention in the chat.
 
-## Roles checklist (growing as we scroll)
-| Role | Era start | Has result card? |
-|------|-----------|------------------|
-| ONLINE | Mar 17 | No |
-| ROOM_RELAY (news) | Mar 19 ~17:46 | No (room’s own gale lines ≠ bot RESULT) |
-| FIRE_ENTER_NOW | Mar 19 ~17:51 | Later — early cards ask /win /loss /tie |
-| FIRE_* (other skins) | TBD scroll | TBD |
-| RESULT_* | TBD scroll | — |
-| UPDATE/OPS | TBD scroll | — |
+## Locked type list so far (chat-native)
+1. ONLINE  
+2. ROOM_RELAY (many subtypes)  
+3. FIRE / SIGNAL_CONFIRMED_ENTER_NOW  
+4. FIRE / SOLO_ELITE_SIGNAL  
+5. FIRE / GOLDEN_SIGNAL_ENTER_NOW  
+6. RESULT / WIN_SOLO_ELITE (G0 + daily stats)  
+
+Keep scrolling → add every **new header/skin** as a new type when it first appears.
 
 ## Not countdown-to-result
-ENTER NOW cards in this era have **no** “Ns until result” factual countdown.
-Do not classify 1s/11s/17s as the definition of countdown; real countdown-to-result = any Ns when that skin appears later.
+These ENTER NOW cards have **no** factual “Ns until result” countdown on the fire.
+Do not treat 1s/11s/17s as the definition of countdown.
