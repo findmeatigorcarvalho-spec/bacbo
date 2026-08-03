@@ -19,7 +19,7 @@
 set -euo pipefail
 cd /home/runner/workspace 2>/dev/null || cd "$(dirname "$0")/.."
 
-ARCH_VERSION="20260803c"
+ARCH_VERSION="20260803d"
 echo "ARCH_VERSION=${ARCH_VERSION} cwd=$(pwd)"
 
 OUT="tg_archaeology"
@@ -175,6 +175,14 @@ def classify(text: str) -> tuple[str, str, str, str, str]:
         lane, clocks = detect_lane_and_clocks(t, role)
         return role, tid, fl, lane, clocks
 
+    # 🟡 EMPATE — SOLO_ELITE  (bot TIE result — ≠ WIN/LOSS, ≠ room relay)
+    if re.search(r"^🟡\s*EMPATE\s*—", fl, re.I) or re.search(r"^EMPATE\s*—", fl, re.I):
+        kind = re.sub(r"^🟡\s*EMPATE\s*—\s*", "", fl, flags=re.I)
+        kind = re.sub(r"^EMPATE\s*—\s*", "", kind, flags=re.I).strip()
+        role, tid = "RESULT", f"RESULT_EMPATE_{fingerprint(kind, 40)}"
+        lane, clocks = detect_lane_and_clocks(t, role)
+        return role, tid, fl, lane, clocks
+
     if re.search(r"^🔵|^🔴|^🟡|^⚪", fl) and re.search(r"GANHOU|PERDEU|EMPATE|TIE", t, re.I):
         outcome = "WIN" if re.search(r"GANHOU", t, re.I) else (
             "LOSS" if re.search(r"PERDEU", t, re.I) else "TIE"
@@ -253,7 +261,17 @@ def classify(text: str) -> tuple[str, str, str, str, str]:
         return role, tid, fl, "COUNTDOWN", clocks
 
     # Named money FIRE headers
-    if re.search(r"GOLDEN SIGNAL\s*—\s*ENTER NOW", t, re.I):
+    # GALE N RETENTATIVA before plain SOLO — body still contains SOLO ELITE SIGNAL
+    if re.search(r"GALE\s*\d+\s*—\s*RETENTATIVA", t, re.I) or re.match(r"^♻️\s*GALE", fl):
+        gm = re.search(r"GALE\s*(\d+)", t, re.I)
+        g = gm.group(1) if gm else "X"
+        kind = "GENERIC"
+        for k in ("SOLO ELITE", "GOLDEN", "SEQUENCE", "PLATINUM", "FLASH", "ULTRA TIE", "EMERGING", "EMERGINDO"):
+            if re.search(k, t, re.I):
+                kind = fingerprint(k, 20)
+                break
+        role, tid = "FIRE", f"FIRE_GALE_{g}_RETENTATIVA_{kind}"
+    elif re.search(r"GOLDEN SIGNAL\s*—\s*ENTER NOW", t, re.I):
         role, tid = "FIRE", "FIRE_GOLDEN_SIGNAL_ENTER_NOW"
     elif re.search(r"SIGNAL CONFIRMED\s*—\s*ENTER NOW", t, re.I):
         role, tid = "FIRE", "FIRE_SIGNAL_CONFIRMED_ENTER_NOW"
@@ -302,6 +320,16 @@ SELFTEST_CASES = [
     ("💎 SOLO ELITE SIGNAL\nENTER NOW", "FIRE", "FIRE_SOLO_ELITE_SIGNAL"),
     ("🏆 GOLDEN SIGNAL — ENTER NOW", "FIRE", "FIRE_GOLDEN_SIGNAL_ENTER_NOW"),
     ("✅ WIN — SOLO_ELITE\nG0 — Acertou de primeira!", "RESULT", "RESULT_WIN_SOLO_ELITE"),
+    (
+        "♻️ GALE 1 — RETENTATIVA (1 room at G1)\n💎 SOLO ELITE SIGNAL 💎\n⚡ ENTER NOW",
+        "FIRE",
+        "FIRE_GALE_1_RETENTATIVA_SOLO_ELITE",
+    ),
+    (
+        "🟡 EMPATE — SOLO_ELITE\nResultado empatado — proteção ativada!",
+        "RESULT",
+        "RESULT_EMPATE_SOLO_ELITE",
+    ),
     ("JANELA: 11s para apostar\n💎 SOLO ELITE", "FIRE", "FIRE_JANELA_11S_SOLO_ELITE"),
     ("🟢 1s 🟢\nSEQUENCE SIGNAL", "FIRE", "FIRE_JANELA_1S_SEQUENCE"),
 ]
@@ -784,9 +812,12 @@ import asyncio
 asyncio.run(scrape())
 PY
 
-# Skip zip after --selftest (python already exited 0/1)
+# Skip zip after --selftest / --diag
 if [[ "${TG_ARCH_SELFTEST:-0}" == "1" ]]; then
   echo "selftest finished"
+  exit 0
+fi
+if [[ "${TG_ARCH_DIAG:-0}" == "1" ]]; then
   exit 0
 fi
 

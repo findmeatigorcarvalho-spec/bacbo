@@ -44,6 +44,17 @@ Same minute as first GOLDEN FIRE:
 So: early SIGNAL CONFIRMED / SOLO fires can exist **without** a RESULT type;
 RESULT types appear as a **later** invention in the chat.
 
+## Era 3 — GALE retentativa FIRE + EMPATE RESULT (~19 Mar 20:48)
+After GOLDEN/WIN exist. New skins (not the same as plain SOLO G0 fire):
+
+| First seen (chat) | Header / skin | Role | Notes |
+|-------------------|---------------|------|-------|
+| 19 Mar **20:48:58** | `♻️ GALE 1 — RETENTATIVA (1 room at G1)` + body `💎 SOLO ELITE SIGNAL` | **FIRE** | Gale-retry fire. Still has `_After result: /win · /loss · /tie_`. ≠ plain SOLO G0 ENTER NOW. |
+| 19 Mar **20:50** | `🟡 EMPATE — SOLO_ELITE` + `Resultado empatado — proteção ativada!` + daily stats | **RESULT** | **First bot TIE/EMPATE result type** (≠ WIN, ≠ LOSS, ≠ room AUTO WIN). |
+
+Plain `💎 SOLO ELITE SIGNAL` (no GALE RETENTATIVA header) stays its own FIRE type.
+`♻️ GALE N — RETENTATIVA` is a **separate FIRE type** even when the body still says SOLO ELITE.
+
 ## Locked type list so far (chat-native)
 1. ONLINE  
 2. ROOM_RELAY (many subtypes)  
@@ -51,6 +62,8 @@ RESULT types appear as a **later** invention in the chat.
 4. FIRE / SOLO_ELITE_SIGNAL  
 5. FIRE / GOLDEN_SIGNAL_ENTER_NOW  
 6. RESULT / WIN_SOLO_ELITE (G0 + daily stats)  
+7. FIRE / GALE_1_RETENTATIVA_SOLO_ELITE  
+8. RESULT / EMPATE_SOLO_ELITE  
 
 Keep scrolling → add every **new header/skin** as a new type when it first appears.
 
