@@ -71,12 +71,47 @@ Ask recovery for transfer **`u17818127167255IdjZb8f932d8c217QL`**, file **`21051
 
 ---
 
-## Rescue path (no old YDRAY)
+## Recovery runbook (do all, in order)
+
+### On Replit (one paste — do NOT restart bot first)
 
 ```bash
-# On Replit — slim export (skip legacy bloat)
-EXPORT_MODE=slim bash REPLIT_EXPORT_FULL_APP.sh
-# Upload new zip to YDRAY/Drive → paste link in Cursor
-# On cloud agent:
+cd /home/runner/workspace
+curl -fsSL -H 'Cache-Control: no-cache' -o RECOVER_ALL.sh \
+  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_RECOVER_ALL.sh'
+bash RECOVER_ALL.sh
+cat recover_all_report.txt
+```
+
+Upload `RECOVERED_bacbo_db.zip` if created. Paste full `recover_all_report.txt` in Cursor.
+
+### On your PC
+
+```bash
+bash LOCAL_PC_HUNT.sh   # from repo replit_elite_stack_patch/
+```
+
+Search for `YDRAY-Bac-Bo-Watcher-replit-full-app-audit-for-cursor-Ai.zip` (~7.4 GB).
+
+### On Cursor cloud (when you have a working link)
+
+```bash
+YDRAY_URL='https://ydray.com/get/t/NEW_OR_RESTORED_ID' \
+  bash replit_elite_stack_patch/download_ydray_full_app.sh
+```
+
+### YDRAY API status (2026-08-03)
+
+| Transfer | Status | Recovery |
+|----------|--------|----------|
+| `u17818127167255IdjZb8f932d8c217QL` (7.4 GB full app) | `expired`, no `recoverable` flag | Direct hash URL redirects to expired page |
+| `u1784507017063UBqg11e64279acc9Hc` (34 MB messages) | `expired` | `recoverable: true`, €2.99 until 2026-08-06 |
+
+## Rescue path (fresh upload)
+
+```bash
+# On Replit — export whatever exists NOW (do not delete first)
+bash REPLIT_EXPORT_DB_FAST.sh
+# Upload zip to YDRAY/Drive → paste link in Cursor
 YDRAY_URL='https://ydray.com/get/t/NEW_ID' bash download_ydray_full_app.sh
 ```

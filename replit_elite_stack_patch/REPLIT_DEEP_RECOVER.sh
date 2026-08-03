@@ -52,8 +52,9 @@ find /home/runner/workspace -xdev -type f \( -name '*.db' -o -name '*.sqlite' -o
   | while read -r f; do ls -lah "$f"; done | sort -k5 -hr | head -30
 
 echo
-echo "========== DELETED BUT STILL OPEN (recoverable via /proc/PID/fd) =========="
-# If engine held old 3GB bacbo.db open when file was replaced, data may still be here
+echo "========== DELETED BUT STILL OPEN (auto-copy to workspace) =========="
+RECOV_DIR="./_recovery_deep_$(date -u +%Y%m%dT%H%M%SZ)"
+mkdir -p "$RECOV_DIR"
 FOUND_DEL=0
 for pid_dir in /proc/[0-9]*; do
   pid="${pid_dir##*/}"
@@ -61,11 +62,13 @@ for pid_dir in /proc/[0-9]*; do
     [ -r "$fd" ] || continue
     target="$(readlink "$fd" 2>/dev/null || true)"
     case "$target" in
-      *bacbo.db*|*full_replit*|*YDRAY*|*deleted*)
+      *bacbo*|*Bac-Bo*|*full_replit*|*YDRAY*|*deleted*)
         sz="$(stat -c%s "$fd" 2>/dev/null || echo 0)"
         if [ "$sz" -gt 104857600 ]; then
+          out="${RECOV_DIR}/RECOVERED_pid${pid}_fd${fd##*/}_$((sz/1024/1024))MB.db"
           echo "RECOVERABLE pid=$pid fd=${fd##*/} size=$((sz/1024/1024))MB target=$target"
-          echo "  -> cp $fd /home/runner/workspace/RECOVERED_${pid}_${fd##*/}.db"
+          echo "  -> copying to $out"
+          cp -a "$fd" "$out" && ls -lah "$out"
           FOUND_DEL=1
         fi
         ;;
