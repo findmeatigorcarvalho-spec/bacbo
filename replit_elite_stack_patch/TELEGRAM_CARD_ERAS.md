@@ -68,15 +68,16 @@ Plain `💎 SOLO ELITE SIGNAL` (no GALE RETENTATIVA header) stays its own FIRE t
 Keep scrolling → add every **new header/skin** as a new type when it first appears.
 
 ## Automated full catalog (no manual scroll)
-Run on Replit (has Telegram session secrets) — scrapes **every** msg since Mar 17 from money + countdown peers, fingerprints every skin, writes unknowns separately so nothing is dropped:
+Run on Replit → `bash TG_UP.sh` → paste `FETCH_URL=` (agent downloads).
 
-```bash
-curl -fsSL -H 'Cache-Control: no-cache' -o TG_ARCH.sh \
-  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TELEGRAM_TYPE_ARCHAEOLOGY.sh'
-bash TG_ARCH.sh
-```
+### Partial pull already fetched (2026-08-03)
+`https://litter.catbox.moe/zt31g0.zip` → `tg_archaeology_partial_30k/CATALOG_SUMMARY.md`
 
-Paste `tg_archaeology/report.txt` (or upload the zip link). Cloud agent merges `eras_auto.md` into this file.
+- **30,300** msgs · **mr_iv4 only** · range **2026-07-01 → 2026-08-03** (Ctrl+C at 30k)
+- **Not yet:** Mar 17 day-one · `@UNIQUE_g1`
+- Core Jul+ skins confirmed: SOLO/GOLDEN/PLATINUM/SEQUENCE fires, WIN/LOSS/EMPATE results, GALE retentativa, CD quantum/timer, room ANALISANDO + AUTO WIN, forensic, G0/G1/G2 follow-ups
+
+Resume scrape until dates ≤ Mar 17 and UNIQUE_g1 finishes, then upload again.
 
 ## Not countdown-to-result
 These ENTER NOW cards have **no** factual “Ns until result” countdown on the fire.
