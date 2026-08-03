@@ -23,6 +23,17 @@ mkdir -p "$OUT"
 export OUT
 export SINCE_ISO="${SINCE_ISO:-2026-03-17T00:00:00+00:00}"
 
+# shellcheck disable=SC1091
+[[ -f .env ]] && set -a && source ./.env && set +a || true
+# File wins over a short/broken Replit secret (same as REPLIT_FINISH / ONE_STACK)
+if [[ -f .telegram_session_string ]]; then
+  _S="$(tr -d '\n\r' < .telegram_session_string)"
+  if [[ ${#_S} -gt 50 ]]; then
+    export TELEGRAM_SESSION_STRING="$_S"
+    echo "prefill: .telegram_session_string len=${#_S}"
+  fi
+fi
+
 # Usage: bash TG_ARCH.sh [--selftest]
 if [[ "${1:-}" == "--selftest" ]]; then
   export TG_ARCH_SELFTEST=1
@@ -305,34 +316,135 @@ if os.environ.get("TG_ARCH_SELFTEST") == "1":
     sys.exit(run_selftest())
 
 
-def load_session():
-    session = os.environ.get("TELEGRAM_SESSION_STRING") or os.environ.get("SESSION_STRING")
+def _clean(s: str) -> str:
+    return (s or "").replace("\n", "").replace("\r", "").strip().strip('"').strip("'")
+
+
+def _looks_like_string_session(s: str) -> bool:
+    """Telethon StringSession is base64-ish and usually >> 50 chars."""
+    s = _clean(s)
+    if len(s) <= 50:
+        return False
+    # Reject obvious non-sessions (bot tokens, placeholders, paths)
+    if ":" in s and s.split(":", 1)[0].isdigit():  # bot API token shape
+        return False
+    if s.startswith("/") or s.endswith(".session"):
+        return False
+    if s.lower() in ("none", "null", "changeme", "your_session"):
+        return False
+    try:
+        from telethon.sessions import StringSession
+        StringSession(s)  # raises ValueError if not valid
+        return True
+    except Exception:
+        return False
+
+
+def load_api_creds():
     api_id = os.environ.get("TELEGRAM_API_ID") or os.environ.get("API_ID")
     api_hash = os.environ.get("TELEGRAM_API_HASH") or os.environ.get("API_HASH")
-    # Replit secrets sometimes only in process env; also probe files
-    for p in [
-        Path(".session_str"),
-        Path("bot/.session_str"),
-        Path(".env"),
-        Path("bot/.env"),
-    ]:
+    for p in (Path(".env"), Path("bot/.env"), Path("luxury_building.env")):
         if not p.exists():
             continue
-        txt = p.read_text(encoding="utf-8", errors="replace")
-        if p.name.endswith(".env") or p.name == ".env":
-            for line in txt.splitlines():
-                if "=" in line and not line.strip().startswith("#"):
-                    k, v = line.split("=", 1)
-                    k, v = k.strip(), v.strip().strip('"').strip("'")
-                    if k in ("TELEGRAM_SESSION_STRING", "SESSION_STRING") and not session:
-                        session = v
-                    if k in ("TELEGRAM_API_ID", "API_ID") and not api_id:
-                        api_id = v
-                    if k in ("TELEGRAM_API_HASH", "API_HASH") and not api_hash:
-                        api_hash = v
-        elif not session and len(txt.strip()) > 20:
-            session = txt.strip()
-    return session, api_id, api_hash
+        for line in p.read_text(encoding="utf-8", errors="replace").splitlines():
+            s = line.strip()
+            if not s or s.startswith("#") or "=" not in s:
+                continue
+            if s.startswith("export "):
+                s = s[len("export "):]
+            k, _, v = s.partition("=")
+            k, v = k.strip(), _clean(v)
+            if k in ("TELEGRAM_API_ID", "API_ID") and not api_id:
+                api_id = v
+            if k in ("TELEGRAM_API_HASH", "API_HASH") and not api_hash:
+                api_hash = v
+    return api_id, api_hash
+
+
+def load_session():
+    """Same sources the live bot uses — NOT .session_str (wrong file caused Not a valid string)."""
+    candidates = []  # (source, value)
+
+    for key in (
+        "TELEGRAM_SESSION_STRING",
+        "TELEGRAM_STRING_SESSION",
+        "STRING_SESSION",
+        "TG_SESSION_STRING",
+    ):
+        v = _clean(os.environ.get(key) or "")
+        if v:
+            candidates.append((f"env:{key}", v))
+
+    for p in (
+        Path(".telegram_session_string"),
+        Path("bot/.telegram_session_string"),
+        Path("/home/runner/workspace/.telegram_session_string"),
+    ):
+        if p.exists():
+            v = _clean(p.read_text(encoding="utf-8", errors="replace"))
+            if v:
+                candidates.append((f"file:{p}", v))
+
+    for p in (Path(".env"), Path("bot/.env"), Path("luxury_building.env")):
+        if not p.exists():
+            continue
+        for line in p.read_text(encoding="utf-8", errors="replace").splitlines():
+            s = line.strip()
+            if not s or s.startswith("#") or "=" not in s:
+                continue
+            if s.startswith("export "):
+                s = s[len("export "):]
+            k, _, v = s.partition("=")
+            k, v = k.strip(), _clean(v)
+            if k in (
+                "TELEGRAM_SESSION_STRING",
+                "TELEGRAM_STRING_SESSION",
+                "STRING_SESSION",
+                "TG_SESSION_STRING",
+            ) and v:
+                candidates.append((f"{p}:{k}", v))
+
+    # Diagnose every candidate; pick first valid StringSession
+    print("session candidates:")
+    for src, v in candidates:
+        ok = _looks_like_string_session(v)
+        print(f"  {src}: len={len(v)} valid={ok}")
+        if ok:
+            # materialize canonical file for other tools
+            try:
+                Path(".telegram_session_string").write_text(v + "\n", encoding="utf-8")
+            except Exception:
+                pass
+            return v, src
+
+    return None, None
+
+
+async def maybe_convert_sqlite_session(api_id, api_hash):
+    """Last resort: convert Telethon *.session SQLite → StringSession."""
+    from telethon import TelegramClient
+    from telethon.sessions import StringSession
+
+    for sess_file in (
+        Path("userbot_session.session"),
+        Path("bot/userbot_session.session"),
+        Path("/home/runner/workspace/userbot_session.session"),
+    ):
+        if not sess_file.exists():
+            continue
+        try:
+            name = str(sess_file.with_suffix(""))  # Telethon wants path without .session
+            c = TelegramClient(name, int(api_id), str(api_hash))
+            await c.connect()
+            s = _clean(StringSession.save(c.session))
+            await c.disconnect()
+            if _looks_like_string_session(s):
+                Path(".telegram_session_string").write_text(s + "\n", encoding="utf-8")
+                print(f"converted {sess_file} → StringSession len={len(s)}")
+                return s, f"converted:{sess_file}"
+        except Exception as e:
+            print(f"convert {sess_file} failed: {e}")
+    return None, None
 
 
 async def scrape():
@@ -346,11 +458,21 @@ async def scrape():
         from telethon import TelegramClient
         from telethon.sessions import StringSession
 
-    session, api_id, api_hash = load_session()
+    api_id, api_hash = load_api_creds()
+    session, sess_src = load_session()
+    if not session and api_id and api_hash:
+        session, sess_src = await maybe_convert_sqlite_session(api_id, api_hash)
     if not session or not api_id or not api_hash:
-        print("FATAL: need TELEGRAM_SESSION_STRING + TELEGRAM_API_ID + TELEGRAM_API_HASH")
-        print("Set Replit Secrets, then re-run. Cloud agent cannot scrape your chats.")
+        print("FATAL: need a valid Telethon StringSession + TELEGRAM_API_ID + TELEGRAM_API_HASH")
+        print("On Replit the bot uses:")
+        print("  Secret TELEGRAM_SESSION_STRING  OR  file .telegram_session_string")
+        print("Check:")
+        print("  ls -la .telegram_session_string")
+        print("  wc -c .telegram_session_string")
+        print("  python3 -c \"from pathlib import Path; t=Path('.telegram_session_string').read_text().strip(); print(len(t))\"")
         sys.exit(2)
+
+    print(f"using session from {sess_src} (len={len(session)})")
 
     peers = []
     for key in (
