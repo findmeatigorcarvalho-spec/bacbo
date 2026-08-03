@@ -73,25 +73,31 @@ echo "=== partial dumps ==="
 ls -lah tg_archaeology/*.csv tg_archaeology/*.jsonl tg_archaeology/*.partial 2>/dev/null || echo "(none)"
 
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
+
+# Inspect existing zips (even tiny ones)
+for z in tg_archaeology_*.zip tg_arch_catalog_*.zip; do
+  [[ -f "$z" ]] || continue
+  echo "=== zip listing: $z ==="
+  unzip -l "$z" 2>/dev/null | head -40 || true
+done
+
 if [[ -d tg_archaeology ]] && [[ -n "$(ls -A tg_archaeology 2>/dev/null)" ]]; then
-  ZIP="tg_archaeology_RECOVERED_${STAMP}.zip"
-  zip -r -q "$ZIP" tg_archaeology
-  ls -lah "$ZIP"
   echo ""
-  echo "RECOVERED ZIP: $ZIP"
-  echo "Upload this zip (Replit → download) or paste:"
-  echo "  cat tg_archaeology/report.txt"
-  echo "  cat tg_archaeology/types_first_seen.csv"
+  echo "=== auto-upload so agent can fetch ==="
+  if [[ -f replit_elite_stack_patch/REPLIT_TG_ARCH_UPLOAD.sh ]]; then
+    bash replit_elite_stack_patch/REPLIT_TG_ARCH_UPLOAD.sh tg_archaeology || true
+  else
+    curl -fsSL -o /tmp/TG_UP.sh \
+      'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TG_ARCH_UPLOAD.sh' \
+      && bash /tmp/TG_UP.sh tg_archaeology || true
+  fi
 else
   echo ""
-  echo "NO archaeology output folder with files."
-  echo "The scrape likely died BEFORE writing finals (all rows were in RAM)."
-  echo "Re-run the NEW arch script (incremental flush) — SHA below."
+  echo "NO archaeology output folder with files yet."
+  echo "If scrape is running (flushed lines), wait — then run:"
+  echo "  bash TG_UP.sh"
 fi
 
 echo ""
-echo "If empty: re-run scrape with incremental writer:"
-echo "  curl -fsSL -o TG_ARCH.sh \\"
-echo "    'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TELEGRAM_TYPE_ARCHAEOLOGY.sh?v=incr1'"
-echo "  bash TG_ARCH.sh"
-echo "Look for ARCH_VERSION=20260803e and lines like 'flushed N msgs'."
+echo "Bridge rule: Replit holds Telegram secrets; cloud agent cannot read Replit disk."
+echo "Fix = upload catalog → paste FETCH_URL= (one line) → agent downloads."

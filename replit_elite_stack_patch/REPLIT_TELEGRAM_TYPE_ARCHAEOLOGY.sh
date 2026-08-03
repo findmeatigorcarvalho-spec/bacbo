@@ -19,7 +19,7 @@
 set -euo pipefail
 cd /home/runner/workspace 2>/dev/null || cd "$(dirname "$0")/.."
 
-ARCH_VERSION="20260803e"
+ARCH_VERSION="20260803f"
 echo "ARCH_VERSION=${ARCH_VERSION} cwd=$(pwd)"
 
 OUT="tg_archaeology"
@@ -838,6 +838,7 @@ async def scrape():
     report_lines += ["", f"Full dump: {csv_path}", f"First-seen: {first_path}", f"Eras: {OUT / 'eras_auto.md'}"]
     report = "\n".join(report_lines) + "\n"
     (OUT / "report.txt").write_text(report, encoding="utf-8")
+    (OUT / "PASTE_ME.txt").write_text(report, encoding="utf-8")
     print(report, flush=True)
     print("UPLOAD/zip folder:", OUT, flush=True)
 
@@ -860,6 +861,19 @@ STAMP=$(date -u +%Y%m%dT%H%M%SZ)
 ZIP="tg_archaeology_${STAMP}.zip"
 zip -r -q "$ZIP" "$OUT"
 ls -lah "$ZIP" "$OUT"/* 2>/dev/null | head -40
+
 echo ""
-echo "DONE. Paste report.txt here OR upload $ZIP and paste the link."
-echo "I will lock every type into TELEGRAM_CARD_ERAS.md from that output — zero manual scrolling."
+echo "=== auto-upload catalog so cloud agent can FETCH (you only paste one URL) ==="
+UPLOADER="replit_elite_stack_patch/REPLIT_TG_ARCH_UPLOAD.sh"
+if [[ ! -f "$UPLOADER" ]]; then
+  curl -fsSL -o /tmp/TG_UP.sh \
+    "https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TG_ARCH_UPLOAD.sh" \
+    && UPLOADER=/tmp/TG_UP.sh || true
+fi
+if [[ -f "$UPLOADER" ]]; then
+  bash "$UPLOADER" "$OUT" || true
+else
+  echo "uploader missing — paste: cat $OUT/PASTE_ME.txt"
+fi
+echo ""
+echo "DONE. Paste the FETCH_URL= line here (one line). Agent downloads the rest."
