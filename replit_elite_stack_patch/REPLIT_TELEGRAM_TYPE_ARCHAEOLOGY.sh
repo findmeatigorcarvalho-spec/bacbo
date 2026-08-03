@@ -3,9 +3,10 @@
 # Same method as manual scroll: chronological first-seen of each skin. Automated.
 # Does NOT drop unknowns — fingerprints them so nothing is missed.
 #
-#   curl -fsSL -H 'Cache-Control: no-cache' -o TG_ARCH.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TELEGRAM_TYPE_ARCHAEOLOGY.sh'
+#   curl -fsSL -o TG_ARCH.sh \
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TELEGRAM_TYPE_ARCHAEOLOGY.sh?v=20260803c'
 #   bash TG_ARCH.sh
+#   bash TG_ARCH.sh --diag          # session diagnose only
 #
 # Outputs (nothing omitted):
 #   tg_archaeology/all_messages.csv
@@ -17,6 +18,9 @@
 #   tg_archaeology_*.zip
 set -euo pipefail
 cd /home/runner/workspace 2>/dev/null || cd "$(dirname "$0")/.."
+
+ARCH_VERSION="20260803c"
+echo "ARCH_VERSION=${ARCH_VERSION} cwd=$(pwd)"
 
 OUT="tg_archaeology"
 mkdir -p "$OUT"
@@ -30,13 +34,16 @@ if [[ -f .telegram_session_string ]]; then
   _S="$(tr -d '\n\r' < .telegram_session_string)"
   if [[ ${#_S} -gt 50 ]]; then
     export TELEGRAM_SESSION_STRING="$_S"
-    echo "prefill: .telegram_session_string len=${#_S}"
+    echo "prefill: .telegram_session_string len=${#_S} first_char='${_S:0:1}'"
   fi
 fi
 
-# Usage: bash TG_ARCH.sh [--selftest]
+# Usage: bash TG_ARCH.sh [--selftest|--diag]
 if [[ "${1:-}" == "--selftest" ]]; then
   export TG_ARCH_SELFTEST=1
+fi
+if [[ "${1:-}" == "--diag" ]]; then
+  export TG_ARCH_DIAG=1
 fi
 
 python3 - <<'PY'
@@ -320,24 +327,66 @@ def _clean(s: str) -> str:
     return (s or "").replace("\n", "").replace("\r", "").strip().strip('"').strip("'")
 
 
+def _session_diag(label: str, s: str) -> None:
+    s = _clean(s)
+    if not s:
+        print(f"  {label}: EMPTY")
+        return
+    first = s[0]
+    print(
+        f"  {label}: len={len(s)} first={first!r} ord={ord(first)} "
+        f"starts_with_1={first == '1'} tail={s[-8:]!r}"
+    )
+
+
 def _looks_like_string_session(s: str) -> bool:
-    """Telethon StringSession is base64-ish and usually >> 50 chars."""
+    """Telethon StringSession must start with version char '1' (see telethon/sessions/string.py)."""
     s = _clean(s)
     if len(s) <= 50:
         return False
-    # Reject obvious non-sessions (bot tokens, placeholders, paths)
     if ":" in s and s.split(":", 1)[0].isdigit():  # bot API token shape
         return False
     if s.startswith("/") or s.endswith(".session"):
         return False
     if s.lower() in ("none", "null", "changeme", "your_session"):
         return False
+    # Exact Telethon rule — this is the ValueError you hit
+    if s[0] != "1":
+        return False
     try:
         from telethon.sessions import StringSession
-        StringSession(s)  # raises ValueError if not valid
+        StringSession(s)
         return True
     except Exception:
         return False
+
+
+def find_sqlite_session_names():
+    """Return Telethon session stems (path without .session)."""
+    names = []
+    for p in (
+        Path("userbot_session.session"),
+        Path("bot/userbot_session.session"),
+        Path("/home/runner/workspace/userbot_session.session"),
+        Path("bacbo_session.session"),
+        Path("bot/bacbo_session.session"),
+        Path("anon.session"),
+        Path("bot/anon.session"),
+    ):
+        if p.exists():
+            names.append(str(p.with_suffix("")))
+    # any other *.session in workspace root / bot
+    for folder in (Path("."), Path("bot")):
+        if not folder.is_dir():
+            continue
+        for p in folder.glob("*.session"):
+            # skip journal
+            if p.name.endswith("-journal") or p.name.endswith("-wal"):
+                continue
+            stem = str(p.with_suffix(""))
+            if stem not in names:
+                names.append(stem)
+    return names
 
 
 def load_api_creds():
@@ -407,10 +456,10 @@ def load_session():
     # Diagnose every candidate; pick first valid StringSession
     print("session candidates:")
     for src, v in candidates:
+        _session_diag(src, v)
         ok = _looks_like_string_session(v)
-        print(f"  {src}: len={len(v)} valid={ok}")
+        print(f"    → valid_StringSession={ok}")
         if ok:
-            # materialize canonical file for other tools
             try:
                 Path(".telegram_session_string").write_text(v + "\n", encoding="utf-8")
             except Exception:
@@ -420,59 +469,109 @@ def load_session():
     return None, None
 
 
-async def maybe_convert_sqlite_session(api_id, api_hash):
-    """Last resort: convert Telethon *.session SQLite → StringSession."""
+async def open_telegram_client(api_id, api_hash):
+    """Open client via valid StringSession OR on-disk *.session (live bot often uses file)."""
     from telethon import TelegramClient
     from telethon.sessions import StringSession
 
-    for sess_file in (
-        Path("userbot_session.session"),
-        Path("bot/userbot_session.session"),
-        Path("/home/runner/workspace/userbot_session.session"),
-    ):
-        if not sess_file.exists():
-            continue
+    session, sess_src = load_session()
+    if session:
+        print(f"using StringSession from {sess_src} (len={len(session)})")
+        client = TelegramClient(StringSession(session), int(api_id), str(api_hash))
+        await client.connect()
+        if await client.is_user_authorized():
+            return client, sess_src
+        await client.disconnect()
+        print("StringSession connected but NOT authorized — trying *.session files")
+
+    sqlite_names = find_sqlite_session_names()
+    print(f"sqlite session files found: {sqlite_names or 'NONE'}")
+    for name in sqlite_names:
         try:
-            name = str(sess_file.with_suffix(""))  # Telethon wants path without .session
-            c = TelegramClient(name, int(api_id), str(api_hash))
-            await c.connect()
-            s = _clean(StringSession.save(c.session))
-            await c.disconnect()
-            if _looks_like_string_session(s):
-                Path(".telegram_session_string").write_text(s + "\n", encoding="utf-8")
-                print(f"converted {sess_file} → StringSession len={len(s)}")
-                return s, f"converted:{sess_file}"
+            client = TelegramClient(name, int(api_id), str(api_hash))
+            await client.connect()
+            if await client.is_user_authorized():
+                # refresh string file for next time
+                try:
+                    s = _clean(StringSession.save(client.session))
+                    if _looks_like_string_session(s):
+                        Path(".telegram_session_string").write_text(s + "\n", encoding="utf-8")
+                        print(f"refreshed .telegram_session_string from {name}.session len={len(s)}")
+                except Exception as e:
+                    print(f"could not refresh string session: {e}")
+                print(f"using sqlite session: {name}.session")
+                return client, f"sqlite:{name}"
+            await client.disconnect()
+            print(f"  {name}.session: not authorized")
         except Exception as e:
-            print(f"convert {sess_file} failed: {e}")
+            print(f"  {name}.session failed: {e}")
+
     return None, None
+
+
+def run_diag() -> int:
+    print("=== TG SESSION DIAG ===")
+    api_id, api_hash = load_api_creds()
+    print(f"api_id={'set' if api_id else 'MISSING'} api_hash={'set' if api_hash else 'MISSING'}")
+    p = Path(".telegram_session_string")
+    if p.exists():
+        raw = p.read_bytes()
+        print(f"file .telegram_session_string: {p.stat().st_size} bytes on disk")
+        print(f"  raw_head_hex={raw[:16].hex()} raw_head_ascii={raw[:20]!r}")
+        _session_diag("file_cleaned", raw.decode("utf-8", "replace"))
+        print(f"  valid={_looks_like_string_session(raw.decode('utf-8', 'replace'))}")
+        print("  Telethon requires first char == '1' (version). len after version for IPv4 == 352 → total 353.")
+    else:
+        print("file .telegram_session_string: MISSING")
+    for key in (
+        "TELEGRAM_SESSION_STRING",
+        "TELEGRAM_STRING_SESSION",
+        "STRING_SESSION",
+        "TG_SESSION_STRING",
+    ):
+        v = os.environ.get(key)
+        if v is not None:
+            _session_diag(f"env:{key}", v)
+            print(f"    → valid={_looks_like_string_session(v)}")
+    print("sqlite:", find_sqlite_session_names() or "NONE")
+    print("ls *.session:")
+    for folder in (Path("."), Path("bot")):
+        if folder.is_dir():
+            for f in sorted(folder.glob("*.session*")):
+                print(f"  {f} ({f.stat().st_size} bytes)")
+    return 0
+
+
+if os.environ.get("TG_ARCH_DIAG") == "1":
+    sys.exit(run_diag())
 
 
 async def scrape():
     try:
-        from telethon import TelegramClient
-        from telethon.sessions import StringSession
+        from telethon import TelegramClient  # noqa: F401
+        from telethon.sessions import StringSession  # noqa: F401
     except ImportError:
         print("Installing telethon...")
         import subprocess
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "telethon"])
-        from telethon import TelegramClient
-        from telethon.sessions import StringSession
 
     api_id, api_hash = load_api_creds()
-    session, sess_src = load_session()
-    if not session and api_id and api_hash:
-        session, sess_src = await maybe_convert_sqlite_session(api_id, api_hash)
-    if not session or not api_id or not api_hash:
-        print("FATAL: need a valid Telethon StringSession + TELEGRAM_API_ID + TELEGRAM_API_HASH")
-        print("On Replit the bot uses:")
-        print("  Secret TELEGRAM_SESSION_STRING  OR  file .telegram_session_string")
-        print("Check:")
-        print("  ls -la .telegram_session_string")
-        print("  wc -c .telegram_session_string")
-        print("  python3 -c \"from pathlib import Path; t=Path('.telegram_session_string').read_text().strip(); print(len(t))\"")
+    if not api_id or not api_hash:
+        print("FATAL: TELEGRAM_API_ID + TELEGRAM_API_HASH required")
         sys.exit(2)
 
-    print(f"using session from {sess_src} (len={len(session)})")
+    client, sess_src = await open_telegram_client(api_id, api_hash)
+    if not client:
+        print("FATAL: no usable Telegram session")
+        print("Your .telegram_session_string is 354 bytes but Telethon says invalid")
+        print("if it does NOT start with the character 1.")
+        print("Run:  bash TG_ARCH.sh --diag")
+        print("Then either:")
+        print("  - fix/regenerate StringSession (must start with '1'), OR")
+        print("  - ensure a live *.session file exists (userbot_session.session)")
+        sys.exit(2)
+
+    print(f"client ready via {sess_src}")
 
     peers = []
     for key in (
@@ -490,12 +589,6 @@ async def scrape():
     for d in ("6774605259", "UNIQUE_g1", "@UNIQUE_g1", "Mr_iv4", "@Mr_iv4"):
         if d not in peers:
             peers.append(d)
-
-    client = TelegramClient(StringSession(session), int(api_id), str(api_hash))
-    await client.connect()
-    if not await client.is_user_authorized():
-        print("FATAL: session not authorized")
-        sys.exit(3)
 
     rows = []
     resolved = []
