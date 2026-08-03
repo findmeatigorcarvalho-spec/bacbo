@@ -11,7 +11,12 @@
 set -euo pipefail
 
 YDRAY_URL="${1:-${YDRAY_URL:-}}"
-OUT_DIR="${OUT_DIR:-/workspace/full_app}"
+# Replit: /workspace is read-only — use cwd. Cloud agent: /workspace/full_app.
+if [ -w /workspace ] 2>/dev/null; then
+  OUT_DIR="${OUT_DIR:-/workspace/full_app}"
+else
+  OUT_DIR="${OUT_DIR:-$(pwd)/ydray_download}"
+fi
 COOKIES="${OUT_DIR}/.ydray.cookies"
 ZIP="${OUT_DIR}/full_replit_app.zip"
 
