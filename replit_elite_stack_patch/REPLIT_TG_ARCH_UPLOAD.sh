@@ -40,13 +40,27 @@ if [[ -z "$(ls -A "$BUNDLE" 2>/dev/null)" ]]; then
   exit 2
 fi
 
-# Compact paste file for chat
+# Coverage gate (Mar 17 → today)
+if [[ -f "$OUT/progress.json" ]]; then
+  echo "=== coverage check ==="
+  python3 - "$OUT/progress.json" <<'PY'
+import json, sys
+d = json.loads(open(sys.argv[1], encoding="utf-8").read())
+print(json.dumps({k: d.get(k) for k in (
+    "total", "oldest_date_utc", "newest_date_utc", "target_since", "coverage_complete_to_mar17"
+)}, indent=2))
+if not d.get("coverage_complete_to_mar17"):
+    print("WARNING: NOT full Mar17→today yet.")
+    print("Run: bash TG_ARCH.sh --resume  (do not Ctrl+C until oldest≤2026-03-17 and UNIQUE_g1 done)")
+PY
+fi
+
+# Compact paste file for chat (progress + report only — not 849KB types dump)
 {
   echo "TG_ARCH_CATALOG $STAMP"
   echo "files: $(ls "$BUNDLE" | tr '\n' ' ')"
   [[ -f "$BUNDLE/progress.json" ]] && echo "--- progress ---" && cat "$BUNDLE/progress.json"
-  [[ -f "$BUNDLE/types_first_seen.csv" ]] && echo "--- types_first_seen ---" && cat "$BUNDLE/types_first_seen.csv"
-  [[ -f "$BUNDLE/report.txt" ]] && echo "--- report ---" && cat "$BUNDLE/report.txt"
+  [[ -f "$BUNDLE/report.txt" ]] && echo "--- report ---" && head -n 200 "$BUNDLE/report.txt"
 } > "$OUT/PASTE_ME.txt"
 cp -f "$OUT/PASTE_ME.txt" "$BUNDLE/"
 

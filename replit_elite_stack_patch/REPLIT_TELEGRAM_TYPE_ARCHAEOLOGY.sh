@@ -5,27 +5,23 @@
 #
 #   curl -fsSL -o TG_ARCH.sh \
 #     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TELEGRAM_TYPE_ARCHAEOLOGY.sh?v=20260803c'
-#   bash TG_ARCH.sh
-#   bash TG_ARCH.sh --diag          # session diagnose only
+#   bash TG_ARCH.sh              # fresh full scrape Mar 17 → today
+#   bash TG_ARCH.sh --resume     # continue older than existing CSV (after Ctrl+C)
+#   bash TG_ARCH.sh --diag
 #
-# Outputs (nothing omitted):
-#   tg_archaeology/all_messages.csv
-#   tg_archaeology/types_first_seen.csv
-#   tg_archaeology/unknown_messages.csv   ← review these; each is a new fingerprint
-#   tg_archaeology/types_summary.json
-#   tg_archaeology/eras_auto.md           ← chronological catalog ready to merge
-#   tg_archaeology/report.txt
-#   tg_archaeology_*.zip
+# MUST reach SINCE_ISO (default 2026-03-17). Jul-only dump = incomplete.
+# When done: bash TG_UP.sh → paste FETCH_URL=
 set -euo pipefail
 cd /home/runner/workspace 2>/dev/null || cd "$(dirname "$0")/.."
 
-ARCH_VERSION="20260803f"
+ARCH_VERSION="20260803g"
 echo "ARCH_VERSION=${ARCH_VERSION} cwd=$(pwd)"
 
 OUT="tg_archaeology"
 mkdir -p "$OUT"
 export OUT
 export SINCE_ISO="${SINCE_ISO:-2026-03-17T00:00:00+00:00}"
+export TG_ARCH_RESUME="${TG_ARCH_RESUME:-0}"
 
 # shellcheck disable=SC1091
 [[ -f .env ]] && set -a && source ./.env && set +a || true
@@ -38,12 +34,16 @@ if [[ -f .telegram_session_string ]]; then
   fi
 fi
 
-# Usage: bash TG_ARCH.sh [--selftest|--diag]
+# Usage: bash TG_ARCH.sh [--selftest|--diag|--resume]
 if [[ "${1:-}" == "--selftest" ]]; then
   export TG_ARCH_SELFTEST=1
 fi
 if [[ "${1:-}" == "--diag" ]]; then
   export TG_ARCH_DIAG=1
+fi
+if [[ "${1:-}" == "--resume" ]]; then
+  export TG_ARCH_RESUME=1
+  echo "RESUME=1 — will append older msgs from existing tg_archaeology/all_messages.csv"
 fi
 
 python3 - <<'PY'
@@ -627,14 +627,22 @@ async def scrape():
     csv_path = OUT / "all_messages.csv"
     unk_path = OUT / "unknown_messages.csv"
     progress_path = OUT / "progress.json"
+    RESUME = os.environ.get("TG_ARCH_RESUME") == "1"
+    print(f"TARGET_RANGE: {SINCE.date()} → today (UTC)  RESUME={RESUME}", flush=True)
 
     resolved = []
+    seen_ent = set()
     for peer in peers:
         try:
             ent = await client.get_entity(int(peer) if peer.lstrip("-").isdigit() else peer)
+            eid = getattr(ent, "id", None)
+            if eid in seen_ent:
+                print(f"DEDUP peer {peer} (same entity {eid})", flush=True)
+                continue
+            seen_ent.add(eid)
             title = getattr(ent, "title", None) or getattr(ent, "username", None) or str(peer)
             resolved.append((peer, title, ent))
-            print(f"OK peer {peer} → {title}", flush=True)
+            print(f"OK peer {peer} → {title} id={eid}", flush=True)
         except Exception as e:
             print(f"SKIP peer {peer}: {e}", flush=True)
 
@@ -643,6 +651,10 @@ async def scrape():
         async for d in client.iter_dialogs():
             name = (d.name or "") + " "
             if re.search(r"bacbo|unique|iv4|g1|gunique|royal", name, re.I):
+                eid = getattr(d.entity, "id", d.id)
+                if eid in seen_ent:
+                    continue
+                seen_ent.add(eid)
                 print("  dialog:", d.name, d.id, flush=True)
                 resolved.append((str(d.id), d.name, d.entity))
         if not resolved:
@@ -655,27 +667,84 @@ async def scrape():
     unknown_first = OrderedDict()
     total = 0
     unknown_n = 0
+    # per chat title → oldest msg_id already stored (for resume offset_id)
+    resume_offset_id = {}  # title -> min msg_id
+    oldest_date_seen = None
+    newest_date_seen = None
 
-    csv_f = csv_path.open("w", newline="", encoding="utf-8")
-    unk_f = unk_path.open("w", newline="", encoding="utf-8")
-    w = csv.DictWriter(csv_f, fieldnames=fields)
-    wu = csv.DictWriter(unk_f, fieldnames=fields)
-    w.writeheader()
-    wu.writeheader()
+    def ingest_row(row, write_unk_file=None):
+        nonlocal total, unknown_n, oldest_date_seen, newest_date_seen
+        tid = row["type_id"]
+        counts[tid] += 1
+        role_counts[row["role"]] += 1
+        if row.get("lane"):
+            lane_counts[row["lane"]] += 1
+        prev = first.get(tid)
+        if prev is None or row["date_utc"] < prev["date_utc"] or (
+            row["date_utc"] == prev["date_utc"] and int(row["msg_id"]) < int(prev["msg_id"])
+        ):
+            first[tid] = row
+        is_unk = row["role"] in ("UNKNOWN", "EMPTY") or tid.startswith("UNKNOWN_") or tid.startswith("RELAY_OTHER_")
+        if is_unk:
+            unknown_n += 1
+            if tid not in unknown_first:
+                unknown_first[tid] = row
+            if write_unk_file is not None:
+                write_unk_file.writerow(row)
+        total += 1
+        d = row["date_utc"]
+        if oldest_date_seen is None or d < oldest_date_seen:
+            oldest_date_seen = d
+        if newest_date_seen is None or d > newest_date_seen:
+            newest_date_seen = d
+
+    if RESUME and csv_path.exists() and csv_path.stat().st_size > 0:
+        print(f"Loading existing {csv_path} for resume...", flush=True)
+        with csv_path.open(newline="", encoding="utf-8") as rf:
+            for row in csv.DictReader(rf):
+                ingest_row(row)
+                title = row["chat"]
+                mid = int(row["msg_id"])
+                if title not in resume_offset_id or mid < resume_offset_id[title]:
+                    resume_offset_id[title] = mid
+        print(
+            f"RESUME state: total={total} types={len(first)} "
+            f"range={oldest_date_seen} → {newest_date_seen} offsets={resume_offset_id}",
+            flush=True,
+        )
+        csv_f = csv_path.open("a", newline="", encoding="utf-8")
+        unk_f = unk_path.open("a", newline="", encoding="utf-8")
+        w = csv.DictWriter(csv_f, fieldnames=fields)
+        wu = csv.DictWriter(unk_f, fieldnames=fields)
+        # no header on append
+    else:
+        if RESUME:
+            print("RESUME requested but no existing CSV — starting fresh", flush=True)
+        csv_f = csv_path.open("w", newline="", encoding="utf-8")
+        unk_f = unk_path.open("w", newline="", encoding="utf-8")
+        w = csv.DictWriter(csv_f, fieldnames=fields)
+        wu = csv.DictWriter(unk_f, fieldnames=fields)
+        w.writeheader()
+        wu.writeheader()
     csv_f.flush()
     unk_f.flush()
 
     def flush_progress(force_types=False):
+        coverage_ok = bool(oldest_date_seen and oldest_date_seen[:10] <= SINCE.date().isoformat())
         progress_path.write_text(json.dumps({
             "total": total,
             "distinct_types": len(first),
             "unknown_n": unknown_n,
             "by_role": dict(role_counts),
+            "oldest_date_utc": oldest_date_seen,
+            "newest_date_utc": newest_date_seen,
+            "target_since": SINCE.date().isoformat(),
+            "coverage_complete_to_mar17": coverage_ok,
             "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
         }, indent=2), encoding="utf-8")
         if force_types or total % 2000 == 0:
             # rewrite first-seen snapshot so crash still leaves a catalog
-            ordered = sorted(first.values(), key=lambda r: (r["date_utc"], r["msg_id"]))
+            ordered = sorted(first.values(), key=lambda r: (r["date_utc"], int(r["msg_id"])))
             with (OUT / "types_first_seen.csv").open("w", newline="", encoding="utf-8") as ff:
                 wf = csv.DictWriter(ff, fieldnames=[
                     "type_id", "role", "lane", "clocks", "first_date_utc", "first_chat",
@@ -699,13 +768,17 @@ async def scrape():
     try:
         for peer, title, ent in resolved:
             n = 0
-            async for msg in client.iter_messages(ent, offset_date=None):
+            offset_id = resume_offset_id.get(title) if RESUME else None
+            if offset_id:
+                print(f"CONTINUE {title} older than msg_id={offset_id}", flush=True)
+            async for msg in client.iter_messages(ent, offset_id=offset_id or 0):
                 if not msg or not msg.date:
                     continue
                 dt = msg.date
                 if dt.tzinfo is None:
                     dt = dt.replace(tzinfo=timezone.utc)
                 if dt < SINCE:
+                    print(f"HIT_SINCE {title}: reached {dt.date()} < {SINCE.date()} — peer complete", flush=True)
                     break  # newest-first
                 text = msg.message or msg.raw_text or ""
                 if msg.media and not text:
@@ -726,30 +799,18 @@ async def scrape():
                     "text_head": text[:400].replace("\n", "\\n"),
                 }
                 w.writerow(row)
-                counts[type_id] += 1
-                role_counts[role] += 1
-                if lane:
-                    lane_counts[lane] += 1
-                # keep OLDEST occurrence (scan is newest→oldest)
-                prev = first.get(type_id)
-                if prev is None or row["date_utc"] < prev["date_utc"] or (
-                    row["date_utc"] == prev["date_utc"] and row["msg_id"] < prev["msg_id"]
-                ):
-                    first[type_id] = row
-                is_unk = role in ("UNKNOWN", "EMPTY") or type_id.startswith("UNKNOWN_") or type_id.startswith("RELAY_OTHER_")
-                if is_unk:
-                    wu.writerow(row)
-                    unknown_n += 1
-                    if type_id not in unknown_first:
-                        unknown_first[type_id] = row
-                total += 1
+                ingest_row(row, write_unk_file=wu)
                 n += 1
                 if n % 500 == 0:
                     csv_f.flush()
                     unk_f.flush()
                     flush_progress()
-                    print(f"  … {title}: {n} msgs (total={total} types={len(first)}) flushed", flush=True)
-            print(f"DONE {title}: {n} msgs since {SINCE.date()}", flush=True)
+                    print(
+                        f"  … {title}: +{n} (total={total} types={len(first)} "
+                        f"oldest={oldest_date_seen}) flushed",
+                        flush=True,
+                    )
+            print(f"DONE {title}: +{n} this pass | total={total} oldest={oldest_date_seen}", flush=True)
             csv_f.flush()
             unk_f.flush()
             flush_progress(force_types=True)
@@ -762,14 +823,28 @@ async def scrape():
             pass
 
     flush_progress(force_types=True)
-    ordered = sorted(first.values(), key=lambda r: (r["date_utc"], r["msg_id"]))
+    ordered = sorted(first.values(), key=lambda r: (r["date_utc"], int(r["msg_id"])))
     first_path = OUT / "types_first_seen.csv"
+    coverage_ok = bool(oldest_date_seen and oldest_date_seen[:10] <= SINCE.date().isoformat())
+    print(
+        f"COVERAGE: oldest={oldest_date_seen} newest={newest_date_seen} "
+        f"target_since={SINCE.date()} complete={coverage_ok}",
+        flush=True,
+    )
+    if not coverage_ok:
+        print(
+            "INCOMPLETE: dump does NOT reach Mar 17 yet. Re-run: bash TG_ARCH.sh --resume",
+            flush=True,
+        )
 
     summary = {
         "since": SINCE.isoformat(),
         "total_messages": total,
         "distinct_types": len(first),
         "unknown_or_other_relay": unknown_n,
+        "oldest_date_utc": oldest_date_seen,
+        "newest_date_utc": newest_date_seen,
+        "coverage_complete_to_mar17": coverage_ok,
         "by_role": dict(role_counts),
         "by_lane": dict(lane_counts),
         "types_in_order_first_seen": [
