@@ -20,17 +20,28 @@ fi
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
 BUNDLE="tg_arch_catalog_${STAMP}"
 mkdir -p "$BUNDLE"
-for f in report.txt types_first_seen.csv eras_auto.md types_summary.json progress.json PASTE_ME.txt unknown_messages.csv; do
+for f in report.txt types_first_seen.csv eras_auto.md types_summary.json progress.json PASTE_ME.txt COVERAGE.txt; do
   [[ -f "$OUT/$f" ]] && cp -f "$OUT/$f" "$BUNDLE/" || true
 done
+# unknown_messages can be huge noise — cap at 15MB
+if [[ -f "$OUT/unknown_messages.csv" ]]; then
+  USZ=$(wc -c < "$OUT/unknown_messages.csv")
+  if [[ "$USZ" -lt 15000000 ]]; then
+    cp -f "$OUT/unknown_messages.csv" "$BUNDLE/"
+  else
+    echo "skip unknown_messages.csv (size=$USZ) — too large for upload hosts"
+    echo "$USZ" > "$BUNDLE/unknown_messages.csv.SIZE_ONLY.txt"
+    # keep only first-seen unknowns via types file
+  fi
+fi
 # all_messages.csv can be huge — only include if under 40MB
 if [[ -f "$OUT/all_messages.csv" ]]; then
   SZ=$(wc -c < "$OUT/all_messages.csv")
+  echo "$SZ" > "$BUNDLE/all_messages.csv.SIZE_ONLY.txt"
   if [[ "$SZ" -lt 40000000 ]]; then
     cp -f "$OUT/all_messages.csv" "$BUNDLE/"
   else
-    echo "skip all_messages.csv (size=$SZ > 40MB) — catalog files still uploaded"
-    echo "$SZ" > "$BUNDLE/all_messages.csv.SIZE_ONLY.txt"
+    echo "skip all_messages.csv (size=$SZ > 40MB) — stays on Replit disk for --resume"
   fi
 fi
 

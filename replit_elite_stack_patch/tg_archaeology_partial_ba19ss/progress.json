@@ -1,0 +1,20 @@
+{
+  "total": 329300,
+  "distinct_types": 20961,
+  "unknown_n": 143417,
+  "by_role": {
+    "UNKNOWN": 46379,
+    "RESULT": 52929,
+    "FIRE": 16834,
+    "OPS": 15932,
+    "EMPTY": 16549,
+    "ONLINE": 1253,
+    "ROOM_RELAY": 179423,
+    "MEDIA": 1
+  },
+  "oldest_date_utc": "2026-05-15 13:08:11",
+  "newest_date_utc": "2026-08-03 20:52:41",
+  "target_since": "2026-03-17",
+  "coverage_complete_to_mar17": false,
+  "updated_utc": "2026-08-03 22:59:27"
+}

@@ -14,7 +14,7 @@
 set -euo pipefail
 cd /home/runner/workspace 2>/dev/null || cd "$(dirname "$0")/.."
 
-ARCH_VERSION="20260803g"
+ARCH_VERSION="20260803h"
 echo "ARCH_VERSION=${ARCH_VERSION} cwd=$(pwd)"
 
 OUT="tg_archaeology"
@@ -730,6 +730,8 @@ async def scrape():
     unk_f.flush()
 
     def flush_progress(force_types=False):
+        # ALWAYS rewrite progress + types snapshot every call (every 500 msgs).
+        # Prior bug: types_first_seen only every 2000 → upload after kill had STALE Jul-only types.
         coverage_ok = bool(oldest_date_seen and oldest_date_seen[:10] <= SINCE.date().isoformat())
         progress_path.write_text(json.dumps({
             "total": total,
@@ -742,28 +744,34 @@ async def scrape():
             "coverage_complete_to_mar17": coverage_ok,
             "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
         }, indent=2), encoding="utf-8")
-        if force_types or total % 2000 == 0:
-            # rewrite first-seen snapshot so crash still leaves a catalog
-            ordered = sorted(first.values(), key=lambda r: (r["date_utc"], int(r["msg_id"])))
-            with (OUT / "types_first_seen.csv").open("w", newline="", encoding="utf-8") as ff:
-                wf = csv.DictWriter(ff, fieldnames=[
-                    "type_id", "role", "lane", "clocks", "first_date_utc", "first_chat",
-                    "first_msg_id", "count", "first_line", "note",
-                ])
-                wf.writeheader()
-                for r in ordered:
-                    wf.writerow({
-                        "type_id": r["type_id"],
-                        "role": r["role"],
-                        "lane": r["lane"],
-                        "clocks": r["clocks"],
-                        "first_date_utc": r["date_utc"],
-                        "first_chat": r["chat"],
-                        "first_msg_id": r["msg_id"],
-                        "count": counts[r["type_id"]],
-                        "first_line": r["first_line"],
-                        "note": r["note"],
-                    })
+        ordered = sorted(first.values(), key=lambda r: (r["date_utc"], int(r["msg_id"])))
+        tmp = OUT / "types_first_seen.csv.tmp"
+        with tmp.open("w", newline="", encoding="utf-8") as ff:
+            wf = csv.DictWriter(ff, fieldnames=[
+                "type_id", "role", "lane", "clocks", "first_date_utc", "first_chat",
+                "first_msg_id", "count", "first_line", "note",
+            ])
+            wf.writeheader()
+            for r in ordered:
+                wf.writerow({
+                    "type_id": r["type_id"],
+                    "role": r["role"],
+                    "lane": r["lane"],
+                    "clocks": r["clocks"],
+                    "first_date_utc": r["date_utc"],
+                    "first_chat": r["chat"],
+                    "first_msg_id": r["msg_id"],
+                    "count": counts[r["type_id"]],
+                    "first_line": r["first_line"],
+                    "note": r["note"],
+                })
+        tmp.replace(OUT / "types_first_seen.csv")
+        # tiny coverage flag file for upload scripts
+        (OUT / "COVERAGE.txt").write_text(
+            f"oldest={oldest_date_seen}\nnewest={newest_date_seen}\n"
+            f"total={total}\ncomplete_to_mar17={coverage_ok}\n",
+            encoding="utf-8",
+        )
 
     try:
         for peer, title, ent in resolved:
