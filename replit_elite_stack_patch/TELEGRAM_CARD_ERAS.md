@@ -54,6 +54,17 @@ RESULT types appear as a **later** invention in the chat.
 
 Keep scrolling → add every **new header/skin** as a new type when it first appears.
 
+## Automated full catalog (no manual scroll)
+Run on Replit (has Telegram session secrets) — scrapes **every** msg since Mar 17 from money + countdown peers, fingerprints every skin, writes unknowns separately so nothing is dropped:
+
+```bash
+curl -fsSL -H 'Cache-Control: no-cache' -o TG_ARCH.sh \
+  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TELEGRAM_TYPE_ARCHAEOLOGY.sh'
+bash TG_ARCH.sh
+```
+
+Paste `tg_archaeology/report.txt` (or upload the zip link). Cloud agent merges `eras_auto.md` into this file.
+
 ## Not countdown-to-result
 These ENTER NOW cards have **no** factual “Ns until result” countdown on the fire.
 Do not treat 1s/11s/17s as the definition of countdown.
