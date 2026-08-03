@@ -19,7 +19,7 @@
 set -euo pipefail
 cd /home/runner/workspace 2>/dev/null || cd "$(dirname "$0")/.."
 
-ARCH_VERSION="20260803d"
+ARCH_VERSION="20260803e"
 echo "ARCH_VERSION=${ARCH_VERSION} cwd=$(pwd)"
 
 OUT="tg_archaeology"
@@ -618,194 +618,228 @@ async def scrape():
         if d not in peers:
             peers.append(d)
 
-    rows = []
+    # INCREMENTAL WRITE — do NOT keep 260k rows in RAM (that killed the last run)
+    OUT.mkdir(parents=True, exist_ok=True)
+    fields = [
+        "chat", "peer", "msg_id", "date_utc", "role", "type_id", "lane", "clocks",
+        "note", "first_line", "text_len", "text_head",
+    ]
+    csv_path = OUT / "all_messages.csv"
+    unk_path = OUT / "unknown_messages.csv"
+    progress_path = OUT / "progress.json"
+
     resolved = []
     for peer in peers:
         try:
             ent = await client.get_entity(int(peer) if peer.lstrip("-").isdigit() else peer)
             title = getattr(ent, "title", None) or getattr(ent, "username", None) or str(peer)
             resolved.append((peer, title, ent))
-            print(f"OK peer {peer} → {title}")
+            print(f"OK peer {peer} → {title}", flush=True)
         except Exception as e:
-            print(f"SKIP peer {peer}: {e}")
+            print(f"SKIP peer {peer}: {e}", flush=True)
 
     if not resolved:
-        print("FATAL: no peers resolved — listing dialogs with bacbo/unique/iv4...")
+        print("FATAL: no peers resolved — listing dialogs with bacbo/unique/iv4...", flush=True)
         async for d in client.iter_dialogs():
             name = (d.name or "") + " "
             if re.search(r"bacbo|unique|iv4|g1|gunique|royal", name, re.I):
-                print("  dialog:", d.name, d.id)
+                print("  dialog:", d.name, d.id, flush=True)
                 resolved.append((str(d.id), d.name, d.entity))
         if not resolved:
             sys.exit(4)
 
-    for peer, title, ent in resolved:
-        n = 0
-        async for msg in client.iter_messages(ent, offset_date=None):
-            if not msg or not msg.date:
-                continue
-            dt = msg.date
-            if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=timezone.utc)
-            if dt < SINCE:
-                break  # newest-first
-            text = msg.message or msg.raw_text or ""
-            if msg.media and not text:
-                text = f"[MEDIA:{type(msg.media).__name__}]"
-            role, type_id, note, lane, clocks = classify(text)
-            rows.append({
-                "chat": title,
-                "peer": peer,
-                "msg_id": msg.id,
-                "date_utc": dt.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
-                "role": role,
-                "type_id": type_id,
-                "lane": lane,
-                "clocks": clocks,
-                "note": note,
-                "first_line": first_line(text),
-                "text_len": len(text),
-                "text_head": text[:400].replace("\n", "\\n"),
-            })
-            n += 1
-            if n % 500 == 0:
-                print(f"  … {title}: {n} msgs")
-        print(f"DONE {title}: {n} msgs since {SINCE.date()}")
-
-    await client.disconnect()
-
-    rows.sort(key=lambda r: (r["date_utc"], r["msg_id"]))
-    OUT.mkdir(parents=True, exist_ok=True)
-
-    fields = [
-        "chat", "peer", "msg_id", "date_utc", "role", "type_id", "lane", "clocks",
-        "note", "first_line", "text_len", "text_head",
-    ]
-    csv_path = OUT / "all_messages.csv"
-    with csv_path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=fields)
-        w.writeheader()
-        w.writerows(rows)
-
-    first = OrderedDict()
+    first = {}  # type_id -> oldest row (scan is newest-first)
     counts = Counter()
-    for r in rows:
-        counts[r["type_id"]] += 1
-        if r["type_id"] not in first:
-            first[r["type_id"]] = r
+    role_counts = Counter()
+    lane_counts = Counter()
+    unknown_first = OrderedDict()
+    total = 0
+    unknown_n = 0
 
+    csv_f = csv_path.open("w", newline="", encoding="utf-8")
+    unk_f = unk_path.open("w", newline="", encoding="utf-8")
+    w = csv.DictWriter(csv_f, fieldnames=fields)
+    wu = csv.DictWriter(unk_f, fieldnames=fields)
+    w.writeheader()
+    wu.writeheader()
+    csv_f.flush()
+    unk_f.flush()
+
+    def flush_progress(force_types=False):
+        progress_path.write_text(json.dumps({
+            "total": total,
+            "distinct_types": len(first),
+            "unknown_n": unknown_n,
+            "by_role": dict(role_counts),
+            "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+        }, indent=2), encoding="utf-8")
+        if force_types or total % 2000 == 0:
+            # rewrite first-seen snapshot so crash still leaves a catalog
+            ordered = sorted(first.values(), key=lambda r: (r["date_utc"], r["msg_id"]))
+            with (OUT / "types_first_seen.csv").open("w", newline="", encoding="utf-8") as ff:
+                wf = csv.DictWriter(ff, fieldnames=[
+                    "type_id", "role", "lane", "clocks", "first_date_utc", "first_chat",
+                    "first_msg_id", "count", "first_line", "note",
+                ])
+                wf.writeheader()
+                for r in ordered:
+                    wf.writerow({
+                        "type_id": r["type_id"],
+                        "role": r["role"],
+                        "lane": r["lane"],
+                        "clocks": r["clocks"],
+                        "first_date_utc": r["date_utc"],
+                        "first_chat": r["chat"],
+                        "first_msg_id": r["msg_id"],
+                        "count": counts[r["type_id"]],
+                        "first_line": r["first_line"],
+                        "note": r["note"],
+                    })
+
+    try:
+        for peer, title, ent in resolved:
+            n = 0
+            async for msg in client.iter_messages(ent, offset_date=None):
+                if not msg or not msg.date:
+                    continue
+                dt = msg.date
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=timezone.utc)
+                if dt < SINCE:
+                    break  # newest-first
+                text = msg.message or msg.raw_text or ""
+                if msg.media and not text:
+                    text = f"[MEDIA:{type(msg.media).__name__}]"
+                role, type_id, note, lane, clocks = classify(text)
+                row = {
+                    "chat": title,
+                    "peer": peer,
+                    "msg_id": msg.id,
+                    "date_utc": dt.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+                    "role": role,
+                    "type_id": type_id,
+                    "lane": lane,
+                    "clocks": clocks,
+                    "note": (note or "")[:200],
+                    "first_line": first_line(text),
+                    "text_len": len(text),
+                    "text_head": text[:400].replace("\n", "\\n"),
+                }
+                w.writerow(row)
+                counts[type_id] += 1
+                role_counts[role] += 1
+                if lane:
+                    lane_counts[lane] += 1
+                # keep OLDEST occurrence (scan is newest→oldest)
+                prev = first.get(type_id)
+                if prev is None or row["date_utc"] < prev["date_utc"] or (
+                    row["date_utc"] == prev["date_utc"] and row["msg_id"] < prev["msg_id"]
+                ):
+                    first[type_id] = row
+                is_unk = role in ("UNKNOWN", "EMPTY") or type_id.startswith("UNKNOWN_") or type_id.startswith("RELAY_OTHER_")
+                if is_unk:
+                    wu.writerow(row)
+                    unknown_n += 1
+                    if type_id not in unknown_first:
+                        unknown_first[type_id] = row
+                total += 1
+                n += 1
+                if n % 500 == 0:
+                    csv_f.flush()
+                    unk_f.flush()
+                    flush_progress()
+                    print(f"  … {title}: {n} msgs (total={total} types={len(first)}) flushed", flush=True)
+            print(f"DONE {title}: {n} msgs since {SINCE.date()}", flush=True)
+            csv_f.flush()
+            unk_f.flush()
+            flush_progress(force_types=True)
+    finally:
+        csv_f.close()
+        unk_f.close()
+        try:
+            await client.disconnect()
+        except Exception:
+            pass
+
+    flush_progress(force_types=True)
+    ordered = sorted(first.values(), key=lambda r: (r["date_utc"], r["msg_id"]))
     first_path = OUT / "types_first_seen.csv"
-    with first_path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=[
-            "type_id", "role", "lane", "clocks", "first_date_utc", "first_chat",
-            "first_msg_id", "count", "first_line", "note",
-        ])
-        w.writeheader()
-        for tid, r in first.items():
-            w.writerow({
-                "type_id": tid,
-                "role": r["role"],
-                "lane": r["lane"],
-                "clocks": r["clocks"],
-                "first_date_utc": r["date_utc"],
-                "first_chat": r["chat"],
-                "first_msg_id": r["msg_id"],
-                "count": counts[tid],
-                "first_line": r["first_line"],
-                "note": r["note"],
-            })
-
-    unknowns = [r for r in rows if r["role"] in ("UNKNOWN", "EMPTY") or r["type_id"].startswith("UNKNOWN_")
-                or r["type_id"].startswith("RELAY_OTHER_")]
-    unk_path = OUT / "unknown_messages.csv"
-    with unk_path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=fields)
-        w.writeheader()
-        w.writerows(unknowns)
 
     summary = {
         "since": SINCE.isoformat(),
-        "total_messages": len(rows),
+        "total_messages": total,
         "distinct_types": len(first),
-        "unknown_or_other_relay": len(unknowns),
-        "by_role": dict(Counter(r["role"] for r in rows)),
-        "by_lane": dict(Counter(r["lane"] for r in rows if r["lane"])),
+        "unknown_or_other_relay": unknown_n,
+        "by_role": dict(role_counts),
+        "by_lane": dict(lane_counts),
         "types_in_order_first_seen": [
             {
-                "type_id": tid,
-                "role": first[tid]["role"],
-                "lane": first[tid]["lane"],
-                "first": first[tid]["date_utc"],
-                "count": counts[tid],
-                "first_line": first[tid]["first_line"],
+                "type_id": r["type_id"],
+                "role": r["role"],
+                "lane": r["lane"],
+                "first": r["date_utc"],
+                "count": counts[r["type_id"]],
+                "first_line": r["first_line"],
             }
-            for tid in first
+            for r in ordered
         ],
     }
     (OUT / "types_summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    # Auto eras markdown — same structure as manual TELEGRAM_CARD_ERAS.md
-    eras = []
-    eras.append("# Telegram card eras (AUTO from Telethon scrape)")
-    eras.append("")
-    eras.append(f"Source of truth = chat text since {SINCE.date()}. Nothing omitted.")
-    eras.append(f"total_messages={len(rows)} distinct_types={len(first)} unknown_review={len(unknowns)}")
-    eras.append("")
-    eras.append("## TYPES IN ORDER OF FIRST APPEARANCE")
-    eras.append("")
-    eras.append("| First UTC | Role | Lane | n | type_id | First line |")
-    eras.append("|-----------|------|------|--:|---------|------------|")
-    for tid, r in first.items():
+    eras = [
+        "# Telegram card eras (AUTO from Telethon scrape)",
+        "",
+        f"Source of truth = chat text since {SINCE.date()}. Nothing omitted.",
+        f"total_messages={total} distinct_types={len(first)} unknown_review={unknown_n}",
+        "",
+        "## TYPES IN ORDER OF FIRST APPEARANCE",
+        "",
+        "| First UTC | Role | Lane | n | type_id | First line |",
+        "|-----------|------|------|--:|---------|------------|",
+    ]
+    for r in ordered:
         eras.append(
-            f"| {r['date_utc']} | {r['role']} | {r['lane'] or '—'} | {counts[tid]} | `{tid}` | {r['first_line'][:80].replace('|', '/')} |"
+            f"| {r['date_utc']} | {r['role']} | {r['lane'] or '—'} | {counts[r['type_id']]} | `{r['type_id']}` | {r['first_line'][:80].replace('|', '/')} |"
         )
-    eras.append("")
-    eras.append("## UNKNOWN / OTHER (must review — each is a candidate new type)")
-    eras.append("")
-    if not unknowns:
+    eras += ["", "## UNKNOWN / OTHER (must review — each is a candidate new type)", ""]
+    if not unknown_first:
         eras.append("_none — every message matched a known role fingerprint_")
     else:
-        seen_u = OrderedDict()
-        for r in unknowns:
-            if r["type_id"] not in seen_u:
-                seen_u[r["type_id"]] = r
-        for tid, r in seen_u.items():
+        for tid, r in unknown_first.items():
             eras.append(f"- `{r['date_utc']}` `{tid}` — {r['first_line'][:100]}")
-    eras.append("")
-    eras.append("## Notes")
-    eras.append("- ROOM_RELAY `AUTO WIN` ≠ bot RESULT")
-    eras.append("- Early FIRE can exist without RESULT type (manual /win /loss /tie era)")
-    eras.append("- Clock A (JANELA Ns) ≠ Clock C (Intervalo on result); any Ns counts when present")
+    eras += [
+        "",
+        "## Notes",
+        "- ROOM_RELAY `AUTO WIN` ≠ bot RESULT",
+        "- Early FIRE can exist without RESULT type (manual /win /loss /tie era)",
+        "- Clock A (JANELA Ns) ≠ Clock C (Intervalo on result); any Ns counts when present",
+    ]
     (OUT / "eras_auto.md").write_text("\n".join(eras) + "\n", encoding="utf-8")
 
     report_lines = [
         f"TELEGRAM TYPE ARCHAEOLOGY since {SINCE.date()}",
-        f"total_messages={len(rows)} distinct_types={len(first)} unknown_review={len(unknowns)}",
+        f"total_messages={total} distinct_types={len(first)} unknown_review={unknown_n}",
         f"by_role={summary['by_role']}",
         f"by_lane={summary['by_lane']}",
         "",
         "TYPES IN ORDER OF FIRST APPEARANCE (nothing omitted):",
     ]
-    for tid, r in first.items():
+    for r in ordered:
         report_lines.append(
-            f"  {r['date_utc']}  {r['role']:12}  lane={r['lane'] or '-':16}  n={counts[tid]:5}  {tid}  | {r['first_line'][:70]}"
+            f"  {r['date_utc']}  {r['role']:12}  lane={r['lane'] or '-':16}  n={counts[r['type_id']]:5}  {r['type_id']}  | {r['first_line'][:70]}"
         )
-    if unknowns:
+    if unknown_first:
         report_lines.append("")
-        report_lines.append(f"UNKNOWN/OTHER TO REVIEW ({len(unknowns)} msgs, {len({u['type_id'] for u in unknowns})} fingerprints):")
-        seen_u = OrderedDict()
-        for r in unknowns:
-            if r["type_id"] not in seen_u:
-                seen_u[r["type_id"]] = r
-        for tid, r in list(seen_u.items())[:80]:
+        report_lines.append(f"UNKNOWN/OTHER TO REVIEW ({unknown_n} msgs, {len(unknown_first)} fingerprints):")
+        for tid, r in list(unknown_first.items())[:80]:
             report_lines.append(f"  {r['date_utc']}  {tid}  | {r['first_line'][:70]}")
-        if len(seen_u) > 80:
-            report_lines.append(f"  ... +{len(seen_u)-80} more fingerprints in unknown_messages.csv")
+        if len(unknown_first) > 80:
+            report_lines.append(f"  ... +{len(unknown_first)-80} more fingerprints in unknown_messages.csv")
     report_lines += ["", f"Full dump: {csv_path}", f"First-seen: {first_path}", f"Eras: {OUT / 'eras_auto.md'}"]
     report = "\n".join(report_lines) + "\n"
     (OUT / "report.txt").write_text(report, encoding="utf-8")
-    print(report)
-    print("UPLOAD/zip folder:", OUT)
+    print(report, flush=True)
+    print("UPLOAD/zip folder:", OUT, flush=True)
 
 
 import asyncio
