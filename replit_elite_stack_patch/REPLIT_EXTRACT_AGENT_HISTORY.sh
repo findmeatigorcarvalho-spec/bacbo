@@ -73,9 +73,10 @@ fi
 
 echo ""
 echo "========== pack zip =========="
-zip -r -q -- "${OUT}.zip" "$OUT"
-ls -lah -- "${OUT}.zip"
-ln -sfn -- "${OUT}.zip" bacbo_agent_history.zip
+# Note: zip does NOT accept "--" before the archive name (unlike many GNU tools).
+zip -r -q "${OUT}.zip" "$OUT"
+ls -lah "${OUT}.zip"
+ln -sfn "${OUT}.zip" bacbo_agent_history.zip
 echo "Upload: $(pwd)/${OUT}.zip"
 echo "Also: $(pwd)/bacbo_agent_history.zip"
 echo "DONE"
