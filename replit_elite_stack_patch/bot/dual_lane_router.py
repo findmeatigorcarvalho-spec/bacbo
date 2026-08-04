@@ -360,8 +360,9 @@ def classify_card(
     card_type: str | None = None,
     meta: dict[str, Any] | None = None,
     signal_id: int | str | None = None,
+    parent_shelf: str | None = None,
 ) -> dict[str, Any]:
-    """Full classification for audits / outbox."""
+    """Full classification for audits / outbox (lane + skin + chat shelf)."""
     parent = parent_lane_for(signal_id) if signal_id is not None else None
     info = route_peer(
         text=text,
@@ -383,6 +384,27 @@ def classify_card(
         info["skin_gate_reason"] = gate.reason
     except Exception:
         info["skin_blocked"] = False
+    try:
+        from chat_shelves import resolve_shelf
+
+        shelf = resolve_shelf(
+            text,
+            signal_kind=signal_kind,
+            meta=meta,
+            parent_shelf=parent_shelf,
+            parent_lane=parent,
+        )
+        info["shelf_id"] = shelf.shelf_id
+        info["shelf_peer"] = shelf.peer
+        info["shelf_band"] = shelf.band_hint
+        info["shelf_follow_parent"] = bool(shelf.follow_parent)
+        info["shelf_reason"] = shelf.reason
+        # Shelf lane wins when it is more specific than dual-lane default
+        if shelf.lane and not parent:
+            info["lane"] = shelf.lane
+            info["peer"] = shelf.peer or info.get("peer")
+    except Exception:
+        info.setdefault("shelf_id", None)
     return info
 
 

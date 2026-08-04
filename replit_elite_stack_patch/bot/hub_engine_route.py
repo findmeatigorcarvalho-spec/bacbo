@@ -174,6 +174,24 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
         "off",
     }
 
+    # Chat shelves: countdown peak / sniper → Gunique (not DB-kinds-only)
+    try:
+        from chat_shelves import (
+            SHELF_COUNTDOWN,
+            SHELF_SINK,
+            SHELF_SNIPER,
+            resolve_shelf,
+        )
+
+        shelf = resolve_shelf(body)
+        if shelf.shelf_id == SHELF_SINK:
+            return money, f"shelf_sink:{shelf.family_id}"
+        if shelf.shelf_id in {SHELF_COUNTDOWN, SHELF_SNIPER} and shelf.role == "FIRE":
+            _save_last(gunique, role="FIRE", reason=f"shelf:{shelf.shelf_id}")
+            return gunique, f"shelf:{shelf.shelf_id}:{shelf.family_id}"
+    except Exception:
+        pass
+
     # Ops / schedule noise → money (#2). Allow SEQUÊNCIA QUENTE/FRIA without
     # treating them as enter-fires (they share the SEQUÊNCIA token).
     if _OPS_HINT.search(body) and not re.search(

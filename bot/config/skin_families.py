@@ -457,6 +457,102 @@ SKIN_FAMILIES: Tuple[SkinFamily, ...] = (
         "OPS divergência de salas",
         "🟠 DIVERGÊNCIA DE SALAS",
     ),
+    # High-value templates often missing from DB signal_kind (must stay floors)
+    SkinFamily(
+        "FIRE_SINAL_RETIDO_LIBERADO",
+        ROLE_FIRE,
+        "cd",
+        "FIRE Sinal Retido→Liberado (countdown peak)",
+        "⏳ Sinal Retido → Liberado",
+        LANE_COUNTDOWN,
+        kind_scoped=True,
+        variable_n=True,
+        notes="Among best countdown fires — Camada/JANELA/🟢 Ns 🟢; not a DB kind",
+    ),
+    SkinFamily(
+        "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+        ROLE_FIRE,
+        "cd",
+        "CD_FIRE timer BRT/EDT apostar",
+        "🟢 HH UTC · EDT · apostar",
+        LANE_COUNTDOWN,
+        variable_n=True,
+        notes="Countdown signal-fire family — historically elite volume",
+    ),
+    SkinFamily(
+        "CD_FIRE_QUANTUM_LOCK",
+        ROLE_FIRE,
+        "cd",
+        "CD_FIRE quantum lock",
+        "🔒 QUANTUM LOCK",
+        LANE_COUNTDOWN,
+    ),
+    SkinFamily(
+        "CD_FIRE_RUSH_NS_LEFT",
+        ROLE_FIRE,
+        "cd",
+        "CD_FIRE rush Ns left",
+        "RUSH · Ns left",
+        LANE_COUNTDOWN,
+        variable_n=True,
+    ),
+    SkinFamily(
+        "RESULT_FORENSIC_INTERVALO",
+        ROLE_RESULT,
+        "forensic",
+        "RESULT resumido forense (G0/G1/G2)",
+        "🔍 SINAL #N — RESUMIDO FORENSE",
+        kind_scoped=True,
+        notes="G0 WIN / LOSS forensic with ⏱ Intervalo — Clock C reporting; glue under parent",
+    ),
+    SkinFamily(
+        "RESULT_BELL_GANHOU",
+        ROLE_RESULT,
+        "forensic",
+        "RESULT bell GANHOU/PERDEU",
+        "🔔 ✅ GANHOU  ·  #N",
+        kind_scoped=True,
+        notes="Often paired with forensic block; G0/G1 outcome product card",
+    ),
+    SkinFamily(
+        "OPS_G1_EXPIROU",
+        ROLE_OPS,
+        "ops_result",
+        "OPS G1 EXPIROU — verificar mesa",
+        "⏰ G1 EXPIROU — VERIFICAR SUA MESA",
+        notes="Result-ops — follow parent fire chat; user must /win /loss /tie",
+    ),
+    SkinFamily(
+        "OPS_G2_MISS",
+        ROLE_OPS,
+        "ops_result",
+        "OPS G2 MISS — perda total",
+        "🛑 G2 MISS — PERDA TOTAL — PARE AGORA",
+        notes="Hard stop card — follow parent; never invent G3",
+    ),
+    SkinFamily(
+        "CD_RES_GREEN_G_BRT",
+        ROLE_RESULT,
+        "cd",
+        "CD result GREEN G BRT",
+        "🟢 G0 · BRT",
+        notes="Countdown-lane result skin",
+    ),
+    SkinFamily(
+        "CD_RES_RODADAS_TEMPO",
+        ROLE_RESULT,
+        "cd",
+        "CD result rodadas·tempo",
+        "⏱ N rodada(s) · Ns",
+    ),
+    SkinFamily(
+        "CD_RES_BELL_GANHOU",
+        ROLE_RESULT,
+        "cd",
+        "CD result bell ganhou",
+        "🔔 ✅ GANHOU",
+        kind_scoped=True,
+    ),
     # Noise / ops catch-alls (not product ENTER→RESULT, but gate-addressable)
     SkinFamily(
         "ROOM_RELAY",
@@ -639,7 +735,39 @@ def classify_telegram_skin(
     ):
         return _match("ROOM_RELAY", text=body, first_line=fl, notes="noise")
 
-    # ── RESULT (before FIRE — Intervalo / WIN lines are not fires) ──────────
+    # ── RESULT / result-ops (before FIRE — Intervalo never makes a fire) ───
+    if re.search(r"G2\s+MISS\s*—\s*PERDA\s+TOTAL|G2\s+MISS", body, re.I):
+        return _match(
+            "OPS_G2_MISS",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+        )
+    if re.search(r"G1\s+EXPIROU", body, re.I):
+        return _match(
+            "OPS_G1_EXPIROU",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+        )
+    if re.search(r"RESUMIDO\s+FORENSE", body, re.I):
+        return _match(
+            "RESULT_FORENSIC_INTERVALO",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            clock_n=_extract_clock_n(body),
+        )
+    if re.search(r"🔔\s*[✅❌].*(GANHOU|PERDEU|G0\s*WIN|LOSS)", body, re.I) or re.search(
+        r"🔔\s*[✅❌]\s*(GANHOU|PERDEU|G0\s*WIN|LOSS)", body, re.I
+    ):
+        return _match(
+            "RESULT_BELL_GANHOU",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+        )
+
     if re.match(r"^🟡\s*EMPATE\s*—", fl, re.I) or re.match(r"^EMPATE\s*—", fl, re.I):
         kind = re.sub(r"^🟡\s*EMPATE\s*—\s*", "", fl, flags=re.I)
         kind = re.sub(r"^EMPATE\s*—\s*", "", kind, flags=re.I).strip()
@@ -708,6 +836,38 @@ def classify_telegram_skin(
             first_line=fl,
             kind=hint_kind or _extract_kind(body, fl),
             lane_override=LANE_MONEY,
+        )
+
+    # ── Countdown peak fires (Sinal Retido / CD_FIRE) — before bare JANELA ─
+    if re.search(r"Sinal\s+Retido\s*→\s*Liberado|Sinal\s+Retido", body, re.I):
+        return _match(
+            "FIRE_SINAL_RETIDO_LIBERADO",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            clock_n=_extract_clock_n(body),
+            lane_override=LANE_COUNTDOWN,
+        )
+    if re.search(r"QUANTUM\s*LOCK|CD_FIRE_QUANTUM", body, re.I):
+        return _match(
+            "CD_FIRE_QUANTUM_LOCK",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_COUNTDOWN,
+        )
+    if re.search(r"CD_FIRE_TIMER_BRT_EDT_APOSTAR", body, re.I) or (
+        re.search(r"\b(BRT|EDT)\b", body)
+        and re.search(r"apostar|JANELA|timer|🟢\s*\d+\s*s", body, re.I)
+        and not re.search(r"RESUMIDO\s+FORENSE|GANHOU|PERDEU", body, re.I)
+    ):
+        return _match(
+            "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            clock_n=_extract_clock_n(body),
+            lane_override=LANE_COUNTDOWN,
         )
 
     # ── Timed FIRE (Clock A — any N) ────────────────────────────────────────

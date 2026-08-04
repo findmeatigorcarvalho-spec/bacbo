@@ -691,6 +691,26 @@ async def main() -> None:
                 meta=meta,
                 parent_lane=parent,
             )
+            # Shelf override: countdown/sniper families force COUNTDOWN peer
+            try:
+                from chat_shelves import SHELF_COUNTDOWN, SHELF_SNIPER, resolve_shelf
+
+                shelf = resolve_shelf(
+                    text,
+                    signal_kind=signal_kind,
+                    meta=meta,
+                    parent_lane=parent,
+                )
+                if (
+                    not is_result
+                    and shelf.shelf_id in {SHELF_COUNTDOWN, SHELF_SNIPER}
+                ):
+                    lane = "COUNTDOWN"
+                    print(
+                        f"[Outbox] shelf {shelf.shelf_id} family={shelf.family_id} → COUNTDOWN"
+                    )
+            except Exception:
+                pass
             if not is_result and signal_id is not None:
                 persist_fire_lane(signal_id, lane)
         except Exception as exc:
