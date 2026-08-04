@@ -337,19 +337,21 @@ async def main() -> int:
     total = len(items)
     stats = pack.get("stats") or {}
     header = (
-        "🏛 MUSEUM — FIRST EXISTENCE ORDER\n"
+        "🏛 MUSEUM — LITERALLY EVERYTHING (final triage)\n"
         "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"Axis: {pack.get('axis') or 'CHRONO_FIRST_EXISTENCE'}\n"
+        f"Axis: {pack.get('axis') or 'CHRONO_EVERYTHING_EXISTENCE'}\n"
         f"Items: {total} "
         f"(dated {stats.get('with_existence_date', '?')} · "
         f"never-fired {stats.get('never_fired_code_order', '?')})\n"
-        "Order: 1st skin ever → #1 · 2nd → #2 · …\n"
-        "Never-fired skins still included (code/registry order after dated)\n"
-        "Rule: RESULT under a FIRE only if that signal originally had one\n"
-        "Purpose: parade of existence — NOT live bets\n"
-        "Pace: slow send · FloodWait-safe · no truncate\n"
+        f"Raw TG types scanned: {stats.get('raw_tg_types_scanned', '?')} "
+        "→ distinct templates\n"
+        "Includes FIRE · RESULT · OPS · ONLINE · news/update · heartbeats\n"
+        "Order: 1st existence → #1 · code-only never-fired at end\n"
+        "Purpose: last-stage triage — trash vs profit · noise vs value\n"
+        "Rule: RESULT under FIRE only if that signal originally had one\n"
+        "NOT live bets · paced · FloodWait-safe\n"
         "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "_Scroll chronologically — birth order of each skin_"
+        "_Every distinct template since Mar 17 — scroll and judge_"
     )
     if not progress.get("header_sent"):
         await _safe_send(client, entity, header, dry=dry)
