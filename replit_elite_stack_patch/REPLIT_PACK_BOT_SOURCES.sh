@@ -61,9 +61,12 @@ zip -qr "$ZIP" "$DIR"
 
 FETCH=$(curl -fsS -F "reqtype=fileupload" -F "time=72h" -F "fileToUpload=@${ZIP}" \
   https://litterbox.catbox.moe/resources/internals/api.php 2>/dev/null || true)
-if [[ -z "$FETCH" ]]; then
+if [[ -z "$FETCH" || "$FETCH" != http* ]]; then
   FETCH=$(curl -fsS -F "reqtype=fileupload" -F "fileToUpload=@${ZIP}" \
     https://catbox.moe/user/api.php 2>/dev/null || true)
+fi
+if [[ -z "$FETCH" || "$FETCH" != http* ]]; then
+  FETCH=$(curl -fsS -F "file=@${ZIP}" https://0x0.st 2>/dev/null || true)
 fi
 
 echo "========== PASTE TO CURSOR =========="
