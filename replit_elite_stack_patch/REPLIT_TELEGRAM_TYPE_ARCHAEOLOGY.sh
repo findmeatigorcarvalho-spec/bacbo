@@ -17,9 +17,10 @@ cd /home/runner/workspace 2>/dev/null || cd "$(dirname "$0")/.."
 ARCH_VERSION="20260803h"
 echo "ARCH_VERSION=${ARCH_VERSION} cwd=$(pwd)"
 
-OUT="tg_archaeology"
+OUT="${OUT:-tg_archaeology}"
 mkdir -p "$OUT"
 export OUT
+echo "OUT=${OUT}"
 export SINCE_ISO="${SINCE_ISO:-2026-03-17T00:00:00+00:00}"
 export TG_ARCH_RESUME="${TG_ARCH_RESUME:-0}"
 
