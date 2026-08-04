@@ -5,8 +5,8 @@
 # Does NOT touch Mr_iv4 / UNIQUE_g1 money lanes.
 #
 #   curl -fsSL -o /tmp/MUSEUM.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UNIQUE_MUSEUM.sh?v=20260804g'
-#   MUSEUM_RESET=1 MUSEUM_LIMIT=5 bash /tmp/MUSEUM.sh   # smoke into NEW chrono chat
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UNIQUE_MUSEUM.sh?v=20260804h'
+#   MUSEUM_RESET=1 MUSEUM_LIMIT=6 bash /tmp/MUSEUM.sh   # ONLINE + 5 menu skins
 #   bash /tmp/MUSEUM.sh                                  # full (resumes)
 #
 # If a previous run wrongly posted into UNIQUE_museum, reset:
@@ -16,7 +16,7 @@ cd /home/runner/workspace 2>/dev/null || cd "$(pwd)"
 
 REF="${BACBO_REF:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${REF}/replit_elite_stack_patch"
-VER="20260804g"
+VER="20260804h"
 
 echo "UNIQUE_MUSEUM cwd=$(pwd) ref=${REF}"
 echo "AXIS: CHRONO_FIRST_EXISTENCE — 1st skin ever → #1, 2nd → #2, …"

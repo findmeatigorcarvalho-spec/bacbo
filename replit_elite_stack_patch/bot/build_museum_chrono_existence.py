@@ -19,7 +19,7 @@ import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE
@@ -44,6 +44,24 @@ SKIP_IDS = {
     "CODE_FRAGMENT",
     "CARD_BODY_LINE",
 }
+
+# Skins named inside the first ONLINE banner = already existed that moment
+# (existence ≠ first dedicated ENTER). Banner menu order preserved.
+ONLINE_MENU_SKINS: Tuple[str, ...] = (
+    "FIRE_SOLO_ELITE_ENTER",
+    "FIRE_GOLDEN_ENTER",
+    "FIRE_EMERGINDO",
+    "OPS_ALERTA_FORMACAO",
+    "FIRE_ULTRA_TIE",
+)
+ONLINE_MENU_LINES = {
+    "FIRE_SOLO_ELITE_ENTER": "💎 SOLO ELITE → sala elite confirmou sozinha (score ≥ 2.0)",
+    "FIRE_GOLDEN_ENTER": "🏆 GOLDEN → consenso confirmado (score ≥ 3.0)",
+    "FIRE_EMERGINDO": "📡 EMERGINDO → cor se formando (score ≥ 1.8)",
+    "OPS_ALERTA_FORMACAO": "👁 ALERTA → formação inicial, aguarde",
+    "FIRE_ULTRA_TIE": "⚪🔴⚪ ULTRA TIE → especialista confirmou empate",
+}
+MENU_ORDER = {fid: i for i, fid in enumerate(ONLINE_MENU_SKINS)}
 
 TYPES_CANDIDATES = [
     Path("/tmp/tg_arch_final/tg_arch_catalog_20260803T234517Z/types_first_seen.csv"),
@@ -190,6 +208,20 @@ def build() -> dict:
                 int(f.get("tg_count") or 0),
             )
 
+    # ONLINE banner menu = product skins already existed at first ONLINE fire.
+    online = earliest.get("ONLINE_BANNER")
+    if online:
+        for fid in ONLINE_MENU_SKINS:
+            consider(
+                fid,
+                online["dt"],
+                "online_banner_menu",
+                ONLINE_MENU_LINES.get(fid, ""),
+                "ONLINE_BANNER",
+                tg_count=0,
+                first_chat=online.get("first_chat") or "",
+            )
+
     pair_first: Dict[str, dict] = {}
     for p in pairs:
         text = p.get("fire_text") or ""
@@ -247,6 +279,16 @@ def build() -> dict:
         body = (old_it.get("body") or "").strip()
         if not body and pf:
             body = pf["fire_text"].strip()
+        if not body and fid in ONLINE_MENU_LINES and (ear or {}).get("source") == "online_banner_menu":
+            # Historical proof of existence = menu line inside first ONLINE card
+            body = (
+                "🟢 BacBo Royal UserBot ONLINE 🟢\n"
+                "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                "Sinais por score de probabilidade:\n"
+                f"{ONLINE_MENU_LINES[fid]}\n"
+                "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                "_Named in first ONLINE banner — skin already existed_"
+            )
         if not body:
             body = (
                 cen.get("tg_example")
@@ -307,7 +349,14 @@ def build() -> dict:
             item["historical"] = False
             items_never.append(item)
 
-    items_dated.sort(key=lambda x: (x["existence_at"], x["family_id"]))
+    def _sort_dated(x: dict) -> tuple:
+        # Same timestamp: ONLINE first, then menu order, then name
+        fid = x["family_id"]
+        menu = MENU_ORDER.get(fid, 1000)
+        online_rank = 0 if fid == "ONLINE_BANNER" else 1
+        return (x["existence_at"], online_rank, menu, fid)
+
+    items_dated.sort(key=_sort_dated)
     reg_order = {f.family_id: i for i, f in enumerate(SKIN_FAMILIES)}
     items_never.sort(key=lambda x: (reg_order.get(x["family_id"], 10_000), x["family_id"]))
 
@@ -329,8 +378,11 @@ def build() -> dict:
         ),
         "understanding": (
             "1st skin that ever existed/fired → example #1; 2nd → #2; … "
-            "Even skins never fired still appear, after fired ones, in build/registry order."
+            "ONLINE banner is #1; skins it names (SOLO/GOLDEN/EMERGINDO/ALERTA/ULTRA) "
+            "count as existing at that same moment — not only later ENTER cards. "
+            "Never-fired skins still appear after dated ones, in build/registry order."
         ),
+        "online_menu_skins": list(ONLINE_MENU_SKINS),
         "note_scrape": (
             "Do not re-scrape Mr_iv4 for this — Mar17→Aug3 types_first_seen "
             "already supplies first-seen UTC dates."

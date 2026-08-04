@@ -4,12 +4,19 @@
   "chat_username": "UNIQUE_museum_chrono",
   "axis": "CHRONO_FIRST_EXISTENCE",
   "rule": "One example per skin, ordered by first existence (UTC). Never-fired skins follow in code-registry order. RESULT under FIRE only if that historical signal originally had one.",
-  "understanding": "1st skin that ever existed/fired → example #1; 2nd → #2; … Even skins never fired still appear, after fired ones, in build/registry order.",
+  "understanding": "1st skin that ever existed/fired → example #1; 2nd → #2; … ONLINE banner is #1; skins it names (SOLO/GOLDEN/EMERGINDO/ALERTA/ULTRA) count as existing at that same moment — not only later ENTER cards. Never-fired skins still appear after dated ones, in build/registry order.",
+  "online_menu_skins": [
+    "FIRE_SOLO_ELITE_ENTER",
+    "FIRE_GOLDEN_ENTER",
+    "FIRE_EMERGINDO",
+    "OPS_ALERTA_FORMACAO",
+    "FIRE_ULTRA_TIE"
+  ],
   "note_scrape": "Do not re-scrape Mr_iv4 for this — Mar17→Aug3 types_first_seen already supplies first-seen UTC dates.",
   "types_csv": "/tmp/tg_arch_final/tg_arch_catalog_20260803T234517Z/types_first_seen.csv",
   "stats": {
-    "total": 115,
-    "with_existence_date": 78,
+    "total": 117,
+    "with_existence_date": 80,
     "never_fired_code_order": 37,
     "fires_with_original_result": 4
   },
@@ -31,24 +38,6 @@
       "fire_at": "2026-03-17 08:37:17",
       "first_chat": "mr_iv4",
       "chrono_order": 1
-    },
-    {
-      "family_id": "FIRE_CONFIRMED_ENTER",
-      "role": "FIRE",
-      "label": "FIRE confirmed ENTER NOW",
-      "lane": "MONEY",
-      "era": "1",
-      "example_first_line": "🏆 SIGNAL CONFIRMED — ENTER NOW 🏆",
-      "body": "🏆 SIGNAL CONFIRMED — ENTER NOW 🏆",
-      "tg_count": 13,
-      "historical": true,
-      "had_original_result": false,
-      "follow_ups": [],
-      "existence_source": "tg_types_first_seen",
-      "existence_at": "2026-03-19 21:51:34",
-      "fire_at": "2026-03-19 21:51:34",
-      "first_chat": "mr_iv4",
-      "chrono_order": 2
     },
     {
       "family_id": "FIRE_SOLO_ELITE_ENTER",
@@ -73,11 +62,112 @@
           "source": "museum_chrono_all_pairs.json"
         }
       ],
-      "existence_source": "tg_types_first_seen",
-      "existence_at": "2026-03-19 21:55:33",
+      "existence_source": "online_banner_menu",
+      "existence_at": "2026-03-17 08:37:17",
       "fire_at": "19.03.2026 22:17:34 UTC-05:00",
       "first_chat": "mr_iv4",
+      "chrono_order": 2
+    },
+    {
+      "family_id": "FIRE_GOLDEN_ENTER",
+      "role": "FIRE",
+      "label": "FIRE GOLDEN ENTER NOW",
+      "lane": "MONEY",
+      "era": "1",
+      "example_first_line": "🏆 GOLDEN SIGNAL — ENTER NOW 🏆",
+      "body": "🏆\nGOLDEN SIGNAL — ENTER NOW\n 🏆\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nEnter:\n 🔴 Vermelho (Player)\n\n   └ _Primary bet — full bankroll_\n\n🟡\n+ Tie\n _Empate_ as protection\n\n🤝\nCorroboration bonus:\n +0.35 _(reliable historical pairs)_\n\n   └ _Side bet — 10% of bankroll_\n\n📊\nTotal score:\n ██████████ ✅ 232%\n\n🏛\nRooms in consensus (2):\n\n  🟢\n@IsaDados\n — CONFIRMED ENTRY _(score 3.60)_\n\n  🟢\n@CoringaDados\n — CONFIRMED ENTRY _(score 2.20)_\n\n🤖\nML Coalition:\n ✅ Padrão vencedor confirmado (1.23×)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 22:15:05 | Evolution Bac Bo\n\n⚡\nENTER NOW — 2 ROOM(S) CONFIRMED\n\n_After result: /win · /loss · /tie_",
+      "tg_count": 2964,
+      "historical": true,
+      "had_original_result": true,
+      "follow_ups": [
+        {
+          "family_id": "UNKNOWN",
+          "role": "UNKNOWN",
+          "label": "unknown",
+          "body": "❌\nLOSS — GOLDEN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔴 VERMELHO (Player)\n\n🔁 Gale 1 — aguardando próxima entrada confirmada pelas salas\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  2❌  2🟡  —  85.7% acerto",
+          "historical": true,
+          "result_at": "19.03.2026 22:16:26 UTC-05:00",
+          "gap_secs": 81.0,
+          "source": "museum_chrono_all_pairs.json"
+        }
+      ],
+      "existence_source": "online_banner_menu",
+      "existence_at": "2026-03-17 08:37:17",
+      "fire_at": "19.03.2026 22:15:05 UTC-05:00",
+      "first_chat": "mr_iv4",
       "chrono_order": 3
+    },
+    {
+      "family_id": "FIRE_EMERGINDO",
+      "role": "FIRE",
+      "label": "FIRE EMERGINDO (forming color)",
+      "lane": "MONEY",
+      "era": "0",
+      "example_first_line": "📡 EMERGINDO → cor se formando (score ≥ 1.8)",
+      "body": "🟢 BacBo Royal UserBot ONLINE 🟢\n━━━━━━━━━━━━━━━━━━━━━━━━━\nSinais por score de probabilidade:\n📡 EMERGINDO → cor se formando (score ≥ 1.8)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Named in first ONLINE banner — skin already existed_",
+      "tg_count": 0,
+      "historical": true,
+      "had_original_result": false,
+      "follow_ups": [],
+      "existence_source": "online_banner_menu",
+      "existence_at": "2026-03-17 08:37:17",
+      "fire_at": "2026-03-17 08:37:17",
+      "first_chat": "mr_iv4",
+      "chrono_order": 4
+    },
+    {
+      "family_id": "OPS_ALERTA_FORMACAO",
+      "role": "OPS",
+      "label": "OPS ALERTA formação",
+      "lane": "-",
+      "era": "0",
+      "example_first_line": "👁 ALERTA → formação inicial, aguarde",
+      "body": "🟢 BacBo Royal UserBot ONLINE 🟢\n━━━━━━━━━━━━━━━━━━━━━━━━━\nSinais por score de probabilidade:\n👁 ALERTA → formação inicial, aguarde\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Named in first ONLINE banner — skin already existed_",
+      "tg_count": 0,
+      "historical": true,
+      "had_original_result": false,
+      "follow_ups": [],
+      "existence_source": "online_banner_menu",
+      "existence_at": "2026-03-17 08:37:17",
+      "fire_at": "2026-03-17 08:37:17",
+      "first_chat": "mr_iv4",
+      "chrono_order": 5
+    },
+    {
+      "family_id": "FIRE_ULTRA_TIE",
+      "role": "FIRE",
+      "label": "FIRE ULTRA TIE",
+      "lane": "MONEY",
+      "era": "2",
+      "example_first_line": "🟡 ULTRA TIE — EMPATE CONFIRMADO",
+      "body": "🟡🟡🟡 ULTRA TIE — EMPATE CONFIRMADO 🟡🟡🟡",
+      "tg_count": 6,
+      "historical": true,
+      "had_original_result": false,
+      "follow_ups": [],
+      "existence_source": "online_banner_menu",
+      "existence_at": "2026-03-17 08:37:17",
+      "fire_at": "2026-03-22 00:06:34",
+      "first_chat": "mr_iv4",
+      "chrono_order": 6
+    },
+    {
+      "family_id": "FIRE_CONFIRMED_ENTER",
+      "role": "FIRE",
+      "label": "FIRE confirmed ENTER NOW",
+      "lane": "MONEY",
+      "era": "1",
+      "example_first_line": "🏆 SIGNAL CONFIRMED — ENTER NOW 🏆",
+      "body": "🏆 SIGNAL CONFIRMED — ENTER NOW 🏆",
+      "tg_count": 13,
+      "historical": true,
+      "had_original_result": false,
+      "follow_ups": [],
+      "existence_source": "tg_types_first_seen",
+      "existence_at": "2026-03-19 21:51:34",
+      "fire_at": "2026-03-19 21:51:34",
+      "first_chat": "mr_iv4",
+      "chrono_order": 7
     },
     {
       "family_id": "FIRE_SEQUENCE_ENTER",
@@ -106,7 +196,7 @@
       "existence_at": "2026-03-19 22:54:09",
       "fire_at": "19.03.2026 21:32:15 UTC-05:00",
       "first_chat": "",
-      "chrono_order": 4
+      "chrono_order": 8
     },
     {
       "family_id": "OPS_SEQUENCE_PREDICTION",
@@ -124,36 +214,7 @@
       "existence_at": "2026-03-19 22:54:09",
       "fire_at": "2026-03-19 22:54:09",
       "first_chat": "mr_iv4",
-      "chrono_order": 5
-    },
-    {
-      "family_id": "FIRE_GOLDEN_ENTER",
-      "role": "FIRE",
-      "label": "FIRE GOLDEN ENTER NOW",
-      "lane": "MONEY",
-      "era": "1",
-      "example_first_line": "🏆 GOLDEN SIGNAL — ENTER NOW 🏆",
-      "body": "🏆\nGOLDEN SIGNAL — ENTER NOW\n 🏆\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nEnter:\n 🔴 Vermelho (Player)\n\n   └ _Primary bet — full bankroll_\n\n🟡\n+ Tie\n _Empate_ as protection\n\n🤝\nCorroboration bonus:\n +0.35 _(reliable historical pairs)_\n\n   └ _Side bet — 10% of bankroll_\n\n📊\nTotal score:\n ██████████ ✅ 232%\n\n🏛\nRooms in consensus (2):\n\n  🟢\n@IsaDados\n — CONFIRMED ENTRY _(score 3.60)_\n\n  🟢\n@CoringaDados\n — CONFIRMED ENTRY _(score 2.20)_\n\n🤖\nML Coalition:\n ✅ Padrão vencedor confirmado (1.23×)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 22:15:05 | Evolution Bac Bo\n\n⚡\nENTER NOW — 2 ROOM(S) CONFIRMED\n\n_After result: /win · /loss · /tie_",
-      "tg_count": 2964,
-      "historical": true,
-      "had_original_result": true,
-      "follow_ups": [
-        {
-          "family_id": "UNKNOWN",
-          "role": "UNKNOWN",
-          "label": "unknown",
-          "body": "❌\nLOSS — GOLDEN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔴 VERMELHO (Player)\n\n🔁 Gale 1 — aguardando próxima entrada confirmada pelas salas\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  2❌  2🟡  —  85.7% acerto",
-          "historical": true,
-          "result_at": "19.03.2026 22:16:26 UTC-05:00",
-          "gap_secs": 81.0,
-          "source": "museum_chrono_all_pairs.json"
-        }
-      ],
-      "existence_source": "tg_types_first_seen",
-      "existence_at": "2026-03-19 22:57:45",
-      "fire_at": "19.03.2026 22:15:05 UTC-05:00",
-      "first_chat": "mr_iv4",
-      "chrono_order": 6
+      "chrono_order": 9
     },
     {
       "family_id": "RESULT_AUTO_TIE",
@@ -171,7 +232,7 @@
       "existence_at": "2026-03-19 22:58:45",
       "fire_at": "2026-03-19 22:58:45",
       "first_chat": "mr_iv4",
-      "chrono_order": 7
+      "chrono_order": 10
     },
     {
       "family_id": "RESULT_WIN_TIER",
@@ -189,7 +250,7 @@
       "existence_at": "2026-03-19 23:52:41",
       "fire_at": "2026-03-19 23:52:41",
       "first_chat": "mr_iv4",
-      "chrono_order": 8
+      "chrono_order": 11
     },
     {
       "family_id": "RESULT_LOSS_TIER",
@@ -207,7 +268,7 @@
       "existence_at": "2026-03-19 23:55:31",
       "fire_at": "2026-03-19 23:55:31",
       "first_chat": "mr_iv4",
-      "chrono_order": 9
+      "chrono_order": 12
     },
     {
       "family_id": "FIRE_GALE_ENTRE_NOVAMENTE",
@@ -225,7 +286,7 @@
       "existence_at": "2026-03-19 23:55:32",
       "fire_at": "2026-03-19 23:55:32",
       "first_chat": "mr_iv4",
-      "chrono_order": 10
+      "chrono_order": 13
     },
     {
       "family_id": "OPS_G2_ATINGIDO_PARE",
@@ -243,7 +304,7 @@
       "existence_at": "2026-03-19 23:55:32",
       "fire_at": "2026-03-19 23:55:32",
       "first_chat": "mr_iv4",
-      "chrono_order": 11
+      "chrono_order": 14
     },
     {
       "family_id": "RESULT_EMPATE",
@@ -261,7 +322,7 @@
       "existence_at": "2026-03-20 00:21:42",
       "fire_at": "2026-03-20 00:21:42",
       "first_chat": "mr_iv4",
-      "chrono_order": 12
+      "chrono_order": 15
     },
     {
       "family_id": "OPS_LOSS_COOLDOWN",
@@ -279,7 +340,7 @@
       "existence_at": "2026-03-20 00:34:50",
       "fire_at": "2026-03-20 00:34:50",
       "first_chat": "mr_iv4",
-      "chrono_order": 13
+      "chrono_order": 16
     },
     {
       "family_id": "FIRE_GALE_RETENTATIVA",
@@ -308,7 +369,7 @@
       "existence_at": "2026-03-20 00:48:58",
       "fire_at": "20.03.2026 00:28:23 UTC-05:00",
       "first_chat": "mr_iv4",
-      "chrono_order": 14
+      "chrono_order": 17
     },
     {
       "family_id": "FIRE_GOLDEN_ENTRE_AGORA",
@@ -326,7 +387,7 @@
       "existence_at": "2026-03-20 09:09:00",
       "fire_at": "2026-03-20 09:09:00",
       "first_chat": "mr_iv4",
-      "chrono_order": 15
+      "chrono_order": 18
     },
     {
       "family_id": "RESULT_GREEN_LEGACY_G0",
@@ -344,7 +405,7 @@
       "existence_at": "2026-03-20 10:17:11",
       "fire_at": "2026-03-20 10:17:11",
       "first_chat": "mr_iv4",
-      "chrono_order": 16
+      "chrono_order": 19
     },
     {
       "family_id": "RESULT_GREEN_LEGACY_G1",
@@ -362,7 +423,7 @@
       "existence_at": "2026-03-20 10:21:23",
       "fire_at": "2026-03-20 10:21:23",
       "first_chat": "mr_iv4",
-      "chrono_order": 17
+      "chrono_order": 20
     },
     {
       "family_id": "OPS_TIER_LEGEND",
@@ -380,7 +441,7 @@
       "existence_at": "2026-03-20 10:54:59",
       "fire_at": "2026-03-20 10:54:59",
       "first_chat": "mr_iv4",
-      "chrono_order": 18
+      "chrono_order": 21
     },
     {
       "family_id": "OPS_TIE_ALERT",
@@ -398,7 +459,7 @@
       "existence_at": "2026-03-20 19:33:41",
       "fire_at": "2026-03-20 19:33:41",
       "first_chat": "mr_iv4",
-      "chrono_order": 19
+      "chrono_order": 22
     },
     {
       "family_id": "OPS_PREALERT_FORMING",
@@ -416,7 +477,7 @@
       "existence_at": "2026-03-20 20:25:16",
       "fire_at": "2026-03-20 20:25:16",
       "first_chat": "mr_iv4",
-      "chrono_order": 20
+      "chrono_order": 23
     },
     {
       "family_id": "FIRE_PLATINUM_ENTER",
@@ -434,7 +495,7 @@
       "existence_at": "2026-03-20 21:29:53",
       "fire_at": "2026-03-20 21:29:53",
       "first_chat": "mr_iv4",
-      "chrono_order": 21
+      "chrono_order": 24
     },
     {
       "family_id": "OPS_ELITE_ANALISANDO",
@@ -452,7 +513,7 @@
       "existence_at": "2026-03-20 21:41:04",
       "fire_at": "2026-03-20 21:41:04",
       "first_chat": "mr_iv4",
-      "chrono_order": 22
+      "chrono_order": 25
     },
     {
       "family_id": "OPS_DUPLO_ELITE",
@@ -470,7 +531,7 @@
       "existence_at": "2026-03-20 22:43:38",
       "fire_at": "2026-03-20 22:43:38",
       "first_chat": "mr_iv4",
-      "chrono_order": 23
+      "chrono_order": 26
     },
     {
       "family_id": "FIRE_JANELA_TIMED",
@@ -488,25 +549,7 @@
       "existence_at": "2026-03-21 15:45:36",
       "fire_at": "2026-03-21 15:45:36",
       "first_chat": "mr_iv4",
-      "chrono_order": 24
-    },
-    {
-      "family_id": "FIRE_ULTRA_TIE",
-      "role": "FIRE",
-      "label": "FIRE ULTRA TIE",
-      "lane": "MONEY",
-      "era": "2",
-      "example_first_line": "🟡 ULTRA TIE — EMPATE CONFIRMADO",
-      "body": "🟡🟡🟡 ULTRA TIE — EMPATE CONFIRMADO 🟡🟡🟡",
-      "tg_count": 6,
-      "historical": true,
-      "had_original_result": false,
-      "follow_ups": [],
-      "existence_source": "tg_types_first_seen",
-      "existence_at": "2026-03-22 00:06:34",
-      "fire_at": "2026-03-22 00:06:34",
-      "first_chat": "mr_iv4",
-      "chrono_order": 25
+      "chrono_order": 27
     },
     {
       "family_id": "OPS_GALE_SATURATION",
@@ -524,7 +567,7 @@
       "existence_at": "2026-03-22 04:37:19",
       "fire_at": "2026-03-22 04:37:19",
       "first_chat": "mr_iv4",
-      "chrono_order": 26
+      "chrono_order": 28
     },
     {
       "family_id": "FIRE_ENTRE_AGORA_GENERIC",
@@ -542,7 +585,7 @@
       "existence_at": "2026-03-22 23:04:23",
       "fire_at": "2026-03-22 23:04:23",
       "first_chat": "mr_iv4",
-      "chrono_order": 27
+      "chrono_order": 29
     },
     {
       "family_id": "OPS_OPEN_PLATFORM_NOW",
@@ -560,7 +603,7 @@
       "existence_at": "2026-03-23 11:00:26",
       "fire_at": "2026-03-23 11:00:26",
       "first_chat": "mr_iv4",
-      "chrono_order": 28
+      "chrono_order": 30
     },
     {
       "family_id": "CD_RES_BELL_GANHOU",
@@ -578,7 +621,7 @@
       "existence_at": "2026-03-23 17:23:15",
       "fire_at": "2026-03-23 17:23:15",
       "first_chat": "mr_iv4",
-      "chrono_order": 29
+      "chrono_order": 31
     },
     {
       "family_id": "OPS_RADAR_PARTIAL_CONSENSUS",
@@ -596,7 +639,7 @@
       "existence_at": "2026-03-23 18:34:27",
       "fire_at": "2026-03-23 18:34:27",
       "first_chat": "mr_iv4",
-      "chrono_order": 30
+      "chrono_order": 32
     },
     {
       "family_id": "RESULT_COLOR_BANNER",
@@ -614,7 +657,7 @@
       "existence_at": "2026-03-27 22:23:44",
       "fire_at": "2026-03-27 22:23:44",
       "first_chat": "mr_iv4",
-      "chrono_order": 31
+      "chrono_order": 33
     },
     {
       "family_id": "OPS_GATE_BLOCK_LOG",
@@ -632,7 +675,7 @@
       "existence_at": "2026-03-29 22:00:14",
       "fire_at": "2026-03-29 22:00:14",
       "first_chat": "mr_iv4",
-      "chrono_order": 32
+      "chrono_order": 34
     },
     {
       "family_id": "OPS_TRIPLE_LOCK",
@@ -650,7 +693,7 @@
       "existence_at": "2026-03-31 18:21:06",
       "fire_at": "2026-03-31 18:21:06",
       "first_chat": "mr_iv4",
-      "chrono_order": 33
+      "chrono_order": 35
     },
     {
       "family_id": "FIRE_APOSTE_AGORA",
@@ -668,7 +711,7 @@
       "existence_at": "2026-04-01 11:12:44",
       "fire_at": "2026-04-01 11:12:44",
       "first_chat": "mr_iv4",
-      "chrono_order": 34
+      "chrono_order": 36
     },
     {
       "family_id": "CD_RES_RODADAS_TEMPO",
@@ -686,7 +729,7 @@
       "existence_at": "2026-04-04 09:44:07",
       "fire_at": "2026-04-04 09:44:07",
       "first_chat": "mr_iv4",
-      "chrono_order": 35
+      "chrono_order": 37
     },
     {
       "family_id": "OPS_JANELA_PRIME",
@@ -704,7 +747,7 @@
       "existence_at": "2026-04-04 14:00:25",
       "fire_at": "2026-04-04 14:00:25",
       "first_chat": "mr_iv4",
-      "chrono_order": 36
+      "chrono_order": 38
     },
     {
       "family_id": "FIRE_G0_MISS_ENTRE_G1",
@@ -722,7 +765,7 @@
       "existence_at": "2026-04-19 06:20:42",
       "fire_at": "2026-04-19 06:20:42",
       "first_chat": "mr_iv4",
-      "chrono_order": 37
+      "chrono_order": 39
     },
     {
       "family_id": "FIRE_GOD_TIER",
@@ -740,7 +783,7 @@
       "existence_at": "2026-04-22 12:42:56",
       "fire_at": "2026-04-22 12:42:56",
       "first_chat": "mr_iv4",
-      "chrono_order": 38
+      "chrono_order": 40
     },
     {
       "family_id": "OPS_DIVERGENCIA_SALAS",
@@ -758,7 +801,7 @@
       "existence_at": "2026-04-22 14:25:39",
       "fire_at": "2026-04-22 14:25:39",
       "first_chat": "mr_iv4",
-      "chrono_order": 39
+      "chrono_order": 41
     },
     {
       "family_id": "FIRE_SINAL_RETIDO_LIBERADO",
@@ -776,7 +819,7 @@
       "existence_at": "2026-04-23 19:22:10",
       "fire_at": "2026-04-23 19:22:10",
       "first_chat": "mr_iv4",
-      "chrono_order": 40
+      "chrono_order": 42
     },
     {
       "family_id": "OPS_CORRECAO",
@@ -794,7 +837,7 @@
       "existence_at": "2026-04-24 17:52:58",
       "fire_at": "2026-04-24 17:52:58",
       "first_chat": "mr_iv4",
-      "chrono_order": 41
+      "chrono_order": 43
     },
     {
       "family_id": "CD_FIRE_RUSH_NS_LEFT",
@@ -812,7 +855,7 @@
       "existence_at": "2026-04-25 16:15:50",
       "fire_at": "2026-04-25 16:15:50",
       "first_chat": "mr_iv4",
-      "chrono_order": 42
+      "chrono_order": 44
     },
     {
       "family_id": "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
@@ -830,7 +873,7 @@
       "existence_at": "2026-04-25 16:23:37",
       "fire_at": "2026-04-25 16:23:37",
       "first_chat": "mr_iv4",
-      "chrono_order": 43
+      "chrono_order": 45
     },
     {
       "family_id": "CD_FIRE_QUANTUM_LOCK",
@@ -848,7 +891,7 @@
       "existence_at": "2026-04-28 20:53:12",
       "fire_at": "2026-04-28 20:53:12",
       "first_chat": "mr_iv4",
-      "chrono_order": 44
+      "chrono_order": 46
     },
     {
       "family_id": "OPS_SEQ_QUENTE",
@@ -866,7 +909,7 @@
       "existence_at": "2026-04-29 06:49:47",
       "fire_at": "2026-04-29 06:49:47",
       "first_chat": "mr_iv4",
-      "chrono_order": 45
+      "chrono_order": 47
     },
     {
       "family_id": "OPS_SEQ_FRIA",
@@ -884,7 +927,7 @@
       "existence_at": "2026-04-29 13:18:29",
       "fire_at": "2026-04-29 13:18:29",
       "first_chat": "mr_iv4",
-      "chrono_order": 46
+      "chrono_order": 48
     },
     {
       "family_id": "OPS_JANELA_PEAK",
@@ -902,7 +945,7 @@
       "existence_at": "2026-04-29 17:00:43",
       "fire_at": "2026-04-29 17:00:43",
       "first_chat": "mr_iv4",
-      "chrono_order": 47
+      "chrono_order": 49
     },
     {
       "family_id": "OPS_PREALERT_3BOLT",
@@ -920,7 +963,7 @@
       "existence_at": "2026-04-30 10:14:34",
       "fire_at": "2026-04-30 10:14:34",
       "first_chat": "mr_iv4",
-      "chrono_order": 48
+      "chrono_order": 50
     },
     {
       "family_id": "RESULT_BELL_GANHOU",
@@ -938,7 +981,7 @@
       "existence_at": "2026-04-30 10:37:07",
       "fire_at": "2026-04-30 10:37:07",
       "first_chat": "mr_iv4",
-      "chrono_order": 49
+      "chrono_order": 51
     },
     {
       "family_id": "OPS_SEQ_EMPATES",
@@ -956,7 +999,7 @@
       "existence_at": "2026-04-30 10:37:28",
       "fire_at": "2026-04-30 10:37:28",
       "first_chat": "mr_iv4",
-      "chrono_order": 50
+      "chrono_order": 52
     },
     {
       "family_id": "CD_RES_GREEN_G_BRT",
@@ -974,7 +1017,7 @@
       "existence_at": "2026-04-30 20:37:04",
       "fire_at": "2026-04-30 20:37:04",
       "first_chat": "mr_iv4",
-      "chrono_order": 51
+      "chrono_order": 53
     },
     {
       "family_id": "RESULT_TIMED_WINDOW",
@@ -992,7 +1035,7 @@
       "existence_at": "2026-04-30 20:37:04",
       "fire_at": "2026-04-30 20:37:04",
       "first_chat": "mr_iv4",
-      "chrono_order": 52
+      "chrono_order": 54
     },
     {
       "family_id": "FIRE_EMPATE_DIRETO_G0",
@@ -1010,7 +1053,7 @@
       "existence_at": "2026-05-01 09:40:24",
       "fire_at": "2026-05-01 09:40:24",
       "first_chat": "mr_iv4",
-      "chrono_order": 53
+      "chrono_order": 55
     },
     {
       "family_id": "FIRE_G0_DIRETO",
@@ -1028,7 +1071,7 @@
       "existence_at": "2026-05-01 09:52:45",
       "fire_at": "2026-05-01 09:52:45",
       "first_chat": "mr_iv4",
-      "chrono_order": 54
+      "chrono_order": 56
     },
     {
       "family_id": "FIRE_PREPARE_G1",
@@ -1046,7 +1089,7 @@
       "existence_at": "2026-05-01 10:13:46",
       "fire_at": "2026-05-01 10:13:46",
       "first_chat": "mr_iv4",
-      "chrono_order": 55
+      "chrono_order": 57
     },
     {
       "family_id": "OPS_AUDIT_360",
@@ -1064,7 +1107,7 @@
       "existence_at": "2026-05-01 13:52:09",
       "fire_at": "2026-05-01 13:52:09",
       "first_chat": "mr_iv4",
-      "chrono_order": 56
+      "chrono_order": 58
     },
     {
       "family_id": "OPS_SELF_CARE_GUARD",
@@ -1082,7 +1125,7 @@
       "existence_at": "2026-05-03 11:16:05",
       "fire_at": "2026-05-03 11:16:05",
       "first_chat": "mr_iv4",
-      "chrono_order": 57
+      "chrono_order": 59
     },
     {
       "family_id": "RESULT_FORENSIC_INTERVALO",
@@ -1100,7 +1143,7 @@
       "existence_at": "2026-05-03 15:56:49",
       "fire_at": "2026-05-03 15:56:49",
       "first_chat": "mr_iv4",
-      "chrono_order": 58
+      "chrono_order": 60
     },
     {
       "family_id": "OPS_STREAK_BANNER",
@@ -1118,7 +1161,7 @@
       "existence_at": "2026-05-05 12:19:43",
       "fire_at": "2026-05-05 12:19:43",
       "first_chat": "mr_iv4",
-      "chrono_order": 59
+      "chrono_order": 61
     },
     {
       "family_id": "OPS_PARE_3_PERDAS",
@@ -1136,7 +1179,7 @@
       "existence_at": "2026-05-05 12:59:24",
       "fire_at": "2026-05-05 12:59:24",
       "first_chat": "mr_iv4",
-      "chrono_order": 60
+      "chrono_order": 62
     },
     {
       "family_id": "OPS_CAMADAS_DO_DIA",
@@ -1154,7 +1197,7 @@
       "existence_at": "2026-05-07 22:38:50",
       "fire_at": "2026-05-07 22:38:50",
       "first_chat": "mr_iv4",
-      "chrono_order": 61
+      "chrono_order": 63
     },
     {
       "family_id": "RESULT_FLASH_WIN",
@@ -1172,7 +1215,7 @@
       "existence_at": "2026-05-09 14:33:26",
       "fire_at": "2026-05-09 14:33:26",
       "first_chat": "mr_iv4",
-      "chrono_order": 62
+      "chrono_order": 64
     },
     {
       "family_id": "RESULT_GREEN_COMPACT_G0",
@@ -1190,7 +1233,7 @@
       "existence_at": "2026-05-11 10:15:16",
       "fire_at": "2026-05-11 10:15:16",
       "first_chat": "mr_iv4",
-      "chrono_order": 63
+      "chrono_order": 65
     },
     {
       "family_id": "RESULT_GREEN_COMPACT_G1",
@@ -1208,7 +1251,7 @@
       "existence_at": "2026-05-11 11:21:44",
       "fire_at": "2026-05-11 11:21:44",
       "first_chat": "mr_iv4",
-      "chrono_order": 64
+      "chrono_order": 66
     },
     {
       "family_id": "OPS_G2_MISS",
@@ -1226,7 +1269,7 @@
       "existence_at": "2026-06-12 11:52:20",
       "fire_at": "2026-06-12 11:52:20",
       "first_chat": "mr_iv4",
-      "chrono_order": 65
+      "chrono_order": 67
     },
     {
       "family_id": "OPS_G1_EXPIROU",
@@ -1244,7 +1287,7 @@
       "existence_at": "2026-06-13 07:22:36",
       "fire_at": "2026-06-13 07:22:36",
       "first_chat": "mr_iv4",
-      "chrono_order": 66
+      "chrono_order": 68
     },
     {
       "family_id": "OPS_G3_ATINGIDO",
@@ -1262,7 +1305,7 @@
       "existence_at": "2026-06-19 09:13:42",
       "fire_at": "2026-06-19 09:13:42",
       "first_chat": "mr_iv4",
-      "chrono_order": 67
+      "chrono_order": 69
     },
     {
       "family_id": "FIRE_COMPACT_HASH",
@@ -1280,7 +1323,7 @@
       "existence_at": "2026-07-05 16:50:40",
       "fire_at": "2026-07-05 16:50:40",
       "first_chat": "UNIQUE_g1",
-      "chrono_order": 68
+      "chrono_order": 70
     },
     {
       "family_id": "RESULT_COMPACT_LOSS_HASH",
@@ -1298,7 +1341,7 @@
       "existence_at": "2026-07-05 16:56:28",
       "fire_at": "2026-07-05 16:56:28",
       "first_chat": "UNIQUE_g1",
-      "chrono_order": 69
+      "chrono_order": 71
     },
     {
       "family_id": "RESULT_COMPACT_WIN_HASH",
@@ -1316,7 +1359,7 @@
       "existence_at": "2026-07-05 17:16:10",
       "fire_at": "2026-07-05 17:16:10",
       "first_chat": "mr_iv4",
-      "chrono_order": 70
+      "chrono_order": 72
     },
     {
       "family_id": "RESULT_COMPACT_TIE_HASH",
@@ -1334,7 +1377,7 @@
       "existence_at": "2026-07-05 17:48:03",
       "fire_at": "2026-07-05 17:48:03",
       "first_chat": "mr_iv4",
-      "chrono_order": 71
+      "chrono_order": 73
     },
     {
       "family_id": "FIRE_SOLO_APOSTAR",
@@ -1352,7 +1395,7 @@
       "existence_at": "2026-07-11 23:40:15",
       "fire_at": "2026-07-11 23:40:15",
       "first_chat": "mr_iv4",
-      "chrono_order": 72
+      "chrono_order": 74
     },
     {
       "family_id": "FIRE_SEQUENCE_APOSTAR",
@@ -1370,7 +1413,7 @@
       "existence_at": "2026-07-11 23:49:21",
       "fire_at": "2026-07-11 23:49:21",
       "first_chat": "mr_iv4",
-      "chrono_order": 73
+      "chrono_order": 75
     },
     {
       "family_id": "FIRE_GOLDEN_APOSTAR",
@@ -1388,7 +1431,7 @@
       "existence_at": "2026-07-15 13:35:41",
       "fire_at": "2026-07-15 13:35:41",
       "first_chat": "mr_iv4",
-      "chrono_order": 74
+      "chrono_order": 76
     },
     {
       "family_id": "FIRE_PLATINUM_APOSTAR",
@@ -1406,7 +1449,7 @@
       "existence_at": "2026-07-17 02:24:16",
       "fire_at": "2026-07-17 02:24:16",
       "first_chat": "mr_iv4",
-      "chrono_order": 75
+      "chrono_order": 77
     },
     {
       "family_id": "FIRE_FLASH_APOSTAR",
@@ -1424,7 +1467,7 @@
       "existence_at": "2026-07-17 06:00:20",
       "fire_at": "2026-07-17 06:00:20",
       "first_chat": "",
-      "chrono_order": 76
+      "chrono_order": 78
     },
     {
       "family_id": "ONLINE_LUXURY_OUTBOX",
@@ -1442,7 +1485,7 @@
       "existence_at": "2026-07-21 04:12:36",
       "fire_at": "2026-07-21 04:12:36",
       "first_chat": "mr_iv4",
-      "chrono_order": 77
+      "chrono_order": 79
     },
     {
       "family_id": "FIRE_SEQUENCIA_ENTER_NOW",
@@ -1460,7 +1503,7 @@
       "existence_at": "2026-07-28 23:10:01",
       "fire_at": "2026-07-28 23:10:01",
       "first_chat": "mr_iv4",
-      "chrono_order": 78
+      "chrono_order": 80
     },
     {
       "family_id": "RESULT_ORACLE_CARD",
@@ -1477,7 +1520,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 79
+      "chrono_order": 81
     },
     {
       "family_id": "FIRE_ENTER_NOW_GENERIC",
@@ -1494,7 +1537,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 80
+      "chrono_order": 82
     },
     {
       "family_id": "FIRE_G0_ENTRADA_DIRETA",
@@ -1511,7 +1554,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 81
+      "chrono_order": 83
     },
     {
       "family_id": "FIRE_DEPTH_G0_ONLY",
@@ -1528,7 +1571,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 82
+      "chrono_order": 84
     },
     {
       "family_id": "FIRE_INVERTED_CONTRARIO",
@@ -1545,7 +1588,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 83
+      "chrono_order": 85
     },
     {
       "family_id": "FIRE_ORACLE_LOCK",
@@ -1562,7 +1605,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 84
+      "chrono_order": 86
     },
     {
       "family_id": "FIRE_CERTIFIED_ELITE",
@@ -1579,7 +1622,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 85
+      "chrono_order": 87
     },
     {
       "family_id": "FIRE_GRADE_BANNER",
@@ -1596,7 +1639,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 86
+      "chrono_order": 88
     },
     {
       "family_id": "FIRE_HOT_STREAK",
@@ -1613,7 +1656,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 87
+      "chrono_order": 89
     },
     {
       "family_id": "FIRE_DOUBLE_TIE_LOCK",
@@ -1630,7 +1673,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 88
+      "chrono_order": 90
     },
     {
       "family_id": "FIRE_GALE_1_FACA_AGORA",
@@ -1647,7 +1690,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 89
+      "chrono_order": 91
     },
     {
       "family_id": "OPS_DO_NOT_BET_YET",
@@ -1664,7 +1707,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 90
+      "chrono_order": 92
     },
     {
       "family_id": "OPS_PREPARE_PLATFORM",
@@ -1681,7 +1724,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 91
+      "chrono_order": 93
     },
     {
       "family_id": "OPS_NEXT_CERTIFIED_WINDOW",
@@ -1698,7 +1741,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 92
+      "chrono_order": 94
     },
     {
       "family_id": "OPS_G1_REGISTRADO_CALC_G2",
@@ -1715,7 +1758,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 93
+      "chrono_order": 95
     },
     {
       "family_id": "OPS_G2_STOP_IF_G1_LOST",
@@ -1732,7 +1775,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 94
+      "chrono_order": 96
     },
     {
       "family_id": "RESULT_G0_ACERTOU_PRIMEIRA",
@@ -1749,7 +1792,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 95
+      "chrono_order": 97
     },
     {
       "family_id": "RESULT_GALE_RECOVERED_CHAIN",
@@ -1766,7 +1809,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 96
+      "chrono_order": 98
     },
     {
       "family_id": "RESULT_EMPATE_DINHEIRO_DEVOLVIDO",
@@ -1783,7 +1826,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 97
+      "chrono_order": 99
     },
     {
       "family_id": "RESULT_EMPATE_PROTECAO",
@@ -1800,7 +1843,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 98
+      "chrono_order": 100
     },
     {
       "family_id": "OPS_GATE_ALLOW_LOG",
@@ -1817,7 +1860,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 99
+      "chrono_order": 101
     },
     {
       "family_id": "OPS_KIND_DOWNGRADE_LOG",
@@ -1834,7 +1877,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 100
+      "chrono_order": 102
     },
     {
       "family_id": "FIRE_APOSTAR_EMPATE",
@@ -1851,7 +1894,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 101
+      "chrono_order": 103
     },
     {
       "family_id": "FIRE_NAMED_EDGE_BANNER",
@@ -1868,7 +1911,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 102
+      "chrono_order": 104
     },
     {
       "family_id": "OPS_NEGATIVE_WINDOW_BLOCK",
@@ -1885,7 +1928,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 103
+      "chrono_order": 105
     },
     {
       "family_id": "FIRE_G2_RESERVE",
@@ -1902,7 +1945,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 104
+      "chrono_order": 106
     },
     {
       "family_id": "RESULT_G2_RESERVE_WIN",
@@ -1919,7 +1962,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 105
+      "chrono_order": 107
     },
     {
       "family_id": "OPS_G2_RESERVE_MISS",
@@ -1936,7 +1979,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 106
+      "chrono_order": 108
     },
     {
       "family_id": "OPS_TIE_AUDIT",
@@ -1953,7 +1996,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 107
+      "chrono_order": 109
     },
     {
       "family_id": "OPS_COMMAND_HELP",
@@ -1970,7 +2013,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 108
+      "chrono_order": 110
     },
     {
       "family_id": "OPS_STAT_LINE",
@@ -1987,7 +2030,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 109
+      "chrono_order": 111
     },
     {
       "family_id": "FIRE_FLASH_CONFIRMADO",
@@ -2004,7 +2047,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 110
+      "chrono_order": 112
     },
     {
       "family_id": "RESULT_AUTO_WIN",
@@ -2021,7 +2064,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 111
+      "chrono_order": 113
     },
     {
       "family_id": "RESULT_AUTO_LOSS",
@@ -2038,7 +2081,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 112
+      "chrono_order": 114
     },
     {
       "family_id": "OPS_AUTO_EXPIRED",
@@ -2055,7 +2098,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 113
+      "chrono_order": 115
     },
     {
       "family_id": "RESULT_FINAL_LOSS_AFTER_G3",
@@ -2072,7 +2115,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 114
+      "chrono_order": 116
     },
     {
       "family_id": "OPS_DELIVERY_WINDOW_LOG",
@@ -2089,7 +2132,7 @@
       "existence_source": "code_registry",
       "existence_at": null,
       "never_fired": true,
-      "chrono_order": 115
+      "chrono_order": 117
     }
   ]
 }

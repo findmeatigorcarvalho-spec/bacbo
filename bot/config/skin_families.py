@@ -93,6 +93,25 @@ SKIN_FAMILIES: Tuple[SkinFamily, ...] = (
         "0",
         "ONLINE banner",
         "🟢 BacBo Royal UserBot ONLINE 🟢",
+        notes="First product card ever; menu names SOLO/GOLDEN/EMERGINDO/ALERTA/ULTRA TIE as existing skins",
+    ),
+    # Era 0 menu skins — named inside ONLINE on first boot (existence ≠ first ENTER)
+    SkinFamily(
+        "FIRE_EMERGINDO",
+        ROLE_FIRE,
+        "0",
+        "FIRE EMERGINDO (forming color)",
+        "📡 EMERGINDO → cor se formando (score ≥ 1.8)",
+        LANE_MONEY,
+        notes="Product tier named in ONLINE banner Mar17; keep even if dedicated ENTER rare/missing",
+    ),
+    SkinFamily(
+        "OPS_ALERTA_FORMACAO",
+        ROLE_OPS,
+        "0",
+        "OPS ALERTA formação",
+        "👁 ALERTA → formação inicial, aguarde",
+        notes="Product tier named in ONLINE banner Mar17 — distinct from OPS_TIE_ALERT",
     ),
     # Era 1
     SkinFamily(
