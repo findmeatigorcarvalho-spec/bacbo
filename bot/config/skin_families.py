@@ -818,6 +818,208 @@ SKIN_FAMILIES: Tuple[SkinFamily, ...] = (
         "📡 @room …",
         notes="High-volume noise class",
     ),
+    SkinFamily(
+        "OPS_GATE_BLOCK_LOG",
+        ROLE_OPS,
+        "internal",
+        "Internal gate block / momentum log line",
+        "⛔ MomentumBlock L-L-L: G0=34.4% historically —",
+        notes="Console/log output from _gates_*.py — classified so census has no UNKNOWN bucket",
+    ),
+    SkinFamily(
+        "OPS_GATE_ALLOW_LOG",
+        ROLE_OPS,
+        "internal",
+        "Internal gate allow / bypass log line",
+        "⚡ [accum_solo_gale/DISABLED] gate disabled → ALLOW",
+        notes="Console/log output — never a Telegram card",
+    ),
+    SkinFamily(
+        "OPS_KIND_DOWNGRADE_LOG",
+        ROLE_OPS,
+        "internal",
+        "Internal tier downgrade log",
+        "⛔ PLATINUM coalition unrescuable after stripping toxic rooms — downgrading to GOLDEN.",
+    ),
+    SkinFamily(
+        "CODE_FRAGMENT",
+        ROLE_UNKNOWN,
+        "internal",
+        "Source-code literal (not a card)",
+        'GOLDEN", "SOLO_ELITE", "PLATINUM", "EMERGING"',
+        notes="Kind lists / ternaries / bare labels mined from source; retained, never dropped",
+    ),
+    SkinFamily(
+        "OPS_G2_ATINGIDO_PARE",
+        ROLE_OPS,
+        "ops_result",
+        "OPS G2 atingido — pare / signal closed",
+        "⛔ **PARE — G2 ATINGIDO**",
+        notes="Portuguese twin of OPS_G2_MISS; JUN08/JUN09 + ELITE_V2 eras",
+    ),
+    SkinFamily(
+        "FIRE_APOSTAR_EMPATE",
+        ROLE_FIRE,
+        "code",
+        "FIRE bet the tie (next rounds)",
+        "🎯 **Aposte no EMPATE (🟠 Tie)** nas próximas rodadas.",
+        LANE_MONEY,
+        notes="Tie-side entry card — distinct from ULTRA_TIE and tie-alert ops",
+    ),
+    SkinFamily(
+        "FIRE_NAMED_EDGE_BANNER",
+        ROLE_FIRE,
+        "code",
+        "FIRE named formation / zone edge banner",
+        "🏆 APEX TRIO · isadados+rigosinais+rqdados · G0=90.3% (n=31)",
+        LANE_MONEY,
+        kind_scoped=True,
+        notes="APEX TRIO / ZERO-LOSS ZONE / PRIME formations — small-n named edges",
+    ),
+    SkinFamily(
+        "OPS_NEGATIVE_WINDOW_BLOCK",
+        ROLE_OPS,
+        "code",
+        "OPS named bad day/hour block banner",
+        "⛔ BLUE TUESDAY ⛔ · G0=36.5% historically (n=159)",
+        notes="Negative-edge window banners (day/color blocks)",
+    ),
+    SkinFamily(
+        "OPS_TIER_LEGEND",
+        ROLE_OPS,
+        "0",
+        "OPS tier legend / glossary line",
+        "💎 SOLO ELITE → sala elite sozinha / single elite room",
+        notes="Explanatory legend in ONLINE banner or /help glossary, not a standalone fire",
+    ),
+    # ── G2 RESERVE subsystem (always-red recovery loop) ─────────────────────
+    SkinFamily(
+        "FIRE_G2_RESERVE",
+        ROLE_FIRE,
+        "g2reserve",
+        "FIRE G2 RESERVE — always red loop",
+        "🔁 **G2 RESERVE — SEMPRE VERMELHO / ALWAYS RED**",
+        LANE_MONEY,
+        kind_scoped=True,
+        notes="Fixed-color G2 reserve chain; loop continues until win or chain close",
+    ),
+    SkinFamily(
+        "RESULT_G2_RESERVE_WIN",
+        ROLE_RESULT,
+        "g2reserve",
+        "RESULT G2 RESERVE recovery win",
+        "🏆🏆🏆 **G2 RESERVE — RECUPERAÇÃO WIN!** 🏆🏆🏆",
+        kind_scoped=True,
+    ),
+    SkinFamily(
+        "OPS_G2_RESERVE_MISS",
+        ROLE_OPS,
+        "g2reserve",
+        "OPS G2 RESERVE miss — chain closed",
+        "🛑🛑 **G2 RESERVE MISS — CADEIA ENCERRADA** 🛑🛑",
+        notes="Terminal card for the reserve chain",
+    ),
+    SkinFamily(
+        "OPS_TIE_AUDIT",
+        ROLE_OPS,
+        "audit",
+        "OPS tie audit report (empates)",
+        "🟡🟡🟡 **AUDITORIA COMPLETA — EMPATES** 🟡🟡🟡",
+        notes="Includes room_memory tie accuracy + outcome_history real-tie sections",
+    ),
+    SkinFamily(
+        "OPS_COMMAND_HELP",
+        ROLE_OPS,
+        "help",
+        "OPS command help / keyword glossary",
+        "🟡 **`empate`** · **`tie`** · **`pressao`**",
+        notes="From strings.py — bot UI text, never a signal card",
+    ),
+    SkinFamily(
+        "OPS_STAT_LINE",
+        ROLE_OPS,
+        "audit",
+        "OPS combined WR stat line",
+        "📊 **87.8% WR** combinado · TRUE G2 · n=115",
+    ),
+    # ── Real cards recovered from live gate sources (AST sweep) ─────────────
+    SkinFamily(
+        "OPS_RADAR_PARTIAL_CONSENSUS",
+        ROLE_OPS,
+        "radar",
+        "OPS radar — partial consensus",
+        "👁 **RADAR — PARTIAL CONSENSUS** 👁",
+        notes="Pre-fire radar; rooms agreeing but below fire threshold",
+    ),
+    SkinFamily(
+        "OPS_OPEN_PLATFORM_NOW",
+        ROLE_OPS,
+        "prealert",
+        "OPS open the platform — signal in seconds",
+        "🚨 **ABRA A PLATAFORMA AGORA — SINAL EM SEGUNDOS!** 🚨",
+        notes="Also 'AGORA É A HORA!' variant; urgency prealert",
+    ),
+    SkinFamily(
+        "FIRE_FLASH_CONFIRMADO",
+        ROLE_FIRE,
+        "flash",
+        "FIRE flash confirmed",
+        "⚡⚡ **FLASH CONFIRMADO** —",
+        LANE_COUNTDOWN,
+        kind_scoped=True,
+        notes="FLASH-kind confirmation fire; sniper band",
+    ),
+    SkinFamily(
+        "RESULT_AUTO_WIN",
+        ROLE_RESULT,
+        "auto",
+        "RESULT auto-detected WIN",
+        "✅ AUTO WIN",
+        kind_scoped=True,
+        notes="Auto-resolved from room outcome, no manual /win",
+    ),
+    SkinFamily(
+        "RESULT_AUTO_LOSS",
+        ROLE_RESULT,
+        "auto",
+        "RESULT auto-detected LOSS",
+        "❌ AUTO LOSS",
+        kind_scoped=True,
+    ),
+    SkinFamily(
+        "OPS_AUTO_EXPIRED",
+        ROLE_OPS,
+        "auto",
+        "OPS signal auto-expired by kind",
+        "🏆 GOLDEN: auto-expired",
+        kind_scoped=True,
+        notes="Fire aged out with no resolvable outcome",
+    ),
+    SkinFamily(
+        "RESULT_FINAL_LOSS_AFTER_G3",
+        ROLE_RESULT,
+        "g3",
+        "RESULT final loss after G3",
+        "❌ FINAL LOSS after G3 —",
+        kind_scoped=True,
+        notes="Terminal loss on the historical 3-gale ladder",
+    ),
+    SkinFamily(
+        "OPS_DELIVERY_WINDOW_LOG",
+        ROLE_OPS,
+        "internal",
+        "OPS delivery-audit window line",
+        "| ⚠️  MISSED WIN — gate=",
+        notes="BLOCKED LOSS / MISSED WIN / QUIET rows from the delivery auditor",
+    ),
+    SkinFamily(
+        "CARD_BODY_LINE",
+        ROLE_UNKNOWN,
+        "internal",
+        "Card body fragment (not a header)",
+        "└ _Primary bet — full bankroll_",
+        notes="Continuation lines, footers, table cells — kept for template fidelity",
+    ),
 )
 
 _FAMILY_BY_ID: Dict[str, SkinFamily] = {f.family_id: f for f in SKIN_FAMILIES}
@@ -1312,6 +1514,104 @@ def classify_telegram_skin(
             lane_override=LANE_MONEY,
         )
 
+    # ── Real cards recovered from gate sources ──────────────────────────────
+    if re.search(r"RADAR\s*—\s*(?:PARTIAL\s+CONSENSUS|CONSENSO\s+PARCIAL)", body, re.I):
+        return _match("OPS_RADAR_PARTIAL_CONSENSUS", text=body, first_line=fl)
+    if re.search(r"ABRA\s+A\s+PLATAFORMA\s+AGORA|AGORA\s+[EÉ]\s+A\s+HORA", body, re.I):
+        return _match("OPS_OPEN_PLATFORM_NOW", text=body, first_line=fl)
+    if re.search(r"FLASH\s+CONFIRMADO", body, re.I):
+        return _match(
+            "FIRE_FLASH_CONFIRMADO",
+            text=body,
+            first_line=fl,
+            kind="FLASH",
+            lane_override=LANE_COUNTDOWN,
+        )
+    if re.search(r"FINAL\s+LOSS\s+after\s+G3", body, re.I):
+        return _match(
+            "RESULT_FINAL_LOSS_AFTER_G3",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+        )
+    if re.search(r"\bauto-expired\b", body, re.I):
+        return _match(
+            "OPS_AUTO_EXPIRED",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+        )
+    if re.fullmatch(r"[\s✅❌🟡⚪]*AUTO\s+WIN[\s!.]*", (fl or "").strip(), re.I):
+        return _match("RESULT_AUTO_WIN", text=body, first_line=fl, kind=hint_kind)
+    if re.fullmatch(r"[\s✅❌🟡⚪]*AUTO\s+LOSS[\s!.]*", (fl or "").strip(), re.I):
+        return _match("RESULT_AUTO_LOSS", text=body, first_line=fl, kind=hint_kind)
+    if re.fullmatch(r"[\s✅❌🟡⚪]*AUTO\s+TIE[\s!.@…]*", (fl or "").strip(), re.I):
+        return _match("RESULT_AUTO_TIE", text=body, first_line=fl)
+    if re.search(r"G0\s+[uú]nico\s*—\s*sem\s+gale", body, re.I):
+        return _match("FIRE_DEPTH_G0_ONLY", text=body, first_line=fl, lane_override=LANE_MONEY)
+    if re.search(r"\bG0\s+MISS\b", body, re.I):
+        return _match(
+            "FIRE_G0_MISS_ENTRE_G1",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            clock_n=_extract_clock_n(body),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"APEX\s+WINDOW", body, re.I):
+        return _match(
+            "FIRE_NAMED_EDGE_BANNER",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"~\s*\d+\s*s\s+para\s+o\s+\S+\s*—\s*esteja\s+pronto", body, re.I):
+        return _match("OPS_OPEN_PLATFORM_NOW", text=body, first_line=fl)
+    if re.search(r"(?:BLOCKED\s+LOSS|MISSED\s+WIN)\s*—\s*gate=|🔇\s*QUIET", body, re.I):
+        return _match("OPS_DELIVERY_WINDOW_LOG", text=body, first_line=fl)
+
+    # ── G2 RESERVE subsystem (before generic G2 handling) ───────────────────
+    if re.search(r"G2\s+RESERVE", body, re.I):
+        if re.search(r"MISS|CADEIA\s+ENCERRADA", body, re.I):
+            return _match("OPS_G2_RESERVE_MISS", text=body, first_line=fl)
+        if re.search(r"RECUPERA[CÇ][AÃ]O\s+WIN|WIN!|GANHOU", body, re.I):
+            return _match(
+                "RESULT_G2_RESERVE_WIN",
+                text=body,
+                first_line=fl,
+                kind=hint_kind or _extract_kind(body, fl),
+            )
+        return _match(
+            "FIRE_G2_RESERVE",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+
+    # ── Audit / help / stat surfaces ────────────────────────────────────────
+    if re.search(r"AUDITORIA\s+COMPLETA\s*—\s*EMPATES", body, re.I) or re.search(
+        r"Acur[aá]cia\s+de\s+empate\s+por\s+sala|[UÚ]ltimos\s+empates\s+reais",
+        body,
+        re.I,
+    ):
+        return _match("OPS_TIE_AUDIT", text=body, first_line=fl)
+    if re.search(r"^\s*[🟡🔵🔴⚪✅❌]?\s*(?:\*\*)?`\w+`", fl):
+        return _match("OPS_COMMAND_HELP", text=body, first_line=fl)
+    if re.search(r"\d+(?:\.\d+)?%\s*WR\*?\*?\s*combinado|WR\*?\*?\s*combinado", body, re.I):
+        return _match("OPS_STAT_LINE", text=body, first_line=fl)
+    # Glossary/legend: "💎 *SOLO ELITE* — explanation" or "TIER → explanation"
+    if re.search(
+        r"(?:💎|🏆|📊|💠|⚡|🟡|🔵|🔴|⚪)\s*\*?\*?_?"
+        r"(?:SOLO\s*ELITE|GOLDEN\s+SIGNAL|SEQUENCE|PLATINUM|FLASH|ULTRA\s*TIE|"
+        r"Empate|Tie|Vermelho|Azul|Blue|Red|FORMANDO|FORMING|MEN[CÇ][AÃ]O|MENTION)"
+        r"\*?\*?_?\s*(?:—|->|→|/)",
+        fl,
+        re.I,
+    ) and not re.search(r"ENTER\s+NOW|ENTRE\s+AGORA|APOSTAR|JANELA", fl, re.I):
+        return _match("OPS_TIER_LEGEND", text=body, first_line=fl)
+
     # ── Code-formatter cards (bacbo_royal_complete / _gates_*) ──────────────
     if re.search(r"ORACLE\s+LOCK|ORACLE\s*—\s*H\d+", body, re.I):
         return _match(
@@ -1331,7 +1631,7 @@ def classify_telegram_skin(
         )
     if re.search(r"DOUBLE\s+TIE\s+LOCK", body, re.I):
         return _match("FIRE_DOUBLE_TIE_LOCK", text=body, first_line=fl, lane_override=LANE_MONEY)
-    if re.search(r"GRADE\s+[AB]\b.*G0\s*=", body, re.I):
+    if re.search(r"GRADE\s+[A-D]\b.*G0\s*=", body, re.I):
         return _match(
             "FIRE_GRADE_BANNER",
             text=body,
@@ -1339,6 +1639,23 @@ def classify_telegram_skin(
             kind=hint_kind or _extract_kind(body, fl),
             lane_override=LANE_MONEY,
         )
+    if re.search(r"APEX\s+TRIO|ZERO[- ]LOSS\s+ZONE|\bPRIME\b\s*·|PRIME\s*·", body, re.I) or (
+        re.search(r"[A-Z_]{4,}\s+PRIME\b", body) and re.search(r"G0\s*=", body, re.I)
+    ):
+        return _match(
+            "FIRE_NAMED_EDGE_BANNER",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(
+        r"\b(?:BLUE|RED|AZUL|VERMELHO)\s+(?:MONDAY|TUESDAY|WEDNESDAY|THURSDAY|"
+        r"FRIDAY|SATURDAY|SUNDAY|SEGUNDA|TER[CÇ]A|QUARTA|QUINTA|SEXTA)\b",
+        body,
+        re.I,
+    ):
+        return _match("OPS_NEGATIVE_WINDOW_BLOCK", text=body, first_line=fl)
     if re.search(r"HOT\s+TABLE|HOT\s+STREAK|PERFECT\s+\d+/\d+\s+WIN\s+STREAK", body, re.I):
         return _match(
             "FIRE_HOT_STREAK",
@@ -1357,8 +1674,22 @@ def classify_telegram_skin(
             kind=hint_kind or _extract_kind(body, fl),
             lane_override=LANE_MONEY,
         )
-    if re.search(r"DEPTH\s+G0\s+only|G0\s+ONLY", body, re.I):
+    if re.search(r"DEPTH\s+G0\b|G0\s+ONLY", body, re.I):
         return _match("FIRE_DEPTH_G0_ONLY", text=body, first_line=fl, lane_override=LANE_MONEY)
+    if re.search(r"Aposte\s+no\s+EMPATE", body, re.I):
+        return _match("FIRE_APOSTAR_EMPATE", text=body, first_line=fl, lane_override=LANE_MONEY)
+    if re.search(
+        r"(?:PARE\s*—\s*G2\s+ATINGIDO|G2\s+atingido|Sinal\s+ENCERRADO\s*·?\s*\*?\*?pare\s+aqui)",
+        body,
+        re.I,
+    ):
+        return _match("OPS_G2_ATINGIDO_PARE", text=body, first_line=fl)
+    if re.search(
+        r"(?:💎|🏆|📊|💠|⚡)\s*(?:SOLO\s*ELITE|GOLDEN|SEQUENCE|PLATINUM|FLASH)\s*→",
+        body,
+        re.I,
+    ):
+        return _match("OPS_TIER_LEGEND", text=body, first_line=fl)
     if re.search(r"G0\s*—\s*(?:ENTRADA\s+DIRETA|PRIMEIRA\s+ENTRADA)", body, re.I):
         return _match(
             "FIRE_G0_ENTRADA_DIRETA",
@@ -1460,6 +1791,60 @@ def classify_telegram_skin(
         return _match("OPS_DIVERGENCIA_SALAS", text=body, first_line=fl)
     if re.search(r"ELITE\s+ANALISANDO", fl, re.I):
         return _match("OPS_ELITE_ANALISANDO", text=body, first_line=fl)
+
+    # ── Internal log lines / source literals (never Telegram cards) ─────────
+    # Bracketed gate tags, e.g. "[PlatDupeGuard]", "[AccumHold]", "[wl_x/DISABLED]".
+    # Truncated literals may lack the closing bracket, so allow an open tag too.
+    if re.search(r"\[[A-Za-z0-9_][A-Za-z0-9_/\-]*(?:\]|/|:|\s|$)", fl):
+        if re.search(r"DISABLED|→\s*ALLOW|bypassed", body, re.I):
+            return _match("OPS_GATE_ALLOW_LOG", text=body, first_line=fl)
+        return _match("OPS_GATE_BLOCK_LOG", text=body, first_line=fl)
+    if re.search(r"downgrad(?:e|ing)\s+to\s+[A-Z_]+", body, re.I):
+        return _match("OPS_KIND_DOWNGRADE_LOG", text=body, first_line=fl)
+    if re.search(
+        r"MomentumBlock|CautionBlock|RoomHourGate|GoldenHourGate|"
+        r"unrescuable|blocked at|saved=\d+|blocked_wins=\d+|shadow WR|"
+        r"_ALWAYS_FIRES|exempt from|kept elite votes|"
+        # CamelCase gate/guard/cooldown identifiers + verdict verbs
+        r"\b[A-Z][A-Za-z0-9]*(?:Gate|Block|Guard|Cooldown|Hold|Fallback)\b|"
+        r"\bBLOCK:|\bEXEMPTED\b|stripped\s+result\s+room|"
+        r"downgrade|upgrade:|conf=|rooms=|only\s+\d+\s+(?:pts|rooms)|"
+        r"pending\s+guard|standalone\s+for|blocked\s+for|"
+        # "GOLDEN: only", "PLATINUM stripped", "GOLDEN G1 gate:", "SoloRoomWindow:"
+        r"\b(?:GOLDEN|PLATINUM|SOLO[_\s]?ELITE|SEQUENCE|FLASH|EMERGING)\s*:?\s*"
+        r"(?:only\b|stripped\b|auto-|G[123]\s+gate\b)|"
+        r"\+FullCoalition|Window:|Filter-[A-Z]\b|PerfectG0|"
+        r"Pipeline\s+Independente",
+        body,
+        re.I,
+    ):
+        if re.search(r"DISABLED|→\s*ALLOW|EXEMPTED|✅\s*Sent|bypassed", body, re.I):
+            return _match("OPS_GATE_ALLOW_LOG", text=body, first_line=fl)
+        return _match("OPS_GATE_BLOCK_LOG", text=body, first_line=fl)
+    # Body continuation / footer fragments (not headers)
+    if (
+        re.match(r"^\s*(?:└|├|│|\||more\s+pts|_[A-Za-z])", fl)
+        or re.fullmatch(r"[\s|]*Evolution\s+Bac\s+Bo[\s|]*", fl, re.I)
+        or re.match(r"^\s*\*\*(?:APOSTAR|ENTRAR|BET)\s*:", fl, re.I)
+    ):
+        return _match("CARD_BODY_LINE", text=body, first_line=fl)
+    # Source literals: quoted kind lists, ternaries, dict fragments
+    if re.search(
+        r'"\s*,\s*"|"\s*:\s*"|__import__|\bif\s+\w+\s*==|else\s+"|'
+        r"_mom\[|w_color|_utc_hour|_is_flash_early|_g0wr|\\s\*|"
+        r'\(\d+,\s*"|;\s*\w+\s*=\s*"|"\s*/\s*"|"\s*:\s*\d+',
+        body,
+    ):
+        return _match("CODE_FRAGMENT", text=body, first_line=fl)
+    # Bare kind words / outcome labels lifted out of source (not cards)
+    if re.fullmatch(
+        r"[✅❌⚪🟡🔵🔴\s]*(?:GOLDEN|SOLO[_\s]?ELITE|SEQUENCE|PLATINUM|FLASH|"
+        r"ULTRA[_\s]?TIE|EMERGING|ganhou|perdeu|empatou|GANHOU|PERDEU|EMPATOU)"
+        r"[!\s\"']*",
+        (fl or "").strip(),
+        re.I,
+    ):
+        return _match("CODE_FRAGMENT", text=body, first_line=fl)
 
     # Fallback: DB signal_kind only (no recognizable Telegram skin)
     if hint_kind:
