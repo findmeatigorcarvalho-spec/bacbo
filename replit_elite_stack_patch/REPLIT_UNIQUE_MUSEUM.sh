@@ -20,6 +20,7 @@ VER="20260804e"
 echo "UNIQUE_MUSEUM cwd=$(pwd) ref=${REF}"
 echo "NOTE: UNIQUE_g2…g5 were never created as Telegram chats — only router names."
 echo "      This creates/uses UNIQUE_museum for the paced catalog."
+echo "RULE: RESULT under FIRE only if that historical signal originally had one."
 
 mkdir -p bot/data logs
 curl -fsSL -o bot/museum_unique_poster.py \

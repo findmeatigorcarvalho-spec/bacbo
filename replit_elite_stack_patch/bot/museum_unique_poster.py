@@ -285,7 +285,9 @@ async def main() -> int:
     header = (
         "🏛 UNIQUE_museum — FULL PRODUCT SKIN CATALOG\n"
         "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"Items: {total} · FIRE with glued RESULT/OPS under them\n"
+        f"Items: {total}\n"
+        "Rule: RESULT under a FIRE only if that signal originally had one\n"
+        "No invented follow-ups · FIRE-only when history had no result\n"
         "Purpose: see every skin/family/template — NOT live bets\n"
         "Pace: slow send · FloodWait-safe · no truncate\n"
         "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
