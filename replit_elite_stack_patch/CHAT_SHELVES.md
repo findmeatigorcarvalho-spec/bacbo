@@ -13,10 +13,7 @@ Replit shims: `bot/chat_shelves.py` · `bot/chat_router.py`
 |---|---|
 | **Mr_iv4** (`6774605259`) | Money ENTER (SOLO/GOLDEN/SEQUENCE/PLATINUM), gale, ops primary |
 | **UNIQUE_g1** | Countdown peak fires (`Sinal Retido→Liberado`, JANELA, `CD_FIRE_*`) + sniper |
-| **UNIQUE_g2** | Overflow shelf #1 when a primary chat is at capacity |
-| **UNIQUE_g3** | Overflow #2 |
-| **UNIQUE_g4** | Overflow #3 |
-| **UNIQUE_g5** | Overflow #4 |
+| **UNIQUE_g2…gN** | Overflow — **as many as needed** (g2–g5 starters; auto-mints g6, g7, … up to 500). Never delay. |
 
 Results (forensic G0/G1 WIN/LOSS, short `✅ WIN — KIND`, `G1 EXPIROU`, `G2 MISS`) **glue to the exact chat** that received the parent FIRE — including overflow.
 

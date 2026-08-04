@@ -48,8 +48,9 @@ _DEFAULT_CAPACITY: Dict[str, float] = {
 _WINDOW_SECONDS = 60.0
 # Named overflow slots via env; beyond that we mint UNIQUE_g{N} elastically.
 _MAX_NAMED_OVERFLOW_ENV = 32
-# Hard ceiling on auto-minted UNIQUE_gN chats (still immediate send — no delay).
-_MAX_ELASTIC_UNIQUE = 64
+# Soft ceiling on auto-minted UNIQUE_gN (g1…g5 are starters only — mint as many
+# as needed). Override with TELEGRAM_MAX_ELASTIC_UNIQUE. Still never delays.
+_MAX_ELASTIC_UNIQUE = 500
 
 
 def _env_float(name: str, default: float) -> float:

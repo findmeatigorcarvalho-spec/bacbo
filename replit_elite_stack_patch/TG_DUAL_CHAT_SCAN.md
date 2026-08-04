@@ -16,10 +16,18 @@ Full archaeology catalog (2026-08-03):
 
 ## Re-run on Replit (needed for true per-chat volume)
 
+Script lives on the PR branch — not on Replit disk. Curl it:
+
 ```bash
-bash replit_elite_stack_patch/REPLIT_TG_DUAL_CHAT_SCAN.sh
-# or resume:
-bash replit_elite_stack_patch/REPLIT_TG_DUAL_CHAT_SCAN.sh --resume
+curl -fsSL -o /tmp/TG_DUAL.sh \
+  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TG_DUAL_CHAT_SCAN.sh?v=20260804a'
+bash /tmp/TG_DUAL.sh
+```
+
+Resume if it dies mid-scrape:
+
+```bash
+bash /tmp/TG_DUAL.sh --resume
 ```
 
 Paste the printed `FETCH_URL=` back here. That zip must include:
