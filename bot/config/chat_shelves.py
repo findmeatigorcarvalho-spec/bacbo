@@ -56,14 +56,19 @@ _SHELF_PEER_ENV = {
     SHELF_SINK: ("TELEGRAM_SHELF_SINK",),
 }
 
+# Chat map (locked):
+#   Mr_iv4 (6774605259)  — money ENTER / gale / ops primary
+#   UNIQUE_g1            — countdown peak fires + sniper
+#   UNIQUE_g2..g5        — elastic overflow when a shelf is saturated
+#                          (see chat_router.overflow_peers)
 _DEFAULT_PEERS = {
-    SHELF_PENTHOUSE_MONEY: "6774605259",
-    SHELF_UPPER_MONEY: "6774605259",
+    SHELF_PENTHOUSE_MONEY: "6774605259",  # Mr_iv4
+    SHELF_UPPER_MONEY: "6774605259",  # Mr_iv4
     SHELF_COUNTDOWN: "UNIQUE_g1",
     SHELF_SNIPER: "UNIQUE_g1",
-    SHELF_GALE: "6774605259",
-    SHELF_OPS_EXPIRE: "6774605259",
-    SHELF_OVERFLOW: "6774605259",
+    SHELF_GALE: "6774605259",  # Mr_iv4
+    SHELF_OPS_EXPIRE: "6774605259",  # Mr_iv4 (results glue to parent chat)
+    SHELF_OVERFLOW: "UNIQUE_g2",  # first overflow; g3–g5 via chat_router
     SHELF_VAULT: "",
     SHELF_SINK: "",
 }

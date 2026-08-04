@@ -66,8 +66,22 @@ def capacity_for(shelf_id: str) -> float:
     return _env_float(key, _DEFAULT_CAPACITY.get(shelf_id, 3.0))
 
 
+# Default overflow shelves when env is unset: UNIQUE_g2 … UNIQUE_g5
+# (UNIQUE_g1 is the primary countdown/sniper chat; Mr_iv4 is money.)
+_DEFAULT_OVERFLOW_PEERS: Tuple[str, ...] = (
+    "UNIQUE_g2",
+    "UNIQUE_g3",
+    "UNIQUE_g4",
+    "UNIQUE_g5",
+)
+
+
 def overflow_peers() -> List[str]:
-    """Elastic overflow chats: TELEGRAM_SHELF_OVERFLOW_1..N (comma list also ok)."""
+    """Elastic overflow chats: TELEGRAM_SHELF_OVERFLOW_1..N (comma list also ok).
+
+    Unset env → UNIQUE_g2, UNIQUE_g3, UNIQUE_g4, UNIQUE_g5.
+    Money stays on Mr_iv4; countdown/sniper primary stays on UNIQUE_g1.
+    """
     peers: List[str] = []
     multi = (os.environ.get("TELEGRAM_SHELF_OVERFLOW_PEERS") or "").strip()
     if multi:
@@ -80,7 +94,18 @@ def overflow_peers() -> List[str]:
         base = (os.environ.get("TELEGRAM_SHELF_OVERFLOW") or "").strip()
         if base:
             peers.append(base.lstrip("@"))
-    return peers
+    if not peers:
+        peers.extend(_DEFAULT_OVERFLOW_PEERS)
+    # de-dupe preserving order
+    seen = set()
+    out: List[str] = []
+    for p in peers:
+        key = p.lstrip("@").lower()
+        if key in seen or not p:
+            continue
+        seen.add(key)
+        out.append(p.lstrip("@"))
+    return out
 
 
 @dataclass

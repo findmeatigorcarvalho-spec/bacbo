@@ -22,6 +22,12 @@ from bot.config.chat_shelves import (
     shelf_catalog,
     shelf_for_family,
 )
+from bot.config.chat_router import (
+    ChatTarget,
+    get_router,
+    overflow_peers,
+    route_card,
+)
 
 __all__ = [
     "EngineGateRegistry",
@@ -30,13 +36,17 @@ __all__ = [
     "SkinMatch",
     "SendGateDecision",
     "ShelfDecision",
+    "ChatTarget",
     "all_skin_families",
     "classify_telegram_skin",
     "evaluate_send_gate",
     "family_ids",
     "gate_keys_for",
+    "get_router",
+    "overflow_peers",
     "product_skin_families",
     "resolve_shelf",
+    "route_card",
     "shelf_catalog",
     "shelf_for_family",
     "should_block_telegram_send",
