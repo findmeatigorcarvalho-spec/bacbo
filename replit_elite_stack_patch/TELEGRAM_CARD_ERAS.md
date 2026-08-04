@@ -182,6 +182,16 @@ These dominate message count; they are operational/relay, not the ENTER→RESULT
 
 ---
 
+## Skin = building floor (census)
+
+Complete inventory (code ∪ Telegram ∪ DB): `replit_elite_stack_patch/SKIN_FLOOR_CENSUS.md`  
+Machine-readable: `bot/data/skin_floor_census.csv` · `bot/data/skin_floor_census.json`  
+Runner: `python3 -m bot.config.skin_census` · Replit: `REPLIT_SKIN_FLOOR_CENSUS.sh`
+
+Each skin/family/template is a candidate **floor** in the profit building (penthouse→basement). DB metrics still need Replit `bacbo.db` to fill PENTHOUSE WR/G0 ranks.
+
+---
+
 ## How this catalog was produced
 
 1. Replit: `bash replit_elite_stack_patch/REPLIT_TELEGRAM_TYPE_ARCHAEOLOGY.sh` (resume until Mar 17)  
