@@ -22,6 +22,7 @@ from bot.config.skin_families import (
     LANE_COUNTDOWN,
     LANE_MONEY,
     SkinMatch,
+    canonical_family_id,
     classify_telegram_skin,
 )
 
@@ -212,10 +213,20 @@ def _band_hint(shelf_id: str) -> str:
 
 
 def shelf_for_family(family_id: str) -> str:
-    fid = (family_id or "").strip()
+    raw = (family_id or "").strip()
+    fid = canonical_family_id(raw)
     if fid in _FAMILY_SHELF:
         return _FAMILY_SHELF[fid]
-    if fid.startswith("SIGNAL_KIND_"):
+    if raw in _FAMILY_SHELF:
+        return _FAMILY_SHELF[raw]
+    if fid == "SIGNAL_KIND_SOLO_ELITE" or raw == "SIGNAL_KIND_SOLO_ELITE":
+        return SHELF_PENTHOUSE_MONEY
+    if fid.startswith("SIGNAL_KIND_") or raw.startswith("SIGNAL_KIND_"):
+        kind = (fid or raw).replace("SIGNAL_KIND_", "")
+        if kind == "FLASH":
+            return SHELF_SNIPER
+        if kind in {"ULTRA_TIE", "EMERGING"}:
+            return SHELF_SNIPER
         return SHELF_UPPER_MONEY
     if fid.startswith("CD_FIRE_") or fid.startswith("FIRE_JANELA"):
         return SHELF_COUNTDOWN

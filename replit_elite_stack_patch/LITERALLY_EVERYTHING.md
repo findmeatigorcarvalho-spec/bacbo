@@ -1,51 +1,39 @@
-# Literally everything — required for the building to work
+# Literally everything — inventory status
 
-Partial catalogs are not enough. Every signal skin / template / kind ever **created** (fired or not, Telegram or not) must enter the inventory.
+## ✅ Replit mine received
 
-## What “everything” means
+`FETCH_URL=https://litter.catbox.moe/16a5od.zip`
 
-| Source | What it catches |
-|--------|-----------------|
-| **CODE + .bak** | Quoted card headers + `FIRE_`/`RESULT_`/`CD_*` ids in formatters, handlers, gates |
-| **GIT history** | Deleted / renamed templates still in blobs |
-| **DB** | `signal_kind` + card text first-lines + `channel_messages` card-like rows |
-| **Telegram archaeology** | Every `type_id` / first_line from the Mar17→now scrape |
-| **Timing catalog** | ~19k structural fingerprints (`timing_presence_catalog.json`) |
-| **Registered families** | Canonical shelf/gate ids (now **66**) |
+| Metric | Value |
+|--------|------:|
+| Unique union keys | **78,978** |
+| Distilled floors | **8,423** |
+| Files scanned | **11,400** |
+| `strings.py` / `signal_handler.py` | **YES on Replit** |
+| DB kinds mined | GOLDEN 530k · SOLO 317k · PLATINUM 171k · FLASH 38k · SEQUENCE 37k · EMERGING 34k · ULTRA_TIE 10k |
 
-Union = master list. Distill = building floors. Never drop CREATED_ONLY.
+Merged into:
+- `bot/data/replit_literally_everything/MERGE_SUMMARY.json`
+- `replit_elite_stack_patch/MASTER_SKIN_FLOORS.md`
+- 48 TG type_id → family aliases (`canonical_family_id`)
 
-## Cloud status
+## One more paste (formatter **source text**)
 
-| Metric | Status |
-|--------|--------|
-| TG archaeology | ✅ mined |
-| Timing fingerprints (top) | ✅ mined |
-| Registered + classify gaps filled | ✅ GOD-TIER, ORACLE, ENTRE AGORA, G0→G1, TIE ALERT, … |
-| Master floors doc | `MASTER_SKIN_FLOORS.md` |
-| **Live Replit formatters / `.bak` / gates** | ❌ missing |
-| **Live `bacbo.db`** | ❌ missing |
-
-## Run on Replit (ONE paste — packs mine + bot sources + DB kinds)
+That zip had the inventory + path list, but not the file bodies. Script now packs `bot/data/literally_everything_bot_sources/`.
 
 ```bash
 cd /home/runner/workspace
-curl -fsSL -H 'Cache-Control: no-cache' -o LITERALLY_EVERYTHING.sh \
-  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_LITERALLY_EVERYTHING.sh'
-bash LITERALLY_EVERYTHING.sh
+curl -fsSL -H 'Cache-Control: no-cache' -o FIND_ALL_SKINS.sh \
+  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIND_ALL_SKINS.sh'
+bash FIND_ALL_SKINS.sh
 ```
 
-Paste the `FETCH_URL=` line back here. That zip is the missing leg.
+Paste the new `FETCH_URL=` (confirm zip contains `literally_everything_bot_sources/strings.py`).
 
-## Outputs
+## Building bands (from this mine)
 
-| File | Role |
-|------|------|
-| `bot/data/literally_everything_floors.json` | Distilled floors |
-| `replit_elite_stack_patch/MASTER_SKIN_FLOORS.md` | TG→classify coverage |
-| `literally_everything_*/bot_sources/` | Live strings/handlers/gates/bak |
-| `literally_everything_*/db_kinds.json` | DB signal_kind census |
-
-## Honesty
-
-Cloud alone **cannot** finish this — Replit holds the live `bot/` and `bacbo.db`. Older catbox luxury packs (404) are gone; only a fresh Replit upload recovers them.
+1. **PENTHOUSE** — SOLO_ELITE  
+2. **UPPER** — GOLDEN · SEQUENCE · PLATINUM  
+3. **COUNTDOWN** — Sinal Retido / JANELA / CD_FIRE_*  
+4. **SNIPER** — FLASH · ULTRA_TIE · EMERGING  
+5. **GALE** — RETENTATIVA / G0→G1  

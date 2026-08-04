@@ -92,6 +92,29 @@ class ChatShelvesTest(unittest.TestCase):
         self.assertIn(SHELF_OPS_EXPIRE, ids)
         self.assertIn(SHELF_PENTHOUSE_MONEY, ids)
 
+    def test_tg_type_aliases_to_canonical_shelf(self):
+        from bot.config.chat_shelves import SHELF_GALE, shelf_for_family
+        from bot.config.skin_families import canonical_family_id
+
+        self.assertEqual(
+            canonical_family_id("FIRE_SOLO_ELITE_SIGNAL"), "FIRE_SOLO_ELITE_ENTER"
+        )
+        self.assertEqual(
+            canonical_family_id("FIRE_GOLDEN_SIGNAL_ENTER_NOW"), "FIRE_GOLDEN_ENTER"
+        )
+        self.assertEqual(
+            canonical_family_id("FIRE_JANELA_11S_SOLO_ELITE"), "FIRE_JANELA_TIMED"
+        )
+        self.assertEqual(
+            shelf_for_family("FIRE_SOLO_ELITE_SIGNAL"), SHELF_PENTHOUSE_MONEY
+        )
+        self.assertEqual(
+            shelf_for_family("RESULT_GALE_G0_N_O_FOI_ENTRE_NO_G1_AGORA"), SHELF_GALE
+        )
+        self.assertEqual(
+            shelf_for_family("SIGNAL_KIND_SOLO_ELITE"), SHELF_PENTHOUSE_MONEY
+        )
+
     def test_archaeology_gap_skins_registered(self):
         from bot.config.chat_shelves import SHELF_GALE, SHELF_OVERFLOW
 

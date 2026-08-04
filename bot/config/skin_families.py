@@ -628,6 +628,58 @@ SKIN_FAMILIES: Tuple[SkinFamily, ...] = (
 
 _FAMILY_BY_ID: Dict[str, SkinFamily] = {f.family_id: f for f in SKIN_FAMILIES}
 
+# Telegram archaeology type_id → canonical SkinFamily id (same skin, different label)
+TG_TYPE_ALIASES: Dict[str, str] = {
+    "FIRE_SOLO_ELITE_SIGNAL": "FIRE_SOLO_ELITE_ENTER",
+    "FIRE_GOLDEN_SIGNAL_ENTER_NOW": "FIRE_GOLDEN_ENTER",
+    "FIRE_GOLDEN": "FIRE_GOLDEN_ENTER",
+    "FIRE_PLATINUM": "FIRE_PLATINUM_ENTER",
+    "FIRE_SEQUENCE": "FIRE_SEQUENCE_ENTER",
+    "FIRE_SIGNAL_CONFIRMED_ENTER_NOW": "FIRE_CONFIRMED_ENTER",
+    "FIRE_GOD_TIER_SYNC_APERTADO_3_SALAS_TOP_CONF_75": "FIRE_GOD_TIER",
+    "FIRE_GALE_1_RETENTATIVA_SOLO_ELITE": "FIRE_GALE_RETENTATIVA",
+    "FIRE_GALE_1_RETENTATIVA_GOLDEN": "FIRE_GALE_RETENTATIVA",
+    "FIRE_SINAL_RETIDO": "FIRE_SINAL_RETIDO_LIBERADO",
+    "FIRE_SEQUENCIA_STREAK": "OPS_STREAK_BANNER",
+    "FIRE_SEQU_NCIA_ENTER_NOW": "FIRE_SEQUENCIA_ENTER_NOW",
+    "CD_FIRE_DO_NOT_BET_PASSED": "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+    "CD_FIRE_TIMER": "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+    "RESULT_WIN_SOLO_ELITE": "RESULT_WIN_TIER",
+    "RESULT_WIN_GOLDEN": "RESULT_WIN_TIER",
+    "RESULT_WIN_SEQUENCE": "RESULT_WIN_TIER",
+    "RESULT_WIN_PLATINUM": "RESULT_WIN_TIER",
+    "RESULT_WIN_FLASH": "RESULT_WIN_TIER",
+    "RESULT_LOSS_SOLO_ELITE": "RESULT_LOSS_TIER",
+    "RESULT_LOSS_GOLDEN": "RESULT_LOSS_TIER",
+    "RESULT_LOSS_SEQUENCE": "RESULT_LOSS_TIER",
+    "RESULT_LOSS_PLATINUM": "RESULT_LOSS_TIER",
+    "RESULT_LOSS_G0_FALHOU": "RESULT_LOSS_TIER",
+    "RESULT_LOSS_G1_FALHOU": "RESULT_LOSS_TIER",
+    "RESULT_EMPATE_SOLO_ELITE": "RESULT_EMPATE",
+    "RESULT_EMPATE_GOLDEN": "RESULT_EMPATE",
+    "RESULT_EMPATE_SEQUENCE": "RESULT_EMPATE",
+    "RESULT_EMPATE_PLATINUM": "RESULT_EMPATE",
+    "RESULT_GALE_G0_N_O_FOI_ENTRE_NO_G1_AGORA": "FIRE_G0_MISS_ENTRE_G1",
+    "RESULT_GALE_G1_N_O_FOI_G2_OPCIONAL_RISCO_ALTO": "OPS_G2_MISS",
+    "RESULT_GALE_G2_N_O_FOI_PERDA_TOTAL_PARE_AGORA": "OPS_G2_MISS",
+    "RESULT_GALE_G1_EXPIROU_VERIFIQUE_SUA_MESA": "OPS_G1_EXPIROU",
+    "RESULT_GALE_G2_EXPIROU_VERIFIQUE_SUA_MESA": "OPS_G2_MISS",
+    "RESULT_GALE_DO_NOT_BET_ROUND_PASSED": "FIRE_JANELA_TIMED",
+    "RESULT_BANNER_TIE_ALERTA_DE_EMPATE_TIE_ALERT": "OPS_TIE_ALERT",
+    "RESULT_BANNER_TIE_SEQU_NCIA_DE_EMPATES": "OPS_SEQ_EMPATES",
+    "RESULT_BANNER_TIE_EMPATE_CR_TICO": "OPS_TIE_ALERT",
+    "RESULT_BANNER_TIE_JANELA_DE_EMPATE_ATIVA": "OPS_TIE_ALERT",
+    "RESULT_BANNER_TIE_PRESS_O_DE_EMPATE_ALERTA_AUTOM": "OPS_TIE_ALERT",
+    "RESULT_BANNER_TIE_AVISO_DE_EMPATE": "OPS_TIE_ALERT",
+    "RESULT_BANNER_TIE_ULTRA_TIE_EMPATE_CONFIRMADO": "FIRE_ULTRA_TIE",
+    "RES_WIN_KIND": "RESULT_WIN_TIER",
+    "RES_LOSS_KIND": "RESULT_LOSS_TIER",
+    "RES_GREEN_G0": "RESULT_GREEN_LEGACY_G0",
+    "RES_AUTO_WIN": "RESULT_WIN_TIER",
+    "RES_AUTO_LOSS": "RESULT_LOSS_TIER",
+    "RES_AUTO_TIE": "RESULT_AUTO_TIE",
+}
+
 
 def all_skin_families() -> Tuple[SkinFamily, ...]:
     return SKIN_FAMILIES
@@ -635,6 +687,30 @@ def all_skin_families() -> Tuple[SkinFamily, ...]:
 
 def get_skin_family(family_id: str) -> Optional[SkinFamily]:
     return _FAMILY_BY_ID.get((family_id or "").strip())
+
+
+def canonical_family_id(raw_id: str) -> str:
+    """Map archaeology / DB type labels onto registered SkinFamily ids."""
+    rid = (raw_id or "").strip()
+    if not rid:
+        return rid
+    if rid in _FAMILY_BY_ID:
+        return rid
+    if rid in TG_TYPE_ALIASES:
+        return TG_TYPE_ALIASES[rid]
+    # Variable-N JANELA type_ids → one family
+    if re.match(r"^FIRE_JANELA_\d+S_", rid, re.I):
+        return "FIRE_JANELA_TIMED"
+    if rid.startswith("FIRE_GOD_TIER"):
+        return "FIRE_GOD_TIER"
+    # Kind-scoped short results already covered; strip trailing signal ids
+    m = re.match(r"^(RESULT_WIN|RESULT_LOSS|RESULT_EMPATE)_([A-Z0-9]+?)(?:_\d+)?$", rid)
+    if m:
+        base = {"RESULT_WIN": "RESULT_WIN_TIER", "RESULT_LOSS": "RESULT_LOSS_TIER", "RESULT_EMPATE": "RESULT_EMPATE"}[
+            m.group(1)
+        ]
+        return base
+    return rid
 
 
 def gate_keys_for(family_id: str, kind: Optional[str] = None) -> Tuple[str, ...]:

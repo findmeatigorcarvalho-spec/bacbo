@@ -71,9 +71,27 @@ LIST="bot/data/template_source_files.txt"
   ls -la bot/strings.py bot/signal_handler.py bot/telegram_outbox.py 2>/dev/null || true
 } > "$LIST" || true
 
+# Pack live card formatters (critical — inventory alone is not enough)
+SRC_DIR="bot/data/literally_everything_bot_sources"
+mkdir -p "$SRC_DIR"
+for f in \
+  bot/strings.py \
+  bot/signal_handler.py \
+  bot/telegram_outbox.py \
+  bot/dual_lane_router.py \
+  bot/fire_origin.py \
+  bot/fallback_signal_sender.py \
+  bot/fallback_result_sender.py \
+  bot/countdown_alert.py
+do
+  [[ -f "$f" ]] && cp -a "$f" "$SRC_DIR/" && cp -a "$f".bak* "$SRC_DIR/" 2>/dev/null || true
+done
+ls bot/_gates_*.py 2>/dev/null | wc -l > "$SRC_DIR/GATES_COUNT.txt" || true
+ls bot/_gates_*.py 2>/dev/null > "$SRC_DIR/GATES_LIST.txt" || true
+
 ZIP="literally_everything_skins_${STAMP}.zip"
-# Prefer floors + list in zip; full JSON can be huge — include if < 40MB
-zip -q "$ZIP" "$OUT_FLOORS" "$OUT_FLOORS_CSV" "$OUT_FLOORS_MD" "$OUT_MD" "$LIST" 2>/dev/null || true
+# Prefer floors + list + sources in zip; full JSON can be huge — include if < 40MB
+zip -q "$ZIP" "$OUT_FLOORS" "$OUT_FLOORS_CSV" "$OUT_FLOORS_MD" "$OUT_MD" "$LIST" "$SRC_DIR" 2>/dev/null || true
 if [[ -f "$OUT_JSON" ]]; then
   SZ=$(wc -c < "$OUT_JSON" || echo 0)
   if [[ "$SZ" -lt 40000000 ]]; then
@@ -82,7 +100,7 @@ if [[ -f "$OUT_JSON" ]]; then
     echo "[FIND_ALL] full JSON ${SZ} bytes — floors-only zip (full left on disk)"
   fi
 fi
-[[ -f "$ZIP" ]] || tar -czf "${ZIP%.zip}.tgz" "$OUT_FLOORS" "$OUT_FLOORS_CSV" "$OUT_FLOORS_MD" "$OUT_MD" "$LIST"
+[[ -f "$ZIP" ]] || tar -czf "${ZIP%.zip}.tgz" "$OUT_FLOORS" "$OUT_FLOORS_CSV" "$OUT_FLOORS_MD" "$OUT_MD" "$LIST" "$SRC_DIR"
 UPLOAD="$ZIP"
 [[ -f "$ZIP" ]] || UPLOAD="${ZIP%.zip}.tgz"
 
