@@ -55,6 +55,19 @@ def _wrap_send(fn: Callable) -> Callable:
         if isinstance(main, types.ModuleType):
             _ensure_config(main.__dict__)
 
+        msg = _extract_msg(args, kwargs)
+
+        # Skin family gate — retire/disable Telegram skins via EngineGateRegistry
+        try:
+            from skin_gate import evaluate_send_gate, log_block
+
+            decision = evaluate_send_gate(msg)
+            if decision.blocked:
+                log_block(decision, where="engine_send")
+                return None
+        except Exception as exc:
+            print("[SKIN-GATE] skip:", repr(exc))
+
         # Hub: route original engine skins to Gunique #1 vs money #2
         prev_target = None
         cfg = None
@@ -67,7 +80,6 @@ def _wrap_send(fn: Callable) -> Callable:
             )
 
             if hub_route_enabled():
-                msg = _extract_msg(args, kwargs)
                 dest, route_reason = pick_target_for_text(msg)
                 if dest is not None:
                     if isinstance(g, dict) and g.get("config") is not None:

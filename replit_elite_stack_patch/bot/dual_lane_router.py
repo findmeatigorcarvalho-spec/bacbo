@@ -372,6 +372,17 @@ def classify_card(
     )
     info["signal_id"] = signal_id
     info["parent_lane"] = parent
+    try:
+        from skin_gate import evaluate_send_gate
+
+        gate = evaluate_send_gate(text, signal_kind=signal_kind, meta=meta)
+        info["skin_family"] = gate.family_id
+        info["skin_kind"] = gate.kind
+        info["skin_gate_keys"] = list(gate.gate_keys)
+        info["skin_blocked"] = bool(gate.blocked)
+        info["skin_gate_reason"] = gate.reason
+    except Exception:
+        info["skin_blocked"] = False
     return info
 
 

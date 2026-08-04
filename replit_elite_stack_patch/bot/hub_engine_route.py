@@ -147,12 +147,23 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
     """
     Returns (target_or_None, reason).
     None target = leave engine TARGET unchanged.
+    When a skin family is registry-blocked, reason starts with ``skin_blocked:``
+    (send wrappers should drop the message — see lux_send_config_bind).
     """
     if not hub_route_enabled():
         return None, "route_off"
     body = str(text or "")
     if not body.strip():
         return None, "empty"
+
+    try:
+        from skin_gate import evaluate_send_gate
+
+        gate = evaluate_send_gate(body)
+        if gate.blocked:
+            return None, f"skin_blocked:{gate.family_id}:{','.join(gate.matched_keys)}"
+    except Exception:
+        pass
 
     money = _as_target(money_peer())
     gunique = _as_target(gunique_peer())

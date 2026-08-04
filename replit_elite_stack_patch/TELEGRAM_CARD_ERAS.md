@@ -165,6 +165,10 @@ Registry check: `EngineGateRegistry.is_telegram_skin_blocked(text)`
 
 Disable/retire either the family (`FIRE_GALE_RETENTATIVA`) or a kind-scoped key (`RESULT_EMPATE:SOLO_ELITE`).
 
+**Send path (live):** `evaluate_send_gate(text)` via `bot/config/skin_gate.py` + Replit `bot/skin_gate.py`  
+Wired in `lux_send_config_bind` (engine `send()`), `telegram_outbox` (fire/result cards), and `dual_lane_router.classify_card`.  
+Env: `TELEGRAM_SKIN_GATE=1` (default on). Fail-open if registry missing.
+
 ---
 
 ## Noise classes (high volume — not primary skins)

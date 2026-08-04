@@ -978,6 +978,24 @@ async def main() -> None:
                             pass
                     dests = [dest] + list(mirrors)
                     lane_by_id[int(row["id"])] = (dest, lane, mirrors)
+                    try:
+                        from skin_gate import evaluate_send_gate, log_block
+
+                        gate = evaluate_send_gate(
+                            body, signal_kind=row["signal_kind"]
+                        )
+                        if gate.blocked:
+                            log_block(gate, where=f"outbox_fire id={row['id']}")
+                            write_int(SIG_STATE, row["id"])
+                            print(
+                                "[Outbox] SKIN-GATE skip fire",
+                                row["id"],
+                                gate.family_id,
+                                gate.matched_keys,
+                            )
+                            continue
+                    except Exception as exc:
+                        print("[Outbox] skin_gate skip:", repr(exc))
                     await _send_all(dests, body)
                     write_int(SIG_STATE, row["id"])
                     print(
@@ -1041,6 +1059,24 @@ async def main() -> None:
                             peer_slot=slot,
                         )
                     dests = [dest] + list(mirrors)
+                    try:
+                        from skin_gate import evaluate_send_gate, log_block
+
+                        gate = evaluate_send_gate(
+                            res_body, signal_kind=row["signal_kind"]
+                        )
+                        if gate.blocked:
+                            log_block(gate, where=f"outbox_result id={row['id']}")
+                            write_int(RES_STATE, row["id"])
+                            print(
+                                "[Outbox] SKIN-GATE skip result",
+                                row["id"],
+                                gate.family_id,
+                                gate.matched_keys,
+                            )
+                            continue
+                    except Exception as exc:
+                        print("[Outbox] skin_gate result skip:", repr(exc))
                     await _send_all(dests, res_body)
                     write_int(RES_STATE, row["id"])
                     print(
