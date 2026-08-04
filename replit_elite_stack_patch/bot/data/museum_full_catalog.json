@@ -1,0 +1,1602 @@
+{
+  "title": "UNIQUE_museum — full product skin catalog",
+  "chat_title": "UNIQUE_museum",
+  "chat_username": "UNIQUE_museum",
+  "note": "FIRE cards with glued follow-up RESULT/OPS under them; remaining RESULT/OPS as standalone. Paced send — not live bets.",
+  "items": [
+    {
+      "family_id": "FIRE_CONFIRMED_ENTER",
+      "role": "FIRE",
+      "label": "FIRE confirmed ENTER NOW",
+      "lane": "MONEY",
+      "era": "1",
+      "example_first_line": "🏆 SIGNAL CONFIRMED — ENTER NOW 🏆",
+      "body": "🏆 SIGNAL CONFIRMED — ENTER NOW 🏆",
+      "tg_count": 13,
+      "tg_type_id": "FIRE_SIGNAL_CONFIRMED_ENTER_NOW",
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_SOLO_ELITE_ENTER",
+      "role": "FIRE",
+      "label": "FIRE SOLO ELITE",
+      "lane": "MONEY",
+      "era": "1",
+      "example_first_line": "💎 SOLO ELITE SIGNAL 💎",
+      "body": "💎 SOLO ELITE SIGNAL 💎",
+      "tg_count": 11228,
+      "tg_type_id": "FIRE_SOLO_ELITE_SIGNAL",
+      "follow_ups": [
+        {
+          "family_id": "RESULT_COLOR_BANNER",
+          "role": "RESULT",
+          "label": "RESULT color-bar header (forensic / bell lead-in)",
+          "body": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+          "tg_count": 20569
+        },
+        {
+          "family_id": "RESULT_FORENSIC_INTERVALO",
+          "role": "RESULT",
+          "label": "RESULT resumido forense (G0/G1/G2)",
+          "body": "🔔 ✅ GANHOU  ·  #4168",
+          "tg_count": 883
+        },
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_GOLDEN_ENTER",
+      "role": "FIRE",
+      "label": "FIRE GOLDEN ENTER NOW",
+      "lane": "MONEY",
+      "era": "1",
+      "example_first_line": "🏆 GOLDEN SIGNAL — ENTER NOW 🏆",
+      "body": "🏆 GOLDEN SIGNAL — ENTER NOW 🏆",
+      "tg_count": 2964,
+      "tg_type_id": "FIRE_GOLDEN_SIGNAL_ENTER_NOW",
+      "follow_ups": [
+        {
+          "family_id": "RESULT_COLOR_BANNER",
+          "role": "RESULT",
+          "label": "RESULT color-bar header (forensic / bell lead-in)",
+          "body": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+          "tg_count": 20569
+        },
+        {
+          "family_id": "RESULT_FORENSIC_INTERVALO",
+          "role": "RESULT",
+          "label": "RESULT resumido forense (G0/G1/G2)",
+          "body": "🔔 ✅ GANHOU  ·  #4168",
+          "tg_count": 883
+        },
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_SEQUENCE_ENTER",
+      "role": "FIRE",
+      "label": "FIRE SEQUENCE ENTER NOW",
+      "lane": "MONEY",
+      "era": "1",
+      "example_first_line": "📊 SEQUENCE SIGNAL — ENTER NOW 📊",
+      "body": "📊 SEQUENCE SIGNAL — ENTER NOW 📊",
+      "tg_count": 109,
+      "tg_type_id": "FIRE_SEQUENCE",
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        },
+        {
+          "family_id": "RESULT_LOSS_TIER",
+          "role": "RESULT",
+          "label": "RESULT LOSS — kind",
+          "body": "❌ LOSS — G0 FALHOU",
+          "tg_count": 1920
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_PLATINUM_ENTER",
+      "role": "FIRE",
+      "label": "FIRE PLATINUM",
+      "lane": "MONEY",
+      "era": "1",
+      "example_first_line": "💠 PLATINUM SIGNAL — PAR DE OURO",
+      "body": "💠💠💠 PLATINUM SIGNAL — PAR DE OURO 💠💠💠",
+      "tg_count": 1377,
+      "tg_type_id": "FIRE_PLATINUM",
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        }
+      ]
+    },
+    {
+      "family_id": "RESULT_AUTO_TIE",
+      "role": "RESULT",
+      "label": "RESULT AUTO TIE banner",
+      "lane": null,
+      "era": "1b",
+      "example_first_line": "⚪ AUTO TIE @…",
+      "body": "⚪ AUTO TIE @…\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_AUTO_TIE`\nRole: RESULT · Era: 1b · Lane: -\nLabel: RESULT AUTO TIE banner\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_WIN_TIER",
+      "role": "RESULT",
+      "label": "RESULT WIN — kind",
+      "lane": null,
+      "era": "1b",
+      "example_first_line": "✅ WIN — SOLO_ELITE",
+      "body": "✅ WIN — SOLO_ELITE",
+      "tg_count": 6054,
+      "tg_type_id": "RESULT_WIN_SOLO_ELITE",
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_LOSS_TIER",
+      "role": "RESULT",
+      "label": "RESULT LOSS — kind",
+      "lane": null,
+      "era": "1b",
+      "example_first_line": "❌ LOSS — GOLDEN",
+      "body": "❌ LOSS — G0 FALHOU",
+      "tg_count": 1920,
+      "tg_type_id": "RESULT_LOSS_G0_FALHOU",
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_GALE_ENTRE_NOVAMENTE",
+      "role": "FIRE",
+      "label": "FIRE gale Entre novamente",
+      "lane": "MONEY",
+      "era": "1b",
+      "example_first_line": "🔁 GALE 1 — Entre novamente",
+      "body": "🔁 GALE 1 — Entre novamente",
+      "tg_count": 401,
+      "tg_type_id": "UNKNOWN_GALE_1_ENTRE_NOVAMENTE",
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        }
+      ]
+    },
+    {
+      "family_id": "RESULT_EMPATE",
+      "role": "RESULT",
+      "label": "RESULT EMPATE — kind",
+      "lane": null,
+      "era": "1b",
+      "example_first_line": "🟡 EMPATE — SOLO_ELITE",
+      "body": "🟡 EMPATE — SOLO_ELITE",
+      "tg_count": 328,
+      "tg_type_id": "RESULT_EMPATE_SOLO_ELITE",
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_GALE_RETENTATIVA",
+      "role": "FIRE",
+      "label": "FIRE gale RETENTATIVA",
+      "lane": "MONEY",
+      "era": "1b",
+      "example_first_line": "♻️ GALE 1 — RETENTATIVA",
+      "body": "♻️ GALE 1 — RETENTATIVA (1 room at G1)",
+      "tg_count": 798,
+      "tg_type_id": "FIRE_GALE_1_RETENTATIVA_SOLO_ELITE",
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        },
+        {
+          "family_id": "OPS_G2_MISS",
+          "role": "OPS",
+          "label": "OPS G2 MISS — perda total",
+          "body": "🟠 G1 NÃO FOI — G2 OPCIONAL (RISCO ALTO)",
+          "tg_count": 368
+        }
+      ]
+    },
+    {
+      "family_id": "RESULT_GREEN_LEGACY_G0",
+      "role": "RESULT",
+      "label": "RESULT GREEN legacy G0",
+      "lane": null,
+      "era": "1b",
+      "example_first_line": "✅✅✅ GREEN — VITÓRIA NO G0!",
+      "body": "✅✅✅ GREEN — VITÓRIA NO G0!\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_GREEN_LEGACY_G0`\nRole: RESULT · Era: 1b · Lane: -\nLabel: RESULT GREEN legacy G0\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_GREEN_LEGACY_G1",
+      "role": "RESULT",
+      "label": "RESULT GREEN legacy G1",
+      "lane": null,
+      "era": "1b",
+      "example_first_line": "♻️♻️♻️ GREEN — RECUPERADO NO G1!",
+      "body": "♻️♻️♻️ GREEN — RECUPERADO NO G1!\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_GREEN_LEGACY_G1`\nRole: RESULT · Era: 1b · Lane: -\nLabel: RESULT GREEN legacy G1\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_LOSS_COOLDOWN",
+      "role": "OPS",
+      "label": "OPS loss cooldown",
+      "lane": null,
+      "era": "2",
+      "example_first_line": "⚠️ LOSS COOLDOWN ACTIVATED",
+      "body": "⚠️ LOSS COOLDOWN ACTIVATED",
+      "tg_count": 4313,
+      "tg_type_id": "UNKNOWN_LOSS_COOLDOWN_ACTIVATED",
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_PREALERT_FORMING",
+      "role": "OPS",
+      "label": "PREALERT forming",
+      "lane": null,
+      "era": "2",
+      "example_first_line": "⚡ SINAL SE FORMANDO ⚡",
+      "body": "⚡ SINAL SE FORMANDO ⚡\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_PREALERT_FORMING`\nRole: OPS · Era: 2 · Lane: -\nLabel: PREALERT forming\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_DUPLO_ELITE",
+      "role": "OPS",
+      "label": "OPS duplo elite",
+      "lane": null,
+      "era": "2",
+      "example_first_line": "🔮 DUPLO ELITE ANALISANDO",
+      "body": "🔮 DUPLO ELITE ANALISANDO\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_DUPLO_ELITE`\nRole: OPS · Era: 2 · Lane: -\nLabel: OPS duplo elite\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_JANELA_TIMED",
+      "role": "FIRE",
+      "label": "TIMED JANELA (any N)",
+      "lane": "COUNTDOWN",
+      "era": "2",
+      "example_first_line": "⛔ JANELA FECHADA — NÃO ENTRE… / JANELA: Ns",
+      "body": "⛔ JANELA FECHADA — NÃO ENTRE NESTE ROUND",
+      "tg_count": 516,
+      "tg_type_id": "UNKNOWN_JANELA_FECHADA_N_O_ENTRE_NESTE_ROUND",
+      "follow_ups": [
+        {
+          "family_id": "RESULT_TIMED_WINDOW",
+          "role": "RESULT",
+          "label": "RESULT timed ~Ns window",
+          "body": "🕐 HH:MM:SS EDT · … · ~Ns window\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_TIMED_WINDOW`\nRole: RESULT · Era: 3 · Lane: -\nLabel: RESULT timed ~Ns window\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+          "tg_count": 0
+        },
+        {
+          "family_id": "CD_RES_GREEN_G_BRT",
+          "role": "RESULT",
+          "label": "CD result GREEN G BRT",
+          "body": "🕐 16:37:04 EDT  ·  ~12s window\n🕐 16:37:04 EDT · ~12s window",
+          "tg_count": 539
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_ULTRA_TIE",
+      "role": "FIRE",
+      "label": "FIRE ULTRA TIE",
+      "lane": "MONEY",
+      "era": "2",
+      "example_first_line": "🟡 ULTRA TIE — EMPATE CONFIRMADO",
+      "body": "🟡🟡🟡 ULTRA TIE — EMPATE CONFIRMADO 🟡🟡🟡",
+      "tg_count": 6,
+      "tg_type_id": "RESULT_BANNER_TIE_ULTRA_TIE_EMPATE_CONFIRMADO",
+      "follow_ups": [
+        {
+          "family_id": "RESULT_EMPATE",
+          "role": "RESULT",
+          "label": "RESULT EMPATE — kind",
+          "body": "🟡 EMPATE — SOLO_ELITE",
+          "tg_count": 328
+        },
+        {
+          "family_id": "RESULT_AUTO_TIE",
+          "role": "RESULT",
+          "label": "RESULT AUTO TIE banner",
+          "body": "⚪ AUTO TIE @…\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_AUTO_TIE`\nRole: RESULT · Era: 1b · Lane: -\nLabel: RESULT AUTO TIE banner\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+          "tg_count": 0
+        }
+      ]
+    },
+    {
+      "family_id": "OPS_TRIPLE_LOCK",
+      "role": "OPS",
+      "label": "OPS triple lock",
+      "lane": null,
+      "era": "2",
+      "example_first_line": "🔐🔐🔐 TRIPLE LOCK CHEGANDO",
+      "body": "🔐🔐🔐 TRIPLE LOCK CHEGANDO\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_TRIPLE_LOCK`\nRole: OPS · Era: 2 · Lane: -\nLabel: OPS triple lock\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_SEQ_QUENTE",
+      "role": "OPS",
+      "label": "OPS sequência quente",
+      "lane": null,
+      "era": "3",
+      "example_first_line": "🔥🔥🔥 SEQUÊNCIA QUENTE",
+      "body": "🔥🔥🔥 SEQUÊNCIA QUENTE\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_SEQ_QUENTE`\nRole: OPS · Era: 3 · Lane: -\nLabel: OPS sequência quente\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_SEQ_FRIA",
+      "role": "OPS",
+      "label": "OPS sequência fria",
+      "lane": null,
+      "era": "3",
+      "example_first_line": "🧊🧊🧊 SEQUÊNCIA FRIA — PAUSAR",
+      "body": "🧊🧊🧊 SEQUÊNCIA FRIA — PAUSAR\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_SEQ_FRIA`\nRole: OPS · Era: 3 · Lane: -\nLabel: OPS sequência fria\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_SEQ_EMPATES",
+      "role": "OPS",
+      "label": "OPS sequência empates",
+      "lane": null,
+      "era": "3",
+      "example_first_line": "🟡🟡🟡 SEQUÊNCIA DE EMPATES",
+      "body": "🟡🟡 SEQUÊNCIA DE EMPATES 🟡🟡",
+      "tg_count": 3945,
+      "tg_type_id": "RESULT_BANNER_TIE_SEQU_NCIA_DE_EMPATES",
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_TIMED_WINDOW",
+      "role": "RESULT",
+      "label": "RESULT timed ~Ns window",
+      "lane": null,
+      "era": "3",
+      "example_first_line": "🕐 HH:MM:SS EDT · … · ~Ns window",
+      "body": "🕐 HH:MM:SS EDT · … · ~Ns window\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_TIMED_WINDOW`\nRole: RESULT · Era: 3 · Lane: -\nLabel: RESULT timed ~Ns window\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_PREALERT_3BOLT",
+      "role": "OPS",
+      "label": "PREALERT 3-bolt",
+      "lane": null,
+      "era": "3",
+      "example_first_line": "⚡⚡⚡ SINAL FORMANDO",
+      "body": "⚡⚡⚡ SINAL FORMANDO\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_PREALERT_3BOLT`\nRole: OPS · Era: 3 · Lane: -\nLabel: PREALERT 3-bolt\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_EMPATE_DIRETO_G0",
+      "role": "FIRE",
+      "label": "FIRE EMPATE DIRETO G0",
+      "lane": "MONEY",
+      "era": "3",
+      "example_first_line": "🎯🟡 EMPATE DIRETO — G0",
+      "body": "🎯🟡 EMPATE DIRETO — G0\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_EMPATE_DIRETO_G0`\nRole: FIRE · Era: 3 · Lane: MONEY\nLabel: FIRE EMPATE DIRETO G0\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": [
+        {
+          "family_id": "RESULT_EMPATE",
+          "role": "RESULT",
+          "label": "RESULT EMPATE — kind",
+          "body": "🟡 EMPATE — SOLO_ELITE",
+          "tg_count": 328
+        }
+      ]
+    },
+    {
+      "family_id": "OPS_AUDIT_360",
+      "role": "OPS",
+      "label": "OPS AUDIT 360",
+      "lane": null,
+      "era": "3",
+      "example_first_line": "📊 AUDIT 360° (DB only)",
+      "body": "📊 AUDIT 360° (DB only)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_AUDIT_360`\nRole: OPS · Era: 3 · Lane: -\nLabel: OPS AUDIT 360\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_G0_DIRETO",
+      "role": "FIRE",
+      "label": "FIRE G0 DIRETO",
+      "lane": "MONEY",
+      "era": "3",
+      "example_first_line": "⚡ G0 DIRETO — Entre com confiança",
+      "body": "⚡ G0 DIRETO — Entre com confiança\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_G0_DIRETO`\nRole: FIRE · Era: 3 · Lane: MONEY\nLabel: FIRE G0 DIRETO\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        },
+        {
+          "family_id": "RESULT_G0_ACERTOU_PRIMEIRA",
+          "role": "RESULT",
+          "label": "RESULT G0 acertou de primeira",
+          "body": "🏆 G0 — Acertou de primeira!\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_G0_ACERTOU_PRIMEIRA`\nRole: RESULT · Era: code · Lane: -\nLabel: RESULT G0 acertou de primeira\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+          "tg_count": 0
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_PREPARE_G1",
+      "role": "FIRE",
+      "label": "FIRE PREPARE G1",
+      "lane": "MONEY",
+      "era": "3",
+      "example_first_line": "♟ PREPARE O G1 — Provável…",
+      "body": "♟ PREPARE O G1 — Provável…\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_PREPARE_G1`\nRole: FIRE · Era: 3 · Lane: MONEY\nLabel: FIRE PREPARE G1\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": [
+        {
+          "family_id": "FIRE_GALE_RETENTATIVA",
+          "role": "FIRE",
+          "label": "FIRE gale RETENTATIVA",
+          "body": "♻️ GALE 1 — RETENTATIVA (1 room at G1)",
+          "tg_count": 798
+        },
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        }
+      ]
+    },
+    {
+      "family_id": "OPS_STREAK_BANNER",
+      "role": "OPS",
+      "label": "STREAK banner",
+      "lane": null,
+      "era": "3",
+      "example_first_line": "🎰 SEQUÊNCIA Nx 🔴 VERMELHO",
+      "body": "🎰 SEQUÊNCIA Nx 🔴 VERMELHO\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_STREAK_BANNER`\nRole: OPS · Era: 3 · Lane: -\nLabel: STREAK banner\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_CAMADAS_DO_DIA",
+      "role": "OPS",
+      "label": "CAMADAS DO DIA",
+      "lane": null,
+      "era": "3",
+      "example_first_line": "🏆 CAMADAS DO DIA — DD/MM/YYYY",
+      "body": "🏆 CAMADAS DO DIA — DD/MM/YYYY\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_CAMADAS_DO_DIA`\nRole: OPS · Era: 3 · Lane: -\nLabel: CAMADAS DO DIA\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_FLASH_WIN",
+      "role": "RESULT",
+      "label": "RESULT FLASH WIN",
+      "lane": null,
+      "era": "4",
+      "example_first_line": "✅ WIN — FLASH",
+      "body": "✅ WIN — FLASH\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_FLASH_WIN`\nRole: RESULT · Era: 4 · Lane: -\nLabel: RESULT FLASH WIN\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_GREEN_COMPACT_G0",
+      "role": "RESULT",
+      "label": "RESULT GREEN compact G0",
+      "lane": null,
+      "era": "4",
+      "example_first_line": "✅ GREEN · G0 · HH:MM BRT",
+      "body": "✅ GREEN · G0 · HH:MM BRT\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_GREEN_COMPACT_G0`\nRole: RESULT · Era: 4 · Lane: -\nLabel: RESULT GREEN compact G0\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_GREEN_COMPACT_G1",
+      "role": "RESULT",
+      "label": "RESULT GREEN compact G1",
+      "lane": null,
+      "era": "4",
+      "example_first_line": "♻️ GREEN · G1 · HH:MM BRT",
+      "body": "♻️ GREEN · G1 · HH:MM BRT\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_GREEN_COMPACT_G1`\nRole: RESULT · Era: 4 · Lane: -\nLabel: RESULT GREEN compact G1\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_COMPACT_HASH",
+      "role": "FIRE",
+      "label": "COMPACT SIGNAL #",
+      "lane": "MONEY",
+      "era": "5",
+      "example_first_line": "🔵 SIGNAL #51250 -- SOLO_ELITE red | rooms: @…",
+      "body": "🔵 SIGNAL #51250 -- SOLO_ELITE red | rooms: @…\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_COMPACT_HASH`\nRole: FIRE · Era: 5 · Lane: MONEY\nLabel: COMPACT SIGNAL #\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": [
+        {
+          "family_id": "RESULT_COMPACT_WIN_HASH",
+          "role": "RESULT",
+          "label": "COMPACT WIN #",
+          "body": "✅ WIN #51252 G0\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_COMPACT_WIN_HASH`\nRole: RESULT · Era: 5 · Lane: -\nLabel: COMPACT WIN #\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+          "tg_count": 0
+        },
+        {
+          "family_id": "RESULT_COMPACT_LOSS_HASH",
+          "role": "RESULT",
+          "label": "COMPACT LOSS #",
+          "body": "❌ LOSS #51250 G0\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_COMPACT_LOSS_HASH`\nRole: RESULT · Era: 5 · Lane: -\nLabel: COMPACT LOSS #\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+          "tg_count": 0
+        }
+      ]
+    },
+    {
+      "family_id": "RESULT_COMPACT_LOSS_HASH",
+      "role": "RESULT",
+      "label": "COMPACT LOSS #",
+      "lane": null,
+      "era": "5",
+      "example_first_line": "❌ LOSS #51250 G0",
+      "body": "❌ LOSS #51250 G0\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_COMPACT_LOSS_HASH`\nRole: RESULT · Era: 5 · Lane: -\nLabel: COMPACT LOSS #\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_COMPACT_WIN_HASH",
+      "role": "RESULT",
+      "label": "COMPACT WIN #",
+      "lane": null,
+      "era": "5",
+      "example_first_line": "✅ WIN #51252 G0",
+      "body": "✅ WIN #51252 G0\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_COMPACT_WIN_HASH`\nRole: RESULT · Era: 5 · Lane: -\nLabel: COMPACT WIN #\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_COMPACT_TIE_HASH",
+      "role": "RESULT",
+      "label": "COMPACT TIE #",
+      "lane": null,
+      "era": "5",
+      "example_first_line": "➖ TIE #51257 G0",
+      "body": "➖ TIE #51257 G0\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_COMPACT_TIE_HASH`\nRole: RESULT · Era: 5 · Lane: -\nLabel: COMPACT TIE #\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_SOLO_APOSTAR",
+      "role": "FIRE",
+      "label": "FIRE SOLO APOSTAR AGORA",
+      "lane": "MONEY",
+      "era": "6",
+      "example_first_line": "⚡ SOLO ELITE — APOSTAR AGORA",
+      "body": "⚡ SOLO ELITE — APOSTAR AGORA\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_SOLO_APOSTAR`\nRole: FIRE · Era: 6 · Lane: MONEY\nLabel: FIRE SOLO APOSTAR AGORA\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_SEQUENCE_APOSTAR",
+      "role": "FIRE",
+      "label": "FIRE SEQUENCE APOSTAR AGORA",
+      "lane": "MONEY",
+      "era": "6",
+      "example_first_line": "⚡ SEQUENCE — APOSTAR AGORA",
+      "body": "⚡ SEQUENCE — APOSTAR AGORA\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_SEQUENCE_APOSTAR`\nRole: FIRE · Era: 6 · Lane: MONEY\nLabel: FIRE SEQUENCE APOSTAR AGORA\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_GOLDEN_APOSTAR",
+      "role": "FIRE",
+      "label": "FIRE GOLDEN APOSTAR AGORA",
+      "lane": "MONEY",
+      "era": "6",
+      "example_first_line": "⚡ GOLDEN — APOSTAR AGORA",
+      "body": "⚡ GOLDEN — APOSTAR AGORA\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_GOLDEN_APOSTAR`\nRole: FIRE · Era: 6 · Lane: MONEY\nLabel: FIRE GOLDEN APOSTAR AGORA\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_PLATINUM_APOSTAR",
+      "role": "FIRE",
+      "label": "FIRE PLATINUM APOSTAR AGORA",
+      "lane": "MONEY",
+      "era": "6",
+      "example_first_line": "⚡ PLATINUM — APOSTAR AGORA",
+      "body": "⚡ PLATINUM — APOSTAR AGORA\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_PLATINUM_APOSTAR`\nRole: FIRE · Era: 6 · Lane: MONEY\nLabel: FIRE PLATINUM APOSTAR AGORA\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_FLASH_APOSTAR",
+      "role": "FIRE",
+      "label": "FIRE FLASH APOSTAR AGORA",
+      "lane": "MONEY",
+      "era": "6",
+      "example_first_line": "⚡ FLASH — APOSTAR AGORA",
+      "body": "⚡ FLASH — APOSTAR AGORA\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_FLASH_APOSTAR`\nRole: FIRE · Era: 6 · Lane: MONEY\nLabel: FIRE FLASH APOSTAR AGORA\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        },
+        {
+          "family_id": "RESULT_FLASH_WIN",
+          "role": "RESULT",
+          "label": "RESULT FLASH WIN",
+          "body": "✅ WIN — FLASH\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_FLASH_WIN`\nRole: RESULT · Era: 4 · Lane: -\nLabel: RESULT FLASH WIN\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+          "tg_count": 0
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_SEQUENCIA_ENTER_NOW",
+      "role": "FIRE",
+      "label": "FIRE SEQUência ENTER NOW",
+      "lane": "MONEY",
+      "era": "6",
+      "example_first_line": "🔥 SEQUência — ENTER NOW 🔥",
+      "body": "🔥 SEQUÊNCIA — ENTER NOW 🔥",
+      "tg_count": 4,
+      "tg_type_id": "FIRE_SEQU_NCIA_ENTER_NOW",
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_ELITE_ANALISANDO",
+      "role": "OPS",
+      "label": "OPS ELITE ANALISANDO",
+      "lane": null,
+      "era": "6",
+      "example_first_line": "⚡ ELITE ANALISANDO",
+      "body": "⚡ ELITE ANALISANDO\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_ELITE_ANALISANDO`\nRole: OPS · Era: 6 · Lane: -\nLabel: OPS ELITE ANALISANDO\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_DIVERGENCIA_SALAS",
+      "role": "OPS",
+      "label": "OPS divergência de salas",
+      "lane": null,
+      "era": "6",
+      "example_first_line": "🟠 DIVERGÊNCIA DE SALAS",
+      "body": "🟠 DIVERGÊNCIA DE SALAS\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_DIVERGENCIA_SALAS`\nRole: OPS · Era: 6 · Lane: -\nLabel: OPS divergência de salas\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_SINAL_RETIDO_LIBERADO",
+      "role": "FIRE",
+      "label": "FIRE Sinal Retido→Liberado (countdown peak)",
+      "lane": "COUNTDOWN",
+      "era": "cd",
+      "example_first_line": "⏳ Sinal Retido → Liberado",
+      "body": "⏳ *Sinal Retido → Liberado* _(recuperação concluída)_",
+      "tg_count": 112,
+      "tg_type_id": "RESULT_GALE_SINAL_RETIDO_LIBERADO_RECUPERA_O_CONCLU_",
+      "follow_ups": [
+        {
+          "family_id": "RESULT_FORENSIC_INTERVALO",
+          "role": "RESULT",
+          "label": "RESULT resumido forense (G0/G1/G2)",
+          "body": "🔔 ✅ GANHOU  ·  #4168",
+          "tg_count": 883
+        },
+        {
+          "family_id": "RESULT_BELL_GANHOU",
+          "role": "RESULT",
+          "label": "RESULT bell GANHOU/PERDEU",
+          "body": "🔔 RESULTADO: ✅ GANHOU",
+          "tg_count": 41
+        },
+        {
+          "family_id": "OPS_G1_EXPIROU",
+          "role": "OPS",
+          "label": "OPS G1 EXPIROU — verificar mesa",
+          "body": "⏰ G1 EXPIROU — VERIFIQUE SUA MESA",
+          "tg_count": 21
+        }
+      ]
+    },
+    {
+      "family_id": "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+      "role": "FIRE",
+      "label": "CD_FIRE timer BRT/EDT apostar",
+      "lane": "COUNTDOWN",
+      "era": "cd",
+      "example_first_line": "🟢 HH UTC · EDT · apostar",
+      "body": "⛔ DO NOT BET — ROUND PASSED ⛔",
+      "tg_count": 2434,
+      "tg_type_id": "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+      "follow_ups": [
+        {
+          "family_id": "CD_RES_BELL_GANHOU",
+          "role": "RESULT",
+          "label": "CD result bell ganhou",
+          "body": "⚡ SINAL SE FORMANDO ⚡",
+          "tg_count": 195
+        },
+        {
+          "family_id": "RESULT_FORENSIC_INTERVALO",
+          "role": "RESULT",
+          "label": "RESULT resumido forense (G0/G1/G2)",
+          "body": "🔔 ✅ GANHOU  ·  #4168",
+          "tg_count": 883
+        }
+      ]
+    },
+    {
+      "family_id": "CD_FIRE_QUANTUM_LOCK",
+      "role": "FIRE",
+      "label": "CD_FIRE quantum lock",
+      "lane": "COUNTDOWN",
+      "era": "cd",
+      "example_first_line": "🔒 QUANTUM LOCK",
+      "body": "⏱️⏱️ H21 UTC em 7 min · 5:00 PM EDT ⏱️⏱️",
+      "tg_count": 1493,
+      "tg_type_id": "CD_FIRE_QUANTUM_LOCK",
+      "follow_ups": [
+        {
+          "family_id": "CD_RES_RODADAS_TEMPO",
+          "role": "RESULT",
+          "label": "CD result rodadas·tempo",
+          "body": "✅✅ WIN na 2ª tentativa! ✅✅",
+          "tg_count": 1799
+        }
+      ]
+    },
+    {
+      "family_id": "CD_FIRE_RUSH_NS_LEFT",
+      "role": "FIRE",
+      "label": "CD_FIRE rush Ns left",
+      "lane": "COUNTDOWN",
+      "era": "cd",
+      "example_first_line": "RUSH · Ns left",
+      "body": "⚡ RUSH — 9s LEFT — ACT NOW ⚡",
+      "tg_count": 302,
+      "tg_type_id": "CD_FIRE_RUSH_NS_LEFT",
+      "follow_ups": [
+        {
+          "family_id": "CD_RES_GREEN_G_BRT",
+          "role": "RESULT",
+          "label": "CD result GREEN G BRT",
+          "body": "🕐 16:37:04 EDT  ·  ~12s window\n🕐 16:37:04 EDT · ~12s window",
+          "tg_count": 539
+        }
+      ]
+    },
+    {
+      "family_id": "RESULT_FORENSIC_INTERVALO",
+      "role": "RESULT",
+      "label": "RESULT resumido forense (G0/G1/G2)",
+      "lane": null,
+      "era": "forensic",
+      "example_first_line": "🔍 SINAL #N — RESUMIDO FORENSE",
+      "body": "🔔 ✅ GANHOU  ·  #4168",
+      "tg_count": 883,
+      "tg_type_id": "RESULT_FORENSIC_INTERVALO",
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_BELL_GANHOU",
+      "role": "RESULT",
+      "label": "RESULT bell GANHOU/PERDEU",
+      "lane": null,
+      "era": "forensic",
+      "example_first_line": "🔔 ✅ GANHOU  ·  #N",
+      "body": "🔔 RESULTADO: ✅ GANHOU",
+      "tg_count": 41,
+      "tg_type_id": "RESULT_GALE_RESULTADO_GANHOU",
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_G1_EXPIROU",
+      "role": "OPS",
+      "label": "OPS G1 EXPIROU — verificar mesa",
+      "lane": null,
+      "era": "ops_result",
+      "example_first_line": "⏰ G1 EXPIROU — VERIFICAR SUA MESA",
+      "body": "⏰ G1 EXPIROU — VERIFIQUE SUA MESA",
+      "tg_count": 21,
+      "tg_type_id": "RESULT_GALE_G1_EXPIROU_VERIFIQUE_SUA_MESA",
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_G2_MISS",
+      "role": "OPS",
+      "label": "OPS G2 MISS — perda total",
+      "lane": null,
+      "era": "ops_result",
+      "example_first_line": "🛑 G2 MISS — PERDA TOTAL — PARE AGORA",
+      "body": "🟠 G1 NÃO FOI — G2 OPCIONAL (RISCO ALTO)",
+      "tg_count": 368,
+      "tg_type_id": "RESULT_GALE_G1_N_O_FOI_G2_OPCIONAL_RISCO_ALTO",
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_GOD_TIER",
+      "role": "FIRE",
+      "label": "FIRE GOD-TIER sync/conf",
+      "lane": "MONEY",
+      "era": "elite",
+      "example_first_line": "💎 GOD-TIER — Sync apertado + ≥3 salas top + conf≥75%",
+      "body": "💎 GOD-TIER — Sync apertado + ≥3 salas top + conf≥75%",
+      "tg_count": 105,
+      "tg_type_id": "FIRE_GOD_TIER_SYNC_APERTADO_3_SALAS_TOP_CONF_75",
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_GOLDEN_ENTRE_AGORA",
+      "role": "FIRE",
+      "label": "FIRE GOLDEN ENTRE AGORA (PT)",
+      "lane": "MONEY",
+      "era": "1",
+      "example_first_line": "🏆🏆🏆 GOLDEN SIGNAL — ENTRE AGORA 🏆🏆🏆",
+      "body": "🏆🏆🏆 GOLDEN SIGNAL — ENTRE AGORA 🏆🏆🏆\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_GOLDEN_ENTRE_AGORA`\nRole: FIRE · Era: 1 · Lane: MONEY\nLabel: FIRE GOLDEN ENTRE AGORA (PT)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": [
+        {
+          "family_id": "RESULT_WIN_TIER",
+          "role": "RESULT",
+          "label": "RESULT WIN — kind",
+          "body": "✅ WIN — SOLO_ELITE",
+          "tg_count": 6054
+        }
+      ]
+    },
+    {
+      "family_id": "FIRE_G0_MISS_ENTRE_G1",
+      "role": "FIRE",
+      "label": "FIRE G0 miss → enter G1 now",
+      "lane": "MONEY",
+      "era": "1b",
+      "example_first_line": "⚠️ G0 NÃO FOI — ENTRE NO G1 AGORA",
+      "body": "⚠️ G0 NÃO FOI — ENTRE NO G1 AGORA",
+      "tg_count": 287,
+      "tg_type_id": "RESULT_GALE_G0_N_O_FOI_ENTRE_NO_G1_AGORA",
+      "follow_ups": [
+        {
+          "family_id": "FIRE_GALE_RETENTATIVA",
+          "role": "FIRE",
+          "label": "FIRE gale RETENTATIVA",
+          "body": "♻️ GALE 1 — RETENTATIVA (1 room at G1)",
+          "tg_count": 798
+        },
+        {
+          "family_id": "OPS_G2_MISS",
+          "role": "OPS",
+          "label": "OPS G2 MISS — perda total",
+          "body": "🟠 G1 NÃO FOI — G2 OPCIONAL (RISCO ALTO)",
+          "tg_count": 368
+        }
+      ]
+    },
+    {
+      "family_id": "RESULT_ORACLE_CARD",
+      "role": "RESULT",
+      "label": "RESULT ORACLE CARD",
+      "lane": null,
+      "era": "oracle",
+      "example_first_line": "🔮 ORACLE CARD #N",
+      "body": "🔮 ORACLE CARD #N\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_ORACLE_CARD`\nRole: RESULT · Era: oracle · Lane: -\nLabel: RESULT ORACLE CARD\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_TIE_ALERT",
+      "role": "OPS",
+      "label": "OPS alerta de empate / tie alert",
+      "lane": null,
+      "era": "2",
+      "example_first_line": "🟡 ALERTA DE EMPATE / TIE ALERT 🟡",
+      "body": "🟡 ALERTA DE EMPATE / TIE ALERT 🟡",
+      "tg_count": 5256,
+      "tg_type_id": "RESULT_BANNER_TIE_ALERTA_DE_EMPATE_TIE_ALERT",
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_CORRECAO",
+      "role": "OPS",
+      "label": "OPS correção / correction",
+      "lane": null,
+      "era": "ops_result",
+      "example_first_line": "♻️♻️♻️ CORREÇÃO / CORRECTION ♻️♻️♻️",
+      "body": "♻️♻️♻️ CORREÇÃO / CORRECTION ♻️♻️♻️\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_CORRECAO`\nRole: OPS · Era: ops_result · Lane: -\nLabel: OPS correção / correction\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_JANELA_PRIME",
+      "role": "OPS",
+      "label": "OPS janela prime — sinais ativos",
+      "lane": null,
+      "era": "cd",
+      "example_first_line": "🟢🟢 JANELA PRIME — SINAIS ATIVOS 🟢🟢",
+      "body": "🟢🟢 JANELA PRIME — SINAIS ATIVOS 🟢🟢",
+      "tg_count": 350,
+      "tg_type_id": "UNKNOWN_JANELA_PRIME_SINAIS_ATIVOS",
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_COLOR_BANNER",
+      "role": "RESULT",
+      "label": "RESULT color-bar header (forensic / bell lead-in)",
+      "lane": null,
+      "era": "forensic",
+      "example_first_line": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "body": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "tg_count": 20569,
+      "tg_type_id": "RESULT_BANNER_WIN_EMPTY",
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_SEQUENCE_PREDICTION",
+      "role": "OPS",
+      "label": "OPS SEQUENCE PREDICTION hint",
+      "lane": null,
+      "era": "ops",
+      "example_first_line": "📊 SEQUENCE PREDICTION",
+      "body": "📊 SEQUENCE PREDICTION",
+      "tg_count": 11474,
+      "tg_type_id": "OPS_MANUAL_RESULT_HINT",
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_GALE_SATURATION",
+      "role": "OPS",
+      "label": "OPS gale saturation / market status",
+      "lane": null,
+      "era": "ops",
+      "example_first_line": "⚡⚡ SATURAÇÃO DE GALE ⚡⚡",
+      "body": "📊 Market Status — ⚡ Gale 1 detected",
+      "tg_count": 1055,
+      "tg_type_id": "UNKNOWN_MARKET_STATUS_GALE_1_DETECTED",
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_SELF_CARE_GUARD",
+      "role": "OPS",
+      "label": "OPS self-care guard ativo",
+      "lane": null,
+      "era": "ops",
+      "example_first_line": "⚕️⚕️ SELF-CARE GUARD ATIVO — GOLDEN ⚕️⚕️",
+      "body": "⚕️⚕️ SELF-CARE GUARD ATIVO — SOLO_ELITE ⚕️⚕️",
+      "tg_count": 97,
+      "tg_type_id": "UNKNOWN_SELF_CARE_GUARD_ATIVO_SOLO_ELITE",
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_PARE_3_PERDAS",
+      "role": "OPS",
+      "label": "OPS pare de apostar — 3 perdas seguidas",
+      "lane": null,
+      "era": "ops",
+      "example_first_line": "⛔ PARE DE APOSTAR — 3 PERDAS SEGUIDAS",
+      "body": "⛔ PARE DE APOSTAR — 3 PERDAS SEGUIDAS",
+      "tg_count": 220,
+      "tg_type_id": "UNKNOWN_PARE_DE_APOSTAR_3_PERDAS_SEGUIDAS",
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_ENTER_NOW_GENERIC",
+      "role": "FIRE",
+      "label": "FIRE plain ENTER NOW (gate-era)",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "⚡ **ENTER NOW**",
+      "body": "⚡ **ENTER NOW**\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_ENTER_NOW_GENERIC`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE plain ENTER NOW (gate-era)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_ENTRE_AGORA_GENERIC",
+      "role": "FIRE",
+      "label": "FIRE ENTRE AGORA (virada/streak)",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "⚡ **ENTRE AGORA — VIRADA DETECTADA**",
+      "body": "⚡ **ENTRE AGORA — VIRADA DETECTADA**\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_ENTRE_AGORA_GENERIC`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE ENTRE AGORA (virada/streak)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_APOSTE_AGORA",
+      "role": "FIRE",
+      "label": "FIRE APOSTE AGORA block",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "⚡ **APOSTE AGORA:**",
+      "body": "⚡ **APOSTE AGORA:**\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_APOSTE_AGORA`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE APOSTE AGORA block\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_G0_ENTRADA_DIRETA",
+      "role": "FIRE",
+      "label": "FIRE G0 entrada direta / primeira entrada",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "⚡⚡⚡ **G0 — ENTRADA DIRETA** ⚡⚡⚡",
+      "body": "⚡⚡⚡ **G0 — ENTRADA DIRETA** ⚡⚡⚡\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_G0_ENTRADA_DIRETA`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE G0 entrada direta / primeira entrada\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_DEPTH_G0_ONLY",
+      "role": "FIRE",
+      "label": "FIRE depth G0 only (no retry)",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "⚡ DEPTH G0 only — single entry, no retry",
+      "body": "⚡ DEPTH G0 only — single entry, no retry\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_DEPTH_G0_ONLY`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE depth G0 only (no retry)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_INVERTED_CONTRARIO",
+      "role": "FIRE",
+      "label": "FIRE inverted / contrário signal",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "🔴 CONTRÁRIO ← sinal invertido ativo",
+      "body": "🔴 CONTRÁRIO ← sinal invertido ativo\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_INVERTED_CONTRARIO`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE inverted / contrário signal\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_ORACLE_LOCK",
+      "role": "FIRE",
+      "label": "FIRE ORACLE LOCK hour/color WR",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "🔮🔮🔮 **ORACLE LOCK — H07 SOLO ELITE 100% WR** 🔮🔮🔮",
+      "body": "🔮🔮🔮 **ORACLE LOCK — H07 SOLO ELITE 100% WR** 🔮🔮🔮\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_ORACLE_LOCK`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE ORACLE LOCK hour/color WR\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_CERTIFIED_ELITE",
+      "role": "FIRE",
+      "label": "FIRE certified elite 100% G0",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "🏆🏆 **CERTIFIED ELITE — 100% G0 HISTÓRICO** 🏆🏆",
+      "body": "🏆🏆 **CERTIFIED ELITE — 100% G0 HISTÓRICO** 🏆🏆\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_CERTIFIED_ELITE`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE certified elite 100% G0\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_GRADE_BANNER",
+      "role": "FIRE",
+      "label": "FIRE grade A/B historical G0 banner",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "💠 GRADE A · G0=76.1% historical (n=46) · elite pair",
+      "body": "💠 GRADE A · G0=76.1% historical (n=46) · elite pair\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_GRADE_BANNER`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE grade A/B historical G0 banner\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_HOT_STREAK",
+      "role": "FIRE",
+      "label": "FIRE hot table / win-streak banner",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "🔥🔥 PERFECT 5/5 WIN STREAK · G0=87.1% historical",
+      "body": "🔥🔥 PERFECT 5/5 WIN STREAK · G0=87.1% historical\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_HOT_STREAK`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE hot table / win-streak banner\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_DOUBLE_TIE_LOCK",
+      "role": "FIRE",
+      "label": "FIRE double tie lock",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "🟡🟡 DOUBLE TIE LOCK · G0=94.1% after 2 consecutive ties (n=17)",
+      "body": "🟡🟡 DOUBLE TIE LOCK · G0=94.1% after 2 consecutive ties (n=17)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_DOUBLE_TIE_LOCK`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE double tie lock\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_GALE_1_FACA_AGORA",
+      "role": "FIRE",
+      "label": "FIRE gale 1 — faça agora",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "🔁 **GALE 1 — FAÇA AGORA:**",
+      "body": "🔁 **GALE 1 — FAÇA AGORA:**\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_GALE_1_FACA_AGORA`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE gale 1 — faça agora\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_DO_NOT_BET_YET",
+      "role": "OPS",
+      "label": "OPS do not bet yet — waiting rooms",
+      "lane": null,
+      "era": "code",
+      "example_first_line": "⛔ **DO NOT BET YET** — waiting for more rooms",
+      "body": "⛔ **DO NOT BET YET** — waiting for more rooms\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_DO_NOT_BET_YET`\nRole: OPS · Era: code · Lane: -\nLabel: OPS do not bet yet — waiting rooms\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_PREPARE_PLATFORM",
+      "role": "OPS",
+      "label": "OPS prepare platform — signal in seconds",
+      "lane": null,
+      "era": "code",
+      "example_first_line": "⏳ Prepare a plataforma — **o sinal de entrada chegará em segundos**",
+      "body": "⏳ Prepare a plataforma — **o sinal de entrada chegará em segundos**\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_PREPARE_PLATFORM`\nRole: OPS · Era: code · Lane: -\nLabel: OPS prepare platform — signal in seconds\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_NEXT_CERTIFIED_WINDOW",
+      "role": "OPS",
+      "label": "OPS next certified window",
+      "lane": null,
+      "era": "code",
+      "example_first_line": "🏆 **Próxima janela certificada / Next certified window:**",
+      "body": "🏆 **Próxima janela certificada / Next certified window:**\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_NEXT_CERTIFIED_WINDOW`\nRole: OPS · Era: code · Lane: -\nLabel: OPS next certified window\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_JANELA_PEAK",
+      "role": "OPS",
+      "label": "OPS janela peak / max precision",
+      "lane": null,
+      "era": "code",
+      "example_first_line": "⚡⚡ **JANELA PEAK / PEAK WINDOW — PRECISÃO MÁXIMA** ⚡⚡",
+      "body": "⚡⚡ **JANELA PEAK / PEAK WINDOW — PRECISÃO MÁXIMA** ⚡⚡\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_JANELA_PEAK`\nRole: OPS · Era: code · Lane: -\nLabel: OPS janela peak / max precision\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_G1_REGISTRADO_CALC_G2",
+      "role": "OPS",
+      "label": "OPS G1 recorded — calculating G2",
+      "lane": null,
+      "era": "ops_result",
+      "example_first_line": "📊 **G1 registrado / G1 recorded** — calculando G2...",
+      "body": "📊 **G1 registrado / G1 recorded** — calculando G2...\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_G1_REGISTRADO_CALC_G2`\nRole: OPS · Era: ops_result · Lane: -\nLabel: OPS G1 recorded — calculating G2\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_G2_STOP_IF_G1_LOST",
+      "role": "OPS",
+      "label": "OPS G2 (if G1 lost) → STOP",
+      "lane": null,
+      "era": "ops_result",
+      "example_first_line": "⛔ G2 _(se perder G1)_ → STOP — aguarde novo sinal",
+      "body": "⛔ G2 _(se perder G1)_ → STOP — aguarde novo sinal\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_G2_STOP_IF_G1_LOST`\nRole: OPS · Era: ops_result · Lane: -\nLabel: OPS G2 (if G1 lost) → STOP\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_G3_ATINGIDO",
+      "role": "OPS",
+      "label": "OPS G3 reached — signal closed (MAR20/21 era)",
+      "lane": null,
+      "era": "ops_result",
+      "example_first_line": "⛔ **G3 ATINGIDO — SINAL ENCERRADO**",
+      "body": "⛔ **G3 ATINGIDO — SINAL ENCERRADO**\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_G3_ATINGIDO`\nRole: OPS · Era: ops_result · Lane: -\nLabel: OPS G3 reached — signal closed (MAR20/21 era)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_G0_ACERTOU_PRIMEIRA",
+      "role": "RESULT",
+      "label": "RESULT G0 acertou de primeira",
+      "lane": null,
+      "era": "code",
+      "example_first_line": "🏆 G0 — Acertou de primeira!",
+      "body": "🏆 G0 — Acertou de primeira!\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_G0_ACERTOU_PRIMEIRA`\nRole: RESULT · Era: code · Lane: -\nLabel: RESULT G0 acertou de primeira\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_GALE_RECOVERED_CHAIN",
+      "role": "RESULT",
+      "label": "RESULT gale recovery chain",
+      "lane": null,
+      "era": "code",
+      "example_first_line": "❌ G0 → ✅ **G1** RECUPERADO / RECOVERED!",
+      "body": "❌ G0 → ✅ **G1** RECUPERADO / RECOVERED!\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_GALE_RECOVERED_CHAIN`\nRole: RESULT · Era: code · Lane: -\nLabel: RESULT gale recovery chain\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_EMPATE_DINHEIRO_DEVOLVIDO",
+      "role": "RESULT",
+      "label": "RESULT empate = dinheiro devolvido",
+      "lane": null,
+      "era": "code",
+      "example_first_line": "✅ **EMPATE = DINHEIRO DEVOLVIDO**",
+      "body": "✅ **EMPATE = DINHEIRO DEVOLVIDO**\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_EMPATE_DINHEIRO_DEVOLVIDO`\nRole: RESULT · Era: code · Lane: -\nLabel: RESULT empate = dinheiro devolvido\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_EMPATE_PROTECAO",
+      "role": "RESULT",
+      "label": "RESULT empate — proteção ativada",
+      "lane": null,
+      "era": "code",
+      "example_first_line": "🟡🟡 **EMPATE — PROTEÇÃO ATIVADA** 🟡🟡",
+      "body": "🟡🟡 **EMPATE — PROTEÇÃO ATIVADA** 🟡🟡\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_EMPATE_PROTECAO`\nRole: RESULT · Era: code · Lane: -\nLabel: RESULT empate — proteção ativada\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "CD_RES_GREEN_G_BRT",
+      "role": "RESULT",
+      "label": "CD result GREEN G BRT",
+      "lane": null,
+      "era": "cd",
+      "example_first_line": "🟢 G0 · BRT",
+      "body": "🕐 16:37:04 EDT  ·  ~12s window\n🕐 16:37:04 EDT · ~12s window",
+      "tg_count": 539,
+      "tg_type_id": "CD_RES_GREEN_G_BRT",
+      "follow_ups": []
+    },
+    {
+      "family_id": "CD_RES_RODADAS_TEMPO",
+      "role": "RESULT",
+      "label": "CD result rodadas·tempo",
+      "lane": null,
+      "era": "cd",
+      "example_first_line": "⏱ N rodada(s) · Ns",
+      "body": "✅✅ WIN na 2ª tentativa! ✅✅",
+      "tg_count": 1799,
+      "tg_type_id": "CD_RES_RODADAS_TEMPO",
+      "follow_ups": []
+    },
+    {
+      "family_id": "CD_RES_BELL_GANHOU",
+      "role": "RESULT",
+      "label": "CD result bell ganhou",
+      "lane": null,
+      "era": "cd",
+      "example_first_line": "🔔 ✅ GANHOU",
+      "body": "⚡ SINAL SE FORMANDO ⚡",
+      "tg_count": 195,
+      "tg_type_id": "CD_RES_BELL_GANHOU",
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_G2_ATINGIDO_PARE",
+      "role": "OPS",
+      "label": "OPS G2 atingido — pare / signal closed",
+      "lane": null,
+      "era": "ops_result",
+      "example_first_line": "⛔ **PARE — G2 ATINGIDO**",
+      "body": "⛔ PARE — G2 ATINGIDO",
+      "tg_count": 560,
+      "tg_type_id": "UNKNOWN_PARE_G2_ATINGIDO",
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_APOSTAR_EMPATE",
+      "role": "FIRE",
+      "label": "FIRE bet the tie (next rounds)",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "🎯 **Aposte no EMPATE (🟠 Tie)** nas próximas rodadas.",
+      "body": "🎯 **Aposte no EMPATE (🟠 Tie)** nas próximas rodadas.\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_APOSTAR_EMPATE`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE bet the tie (next rounds)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_NAMED_EDGE_BANNER",
+      "role": "FIRE",
+      "label": "FIRE named formation / zone edge banner",
+      "lane": "MONEY",
+      "era": "code",
+      "example_first_line": "🏆 APEX TRIO · isadados+rigosinais+rqdados · G0=90.3% (n=31)",
+      "body": "🏆 APEX TRIO · isadados+rigosinais+rqdados · G0=90.3% (n=31)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_NAMED_EDGE_BANNER`\nRole: FIRE · Era: code · Lane: MONEY\nLabel: FIRE named formation / zone edge banner\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_NEGATIVE_WINDOW_BLOCK",
+      "role": "OPS",
+      "label": "OPS named bad day/hour block banner",
+      "lane": null,
+      "era": "code",
+      "example_first_line": "⛔ BLUE TUESDAY ⛔ · G0=36.5% historically (n=159)",
+      "body": "⛔ BLUE TUESDAY ⛔ · G0=36.5% historically (n=159)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_NEGATIVE_WINDOW_BLOCK`\nRole: OPS · Era: code · Lane: -\nLabel: OPS named bad day/hour block banner\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_TIER_LEGEND",
+      "role": "OPS",
+      "label": "OPS tier legend / glossary line",
+      "lane": null,
+      "era": "0",
+      "example_first_line": "💎 SOLO ELITE → sala elite sozinha / single elite room",
+      "body": "💎 SOLO ELITE → sala elite sozinha / single elite room\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_TIER_LEGEND`\nRole: OPS · Era: 0 · Lane: -\nLabel: OPS tier legend / glossary line\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_G2_RESERVE",
+      "role": "FIRE",
+      "label": "FIRE G2 RESERVE — always red loop",
+      "lane": "MONEY",
+      "era": "g2reserve",
+      "example_first_line": "🔁 **G2 RESERVE — SEMPRE VERMELHO / ALWAYS RED**",
+      "body": "🔁 **G2 RESERVE — SEMPRE VERMELHO / ALWAYS RED**\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_G2_RESERVE`\nRole: FIRE · Era: g2reserve · Lane: MONEY\nLabel: FIRE G2 RESERVE — always red loop\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_G2_RESERVE_WIN",
+      "role": "RESULT",
+      "label": "RESULT G2 RESERVE recovery win",
+      "lane": null,
+      "era": "g2reserve",
+      "example_first_line": "🏆🏆🏆 **G2 RESERVE — RECUPERAÇÃO WIN!** 🏆🏆🏆",
+      "body": "🏆🏆🏆 **G2 RESERVE — RECUPERAÇÃO WIN!** 🏆🏆🏆\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_G2_RESERVE_WIN`\nRole: RESULT · Era: g2reserve · Lane: -\nLabel: RESULT G2 RESERVE recovery win\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_G2_RESERVE_MISS",
+      "role": "OPS",
+      "label": "OPS G2 RESERVE miss — chain closed",
+      "lane": null,
+      "era": "g2reserve",
+      "example_first_line": "🛑🛑 **G2 RESERVE MISS — CADEIA ENCERRADA** 🛑🛑",
+      "body": "🛑🛑 **G2 RESERVE MISS — CADEIA ENCERRADA** 🛑🛑\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_G2_RESERVE_MISS`\nRole: OPS · Era: g2reserve · Lane: -\nLabel: OPS G2 RESERVE miss — chain closed\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_TIE_AUDIT",
+      "role": "OPS",
+      "label": "OPS tie audit report (empates)",
+      "lane": null,
+      "era": "audit",
+      "example_first_line": "🟡🟡🟡 **AUDITORIA COMPLETA — EMPATES** 🟡🟡🟡",
+      "body": "🟡🟡🟡 **AUDITORIA COMPLETA — EMPATES** 🟡🟡🟡\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_TIE_AUDIT`\nRole: OPS · Era: audit · Lane: -\nLabel: OPS tie audit report (empates)\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_RADAR_PARTIAL_CONSENSUS",
+      "role": "OPS",
+      "label": "OPS radar — partial consensus",
+      "lane": null,
+      "era": "radar",
+      "example_first_line": "👁 **RADAR — PARTIAL CONSENSUS** 👁",
+      "body": "👁 **RADAR — PARTIAL CONSENSUS** 👁\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_RADAR_PARTIAL_CONSENSUS`\nRole: OPS · Era: radar · Lane: -\nLabel: OPS radar — partial consensus\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_OPEN_PLATFORM_NOW",
+      "role": "OPS",
+      "label": "OPS open the platform — signal in seconds",
+      "lane": null,
+      "era": "prealert",
+      "example_first_line": "🚨 **ABRA A PLATAFORMA AGORA — SINAL EM SEGUNDOS!** 🚨",
+      "body": "🚨 **ABRA A PLATAFORMA AGORA — SINAL EM SEGUNDOS!** 🚨\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_OPEN_PLATFORM_NOW`\nRole: OPS · Era: prealert · Lane: -\nLabel: OPS open the platform — signal in seconds\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "FIRE_FLASH_CONFIRMADO",
+      "role": "FIRE",
+      "label": "FIRE flash confirmed",
+      "lane": "COUNTDOWN",
+      "era": "flash",
+      "example_first_line": "⚡⚡ **FLASH CONFIRMADO** —",
+      "body": "⚡⚡ **FLASH CONFIRMADO** —\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `FIRE_FLASH_CONFIRMADO`\nRole: FIRE · Era: flash · Lane: COUNTDOWN\nLabel: FIRE flash confirmed\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_AUTO_WIN",
+      "role": "RESULT",
+      "label": "RESULT auto-detected WIN",
+      "lane": null,
+      "era": "auto",
+      "example_first_line": "✅ AUTO WIN",
+      "body": "✅ AUTO WIN\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_AUTO_WIN`\nRole: RESULT · Era: auto · Lane: -\nLabel: RESULT auto-detected WIN\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_AUTO_LOSS",
+      "role": "RESULT",
+      "label": "RESULT auto-detected LOSS",
+      "lane": null,
+      "era": "auto",
+      "example_first_line": "❌ AUTO LOSS",
+      "body": "❌ AUTO LOSS\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_AUTO_LOSS`\nRole: RESULT · Era: auto · Lane: -\nLabel: RESULT auto-detected LOSS\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "OPS_AUTO_EXPIRED",
+      "role": "OPS",
+      "label": "OPS signal auto-expired by kind",
+      "lane": null,
+      "era": "auto",
+      "example_first_line": "🏆 GOLDEN: auto-expired",
+      "body": "🏆 GOLDEN: auto-expired\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `OPS_AUTO_EXPIRED`\nRole: OPS · Era: auto · Lane: -\nLabel: OPS signal auto-expired by kind\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    },
+    {
+      "family_id": "RESULT_FINAL_LOSS_AFTER_G3",
+      "role": "RESULT",
+      "label": "RESULT final loss after G3",
+      "lane": null,
+      "era": "g3",
+      "example_first_line": "❌ FINAL LOSS after G3 —",
+      "body": "❌ FINAL LOSS after G3 —\n━━━━━━━━━━━━━━━━━━━━━━━━━\n🏛 MUSEUM SAMPLE · `RESULT_FINAL_LOSS_AFTER_G3`\nRole: RESULT · Era: g3 · Lane: -\nLabel: RESULT final loss after G3\n━━━━━━━━━━━━━━━━━━━━━━━━━\n_Catalog sample — not a live bet_\n_/win · /loss · /tie_",
+      "tg_count": 0,
+      "tg_type_id": null,
+      "follow_ups": []
+    }
+  ],
+  "stats": {
+    "items": 107,
+    "fires": 42,
+    "with_followups": 24,
+    "tg_examples_used": 36
+  }
+}
