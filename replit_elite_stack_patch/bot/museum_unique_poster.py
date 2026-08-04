@@ -43,10 +43,18 @@ PROGRESS = DATA / "museum_unique_progress.json"
 CACHE = DATA / "telegram_museum_entity.json"
 
 
+def _safe_peer(peer: str) -> str:
+    return "".join(c if c.isalnum() or c in "-_" else "_" for c in (peer or "museum"))
+
+
 def _progress_path(peer: str) -> Path:
     """Separate resume files per museum chat so chrono ≠ old registry dump."""
-    safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in (peer or "museum"))
-    return DATA / f"museum_progress_{safe}.json"
+    return DATA / f"museum_progress_{_safe_peer(peer)}.json"
+
+
+def _cache_path(peer: str) -> Path:
+    """Separate entity cache per museum title — never reuse UNIQUE_museum for chrono."""
+    return DATA / f"telegram_museum_entity_{_safe_peer(peer)}.json"
 
 
 def _session() -> str:
@@ -151,80 +159,109 @@ async def _safe_send(client, entity, text: str, *, dry: bool) -> None:
                 break
 
 
+def _write_cache(path: Path, ent, title: str) -> None:
+    path.write_text(
+        json.dumps(
+            {
+                "id": int(ent.id),
+                "username": getattr(ent, "username", None),
+                "title": getattr(ent, "title", None) or title,
+                "wanted_title": title,
+            }
+        ),
+        encoding="utf-8",
+    )
+    # legacy mirror (debug only) — do not read this for resolve
+    try:
+        CACHE.write_text(path.read_text(encoding="utf-8"), encoding="utf-8")
+    except Exception:
+        pass
+
+
 async def _resolve_or_create_museum(client, title: str, username: str):
-    """Find existing UNIQUE_museum dialog or create a megagroup/channel."""
+    """Find or create the museum chat for this exact title/username.
+
+    Never fall back to UNIQUE_museum when asking for UNIQUE_museum_chrono.
+    """
     from telethon.tl.functions.channels import (
         CreateChannelRequest,
         UpdateUsernameRequest,
     )
     from telethon.errors import UsernameOccupiedError, UsernameInvalidError
 
-    # 1) cache
-    if CACHE.exists():
+    cache_path = _cache_path(title)
+    want_title = title.casefold()
+    want_user = username.casefold().lstrip("@")
+    print(f"resolving museum peer title={title!r} username={username!r} …")
+
+    # 1) per-title cache (must match wanted title/username)
+    if cache_path.exists():
         try:
-            data = json.loads(CACHE.read_text())
-            if data.get("id") is not None:
+            data = json.loads(cache_path.read_text(encoding="utf-8"))
+            cached_title = (data.get("title") or data.get("wanted_title") or "").casefold()
+            cached_user = (data.get("username") or "").casefold()
+            if data.get("id") is not None and (
+                cached_title == want_title or (want_user and cached_user == want_user)
+            ):
                 ent = await client.get_entity(int(data["id"]))
-                print(f"museum via cache id={ent.id} title={getattr(ent,'title',None)}")
+                print(
+                    f"museum via cache id={ent.id} "
+                    f"title={getattr(ent, 'title', None)}"
+                )
                 return ent
+            print("cache ignored — title/username mismatch for this peer")
         except Exception as exc:
             print("cache miss:", exc)
 
-    # 2) dialog scan
-    want = {title.casefold(), username.casefold(), "unique_museum", "museum"}
+    # 2) username / title resolve first (fast; avoids long dialog scans)
+    for cand in (f"@{want_user}" if want_user else None, want_user, title):
+        if not cand:
+            continue
+        try:
+            ent = await client.get_entity(cand)
+            got_title = (getattr(ent, "title", None) or "").casefold()
+            got_user = (getattr(ent, "username", None) or "").casefold()
+            if got_title == want_title or got_user == want_user:
+                print(f"museum via get_entity {cand} id={ent.id}")
+                _write_cache(cache_path, ent, title)
+                return ent
+        except Exception:
+            pass
+
+    # 3) exact dialog match only (no "museum" substring / old UNIQUE_museum alias)
+    print("scanning dialogs for exact title/username match …")
+    scanned = 0
     async for d in client.iter_dialogs():
+        scanned += 1
+        if scanned % 100 == 0:
+            print(f"  … dialogs scanned {scanned}")
         ent = d.entity
         names = {
             (getattr(ent, "username", None) or "").casefold(),
             (getattr(ent, "title", None) or "").casefold(),
             (d.name or "").casefold(),
         }
-        if names & want:
+        if want_title in names or (want_user and want_user in names):
             print(f"museum via dialog id={ent.id} name={d.name}")
-            CACHE.write_text(
-                json.dumps(
-                    {
-                        "id": int(ent.id),
-                        "username": getattr(ent, "username", None),
-                        "title": getattr(ent, "title", None),
-                    }
-                ),
-                encoding="utf-8",
-            )
+            _write_cache(cache_path, ent, title)
             return ent
-
-    # 3) try username resolve
-    for cand in (username, f"@{username}", title):
-        try:
-            ent = await client.get_entity(cand)
-            print(f"museum via get_entity {cand} id={ent.id}")
-            CACHE.write_text(
-                json.dumps(
-                    {
-                        "id": int(ent.id),
-                        "username": getattr(ent, "username", None),
-                        "title": getattr(ent, "title", None),
-                    }
-                ),
-                encoding="utf-8",
-            )
-            return ent
-        except Exception:
-            pass
+    print(f"dialog scan done ({scanned}) — no exact match")
 
     # 4) create megagroup (chat-like, good for museum scroll)
     print(f"creating museum chat title={title!r} …")
     result = await client(
         CreateChannelRequest(
             title=title,
-            about="Bac Bo skin museum — every product FIRE + glued RESULT/OPS. Not live bets. Paced catalog.",
+            about=(
+                "Bac Bo skin museum — first-existence order. "
+                "Not live bets. Paced catalog."
+            ),
             megagroup=True,
         )
     )
     ent = result.chats[0]
     print(f"created museum id={ent.id}")
 
-    # optional public username (may fail if taken — title alone is enough)
     try:
         await client(UpdateUsernameRequest(channel=ent, username=username))
         print(f"username set @{username}")
@@ -234,16 +271,7 @@ async def _resolve_or_create_museum(client, title: str, username: str):
     except Exception as exc:
         print(f"username skip: {exc!r}")
 
-    CACHE.write_text(
-        json.dumps(
-            {
-                "id": int(ent.id),
-                "username": getattr(ent, "username", None),
-                "title": getattr(ent, "title", None) or title,
-            }
-        ),
-        encoding="utf-8",
-    )
+    _write_cache(cache_path, ent, title)
     return ent
 
 
