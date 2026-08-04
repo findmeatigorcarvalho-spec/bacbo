@@ -7,7 +7,7 @@ import tempfile
 import threading
 from datetime import datetime, timezone
 from types import MappingProxyType
-from typing import Any, Callable, Dict, FrozenSet, Iterable, List, Mapping, Set, Tuple
+from typing import Any, Callable, Dict, FrozenSet, Iterable, List, Mapping, Optional, Set, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -350,6 +350,44 @@ class EngineGateRegistry:
 
     def bulk_clear_retest(self, gates: Iterable[str]) -> None:
         self._transaction(lambda: self._bulk_clear_retest(gates))
+
+    # ── Telegram skin family gating ──────────────────────────────────────────
+    def is_blocked(self, gate_name: str) -> bool:
+        """True when the gate is runtime-disabled or retired."""
+        gate_name = self._validate_gate_name(gate_name)
+        return gate_name in self._runtime_disabled or gate_name in self._retired_gates
+
+    def is_skin_blocked(self, gate_keys: Iterable[str]) -> bool:
+        """True if any skin gate key (family or FAMILY:KIND) is disabled/retired."""
+        for key in gate_keys:
+            if not isinstance(key, str) or not key.strip():
+                continue
+            if self.is_blocked(key):
+                return True
+        return False
+
+    def classify_skin(
+        self,
+        text: Optional[str] = None,
+        *,
+        signal_kind: Optional[str] = None,
+        meta: Optional[Dict[str, Any]] = None,
+    ):
+        """Classify Telegram card text into a SkinMatch (lazy import)."""
+        from bot.config.skin_families import classify_telegram_skin
+
+        return classify_telegram_skin(text, signal_kind=signal_kind, meta=meta)
+
+    def is_telegram_skin_blocked(
+        self,
+        text: Optional[str] = None,
+        *,
+        signal_kind: Optional[str] = None,
+        meta: Optional[Dict[str, Any]] = None,
+    ) -> bool:
+        """Classify card text, then check family / FAMILY:KIND against this registry."""
+        match = self.classify_skin(text, signal_kind=signal_kind, meta=meta)
+        return self.is_skin_blocked(match.gate_keys)
 
     def _trim_audit(self, audit_log: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         if self.max_audit_entries and len(audit_log) > self.max_audit_entries:

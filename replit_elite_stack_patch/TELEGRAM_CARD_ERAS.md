@@ -136,6 +136,37 @@ Telegram shows **many more skins** than those 7 kinds (gale retentativa, EMPATE 
 
 ---
 
+## Stable gate keys (engine registry)
+
+Canonical module: `bot/config/skin_families.py`  
+Classifier: `classify_telegram_skin(text)` → `SkinMatch.gate_keys`  
+Registry check: `EngineGateRegistry.is_telegram_skin_blocked(text)`
+
+| Family id | Role | Notes |
+|---|---|---|
+| `ONLINE_BANNER` | ONLINE | Era 0 |
+| `FIRE_CONFIRMED_ENTER` | FIRE | Era 1 |
+| `FIRE_SOLO_ELITE_ENTER` | FIRE | Era 1 |
+| `FIRE_GOLDEN_ENTER` | FIRE | Era 1 |
+| `FIRE_SEQUENCE_ENTER` | FIRE | Era 1 |
+| `FIRE_PLATINUM_ENTER` | FIRE | Era 1 |
+| `RESULT_WIN_TIER` / `RESULT_LOSS_TIER` | RESULT | kind-scoped (`:SOLO_ELITE` …) |
+| `FIRE_GALE_ENTRE_NOVAMENTE` | FIRE | ≠ retentativa |
+| `RESULT_EMPATE` | RESULT | keep `RESULT_EMPATE:SOLO_ELITE` distinct |
+| `FIRE_GALE_RETENTATIVA` | FIRE | ≠ entre novamente |
+| `FIRE_JANELA_TIMED` | FIRE | **variable-N** COUNTDOWN family |
+| `FIRE_ULTRA_TIE` | FIRE | Era 2 |
+| `RESULT_TIMED_WINDOW` | RESULT | variable-N resolve clock |
+| `FIRE_EMPATE_DIRETO_G0` / `FIRE_G0_DIRETO` / `FIRE_PREPARE_G1` | FIRE | Era 3 |
+| `FIRE_COMPACT_HASH` + `RESULT_COMPACT_*_HASH` | FIRE/RESULT | Era 5 `#` |
+| `FIRE_*_APOSTAR` | FIRE | Era 6 APOSTAR AGORA (≠ ENTER NOW) |
+| `ONLINE_LUXURY_OUTBOX` | ONLINE | Era 6 |
+| `FIRE_SEQUENCIA_ENTER_NOW` | FIRE | Era 6 |
+
+Disable/retire either the family (`FIRE_GALE_RETENTATIVA`) or a kind-scoped key (`RESULT_EMPATE:SOLO_ELITE`).
+
+---
+
 ## Noise classes (high volume — not primary skins)
 
 - `ROOM_RELAY` placar / acertividade / @room scoreboards  
