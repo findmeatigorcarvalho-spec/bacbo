@@ -1,6 +1,6 @@
 # Literally Everything — Skin / Template Inventory
 
-Generated: `2026-08-04T04:18:35.577826+00:00`
+Generated: `2026-08-04T04:22:10.610472+00:00`
 
 Distilled floors for the luxury building (union minus relay/TG_LINE/UNKNOWN noise)
 
@@ -8,15 +8,15 @@ Distilled floors for the luxury building (union minus relay/TG_LINE/UNKNOWN nois
 
 | Metric | n |
 |---|---:|
-| Unique keys | **6450** |
-| HEADER templates (quoted card lines in code/git) | 256 |
-| TOKEN ids (FIRE_/RESULT_/CD_/kinds) | 134 |
+| Unique keys | **6624** |
+| HEADER templates (quoted card lines in code/git) | 424 |
+| TOKEN ids (FIRE_/RESULT_/CD_/kinds) | 245 |
 | DB kinds | 0 |
 | DB text first-lines | 0 |
-| Telegram type_ids / lines | 6059 |
+| Telegram type_ids / lines | 5954 |
 | Registered families | 1 |
 
-Sources: `{'TELEGRAM': 6092, 'CODE': 369, 'GIT_HISTORY': 159, 'REGISTERED': 59}`
+Sources: `{'TIMING_CATALOG': 160, 'CODE': 488, 'TELEGRAM': 6092, 'GIT_HISTORY': 159, 'REGISTERED': 66}`
 
 ## Gaps / honesty
 
@@ -28,178 +28,289 @@ Sources: `{'TELEGRAM': 6092, 'CODE': 369, 'GIT_HISTORY': 159, 'REGISTERED': 59}`
 
 | count | key | files |
 |---:|---|---|
-| 32 | `HEADER::GOLDEN` | /workspace/bot/config/find_all_skins.py, /workspace/bot/config/skin_census.py, /workspace/bot/config/skin_families.py |
-| 28 | `HEADER::SEQUENCE` | /workspace/bot/config/find_all_skins.py, /workspace/bot/config/skin_census.py, /workspace/bot/config/skin_families.py |
-| 22 | `HEADER::PLATINUM` | /workspace/bot/config/find_all_skins.py, /workspace/bot/config/skin_census.py, /workspace/bot/config/skin_families.py |
-| 8 | `HEADER::G2 MISS` | /workspace/replit_elite_stack_patch/LITERALLY_EVERYTHING_FLOORS.md, /workspace/replit_elite_stack_patch/LITERALLY_EVERYTHING_SKINS.md |
-| 6 | `HEADER::CAMADAS DO DIA` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/CHRONO_MUSEUM.md, /workspace/replit_elite_stack_patch/TEMPLATE_CENSUS.md |
-| 6 | `HEADER::EMERGING` | /workspace/bot/config/find_all_skins.py, /workspace/bot/config/skin_census.py, /workspace/tests/test_telegram_skin_families.py |
-| 6 | `HEADER::LUXURY OUTBOX ONLINE` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/REPLIT_COMMANDS.md, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 6 | `HEADER::⚡ ENTER NOW\n` | /workspace/replit_elite_stack_patch/bot/hub_dispatch.py |
-| 6 | `HEADER::⚡ G0 ONLY\n` | /workspace/replit_elite_stack_patch/bot/fallback_signal_sender.py, /workspace/replit_elite_stack_patch/bot/telegram_outbox.py, git:replit_elite_stack_patch/bot/fallback_signal_sender.py |
-| 6 | `HEADER::✅ WIN — SOLO_ELITE` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/COUNTDOWN_START_AXIS.md, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 6 | `HEADER::💎 SOLO ELITE SIGNAL 💎` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, /workspace/tests/test_skin_census.py |
-| 6 | `HEADER::🔁 GALE 1 — Entre novamente` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, /workspace/tests/test_telegram_skin_families.py |
-| 6 | `HEADER::🔵" if color == "blue" else "🔴" if color == "red" else "🟡` | /workspace/replit_elite_stack_patch/bot/fallback_signal_sender.py, /workspace/replit_elite_stack_patch/bot/hub_dispatch.py, /workspace/replit_elite_stack_patch/bot/telegram_outbox.py |
-| 5 | `HEADER::⚡ SOLO ELITE — APOSTAR AGORA` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, /workspace/tests/test_telegram_skin_families.py |
-| 5 | `HEADER::🏆 GOLDEN SIGNAL — ENTER NOW 🏆` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, /workspace/tests/test_skin_gate.py |
-| 5 | `HEADER::🏆 GOLDEN SIGNAL — ENTER NOW 🏆\n` | /workspace/replit_elite_stack_patch/bot/dual_lane_router.py, /workspace/replit_elite_stack_patch/bot/hub_dispatch.py, /workspace/tests/test_chat_shelves.py |
-| 5 | `HEADER::🟡 EMPATE — SOLO_ELITE` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, /workspace/tests/test_skin_gate.py |
-| 4 | `HEADER::EMERGING": "SIGNAL_KIND_EMERGING` | /workspace/bot/config/skin_census.py |
-| 4 | `HEADER::G2 MISS — PERDA TOTAL` | /workspace/replit_elite_stack_patch/LITERALLY_EVERYTHING_FLOORS.md, /workspace/replit_elite_stack_patch/LITERALLY_EVERYTHING_SKINS.md |
-| 4 | `HEADER::JANELA\s*:\s*\d+\s*s|` | /workspace/replit_elite_stack_patch/bot/dual_lane_router.py, /workspace/replit_elite_stack_patch/bot/timing_presence_catalog.py |
-| 4 | `HEADER::PERDEU` | /workspace/replit_elite_stack_patch/LITERALLY_EVERYTHING_FLOORS.md, /workspace/replit_elite_stack_patch/LITERALLY_EVERYTHING_SKINS.md |
-| 4 | `HEADER::⏳ Sinal Retido → Liberado` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/CARD_TEMPLATE_TAXONOMY.md, git:replit_elite_stack_patch/CARD_TEMPLATE_TAXONOMY.md |
-| 4 | `HEADER::♻️ GALE 1 — RETENTATIVA` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::♻️ GREEN · G1 · HH:MM BRT` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::♻️♻️♻️ GREEN — RECUPERADO NO G1!` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::⚡ ENTER NOW — 3 ROOM(S) CONFIRMED` | /workspace/replit_elite_stack_patch/CARD_TEMPLATE_TAXONOMY.md, /workspace/replit_elite_stack_patch/bot/dual_lane_router.py, git:replit_elite_stack_patch/CARD_TEMPLATE_TAXONOMY.md |
-| 4 | `HEADER::⚡ FLASH — APOSTAR AGORA` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::⚡ G0 DIRETO — Entre com confiança` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::⚡ GOLDEN — APOSTAR AGORA` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::⚡ PLATINUM — APOSTAR AGORA` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::⚡ SEQUENCE — APOSTAR AGORA` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::⚡ SINAL SE FORMANDO ⚡` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::⚡⚡⚡ SINAL FORMANDO` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::⚪ AUTO TIE @…` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::✅ GREEN · G0 · HH:MM BRT` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::✅ WIN #51252 G0` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::✅ WIN — FLASH` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::✅" if outcome == "win" else "❌" if outcome == "loss" else "🟡` | /workspace/replit_elite_stack_patch/bot/fallback_result_sender.py, /workspace/replit_elite_stack_patch/bot/telegram_outbox.py, git:replit_elite_stack_patch/bot/telegram_outbox.py |
-| 4 | `HEADER::✅\s*WIN\s*—|` | /workspace/replit_elite_stack_patch/bot/dual_lane_router.py, /workspace/replit_elite_stack_patch/bot/timing_presence_catalog.py |
-| 4 | `HEADER::✅✅✅ GREEN — VITÓRIA NO G0!` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::❌ LOSS #51250 G0` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::❌ LOSS — GOLDEN` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::❌" if outcome == "loss" else` | /workspace/replit_elite_stack_patch/LITERALLY_EVERYTHING_FLOORS.md, /workspace/replit_elite_stack_patch/LITERALLY_EVERYTHING_SKINS.md |
-| 4 | `HEADER::➖ TIE #51257 G0` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::🎯🟡 EMPATE DIRETO — G0` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::🏆 CAMADAS DO DIA — DD/MM/YYYY` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::🏆 SIGNAL CONFIRMED — ENTER NOW 🏆` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::💎 SOLO ELITE SIGNAL 💎\nENTER NOW` | /workspace/tests/test_skin_gate.py, /workspace/tests/test_telegram_skin_families.py, git:tests/test_skin_gate.py |
-| 4 | `HEADER::💠 PLATINUM SIGNAL — PAR DE OURO` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::📊 AUDIT 360° (DB only)` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::📊 SEQUENCE SIGNAL — ENTER NOW 📊` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::🔐🔐🔐 TRIPLE LOCK CHEGANDO` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::🔥 SEQUência — ENTER NOW 🔥` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::🔥🔥🔥 SEQUÊNCIA QUENTE` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::🔮 DUPLO ELITE ANALISANDO` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::🔴" if color == "red" else` | /workspace/replit_elite_stack_patch/LITERALLY_EVERYTHING_FLOORS.md, /workspace/replit_elite_stack_patch/LITERALLY_EVERYTHING_SKINS.md |
-| 4 | `HEADER::🕐 HH:MM:SS EDT · … · ~Ns window` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::🟡 EMPATE — SEQUENCE` | /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, /workspace/tests/test_skin_gate.py, /workspace/tests/test_telegram_skin_families.py |
-| 4 | `HEADER::🟡 ULTRA TIE — EMPATE CONFIRMADO` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::🟡🟡🟡 SEQUÊNCIA DE EMPATES` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 4 | `HEADER::🟢 1s 🟢` | /workspace/replit_elite_stack_patch/CARD_TEMPLATE_TAXONOMY.md, /workspace/replit_elite_stack_patch/TIMING_CLOCKS.md, git:replit_elite_stack_patch/CARD_TEMPLATE_TAXONOMY.md |
-| 4 | `HEADER::🟢 BacBo Royal UserBot ONLINE 🟢` | /workspace/bot/config/skin_families.py, /workspace/replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md, git:replit_elite_stack_patch/TELEGRAM_CARD_ERAS.md |
-| 3 | `HEADER::⏰ G1 EXPIROU — VERIFICAR SUA MESA` | /workspace/bot/config/skin_families.py, /workspace/tests/test_chat_shelves.py |
-| 3 | `HEADER::♻️ GALE 1 — RETENTATIVA\n💎 SOLO ELITE SIGNAL` | /workspace/tests/test_skin_gate.py, /workspace/tests/test_telegram_skin_families.py, git:tests/test_skin_gate.py |
-| 3 | `HEADER::📋 ✅ GANHOU NO G0` | /workspace/replit_elite_stack_patch/bot/dual_lane_router.py, /workspace/tests/test_chat_shelves.py |
-| 3 | `HEADER::🔴 JANELA: 1s para apostar\n` | /workspace/replit_elite_stack_patch/bot/dual_lane_router.py, /workspace/tests/test_chat_shelves.py |
-| 3 | `HEADER::🟡 EMPATE — SOLO_ELITE\nResultado empatado — proteção ativada!` | /workspace/bot/config/skin_families.py, /workspace/tests/test_telegram_skin_families.py, git:tests/test_telegram_skin_families.py |
-| 2 | `HEADER::APOSTAR AGORA", "FIRE_APOSTAR_AGORA_FAMILY", "FIRE` | /workspace/bot/config/skin_census.py |
-| 2 | `HEADER::CAMADAS DO DIA", "OPS_CAMADAS_DO_DIA", "OPS` | /workspace/bot/config/skin_census.py |
-| 2 | `HEADER::EMERGINDO` | /workspace/bot/config/find_all_skins.py |
-| 2 | `HEADER::EMERGINDO' else 'EMERGING` | /workspace/bot/config/find_all_skins.py |
-| 2 | `HEADER::EMERGIN[DG]O?|\bEMERGING\b", "EMERGING` | /workspace/bot/config/skin_families.py |
-| 2 | `HEADER::ENTER NOW / rooms confirmed` | /workspace/replit_elite_stack_patch/bot/fire_origin.py |
-| 2 | `HEADER::FLASH / ULTRA_TIE / EMERGING / EMPATE DIRETO — thin n, high WR` | /workspace/bot/config/chat_shelves.py |
-| 2 | `HEADER::FLASH": "FIRE_FLASH_APOSTAR` | /workspace/bot/config/skin_census.py |
-| 2 | `HEADER::FLASH": "SIGNAL_KIND_FLASH` | /workspace/bot/config/skin_census.py |
-| 2 | `HEADER::G1 EXPIROU (result ops)` | /workspace/replit_elite_stack_patch/bot/dual_lane_router.py |
-| 2 | `HEADER::G1 EXPIROU / G2 MISS — follow parent shelf when possible` | /workspace/bot/config/chat_shelves.py |
-| 2 | `HEADER::G1 EXPIROU` / `G2 MISS` | /workspace/replit_elite_stack_patch/CHAT_SHELVES.md |
-| 2 | `HEADER::G1 EXPIROU`, `G2 MISS` | /workspace/replit_elite_stack_patch/TEMPLATE_CENSUS.md, git:replit_elite_stack_patch/TEMPLATE_CENSUS.md |
+| 25965 | `TEMPLATE_FP::697129f49638|GT Unique pinned this message` |  |
+| 16711 | `TEMPLATE_FP::233cb21314c4|📡` |  |
+| 14926 | `TEMPLATE_FP::0fd4ce05d59a|📡` |  |
+| 12217 | `TEMPLATE_FP::021444c9dca4|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵` |  |
+| 11331 | `TEMPLATE_FP::6df5af2747b1|📡` |  |
+| 11284 | `TEMPLATE_FP::5337916db9f9|📡` |  |
+| 8748 | `TEMPLATE_FP::8405020319ee|📡` |  |
+| 7738 | `TEMPLATE_FP::cc708c581c16|📡` |  |
+| 7391 | `TEMPLATE_FP::273e2ff55bb8|📡` |  |
+| 6922 | `TEMPLATE_FP::ebd960cb513e|📡` |  |
+| 6783 | `TEMPLATE_FP::d410427a2d0f|📡` |  |
+| 6665 | `TEMPLATE_FP::597f00de8ab1|📡` |  |
+| 6408 | `TEMPLATE_FP::3fb03a500f97|📡` |  |
+| 6307 | `TEMPLATE_FP::feb07e8992a4|📅 CYCLE SUMMARY` |  |
+| 6185 | `TEMPLATE_FP::20ed011e20ea|📡` |  |
+| 5553 | `TEMPLATE_FP::811942ffaa87|📅 CYCLE SUMMARY` |  |
+| 5510 | `TEMPLATE_FP::1338ec0b58b6|📡` |  |
+| 5475 | `TEMPLATE_FP::d80a12b1403f|📡` |  |
+| 5225 | `TEMPLATE_FP::70eff9c59cd0|📡` |  |
+| 4955 | `TEMPLATE_FP::61d30ddaab6c|📡` |  |
+| 4767 | `TEMPLATE_FP::9603a6b68f0d|📡` |  |
+| 4428 | `TEMPLATE_FP::476f84a59333|📡` |  |
+| 4426 | `TEMPLATE_FP::05d8ef6f838f|🟡` |  |
+| 4354 | `TEMPLATE_FP::f6a119af9f2f|📡` |  |
+| 4313 | `TEMPLATE_FP::1c37667da588|⚠T` |  |
+| 4184 | `TEMPLATE_FP::901c79b1121c|📡` |  |
+| 4091 | `TEMPLATE_FP::f4ee8df0aaa2|📡` |  |
+| 4048 | `TEMPLATE_FP::bc9910245509|📡` |  |
+| 3705 | `TEMPLATE_FP::7f62c2627b9d|📡` |  |
+| 3485 | `TEMPLATE_FP::40d3d0b5cc76|📡` |  |
+| 3449 | `TEMPLATE_FP::bc338321ed16|📡` |  |
+| 3238 | `TEMPLATE_FP::b1f0034a9e8a|📡` |  |
+| 3158 | `TEMPLATE_FP::d6c3b51a7448|📡` |  |
+| 3072 | `TEMPLATE_FP::7698ffc46ef9|📡` |  |
+| 3065 | `TEMPLATE_FP::8c5a6238b1a7|📡` |  |
+| 3017 | `TEMPLATE_FP::fb9682cf81f5|📡` |  |
+| 2678 | `TEMPLATE_FP::d10fcc184dde|📡` |  |
+| 2603 | `TEMPLATE_FP::373bd42d2df0|🟢` |  |
+| 2443 | `TEMPLATE_FP::e7b733970023|📡` |  |
+| 2395 | `TEMPLATE_FP::4d19bec532d1|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵` |  |
+| 2331 | `TEMPLATE_FP::fb80f6bfcbea|📡` |  |
+| 2277 | `TEMPLATE_FP::68544611daad|📡` |  |
+| 2207 | `TEMPLATE_FP::88a0b81467b7|📡` |  |
+| 1979 | `TEMPLATE_FP::c8ead70d8cb0|📡` |  |
+| 1907 | `TEMPLATE_FP::8c72baead189|📡` |  |
+| 1877 | `TEMPLATE_FP::8d1c82819844|📡` |  |
+| 1841 | `TEMPLATE_FP::760d33f07ff7|✅` |  |
+| 1756 | `TEMPLATE_FP::6a25cf18e3e9|🔥🔥🔥` |  |
+| 1709 | `TEMPLATE_FP::22dbef5e8226|📡` |  |
+| 1695 | `TEMPLATE_FP::80325a882320|📡` |  |
+| 1694 | `TEMPLATE_FP::e92f48bb9a09|✅` |  |
+| 1674 | `TEMPLATE_FP::fc816960e10e|♻T GREEN · GT · T BRT` |  |
+| 1656 | `TEMPLATE_FP::9e162719bdd2|📡` |  |
+| 1653 | `TEMPLATE_FP::47e91a317621|📡` |  |
+| 1567 | `TEMPLATE_FP::debb57ad97db|📡` |  |
+| 1508 | `TEMPLATE_FP::082ca5e9c32e|📡` |  |
+| 1466 | `TEMPLATE_FP::a90faa9df24a|✅` |  |
+| 1431 | `TEMPLATE_FP::4847868e55d7|📡` |  |
+| 1394 | `TEMPLATE_FP::b03d9ed1950b|📡` |  |
+| 1386 | `TEMPLATE_FP::8485aba3102b|📡` |  |
+| 1376 | `TEMPLATE_FP::7809fbcb8232|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴` |  |
+| 1348 | `TEMPLATE_FP::c2f76fa78ea7|🔥🔥🔥` |  |
+| 1335 | `TEMPLATE_FP::945d25e92dcf|📡` |  |
+| 1325 | `TEMPLATE_FP::562f0a0acceb|✅` |  |
+| 1303 | `TEMPLATE_FP::8f749f4c5cbd|✅ AUTO WIN` |  |
+| 1226 | `TEMPLATE_FP::67b8ef0edf41|📡` |  |
+| 1224 | `TEMPLATE_FP::24322a3d5fa9|📡` |  |
+| 1193 | `TEMPLATE_FP::7bb8ffb6ba41|✅` |  |
+| 1171 | `TEMPLATE_FP::4b71e6b6448b|❌` |  |
+| 1146 | `TEMPLATE_FP::f5685e529409|📡` |  |
+| 1083 | `TEMPLATE_FP::baf9f5771385|✅ AUTO WIN` |  |
+| 1041 | `TEMPLATE_FP::e83ea1213bb9|✅ AUTO WIN` |  |
+| 1027 | `TEMPLATE_FP::5fa28d8783be|📡` |  |
+| 1025 | `TEMPLATE_FP::47ac8164db5e|📡` |  |
+| 1018 | `TEMPLATE_FP::4a34c1eaf55b|📡` |  |
+| 1015 | `TEMPLATE_FP::4e446a89d30e|📡` |  |
+| 1008 | `TEMPLATE_FP::5a2ff9bbbc11|📡` |  |
+| 985 | `TEMPLATE_FP::342c83a9b8db|✅ GREEN · GT · T BRT` |  |
+| 966 | `TEMPLATE_FP::7b4aae77dd64|📡` |  |
+| 929 | `TEMPLATE_FP::882722836eb3|✅ AUTO WIN` |  |
 
 ## All TOKEN / REGISTERED / DB_KIND ids
 
 | kind | key | count | sources |
 |---|---|---:|---|
-| TOKEN | `OPS_MANUAL_RESULT_HINT` | 11486 | CODE,TELEGRAM |
-| TOKEN | `FIRE_SOLO_ELITE_SIGNAL` | 11239 | CODE,TELEGRAM |
-| TOKEN | `RESULT_WIN_SOLO_ELITE` | 6060 | CODE,TELEGRAM |
-| TOKEN | `ONLINE_BANNER` | 3549 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
-| TOKEN | `FIRE_GOLDEN_SIGNAL_ENTER_NOW` | 2974 | CODE,TELEGRAM |
-| TOKEN | `CD_FIRE_TIMER_BRT_EDT_APOSTAR` | 2476 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
-| TOKEN | `RESULT_WIN_GOLDEN` | 1930 | CODE,TELEGRAM |
-| TOKEN | `RESULT_LOSS_G0_FALHOU` | 1926 | CODE,TELEGRAM |
-| TOKEN | `CD_RES_RODADAS_TEMPO` | 1825 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
-| TOKEN | `RESULT_WIN_SEQUENCE` | 1619 | CODE,TELEGRAM |
-| TOKEN | `CD_FIRE_QUANTUM_LOCK` | 1517 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
-| TOKEN | `FIRE_PLATINUM` | 1387 | CODE,TELEGRAM |
-| TOKEN | `SIGNAL_KIND_SOLO_ELITE` | 1257 | CODE,GIT_HISTORY |
-| TOKEN | `RESULT_FORENSIC_INTERVALO` | 898 | CODE,REGISTERED,TELEGRAM |
-| TOKEN | `SIGNAL_KIND_SEQUENCE` | 857 | CODE,GIT_HISTORY |
-| TOKEN | `FIRE_GALE_1_RETENTATIVA_SOLO_ELITE` | 808 | CODE,TELEGRAM |
-| TOKEN | `RESULT_LOSS_SOLO_ELITE` | 598 | CODE,TELEGRAM |
-| TOKEN | `CD_RES_GREEN_G_BRT` | 567 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
-| TOKEN | `RESULT_WIN_PLATINUM` | 534 | CODE,TELEGRAM |
-| TOKEN | `SIGNAL_KIND_GOLDEN` | 478 | CODE,GIT_HISTORY |
-| TOKEN | `FIRE_EMPTY` | 468 | CODE,TELEGRAM |
-| TOKEN | `FIRE_GALE_1_RETENTATIVA_GOLDEN` | 460 | CODE,TELEGRAM |
-| TOKEN | `RESULT_EMPATE_SOLO_ELITE` | 334 | CODE,TELEGRAM |
-| TOKEN | `SIGNAL_KIND_PLATINUM` | 332 | CODE,GIT_HISTORY |
-| TOKEN | `CD_FIRE_RUSH_NS_LEFT` | 322 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
-| TOKEN | `CD_RES_BELL_GANHOU` | 223 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
-| TOKEN | `RESULT_LOSS_SEQUENCE` | 188 | CODE,TELEGRAM |
-| TOKEN | `RESULT_LOSS_GOLDEN` | 179 | CODE,TELEGRAM |
-| TOKEN | `RESULT_EMPATE_SEQUENCE` | 164 | CODE,TELEGRAM |
-| TOKEN | `SIGNAL_KIND_FLASH` | 122 | CODE,GIT_HISTORY |
-| TOKEN | `RESULT_EMPATE_GOLDEN` | 120 | CODE,TELEGRAM |
-| TOKEN | `FIRE_SEQUENCE` | 119 | CODE,TELEGRAM |
-| TOKEN | `FIRE_GOD_TIER_SYNC_APERTADO_3_SALAS_TOP_CONF_75` | 113 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_WIN_EMPTY` | 20571 | CODE,TELEGRAM |
+| TOKEN | `OPS_MANUAL_RESULT_HINT` | 11488 | CODE,TELEGRAM |
+| TOKEN | `FIRE_SOLO_ELITE_SIGNAL` | 11241 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_EMPTY` | 6466 | CODE,TELEGRAM |
+| TOKEN | `RESULT_WIN_SOLO_ELITE` | 6062 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_ALERTA_DE_EMPATE_TIE_ALERT` | 5258 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_EMPTY` | 4344 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_SEQU_NCIA_DE_EMPATES` | 3947 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_LOSS_EMPTY` | 3713 | CODE,TELEGRAM |
+| TOKEN | `ONLINE_BANNER` | 3553 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
+| TOKEN | `FIRE_GOLDEN_SIGNAL_ENTER_NOW` | 2976 | CODE,TELEGRAM |
+| TOKEN | `CD_FIRE_TIMER_BRT_EDT_APOSTAR` | 2478 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
+| TOKEN | `RESULT_WIN_GOLDEN` | 1932 | CODE,TELEGRAM |
+| TOKEN | `RESULT_LOSS_G0_FALHOU` | 1928 | CODE,TELEGRAM |
+| TOKEN | `CD_RES_RODADAS_TEMPO` | 1827 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
+| TOKEN | `RESULT_WIN_SEQUENCE` | 1621 | CODE,TELEGRAM |
+| TOKEN | `CD_FIRE_QUANTUM_LOCK` | 1519 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
+| TOKEN | `FIRE_PLATINUM` | 1389 | CODE,TELEGRAM |
+| TOKEN | `SIGNAL_KIND_SOLO_ELITE` | 1263 | CODE,GIT_HISTORY |
+| TOKEN | `RESULT_FORENSIC_INTERVALO` | 900 | CODE,REGISTERED,TELEGRAM |
+| TOKEN | `SIGNAL_KIND_SEQUENCE` | 867 | CODE,GIT_HISTORY |
+| TOKEN | `FIRE_GALE_1_RETENTATIVA_SOLO_ELITE` | 810 | CODE,TELEGRAM |
+| TOKEN | `RESULT_LOSS_SOLO_ELITE` | 600 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_EMPATE_CR_TICO` | 580 | CODE,TELEGRAM |
+| TOKEN | `CD_RES_GREEN_G_BRT` | 569 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
+| TOKEN | `RESULT_WIN_PLATINUM` | 536 | CODE,TELEGRAM |
+| TOKEN | `SIGNAL_KIND_GOLDEN` | 520 | CODE,GIT_HISTORY |
+| TOKEN | `RESULT_BANNER_TIE_JANELA_DE_EMPATE_ATIVA` | 498 | CODE,TELEGRAM |
+| TOKEN | `FIRE_EMPTY` | 470 | CODE,TELEGRAM |
+| TOKEN | `FIRE_GALE_1_RETENTATIVA_GOLDEN` | 462 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_PRESS_O_DE_EMPATE_ALERTA_AUTOM` | 456 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_DO_NOT_BET_ROUND_PASSED` | 449 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_BACBOBRASILEIRO01_SOLO_ELITE_A` | 380 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_G1_N_O_FOI_G2_OPCIONAL_RISCO_ALTO` | 370 | CODE,TELEGRAM |
+| TOKEN | `SIGNAL_KIND_PLATINUM` | 346 | CODE,GIT_HISTORY |
+| TOKEN | `RESULT_EMPATE_SOLO_ELITE` | 336 | CODE,TELEGRAM |
+| TOKEN | `CD_FIRE_RUSH_NS_LEFT` | 324 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
+| TOKEN | `RESULT_GALE_G0_N_O_FOI_ENTRE_NO_G1_AGORA` | 289 | CODE,TELEGRAM |
+| TOKEN | `CD_RES_BELL_GANHOU` | 225 | CODE,GIT_HISTORY,REGISTERED,TELEGRAM |
+| TOKEN | `RESULT_GALE_G2_N_O_FOI_PERDA_TOTAL_PARE_AGORA` | 219 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AVISO_DE_EMPATE` | 208 | CODE,TELEGRAM |
+| TOKEN | `RESULT_LOSS_SEQUENCE` | 190 | CODE,TELEGRAM |
+| TOKEN | `RESULT_LOSS_GOLDEN` | 181 | CODE,TELEGRAM |
+| TOKEN | `RESULT_EMPATE_SEQUENCE` | 166 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_CORINGADADOS_SOLO_ELITE_AI` | 145 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_SEQU_NCIA_17X_AZUL` | 136 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_BAD_COALITION_PAIR_SAVED_272_BLOCKED_WIN` | 132 | CODE,TELEGRAM |
+| TOKEN | `SIGNAL_KIND_FLASH` | 124 | CODE,GIT_HISTORY |
+| TOKEN | `RESULT_EMPATE_GOLDEN` | 122 | CODE,TELEGRAM |
+| TOKEN | `FIRE_SEQUENCE` | 121 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_ENTRY_CONFIRMED_HOUR_BLOCK_SAVED_345_BLO` | 120 | CODE,TELEGRAM |
+| TOKEN | `FIRE_GOD_TIER_SYNC_APERTADO_3_SALAS_TOP_CONF_75` | 115 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_TOP_10_PAIRS` | 100 | CODE,TELEGRAM |
 | TOKEN | `FIRE_COLOR_G0` | 94 | CODE |
-| TOKEN | `FIRE_SINAL_RETIDO_LIBERADO` | 84 | CODE,REGISTERED,TELEGRAM |
+| TOKEN | `FIRE_SINAL_RETIDO_LIBERADO` | 90 | CODE,REGISTERED,TELEGRAM |
 | TOKEN | `SIGNAL_KIND_EMERGING` | 74 | CODE,GIT_HISTORY |
-| TOKEN | `RESULT_LOSS_PLATINUM` | 58 | CODE,TELEGRAM |
-| TOKEN | `RESULT_EMPATE_PROTE_O_ATIVADA_TIE_COVER_HIT` | 56 | CODE,TELEGRAM |
-| TOKEN | `RESULT_EMPATE` | 44 | CODE,GIT_HISTORY,REGISTERED |
-| TOKEN | `RESULT_LOSS_G1_FALHOU` | 40 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_CLUSTER_DE_EMPATE_DETECTADO` | 70 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_80_GATE_G0_RECOVERY_GATE_NET_NEGATIVE_31` | 68 | CODE,TELEGRAM |
+| TOKEN | `RESULT_AUTO_TIE` | 66 | CODE,REGISTERED |
+| TOKEN | `RESULT_LOSS_PLATINUM` | 60 | CODE,TELEGRAM |
+| TOKEN | `RESULT_EMPATE_PROTE_O_ATIVADA_TIE_COVER_HIT` | 58 | CODE,TELEGRAM |
+| TOKEN | `RESULT_EMPATE` | 54 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_BANNER_TIE_POST_TIE_COLOR_ENTRY` | 52 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AZUL` | 51 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_VERMELHO` | 51 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_ISADADOS_PLATINUM_AI` | 48 | CODE,TELEGRAM |
+| TOKEN | `FIRE_JANELA_1S_SOLO_ELITE` | 47 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_RIGOSINAIS_PLATINUM_AI` | 46 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_ENTRY_CONFIRMED_HOUR_BLOCK_SAVED_360_BLO` | 45 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_BACCARAT_B_ROBOFREEBACBO24HORASS_N_24_WR` | 44 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_PLATINUM_DUPE_GUARD_SAVED_371_BLOCKED_WI` | 44 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_RESULTADO_GANHOU` | 43 | CODE,TELEGRAM |
+| TOKEN | `RESULT_LOSS_G1_FALHOU` | 42 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_RQDADOS1_GOLDEN_AI` | 41 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_RQDADOS_GOLDEN_AI` | 41 | CODE,TELEGRAM |
+| TOKEN | `FIRE_GALE_RETENTATIVA` | 37 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `FIRE_SOLO_ELITE_ENTER` | 37 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_GALE_80_GATE_DYNAMIC_THRESHOLD_BAD_HOUR_NET_N` | 37 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_WIN_VERMELHO` | 36 | CODE,TELEGRAM |
 | TOKEN | `FIRE_JANELA_TIMED` | 35 | CODE,GIT_HISTORY,REGISTERED |
-| TOKEN | `FIRE_SOLO_ELITE_ENTER` | 35 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_BANNER_WIN_AZUL` | 35 | CODE,TELEGRAM |
+| TOKEN | `FIRE_GOLDEN_ENTER` | 34 | CODE,GIT_HISTORY,REGISTERED |
 | TOKEN | `SIGNAL_KIND_ULTRA_TIE` | 34 | CODE,GIT_HISTORY |
-| TOKEN | `FIRE_GALE_RETENTATIVA` | 33 | CODE,GIT_HISTORY,REGISTERED |
-| TOKEN | `FIRE_GOLDEN_ENTER` | 30 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_LOSS_TIER` | 32 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_BANNER_TIE_DUPLA_CONFIRMA_O_DE_EMPATE` | 31 | CODE,TELEGRAM |
+| TOKEN | `RESULT_WIN_TIER` | 31 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_BANNER_TIE_DADOSBACBOBR_GOLDEN_AI` | 30 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_UMGALESALABACBO123_GOLDEN_AI` | 30 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_BOTTOM_10_PAIRS_CONSIDER_BLOCKING` | 30 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_BACBOAOVIVOVIP_GOLDEN_AI` | 29 | CODE,TELEGRAM |
+| TOKEN | `FIRE_PLATINUM_ENTER` | 28 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `FIRE_SEQUENCE_ENTER` | 28 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_RIGOSINAIS_26_05_2026` | 28 | CODE,TELEGRAM |
 | TOKEN | `FIRE_GALE_ENTRE_NOVAMENTE` | 27 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_BANNER_TIE_EMPATE_PROTE_O_ATIVADA` | 27 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_GOLDEN_ENTRADA_AI` | 27 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_SEQU_NCIA_18X_AZUL` | 27 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_TIMING_GATE_SAVED_359_BLOCKED_WINS_512_N` | 27 | CODE,TELEGRAM |
 | TOKEN | `FIRE_FLASH_APOSTAR` | 26 | CODE,REGISTERED |
-| TOKEN | `FIRE_PLATINUM_ENTER` | 26 | CODE,GIT_HISTORY,REGISTERED |
-| TOKEN | `FIRE_SEQUENCE_ENTER` | 26 | CODE,GIT_HISTORY,REGISTERED |
 | TOKEN | `FIRE_ULTRA_TIE` | 26 | CODE,GIT_HISTORY,REGISTERED |
 | TOKEN | `NORMAL_RESULT` | 26 | CODE,GIT_HISTORY |
-| TOKEN | `RESULT_WIN_TIER` | 23 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_RIGOSINAIS_27_05_2026` | 26 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_FULL_AUDIT_3_FINDINGS` | 26 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_GALE_FILTER_SAVED_414_BLOCKED_WINS_456_N` | 26 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_RIGOSINAIS_UMGALESALABACBO123_N_30_WR_96` | 26 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_SEQU_NCIA_16X_AZUL` | 25 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_CORINGADADOS_PLATINUM_AI` | 24 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_BAD_COALITION_PAIR_SAVED_345_BLOCKED_WIN` | 24 | CODE,TELEGRAM |
+| TOKEN | `FIRE_SIGNAL_CONFIRMED_ENTER_NOW` | 23 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_CORINGADADOS_26_05_20` | 23 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_EMPATE` | 23 | CODE,TELEGRAM |
+| TOKEN | `RESULT_EMPATE_PLATINUM` | 23 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_G1_EXPIROU_VERIFIQUE_SUA_MESA` | 23 | CODE,TELEGRAM |
 | TOKEN | `COUNTDOWN_RESULT` | 22 | CODE,GIT_HISTORY |
 | TOKEN | `COUNTDOWN_SIGNAL_FIRE` | 22 | CODE,GIT_HISTORY |
-| TOKEN | `FIRE_SIGNAL_CONFIRMED_ENTER_NOW` | 21 | CODE,TELEGRAM |
+| TOKEN | `OPS_WEBWATCHDOG_API_SERVER_OFFLINE_5_MIN` | 22 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_CORINGADADOS_27_05_20` | 22 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_P1_P2_TOP_COALITION_PAIRS_N_10_BY_WR_THE` | 22 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_RIGOSINAIS_21_05_2026` | 21 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_ROBOFREEBACBO24HORASS_GOLDEN_A` | 21 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_BACBOAOVIVOVIP_SINAISBACBOANGOLA_N_11_WR` | 21 | CODE,TELEGRAM |
 | TOKEN | `FIRE_COMPACT_HASH` | 20 | CODE,GIT_HISTORY,REGISTERED |
-| TOKEN | `RESULT_LOSS_TIER` | 20 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `FIRE_CONFIRMED_ENTER` | 20 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `FIRE_PREPARE_G1` | 20 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_CORINGADADOS_21_05_20` | 20 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_BAD_COALITION_PAIR_SAVED_340_BLOCKED_WIN` | 20 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_GANHOU_WIN_G1` | 20 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_SEQU_NCIA_33X_AZUL` | 20 | CODE,TELEGRAM |
 | TOKEN | `RES_STATE` | 20 | CODE,GIT_HISTORY |
 | TOKEN | `FIRE_SOLO_APOSTAR` | 19 | CODE,GIT_HISTORY,REGISTERED |
-| TOKEN | `FIRE_CONFIRMED_ENTER` | 18 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `OPS_G1_EXPIROU` | 19 | CODE,REGISTERED |
+| TOKEN | `RESULT_GALE_PERFORMANCE_GUARDIAN_ATEN_O` | 19 | CODE,TELEGRAM |
 | TOKEN | `FIRE_EMPATE_DIRETO_G0` | 18 | CODE,GIT_HISTORY,REGISTERED |
 | TOKEN | `FIRE_G0_DIRETO` | 18 | CODE,GIT_HISTORY,REGISTERED |
-| TOKEN | `FIRE_PREPARE_G1` | 18 | CODE,GIT_HISTORY,REGISTERED |
-| TOKEN | `OPS_G1_EXPIROU` | 17 | CODE,REGISTERED |
+| TOKEN | `OPS_STREAK_BANNER` | 18 | CODE,REGISTERED |
+| TOKEN | `RESULT_GALE_80_GATE_COALITION_DEDUP_NET_NEGATIVE_134` | 18 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_BACBOAOVIVOVIP_UMGALESALABACBO123_N_25_W` | 18 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_BACCARAT_B_SPEEDBACCARAT_A_01_N_11_WR_10` | 18 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_ENTRY_CONFIRMED_HOUR_BLOCK_SAVED_383_BLO` | 18 | CODE,TELEGRAM |
 | TOKEN | `OPS_G2_MISS` | 17 | CODE,REGISTERED |
+| TOKEN | `OPS_TIE_ALERT` | 17 | CODE,REGISTERED |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_CORINGADADOS_25_05_20` | 17 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_RIGOSINAIS_24_05_2026` | 17 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_DYNAMIC_THRESHOLD_BAD_HOUR_SAVED_294_BLO` | 17 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_FULL_AUDIT_25_FINDINGS` | 17 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_GALE_FILTER_SAVED_418_BLOCKED_WINS_458_N` | 17 | CODE,TELEGRAM |
 | TOKEN | `NORMAL_SIGNAL_FIRE` | 16 | CODE,GIT_HISTORY |
 | TOKEN | `OPS_CAMADAS_DO_DIA` | 16 | CODE,REGISTERED |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_CORINGADADOS_19_05_20` | 16 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_CORINGADADOS_20_05_20` | 16 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_CORINGADADOS_24_05_20` | 16 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_RIGOSINAIS_20_05_2026` | 16 | CODE,TELEGRAM |
+| TOKEN | `RESULT_TIMED_WINDOW` | 16 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_WIN_FLASH` | 16 | CODE,TELEGRAM |
 | TOKEN | `RES_WIN_KIND` | 16 | CODE,GIT_HISTORY |
+| TOKEN | `FIRE_JANELA_1S_GOLDEN` | 15 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_BACCARAT_A_12_05_2026` | 15 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_BACCARAT_B_11_05_2026` | 15 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_CORINGADADOS_GOLDEN_AI` | 15 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_ROBOBACBODADOS_GOLDEN_AI` | 15 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_SINAISBACBOANGOLA_GOLDEN_AI` | 15 | CODE,TELEGRAM |
 | TOKEN | `CD_FIRE_DO_NOT_BET_PASSED` | 14 | CODE,GIT_HISTORY |
 | TOKEN | `FIRE_GOLDEN` | 14 | CODE,GIT_HISTORY |
 | TOKEN | `FIRE_GOLDEN_APOSTAR` | 14 | CODE,REGISTERED |
+| TOKEN | `FIRE_JANELA_1S_FLASH` | 14 | CODE,TELEGRAM |
 | TOKEN | `FIRE_PLATINUM_APOSTAR` | 14 | CODE,REGISTERED |
 | TOKEN | `FIRE_SEQUENCE_APOSTAR` | 14 | CODE,REGISTERED |
 | TOKEN | `FIRE_SEQUENCIA_ENTER_NOW` | 14 | CODE,GIT_HISTORY,REGISTERED |
 | TOKEN | `ONLINE_LUXURY_OUTBOX` | 14 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `RESULT_BANNER_TIE_RIGOSINAIS_GOLDEN_AI` | 14 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BELL_GANHOU` | 14 | CODE,REGISTERED |
 | TOKEN | `RESULT_COMPACT_WIN_HASH` | 14 | CODE,REGISTERED |
-| TOKEN | `RESULT_TIMED_WINDOW` | 14 | CODE,GIT_HISTORY,REGISTERED |
+| TOKEN | `FIRE_JANELA_0S_GENERIC` | 13 | CODE,TELEGRAM |
 | TOKEN | `OPS_ROOM_QUARANTINE` | 13 | CODE |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_BACBO_SINAIS_11_05_20` | 13 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_BACCARAT_A_10_05_2026` | 13 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_BACCARAT_A_11_05_2026` | 13 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_ISADADOS_21_05_2026_0` | 13 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_GANHOU_WIN_G0` | 13 | CODE,TELEGRAM |
+| TOKEN | `RESULT_ORACLE_CARD` | 13 | CODE,REGISTERED |
 | TOKEN | `FIRE_APOSTAR_AGORA_FAMILY` | 12 | CODE |
 | TOKEN | `FIRE_SEQUENCIA_STREAK` | 12 | CODE,GIT_HISTORY |
 | TOKEN | `FIRE_SINAL_RETIDO` | 12 | CODE,GIT_HISTORY |
+| TOKEN | `OPS_PREALERT_FORMING` | 12 | CODE,REGISTERED |
+| TOKEN | `OPS_SEQ_EMPATES` | 12 | CODE,REGISTERED |
 | TOKEN | `OPS_SEQ_FRIA` | 12 | CODE,REGISTERED |
 | TOKEN | `OPS_SEQ_QUENTE` | 12 | CODE,REGISTERED |
 | TOKEN | `OPS_TRIPLE_LOCK` | 12 | CODE,REGISTERED |
-| TOKEN | `RESULT_AUTO_TIE` | 12 | CODE,REGISTERED |
-| TOKEN | `RESULT_BELL_GANHOU` | 12 | CODE,REGISTERED |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_BACCARAT_B_10_05_2026` | 12 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_ISADADOS_19_05_2026_1` | 12 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_ISADADOS_27_05_2026_0` | 12 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_AUTO_TIE_RIGOSINAIS_19_05_2026` | 12 | CODE,TELEGRAM |
+| TOKEN | `RESULT_BANNER_TIE_MARTINSWINBACBO_GOLDEN_AI` | 12 | CODE,TELEGRAM |
 | TOKEN | `RESULT_COMPACT_LOSS_HASH` | 12 | CODE,REGISTERED |
+| TOKEN | `RESULT_FLASH_WIN` | 12 | CODE,REGISTERED |
+| TOKEN | `RESULT_GALE_FULL_AUDIT_23_FINDINGS` | 12 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_FULL_AUDIT_24_FINDINGS` | 12 | CODE,TELEGRAM |
+| TOKEN | `RESULT_GALE_RIGOSINAIS_UMGALESALABACBO123_N_17_WR_94` | 12 | CODE,TELEGRAM |
 | TOKEN | `RESULT_GREEN_COMPACT_G0` | 12 | CODE,REGISTERED |
 | TOKEN | `RESULT_GREEN_COMPACT_G1` | 12 | CODE,REGISTERED |
 | TOKEN | `RESULT_GREEN_LEGACY_G0` | 12 | CODE,REGISTERED |
@@ -217,21 +328,21 @@ Sources: `{'TELEGRAM': 6092, 'CODE': 369, 'GIT_HISTORY': 159, 'REGISTERED': 59}`
 | TOKEN | `OPS_GATE_HEALTH_DUMP` | 10 | CODE |
 | TOKEN | `OPS_LOSS_COOLDOWN` | 10 | CODE,REGISTERED |
 | TOKEN | `OPS_PREALERT_3BOLT` | 10 | CODE,REGISTERED |
-| TOKEN | `OPS_PREALERT_FORMING` | 10 | CODE,REGISTERED |
-| TOKEN | `OPS_SEQ_EMPATES` | 10 | CODE,REGISTERED |
-| TOKEN | `OPS_STREAK_BANNER` | 10 | CODE,REGISTERED |
 | TOKEN | `RESULT_COMPACT_TIE_HASH` | 10 | CODE,REGISTERED |
-| TOKEN | `RESULT_FLASH_WIN` | 10 | CODE,REGISTERED |
 | TOKEN | `RESULT_GALE_OUTCOME` | 10 | CODE |
 | TOKEN | `RES_LOSS_KIND` | 10 | CODE,GIT_HISTORY |
+| TOKEN | `FIRE_G0_MISS_ENTRE_G1` | 9 | CODE,REGISTERED |
+| TOKEN | `FIRE_GOD_TIER` | 9 | CODE,REGISTERED |
 | TOKEN | `CD_FIRE_MULTI_ALARM` | 8 | CODE,GIT_HISTORY |
 | TOKEN | `CD_FIRE_QUANTUM` | 8 | CODE |
 | TOKEN | `FIRE_FLASH` | 8 | CODE |
 | TOKEN | `FIRE_SOLO_ELITE` | 8 | CODE,GIT_HISTORY |
+| TOKEN | `OPS_CORRECAO` | 8 | CODE,REGISTERED |
 | TOKEN | `RESULT_LOOKBACK_HOURS` | 8 | CODE,GIT_HISTORY |
 | TOKEN | `RESULT_TRUTH` | 8 | CODE |
 | TOKEN | `RES_AUTO_LOSS` | 8 | CODE |
 | TOKEN | `RES_AUTO_TIE` | 8 | CODE |
+| TOKEN | `FIRE_GOLDEN_ENTRE_AGORA` | 7 | CODE,REGISTERED |
 | TOKEN | `FIRE_JANELA_11S_SOLO_ELITE` | 7 | CODE |
 | TOKEN | `FIRE_JANELA_17S_GOLDEN` | 7 | CODE |
 | TOKEN | `CD_RES_BELL_PERDEU` | 6 | CODE,GIT_HISTORY |
@@ -239,8 +350,8 @@ Sources: `{'TELEGRAM': 6092, 'CODE': 369, 'GIT_HISTORY': 159, 'REGISTERED': 59}`
 | TOKEN | `FIRE_ENTER_NOW_N_ROOMS` | 6 | CODE |
 | TOKEN | `FIRE_JANELA` | 6 | CODE |
 | TOKEN | `FIRE_JANELA_1S_SEQUENCE` | 6 | CODE |
+| TOKEN | `OPS_JANELA_PRIME` | 6 | CODE,REGISTERED |
 | TOKEN | `OPS_MANUAL_RESULT` | 6 | CODE |
-| TOKEN | `RESULT_ORACLE_CARD` | 6 | CODE |
 | TOKEN | `RES_G2_MISS_STOP` | 6 | CODE,GIT_HISTORY |
 | TOKEN | `RES_GREEN_G1` | 6 | CODE,GIT_HISTORY |
 | TOKEN | `RES_ORACLE_CARD` | 6 | CODE,GIT_HISTORY |

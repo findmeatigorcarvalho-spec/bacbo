@@ -530,6 +530,68 @@ SKIN_FAMILIES: Tuple[SkinFamily, ...] = (
         "🛑 G2 MISS — PERDA TOTAL — PARE AGORA",
         notes="Hard stop card — follow parent; never invent G3",
     ),
+    # Archaeology gaps — high volume, previously classified UNKNOWN
+    SkinFamily(
+        "FIRE_GOD_TIER",
+        ROLE_FIRE,
+        "elite",
+        "FIRE GOD-TIER sync/conf",
+        "💎 GOD-TIER — Sync apertado + ≥3 salas top + conf≥75%",
+        LANE_MONEY,
+        notes="TG FIRE_GOD_TIER_SYNC_* — rare elite multi-room",
+    ),
+    SkinFamily(
+        "FIRE_GOLDEN_ENTRE_AGORA",
+        ROLE_FIRE,
+        "1",
+        "FIRE GOLDEN ENTRE AGORA (PT)",
+        "🏆🏆🏆 GOLDEN SIGNAL — ENTRE AGORA 🏆🏆🏆",
+        LANE_MONEY,
+        notes="Portuguese ENTER NOW twin of FIRE_GOLDEN_ENTER; keep distinct skin",
+    ),
+    SkinFamily(
+        "FIRE_G0_MISS_ENTRE_G1",
+        ROLE_FIRE,
+        "1b",
+        "FIRE G0 miss → enter G1 now",
+        "⚠️ G0 NÃO FOI — ENTRE NO G1 AGORA",
+        LANE_MONEY,
+        kind_scoped=True,
+        variable_n=True,
+        notes="Distinct from FIRE_PREPARE_G1 / gale retentativa",
+    ),
+    SkinFamily(
+        "RESULT_ORACLE_CARD",
+        ROLE_RESULT,
+        "oracle",
+        "RESULT ORACLE CARD",
+        "🔮 ORACLE CARD #N",
+        kind_scoped=True,
+        notes="Floor camada + tier/kind + timing delay — glue under parent",
+    ),
+    SkinFamily(
+        "OPS_TIE_ALERT",
+        ROLE_OPS,
+        "2",
+        "OPS alerta de empate / tie alert",
+        "🟡 ALERTA DE EMPATE / TIE ALERT 🟡",
+        notes="High-volume tie pressure family (also EMPATE CRÍTICO / JANELA DE EMPATE)",
+    ),
+    SkinFamily(
+        "OPS_CORRECAO",
+        ROLE_OPS,
+        "ops_result",
+        "OPS correção / correction",
+        "♻️♻️♻️ CORREÇÃO / CORRECTION ♻️♻️♻️",
+    ),
+    SkinFamily(
+        "OPS_JANELA_PRIME",
+        ROLE_OPS,
+        "cd",
+        "OPS janela prime — sinais ativos",
+        "🟢🟢 JANELA PRIME — SINAIS ATIVOS 🟢🟢",
+        notes="Countdown-adjacent ops banner",
+    ),
     SkinFamily(
         "CD_RES_GREEN_G_BRT",
         ROLE_RESULT,
@@ -912,6 +974,16 @@ def classify_telegram_skin(
     # ── Named money FIRE headers ────────────────────────────────────────────
     if re.search(r"SIGNAL\s+CONFIRMED\s*—\s*ENTER\s+NOW", body, re.I):
         return _match("FIRE_CONFIRMED_ENTER", text=body, first_line=fl, kind=hint_kind)
+    if re.search(r"GOD[- ]?TIER", fl, re.I) or re.search(r"GOD[- ]?TIER", body, re.I):
+        return _match(
+            "FIRE_GOD_TIER",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"GOLDEN\s+SIGNAL\s*—\s*ENTRE\s+AGORA", body, re.I):
+        return _match("FIRE_GOLDEN_ENTRE_AGORA", text=body, first_line=fl, kind="GOLDEN")
     if re.search(r"GOLDEN\s+SIGNAL\s*—\s*ENTER\s+NOW", body, re.I):
         return _match("FIRE_GOLDEN_ENTER", text=body, first_line=fl, kind="GOLDEN")
     if re.search(r"SOLO\s*ELITE\s+SIGNAL", body, re.I):
@@ -928,10 +1000,42 @@ def classify_telegram_skin(
         return _match("FIRE_EMPATE_DIRETO_G0", text=body, first_line=fl, kind=hint_kind)
     if re.search(r"G0\s+DIRETO", fl, re.I):
         return _match("FIRE_G0_DIRETO", text=body, first_line=fl, kind=hint_kind)
+    if re.search(r"G0\s+N[AÃ]O\s+FOI\s*—\s*ENTRE\s+NO\s+G1", fl, re.I) or re.search(
+        r"G0\s+MISS\s*—\s*G1\s+AGORA", fl, re.I
+    ):
+        return _match(
+            "FIRE_G0_MISS_ENTRE_G1",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            clock_n=_extract_clock_n(body),
+            lane_override=LANE_MONEY,
+        )
     if re.search(r"PREPARE\s+O\s+G1", fl, re.I):
         return _match("FIRE_PREPARE_G1", text=body, first_line=fl, kind=hint_kind)
     if re.search(r"SEQU[EÊ]NCIA\s*—\s*ENTER\s+NOW", fl, re.I):
         return _match("FIRE_SEQUENCIA_ENTER_NOW", text=body, first_line=fl, kind="SEQUENCE")
+
+    # ── RESULT oracle / tie alerts (before generic OPS) ─────────────────────
+    if re.search(r"ORACLE\s+CARD", body, re.I):
+        return _match(
+            "RESULT_ORACLE_CARD",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+        )
+    if re.search(
+        r"ALERTA\s+DE\s+EMPATE|TIE\s+ALERT|EMPATE\s+CR[IÍ]TICO|"
+        r"JANELA\s+DE\s+EMPATE\s+ATIVA|PRESS[AÃ]O\s+DE\s+EMPATE|"
+        r"AVISO\s+DE\s+EMPATE",
+        body,
+        re.I,
+    ):
+        return _match("OPS_TIE_ALERT", text=body, first_line=fl)
+    if re.search(r"CORRE[CÇ][AÃ]O\s*/\s*CORRECTION", body, re.I):
+        return _match("OPS_CORRECAO", text=body, first_line=fl)
+    if re.search(r"JANELA\s+PRIME", fl, re.I):
+        return _match("OPS_JANELA_PRIME", text=body, first_line=fl)
 
     # ── OPS ─────────────────────────────────────────────────────────────────
     if re.search(r"LOSS\s+COOLDOWN", body, re.I):

@@ -92,6 +92,40 @@ class ChatShelvesTest(unittest.TestCase):
         self.assertIn(SHELF_OPS_EXPIRE, ids)
         self.assertIn(SHELF_PENTHOUSE_MONEY, ids)
 
+    def test_archaeology_gap_skins_registered(self):
+        from bot.config.chat_shelves import SHELF_GALE, SHELF_OVERFLOW
+
+        cases = [
+            (
+                "💎 GOD-TIER — Sync apertado + ≥3 salas top + conf≥75%",
+                "FIRE_GOD_TIER",
+                SHELF_UPPER_MONEY,
+            ),
+            (
+                "🏆🏆🏆 GOLDEN SIGNAL — ENTRE AGORA 🏆🏆🏆",
+                "FIRE_GOLDEN_ENTRE_AGORA",
+                SHELF_UPPER_MONEY,
+            ),
+            (
+                "⚠️ G0 NÃO FOI — ENTRE NO G1 AGORA",
+                "FIRE_G0_MISS_ENTRE_G1",
+                SHELF_GALE,
+            ),
+            (
+                "🟡 ALERTA DE EMPATE / TIE ALERT 🟡",
+                "OPS_TIE_ALERT",
+                SHELF_OVERFLOW,
+            ),
+        ]
+        for text, fam, shelf in cases:
+            skin = classify_telegram_skin(text)
+            self.assertEqual(skin.family_id, fam, text)
+            self.assertEqual(resolve_shelf(text).shelf_id, shelf, text)
+        oracle = classify_telegram_skin(
+            "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴\n🔮 ORACLE CARD #1\n🎯 TIER / KIND: GOLDEN"
+        )
+        self.assertEqual(oracle.family_id, "RESULT_ORACLE_CARD")
+
 
 if __name__ == "__main__":
     unittest.main()

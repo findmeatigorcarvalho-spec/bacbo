@@ -441,6 +441,41 @@ def mine_registered(hits: Dict[str, Hit]) -> Dict[str, Any]:
     return meta
 
 
+def mine_timing_catalog(hits: Dict[str, Hit], path: Path) -> Dict[str, Any]:
+    """Structural fingerprints from timing_presence_catalog (~19k skins)."""
+    meta: Dict[str, Any] = {"path": str(path), "rows": 0}
+    if not path.exists():
+        meta["error"] = "missing"
+        return meta
+    try:
+        data = json.loads(path.read_text(encoding="utf-8", errors="ignore"))
+    except Exception as exc:
+        meta["error"] = repr(exc)
+        return meta
+    for bucket in ("top_with_timing_templates", "top_no_timing_templates"):
+        for row in data.get(bucket) or []:
+            if not isinstance(row, dict):
+                continue
+            fp = str(row.get("fingerprint") or "").strip()
+            head = str(row.get("sample_head") or "").replace(" | ", "\n")
+            first = next((ln.strip() for ln in head.splitlines() if ln.strip()), "")
+            n = int(row.get("n") or 0)
+            role = str(row.get("role") or "")
+            axis = str(row.get("timing_axis") or bucket)
+            if not fp and not first:
+                continue
+            key = f"TEMPLATE_FP::{(fp or first)[:100]}"
+            h = _ensure(hits, key, "HEADER")
+            h.sources.add("TIMING_CATALOG")
+            h.count_hint += n
+            h.add_example(first or fp)
+            h.notes = f"role={role};axis={axis}"
+            meta["rows"] += 1
+    tc = data.get("template_counts") or {}
+    meta["template_counts"] = tc
+    return meta
+
+
 def build_inventory(
     *,
     roots: Optional[List[Path]] = None,
@@ -464,12 +499,25 @@ def build_inventory(
         if r.exists() and rp not in seen_roots:
             seen_roots.append(rp)
 
+    timing_path = None
+    for cand in (
+        REPO / "replit_elite_stack_patch" / "bot" / "data" / "timing_presence_catalog.json",
+        Path("/home/runner/workspace/bot/data/timing_presence_catalog.json"),
+        Path.cwd() / "bot" / "data" / "timing_presence_catalog.json",
+    ):
+        if cand.exists():
+            timing_path = cand
+            break
+
     meta = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "goal": "Literally every skin/template/kind ever created — union of all sources",
         "filesystem": mine_filesystem(hits, seen_roots),
         "git_history": mine_git_history(hits, repo or Path("/home/runner/workspace")),
         "registered": mine_registered(hits),
+        "timing_catalog": mine_timing_catalog(hits, timing_path)
+        if timing_path
+        else {"error": "missing"},
     }
 
     db = db_path
