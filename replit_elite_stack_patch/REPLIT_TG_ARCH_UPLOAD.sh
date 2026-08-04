@@ -20,9 +20,13 @@ fi
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
 BUNDLE="tg_arch_catalog_${STAMP}"
 mkdir -p "$BUNDLE"
-for f in report.txt types_first_seen.csv eras_auto.md types_summary.json progress.json PASTE_ME.txt COVERAGE.txt; do
+for f in report.txt types_first_seen.csv eras_auto.md types_summary.json progress.json PASTE_ME.txt COVERAGE.txt per_chat_counts.json; do
   [[ -f "$OUT/$f" ]] && cp -f "$OUT/$f" "$BUNDLE/" || true
 done
+if [[ -d "$OUT/cross_compare" ]]; then
+  mkdir -p "$BUNDLE/cross_compare"
+  cp -f "$OUT"/cross_compare/* "$BUNDLE/cross_compare/" 2>/dev/null || true
+fi
 # unknown_messages can be huge noise — cap at 15MB
 if [[ -f "$OUT/unknown_messages.csv" ]]; then
   USZ=$(wc -c < "$OUT/unknown_messages.csv")

@@ -18,9 +18,11 @@ Full archaeology catalog (2026-08-03):
 
 Script lives on the PR branch — not on Replit disk. Curl it:
 
+Self-bootstrapping (curls archaeology + upload from GitHub — no local patch folder needed):
+
 ```bash
 curl -fsSL -o /tmp/TG_DUAL.sh \
-  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TG_DUAL_CHAT_SCAN.sh?v=20260804a'
+  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_TG_DUAL_CHAT_SCAN.sh?v=20260804b'
 bash /tmp/TG_DUAL.sh
 ```
 
