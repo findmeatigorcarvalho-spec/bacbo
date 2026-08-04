@@ -11,11 +11,12 @@
 set -euo pipefail
 cd /home/runner/workspace 2>/dev/null || cd "$(pwd)"
 
-BRANCH="${BACBO_BRANCH:-cursor/add-engine-gate-registry-d5ba}"
-RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}/replit_elite_stack_patch"
-VER="20260804b"
+# Pin to commit SHA so GitHub CDN can't serve a stale archaeology script.
+REF="${BACBO_REF:-818b304}"
+RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${REF}/replit_elite_stack_patch"
+VER="20260804c"
 
-echo "DUAL_CHAT_SCAN cwd=$(pwd) branch=${BRANCH}"
+echo "DUAL_CHAT_SCAN cwd=$(pwd) ref=${REF}"
 
 export TELEGRAM_TARGET_PEER="${TELEGRAM_TARGET_PEER:-6774605259}"
 export TELEGRAM_COUNTDOWN_PEER="${TELEGRAM_COUNTDOWN_PEER:-UNIQUE_g1}"
