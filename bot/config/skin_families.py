@@ -592,6 +592,200 @@ SKIN_FAMILIES: Tuple[SkinFamily, ...] = (
         "🟢🟢 JANELA PRIME — SINAIS ATIVOS 🟢🟢",
         notes="Countdown-adjacent ops banner",
     ),
+    # ── Code-side card formatters (bacbo_royal_complete.py + _gates_*.py) ────
+    SkinFamily(
+        "FIRE_ENTER_NOW_GENERIC",
+        ROLE_FIRE,
+        "code",
+        "FIRE plain ENTER NOW (gate-era)",
+        "⚡ **ENTER NOW**",
+        LANE_MONEY,
+        kind_scoped=True,
+        notes="Includes PATTERN CONFIRMED / HIGH-PERFORMANCE ROOM CONFIRMED variants",
+    ),
+    SkinFamily(
+        "FIRE_ENTRE_AGORA_GENERIC",
+        ROLE_FIRE,
+        "code",
+        "FIRE ENTRE AGORA (virada/streak)",
+        "⚡ **ENTRE AGORA — VIRADA DETECTADA**",
+        LANE_MONEY,
+        kind_scoped=True,
+    ),
+    SkinFamily(
+        "FIRE_APOSTE_AGORA",
+        ROLE_FIRE,
+        "code",
+        "FIRE APOSTE AGORA block",
+        "⚡ **APOSTE AGORA:**",
+        LANE_MONEY,
+        kind_scoped=True,
+    ),
+    SkinFamily(
+        "FIRE_G0_ENTRADA_DIRETA",
+        ROLE_FIRE,
+        "code",
+        "FIRE G0 entrada direta / primeira entrada",
+        "⚡⚡⚡ **G0 — ENTRADA DIRETA** ⚡⚡⚡",
+        LANE_MONEY,
+        kind_scoped=True,
+    ),
+    SkinFamily(
+        "FIRE_DEPTH_G0_ONLY",
+        ROLE_FIRE,
+        "code",
+        "FIRE depth G0 only (no retry)",
+        "⚡ DEPTH G0 only — single entry, no retry",
+        LANE_MONEY,
+        notes="No-gale depth variant — distinct from gale ladder fires",
+    ),
+    SkinFamily(
+        "FIRE_INVERTED_CONTRARIO",
+        ROLE_FIRE,
+        "code",
+        "FIRE inverted / contrário signal",
+        "🔴 CONTRÁRIO ← sinal invertido ativo",
+        LANE_MONEY,
+        kind_scoped=True,
+        notes="Signal-inversion mode — bet opposite of base prediction",
+    ),
+    SkinFamily(
+        "FIRE_ORACLE_LOCK",
+        ROLE_FIRE,
+        "code",
+        "FIRE ORACLE LOCK hour/color WR",
+        "🔮🔮🔮 **ORACLE LOCK — H07 SOLO ELITE 100% WR** 🔮🔮🔮",
+        LANE_MONEY,
+        kind_scoped=True,
+        notes="Hour+color hardcoded WR locks — heavy per-hour overfit family",
+    ),
+    SkinFamily(
+        "FIRE_CERTIFIED_ELITE",
+        ROLE_FIRE,
+        "code",
+        "FIRE certified elite 100% G0",
+        "🏆🏆 **CERTIFIED ELITE — 100% G0 HISTÓRICO** 🏆🏆",
+        LANE_MONEY,
+        kind_scoped=True,
+    ),
+    SkinFamily(
+        "FIRE_GRADE_BANNER",
+        ROLE_FIRE,
+        "code",
+        "FIRE grade A/B historical G0 banner",
+        "💠 GRADE A · G0=76.1% historical (n=46) · elite pair",
+        LANE_MONEY,
+        kind_scoped=True,
+    ),
+    SkinFamily(
+        "FIRE_HOT_STREAK",
+        ROLE_FIRE,
+        "code",
+        "FIRE hot table / win-streak banner",
+        "🔥🔥 PERFECT 5/5 WIN STREAK · G0=87.1% historical",
+        LANE_MONEY,
+        kind_scoped=True,
+    ),
+    SkinFamily(
+        "FIRE_DOUBLE_TIE_LOCK",
+        ROLE_FIRE,
+        "code",
+        "FIRE double tie lock",
+        "🟡🟡 DOUBLE TIE LOCK · G0=94.1% after 2 consecutive ties (n=17)",
+        LANE_MONEY,
+        notes="Tiny-n tie lock (n=17)",
+    ),
+    SkinFamily(
+        "FIRE_GALE_1_FACA_AGORA",
+        ROLE_FIRE,
+        "code",
+        "FIRE gale 1 — faça agora",
+        "🔁 **GALE 1 — FAÇA AGORA:**",
+        LANE_MONEY,
+        kind_scoped=True,
+        notes="ELITE_V2-era gale card; distinct from RETENTATIVA / Entre novamente",
+    ),
+    SkinFamily(
+        "OPS_DO_NOT_BET_YET",
+        ROLE_OPS,
+        "code",
+        "OPS do not bet yet — waiting rooms",
+        "⛔ **DO NOT BET YET** — waiting for more rooms",
+    ),
+    SkinFamily(
+        "OPS_PREPARE_PLATFORM",
+        ROLE_OPS,
+        "code",
+        "OPS prepare platform — signal in seconds",
+        "⏳ Prepare a plataforma — **o sinal de entrada chegará em segundos**",
+    ),
+    SkinFamily(
+        "OPS_NEXT_CERTIFIED_WINDOW",
+        ROLE_OPS,
+        "code",
+        "OPS next certified window",
+        "🏆 **Próxima janela certificada / Next certified window:**",
+    ),
+    SkinFamily(
+        "OPS_JANELA_PEAK",
+        ROLE_OPS,
+        "code",
+        "OPS janela peak / max precision",
+        "⚡⚡ **JANELA PEAK / PEAK WINDOW — PRECISÃO MÁXIMA** ⚡⚡",
+    ),
+    SkinFamily(
+        "OPS_G1_REGISTRADO_CALC_G2",
+        ROLE_OPS,
+        "ops_result",
+        "OPS G1 recorded — calculating G2",
+        "📊 **G1 registrado / G1 recorded** — calculando G2...",
+    ),
+    SkinFamily(
+        "OPS_G2_STOP_IF_G1_LOST",
+        ROLE_OPS,
+        "ops_result",
+        "OPS G2 (if G1 lost) → STOP",
+        "⛔ G2 _(se perder G1)_ → STOP — aguarde novo sinal",
+    ),
+    SkinFamily(
+        "OPS_G3_ATINGIDO",
+        ROLE_OPS,
+        "ops_result",
+        "OPS G3 reached — signal closed (MAR20/21 era)",
+        "⛔ **G3 ATINGIDO — SINAL ENCERRADO**",
+        notes="Historical: MAR20/MAR21 gates ran a 3-gale ladder. Later eras stop at G2.",
+    ),
+    SkinFamily(
+        "RESULT_G0_ACERTOU_PRIMEIRA",
+        ROLE_RESULT,
+        "code",
+        "RESULT G0 acertou de primeira",
+        "🏆 G0 — Acertou de primeira!",
+        kind_scoped=True,
+    ),
+    SkinFamily(
+        "RESULT_GALE_RECOVERED_CHAIN",
+        ROLE_RESULT,
+        "code",
+        "RESULT gale recovery chain",
+        "❌ G0 → ✅ **G1** RECUPERADO / RECOVERED!",
+        kind_scoped=True,
+        notes="Chain form shows which gale leg recovered",
+    ),
+    SkinFamily(
+        "RESULT_EMPATE_DINHEIRO_DEVOLVIDO",
+        ROLE_RESULT,
+        "code",
+        "RESULT empate = dinheiro devolvido",
+        "✅ **EMPATE = DINHEIRO DEVOLVIDO**",
+    ),
+    SkinFamily(
+        "RESULT_EMPATE_PROTECAO",
+        ROLE_RESULT,
+        "code",
+        "RESULT empate — proteção ativada",
+        "🟡🟡 **EMPATE — PROTEÇÃO ATIVADA** 🟡🟡",
+    ),
     SkinFamily(
         "CD_RES_GREEN_G_BRT",
         ROLE_RESULT,
@@ -1091,6 +1285,130 @@ def classify_telegram_skin(
         return _match("FIRE_PREPARE_G1", text=body, first_line=fl, kind=hint_kind)
     if re.search(r"SEQU[EÊ]NCIA\s*—\s*ENTER\s+NOW", fl, re.I):
         return _match("FIRE_SEQUENCIA_ENTER_NOW", text=body, first_line=fl, kind="SEQUENCE")
+    # Generic ENTER NOW / ENTRE AGORA / APOSTE AGORA (gate-era code cards) —
+    # only after all named-kind headers above have had their chance.
+    if re.search(r"ENTER\s+NOW", body, re.I):
+        return _match(
+            "FIRE_ENTER_NOW_GENERIC",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"ENTRE\s+AGORA", body, re.I):
+        return _match(
+            "FIRE_ENTRE_AGORA_GENERIC",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"APOSTE\s+AGORA", body, re.I):
+        return _match(
+            "FIRE_APOSTE_AGORA",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+
+    # ── Code-formatter cards (bacbo_royal_complete / _gates_*) ──────────────
+    if re.search(r"ORACLE\s+LOCK|ORACLE\s*—\s*H\d+", body, re.I):
+        return _match(
+            "FIRE_ORACLE_LOCK",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"CERTIFIED\s+ELITE", body, re.I):
+        return _match(
+            "FIRE_CERTIFIED_ELITE",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"DOUBLE\s+TIE\s+LOCK", body, re.I):
+        return _match("FIRE_DOUBLE_TIE_LOCK", text=body, first_line=fl, lane_override=LANE_MONEY)
+    if re.search(r"GRADE\s+[AB]\b.*G0\s*=", body, re.I):
+        return _match(
+            "FIRE_GRADE_BANNER",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"HOT\s+TABLE|HOT\s+STREAK|PERFECT\s+\d+/\d+\s+WIN\s+STREAK", body, re.I):
+        return _match(
+            "FIRE_HOT_STREAK",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"CONTR[AÁ]RIO", fl, re.I) and re.search(
+        r"invertid|oposto|inverted|opposite", body, re.I
+    ):
+        return _match(
+            "FIRE_INVERTED_CONTRARIO",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"DEPTH\s+G0\s+only|G0\s+ONLY", body, re.I):
+        return _match("FIRE_DEPTH_G0_ONLY", text=body, first_line=fl, lane_override=LANE_MONEY)
+    if re.search(r"G0\s*—\s*(?:ENTRADA\s+DIRETA|PRIMEIRA\s+ENTRADA)", body, re.I):
+        return _match(
+            "FIRE_G0_ENTRADA_DIRETA",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"GALE\s*1\s*—\s*FA[CÇ]A\s+AGORA", body, re.I):
+        return _match(
+            "FIRE_GALE_1_FACA_AGORA",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+            lane_override=LANE_MONEY,
+        )
+    if re.search(r"G3\s+ATINGIDO", body, re.I):
+        return _match("OPS_G3_ATINGIDO", text=body, first_line=fl)
+    if re.search(r"DO\s+NOT\s+BET\s+YET", body, re.I):
+        return _match("OPS_DO_NOT_BET_YET", text=body, first_line=fl)
+    if re.search(r"Prepare\s+a\s+plataforma", body, re.I):
+        return _match("OPS_PREPARE_PLATFORM", text=body, first_line=fl)
+    if re.search(r"Pr[oó]xima\s+janela\s+certificada|Next\s+certified\s+window", body, re.I):
+        return _match("OPS_NEXT_CERTIFIED_WINDOW", text=body, first_line=fl)
+    if re.search(r"JANELA\s+PEAK|PEAK\s+WINDOW", body, re.I):
+        return _match("OPS_JANELA_PEAK", text=body, first_line=fl)
+    if re.search(r"G1\s+(?:registrado|recorded).*calculando\s+G2", body, re.I):
+        return _match("OPS_G1_REGISTRADO_CALC_G2", text=body, first_line=fl)
+    if re.search(r"G2\s*_?\(se\s+perder\s+G1\)", body, re.I):
+        return _match("OPS_G2_STOP_IF_G1_LOST", text=body, first_line=fl)
+    if re.search(r"EMPATE\s*=\s*DINHEIRO\s+DEVOLVIDO", body, re.I):
+        return _match("RESULT_EMPATE_DINHEIRO_DEVOLVIDO", text=body, first_line=fl)
+    if re.search(r"EMPATE\s*—\s*PROTE[CÇ][AÃ]O\s+ATIVADA", body, re.I):
+        return _match("RESULT_EMPATE_PROTECAO", text=body, first_line=fl)
+    if re.search(r"G0\s*(?:→|->)\s*.*\bG[12]\b.*RECUPERAD|RECOVERED", body, re.I) and re.search(
+        r"G0\s*(?:→|->)", body
+    ):
+        return _match(
+            "RESULT_GALE_RECOVERED_CHAIN",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+        )
+    if re.search(r"ACERTOU\s+DE\s+PRIMEIRA|G0\s*—\s*Acertou\s+de\s+primeira", body, re.I):
+        return _match(
+            "RESULT_G0_ACERTOU_PRIMEIRA",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+        )
 
     # ── RESULT oracle / tie alerts (before generic OPS) ─────────────────────
     if re.search(r"ORACLE\s+CARD", body, re.I):
