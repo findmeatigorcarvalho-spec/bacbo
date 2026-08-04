@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Create/resolve UNIQUE_museum and paced-post every product skin + follow-up cards.
+"""Create/resolve museum chat and paced-post every product skin + follow-up cards.
+
+Catalog axis (museum_full_catalog.json):
+  CHRONO_FIRST_EXISTENCE — 1st skin ever → example #1, 2nd → #2, …
+  Never-fired code skins still appear, after dated ones, in registry order.
+  RESULT under FIRE only if that historical signal originally had one.
 
 Safety:
   - Never blast: sleep between messages, respect FloodWait
@@ -10,12 +15,13 @@ Safety:
 Env:
   TELEGRAM_SESSION_STRING / .telegram_session_string
   TELEGRAM_API_ID / TELEGRAM_API_HASH
-  MUSEUM_PEER=UNIQUE_museum          (title/username to create or reuse)
+  MUSEUM_PEER=UNIQUE_museum_chrono   (title/username to create or reuse)
   MUSEUM_SLEEP_FIRE=2.0
   MUSEUM_SLEEP_RESULT=1.2
   MUSEUM_SLEEP_ITEM=2.5
   MUSEUM_LIMIT=0                    (0 = all)
   MUSEUM_OFFSET=0
+  MUSEUM_RESET=0                    (1 = wipe progress and re-post)
   MUSEUM_DRY_RUN=0
 """
 from __future__ import annotations
@@ -35,6 +41,12 @@ DATA = HERE / "data"
 CATALOG = DATA / "museum_full_catalog.json"
 PROGRESS = DATA / "museum_unique_progress.json"
 CACHE = DATA / "telegram_museum_entity.json"
+
+
+def _progress_path(peer: str) -> Path:
+    """Separate resume files per museum chat so chrono ≠ old registry dump."""
+    safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in (peer or "museum"))
+    return DATA / f"museum_progress_{safe}.json"
 
 
 def _session() -> str:
@@ -90,18 +102,23 @@ def _chunks(text: str, limit: int = 3800) -> List[str]:
     return parts
 
 
-def _load_progress() -> dict:
-    if PROGRESS.exists():
+def _load_progress(path: Path) -> dict:
+    if path.exists():
         try:
-            return json.loads(PROGRESS.read_text(encoding="utf-8"))
+            return json.loads(path.read_text(encoding="utf-8"))
         except Exception:
             pass
     return {"done_family_ids": [], "museum_id": None, "sent": 0}
 
 
-def _save_progress(p: dict) -> None:
+def _save_progress(path: Path, p: dict) -> None:
     DATA.mkdir(parents=True, exist_ok=True)
-    PROGRESS.write_text(json.dumps(p, indent=2), encoding="utf-8")
+    path.write_text(json.dumps(p, indent=2), encoding="utf-8")
+    # keep legacy path mirrored for the default chrono peer
+    try:
+        PROGRESS.write_text(json.dumps(p, indent=2), encoding="utf-8")
+    except Exception:
+        pass
 
 
 async def _sleep_fw(client, seconds: float) -> None:
@@ -241,17 +258,21 @@ async def main() -> int:
         return 2
 
     dry = os.environ.get("MUSEUM_DRY_RUN", "0").strip().lower() in {"1", "true", "yes"}
+    reset = os.environ.get("MUSEUM_RESET", "0").strip().lower() in {"1", "true", "yes"}
     sleep_fire = float(os.environ.get("MUSEUM_SLEEP_FIRE", "2.0"))
     sleep_res = float(os.environ.get("MUSEUM_SLEEP_RESULT", "1.2"))
     sleep_item = float(os.environ.get("MUSEUM_SLEEP_ITEM", "2.5"))
     offset = int(os.environ.get("MUSEUM_OFFSET", "0") or 0)
     limit = int(os.environ.get("MUSEUM_LIMIT", "0") or 0)
-    title = (os.environ.get("MUSEUM_PEER") or pack.get("chat_title") or "UNIQUE_museum").strip()
+    title = (
+        os.environ.get("MUSEUM_PEER") or pack.get("chat_title") or "UNIQUE_museum_chrono"
+    ).strip()
     username = (
         os.environ.get("MUSEUM_USERNAME")
         or pack.get("chat_username")
-        or "UNIQUE_museum"
+        or "UNIQUE_museum_chrono"
     ).strip().lstrip("@")
+    prog_path = _progress_path(title)
 
     session = _session()
     if not session:
@@ -273,8 +294,12 @@ async def main() -> int:
         return 6
 
     entity = await _resolve_or_create_museum(client, title=title, username=username)
-    progress = _load_progress()
+    if reset and prog_path.exists():
+        prog_path.unlink()
+        print("RESET progress", prog_path)
+    progress = _load_progress(prog_path)
     progress["museum_id"] = int(getattr(entity, "id", 0) or 0)
+    progress["axis"] = pack.get("axis") or "CHRONO_FIRST_EXISTENCE"
     done = set(progress.get("done_family_ids") or [])
 
     slice_items = items[offset:]
@@ -282,21 +307,26 @@ async def main() -> int:
         slice_items = slice_items[:limit]
 
     total = len(items)
+    stats = pack.get("stats") or {}
     header = (
-        "🏛 UNIQUE_museum — FULL PRODUCT SKIN CATALOG\n"
+        "🏛 MUSEUM — FIRST EXISTENCE ORDER\n"
         "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"Items: {total}\n"
+        f"Axis: {pack.get('axis') or 'CHRONO_FIRST_EXISTENCE'}\n"
+        f"Items: {total} "
+        f"(dated {stats.get('with_existence_date', '?')} · "
+        f"never-fired {stats.get('never_fired_code_order', '?')})\n"
+        "Order: 1st skin ever → #1 · 2nd → #2 · …\n"
+        "Never-fired skins still included (code/registry order after dated)\n"
         "Rule: RESULT under a FIRE only if that signal originally had one\n"
-        "No invented follow-ups · FIRE-only when history had no result\n"
-        "Purpose: see every skin/family/template — NOT live bets\n"
+        "Purpose: parade of existence — NOT live bets\n"
         "Pace: slow send · FloodWait-safe · no truncate\n"
         "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "_Scroll this chat to review the building floors_"
+        "_Scroll chronologically — birth order of each skin_"
     )
     if not progress.get("header_sent"):
         await _safe_send(client, entity, header, dry=dry)
         progress["header_sent"] = True
-        _save_progress(progress)
+        _save_progress(prog_path, progress)
         await _sleep_fw(client, sleep_item)
 
     sent = int(progress.get("sent") or 0)
@@ -306,12 +336,16 @@ async def main() -> int:
             print(f"skip done {fid}")
             continue
 
-        idx = n
+        idx = int(item.get("chrono_order") or n)
         role = item.get("role") or "?"
+        exist = item.get("existence_at") or ("never-fired · code order" if item.get("never_fired") else "?")
         fire_msg = (
-            f"🏛 MUSEUM · {role} · `{fid}` · #{idx}/{total}\n"
+            f"🏛 MUSEUM · #{idx}/{total} · first existence\n"
+            f"`{fid}` · {role}\n"
             f"━━━━━━━━━━━━━━━━━━━━━━━━━\n"
             f"{item.get('label') or fid}\n"
+            f"First existence (UTC): {exist}\n"
+            f"Source: {item.get('existence_source') or '-'}\n"
             f"Lane: {item.get('lane') or '-'} · TG hits: {item.get('tg_count') or 0}\n"
             f"━━━━━━━━━━━━━━━━━━━━━━━━━\n"
             f"{item.get('body') or item.get('example_first_line') or fid}\n"
@@ -322,14 +356,21 @@ async def main() -> int:
         await _sleep_fw(client, sleep_fire)
         sent += 1
 
+        # Only historical follow-ups (original signal had this result). Never invent.
         for fu in item.get("follow_ups") or []:
+            if not (fu.get("body") or "").strip():
+                continue
+            if fu.get("historical") is False:
+                continue
+            gap = fu.get("gap_secs")
+            gap_bit = f" · gap {gap}s" if gap is not None else ""
             fu_msg = (
                 f"🏛 MUSEUM · {fu.get('role')} · `{fu.get('family_id')}`\n"
-                f"↳ under `{fid}`\n"
+                f"↳ under `{fid}` · original result{gap_bit}\n"
                 f"━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-                f"{fu.get('body') or fu.get('family_id')}\n"
+                f"{fu.get('body')}\n"
                 f"━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-                f"_Follow-up card glued under parent fire_"
+                f"_Original result for this signal — not invented_"
             )
             await _safe_send(client, entity, fu_msg, dry=dry)
             await _sleep_fw(client, sleep_res)
@@ -339,20 +380,24 @@ async def main() -> int:
         progress["done_family_ids"] = sorted(done)
         progress["sent"] = sent
         progress["last_family_id"] = fid
-        _save_progress(progress)
-        print(f"OK #{idx}/{total} {fid} (+{len(item.get('follow_ups') or [])} follow-ups)")
+        _save_progress(prog_path, progress)
+        print(
+            f"OK #{idx}/{total} {fid} @ {exist} "
+            f"(+{len(item.get('follow_ups') or [])} follow-ups)"
+        )
         await _sleep_fw(client, sleep_item)
 
     footer = (
-        f"✅ UNIQUE_museum catalog pass complete\n"
-        f"Families posted this run progress: {len(done)}/{total}\n"
+        f"✅ Museum chrono-existence pass complete\n"
+        f"Families posted: {len(done)}/{total}\n"
         f"Messages ~{sent}\n"
-        f"_Resume-safe · re-run skips done families_"
+        f"_Resume-safe · re-run skips done · MUSEUM_RESET=1 to restart_"
     )
     await _safe_send(client, entity, footer, dry=dry)
     await client.disconnect()
     print("DONE museum →", title, "id=", progress.get("museum_id"), "sent=", sent)
     print("CACHE", CACHE)
+    print("PROGRESS", prog_path)
     return 0
 
 
