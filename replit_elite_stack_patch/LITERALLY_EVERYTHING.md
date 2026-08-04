@@ -16,12 +16,16 @@ Union = master list. Distill = building floors (drops `RELAY_*` + `TG_LINE::` du
 
 ## Cloud status (partial)
 
-Local deep mine already ran with full TG catalog:
+Local deep mine already ran with full TG catalog (`types_first_seen.csv`):
 
-- Tokens / registered ids: present
-- Telegram type_ids: present (~39k raw; floors distill keeps FIRE/RESULT/CD/OPS/UNKNOWN)
-- **DB: missing on cloud**
-- **Full Replit `bot/` (strings.py, signal_handler, `_gates_*.py`, `.bak*`): missing on cloud**
+| Metric | Cloud result |
+|--------|-------------:|
+| Full union keys | ~77k (includes TG_LINE + RELAY) |
+| Distilled floors | ~6.4k (FIRE/RESULT/CD/OPS + headers + tokens) |
+| TOKEN / REGISTERED ids | ~135 / 59 |
+| HEADER templates (code/git) | ~256 |
+| **DB kinds / texts** | **missing** |
+| **Replit formatters / .bak / gates** | **missing** |
 
 ## Run on Replit (required — full `bot/` + `bacbo.db` live there)
 
