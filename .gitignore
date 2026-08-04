@@ -3,3 +3,11 @@ __pycache__/
 
 # EngineGateRegistry file-lock artifact
 *.json.lock
+
+# Huge archaeology / deep-mine dumps (MD summaries are committed)
+bot/data/literally_everything_skins.json
+bot/data/literally_everything_skins.csv
+bot/data/literally_everything_floors.json
+bot/data/literally_everything_floors.csv
+recovery_probe/
+replit_elite_stack_patch/tg_archaeology_partial_*/
