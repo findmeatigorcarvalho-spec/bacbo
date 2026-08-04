@@ -203,6 +203,7 @@ async def _resolve_or_create_museum(client, title: str, username: str):
             if data.get("id") is not None and (
                 cached_title == want_title or (want_user and cached_user == want_user)
             ):
+                print(f"cache hit id={data['id']} — get_entity …")
                 ent = await client.get_entity(int(data["id"]))
                 print(
                     f"museum via cache id={ent.id} "
@@ -211,29 +212,34 @@ async def _resolve_or_create_museum(client, title: str, username: str):
                 return ent
             print("cache ignored — title/username mismatch for this peer")
         except Exception as exc:
-            print("cache miss:", exc)
+            print("cache miss:", repr(exc))
 
     # 2) username / title resolve first (fast; avoids long dialog scans)
     for cand in (f"@{want_user}" if want_user else None, want_user, title):
         if not cand:
             continue
-        try:
-            ent = await client.get_entity(cand)
-            got_title = (getattr(ent, "title", None) or "").casefold()
-            got_user = (getattr(ent, "username", None) or "").casefold()
-            if got_title == want_title or got_user == want_user:
-                print(f"museum via get_entity {cand} id={ent.id}")
-                _write_cache(cache_path, ent, title)
-                return ent
-        except Exception:
-            pass
+        for attempt in range(1, 4):
+            try:
+                print(f"get_entity {cand!r} attempt {attempt} …")
+                ent = await client.get_entity(cand)
+                got_title = (getattr(ent, "title", None) or "").casefold()
+                got_user = (getattr(ent, "username", None) or "").casefold()
+                if got_title == want_title or got_user == want_user:
+                    print(f"museum via get_entity {cand} id={ent.id}")
+                    _write_cache(cache_path, ent, title)
+                    return ent
+                break
+            except Exception as exc:
+                print(f"get_entity {cand!r} failed: {exc!r}")
+                await asyncio.sleep(2 * attempt)
 
-    # 3) exact dialog match only (no "museum" substring / old UNIQUE_museum alias)
+    # 3) exact dialog match only (cap scan — do not hang forever)
     print("scanning dialogs for exact title/username match …")
     scanned = 0
+    max_dialogs = int(os.environ.get("MUSEUM_DIALOG_SCAN_MAX", "500") or 500)
     async for d in client.iter_dialogs():
         scanned += 1
-        if scanned % 100 == 0:
+        if scanned % 50 == 0:
             print(f"  … dialogs scanned {scanned}")
         ent = d.entity
         names = {
@@ -245,6 +251,9 @@ async def _resolve_or_create_museum(client, title: str, username: str):
             print(f"museum via dialog id={ent.id} name={d.name}")
             _write_cache(cache_path, ent, title)
             return ent
+        if scanned >= max_dialogs:
+            print(f"dialog scan cap {max_dialogs} — giving up scan")
+            break
     print(f"dialog scan done ({scanned}) — no exact match")
 
     # 4) create megagroup (chat-like, good for museum scroll)
@@ -314,17 +323,29 @@ async def main() -> int:
     from telethon import TelegramClient
     from telethon.sessions import StringSession
 
+    if reset and prog_path.exists():
+        prog_path.unlink()
+        print("RESET progress", prog_path)
+
+    print("connecting Telegram …")
     client = TelegramClient(StringSession(session), int(api_id), api_hash)
-    await client.connect()
+    for attempt in range(1, 6):
+        try:
+            await client.connect()
+            break
+        except Exception as exc:
+            print(f"connect failed attempt {attempt}: {exc!r}")
+            await asyncio.sleep(3 * attempt)
+    else:
+        print("CONNECT_FAILED")
+        return 7
     if not await client.is_user_authorized():
         print("SESSION_NOT_AUTHORIZED")
         await client.disconnect()
         return 6
+    print("connected — resolving museum chat …")
 
     entity = await _resolve_or_create_museum(client, title=title, username=username)
-    if reset and prog_path.exists():
-        prog_path.unlink()
-        print("RESET progress", prog_path)
     progress = _load_progress(prog_path)
     progress["museum_id"] = int(getattr(entity, "id", 0) or 0)
     progress["axis"] = pack.get("axis") or "CHRONO_FIRST_EXISTENCE"

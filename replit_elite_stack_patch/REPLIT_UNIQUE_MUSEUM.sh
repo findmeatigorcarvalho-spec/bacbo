@@ -1,32 +1,33 @@
 #!/usr/bin/env bash
-# UNIQUE_museum_chrono — LITERALLY EVERYTHING (final triage parade)
-# One example of every distinct signal type/skin/template since Mar 17
-# including news/update/ops/heartbeats — fired or not.
+# UNIQUE_museum_chrono — every distinct Telegram-bound template (final triage)
 #
+# Rule: if it was built/taught/shadowed to reach Telegram → one example.
+# SOLO/GOLDEN/etc. are just kinds — not buckets that swallow other skins.
+#
+# Resume (default — do NOT reset if already mid-parade):
 #   curl -fsSL -o /tmp/MUSEUM.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UNIQUE_MUSEUM.sh?v=20260804i'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UNIQUE_MUSEUM.sh?v=20260804j'
+#   bash /tmp/MUSEUM.sh
+#
+# Only if you need a clean redo:
 #   MUSEUM_RESET=1 bash /tmp/MUSEUM.sh
 set -euo pipefail
 cd /home/runner/workspace 2>/dev/null || cd "$(pwd)"
 
 REF="${BACBO_REF:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${REF}/replit_elite_stack_patch"
-VER="20260804i"
+VER="20260804j"
 
 echo "UNIQUE_MUSEUM cwd=$(pwd) ref=${REF}"
-echo "AXIS: CHRONO_EVERYTHING_EXISTENCE — final triage inventory"
-echo "GOAL: every distinct template since Mar 17 → judge trash vs profit"
-echo "NOTE: ~39k raw TG type_ids collapse to distinct templates (room/date/N)."
-echo "NOTE: Creates/uses UNIQUE_museum_chrono ONLY (never aliases to UNIQUE_museum)."
-echo "RULE: RESULT under FIRE only if that historical signal originally had one."
+echo "AXIS: CHRONO_EVERYTHING_EXISTENCE — fingerprint-first (every template)"
+echo "RULE: Telegram-bound = signal. Collapse only @room/date/N — not SOLO/GOLDEN buckets."
+echo "GOAL: never lose a type that could be valuable in the new result system."
 
 mkdir -p bot/data logs
 curl -fsSL -o bot/museum_unique_poster.py \
   "${RAW}/bot/museum_unique_poster.py?v=${VER}"
 curl -fsSL -o bot/data/museum_full_catalog.json \
   "${RAW}/bot/data/museum_full_catalog.json?v=${VER}"
-
-rm -f bot/data/telegram_museum_entity.json
 
 # shellcheck disable=SC1091
 [[ -f .env ]] && set -a && source ./.env && set +a || true
@@ -44,14 +45,21 @@ python3 -m py_compile bot/museum_unique_poster.py
 echo "========== UNIQUE_museum_chrono EVERYTHING =========="
 python3 - <<'PY'
 import json
+from pathlib import Path
 p=json.load(open('bot/data/museum_full_catalog.json'))
 print('axis=', p.get('axis'))
 print('stats=', p.get('stats'))
-print('first8=')
-for it in (p.get('items') or [])[:8]:
-    print(' ', it.get('chrono_order'), it.get('existence_at') or 'NEVER', it.get('role'), it.get('family_id'))
-print('starting poster …')
+prog=Path('bot/data/museum_progress_UNIQUE_museum_chrono.json')
+if prog.exists():
+    g=json.load(open(prog))
+    print('resume: already_done=', len(g.get('done_family_ids') or []), 'sent=', g.get('sent'))
+else:
+    print('resume: no progress file (starts from #1)')
+print('first5 labels=')
+for it in (p.get('items') or [])[:5]:
+    print(' ', it.get('chrono_order'), it.get('existence_at') or 'NEVER', (it.get('label') or '')[:60])
+print('starting poster (connecting…) …')
 PY
-python3 bot/museum_unique_poster.py | tee -a logs/museum_unique.log
-echo "Done. Open UNIQUE_museum_chrono — scroll and triage."
-echo "Progress: bot/data/museum_progress_UNIQUE_museum_chrono.json"
+python3 -u bot/museum_unique_poster.py | tee -a logs/museum_unique.log
+echo "Done. Open @UNIQUE_museum_chrono — triage trash vs profit."
+echo "Re-run WITHOUT MUSEUM_RESET to resume after Ctrl+C / FloodWait."
