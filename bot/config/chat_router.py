@@ -1,23 +1,23 @@
-"""Multi-chat runtime router — capacity, elastic overflow, sticky result gluing.
+"""Multi-chat runtime router — capacity spill, elastic UNIQUE_gN, sticky glue.
 
 `chat_shelves.resolve_shelf()` decides *which shelf* a card belongs to.
 This module decides *which actual chat* it lands in, and guarantees:
 
-1. **Never drop a fire.** If a shelf is at capacity the card spills to
-   OVERFLOW_1, OVERFLOW_2, … (elastic). If every overflow chat is saturated the
-   card is *delayed*, never discarded.
+1. **Never miss a fire — never delay.** Bet windows are seconds. Capacity only
+   *moves* a card to the next chat (UNIQUE_g2…gN). If every named overflow is
+   busy we **mint the next UNIQUE_g{N}** and send immediately. We do **not**
+   wait, queue-delay, or drop time-sensitive ENTER/JANELA/countdown cards.
 2. **Results follow their parent to the exact chat.** A fire that spilled into
-   overflow chat #2 has its WIN/LOSS/forensic/G1-EXPIROU cards delivered to
-   overflow chat #2 — not merely to the same shelf.
+   UNIQUE_g3 has its WIN/LOSS/forensic/G1-EXPIROU cards delivered to UNIQUE_g3.
 3. **Nothing is deleted.** CREATED_ONLY / never-fired templates keep a VAULT
    target so they stay addressable when revived.
 
-Config is env-driven and fail-open: with no env set, everything resolves to the
-existing default peers and capacity limits are generous.
+Config is env-driven and fail-open.
 """
 from __future__ import annotations
 
 import os
+import re
 import threading
 import time
 from collections import deque
@@ -32,8 +32,7 @@ from bot.config.chat_shelves import (
     resolve_shelf,
 )
 
-# ── Capacity defaults (cards per minute, per shelf) ─────────────────────────
-# Money shelves stay readable; countdown tolerates more because cards are short.
+# ── Soft capacity (cards/min) — spill trigger only, NEVER a delay/drop ──────
 _DEFAULT_CAPACITY: Dict[str, float] = {
     "SHELF_PENTHOUSE_MONEY": 3.0,
     "SHELF_UPPER_MONEY": 3.0,
@@ -47,7 +46,10 @@ _DEFAULT_CAPACITY: Dict[str, float] = {
 }
 
 _WINDOW_SECONDS = 60.0
-_MAX_OVERFLOW_CHATS = 8
+# Named overflow slots via env; beyond that we mint UNIQUE_g{N} elastically.
+_MAX_NAMED_OVERFLOW_ENV = 32
+# Hard ceiling on auto-minted UNIQUE_gN chats (still immediate send — no delay).
+_MAX_ELASTIC_UNIQUE = 64
 
 
 def _env_float(name: str, default: float) -> float:
@@ -60,8 +62,18 @@ def _env_float(name: str, default: float) -> float:
         return default
 
 
+def _env_int(name: str, default: int) -> int:
+    raw = (os.environ.get(name) or "").strip()
+    if not raw:
+        return default
+    try:
+        return int(raw)
+    except ValueError:
+        return default
+
+
 def capacity_for(shelf_id: str) -> float:
-    """Cards/minute allowed on a shelf. `TELEGRAM_CAP_<SHELF>` overrides."""
+    """Soft cards/minute on a shelf (spill trigger). `TELEGRAM_CAP_<SHELF>` overrides."""
     key = f"TELEGRAM_CAP_{shelf_id.replace('SHELF_', '')}"
     return _env_float(key, _DEFAULT_CAPACITY.get(shelf_id, 3.0))
 
@@ -75,18 +87,21 @@ _DEFAULT_OVERFLOW_PEERS: Tuple[str, ...] = (
     "UNIQUE_g5",
 )
 
+_UNIQUE_G_RE = re.compile(r"^UNIQUE_g(\d+)$", re.I)
+
 
 def overflow_peers() -> List[str]:
-    """Elastic overflow chats: TELEGRAM_SHELF_OVERFLOW_1..N (comma list also ok).
+    """Named overflow chats: TELEGRAM_SHELF_OVERFLOW_1..N (comma list also ok).
 
     Unset env → UNIQUE_g2, UNIQUE_g3, UNIQUE_g4, UNIQUE_g5.
     Money stays on Mr_iv4; countdown/sniper primary stays on UNIQUE_g1.
+    When these are all at soft cap, `elastic_overflow_peer()` mints UNIQUE_g6+.
     """
     peers: List[str] = []
     multi = (os.environ.get("TELEGRAM_SHELF_OVERFLOW_PEERS") or "").strip()
     if multi:
         peers.extend(p.strip().lstrip("@") for p in multi.split(",") if p.strip())
-    for i in range(1, _MAX_OVERFLOW_CHATS + 1):
+    for i in range(1, _MAX_NAMED_OVERFLOW_ENV + 1):
         raw = (os.environ.get(f"TELEGRAM_SHELF_OVERFLOW_{i}") or "").strip()
         if raw:
             peers.append(raw.lstrip("@"))
@@ -106,6 +121,23 @@ def overflow_peers() -> List[str]:
         seen.add(key)
         out.append(p.lstrip("@"))
     return out
+
+
+def elastic_overflow_peer(existing: Optional[List[str]] = None) -> str:
+    """Next UNIQUE_g{N} after the highest already listed — never reuse a full chat."""
+    peers = existing if existing is not None else overflow_peers()
+    max_n = 1  # g1 is primary countdown; overflow starts at g2
+    for p in peers:
+        m = _UNIQUE_G_RE.match(p.lstrip("@"))
+        if m:
+            max_n = max(max_n, int(m.group(1)))
+    nxt = max_n + 1
+    ceiling = _env_int("TELEGRAM_MAX_ELASTIC_UNIQUE", _MAX_ELASTIC_UNIQUE)
+    if nxt > ceiling:
+        # Last resort: still send immediately to the highest UNIQUE_gN.
+        # Soft-cap ignored — time window > chat neatness.
+        return f"UNIQUE_g{ceiling}"
+    return f"UNIQUE_g{nxt}"
 
 
 @dataclass
@@ -280,8 +312,9 @@ class ChatRouter:
                         self._remember_parent(sid, target)
                 return target
 
-            # Shelf saturated → spill across elastic overflow chats.
-            peers = overflow_peers()
+            # Soft-cap hit → spill across named overflow (UNIQUE_g2…g5), then mint g6+.
+            # Never delay: bet windows are seconds; missing the window = miss.
+            peers = list(overflow_peers())
             for idx, peer in enumerate(peers, start=1):
                 of_id = f"{SHELF_OVERFLOW}#{idx}"
                 if self._has_room(SHELF_OVERFLOW, of_id, now):
@@ -289,6 +322,7 @@ class ChatRouter:
                         shelf_id=SHELF_OVERFLOW,
                         peer=peer,
                         overflow_index=idx,
+                        delayed_seconds=0.0,
                         family_id=decision.family_id,
                         role=decision.role,
                         kind=decision.kind,
@@ -301,24 +335,66 @@ class ChatRouter:
                             self._remember_parent(sid, target)
                     return target
 
-            # Everything saturated → DELAY on the primary shelf. Never drop.
-            w = self._window(primary_id)
-            w.prune(now)
-            oldest = w.stamps[0] if w.stamps else now
-            wait = max(0.0, (oldest + _WINDOW_SECONDS) - now)
+            # All named overflow chats at soft cap → mint next UNIQUE_g{N} immediately.
+            minted: List[str] = []
+            ceiling = _env_int("TELEGRAM_MAX_ELASTIC_UNIQUE", _MAX_ELASTIC_UNIQUE)
+            while len(minted) < ceiling:
+                peer = elastic_overflow_peer(peers + minted)
+                if peer in peers or peer in minted:
+                    # Ceiling reached — still send NOW to that chat (ignore soft cap).
+                    idx = max(len(peers), 1) + len(minted)
+                    of_id = f"{SHELF_OVERFLOW}#{idx}"
+                    target = ChatTarget(
+                        shelf_id=SHELF_OVERFLOW,
+                        peer=peer,
+                        overflow_index=idx,
+                        delayed_seconds=0.0,
+                        family_id=decision.family_id,
+                        role=decision.role,
+                        kind=decision.kind,
+                        lane=decision.lane,
+                        reason=f"elastic_force:{peer}:from:{shelf}",
+                    )
+                    if commit:
+                        self._window(of_id).add(now)
+                        if decision.role == "FIRE" and sid:
+                            self._remember_parent(sid, target)
+                    return target
+                minted.append(peer)
+                idx = len(peers) + len(minted)
+                of_id = f"{SHELF_OVERFLOW}#{idx}"
+                # Brand-new chat → always has room; send immediately.
+                target = ChatTarget(
+                    shelf_id=SHELF_OVERFLOW,
+                    peer=peer,
+                    overflow_index=idx,
+                    delayed_seconds=0.0,
+                    family_id=decision.family_id,
+                    role=decision.role,
+                    kind=decision.kind,
+                    lane=decision.lane,
+                    reason=f"elastic_mint:{peer}:from:{shelf}",
+                )
+                if commit:
+                    self._window(of_id).add(now)
+                    if decision.role == "FIRE" and sid:
+                        self._remember_parent(sid, target)
+                return target
+
+            # Unreachable with sane ceiling; keep fail-open send on primary (no delay).
             target = ChatTarget(
                 shelf_id=shelf,
                 peer=decision.peer,
                 overflow_index=0,
-                delayed_seconds=wait,
+                delayed_seconds=0.0,
                 family_id=decision.family_id,
                 role=decision.role,
                 kind=decision.kind,
                 lane=decision.lane,
-                reason=f"delayed_all_saturated:{round(wait, 1)}s",
+                reason=f"failopen_immediate:{shelf}",
             )
             if commit:
-                w.add(now)
+                self._window(primary_id).add(now)
                 if decision.role == "FIRE" and sid:
                     self._remember_parent(sid, target)
             return target

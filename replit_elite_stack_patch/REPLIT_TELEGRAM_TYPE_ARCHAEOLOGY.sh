@@ -603,9 +603,10 @@ async def scrape():
 
     peers = []
     for key in (
+        "TELEGRAM_ARCH_PEERS",  # dual-scan override: Mr_iv4,UNIQUE_g1,…
+        "TELEGRAM_ARCHAEOLOGY_PEERS",
         "TELEGRAM_TARGET_PEER",
         "TELEGRAM_COUNTDOWN_PEER",
-        "TELEGRAM_ARCHAEOLOGY_PEERS",
     ):
         v = os.environ.get(key)
         if not v:
@@ -614,9 +615,11 @@ async def scrape():
             part = part.strip()
             if part and part not in peers:
                 peers.append(part)
+    # Always include money + Gunique (never miss a destination chat).
     for d in ("6774605259", "UNIQUE_g1", "@UNIQUE_g1", "Mr_iv4", "@Mr_iv4"):
         if d not in peers:
             peers.append(d)
+    print(f"ARCH_PEERS_RESOLVE_LIST={peers}", flush=True)
 
     # INCREMENTAL WRITE — do NOT keep 260k rows in RAM (that killed the last run)
     OUT.mkdir(parents=True, exist_ok=True)

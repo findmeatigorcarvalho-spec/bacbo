@@ -592,6 +592,45 @@ SKIN_FAMILIES: Tuple[SkinFamily, ...] = (
         "🟢🟢 JANELA PRIME — SINAIS ATIVOS 🟢🟢",
         notes="Countdown-adjacent ops banner",
     ),
+    SkinFamily(
+        "RESULT_COLOR_BANNER",
+        ROLE_RESULT,
+        "forensic",
+        "RESULT color-bar header (forensic / bell lead-in)",
+        "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+        notes="Lead-in rows before RESUMIDO FORENSE / GANHOU / PERDEU — keep distinct from body",
+    ),
+    SkinFamily(
+        "OPS_SEQUENCE_PREDICTION",
+        ROLE_OPS,
+        "ops",
+        "OPS SEQUENCE PREDICTION hint",
+        "📊 SEQUENCE PREDICTION",
+        notes="Manual-result / sequence prediction banner (high volume on Mr_iv4)",
+    ),
+    SkinFamily(
+        "OPS_GALE_SATURATION",
+        ROLE_OPS,
+        "ops",
+        "OPS gale saturation / market status",
+        "⚡⚡ SATURAÇÃO DE GALE ⚡⚡",
+        notes="Also Market Status — Gale 1/2 detected",
+    ),
+    SkinFamily(
+        "OPS_SELF_CARE_GUARD",
+        ROLE_OPS,
+        "ops",
+        "OPS self-care guard ativo",
+        "⚕️⚕️ SELF-CARE GUARD ATIVO — GOLDEN ⚕️⚕️",
+        kind_scoped=True,
+    ),
+    SkinFamily(
+        "OPS_PARE_3_PERDAS",
+        ROLE_OPS,
+        "ops",
+        "OPS pare de apostar — 3 perdas seguidas",
+        "⛔ PARE DE APOSTAR — 3 PERDAS SEGUIDAS",
+    ),
     # ── Code-side card formatters (bacbo_royal_complete.py + _gates_*.py) ────
     SkinFamily(
         "FIRE_ENTER_NOW_GENERIC",
@@ -1074,6 +1113,35 @@ TG_TYPE_ALIASES: Dict[str, str] = {
     "RES_AUTO_WIN": "RESULT_WIN_TIER",
     "RES_AUTO_LOSS": "RESULT_LOSS_TIER",
     "RES_AUTO_TIE": "RESULT_AUTO_TIE",
+    # Archaeology often fingerprinted these as UNKNOWN_* before classifier caught up
+    "UNKNOWN_GALE_1_ENTRE_NOVAMENTE": "FIRE_GALE_ENTRE_NOVAMENTE",
+    "UNKNOWN_GALE_2_LTIMA_CHANCE": "FIRE_GALE_ENTRE_NOVAMENTE",
+    "UNKNOWN_LOSS_COOLDOWN_ACTIVATED": "OPS_LOSS_COOLDOWN",
+    "UNKNOWN_PARE_G2_ATINGIDO": "OPS_G2_ATINGIDO_PARE",
+    "UNKNOWN_COOLDOWN_CANCELLED_WIN_RECORDED_THRESHOLDS_BACK_TO": "OPS_LOSS_COOLDOWN",
+    "UNKNOWN_JANELA_FECHADA_N_O_ENTRE_NESTE_ROUND": "FIRE_JANELA_TIMED",
+    "UNKNOWN_JANELA_FECHADA_TEMPO_ESGOTADO": "FIRE_JANELA_TIMED",
+    "UNKNOWN_JANELA_PRIME_SINAIS_ATIVOS": "OPS_JANELA_PRIME",
+    "RESULT_GALE_JANELA_PRIME_SINAIS_ATIVOS": "OPS_JANELA_PRIME",
+    "RESULT_GALE_SINAL_RETIDO_LIBERADO_RECUPERA_O_CONCLU_": "FIRE_SINAL_RETIDO_LIBERADO",
+    "RESULT_GALE_RESULTADO_GANHOU": "RESULT_BELL_GANHOU",
+    "UNKNOWN_MARKET_STATUS_GALE_1_DETECTED": "OPS_GALE_SATURATION",
+    "UNKNOWN_MARKET_STATUS_GALE_2_DETECTED": "OPS_GALE_SATURATION",
+    "UNKNOWN_SATURA_O_DE_GALE_DETECTADA": "OPS_GALE_SATURATION",
+    "UNKNOWN_SATURA_O_DE_GALE": "OPS_GALE_SATURATION",
+    "RESULT_BANNER_WIN_EMPTY": "RESULT_COLOR_BANNER",
+    "RESULT_BANNER_LOSS_EMPTY": "RESULT_COLOR_BANNER",
+    "RESULT_BANNER_TIE_EMPTY": "RESULT_COLOR_BANNER",
+    "RESULT_GALE_EMPTY": "RESULT_COLOR_BANNER",
+    "RESULT_BANNER_WIN_VERMELHO": "RESULT_COLOR_BANNER",
+    "RESULT_BANNER_WIN_AZUL": "RESULT_COLOR_BANNER",
+    "RESULT_BANNER_TIE_VERMELHO": "RESULT_COLOR_BANNER",
+    "RESULT_BANNER_TIE_AZUL": "RESULT_COLOR_BANNER",
+    "OPS_MANUAL_RESULT_HINT": "OPS_SEQUENCE_PREDICTION",
+    "UNKNOWN_SELF_CARE_GUARD_ATIVO_GOLDEN": "OPS_SELF_CARE_GUARD",
+    "UNKNOWN_SELF_CARE_GUARD_ATIVO_SOLO_ELITE": "OPS_SELF_CARE_GUARD",
+    "UNKNOWN_SELF_CARE_GUARD_ATIVO_PLATINUM": "OPS_SELF_CARE_GUARD",
+    "UNKNOWN_PARE_DE_APOSTAR_3_PERDAS_SEGUIDAS": "OPS_PARE_3_PERDAS",
 }
 
 
@@ -1761,8 +1829,30 @@ def classify_telegram_skin(
         return _match("OPS_CORRECAO", text=body, first_line=fl)
     if re.search(r"JANELA\s+PRIME", fl, re.I):
         return _match("OPS_JANELA_PRIME", text=body, first_line=fl)
+    # Color-bar lead-in (forensic / bell cards often start with 8–12 emoji)
+    if re.match(r"^[🔵🔴🟨🟢]{8,}\s*$", fl) or re.match(
+        r"^(?:🔵|🔴|🟨|🟢){8,}$", fl.replace(" ", "")
+    ):
+        return _match("RESULT_COLOR_BANNER", text=body, first_line=fl)
 
     # ── OPS ─────────────────────────────────────────────────────────────────
+    if re.search(r"SEQUENCE\s+PREDICTION", body, re.I):
+        return _match("OPS_SEQUENCE_PREDICTION", text=body, first_line=fl)
+    if re.search(
+        r"SATURA[CÇ][AÃ]O\s+DE\s+GALE|Market\s+Status\s*—\s*.*Gale\s+\d",
+        body,
+        re.I,
+    ):
+        return _match("OPS_GALE_SATURATION", text=body, first_line=fl)
+    if re.search(r"SELF-CARE\s+GUARD\s+ATIVO", body, re.I):
+        return _match(
+            "OPS_SELF_CARE_GUARD",
+            text=body,
+            first_line=fl,
+            kind=hint_kind or _extract_kind(body, fl),
+        )
+    if re.search(r"PARE\s+DE\s+APOSTAR\s*—\s*3\s+PERDAS", body, re.I):
+        return _match("OPS_PARE_3_PERDAS", text=body, first_line=fl)
     if re.search(r"LOSS\s+COOLDOWN", body, re.I):
         return _match("OPS_LOSS_COOLDOWN", text=body, first_line=fl)
     if re.search(r"SINAL\s+SE\s+FORMANDO", body, re.I):

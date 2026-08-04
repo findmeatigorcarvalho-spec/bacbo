@@ -22,15 +22,15 @@ Results (forensic G0/G1 WIN/LOSS, short `✅ WIN — KIND`, `G1 EXPIROU`, `G2 MI
 
 ---
 
-## What “delay instead of drop” means
+## Never miss — never delay
 
-Each shelf has a cards-per-minute cap (e.g. money ~3/min, countdown ~6/min).
+Bet windows are seconds (JANELA / `🟢 Ns 🟢`). Soft cards/min caps only **move** a card to the next chat so chats stay readable — they must never make a fire wait.
 
 1. Fire tries the **primary** shelf chat (Mr_iv4 or UNIQUE_g1).
-2. If that chat is at cap → spill to **UNIQUE_g2**, then g3, g4, g5.
-3. If **every** primary + overflow chat is also at cap → the router returns `delayed_seconds` = wait until the sliding 60s window has a free slot.
+2. Soft-cap hit → spill to **UNIQUE_g2**, then g3, g4, g5.
+3. Those full too → **mint UNIQUE_g6, g7, …** and send **immediately** (`delayed_seconds=0`).
 
-**Delay ≠ delete.** The signal stays queued; it is **not** suppressed, gated-off, or discarded. Drop only happens for explicit sink/noise or vault (CREATED_ONLY not live yet) — never because “chat was full.”
+No queue-wait. No drop for capacity. Building more UNIQUE_gN chats *is* the strategy for never missing a window.
 
 ---
 
