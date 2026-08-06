@@ -75,37 +75,29 @@ def build() -> Dict[str, Any]:
 
     pieces: List[Dict[str, Any]] = []
 
-    # Chats — each must earn its keep toward max return
-    pieces.append(
-        _piece(
-            "chat:Mr_iv4",
-            "chat",
-            "Densest money path — max ENTER/gale capture at min stake",
-            "money_first + soft-cap spill out, never delay in",
-            chat="Mr_iv4",
-            ambition="$100k+/day when volume+WR allow; else max possible",
-        )
+    # Profit Chat Bundle — identity by what each BECOMES (Mr_iv4 excluded)
+    _bundle = (
+        ("UNIQUE_g1", "APEX #1 — all primary ENTER + clocks + gale (replaces Mr_iv4)",
+         "primary_peer + TTB + gale home", "max honest capture / day on #1"),
+        ("UNIQUE_g2", "PRECISION — sniper / FLASH / ULTRA_TIE",
+         "high-assertiveness timed only", "edge per signal"),
+        ("UNIQUE_g3", "VOLUME — dense overflow ENTER",
+         "soft-cap spill / densifier gap fill", "fill to 1/round or 1/2 rounds"),
+        ("UNIQUE_g4", "ASSERTIVE — gale / recovery spill",
+         "same-color recovery stated only", "bankroll discipline capture"),
+        ("UNIQUE_g5", "IMPACT — RESULT comprovation / ops",
+         "THAT RESULT closes the subject", "trust compounds via proof"),
     )
-    pieces.append(
-        _piece(
-            "chat:UNIQUE_g1",
-            "chat",
-            "Every timed window used — human bets before 0",
-            "countdown shelf + TTB release",
-            chat="UNIQUE_g1",
-            ambition="max timed-window capture / day",
-        )
-    )
-    for n in range(2, 6):
+    for peer, essence, method, ambition in _bundle:
         pieces.append(
             _piece(
-                f"chat:UNIQUE_g{n}",
+                f"chat:{peer}",
                 "chat",
-                "No dead shelf — overflow opportunities still pay",
-                "soft-cap spill / densifier gap fill",
-                chat=f"UNIQUE_g{n}",
-                ambition="fill to 1/round or 1/2 rounds minimum",
-                status="CAN_BECOME_REAL",
+                essence,
+                method,
+                chat=peer,
+                ambition=ambition,
+                status="WIRED" if peer == "UNIQUE_g1" else "CAN_BECOME_REAL",
             )
         )
 
@@ -205,9 +197,9 @@ def build() -> Dict[str, Any]:
             "chat_router soft-cap→UNIQUE_gN",
         ),
         (
-            "wire:money_first",
-            "Mr_iv4 remains densest money path",
-            "HUB_MONEY_FIRST",
+            "wire:g1_apex_first",
+            "UNIQUE_g1 is APEX #1 — Mr_iv4 removed from live equation",
+            "HUB_G1_APEX_FIRST + PROFIT_CHAT_BUNDLE",
         ),
     ):
         pieces.append(_piece(fid, "wire", ir, lever))

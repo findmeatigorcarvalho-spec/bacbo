@@ -41,10 +41,13 @@ def _workspace_root() -> Path:
 ROOT = _workspace_root()
 ENV_PATH = ROOT / "luxury_building.env"
 
-# Gunique first, then money, then specialists
+# Profit Chat Bundle: UNIQUE_g1 APEX #1 (Mr_iv4 removed)
 CHAT_PRIORITY = [
-    "UNIQUE_g1",  # #1 — 24/7
-    "6774605259",  # #2 — Mr_iv4 / PLAY
+    "UNIQUE_g1",  # #1 APEX — money + countdown + gale
+    "UNIQUE_g2",  # PRECISION
+    "UNIQUE_g3",  # VOLUME
+    "UNIQUE_g4",  # ASSERTIVE
+    "UNIQUE_g5",  # IMPACT
     "SOLO",
     "GOLDEN",
     "SEQUENCE",
@@ -58,14 +61,21 @@ ENV_KEYS = {
     "V2_PROPOSERS": "1",
     "TELEGRAM_MIRROR_MONEY_TO_GUNIQUE": "0",
     "TELEGRAM_SINGLE_OUTBOX": "1",
+    "TELEGRAM_PRIMARY_PEER": "UNIQUE_g1",
+    "TELEGRAM_PRIMARY_PEER_ID": "5855678138",
+    "TELEGRAM_TARGET_PEER": "UNIQUE_g1",
     "TELEGRAM_COUNTDOWN_PEER": "UNIQUE_g1",
     "GUNIQUE_PEER": "UNIQUE_g1",
     # @UNIQUE_g1 numeric — avoids ResolveUsername / MONEY_FALLBACK race
     "TELEGRAM_GUNIQUE_PEER_ID": "5855678138",
     "GUNIQUE_PEER_ID": "5855678138",
-    "PACKER_REAL_COUNTDOWN_MAX": "30",
-    "PACKER_HUB_CHAT": "PLAY",
-    "HUB_CHAT_PRIORITY": "UNIQUE_g1,6774605259,SOLO,GOLDEN,SEQUENCE,MIX,OPS",
+    "TELEGRAM_EXCLUDE_PEERS": "Mr_iv4,6774605259",
+    "PROFIT_CHAT_BUNDLE": "1",
+    "HUB_G1_APEX_FIRST": "1",
+    "HUB_MONEY_FIRST": "0",
+    "PACKER_REAL_COUNTDOWN_MAX": "12",
+    "PACKER_HUB_CHAT": "APEX",
+    "HUB_CHAT_PRIORITY": "UNIQUE_g1,UNIQUE_g2,UNIQUE_g3,UNIQUE_g4,UNIQUE_g5,SOLO,GOLDEN,SEQUENCE,MIX,OPS",
     "HUB_GUNIQUE_FIRST": "1",
     "HUB_CONFIG_SEPARATE": "1",
     "HUB_NO_SHRINK_GATES": "1",
@@ -104,17 +114,30 @@ def _upsert_env(path: Path, keys: dict[str, str]) -> None:
 
 def apply() -> dict:
     DATA.mkdir(parents=True, exist_ok=True)
-    peer = os.environ.get("TELEGRAM_TARGET_PEER", "6774605259")
+    peer = (
+        os.environ.get("TELEGRAM_PRIMARY_PEER")
+        or os.environ.get("TELEGRAM_TARGET_PEER")
+        or "UNIQUE_g1"
+    ).strip().strip('"').strip("'").lstrip("@")
+    if peer in {"6774605259", "Mr_iv4", "mr_iv4"}:
+        peer = "UNIQUE_g1"
     cd = (
         os.environ.get("TELEGRAM_COUNTDOWN_PEER")
+        or os.environ.get("TELEGRAM_PRIMARY_PEER")
         or os.environ.get("GUNIQUE_PEER")
         or "UNIQUE_g1"
     ).strip().strip('"').strip("'").lstrip("@")
+    if cd in {"6774605259", "Mr_iv4", "mr_iv4"}:
+        cd = "UNIQUE_g1"
     keys = dict(ENV_KEYS)
+    keys["TELEGRAM_PRIMARY_PEER"] = peer
     keys["TELEGRAM_TARGET_PEER"] = peer
     keys["TELEGRAM_COUNTDOWN_PEER"] = cd
     keys["GUNIQUE_PEER"] = cd
-    keys["HUB_CHAT_PRIORITY"] = f"{cd},{peer},SOLO,GOLDEN,SEQUENCE,MIX,OPS"
+    keys["TELEGRAM_EXCLUDE_PEERS"] = "Mr_iv4,6774605259"
+    keys["HUB_CHAT_PRIORITY"] = (
+        f"{cd},UNIQUE_g2,UNIQUE_g3,UNIQUE_g4,UNIQUE_g5,SOLO,GOLDEN,SEQUENCE,MIX,OPS"
+    )
     # Numeric id bypasses ResolveUsername FloodWait / UsernameNotOccupied
     gid = ""
     for id_key in (

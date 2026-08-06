@@ -50,7 +50,7 @@ SIGNAL_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_SIGNAL_LOOKBACK_HOURS", "48")
 RESULT_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_RESULT_LOOKBACK_HOURS", "72"))
 HEARTBEAT_EVERY = int(os.environ.get("OUTBOX_HEARTBEAT_EVERY", "12"))  # ~60s at 5s sleep
 # NEVER default-mirror. User wants TOTAL SEPARATION, not duplication:
-# MONEY fires → Mr_iv4 only; TIMED fires → @UNIQUE_g1 only; results glue under parent.
+# Profit Chat Bundle: APEX=UNIQUE_g1 (#1). Mr_iv4 removed. Results glue under parent.
 MIRROR_MONEY_TO_GUNIQUE = os.environ.get("TELEGRAM_MIRROR_MONEY_TO_GUNIQUE", "0").strip().lower() in {
     "1", "true", "yes", "on",
 }
@@ -434,7 +434,7 @@ async def _resolve_target(client, target):
         except Exception:
             pass
     if target is None:
-        raise RuntimeError("TARGET missing — set TELEGRAM_TARGET_PEER=6774605259")
+        raise RuntimeError("TARGET missing — set TELEGRAM_TARGET_PEER=UNIQUE_g1")
     ent = await client.get_entity(target)
     _write_peer_cache(cache, str(target), ent)
     return ent
@@ -595,7 +595,11 @@ async def main() -> None:
             pass
     session = _load_telegram_session()
     target = getattr(config, "TARGET", None)
-    peer = os.environ.get("TELEGRAM_TARGET_PEER") or "6774605259"
+    peer = (
+        os.environ.get("TELEGRAM_PRIMARY_PEER")
+        or os.environ.get("TELEGRAM_TARGET_PEER")
+        or "UNIQUE_g1"
+    )
 
     client = TelegramClient(StringSession(session), int(api_id), str(api_hash))
     await client.connect()
@@ -611,10 +615,12 @@ async def main() -> None:
         print("[Outbox] resolve peer fallback:", exc)
         entity = await client.get_entity(int(peer))
 
-    # Dual-lane SEPARATION (no mirror): money FIRE → Mr_iv4; timed FIRE → @UNIQUE_g1;
-    # RESULT always same chat as parent fire (lane persisted by signal id).
+    # Profit Chat Bundle: APEX=UNIQUE_g1 owns money + countdown.
+    # Mr_iv4 removed. RESULT always same chat as parent fire.
+    # Precision/volume/assertive/impact spill to UNIQUE_g2…g5 (never delay).
     cd_peer = _clean_peer(
         os.environ.get("TELEGRAM_COUNTDOWN_PEER")
+        or os.environ.get("TELEGRAM_PRIMARY_PEER")
         or os.environ.get("GUNIQUE_PEER")
         or os.environ.get("TELEGRAM_GUNIQUE_PEER")
         or "UNIQUE_g1"
@@ -622,23 +628,27 @@ async def main() -> None:
     cd_entity = await _resolve_gunique(client, cd_peer) if cd_peer else None
     if cd_entity is not None:
         print(
-            f"[Outbox] COUNTDOWN/Gunique peer ready: @{cd_peer} "
-            f"id={getattr(cd_entity, 'id', '?')} (SEPARATE lane, no money mirror)"
+            f"[Outbox] APEX/COUNTDOWN peer ready: @{cd_peer} "
+            f"id={getattr(cd_entity, 'id', '?')} (g1 #1; Mr_iv4 excluded)"
         )
     else:
         print(
-            f"[Outbox] Gunique NOT READY peer=@{cd_peer} — will soft-retry; "
-            "set TELEGRAM_GUNIQUE_PEER_ID=<numeric> if FloodWait / UsernameNotOccupied"
+            f"[Outbox] APEX NOT READY peer=@{cd_peer} — will soft-retry; "
+            "set TELEGRAM_GUNIQUE_PEER_ID=5855678138 if FloodWait / UsernameNotOccupied"
         )
     try:
         mid = int(getattr(entity, "id", 0) or 0)
         cid = int(getattr(cd_entity, "id", 0) or 0) if cd_entity is not None else 0
         if mid and cid and mid == cid:
+            # Expected under Profit Chat Bundle — UNIQUE_g1 is both money + countdown.
             print(
-                "[Outbox] FATAL CONFIG: money peer id == Gunique peer id "
-                f"({mid}) — chats are NOT separated. Fix TELEGRAM_TARGET_PEER vs "
-                "TELEGRAM_COUNTDOWN_PEER / TELEGRAM_GUNIQUE_PEER_ID."
+                f"[Outbox] APEX unified: money+countdown share peer id={mid} "
+                "(UNIQUE_g1 #1 — intentional; Mr_iv4 removed)"
             )
+        elif cd_entity is None:
+            # Prefer primary entity as APEX when countdown resolve fails
+            cd_entity = entity
+            print("[Outbox] APEX fallback: using primary entity for countdown lane")
     except Exception:
         pass
     print(
@@ -651,25 +661,23 @@ async def main() -> None:
     _peer_entity_cache: dict[str, object] = {}
 
     async def _resolve_peer_entity(peer: str | None):
-        """Resolve Mr_iv4 / UNIQUE_gN. Fail-open None → caller uses primary (no delay)."""
+        """Resolve UNIQUE_gN / APEX. Mr_iv4 redirects to APEX. Fail-open → primary."""
         if not peer:
             return None
         key = str(peer).lstrip("@").strip()
         if not key:
             return None
-        # Known primaries
-        if key in {"6774605259", "Mr_iv4", "mr_iv4"} or key == str(
-            getattr(entity, "id", "")
-        ):
-            return entity
-        if key in {
+        # Excluded former money king → APEX (UNIQUE_g1)
+        if key in {"6774605259", "Mr_iv4", "mr_iv4"}:
+            return cd_entity or entity
+        if key == str(getattr(entity, "id", "")) or key in {
             "UNIQUE_g1",
             "unique_g1",
             "5855678138",
             str(cd_peer),
             str(getattr(cd_entity, "id", "") or ""),
         }:
-            return cd_entity
+            return cd_entity or entity
         if key in _peer_entity_cache:
             return _peer_entity_cache[key]
         if key.lstrip("-").isdigit():
@@ -851,15 +859,10 @@ async def main() -> None:
             body = held.text or ""
             if not body.strip():
                 continue
-            chat = (held.chat or "Mr_iv4").strip()
-            dest = entity
-            if chat.upper().startswith("UNIQUE_G") or chat in {
-                "UNIQUE_g1",
-                "5855678138",
-            }:
-                dest = (await _resolve_peer_entity(chat)) or cd_entity or entity
-            else:
-                dest = (await _resolve_peer_entity(chat)) or entity
+            chat = (held.chat or "UNIQUE_g1").strip()
+            if chat in {"6774605259", "Mr_iv4", "mr_iv4"}:
+                chat = "UNIQUE_g1"
+            dest = (await _resolve_peer_entity(chat)) or cd_entity or entity
             try:
                 await client.send_message(dest, body)
                 n += 1
@@ -909,35 +912,21 @@ async def main() -> None:
         except Exception:
             do_ping = True
         if do_ping:
-            ping_money = (
-                "LUXURY OUTBOX ONLINE — MONEY CHAT (#2)\n"
-                f"DEST peer id: {getattr(entity, 'id', '?')}\n"
+            ping_apex = (
+                "PROFIT BUNDLE ONLINE — UNIQUE_g1 APEX (#1)\n"
+                f"DEST peer id: {getattr(cd_entity or entity, 'id', '?')}\n"
                 f"Tag floor: {boot_tag}\n"
                 f"DB: {DB.name}\n"
-                "Hub: engine routes low-trust / ops here.\n"
+                "Mr_iv4 REMOVED. All primary ENTER + clocks + gale home here.\n"
                 f"Outbox fire cards: {'ON' if HUB_OUTBOX_FIRE_CARDS else 'OFF (engine owns skins)'}\n"
-                f"HUB_MAX={int(HUB_MAX)} · no mirror."
-            )
-            ping_cd = (
-                "LUXURY OUTBOX ONLINE — GUNIQUE (#1) TRUST-FIRST\n"
-                f"DEST peer id: {getattr(cd_entity, 'id', '?')}\n"
-                f"Tag floor: {boot_tag}\n"
-                f"DB: {DB.name}\n"
-                "Priority #1 24/7 — high-TRUST original skins land here.\n"
-                "Engine send() is redirected here when HUB_ENGINE_ROUTE=1.\n"
-                f"HUB_MAX={int(HUB_MAX)} · trust→Gunique · cascade→money."
+                f"HUB_MAX={int(HUB_MAX)} · bundle spill g2…gN · never delay."
             )
             try:
-                msg = await client.send_message(entity, ping_money)
-                print("[Outbox] startup ping Mr_iv4 OK id=", msg.id)
+                dest_ping = cd_entity or entity
+                msg = await client.send_message(dest_ping, ping_apex)
+                print("[Outbox] startup ping UNIQUE_g1 APEX OK id=", msg.id)
             except Exception as exc:
-                print("[Outbox] startup ping Mr_iv4 FAIL:", repr(exc))
-            if cd_entity is not None:
-                try:
-                    msg2 = await client.send_message(cd_entity, ping_cd)
-                    print("[Outbox] startup ping Gunique OK id=", msg2.id)
-                except Exception as exc:
-                    print("[Outbox] startup ping Gunique FAIL:", repr(exc))
+                print("[Outbox] startup ping UNIQUE_g1 APEX FAIL:", repr(exc))
             try:
                 ping_stamp.parent.mkdir(parents=True, exist_ok=True)
                 ping_stamp.write_text(str(time.time()))
@@ -1290,9 +1279,7 @@ async def main() -> None:
                                     family_id="RESULT",
                                     signal_kind=str(row.get("signal_kind") or "RESULT"),
                                     score=0.0,
-                                    chat="Mr_iv4"
-                                    if "COUNTDOWN" not in str(lane).upper()
-                                    else "UNIQUE_g1",
+                                    chat="UNIQUE_g1",
                                     clock_a_secs=None,
                                     detected_at=time.time(),
                                     ideal_release_at=phase.next_interval_start,

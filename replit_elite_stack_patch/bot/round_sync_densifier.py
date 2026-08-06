@@ -399,7 +399,7 @@ class RoundSyncDensifier:
             pass
         if extract_clock_a(text) is not None:
             return "UNIQUE_g1"
-        return "Mr_iv4"
+        return "UNIQUE_g1"
 
     def _density_key(self, chat: str, round_id: int) -> str:
         return f"{chat}#{round_id}"
@@ -428,7 +428,7 @@ class RoundSyncDensifier:
 
     def densify_gaps(self, chats: Optional[List[str]] = None) -> List[Dict[str, Any]]:
         """Chats below 1-per-2-rounds minimum over last 4 rounds."""
-        chats = chats or ["Mr_iv4", "UNIQUE_g1", "UNIQUE_g2", "UNIQUE_g3"]
+        chats = chats or ["UNIQUE_g1", "UNIQUE_g2", "UNIQUE_g3", "UNIQUE_g4", "UNIQUE_g5"]
         phase = _CLOCK.phase_at()
         data = _load_density()
         bcr = data.get("by_chat_round") or {}
@@ -770,7 +770,7 @@ class RoundSyncDensifier:
                             family_id=str(it.get("family_id") or ""),
                             signal_kind=str(it.get("signal_kind") or ""),
                             score=float(it.get("score") or 0),
-                            chat=str(it.get("chat") or "Mr_iv4"),
+                            chat=str(it.get("chat") or "UNIQUE_g1"),
                             clock_a_secs=it.get("clock_a_secs"),
                             detected_at=float(it.get("detected_at") or now),
                             ideal_release_at=float(it.get("ideal_release_at") or now),
@@ -780,7 +780,7 @@ class RoundSyncDensifier:
                         )
                     )
                     self.record_fire(
-                        str(it.get("chat") or "Mr_iv4"),
+                        str(it.get("chat") or "UNIQUE_g1"),
                         int(it.get("round_id") or phase.round_id),
                         str(it.get("fire_key") or ""),
                         float(it.get("score") or 0),

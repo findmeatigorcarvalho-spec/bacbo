@@ -150,9 +150,10 @@ def main() -> int:
         "name": "PROFIT_SKYSCRAPER_OS",
         "mission": (
             "Understand every Telegram-bound skin/template/gate; distribute KEEP "
-            "across Mr_iv4 (money penthouse) → UNIQUE_g1 (countdown) → UNIQUE_gN "
-            "(overflow, never delay); block TRASH; kid-simple play rules so every "
-            "chat is fully usable even at 5 signals/day."
+            "across UNIQUE_g1 APEX (#1, replaces Mr_iv4) → UNIQUE_g2 PRECISION → "
+            "g3 VOLUME → g4 ASSERTIVE → g5 IMPACT → gN ELASTIC (never delay); "
+            "block TRASH; kid-simple play rules so every chat is fully usable "
+            "even at 5 signals/day. Mr_iv4 is REMOVED from the live equation."
         ),
         "honesty": (
             "Dollar outcomes depend on platform stakes, volume, and WR — not guaranteed. "
@@ -188,7 +189,11 @@ def main() -> int:
         ],
         "runtime": {
             "PROFIT_SKYSCRAPER": "1",
-            "HUB_MONEY_FIRST": "1",
+            "PROFIT_CHAT_BUNDLE": "1",
+            "HUB_G1_APEX_FIRST": "1",
+            "HUB_MONEY_FIRST": "0",
+            "TELEGRAM_PRIMARY_PEER": "UNIQUE_g1",
+            "TELEGRAM_EXCLUDE_PEERS": "Mr_iv4,6774605259",
             "TELEGRAM_TRASH_BLOCK": "1",
             "TELEGRAM_SKIN_GATE": "1",
             "never_delay": True,
@@ -201,29 +206,57 @@ def main() -> int:
         json.dumps(brain, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
 
-    cards = {
-        "mr_iv4": playbook_card("mr_iv4"),
-        "unique_g1": playbook_card("unique_g1"),
-        "unique_gn": playbook_card("overflow"),
-    }
-    (DATA / "chat_playbook_cards.json").write_text(
-        json.dumps(cards, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+    # Prefer structured APEX bundle cards when present; else generate pin texts
+    structured = _load(DATA / "chat_playbook_cards.json") or {}
+    if not (isinstance(structured, dict) and structured.get("cards")):
+        cards = {
+            "generated_for": "profit_chat_bundle_g1_apex",
+            "cards": [
+                {"id": "APEX", "peer": "UNIQUE_g1", "pin": playbook_card("unique_g1")},
+                {"id": "PRECISION", "peer": "UNIQUE_g2", "pin": playbook_card("unique_g2")},
+                {"id": "VOLUME", "peer": "UNIQUE_g3", "pin": playbook_card("unique_g3")},
+                {"id": "ASSERTIVE", "peer": "UNIQUE_g4", "pin": playbook_card("unique_g4")},
+                {"id": "IMPACT", "peer": "UNIQUE_g5", "pin": playbook_card("unique_g5")},
+                {"id": "ELASTIC", "peer": "UNIQUE_g6+", "pin": playbook_card("overflow")},
+                {
+                    "id": "EXCLUDED",
+                    "peer": "Mr_iv4",
+                    "pin": "REMOVED from live equation. Do not route here.",
+                },
+            ],
+        }
+        (DATA / "chat_playbook_cards.json").write_text(
+            json.dumps(cards, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+        structured = cards
+
+    pin_by_peer = {}
+    for c in structured.get("cards") or []:
+        pin_by_peer[str(c.get("peer") or "")] = c.get("pin") or playbook_card(
+            str(c.get("peer") or "")
+        )
 
     # Markdown playbook
     lines = [
-        "# Profit Skyscraper — how to use every chat (simple)",
+        "# Profit Chat Bundle — how to use every chat (UNIQUE_g1 APEX)",
+        "",
+        "**EMERGENCY PIVOT:** UNIQUE_g1 is #1 (takes Mr_iv4's place). "
+        "Mr_iv4 is REMOVED (`TELEGRAM_EXCLUDE_PEERS=Mr_iv4,6774605259`).",
         "",
         "Built from the full museum (827 templates) → **KEEP 777 / TRASH 50**, "
         "plus 120 registry skins and live floors/gates.",
         "",
-        "## The building",
+        "## The bundle",
         "",
-        "| Chat | Job | What you do |",
+        "| Chat | Becomes | What you do |",
         "|---|---|---|",
-        "| **Mr_iv4** | Money penthouse (most profit) | ENTER + color → min bet; gale → same color min; WIN/LOSS ends round |",
-        "| **UNIQUE_g1** | Countdown / sniper | Bet before the timer hits 0 |",
-        "| **UNIQUE_g2…gN** | Overflow when busy | Same rules — never wait for a free slot |",
+        "| **UNIQUE_g1** | **APEX #1** | Primary ENTER + clocks + gale + RESULT |",
+        "| **UNIQUE_g2** | PRECISION | FLASH / ULTRA_TIE sniper |",
+        "| **UNIQUE_g3** | VOLUME | Dense overflow ENTER |",
+        "| **UNIQUE_g4** | ASSERTIVE | Gale / recovery spill |",
+        "| **UNIQUE_g5** | IMPACT | RESULT comprovation / ops |",
+        "| **UNIQUE_g6…gN** | ELASTIC | Mint under pressure — never delay |",
+        "| ~~Mr_iv4~~ | — | **Excluded** |",
         "",
         "## Universal rules (even a 12-year-old)",
         "",
@@ -247,7 +280,7 @@ def main() -> int:
         "## What the system does (autonomous)",
         "",
         "1. Blocks TRASH (shell pastes, agent meta, UI crumbs).",
-        "2. Sends KEEP fires: money → Mr_iv4, countdown → UNIQUE_g1.",
+        "2. Sends KEEP fires: **all primary → UNIQUE_g1 APEX** (Mr_iv4 excluded).",
         "3. Soft-cap → spill to UNIQUE_gN **immediately** (never delay a bet window).",
         "4. Results glue to the exact chat of the parent fire.",
         "5. Peak floors (JUN10, ELITE_V2, …) stay as gates; their skins ride the shelves.",
@@ -261,19 +294,14 @@ def main() -> int:
         "",
         "## Pin these cards in each chat",
         "",
-        "### Mr_iv4",
+        "### UNIQUE_g1 APEX",
         "```",
-        cards["mr_iv4"],
-        "```",
-        "",
-        "### UNIQUE_g1",
-        "```",
-        cards["unique_g1"],
+        pin_by_peer.get("UNIQUE_g1") or playbook_card("unique_g1"),
         "```",
         "",
-        "### UNIQUE_gN",
+        "### UNIQUE_g2…gN bundle",
         "```",
-        cards["unique_gn"],
+        pin_by_peer.get("UNIQUE_g6+") or playbook_card("overflow"),
         "```",
         "",
         "## Machine files",

@@ -12,13 +12,13 @@ SPLIT KEY (locked)
 3) RESULT always inherits the parent FIRE's lane (same chat as the signal).
 4) Result metadata like "⏱ Intervalo: 31.3s" NEVER makes a card a countdown fire.
 
-LANES
+LANES (Profit Chat Bundle — Mr_iv4 REMOVED)
 ─────
-MONEY     → Mr_iv4 (TELEGRAM_TARGET_PEER=6774605259)
+MONEY     → UNIQUE_g1 APEX (TELEGRAM_PRIMARY_PEER / TELEGRAM_TARGET_PEER)
   FIRE templates with NO bet-window / janela / Ns-to-hit on the SIGNAL itself.
   Examples: 🏆 GOLDEN SIGNAL — ENTER NOW, rooms consensus, ENTER NOW — N ROOM(S).
 
-COUNTDOWN → @UNIQUE_g1 (TELEGRAM_COUNTDOWN_PEER)
+COUNTDOWN → UNIQUE_g1 APEX (same #1 chat; sniper precision may spill UNIQUE_g2)
   FIRE templates with CLOCK A — ENTRY WINDOW (Ns to PLACE the bet).
   Examples: JANELA: 1s/11s/17s para apostar, 🟢 1s 🟢, CD_FIRE_TIMER_*,
             Sinal Retido→Liberado + entry window.
@@ -47,8 +47,11 @@ ROLE_FIRE = "FIRE"
 ROLE_RESULT = "RESULT"
 ROLE_UNKNOWN = "UNKNOWN"
 
-DEFAULT_MONEY_PEER = "6774605259"  # Mr_iv4
-DEFAULT_COUNTDOWN_PEER = "UNIQUE_g1"  # @UNIQUE_g1
+# Profit Chat Bundle: UNIQUE_g1 is APEX #1 for money + countdown (Mr_iv4 removed).
+DEFAULT_MONEY_PEER = os.environ.get("TELEGRAM_PRIMARY_PEER") or os.environ.get(
+    "TELEGRAM_TARGET_PEER"
+) or "UNIQUE_g1"
+DEFAULT_COUNTDOWN_PEER = os.environ.get("TELEGRAM_COUNTDOWN_PEER") or "UNIQUE_g1"
 
 # Persist fire→lane so results follow parent across outbox restarts.
 _LANE_STATE = Path(
@@ -259,17 +262,24 @@ def route_lane(
 def peer_for_lane(lane: str) -> str | None:
     lane = (lane or LANE_MONEY).upper()
     if lane == LANE_COUNTDOWN:
-        return _norm_peer(
+        peer = _norm_peer(
             os.environ.get("TELEGRAM_COUNTDOWN_PEER")
+            or os.environ.get("TELEGRAM_PRIMARY_PEER")
             or os.environ.get("GUNIQUE_PEER")
             or os.environ.get("TELEGRAM_GUNIQUE_PEER")
             or DEFAULT_COUNTDOWN_PEER
         )
-    return _norm_peer(
-        os.environ.get("TELEGRAM_TARGET_PEER")
-        or os.environ.get("TARGET_PEER_ID")
-        or DEFAULT_MONEY_PEER
-    )
+    else:
+        peer = _norm_peer(
+            os.environ.get("TELEGRAM_PRIMARY_PEER")
+            or os.environ.get("TELEGRAM_TARGET_PEER")
+            or os.environ.get("TARGET_PEER_ID")
+            or DEFAULT_MONEY_PEER
+        )
+    # Mr_iv4 removed from live equation — always APEX
+    if peer and peer.lstrip("@") in {"6774605259", "Mr_iv4", "mr_iv4"}:
+        return "UNIQUE_g1"
+    return peer
 
 
 def route_peer(
@@ -303,9 +313,9 @@ def route_peer(
             "RESULT → same chat as parent fire"
             if role == ROLE_RESULT
             else (
-                "FIRE money/coalition (no bet-window on signal) → Mr_iv4 ONLY"
+                f"FIRE money/coalition → @{peer} APEX (Mr_iv4 excluded)"
                 if lane == LANE_MONEY
-                else f"FIRE timed/janela/countdown → @{peer} ONLY"
+                else f"FIRE timed/janela/countdown → @{peer} APEX"
             )
         ),
     }

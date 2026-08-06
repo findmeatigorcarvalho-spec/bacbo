@@ -1,19 +1,25 @@
-# The path — how a human uses every chat
+# The path — Profit Chat Bundle (UNIQUE_g1 APEX)
 
-We are not naming the finished thing yet. Scaffold labels (skyscraper, densifier) are wires.  
-**What we are creating:** a path where you still have time to act, every round we can give you.
+**EMERGENCY PIVOT:** UNIQUE_g1 is the #1 most important chat — it takes Mr_iv4's place.  
+Mr_iv4 is **REMOVED** from the live equation (`TELEGRAM_EXCLUDE_PEERS=Mr_iv4,6774605259`).
 
-See `WHAT_WE_ARE_CREATING.md`. Status: `python3 bot/human_return_path.py`
+A chat *is* when it BECOMES — proven by Profit · Volume · WR · Precision · Assertiveness · Existence · Essence · Impact · Results.
+
+See `PROFIT_CHAT_BUNDLE.md` · `WHAT_WE_ARE_CREATING.md`. Status: `python3 bot/human_return_path.py`
 
 Built from the full museum (827 templates) → **KEEP 777 / TRASH 50**, plus 120 registry skins and live floors/gates.
 
-## The building
+## The bundle
 
-| Chat | Job | What you do |
+| Chat | Becomes | What you do |
 |---|---|---|
-| **Mr_iv4** | Money penthouse (most profit) | ENTER + color → min bet; gale → same color min; WIN/LOSS ends round |
-| **UNIQUE_g1** | Countdown / sniper | Bet before the timer hits 0 |
-| **UNIQUE_g2…gN** | Overflow when busy | Same rules — never wait for a free slot |
+| **UNIQUE_g1** | **APEX #1** | Primary ENTER + clocks + gale + RESULT home |
+| **UNIQUE_g2** | PRECISION | FLASH / ULTRA_TIE / high-assertiveness sniper |
+| **UNIQUE_g3** | VOLUME | Dense overflow ENTER when APEX is at soft-cap |
+| **UNIQUE_g4** | ASSERTIVE | Gale / recovery spill |
+| **UNIQUE_g5** | IMPACT | RESULT comprovation / ops home |
+| **UNIQUE_g6…gN** | ELASTIC | Mint under pressure — never delay |
+| ~~Mr_iv4~~ | — | **Excluded — not a live money surface** |
 
 ## Universal rules (even a 12-year-old)
 
@@ -51,18 +57,18 @@ Built from the full museum (827 templates) → **KEEP 777 / TRASH 50**, plus 120
 - Always the platform minimum unit. Volume of correct windows > size of bet.
 - Gale: G0 = 1u, G1 = 1u (same min), G2 = 1u only if card says enter G2.
 - Never: Never raise stake to 'recover'. Never bet without a card.
-- Worst chat (5 signals/day): Even if a chat only posts 5 ENTER days: play all 5 with min stake + official gales. Skip DO-NOT-BET. That chat is still fully used.
 
 ## What the system does (autonomous)
 
 1. Blocks TRASH (shell pastes, agent meta, UI crumbs).
-2. Sends KEEP fires: money → Mr_iv4, countdown → UNIQUE_g1.
-3. Soft-cap → spill to UNIQUE_gN **immediately** (never delay a bet window).
-4. Results glue to the exact chat of the parent fire.
-5. Peak floors (JUN10, ELITE_V2, …) stay as gates; their skins ride the shelves.
-6. **Round sync densifier:** target **1 signal per round** per chat (min 1 per 2).
-7. Long JANELA (30s…400s) is **prep invest** — held, then released at ~10s time-to-bet.
-8. RESULT cards prefer **interval start** so the color matches the round that just closed.
+2. Sends KEEP fires: **all primary → UNIQUE_g1 APEX** (Mr_iv4 excluded).
+3. Situation routes PRECISION→g2, VOLUME spill→g3, ASSERTIVE→g4, IMPACT→g5.
+4. Soft-cap → spill to UNIQUE_gN **immediately** (never delay a bet window).
+5. Results glue to the exact chat of the parent fire.
+6. Peak floors (JUN10, ELITE_V2, …) stay as gates; their skins ride the shelves.
+7. **Round sync densifier:** target **1 signal per round** per chat (min 1 per 2).
+8. Long JANELA (30s…400s) is **prep invest** — held, then released at ~10s time-to-bet.
+9. RESULT cards prefer **interval start** so the color matches the round that just closed.
 
 ## Timing (follow to the T)
 
@@ -72,73 +78,11 @@ Built from the full museum (827 templates) → **KEEP 777 / TRASH 50**, plus 120
 | Bet window (~12s…3s left) | ENTER + color | Bet **minimum** NOW |
 | Locked (&lt;3s) | DO NOT BET / silence | Skip — next round |
 
-## Inventory snapshot
+## Verdict chain (locked)
 
-- Museum templates: 827
-- KEEP: 777 · TRASH: 50
-- Registry skins: 120 → {'ONLINE': 2, 'FIRE': 43, 'OPS': 44, 'RESULT': 28, 'ROOM_RELAY': 1, 'UNKNOWN': 2}
-- Live floors: JUN10, AITEST_ULTIMATE, AITEST_APR20_MAX, MAY01, APR20, LIVE, JUN20, APR27, ELITE_V2, ULTIMATE, AITEST_LIVE, APR22, APR26, JUN19, APR20_MAX, JUN26, MAY19, MAY10, MAR21, JUN27, APR29, ELITE_V2_PEAK, MAR19, MAY11, MAR20, AITEST_MAR21, JUN08, APR30, APR28, AITEST_APR20, MAY04, APR19
+- Was: `CAN_BECOME_REAL`
+- Verdict: `MAKE_IT_REAL`
+- Outcome: Make It Real / It Is Real, Really.
+- Reality: It Is Real truthfully.
 
-## Pin these cards in each chat
-
-### Mr_iv4
-```
-🏛 Mr_iv4 — MONEY PENTHOUSE
-This is the main profit chat.
-
-Focus: Most ENTER NOW / gale / WIN-LOSS land here.
-
-HOW TO MAKE MONEY HERE (simple):
-1) See ENTER + color → bet MINIMUM on that color.
-2) See timer / JANELA → bet BEFORE 0.
-3) See GALE / again → same color, MINIMUM again.
-4) See WIN → stop that round.
-5) See DO NOT BET / EXPIRED → skip.
-6) Never invent your own bets.
-
-One card = one job. Follow the card. Minimum stake. Every signal.
-```
-
-### UNIQUE_g1
-```
-⏱ UNIQUE_g1 — COUNTDOWN / SNIPER
-Fast clocks. Bet in the seconds shown.
-
-Focus: JANELA / Sinal Retido / FLASH live here.
-
-HOW TO MAKE MONEY HERE (simple):
-1) See ENTER + color → bet MINIMUM on that color.
-2) See timer / JANELA → bet BEFORE 0.
-3) See GALE / again → same color, MINIMUM again.
-4) See WIN → stop that round.
-5) See DO NOT BET / EXPIRED → skip.
-6) Never invent your own bets.
-
-One card = one job. Follow the card. Minimum stake. Every signal.
-```
-
-### UNIQUE_gN
-```
-📤 UNIQUE_gN — OVERFLOW
-Same game as the main chats — just less crowded.
-
-Focus: If you see ENTER here, treat it like Mr_iv4 / g1.
-
-HOW TO MAKE MONEY HERE (simple):
-1) See ENTER + color → bet MINIMUM on that color.
-2) See timer / JANELA → bet BEFORE 0.
-3) See GALE / again → same color, MINIMUM again.
-4) See WIN → stop that round.
-5) See DO NOT BET / EXPIRED → skip.
-6) Never invent your own bets.
-
-One card = one job. Follow the card. Minimum stake. Every signal.
-```
-
-## Machine files
-
-- `keep_allowlist.json` — live trash block list
-- `profit_skyscraper_brain.json` — full system map
-- `chat_playbook_cards.json` — pin texts
-- Regenerator: `python3 bot/build_profit_skyscraper_brain.py`
-
+Honesty: dollar north-stars are direction, not guarantees. Path reality = on-time factual bet + warning + RESULT comprovation + max honest capture.

@@ -80,7 +80,8 @@ def capacity_for(shelf_id: str) -> float:
 
 
 # Default overflow shelves when env is unset: UNIQUE_g2 … UNIQUE_g5
-# (UNIQUE_g1 is the primary countdown/sniper chat; Mr_iv4 is money.)
+# UNIQUE_g1 is APEX #1 (money+countdown). Overflow = behavioral bundle g2…g5.
+# Mr_iv4 removed from the live equation.
 _DEFAULT_OVERFLOW_PEERS: Tuple[str, ...] = (
     "UNIQUE_g2",
     "UNIQUE_g3",
@@ -95,7 +96,7 @@ def overflow_peers() -> List[str]:
     """Named overflow chats: TELEGRAM_SHELF_OVERFLOW_1..N (comma list also ok).
 
     Unset env → UNIQUE_g2, UNIQUE_g3, UNIQUE_g4, UNIQUE_g5.
-    Money stays on Mr_iv4; countdown/sniper primary stays on UNIQUE_g1.
+    APEX (money+countdown) stays on UNIQUE_g1; Mr_iv4 excluded.
     When these are all at soft cap, `elastic_overflow_peer()` mints UNIQUE_g6+.
     """
     peers: List[str] = []
@@ -112,12 +113,20 @@ def overflow_peers() -> List[str]:
             peers.append(base.lstrip("@"))
     if not peers:
         peers.extend(_DEFAULT_OVERFLOW_PEERS)
+    # Hard-exclude Mr_iv4 from overflow (removed from live equation)
+    excluded = {"mr_iv4", "6774605259"}
+    try:
+        from bot.config.profit_chat_bundle import excluded_peers
+
+        excluded |= {x.lower().lstrip("@") for x in excluded_peers()}
+    except Exception:
+        pass
     # de-dupe preserving order
     seen = set()
     out: List[str] = []
     for p in peers:
         key = p.lstrip("@").lower()
-        if key in seen or not p:
+        if key in seen or not p or key in excluded:
             continue
         seen.add(key)
         out.append(p.lstrip("@"))

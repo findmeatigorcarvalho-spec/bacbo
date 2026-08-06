@@ -94,7 +94,7 @@ def _wrap_send(fn: Callable) -> Callable:
                             family_id="RESULT",
                             signal_kind="RESULT",
                             score=0.0,
-                            chat="Mr_iv4",
+                            chat="UNIQUE_g1",
                             clock_a_secs=None,
                             detected_at=_time.time(),
                             ideal_release_at=phase.next_interval_start,

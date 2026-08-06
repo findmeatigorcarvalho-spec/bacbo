@@ -56,19 +56,20 @@ _SHELF_PEER_ENV = {
     SHELF_SINK: ("TELEGRAM_SHELF_SINK",),
 }
 
-# Chat map (locked):
-#   Mr_iv4 (6774605259)  — money ENTER / gale / ops primary
-#   UNIQUE_g1            — countdown peak fires + sniper
-#   UNIQUE_g2..g5        — elastic overflow when a shelf is saturated
-#                          (see chat_router.overflow_peers)
+# Chat map (locked — Profit Chat Bundle):
+#   UNIQUE_g1            — APEX #1 (replaces Mr_iv4): money + countdown + gale
+#   UNIQUE_g2            — PRECISION sniper
+#   UNIQUE_g3..g5        — VOLUME / ASSERTIVE / IMPACT
+#   UNIQUE_g6+           — elastic overflow (see chat_router)
+#   Mr_iv4               — REMOVED from live equation
 _DEFAULT_PEERS = {
-    SHELF_PENTHOUSE_MONEY: "6774605259",  # Mr_iv4
-    SHELF_UPPER_MONEY: "6774605259",  # Mr_iv4
-    SHELF_COUNTDOWN: "UNIQUE_g1",
-    SHELF_SNIPER: "UNIQUE_g1",
-    SHELF_GALE: "6774605259",  # Mr_iv4
-    SHELF_OPS_EXPIRE: "6774605259",  # Mr_iv4 (results glue to parent chat)
-    SHELF_OVERFLOW: "UNIQUE_g2",  # first overflow; g3–g5 via chat_router
+    SHELF_PENTHOUSE_MONEY: "UNIQUE_g1",  # APEX
+    SHELF_UPPER_MONEY: "UNIQUE_g1",  # APEX
+    SHELF_COUNTDOWN: "UNIQUE_g1",  # APEX
+    SHELF_SNIPER: "UNIQUE_g2",  # PRECISION
+    SHELF_GALE: "UNIQUE_g1",  # APEX
+    SHELF_OPS_EXPIRE: "UNIQUE_g1",  # glue prefers parent; default APEX
+    SHELF_OVERFLOW: "UNIQUE_g3",  # VOLUME first overflow
     SHELF_VAULT: "",
     SHELF_SINK: "",
 }
@@ -222,11 +223,31 @@ class ShelfDecision:
 
 
 def _peer_for_shelf(shelf_id: str) -> Optional[str]:
+    try:
+        from bot.config.profit_chat_bundle import (
+            is_excluded,
+            peer_for_shelf,
+            primary_peer,
+        )
+
+        # Bundle wins when enabled — never return Mr_iv4
+        peer = peer_for_shelf(shelf_id)
+        if peer and not is_excluded(peer):
+            return peer
+        return primary_peer()
+    except Exception:
+        pass
     for key in _SHELF_PEER_ENV.get(shelf_id, ()):
         raw = (os.environ.get(key) or "").strip().strip('"').strip("'")
         if raw:
-            return raw.lstrip("@") if not raw.lstrip("-").isdigit() else raw
-    default = _DEFAULT_PEERS.get(shelf_id, "")
+            peer = raw.lstrip("@") if not raw.lstrip("-").isdigit() else raw
+            # Hard-exclude Mr_iv4 even without bundle import
+            if peer in {"6774605259", "Mr_iv4", "mr_iv4"}:
+                continue
+            return peer
+    default = _DEFAULT_PEERS.get(shelf_id, "") or "UNIQUE_g1"
+    if default in {"6774605259", "Mr_iv4", "mr_iv4"}:
+        return "UNIQUE_g1"
     return default or None
 
 

@@ -350,15 +350,25 @@ def human_status() -> Dict[str, Any]:
 
 def pin_card(chat_key: str) -> str:
     """Human-first pin text — essence over architecture jargon."""
-    if chat_key in ("mr_iv4", "money", "penthouse"):
-        where = "This is the main money path."
-        focus = "Most ENTER / gale / WIN-LOSS live here."
-    elif chat_key in ("unique_g1", "g1", "countdown"):
-        where = "This is the fast-clock path."
-        focus = "JANELA / timers — bet in the seconds you see."
+    key = (chat_key or "").lower()
+    if key in ("unique_g1", "g1", "apex", "primary", "money", "penthouse"):
+        where = "This chat BECOMES: APEX #1 (replaces Mr_iv4)."
+        focus = "All primary ENTER + clocks + gale. The first most important chat."
+    elif key in ("unique_g2", "g2", "precision"):
+        where = "This chat BECOMES: PRECISION."
+        focus = "Sniper / FLASH / ULTRA_TIE — clean high-assertiveness."
+    elif key in ("unique_g3", "g3", "volume"):
+        where = "This chat BECOMES: VOLUME."
+        focus = "Dense overflow when APEX is busy — never delay."
+    elif key in ("unique_g4", "g4", "assertive", "gale"):
+        where = "This chat BECOMES: ASSERTIVE."
+        focus = "Gale / recovery — same color only if stated."
+    elif key in ("unique_g5", "g5", "impact"):
+        where = "This chat BECOMES: IMPACT."
+        focus = "RESULT comprovation + protective warnings."
     else:
-        where = "Same path, quieter room."
-        focus = "If ENTER appears here, treat it as real as the main chat."
+        where = "This chat BECOMES: ELASTIC."
+        focus = "Minted overflow — same path, never miss a window."
 
     return "\n".join(
         [
@@ -373,8 +383,8 @@ def pin_card(chat_key: str) -> str:
             "5) RESULT comprovation (WIN/LOSS/TIE) → round closed. That is THE RESULT.",
             "6) Never invent bets. Stated subject = only subject.",
             "",
-            "On time every round we have. Clear every time. Helpful every time.",
-            "Get it all — the most of all — truthfully resourceful always.",
+            "On time every round we have. Get the most of all — truthfully resourceful.",
+            "Mr_iv4 is out. Bundle = UNIQUE_g1…gN by what each BECOMES.",
         ]
     )
 

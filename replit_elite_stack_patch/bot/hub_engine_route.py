@@ -9,9 +9,12 @@ Env:
   HUB_MAX=1
   HUB_ENGINE_ROUTE=1          (default on when HUB_MAX)
   HUB_GUNIQUE_FIRST=1
-  TELEGRAM_TARGET_PEER       money (#2)
-  TELEGRAM_GUNIQUE_PEER_ID   numeric preferred
-  TELEGRAM_COUNTDOWN_PEER / GUNIQUE_PEER  username fallback
+  HUB_G1_APEX_FIRST=1
+  PROFIT_CHAT_BUNDLE=1
+  TELEGRAM_PRIMARY_PEER / TELEGRAM_TARGET_PEER  APEX (#1 UNIQUE_g1)
+  TELEGRAM_EXCLUDE_PEERS=Mr_iv4,6774605259
+  TELEGRAM_GUNIQUE_PEER_ID   numeric preferred (5855678138)
+  TELEGRAM_COUNTDOWN_PEER / GUNIQUE_PEER  username fallback (same APEX)
 """
 from __future__ import annotations
 
@@ -69,31 +72,50 @@ def _clean(raw: str | None) -> str:
 
 
 def money_peer() -> str:
-    return _clean(
-        os.environ.get("TELEGRAM_TARGET_PEER")
+    """Primary money/apex peer — UNIQUE_g1 (Mr_iv4 removed from equation)."""
+    try:
+        from bot.config.profit_chat_bundle import is_excluded, primary_peer, primary_peer_id
+
+        pid = primary_peer_id()
+        if pid and not is_excluded(pid):
+            return pid
+        return primary_peer()
+    except Exception:
+        pass
+    raw = _clean(
+        os.environ.get("TELEGRAM_PRIMARY_PEER")
+        or os.environ.get("TELEGRAM_TARGET_PEER")
         or os.environ.get("TARGET_PEER_ID")
-        or "6774605259"
-    ) or "6774605259"
+        or "UNIQUE_g1"
+    )
+    if raw in {"6774605259", "Mr_iv4", "mr_iv4"}:
+        return "5855678138"  # UNIQUE_g1 id
+    return raw or "UNIQUE_g1"
 
 
 def gunique_peer() -> str:
+    """Same APEX home as money under Profit Chat Bundle (g1 is #1)."""
     for key in (
         "TELEGRAM_GUNIQUE_PEER_ID",
         "GUNIQUE_PEER_ID",
         "TELEGRAM_COUNTDOWN_PEER_ID",
+        "TELEGRAM_PRIMARY_PEER_ID",
     ):
         raw = _clean(os.environ.get(key))
-        if raw and raw.lstrip("-").isdigit():
+        if raw and raw.lstrip("-").isdigit() and raw not in {"6774605259"}:
             return raw
     if GUNIQUE_CACHE.exists():
         try:
             data = json.loads(GUNIQUE_CACHE.read_text(encoding="utf-8"))
             if data.get("id") is not None:
-                return str(int(data["id"]))
+                gid = str(int(data["id"]))
+                if gid != "6774605259":
+                    return gid
         except Exception:
             pass
     return _clean(
         os.environ.get("TELEGRAM_COUNTDOWN_PEER")
+        or os.environ.get("TELEGRAM_PRIMARY_PEER")
         or os.environ.get("GUNIQUE_PEER")
         or "UNIQUE_g1"
     ) or "UNIQUE_g1"
@@ -165,30 +187,29 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
     except Exception:
         pass
 
-    money = _as_target(money_peer())
-    gunique = _as_target(gunique_peer())
-    # Profit skyscraper: Mr_iv4 is money penthouse. Countdown/sniper stay on g1.
-    # Legacy HUB_GUNIQUE_FIRST only wins when HUB_MONEY_FIRST=0 and skyscraper off.
-    money_first = True
+    # Profit Chat Bundle: UNIQUE_g1 APEX is #1 (Mr_iv4 removed).
+    apex = _as_target(gunique_peer() or money_peer())
     try:
-        from bot.config.profit_skyscraper import money_first as _mf
+        from bot.config.profit_chat_bundle import peer_for_signal
 
-        money_first = _mf()
+        peer, why = peer_for_signal(
+            body, is_result=_is_result(body), role="RESULT" if _is_result(body) else "FIRE"
+        )
+        if peer:
+            dest = _as_target(str(peer))
+            if _is_result(body):
+                last = _load_last_target()
+                return (last if last is not None else dest), f"bundle_result:{why}"
+            if _FIRE_HINT.search(body) or _TRUST_FIRE.search(body):
+                _save_last(dest, role="FIRE", reason=f"bundle:{why}")
+            return dest, f"bundle:{why}"
     except Exception:
-        money_first = os.environ.get("HUB_MONEY_FIRST", "1").strip().lower() not in {
-            "0",
-            "false",
-            "no",
-            "off",
-        }
-    gunique_first = (not money_first) and os.environ.get(
-        "HUB_GUNIQUE_FIRST", "1"
-    ).strip().lower() not in {"0", "false", "no", "off"}
+        pass
 
     # Results glue to last FIRE chat (engine path has no signal_id).
     if _is_result(body):
         last = _load_last_target()
-        return (last if last is not None else money), "result→parent"
+        return (last if last is not None else apex), "result→parent"
 
     # Soft-cap spill via chat_router for FIRE/ops (never delay).
     try:
@@ -196,9 +217,9 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
 
         target = route_card(body)
         if getattr(target, "suppressed", False):
-            return money, f"router_suppressed:{getattr(target, 'reason', '')}"
+            return apex, f"router_suppressed:{getattr(target, 'reason', '')}"
         peer = getattr(target, "peer", None)
-        if peer:
+        if peer and str(peer) not in {"6774605259", "Mr_iv4", "mr_iv4"}:
             dest = _as_target(str(peer))
             reason = (
                 f"skyscraper:{getattr(target, 'reason', '')}:"
@@ -210,55 +231,36 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
     except Exception:
         pass
 
-    # Chat shelves: countdown peak / sniper → Gunique (not DB-kinds-only)
+    # Chat shelves → APEX / PRECISION peers (never Mr_iv4)
     try:
-        from chat_shelves import (
-            SHELF_COUNTDOWN,
-            SHELF_SINK,
-            SHELF_SNIPER,
-            resolve_shelf,
-        )
+        from chat_shelves import SHELF_SINK, resolve_shelf
 
         shelf = resolve_shelf(body)
         if shelf.shelf_id == SHELF_SINK:
-            return money, f"shelf_sink:{shelf.family_id}"
-        if shelf.shelf_id in {SHELF_COUNTDOWN, SHELF_SNIPER} and shelf.role == "FIRE":
-            _save_last(gunique, role="FIRE", reason=f"shelf:{shelf.shelf_id}")
-            return gunique, f"shelf:{shelf.shelf_id}:{shelf.family_id}"
+            return apex, f"shelf_sink:{shelf.family_id}"
+        peer = getattr(shelf, "peer", None) or "UNIQUE_g1"
+        if str(peer) in {"6774605259", "Mr_iv4", "mr_iv4"}:
+            peer = "UNIQUE_g1"
+        dest = _as_target(str(peer))
+        if shelf.role == "FIRE":
+            _save_last(dest, role="FIRE", reason=f"shelf:{shelf.shelf_id}")
+        return dest, f"shelf:{shelf.shelf_id}:{shelf.family_id}"
     except Exception:
         pass
 
-    # Ops / schedule noise → money penthouse. Allow SEQUÊNCIA QUENTE/FRIA without
-    # treating them as enter-fires (they share the SEQUÊNCIA token).
     if _OPS_HINT.search(body) and not re.search(
         r"(APOSTE AGORA|ENTER NOW|GOLDEN SIGNAL|FLASH SIGNAL|SOLO ELITE)",
         body,
         re.I,
     ):
-        return money, "ops→money"
+        return apex, "ops→APEX"
 
-    # Timed / countdown fires → Gunique
-    try:
-        from dual_lane_router import LANE_COUNTDOWN, is_countdown_fire, route_lane
+    if _TRUST_FIRE.search(body) or _FIRE_HINT.search(body):
+        _save_last(apex, role="FIRE", reason="apex_first→UNIQUE_g1")
+        return apex, "apex_first→UNIQUE_g1"
 
-        if is_countdown_fire(text=body) or route_lane(text=body) == LANE_COUNTDOWN:
-            _save_last(gunique, role="FIRE", reason="countdown→gunique")
-            return gunique, "countdown→gunique"
-    except Exception:
-        pass
-
-    # Money-first (default): ENTER skins → Mr_iv4 penthouse
-    if money_first and (_TRUST_FIRE.search(body) or _FIRE_HINT.search(body)):
-        _save_last(money, role="FIRE", reason="money_first→mr_iv4")
-        return money, "money_first→mr_iv4"
-
-    # Legacy trust-first: original enter skins → Gunique #1
-    if gunique_first and (_TRUST_FIRE.search(body) or _FIRE_HINT.search(body)):
-        _save_last(gunique, role="FIRE", reason="trust_skin→gunique")
-        return gunique, "trust_skin→gunique"
-
-    _save_last(money, role="FIRE", reason="default→money")
-    return money, "default→money"
+    _save_last(apex, role="FIRE", reason="default→APEX")
+    return apex, "default→APEX"
 
 
 def apply_target_to_config(cfg: Any, target: Any) -> Any:

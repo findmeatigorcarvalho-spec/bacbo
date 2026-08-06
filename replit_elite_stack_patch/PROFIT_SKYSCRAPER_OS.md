@@ -1,4 +1,6 @@
-# Profit Skyscraper OS
+# Profit Skyscraper OS — UNIQUE_g1 APEX Bundle
+
+> **EMERGENCY PIVOT:** UNIQUE_g1 is APEX #1. Mr_iv4 removed from live equation. Soft-cap spills; never delay.
 
 Autonomous distribution + kid-simple play layer over the full Telegram skin/gate inventory.
 
@@ -6,8 +8,8 @@ Autonomous distribution + kid-simple play layer over the full Telegram skin/gate
 
 1. **Understands the whole product** — 827 museum templates → KEEP 777 / TRASH 50, plus 120 registry skins and live floors (JUN10, ELITE_V2, …).
 2. **Blocks trash** — UI crumbs, shell pastes, agent meta never go live (`TELEGRAM_TRASH_BLOCK=1`).
-3. **Money penthouse = Mr_iv4** — ENTER / gale / most results (`HUB_MONEY_FIRST=1`).
-4. **Countdown = UNIQUE_g1** — JANELA / Sinal Retido / sniper clocks.
+3. **APEX #1 = UNIQUE_g1** — ENTER / clocks / gale / most results (`HUB_G1_APEX_FIRST=1`). **Mr_iv4 excluded.**
+4. **Behavioral bundle** — g2 PRECISION · g3 VOLUME · g4 ASSERTIVE · g5 IMPACT · g6+ ELASTIC.
 5. **Never delay** — soft-cap only spills to UNIQUE_g2…gN (mint as needed).
 6. **User playbook** — six rules, minimum stake, every chat usable even at 5 signals/day.
 
@@ -15,7 +17,7 @@ Autonomous distribution + kid-simple play layer over the full Telegram skin/gate
 
 ```bash
 curl -fsSL -o /tmp/SKY.sh \
-  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806a'
+  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806f'
 bash /tmp/SKY.sh
 ```
 
@@ -25,11 +27,12 @@ Then pin the texts from `bot/data/chat_playbook_cards.json` in each chat.
 
 | File | Role |
 |---|---|
-| `bot/config/profit_skyscraper.py` | Chat map + play rules + money-first |
+| `bot/config/profit_chat_bundle.py` | Bundle identity + situation routing |
+| `bot/config/profit_skyscraper.py` | Chat map + play rules + APEX-first |
 | `bot/config/keep_allowlist.py` | KEEP/TRASH live gate |
 | `bot/config/skin_gate.py` | Registry retire + trash block |
 | `bot/config/chat_router.py` | Soft-cap spill, never delay |
-| `bot/hub_engine_route.py` | Engine send → Mr_iv4 / g1 / spill |
+| `bot/hub_engine_route.py` | Engine send → UNIQUE_g1 / spill |
 | `bot/telegram_outbox.py` | Outbox spill resolve |
 | `bot/data/CHAT_PROFIT_PLAYBOOK.md` | Human playbook |
 | `bot/data/profit_skyscraper_brain.json` | Full system map |

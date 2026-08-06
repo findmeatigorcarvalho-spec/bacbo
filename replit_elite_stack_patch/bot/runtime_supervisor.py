@@ -90,10 +90,15 @@ _SKYSCRAPER_FORCE_KEYS = {
     "PROFIT_SKYSCRAPER",
     "HUB_MONEY_FIRST",
     "HUB_GUNIQUE_FIRST",
+    "HUB_G1_APEX_FIRST",
+    "PROFIT_CHAT_BUNDLE",
     "TELEGRAM_TRASH_BLOCK",
     "TELEGRAM_SKIN_GATE",
     "TELEGRAM_SHELF_OVERFLOW_PEERS",
     "TELEGRAM_TARGET_PEER",
+    "TELEGRAM_PRIMARY_PEER",
+    "TELEGRAM_PRIMARY_PEER_ID",
+    "TELEGRAM_EXCLUDE_PEERS",
     "TELEGRAM_COUNTDOWN_PEER",
     "ROUND_SYNC",
     "ROUND_INTERVAL_SECS",
@@ -135,7 +140,7 @@ def _env() -> dict[str, str]:
     # Defaults first; luxury_building.env overwrites policy keys (fixes Secret=shadow).
     _load_dotenv_file(ROOT / ".env", env)
     _load_dotenv_file(ROOT / "luxury_building.env", env, force_keys=_LUXURY_FORCE_KEYS)
-    # Profit skyscraper: Mr_iv4 money-first + trash block + never-delay spill.
+    # Profit Chat Bundle: UNIQUE_g1 APEX #1; Mr_iv4 excluded; never-delay spill.
     _load_dotenv_file(
         BOT / "data" / "profit_skyscraper.env",
         env,

@@ -2,10 +2,10 @@
 """
 hub_dispatch.py — Gunique-first trust routing + original-style cards.
 
-When HUB_MAX=1 / HUB_GUNIQUE_FIRST=1:
+When HUB_MAX=1 / HUB_GUNIQUE_FIRST=1 / PROFIT_CHAT_BUNDLE=1:
   - Score each fire by TRUST (kind, score, rooms, floor)
-  - HIGH trust  → @UNIQUE_g1 (priority #1, 24/7)
-  - LOWER trust → Mr_iv4 money chat (#2)
+  - HIGH trust  → @UNIQUE_g1 APEX (priority #1, 24/7)
+  - LOWER trust → still UNIQUE_g1 APEX (Mr_iv4 removed); spill g2…gN on soft-cap
   - Results follow parent peer
 
 Card skins: original family look (GOLDEN / SOLO / SEQUENCE), facts refreshed.
@@ -106,7 +106,7 @@ def trust_score(
         "reason": (
             f"trust {total:.1f}>={GUNIQUE_TRUST_MIN} → Gunique #1"
             if to_gunique
-            else f"trust {total:.1f}<{GUNIQUE_TRUST_MIN} → money #2"
+            else f"trust {total:.1f}<{GUNIQUE_TRUST_MIN} → APEX g1 (Mr_iv4 out)"
         ),
     }
 
