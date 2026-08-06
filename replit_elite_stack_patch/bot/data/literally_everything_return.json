@@ -1,0 +1,2733 @@
+{
+  "built_at": "2026-08-06T04:01:49.657363+00:00",
+  "law": "Only when a path is real — or can become turned into real — we'll know.",
+  "north_stars": {
+    "BEST_Existence": "Show up on time every round we can",
+    "BEST_Enlightenment_by_clarity": "One card, one job — no fear, no noise",
+    "THE_MOST_Helpful": "Min stake, max honest use, bankroll protected"
+  },
+  "intended_results_rule": "Proof-as-vanity does not matter. Intended results in every part/piece of the whole do.",
+  "ambition": {
+    "per_chat_day_usd_north_star": 100000,
+    "mode": "get_as_much_as_we_can_from_literally_everything",
+    "honesty": "North star is direction under volume+WR+density — not a guarantee. Every fragment must still maximize its honest contribution."
+  },
+  "stats": {
+    "pieces": 214,
+    "WIRED": 164,
+    "CAN_BECOME_REAL": 50,
+    "GAP": 0,
+    "keep_templates": 777,
+    "trash_templates": 50,
+    "registry_skins": 120,
+    "live_floors": 32
+  },
+  "chat_map": {
+    "mr_iv4": {
+      "id": "6774605259",
+      "username": "Mr_iv4",
+      "title": "Mr_iv4 — MONEY PENTHOUSE",
+      "job": "Biggest money chat. ENTER NOW colors, gale retries, WIN/LOSS, ops.",
+      "priority": 1
+    },
+    "unique_g1": {
+      "id": "5855678138",
+      "username": "UNIQUE_g1",
+      "title": "UNIQUE_g1 — COUNTDOWN / SNIPER",
+      "job": "Timed windows (JANELA / Sinal Retido / FLASH). Bet in the seconds.",
+      "priority": 2
+    },
+    "overflow": {
+      "pattern": "UNIQUE_g{N}",
+      "start_n": 2,
+      "title": "UNIQUE_g2…gN — OVERFLOW",
+      "job": "Only when Mr_iv4 or g1 is too busy. Same rules. Never wait.",
+      "priority": 3
+    },
+    "rules": {
+      "never_delay": true,
+      "soft_cap_spills_only": true,
+      "results_glue_to_parent_chat": true,
+      "money_penthouse": "Mr_iv4",
+      "countdown_primary": "UNIQUE_g1"
+    },
+    "play_rules": [
+      {
+        "when": "ENTER NOW / APOSTE AGORA / ENTRE AGORA + color (🔴/🔵)",
+        "do": "Bet the MINIMUM on that color NOW.",
+        "stop": "Wait for WIN / LOSS / gale card for this signal."
+      },
+      {
+        "when": "JANELA / 🟢 Ns 🟢 / Sinal Retido→Liberado",
+        "do": "Same: minimum bet on the color before the seconds hit 0.",
+        "stop": "If it says RODADA JÁ PASSOU / DO NOT BET — skip."
+      },
+      {
+        "when": "GALE / RETENTATIVA / Entre novamente / AGUARDANDO G1",
+        "do": "Same color, MINIMUM bet again (G1). Then G2 only if the card says so.",
+        "stop": "Never invent G3+ unless the chat posts it."
+      },
+      {
+        "when": "✅ WIN / GREEN / GANHOU",
+        "do": "Round over. Bank the win. Wait for next ENTER.",
+        "stop": "Do not re-bet the same round."
+      },
+      {
+        "when": "❌ LOSS / PERDEU + no gale card",
+        "do": "Round over. Next signal only.",
+        "stop": "Do not chase with your own gales."
+      },
+      {
+        "when": "DO NOT BET / NÃO APOSTE / RODADA PASSOU / EXPIROU / G2 MISS",
+        "do": "Skip. Zero bet.",
+        "stop": "This protects the bankroll."
+      },
+      {
+        "when": "OPS only (quarantine, schedule, grounded, hot/cold)",
+        "do": "Read. Do not bet from ops alone.",
+        "stop": "Bet only from ENTER / JANELA / GALE cards."
+      }
+    ],
+    "stake_policy": {
+      "mode": "MINIMUM_ALWAYS",
+      "rule": "Always the platform minimum unit. Volume of correct windows > size of bet.",
+      "gale_ladder": "G0 = 1u, G1 = 1u (same min), G2 = 1u only if card says enter G2.",
+      "never": "Never raise stake to 'recover'. Never bet without a card.",
+      "worst_case_5_signals": "Even if a chat only posts 5 ENTER days: play all 5 with min stake + official gales. Skip DO-NOT-BET. That chat is still fully used."
+    }
+  },
+  "pieces": [
+    {
+      "fragment_id": "chat:Mr_iv4",
+      "kind": "chat",
+      "intended_result": "Densest money path — max ENTER/gale capture at min stake",
+      "lever": "money_first + soft-cap spill out, never delay in",
+      "chat": "Mr_iv4",
+      "ambition": "$100k+/day when volume+WR allow; else max possible",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "chat:UNIQUE_g1",
+      "kind": "chat",
+      "intended_result": "Every timed window used — human bets before 0",
+      "lever": "countdown shelf + TTB release",
+      "chat": "UNIQUE_g1",
+      "ambition": "max timed-window capture / day",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "chat:UNIQUE_g2",
+      "kind": "chat",
+      "intended_result": "No dead shelf — overflow opportunities still pay",
+      "lever": "soft-cap spill / densifier gap fill",
+      "chat": "UNIQUE_g2",
+      "ambition": "fill to 1/round or 1/2 rounds minimum",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "chat:UNIQUE_g3",
+      "kind": "chat",
+      "intended_result": "No dead shelf — overflow opportunities still pay",
+      "lever": "soft-cap spill / densifier gap fill",
+      "chat": "UNIQUE_g3",
+      "ambition": "fill to 1/round or 1/2 rounds minimum",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "chat:UNIQUE_g4",
+      "kind": "chat",
+      "intended_result": "No dead shelf — overflow opportunities still pay",
+      "lever": "soft-cap spill / densifier gap fill",
+      "chat": "UNIQUE_g4",
+      "ambition": "fill to 1/round or 1/2 rounds minimum",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "chat:UNIQUE_g5",
+      "kind": "chat",
+      "intended_result": "No dead shelf — overflow opportunities still pay",
+      "lever": "soft-cap spill / densifier gap fill",
+      "chat": "UNIQUE_g5",
+      "ambition": "fill to 1/round or 1/2 rounds minimum",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "triage:KEEP",
+      "kind": "inventory",
+      "intended_result": "All 777 valuable templates remain wire-eligible",
+      "lever": "keep_allowlist + skin_gate allow",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "triage:TRASH",
+      "kind": "inventory",
+      "intended_result": "All 50 junk templates never steal attention",
+      "lever": "TELEGRAM_TRASH_BLOCK",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "skin:ONLINE_BANNER",
+      "kind": "skin",
+      "intended_result": "Human knows the path is alive",
+      "lever": "boot banner / pin cards",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "ONLINE",
+        "era": "0"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_EMERGINDO",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "0"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_ALERTA_FORMACAO",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "0"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_CONFIRMED_ENTER",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "1"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_SOLO_ELITE_ENTER",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "1"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_GOLDEN_ENTER",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "1"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_SEQUENCE_ENTER",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "1"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_PLATINUM_ENTER",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "1"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_AUTO_TIE",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "1b"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_WIN_TIER",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "1b"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_LOSS_TIER",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "1b"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_GALE_ENTRE_NOVAMENTE",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "1b"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_EMPATE",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "1b"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_GALE_RETENTATIVA",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "1b"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_GREEN_LEGACY_G0",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "1b"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_GREEN_LEGACY_G1",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "1b"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_LOSS_COOLDOWN",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "2"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_PREALERT_FORMING",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "2"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_DUPLO_ELITE",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "2"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_JANELA_TIMED",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "2"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_ULTRA_TIE",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "2"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_TRIPLE_LOCK",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "2"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_SEQ_QUENTE",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "3"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_SEQ_FRIA",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "3"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_SEQ_EMPATES",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "3"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_TIMED_WINDOW",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "3"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_PREALERT_3BOLT",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "3"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_EMPATE_DIRETO_G0",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "3"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_AUDIT_360",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "3"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_G0_DIRETO",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "3"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_PREPARE_G1",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "3"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_STREAK_BANNER",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "3"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_CAMADAS_DO_DIA",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "3"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_FLASH_WIN",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "4"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_GREEN_COMPACT_G0",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "4"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_GREEN_COMPACT_G1",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "4"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_COMPACT_HASH",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "5"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_COMPACT_LOSS_HASH",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "5"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_COMPACT_WIN_HASH",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "5"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_COMPACT_TIE_HASH",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "5"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_SOLO_APOSTAR",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "6"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_SEQUENCE_APOSTAR",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "6"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_GOLDEN_APOSTAR",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "6"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_PLATINUM_APOSTAR",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "6"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_FLASH_APOSTAR",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "6"
+      }
+    },
+    {
+      "fragment_id": "skin:ONLINE_LUXURY_OUTBOX",
+      "kind": "skin",
+      "intended_result": "Human knows the path is alive",
+      "lever": "boot banner / pin cards",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "ONLINE",
+        "era": "6"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_SEQUENCIA_ENTER_NOW",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "6"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_ELITE_ANALISANDO",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "6"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_DIVERGENCIA_SALAS",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "6"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_SINAL_RETIDO_LIBERADO",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "cd"
+      }
+    },
+    {
+      "fragment_id": "skin:CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "cd"
+      }
+    },
+    {
+      "fragment_id": "skin:CD_FIRE_QUANTUM_LOCK",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "cd"
+      }
+    },
+    {
+      "fragment_id": "skin:CD_FIRE_RUSH_NS_LEFT",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "cd"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_FORENSIC_INTERVALO",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "forensic"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_BELL_GANHOU",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "forensic"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_G1_EXPIROU",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "ops_result"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_G2_MISS",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "ops_result"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_GOD_TIER",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "elite"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_GOLDEN_ENTRE_AGORA",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "1"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_G0_MISS_ENTRE_G1",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "1b"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_ORACLE_CARD",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "oracle"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_TIE_ALERT",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "2"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_CORRECAO",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "ops_result"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_JANELA_PRIME",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "cd"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_COLOR_BANNER",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "forensic"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_SEQUENCE_PREDICTION",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "ops"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_GALE_SATURATION",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "ops"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_SELF_CARE_GUARD",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "ops"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_PARE_3_PERDAS",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "ops"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_ENTER_NOW_GENERIC",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_ENTRE_AGORA_GENERIC",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_APOSTE_AGORA",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_G0_ENTRADA_DIRETA",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_DEPTH_G0_ONLY",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_INVERTED_CONTRARIO",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_ORACLE_LOCK",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_CERTIFIED_ELITE",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_GRADE_BANNER",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_HOT_STREAK",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_DOUBLE_TIE_LOCK",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_GALE_1_FACA_AGORA",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_DO_NOT_BET_YET",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_PREPARE_PLATFORM",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_NEXT_CERTIFIED_WINDOW",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_JANELA_PEAK",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_G1_REGISTRADO_CALC_G2",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "ops_result"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_G2_STOP_IF_G1_LOST",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "ops_result"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_G3_ATINGIDO",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "ops_result"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_G0_ACERTOU_PRIMEIRA",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_GALE_RECOVERED_CHAIN",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_EMPATE_DINHEIRO_DEVOLVIDO",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_EMPATE_PROTECAO",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:CD_RES_GREEN_G_BRT",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "cd"
+      }
+    },
+    {
+      "fragment_id": "skin:CD_RES_RODADAS_TEMPO",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "cd"
+      }
+    },
+    {
+      "fragment_id": "skin:CD_RES_BELL_GANHOU",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "cd"
+      }
+    },
+    {
+      "fragment_id": "skin:ROOM_RELAY",
+      "kind": "skin",
+      "intended_result": "Edge/info retained for AI filter — not raw bet spam",
+      "lever": "keep + later filter",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {
+        "role": "ROOM_RELAY",
+        "era": "noise"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_GATE_BLOCK_LOG",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "internal"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_GATE_ALLOW_LOG",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "internal"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_KIND_DOWNGRADE_LOG",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "internal"
+      }
+    },
+    {
+      "fragment_id": "skin:CODE_FRAGMENT",
+      "kind": "skin",
+      "intended_result": "Classified so nothing valuable is invisible",
+      "lever": "museum + classifier",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {
+        "role": "UNKNOWN",
+        "era": "internal"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_G2_ATINGIDO_PARE",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "ops_result"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_APOSTAR_EMPATE",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_NAMED_EDGE_BANNER",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_NEGATIVE_WINDOW_BLOCK",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "code"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_TIER_LEGEND",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "0"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_G2_RESERVE",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "g2reserve"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_G2_RESERVE_WIN",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "g2reserve"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_G2_RESERVE_MISS",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "g2reserve"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_TIE_AUDIT",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "audit"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_COMMAND_HELP",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "help"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_STAT_LINE",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "audit"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_RADAR_PARTIAL_CONSENSUS",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "radar"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_OPEN_PLATFORM_NOW",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "prealert"
+      }
+    },
+    {
+      "fragment_id": "skin:FIRE_FLASH_CONFIRMADO",
+      "kind": "skin",
+      "intended_result": "Human gets a clear ENTER/color chance with time to act",
+      "lever": "round_sync TTB + shelf route",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "FIRE",
+        "era": "flash"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_AUTO_WIN",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "auto"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_AUTO_LOSS",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "auto"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_AUTO_EXPIRED",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "auto"
+      }
+    },
+    {
+      "fragment_id": "skin:RESULT_FINAL_LOSS_AFTER_G3",
+      "kind": "skin",
+      "intended_result": "Human understands win/loss/gale — round closes clean",
+      "lever": "result glue + interval align",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "RESULT",
+        "era": "g3"
+      }
+    },
+    {
+      "fragment_id": "skin:OPS_DELIVERY_WINDOW_LOG",
+      "kind": "skin",
+      "intended_result": "Human protected / informed — no false bet from ops alone",
+      "lever": "ops→money / read-only play rule",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {
+        "role": "OPS",
+        "era": "internal"
+      }
+    },
+    {
+      "fragment_id": "skin:CARD_BODY_LINE",
+      "kind": "skin",
+      "intended_result": "Classified so nothing valuable is invisible",
+      "lever": "museum + classifier",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {
+        "role": "UNKNOWN",
+        "era": "internal"
+      }
+    },
+    {
+      "fragment_id": "floor:JUN10",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:AITEST_ULTIMATE",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:AITEST_APR20_MAX",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:MAY01",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:APR20",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:LIVE",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:JUN20",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:APR27",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:ELITE_V2",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:ULTIMATE",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:AITEST_LIVE",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:APR22",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:APR26",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:JUN19",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:APR20_MAX",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:JUN26",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:MAY19",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:MAY10",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:MAR21",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:JUN27",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:APR29",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:ELITE_V2_PEAK",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:MAR19",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:MAY11",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:MAR20",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:AITEST_MAR21",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:JUN08",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:APR30",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:APR28",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:AITEST_APR20",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:MAY04",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "floor:APR19",
+      "kind": "floor",
+      "intended_result": "Peak edge proposes ENTER when cells allow",
+      "lever": "luxury_live_floors + edge policy",
+      "chat": "",
+      "ambition": "contribute WR×volume to chat max return",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:LIVE",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→ELITE_V2",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:JUN19",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→JUN19_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:JUN20",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→JUN20_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:JUN08",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→JUN08_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:JUN10",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→JUN10_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:JUN26",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→JUN26",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:JUN27",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→JUN27_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:JUN06",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→JUN06_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY19",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY19_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY10",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY10_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY11",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY11_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY01",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY01_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY20",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY20_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY21",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY21_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY22",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY22_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY23",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY23_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY24",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY24_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY25",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY25_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY26",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY26_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY27",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY27_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:APR19",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→APR19_golden",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:APR20",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→APR20_perfect",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:APR30",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→APR30_peak",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:JUN12A",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→JUN12_avalanche",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:JUN12B",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→JUN12_eliteguard",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:ELITE_V2_PEAK",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→ELITE_V2_PEAK",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:ELITE_V2",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→ELITE_V2",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:ULTIMATE",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→ULTIMATE",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAR19",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAR19",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAR20",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAR20",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAR21",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAR21",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:APR22",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→APR22",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:APR26",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→APR27",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:APR27",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→APR27",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:APR28",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→APR28_complex",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:APR29",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→APR29",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:AITEST_ULTIMATE",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→ULTIMATE",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:AITEST_APR20_MAX",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→APR20_perfect",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:AITEST_LIVE",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→ELITE_V2",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:AITEST_APR20",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→APR20_perfect",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:AITEST_MAR21",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAR21",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:APR20_MAX",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→APR20_perfect",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "gate:MAY04",
+      "kind": "gate",
+      "intended_result": "Named peak system stays addressable — never casually deleted",
+      "lever": "alias→MAY04",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "CAN_BECOME_REAL",
+      "meta": {}
+    },
+    {
+      "fragment_id": "wire:round_sync",
+      "kind": "wire",
+      "intended_result": "Long prep → release at time-to-bet; never late burn",
+      "lever": "round_sync_densifier",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "wire:human_return_path",
+      "kind": "wire",
+      "intended_result": "Existence + clarity + help spoken; intended results tracked",
+      "lever": "human_return_path",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "wire:chat_router_spill",
+      "kind": "wire",
+      "intended_result": "Capacity never delays a bet window",
+      "lever": "chat_router soft-cap→UNIQUE_gN",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "wire:money_first",
+      "kind": "wire",
+      "intended_result": "Mr_iv4 remains densest money path",
+      "lever": "HUB_MONEY_FIRST",
+      "chat": "",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "dist:FIRE_money_enter",
+      "kind": "distribution",
+      "intended_result": "User action: Bet min on color",
+      "lever": "chat=Mr_iv4 shelf=SHELF_PENTHOUSE_MONEY / SHELF_UPPER_MONEY",
+      "chat": "Mr_iv4",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "dist:FIRE_countdown_sniper",
+      "kind": "distribution",
+      "intended_result": "User action: Bet min before timer ends",
+      "lever": "chat=UNIQUE_g1 shelf=SHELF_COUNTDOWN / SHELF_SNIPER",
+      "chat": "UNIQUE_g1",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "dist:FIRE_gale",
+      "kind": "distribution",
+      "intended_result": "User action: Same color min again",
+      "lever": "chat=Mr_iv4 (or parent if glued) shelf=SHELF_GALE",
+      "chat": "Mr_iv4 (or parent if glued)",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "dist:RESULT",
+      "kind": "distribution",
+      "intended_result": "User action: Stop round on WIN/LOSS; follow gale if posted",
+      "lever": "chat=exact chat of the FIRE shelf=parent",
+      "chat": "exact chat of the FIRE",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "dist:OPS_health",
+      "kind": "distribution",
+      "intended_result": "User action: Read only — no bet",
+      "lever": "chat=Mr_iv4 shelf=SHELF_OPS / overflow",
+      "chat": "Mr_iv4",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "dist:ROOM_RELAY",
+      "kind": "distribution",
+      "intended_result": "User action: Do not bet from raw relay alone",
+      "lever": "chat=Mr_iv4 / ops shelf=AI-filter later; keep for edge",
+      "chat": "Mr_iv4 / ops",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    },
+    {
+      "fragment_id": "dist:TRASH",
+      "kind": "distribution",
+      "intended_result": "User action: Ignored",
+      "lever": "chat=nowhere shelf=blocked",
+      "chat": "nowhere",
+      "ambition": "max_capture",
+      "status": "WIRED",
+      "meta": {}
+    }
+  ],
+  "brain_inventory": {
+    "museum_templates": 827,
+    "keep": 777,
+    "trash": 50,
+    "registry_skins": 120,
+    "registry_by_role": {
+      "ONLINE": 2,
+      "FIRE": 43,
+      "OPS": 44,
+      "RESULT": 28,
+      "ROOM_RELAY": 1,
+      "UNKNOWN": 2
+    },
+    "keep_by_role": {
+      "ROOM_RELAY": 8,
+      "RESULT": 207,
+      "UNKNOWN": 505,
+      "OPS": 22,
+      "FIRE": 34,
+      "ONLINE": 1
+    },
+    "keep_by_reason_top": {
+      "result_indication": 287,
+      "tier_signal": 62,
+      "gale_ops_edge": 49,
+      "color_indication": 47,
+      "fire_enter_edge": 34,
+      "room_info": 32,
+      "gate_audit_value": 30,
+      "stats_edge": 28,
+      "schedule_audit_value": 26,
+      "timing_indication": 26,
+      "ops_system_value": 22,
+      "timing_or_entry_edge": 22,
+      "floor_ops_value": 21,
+      "signal_forming": 19,
+      "ops_health_value": 15,
+      "system_health": 11,
+      "market_regime_edge": 10,
+      "room_info_edge_ai_filter": 8,
+      "volume_presence": 8,
+      "pair_room_stats_edge": 5,
+      "ops_recovery_value": 4,
+      "risk_audit_value": 4,
+      "hour_forecast_edge": 3,
+      "ops_silence_alive": 2,
+      "boot_menu_system": 1
+    },
+    "live_floors": [
+      "JUN10",
+      "AITEST_ULTIMATE",
+      "AITEST_APR20_MAX",
+      "MAY01",
+      "APR20",
+      "LIVE",
+      "JUN20",
+      "APR27",
+      "ELITE_V2",
+      "ULTIMATE",
+      "AITEST_LIVE",
+      "APR22",
+      "APR26",
+      "JUN19",
+      "APR20_MAX",
+      "JUN26",
+      "MAY19",
+      "MAY10",
+      "MAR21",
+      "JUN27",
+      "APR29",
+      "ELITE_V2_PEAK",
+      "MAR19",
+      "MAY11",
+      "MAR20",
+      "AITEST_MAR21",
+      "JUN08",
+      "APR30",
+      "APR28",
+      "AITEST_APR20",
+      "MAY04",
+      "APR19"
+    ],
+    "gate_aliases": {
+      "LIVE": "ELITE_V2",
+      "JUN19": "JUN19_peak",
+      "JUN20": "JUN20_peak",
+      "JUN08": "JUN08_peak",
+      "JUN10": "JUN10_peak",
+      "JUN26": "JUN26",
+      "JUN27": "JUN27_peak",
+      "JUN06": "JUN06_peak",
+      "MAY19": "MAY19_peak",
+      "MAY10": "MAY10_peak",
+      "MAY11": "MAY11_peak",
+      "MAY01": "MAY01_peak",
+      "MAY20": "MAY20_peak",
+      "MAY21": "MAY21_peak",
+      "MAY22": "MAY22_peak",
+      "MAY23": "MAY23_peak",
+      "MAY24": "MAY24_peak",
+      "MAY25": "MAY25_peak",
+      "MAY26": "MAY26_peak",
+      "MAY27": "MAY27_peak",
+      "APR19": "APR19_golden",
+      "APR20": "APR20_perfect",
+      "APR30": "APR30_peak",
+      "JUN12A": "JUN12_avalanche",
+      "JUN12B": "JUN12_eliteguard",
+      "ELITE_V2_PEAK": "ELITE_V2_PEAK",
+      "ELITE_V2": "ELITE_V2",
+      "ULTIMATE": "ULTIMATE",
+      "MAR19": "MAR19",
+      "MAR20": "MAR20",
+      "MAR21": "MAR21",
+      "APR22": "APR22",
+      "APR26": "APR27",
+      "APR27": "APR27",
+      "APR28": "APR28_complex",
+      "APR29": "APR29",
+      "AITEST_ULTIMATE": "ULTIMATE",
+      "AITEST_APR20_MAX": "APR20_perfect",
+      "AITEST_LIVE": "ELITE_V2",
+      "AITEST_APR20": "APR20_perfect",
+      "AITEST_MAR21": "MAR21",
+      "APR20_MAX": "APR20_perfect",
+      "MAY04": "MAY04"
+    },
+    "blocked_floors": [
+      "JUN12A",
+      "JUN12B"
+    ]
+  }
+}

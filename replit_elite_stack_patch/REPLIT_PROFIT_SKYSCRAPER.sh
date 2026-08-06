@@ -29,9 +29,10 @@ done
 # Patch runtime modules
 for f in hub_engine_route.py telegram_outbox.py chat_router.py chat_shelves.py skin_gate.py \
          lux_send_config_bind.py window_packer.py round_sync_densifier.py human_return_path.py \
-         runtime_supervisor.py build_profit_skyscraper_brain.py triage_museum_keep_trash.py; do
+         literally_everything_return.py runtime_supervisor.py \
+         build_profit_skyscraper_brain.py triage_museum_keep_trash.py; do
   curl -fsSL -o "bot/${f}" \
-    "${RAW}/replit_elite_stack_patch/bot/${f}?v=20260806c" || true
+    "${RAW}/replit_elite_stack_patch/bot/${f}?v=20260806d" || true
 done
 
 # Data: triage + allowlist + playbook (from repo)
@@ -84,13 +85,13 @@ $PY -m py_compile bot/config/keep_allowlist.py bot/config/profit_skyscraper.py \
 pkill -f 'telegram_outbox.py' 2>/dev/null || true
 rm -f bot/data/telegram_outbox.lock 2>/dev/null || true
 
-$PY bot/round_sync_densifier.py 2>/dev/null | head -40 || true
+$PY bot/literally_everything_return.py 2>/dev/null | head -50 || true
+$PY bot/human_return_path.py 2>/dev/null | head -40 || true
 
 echo "========== DONE =========="
-echo "Money penthouse: Mr_iv4 | Countdown: UNIQUE_g1 | Spill: UNIQUE_g2…gN (never delay)"
-echo "Round sync: 1 signal/round target · TTB≈10s · prep invest up to 400s · result@interval"
-echo "Playbook: bot/data/CHAT_PROFIT_PLAYBOOK.md"
-echo "Allowlist: bot/data/keep_allowlist.json"
-echo "Env file: $ENVF — ensure runtime_supervisor sources it or export before start."
-echo "Pin chat_playbook_cards.json texts in each Telegram chat."
-echo "Status anytime: python3 bot/round_sync_densifier.py"
+echo "Law: real OR can-become-real — then we'll know."
+echo "North stars: BEST Existence · BEST clarity · THE MOST helpful"
+echo "Ambition: max from literally everything (north star \$100k+/day/chat — not a guarantee)"
+echo "Money: Mr_iv4 | Clocks: UNIQUE_g1 | Spill: UNIQUE_gN (never delay) | TTB≈10s"
+echo "Status: python3 bot/human_return_path.py"
+echo "Everything map: python3 bot/literally_everything_return.py"

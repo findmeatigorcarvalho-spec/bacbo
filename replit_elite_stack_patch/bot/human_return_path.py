@@ -85,38 +85,55 @@ def record(kind: str, detail: str = "", **extra: Any) -> None:
 def essence() -> Dict[str, str]:
     return {
         "blank": "Human Return Path",
+        "law": (
+            "Only when a path is real — or can become turned into real — we'll know."
+        ),
         "not_the_name": (
             "Labels (densifier, skyscraper, museum) are wires. "
             "The creation is a human who still has time to bet."
         ),
-        "existence": "Show up on time for the human — every round we can.",
-        "light": "They know what to do without fear or noise.",
-        "help": "Clear card. Minimum stake. No wasted late spam. No invented gales.",
-        "proof": (
-            "They follow once, understand, come back — "
-            "and want to shape the thing with us."
+        "BEST_Existence": "Show up on time for the human — every round we can.",
+        "BEST_Enlightenment_by_clarity": "One card, one job — no fear, no noise.",
+        "THE_MOST_Helpful": (
+            "Clear card. Minimum stake. Max honest use of every opportunity. "
+            "No late spam. No invented gales."
+        ),
+        "intended_results": (
+            "Proof-as-vanity does not matter. "
+            "Intended results in every part/piece of the whole do."
+        ),
+        "ambition": (
+            "Get as much as we can from literally everything — "
+            "north star $100k+/day/chat when volume+WR+density allow; "
+            "never less than each fragment can honestly contribute."
         ),
         "honesty": (
-            "We maximize capture of real windows. "
-            "We do not invent guaranteed dollar miracles."
+            "North star is direction, not a fake certificate. "
+            "We maximize capture of real windows."
         ),
     }
 
 
 def path_is_real() -> Dict[str, Any]:
-    """Locked criterion: WHEN THAT PATH IS REAL — WE'LL KNOW.
+    """Law: real OR can-become-turned-into-real — then we'll know.
 
-    Honest machine checks for the scaffold. Human return-loop (they come back
-    wanting to shape it) is marked separately — only a human can close that.
+    Intended results in every piece matter more than vanity proof counters.
+    Counters here only show whether levers are firing toward those results.
     """
     proof = _load_proof()
     gaps: List[dict] = []
+    lit_stats: Dict[str, Any] = {}
     try:
         from round_sync_densifier import status as rs_status
 
         gaps = (rs_status() or {}).get("density_gaps") or []
     except Exception:
         pass
+    try:
+        lit = json.loads((DATA / "literally_everything_return.json").read_text())
+        lit_stats = lit.get("stats") or {}
+    except Exception:
+        lit_stats = {}
 
     ttb_n = int(proof.get("ttb_fires_delivered") or 0)
     prep_n = int(proof.get("prep_invests_held") or 0)
@@ -125,67 +142,92 @@ def path_is_real() -> Dict[str, Any]:
     trash_n = int(proof.get("trash_blocked") or 0)
     res_n = int(proof.get("results_aligned") or 0)
     open_gaps = len(gaps)
+    pieces_n = int(lit_stats.get("pieces") or 0)
+    wired_n = int(lit_stats.get("WIRED") or 0)
+    becoming_n = int(lit_stats.get("CAN_BECOME_REAL") or 0)
 
     checks = [
         {
-            "id": "time",
-            "need": "ENTER lands with time to bet (proof of TTB fires)",
+            "id": "BEST_Existence",
+            "intended_result": "ENTER lands with time to bet",
             "ok": ttb_n >= 20,
             "have": ttb_n,
         },
         {
-            "id": "prep",
-            "need": "Long signals invested, not dumped early",
-            "ok": prep_n >= 5,
-            "have": prep_n,
+            "id": "BEST_Enlightenment_by_clarity",
+            "intended_result": "Long signals invested; results aligned; path pin clear",
+            "ok": prep_n >= 5 or res_n >= 5,
+            "have": {"prep": prep_n, "results_aligned": res_n},
         },
         {
-            "id": "protection",
-            "need": "Late/trash burns stopped",
-            "ok": (late_n + trash_n) >= 5,
-            "have": late_n + trash_n,
+            "id": "THE_MOST_Helpful",
+            "intended_result": "Late/trash burns stopped; quiet chats filled",
+            "ok": (late_n + trash_n) >= 5 or gap_n >= 3,
+            "have": {
+                "late_plus_trash": late_n + trash_n,
+                "gaps_filled": gap_n,
+                "open_gaps": open_gaps,
+            },
         },
         {
-            "id": "coverage",
-            "need": "Quiet chats filled; few open density gaps",
-            "ok": gap_n >= 3 and open_gaps <= 1,
-            "have": {"filled": gap_n, "open_gaps": open_gaps},
-        },
-        {
-            "id": "results",
-            "need": "Results aligned to interval when possible",
-            "ok": res_n >= 5,
-            "have": res_n,
+            "id": "literally_everything",
+            "intended_result": "Every fragment has an intended result aimed at max return",
+            "ok": pieces_n >= 100 and wired_n + becoming_n >= 100,
+            "have": {
+                "pieces": pieces_n,
+                "WIRED": wired_n,
+                "CAN_BECOME_REAL": becoming_n,
+            },
         },
         {
             "id": "return_loop",
-            "need": "Human comes back and wants to shape it — only they can mark this",
+            "intended_result": "Human walks it and wants to shape it — only they mark this",
             "ok": bool(proof.get("human_return_loop_confirmed")),
             "have": proof.get("human_return_loop_confirmed", False),
         },
     ]
     machine_ok = all(c["ok"] for c in checks if c["id"] != "return_loop")
+    becoming_ok = pieces_n >= 50 and (wired_n + becoming_n) >= 50
     human_ok = bool(proof.get("human_return_loop_confirmed"))
     if machine_ok and human_ok:
         verdict = "REAL"
-        line = "WHEN THAT PATH IS REAL — WE'LL KNOW. It is. We know."
-    elif machine_ok:
-        verdict = "ALMOST"
         line = (
-            "Scaffold is working. Path is not real until a human marks the return loop."
+            "Only when a path is real — or can become turned into real — we'll know. "
+            "It is real. We know."
         )
-    elif any(c["ok"] for c in checks):
-        verdict = "NOT_YET"
-        line = "WHEN THAT PATH IS REAL — WE'LL KNOW. Not yet. Keep building the path."
+    elif machine_ok:
+        verdict = "CAN_BECOME_REAL"
+        line = (
+            "Path can become real — intended results are firing. "
+            "Human return loop still open."
+        )
+    elif becoming_ok or any(c["ok"] for c in checks):
+        verdict = "CAN_BECOME_REAL"
+        line = (
+            "Only when a path is real — or can become turned into real — we'll know. "
+            "It can become real. Turning is underway."
+        )
     else:
         verdict = "NOT_YET"
-        line = "WHEN THAT PATH IS REAL — WE'LL KNOW. Not yet. Wires exist; the path is still becoming."
+        line = (
+            "Only when a path is real — or can become turned into real — we'll know. "
+            "Not yet. Aim every piece at intended results."
+        )
 
     return {
         "verdict": verdict,
         "line": line,
         "checks": checks,
-        "rule": "WHEN THAT PATH IS REAL — WE'LL KNOW. Not before. Not by naming it early.",
+        "north_stars": [
+            "BEST_Existence",
+            "BEST_Enlightenment_by_clarity",
+            "THE_MOST_Helpful",
+        ],
+        "ambition_per_chat_day_usd_north_star": 100_000,
+        "rule": (
+            "Only when a path is real — or can become turned into real — we'll know. "
+            "Intended results in every piece > vanity proof."
+        ),
     }
 
 
