@@ -2,45 +2,61 @@
 # Profit Family AI + One AI Organizer + UNIQUE_g1 APEX Bundle (Mr_iv4 REMOVED).
 #
 #   curl -fsSL -o /tmp/SKY.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806h'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806i'
 #   bash /tmp/SKY.sh
+#
+# Do NOT paste the printed DONE lines back into the shell — they are messages, not commands.
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 PY="${PY:-python3}"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260806h"
+V="20260806i"
+OK=0
+FAIL=0
 
 echo "========== PROFIT FAMILY AI + ONE ORGANIZER + G1 APEX =========="
+echo "ROOT=$ROOT"
 mkdir -p bot/config bot/data logs
 
+pull() {
+  local dest="$1" url="$2"
+  if curl -fsSL -o "$dest" "$url"; then
+    OK=$((OK + 1))
+    echo "  OK  $dest"
+  else
+    FAIL=$((FAIL + 1))
+    echo "  FAIL $dest"
+  fi
+}
+
+echo "-- config --"
 for f in keep_allowlist.py profit_skyscraper.py profit_chat_bundle.py bundle_organizer.py \
          result_essence_engine.py skin_gate.py chat_shelves.py chat_router.py; do
-  curl -fsSL -o "bot/config/${f}" "${RAW}/bot/config/${f}?v=${V}" || true
+  pull "bot/config/${f}" "${RAW}/bot/config/${f}?v=${V}"
 done
-for f in chat_router.py chat_shelves.py skin_families.py registry.py; do
+for f in skin_families.py registry.py; do
   if [[ ! -f "bot/config/${f}" ]]; then
-    curl -fsSL -o "bot/config/${f}" "${RAW}/bot/config/${f}?v=${V}" || true
+    pull "bot/config/${f}" "${RAW}/bot/config/${f}?v=${V}"
   fi
 done
 
+echo "-- bot runtime --"
 for f in hub_engine_route.py telegram_outbox.py dual_lane_router.py chat_router.py chat_shelves.py \
          skin_gate.py lux_send_config_bind.py window_packer.py round_sync_densifier.py \
          human_return_path.py literally_everything_return.py factual_card_contract.py \
          runtime_supervisor.py hub_max_boot.py hub_dispatch.py build_profit_skyscraper_brain.py \
          build_result_essence_atlas.py triage_museum_keep_trash.py; do
-  curl -fsSL -o "bot/${f}" \
-    "${RAW}/replit_elite_stack_patch/bot/${f}?v=${V}" || true
+  pull "bot/${f}" "${RAW}/replit_elite_stack_patch/bot/${f}?v=${V}"
 done
 
-mkdir -p bot/data
+echo "-- data --"
 for f in museum_triage_keep_trash.json keep_allowlist.json profit_skyscraper_brain.json \
          chat_playbook_cards.json CHAT_PROFIT_PLAYBOOK.md museum_full_catalog.json \
          profit_skyscraper.env literally_everything_return.json result_essence_atlas.json \
          peak_fidelity_ranker_report.json profit_organism_report.json; do
-  curl -fsSL -o "bot/data/${f}" \
-    "${RAW}/replit_elite_stack_patch/bot/data/${f}?v=${V}" || true
+  pull "bot/data/${f}" "${RAW}/replit_elite_stack_patch/bot/data/${f}?v=${V}"
 done
 
 ENVF=bot/data/profit_skyscraper.env
@@ -78,29 +94,67 @@ set -a
 source "$ENVF"
 set +a
 
-$PY -m py_compile bot/config/result_essence_engine.py bot/config/bundle_organizer.py \
-  bot/config/profit_chat_bundle.py bot/config/chat_router.py \
-  bot/hub_engine_route.py bot/round_sync_densifier.py 2>/dev/null || true
+echo "-- compile --"
+if $PY -m py_compile bot/config/result_essence_engine.py bot/config/bundle_organizer.py \
+  bot/config/profit_chat_bundle.py bot/config/chat_router.py 2>&1; then
+  echo "  OK  py_compile config"
+else
+  echo "  WARN py_compile config (non-fatal if deps missing)"
+fi
 
-$PY bot/build_result_essence_atlas.py 2>/dev/null || \
-  $PY - <<'PY' 2>/dev/null || true
+echo "-- verify --"
+$PY - <<'PY'
 import json, sys
+from pathlib import Path
 sys.path.insert(0, ".")
-from bot.config.result_essence_engine import family_ai_manifest, load_atlas
-from bot.config.bundle_organizer import organize
-print(json.dumps(family_ai_manifest(), indent=2)[:2000])
-a = load_atlas()
-print("atlas_keep", a.get("stats", {}).get("keep_scored"))
-d = organize("💎 SOLO ELITE SIGNAL 💎\n⚡ ENTER NOW")
-print("sample", d.peer, d.becomes, d.why[:100])
+errs = []
+for p in [
+    "bot/config/result_essence_engine.py",
+    "bot/config/bundle_organizer.py",
+    "bot/config/profit_chat_bundle.py",
+    "bot/data/result_essence_atlas.json",
+    "bot/data/profit_skyscraper.env",
+]:
+    if not Path(p).is_file():
+        errs.append(f"missing {p}")
+        print("MISSING", p)
+    else:
+        print("HAVE", p)
+
+try:
+    from bot.config.result_essence_engine import family_ai_manifest, load_atlas
+    from bot.config.bundle_organizer import organize
+    a = load_atlas()
+    m = family_ai_manifest()
+    d = organize("SOLO ELITE SIGNAL\nENTER NOW")
+    print(json.dumps({
+        "model": m.get("model"),
+        "layers": m.get("layers"),
+        "keep_scored": (a.get("stats") or {}).get("keep_scored"),
+        "sample_peer": d.peer,
+        "sample_becomes": d.becomes,
+        "primary_env": __import__("os").environ.get("TELEGRAM_PRIMARY_PEER"),
+        "exclude": __import__("os").environ.get("TELEGRAM_EXCLUDE_PEERS"),
+    }, indent=2))
+    if d.peer != "UNIQUE_g1":
+        errs.append(f"expected UNIQUE_g1 got {d.peer}")
+except Exception as exc:
+    errs.append(repr(exc))
+    print("VERIFY_EXC", repr(exc))
+
+if errs:
+    print("VERIFY_FAIL", errs)
+    sys.exit(1)
+print("VERIFY_OK")
 PY
 
 pkill -f 'telegram_outbox.py' 2>/dev/null || true
 rm -f bot/data/telegram_outbox.lock 2>/dev/null || true
 
-echo "========== DONE =========="
-echo "PROFIT FAMILY AI (2000%) + ONE ORGANIZER (1000%) | APEX=UNIQUE_g1 | Mr_iv4 OUT"
-echo "RESULT: attach immediate under its own FIRE"
-echo "Atlas: bot/data/result_essence_atlas.json — every KEEP essence scored"
-echo "See: PROFIT_FAMILY_AI.md · ONE_AI_ORGANIZER.md"
-echo "Reality: Make It Real / It Is Real, Really. It Is Real truthfully."
+echo "----------"
+echo "pull_ok=$OK pull_fail=$FAIL"
+echo "DONE — Profit Family AI + Organizer + UNIQUE_g1 APEX | Mr_iv4 OUT"
+echo "RESULT attaches immediate under its own FIRE"
+echo "Docs: PROFIT_FAMILY_AI.md and ONE_AI_ORGANIZER.md"
+echo "Next: restart supervisor / outbox so env force-keys load"
+echo "Do not paste these lines back into the shell."
