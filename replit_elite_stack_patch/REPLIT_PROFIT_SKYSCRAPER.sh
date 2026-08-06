@@ -2,7 +2,7 @@
 # Profit Family AI + One AI Organizer + UNIQUE_g1 APEX Bundle (Mr_iv4 REMOVED).
 #
 #   curl -fsSL -o /tmp/SKY.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806i'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806j'
 #   bash /tmp/SKY.sh
 #
 # Do NOT paste the printed DONE lines back into the shell — they are messages, not commands.
@@ -12,7 +12,7 @@ cd "$ROOT"
 PY="${PY:-python3}"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260806i"
+V="20260806j"
 OK=0
 FAIL=0
 
@@ -32,14 +32,11 @@ pull() {
 }
 
 echo "-- config --"
+# ALWAYS overwrite skin_families/registry — older Replit copies miss canonical_family_id.
 for f in keep_allowlist.py profit_skyscraper.py profit_chat_bundle.py bundle_organizer.py \
-         result_essence_engine.py skin_gate.py chat_shelves.py chat_router.py; do
+         result_essence_engine.py skin_gate.py chat_shelves.py chat_router.py \
+         skin_families.py registry.py __init__.py; do
   pull "bot/config/${f}" "${RAW}/bot/config/${f}?v=${V}"
-done
-for f in skin_families.py registry.py; do
-  if [[ ! -f "bot/config/${f}" ]]; then
-    pull "bot/config/${f}" "${RAW}/bot/config/${f}?v=${V}"
-  fi
 done
 
 echo "-- bot runtime --"

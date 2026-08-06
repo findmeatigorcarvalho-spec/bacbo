@@ -74,7 +74,7 @@ python3 -c "from bot.config.result_essence_engine import family_ai_manifest; imp
 
 ```bash
 curl -fsSL -o /tmp/SKY.sh \
-  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806i'
+  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806j'
 bash /tmp/SKY.sh
 ```
 

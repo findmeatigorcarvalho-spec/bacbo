@@ -18,13 +18,44 @@ import os
 from dataclasses import dataclass
 from typing import Any, Dict, Optional, Tuple
 
-from bot.config.skin_families import (
-    LANE_COUNTDOWN,
-    LANE_MONEY,
-    SkinMatch,
-    canonical_family_id,
-    classify_telegram_skin,
-)
+try:
+    from bot.config.skin_families import (
+        LANE_COUNTDOWN,
+        LANE_MONEY,
+        SkinMatch,
+        classify_telegram_skin,
+    )
+    try:
+        from bot.config.skin_families import canonical_family_id
+    except ImportError:  # older Replit skin_families without archaeology helper
+        def canonical_family_id(raw_id: str) -> str:  # type: ignore
+            return (raw_id or "").strip()
+except ImportError:  # extreme fail-open
+    LANE_COUNTDOWN = "COUNTDOWN"
+    LANE_MONEY = "MONEY"
+
+    @dataclass
+    class SkinMatch:  # type: ignore
+        family_id: str = ""
+        role: str = ""
+        kind: str = ""
+        default_lane: str = ""
+        matched_keys: Tuple[str, ...] = ()
+
+        def as_dict(self) -> Dict[str, Any]:
+            return {
+                "family_id": self.family_id,
+                "role": self.role,
+                "kind": self.kind,
+                "default_lane": self.default_lane,
+                "matched_keys": list(self.matched_keys),
+            }
+
+    def canonical_family_id(raw_id: str) -> str:
+        return (raw_id or "").strip()
+
+    def classify_telegram_skin(*_a: Any, **_k: Any) -> Optional[SkinMatch]:
+        return None
 
 
 # ── Shelf ids (stable) ──────────────────────────────────────────────────────
