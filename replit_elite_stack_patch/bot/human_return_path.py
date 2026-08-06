@@ -286,7 +286,23 @@ def pin_card(chat_key: str) -> str:
 
 
 def main() -> int:
-    print(json.dumps(human_status(), ensure_ascii=False, indent=2))
+    import argparse
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "--confirm-return-loop",
+        action="store_true",
+        help="Human marks: I came back and want to shape this (closes last REAL check)",
+    )
+    ap.add_argument("--note", default="", help="Optional note with --confirm-return-loop")
+    args = ap.parse_args()
+    if args.confirm_return_loop:
+        confirm_human_return_loop(True, note=args.note)
+        print("human_return_loop_confirmed=true")
+    st = human_status()
+    real = st.get("WHEN_THAT_PATH_IS_REAL_WE_WILL_KNOW") or {}
+    print(real.get("line") or "")
+    print(json.dumps(st, ensure_ascii=False, indent=2))
     return 0
 
 
