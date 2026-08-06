@@ -113,12 +113,17 @@ def essence() -> Dict[str, str]:
             "Every time. All the time. Stated ≠ actual subject → piece failed."
         ),
         "ambition_XXX": (
-            "Outcome: get it all. "
-            "Even when disempowered / constrained — get the most that moment can yield. "
-            "North star $100k+/day/chat when volume+WR+density allow. "
-            "Floor: maximum honest capture of literally everything available."
+            "Get it all — always get the most of all. "
+            "Always truthfully resourceful — even when disempowered. "
+            "North star $100k+/day/chat when volume+WR+density allow."
         ),
-        "always": "Every time. All the time. Truthfully.",
+        "factual_card_contract": (
+            "REAL FACTUAL fact of what to bet on + "
+            "statement of warning of actual factual outcoming/result + "
+            "THAT RESULT / THE RESULT comprovation. "
+            "Stated subject = actual effect. Every time."
+        ),
+        "always": "Every time. All the time. Truthfully. Resourcefully — get the most of all.",
     }
 
 
@@ -259,12 +264,14 @@ def path_is_real() -> Dict[str, Any]:
             "Truthfully_Helpful_every_time",
             "intended_results_XXX",
             "ambition_XXX_get_it_all",
+            "factual_bet_warn_result_comprovation",
         ],
         "ambition_per_chat_day_usd_north_star": 100_000,
         "rule": (
             "Only when a path is real — or can become turned into real — we'll know. "
-            "Every time · all the time · truthfully. "
-            "Stated subject of the matter = actual effect. Get it all."
+            "Every time · all the time · truthfully · resourcefully. "
+            "REAL FACTUAL bet + warning + RESULT comprovation. "
+            "Get it all — the most of all."
         ),
     }
 
@@ -347,20 +354,19 @@ def pin_card(chat_key: str) -> str:
 
     return "\n".join(
         [
-            "THE PATH (not a brand — what you do)",
+            "THE PATH — factual subject only",
             where,
             focus,
             "",
-            "1) ENTER + color → bet MINIMUM on that color.",
+            "1) REAL FACT: ENTER + color → bet MINIMUM on that color.",
             "2) Seconds on the card → bet BEFORE 0.",
-            "3) GALE / again → same color, MINIMUM.",
-            "4) WIN → round over. LOSS + no gale → round over.",
-            "5) DO NOT BET / expired → skip. That is protection.",
-            "6) Never invent bets. The card is the only teacher.",
+            "3) WARNING (DO NOT BET / expired / cold) → zero. That is the outcoming stated.",
+            "4) GALE / again → same color, MINIMUM — only if the card states it.",
+            "5) RESULT comprovation (WIN/LOSS/TIE) → round closed. That is THE RESULT.",
+            "6) Never invent bets. Stated subject = only subject.",
             "",
-            "On time for every round we have. Clear every time. Helpful every time.",
-            "What the card states is the only subject — follow that outcome.",
-            "Your job: follow. Minimum stake. Get every real chance.",
+            "On time every round we have. Clear every time. Helpful every time.",
+            "Get it all — the most of all — truthfully resourceful always.",
         ]
     )
 
