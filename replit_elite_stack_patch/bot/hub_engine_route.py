@@ -187,29 +187,34 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
     except Exception:
         pass
 
-    # Profit Chat Bundle: UNIQUE_g1 APEX is #1 (Mr_iv4 removed).
+    # ONE AI ORGANIZER + Profit Chat Bundle (UNIQUE_g1 APEX; Mr_iv4 removed).
     apex = _as_target(gunique_peer() or money_peer())
+    # Results glue to last FIRE chat immediately (engine path often has no signal_id).
+    if _is_result(body):
+        last = _load_last_target()
+        return (last if last is not None else apex), "result_attach_immediate→parent"
+    try:
+        from bot.config.bundle_organizer import organize
+
+        org = organize(body, role="FIRE", is_result=False)
+        if org.peer:
+            dest = _as_target(str(org.peer))
+            if _FIRE_HINT.search(body) or _TRUST_FIRE.search(body):
+                _save_last(dest, role="FIRE", reason=f"organize:{org.why}")
+            return dest, f"organize:{org.why}"
+    except Exception:
+        pass
     try:
         from bot.config.profit_chat_bundle import peer_for_signal
 
-        peer, why = peer_for_signal(
-            body, is_result=_is_result(body), role="RESULT" if _is_result(body) else "FIRE"
-        )
+        peer, why = peer_for_signal(body, is_result=False, role="FIRE")
         if peer:
             dest = _as_target(str(peer))
-            if _is_result(body):
-                last = _load_last_target()
-                return (last if last is not None else dest), f"bundle_result:{why}"
             if _FIRE_HINT.search(body) or _TRUST_FIRE.search(body):
                 _save_last(dest, role="FIRE", reason=f"bundle:{why}")
             return dest, f"bundle:{why}"
     except Exception:
         pass
-
-    # Results glue to last FIRE chat (engine path has no signal_id).
-    if _is_result(body):
-        last = _load_last_target()
-        return (last if last is not None else apex), "result→parent"
 
     # Soft-cap spill via chat_router for FIRE/ops (never delay).
     try:

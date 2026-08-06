@@ -119,6 +119,16 @@ def result_align() -> bool:
     }
 
 
+def result_attach_immediate() -> bool:
+    """RESULT under its own FIRE now — default ON (zero intentional delay)."""
+    return os.environ.get("RESULT_ATTACH_IMMEDIATE", "1").strip().lower() not in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }
+
+
 # ── Round phase clock ───────────────────────────────────────────────────────
 
 
@@ -678,7 +688,14 @@ class RoundSyncDensifier:
         text: str,
         *,
         now: Optional[float] = None,
+        force_now: bool = False,
     ) -> SyncDecision:
+        # Locked law: RESULT attaches under its FIRE immediately — no delay.
+        if force_now or result_attach_immediate():
+            return SyncDecision(
+                "RESULT_NOW",
+                "attach_immediate_under_fire",
+            )
         if not enabled() or not result_align():
             return SyncDecision("RESULT_NOW", "result_align_off")
         if not is_result_text(text or ""):
@@ -693,7 +710,7 @@ class RoundSyncDensifier:
                 round_id=phase.round_id,
                 ttb_remaining=phase.ttb_remaining,
             )
-        # Hold result until next interval start (precise alignment)
+        # Legacy align path (only if RESULT_ATTACH_IMMEDIATE=0)
         return SyncDecision(
             "HOLD_RESULT",
             f"align result to next interval in {phase.next_interval_start - now:.1f}s",

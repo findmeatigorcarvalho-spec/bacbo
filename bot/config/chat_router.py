@@ -272,6 +272,7 @@ class ChatRouter:
             )
 
             # RESULT / ops-result glue straight back to the parent's exact chat.
+            # Zero intentional delay — attach under its own FIRE immediately.
             if decision.follow_parent and parent is not None:
                 target = ChatTarget(
                     shelf_id=parent.shelf_id,
@@ -282,7 +283,8 @@ class ChatRouter:
                     kind=decision.kind,
                     lane=parent.lane,
                     follow_parent=True,
-                    reason=f"glue_parent:{parent.target_id}",
+                    delayed_seconds=0.0,
+                    reason=f"glue_parent_immediate:{parent.target_id}",
                 )
                 if commit:
                     self._window(target.target_id).add(now)
@@ -303,18 +305,51 @@ class ChatRouter:
                     reason=f"{'vault_created_only' if shelf == SHELF_VAULT else 'noise_sink'}",
                 )
 
-            # Primary shelf chat if it has room.
+            # ONE AI ORGANIZER — sees every valuable signal; picks ideal peer.
+            def _peer_excluded(p: Optional[str]) -> bool:
+                try:
+                    from bot.config.profit_chat_bundle import is_excluded
+
+                    return is_excluded(p)
+                except Exception:
+                    return str(p or "").lstrip("@") in {"Mr_iv4", "6774605259", "mr_iv4"}
+
+            ideal_peer = decision.peer
+            org_why = decision.reason
+            try:
+                from bot.config.bundle_organizer import organize
+
+                org = organize(
+                    text,
+                    signal_kind=signal_kind,
+                    family_id=decision.family_id,
+                    role=decision.role,
+                    parent_peer=parent.peer if parent else None,
+                    signal_id=sid or None,
+                    is_result=decision.role == "RESULT",
+                )
+                if org.peer and not _peer_excluded(org.peer):
+                    ideal_peer = org.peer
+                    org_why = org.why
+            except Exception:
+                pass
+
+            if ideal_peer and _peer_excluded(ideal_peer):
+                ideal_peer = "UNIQUE_g1"
+
+            # Primary shelf chat if it has room (organizer's ideal peer).
             primary_id = f"{shelf}#0"
             if self._has_room(shelf, primary_id, now):
                 target = ChatTarget(
                     shelf_id=shelf,
-                    peer=decision.peer,
+                    peer=ideal_peer or decision.peer,
                     overflow_index=0,
                     family_id=decision.family_id,
                     role=decision.role,
                     kind=decision.kind,
                     lane=decision.lane,
-                    reason=decision.reason,
+                    delayed_seconds=0.0,
+                    reason=org_why,
                 )
                 if commit:
                     self._window(primary_id).add(now)
@@ -322,9 +357,21 @@ class ChatRouter:
                         self._remember_parent(sid, target)
                 return target
 
-            # Soft-cap hit → spill across named overflow (UNIQUE_g2…g5), then mint g6+.
+            # Soft-cap hit → organizer spill order, then mint g6+.
             # Never delay: bet windows are seconds; missing the window = miss.
-            peers = list(overflow_peers())
+            try:
+                from bot.config.bundle_organizer import organize_spill_order
+
+                peers = [
+                    p
+                    for p in organize_spill_order(ideal_peer or decision.peer or "UNIQUE_g1")
+                    if p != (ideal_peer or decision.peer)
+                ]
+                # Prefer named overflow list if spill order empty of others
+                if not peers:
+                    peers = list(overflow_peers())
+            except Exception:
+                peers = list(overflow_peers())
             for idx, peer in enumerate(peers, start=1):
                 of_id = f"{SHELF_OVERFLOW}#{idx}"
                 if self._has_room(SHELF_OVERFLOW, of_id, now):
@@ -337,7 +384,7 @@ class ChatRouter:
                         role=decision.role,
                         kind=decision.kind,
                         lane=decision.lane,
-                        reason=f"overflow_from:{shelf}",
+                        reason=f"organize_spill:{org_why}→{peer}",
                     )
                     if commit:
                         self._window(of_id).add(now)

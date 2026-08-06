@@ -1257,18 +1257,21 @@ async def main() -> None:
                             get_densifier,
                         )
 
-                        rsync = decide_result(res_body)
+                        # RESULT attaches under its own FIRE immediately.
+                        rsync = decide_result(res_body, force_now=True)
                         if rsync.action == "HOLD_RESULT":
                             phase = get_clock().phase_at()
-                            # Nudge clock from observed resolve timing
                             try:
-                                import datetime as _dt
-
-                                ra = row.get("resolved_at")
-                                if ra:
-                                    # SQLite UTC-ish text → epoch best-effort
-                                    pass
                                 get_clock().nudge_from_resolve(time.time())
+                            except Exception:
+                                pass
+                            parent_chat = "UNIQUE_g1"
+                            try:
+                                from hub_dispatch import parent_peer_slot
+
+                                slot = parent_peer_slot(int(row["id"]))
+                                if slot:
+                                    parent_chat = str(slot)
                             except Exception:
                                 pass
                             get_densifier()._enqueue(
@@ -1279,7 +1282,7 @@ async def main() -> None:
                                     family_id="RESULT",
                                     signal_kind=str(row.get("signal_kind") or "RESULT"),
                                     score=0.0,
-                                    chat="UNIQUE_g1",
+                                    chat=parent_chat,
                                     clock_a_secs=None,
                                     detected_at=time.time(),
                                     ideal_release_at=phase.next_interval_start,

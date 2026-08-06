@@ -1,7 +1,11 @@
-# Profit Chat Bundle — UNIQUE_g1 is #1
+# Profit Chat Bundle — UNIQUE_g1 is #1 + One AI Organizer
 
 **Mr_iv4 is removed from the live equation.**  
 UNIQUE_g1 takes its place as APEX — the first most important chat.
+
+**Ambition:** get as much / make the Most of literally everything.  
+**Model:** one AI organizer sees every valuable signal and distributes across the bundle (mix/merge/use as needed).  
+See `ONE_AI_ORGANIZER.md`.
 
 ## A chat IS when it BECOMES
 
@@ -18,16 +22,17 @@ Profit · Volume · WR · Precision · Assertiveness · Existence · Essence · 
 | UNIQUE_g5 | IMPACT | RESULT comprovation / ops home |
 | UNIQUE_g6+ | ELASTIC | Mint forever — never miss a window |
 
-## Situation routing
+## Organizer routing (not static labels)
 
-Different signal + gate + fire + result systems land by the whole situation:
+The organizer scores the whole situation and may **mix** identities:
 
 - Timed JANELA / Sinal Retido → APEX (g1)  
-- FLASH / sniper → PRECISION (g2) unless timed → APEX  
+- FLASH / sniper → PRECISION (g2); **timed** precision → APEX (window > neatness)  
 - ENTER NOW / GOLDEN / SOLO → APEX  
 - Gale / RETENTATIVA → APEX (spill ASSERTIVE g4)  
-- RESULT → glue to parent chat  
-- Heavy forensic / audit → IMPACT (g5)
+- Soft-cap → VOLUME / next elastic — **never delay**  
+- **RESULT → attach immediately under its own FIRE** (zero intentional delay)  
+- Heavy forensic / audit → IMPACT identity (g5); RESULT still follows parent  
 
 ## Reality
 
@@ -37,6 +42,6 @@ Was `CAN_BECOME_REAL` → Verdict `MAKE_IT_REAL` → Outcome Make It Real / It I
 ## Apply
 
 ```bash
-bash /tmp/SKY.sh   # REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806f
-python3 -c "from bot.config.profit_chat_bundle import bundle_catalog; import json; print(json.dumps(bundle_catalog(), indent=2))"
+bash /tmp/SKY.sh   # REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806g
+python3 -c "from bot.config.bundle_organizer import organizer_manifest; import json; print(json.dumps(organizer_manifest(), indent=2))"
 ```

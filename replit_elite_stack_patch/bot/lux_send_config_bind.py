@@ -83,9 +83,24 @@ def _wrap_send(fn: Callable) -> Callable:
             )
 
             if _rs_on() and isinstance(msg, str) and msg.strip():
-                rd = decide_result(msg)
+                # RESULT: attach under parent FIRE immediately (force_now).
+                rd = decide_result(msg, force_now=True)
                 if rd.action == "HOLD_RESULT":
+                    # Legacy only — should not fire when RESULT_ATTACH_IMMEDIATE=1
                     phase = get_clock().phase_at()
+                    parent_chat = "UNIQUE_g1"
+                    try:
+                        from hub_engine_route import _load_last_target
+
+                        last = _load_last_target()
+                        if last is not None:
+                            parent_chat = str(
+                                getattr(last, "username", None)
+                                or getattr(last, "id", None)
+                                or parent_chat
+                            )
+                    except Exception:
+                        pass
                     get_densifier()._enqueue(
                         HeldFire(
                             fire_key=f"result:{phase.round_id}:{hash(msg) & 0xFFFFFFFF:x}",
@@ -94,7 +109,7 @@ def _wrap_send(fn: Callable) -> Callable:
                             family_id="RESULT",
                             signal_kind="RESULT",
                             score=0.0,
-                            chat="UNIQUE_g1",
+                            chat=str(parent_chat),
                             clock_a_secs=None,
                             detected_at=_time.time(),
                             ideal_release_at=phase.next_interval_start,
