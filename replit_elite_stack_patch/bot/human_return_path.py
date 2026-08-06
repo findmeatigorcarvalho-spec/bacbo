@@ -198,11 +198,20 @@ def path_is_real() -> Dict[str, Any]:
         {
             "id": "ambition_XXX_get_it_all",
             "stated_subject": (
-                "Get it all — even when disempowered, get the most that moment yields"
+                "Get it all — most of all — truthfully resourceful always"
             ),
             "actual_effect_ok": open_gaps <= 1 and gap_n >= 1,
             "ok": open_gaps <= 1 or gap_n >= 3,
             "have": {"open_gaps": open_gaps, "gaps_filled": gap_n},
+        },
+        {
+            "id": "factual_bet_warn_result_comprovation",
+            "stated_subject": (
+                "REAL FACTUAL bet + warning of factual outcoming + RESULT comprovation"
+            ),
+            "actual_effect_ok": ttb_n >= 10 and res_n >= 5,
+            "ok": ttb_n >= 10 and res_n >= 5,
+            "have": {"ttb_fires": ttb_n, "results_aligned": res_n},
         },
         {
             "id": "return_loop",

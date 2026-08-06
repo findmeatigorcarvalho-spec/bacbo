@@ -67,12 +67,25 @@ If stated ≠ actual subject of the matter → that piece failed, no matter the 
 ### 5. Ambition: get it all — XXX
 
 Outcome: **get it all.**  
+Always be sure to get **the most of all**.  
+Always be **truthfully resourceful** — even when disempowered, extract the maximum honest capture of that moment.
 
-Even when disempowered / constrained / thin volume — still get **the most** that situation can yield.  
-North star remains as high as **$100k+/day/chat** when volume+WR+density allow.  
-Floor: never less than the maximum honest capture of **literally everything** available in that moment.
+North star: as high as **$100k+/day/chat** when volume+WR+density allow.  
+Floor: never less than everything available — not a polite fraction.
 
-Direction, not a fake certificate — but the direction is **all of it**, not a polite fraction.
+### 6. REAL FACTUAL bet + warning + RESULT comprovation
+
+Every path carries three subjects of the matter:
+
+| Piece | Subject |
+|---|---|
+| **BET FACT** | REAL FACTUAL fact of what to bet on (color + act) |
+| **WARNING** | Statement of warning of actual factual outcoming / result |
+| **RESULT comprovation** | THAT RESULT / THE RESULT — WIN/LOSS/TIE closes what was stated |
+
+Stated bet without comprovation later = path incomplete.  
+Comprovation without a prior factual bet subject = noise.  
+Warning that is the subject → zero bet — that is help.
 
 ## The blank → one living path
 

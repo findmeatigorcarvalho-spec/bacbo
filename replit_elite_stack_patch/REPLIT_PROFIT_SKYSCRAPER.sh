@@ -29,10 +29,10 @@ done
 # Patch runtime modules
 for f in hub_engine_route.py telegram_outbox.py chat_router.py chat_shelves.py skin_gate.py \
          lux_send_config_bind.py window_packer.py round_sync_densifier.py human_return_path.py \
-         literally_everything_return.py runtime_supervisor.py \
+         literally_everything_return.py factual_card_contract.py runtime_supervisor.py \
          build_profit_skyscraper_brain.py triage_museum_keep_trash.py; do
   curl -fsSL -o "bot/${f}" \
-    "${RAW}/replit_elite_stack_patch/bot/${f}?v=20260806d" || true
+    "${RAW}/replit_elite_stack_patch/bot/${f}?v=20260806e" || true
 done
 
 # Data: triage + allowlist + playbook (from repo)

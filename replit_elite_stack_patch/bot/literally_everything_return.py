@@ -252,6 +252,8 @@ def build() -> Dict[str, Any]:
         ),
         "ambition_XXX": {
             "outcome": "get_it_all",
+            "always": "get_the_most_of_all",
+            "truthfully_resourceful": True,
             "even_when_disempowered": "get_the_most_that_moment_can_yield",
             "per_chat_day_usd_north_star": 100_000,
             "mode": "literally_everything_available",
@@ -259,6 +261,11 @@ def build() -> Dict[str, Any]:
                 "Direction under volume+WR+density — not a fake certificate. "
                 "Floor = max honest capture of everything available in that moment."
             ),
+        },
+        "factual_card_contract": {
+            "bet_fact": "REAL FACTUAL fact of what to bet on",
+            "outcome_warning": "Warning of actual factual outcoming/result",
+            "result_comprovation": "THAT RESULT / THE RESULT — comprovation",
         },
         "stats": {
             "pieces": len(pieces),

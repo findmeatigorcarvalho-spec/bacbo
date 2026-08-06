@@ -574,6 +574,17 @@ class RoundSyncDensifier:
                     _hr("gap_fill", f"filled quiet chat {chat_name}", chat=chat_name)
             except Exception:
                 pass
+            try:
+                from factual_card_contract import check_card
+
+                cc = check_card(body)
+                if not cc.ok_for_fire:
+                    # Still fire if timed — but note missing factual subject gaps
+                    print(
+                        f"[FACT-CONTRACT] FIRE gaps={cc.gaps} subject={cc.stated_subject_of_matter}"
+                    )
+            except Exception:
+                pass
             return SyncDecision(
                 "FIRE_NOW",
                 phase.reason,
