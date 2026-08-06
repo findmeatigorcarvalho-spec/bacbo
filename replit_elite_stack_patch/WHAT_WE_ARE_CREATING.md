@@ -19,8 +19,24 @@ We are building the thing that turns every fragment we already have —
 4. **Not burn** a round that was already gone  
 5. **Understand** what happened — win or loss — without confusion  
 
+**WHEN THAT PATH IS REAL — WE'LL KNOW.**  
+Not before. Not by naming it early. Not by shipping another label.
+
 Only when that path is real for a human will we know what we created.  
 Until then, modules are scaffolding. The product is the human’s return path.
+
+### When the path is real (we'll know)
+
+The path is real when all of these are true at once — not one, not almost:
+
+1. **Time** — ENTER cards land while a human still has seconds to bet (not after).  
+2. **Clarity** — one card, one job; a first-time human follows without a second explanation.  
+3. **Coverage** — every live chat gives usable chances (≈1/round or at least 1 per 2).  
+4. **Protection** — late/trash/DO-NOT-BET never burns the bankroll.  
+5. **Return loop** — they come back, and want to help shape it, because it felt true.
+
+Until then the answer is honest: **not yet.**  
+When it is — we won't need to argue about the name. We'll know.
 
 ## Essence (not a slogan)
 

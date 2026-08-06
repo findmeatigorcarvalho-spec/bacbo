@@ -103,6 +103,101 @@ def essence() -> Dict[str, str]:
     }
 
 
+def path_is_real() -> Dict[str, Any]:
+    """Locked criterion: WHEN THAT PATH IS REAL — WE'LL KNOW.
+
+    Honest machine checks for the scaffold. Human return-loop (they come back
+    wanting to shape it) is marked separately — only a human can close that.
+    """
+    proof = _load_proof()
+    gaps: List[dict] = []
+    try:
+        from round_sync_densifier import status as rs_status
+
+        gaps = (rs_status() or {}).get("density_gaps") or []
+    except Exception:
+        pass
+
+    ttb_n = int(proof.get("ttb_fires_delivered") or 0)
+    prep_n = int(proof.get("prep_invests_held") or 0)
+    late_n = int(proof.get("late_burns_prevented") or 0)
+    gap_n = int(proof.get("gap_chats_filled") or 0)
+    trash_n = int(proof.get("trash_blocked") or 0)
+    res_n = int(proof.get("results_aligned") or 0)
+    open_gaps = len(gaps)
+
+    checks = [
+        {
+            "id": "time",
+            "need": "ENTER lands with time to bet (proof of TTB fires)",
+            "ok": ttb_n >= 20,
+            "have": ttb_n,
+        },
+        {
+            "id": "prep",
+            "need": "Long signals invested, not dumped early",
+            "ok": prep_n >= 5,
+            "have": prep_n,
+        },
+        {
+            "id": "protection",
+            "need": "Late/trash burns stopped",
+            "ok": (late_n + trash_n) >= 5,
+            "have": late_n + trash_n,
+        },
+        {
+            "id": "coverage",
+            "need": "Quiet chats filled; few open density gaps",
+            "ok": gap_n >= 3 and open_gaps <= 1,
+            "have": {"filled": gap_n, "open_gaps": open_gaps},
+        },
+        {
+            "id": "results",
+            "need": "Results aligned to interval when possible",
+            "ok": res_n >= 5,
+            "have": res_n,
+        },
+        {
+            "id": "return_loop",
+            "need": "Human comes back and wants to shape it — only they can mark this",
+            "ok": bool(proof.get("human_return_loop_confirmed")),
+            "have": proof.get("human_return_loop_confirmed", False),
+        },
+    ]
+    machine_ok = all(c["ok"] for c in checks if c["id"] != "return_loop")
+    human_ok = bool(proof.get("human_return_loop_confirmed"))
+    if machine_ok and human_ok:
+        verdict = "REAL"
+        line = "WHEN THAT PATH IS REAL — WE'LL KNOW. It is. We know."
+    elif machine_ok:
+        verdict = "ALMOST"
+        line = (
+            "Scaffold is working. Path is not real until a human marks the return loop."
+        )
+    elif any(c["ok"] for c in checks):
+        verdict = "NOT_YET"
+        line = "WHEN THAT PATH IS REAL — WE'LL KNOW. Not yet. Keep building the path."
+    else:
+        verdict = "NOT_YET"
+        line = "WHEN THAT PATH IS REAL — WE'LL KNOW. Not yet. Wires exist; the path is still becoming."
+
+    return {
+        "verdict": verdict,
+        "line": line,
+        "checks": checks,
+        "rule": "WHEN THAT PATH IS REAL — WE'LL KNOW. Not before. Not by naming it early.",
+    }
+
+
+def confirm_human_return_loop(confirmed: bool = True, note: str = "") -> None:
+    """Only a human (or their explicit say-so) closes the last check."""
+    data = _load_proof()
+    data["human_return_loop_confirmed"] = bool(confirmed)
+    data["human_return_loop_note"] = (note or "")[:300]
+    data["human_return_loop_at"] = time.time()
+    _save_proof(data)
+
+
 def human_status() -> Dict[str, Any]:
     """Status in human language + machine proof counters."""
     proof = _load_proof()
@@ -130,7 +225,9 @@ def human_status() -> Dict[str, Any]:
     else:
         moment = "System is investing prep time so the next ENTER lands with time to act."
 
+    real = path_is_real()
     return {
+        "WHEN_THAT_PATH_IS_REAL_WE_WILL_KNOW": real,
         "what_we_are_creating": essence(),
         "for_you_right_now": moment,
         "prep_investing_now": hold_n,
