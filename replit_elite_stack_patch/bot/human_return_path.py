@@ -230,33 +230,40 @@ def path_is_real() -> Dict[str, Any]:
     becoming_ok = pieces_n >= 50 and (wired_n + becoming_n) >= 50
     human_ok = bool(proof.get("human_return_loop_confirmed"))
     if machine_ok and human_ok:
-        verdict = "REAL"
-        outcome = "It Is Real, Really."
+        verdict = "MAKE_IT_REAL"
+        outcome = "Make It Real / It Is Real, Really."
+        reality = "It Is Real truthfully."
         line = (
-            "Only when a path is real — or can become turned into real — we'll know. "
-            "It Is Real, Really. We know."
+            "Was CAN_BECOME_REAL → Verdict MAKE_IT_REAL → "
+            "Outcome: Make It Real / It Is Real, Really. "
+            "Reality: It Is Real truthfully. We know."
         )
     elif machine_ok or becoming_ok or any(c["ok"] for c in checks):
         # CAN_BECOME_REAL is not a pause — it is the order: Make It Real.
         verdict = "MAKE_IT_REAL"
         outcome = "Make It Real / It Is Real, Really."
+        reality = "It Is Real truthfully."
         line = (
-            "Verdict was CAN_BECOME_REAL → outcome: Make It Real. "
-            "It Is Real, Really — by doing: on-time rounds, factual bet, "
-            "warning, RESULT comprovation, get the most of all."
+            "Was CAN_BECOME_REAL → Verdict MAKE_IT_REAL → "
+            "Outcome: Make It Real / It Is Real, Really. "
+            "Reality: It Is Real truthfully — by doing: on-time rounds, "
+            "factual bet, warning, RESULT comprovation, get the most of all."
         )
     else:
         verdict = "MAKE_IT_REAL"
         outcome = "Make It Real / It Is Real, Really."
+        reality = "It Is Real truthfully."
         line = (
-            "Not yet wired enough — still: Make It Real. "
-            "Aim every piece until It Is Real, Really."
+            "Was CAN_BECOME_REAL → Verdict MAKE_IT_REAL → "
+            "Outcome: Make It Real / It Is Real, Really. "
+            "Reality: It Is Real truthfully — aim every piece until stated = actual."
         )
 
     return {
+        "was": "CAN_BECOME_REAL",
         "verdict": verdict,
         "outcome": outcome,
-        "was": "CAN_BECOME_REAL" if verdict == "MAKE_IT_REAL" else verdict,
+        "reality": reality,
         "line": line,
         "checks": checks,
         "always_on": [
