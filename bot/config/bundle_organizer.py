@@ -295,6 +295,27 @@ def organize(
         )
 
     scores = _score_peers(flags)
+
+    # 2000% layer: Result Essence / Profit Family AI — boost from every
+    # historical signal+RESULT essence, peak impact, never-fired potential.
+    essence_meta: Optional[Dict[str, Any]] = None
+    try:
+        from bot.config.result_essence_engine import (
+            becomes_boost_from_essence,
+            engine_enabled as _essence_on,
+            essence_for_text,
+        )
+
+        if _essence_on():
+            essence_meta = essence_for_text(
+                body, family_id=fam or None, signal_kind=kind or None
+            )
+            for peer, bump in becomes_boost_from_essence(essence_meta).items():
+                if peer in scores:
+                    scores[peer] += float(bump)
+    except Exception:
+        essence_meta = None
+
     # Soft load preference: prefer less-loaded peers among close scores
     if load_hints:
         for peer, load in load_hints.items():
@@ -330,6 +351,16 @@ def organize(
         f"organize→{becomes}@{peer} score={best_score:.2f} "
         f"sid={signal_id or '-'} value={value.split('—')[0].strip()}"
     )
+    if essence_meta:
+        why += (
+            f" essence={essence_meta.get('match') or 'hit'}:"
+            f"{essence_meta.get('becomes_home') or essence_meta.get('impact_class') or ''}"
+        )
+        mix_extra = [
+            f"essence:{essence_meta.get('family_id') or essence_meta.get('registry_family') or ''}"
+        ]
+    else:
+        mix_extra = []
     return OrganizeDecision(
         peer=peer,
         becomes=becomes,
@@ -339,7 +370,7 @@ def organize(
         glue_parent=False,
         delayed_seconds=0.0,
         dimensions_used=list(dict.fromkeys(dims))[:6],
-        mix=_mix_notes(flags, peer, becomes),
+        mix=_mix_notes(flags, peer, becomes) + mix_extra,
         score_by_peer={p: round(s, 3) for p, s in ranked[:6]},
         never_delay=True,
     )
@@ -360,12 +391,23 @@ def organize_spill_order(preferred: str) -> List[str]:
 
 
 def organizer_manifest() -> Dict[str, Any]:
+    family = {}
+    try:
+        from bot.config.result_essence_engine import family_ai_manifest
+
+        family = family_ai_manifest()
+    except Exception:
+        family = {"model": "PROFIT_FAMILY_AI", "enabled": False}
     return {
         "model": "ONE_AI_ORGANIZER",
         "ambition": "get as much / make the Most of literally everything",
         "law": (
             "Every valuable signal is seen. The organizer distributes across the "
             "bundle by what each chat BECOMES — mixing/merging/using as needed."
+        ),
+        "law_2000": (
+            "Result Essence Engine knows every signal+RESULT — peak impact, "
+            "latent never-fired potential — and invents/updates the Profit Family AI."
         ),
         "result_law": (
             "RESULT attaches immediately under its own FIRE — zero intentional delay."
@@ -374,5 +416,6 @@ def organizer_manifest() -> Dict[str, Any]:
         "result_attach_immediate": result_attach_immediate(),
         "bundle": [(c.peer, c.becomes) for c in BUNDLE],
         "excluded": ["Mr_iv4", "6774605259"],
+        "profit_family_ai": family,
         "reality": "Make It Real / It Is Real, Really. It Is Real truthfully.",
     }

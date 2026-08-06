@@ -4,6 +4,8 @@
 
 **Yours.** One brain. Every valuable signal. Perfect distribution across the bundle.
 
+**2000% layer:** see `PROFIT_FAMILY_AI.md` — Result Essence Engine knows every signal+RESULT (peak impact, never-fired potential) and invents/updates the whole Family AI from that truth.
+
 Not “pick one best chat and ignore the rest.”  
 Not “static labels forever.”  
 **One organizer** sees every KEEP / usable fragment, then **organizes / mixes / merges / uses / distributes** into the chats that BECOME the most profitable, tactical, and certain for that exact situation.
