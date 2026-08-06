@@ -5,74 +5,81 @@ A label is a handle. **Creation is what a human can feel, follow, and return fro
 
 ## The law
 
-**Only when a path is real — or can become turned into real — we'll know.**
+**Only when a path is real — or can become turned into real — we'll know.**  
+Not before. Not by naming it early.
 
-Not before. Not by naming it early.  
-Potential that can be turned into real counts. Dead labels do not.
+## Always-on truths (every time · all the time)
 
-## The three bests (north stars)
+### 1. On time, every round — TRUTHFULLY
 
-| Best | Meaning here |
+Show up on time for **every round we have**.  
+
+The rounds we “couldn’t” are almost nothing next to the ones we got — half of what we got — all of what we got.  
+So we do **not** center excuses. We center delivery:
+
+- every ENTER that existed with seconds left → delivered while seconds still left  
+- every chat that had a chance → that chance used  
+- no storytelling about the rare miss as if it were the story  
+
+**Truthful existence** = on time for the rounds that are ours.
+
+### 2. TRUE Enlightenment — every time · all the time
+
+Clarity is not optional and not sometimes.
+
+- One card · one job · one color · one action  
+- No fear padding · no noise · no jargon that hides the act  
+- A human sees it once and knows  
+
+**True enlightenment** = they are never confused by us.
+
+### 3. Truthfully Helpful — every time · all the time
+
+Help is not a mood. It is the default of every send.
+
+- Minimum stake · max honest use of the opportunity  
+- DO NOT BET means zero — that *is* help  
+- No invented gales · no late spam · no trash in the path  
+
+**Truthfully helpful** = every piece leaves the human better able to act or better protected.
+
+### 4. Intended results — not vanity proof — XXX
+
+Proof-as-vanity doesn’t matter.  
+
+What always mattered, literally, correctly, every time:
+
+> The actual **effect / affect / outcome**  
+> that was **stated · transmitted · promised · guaranteed**  
+> — the **subject of the matter** for that pretended/stated result.
+
+Every fragment must match:
+
+| Stated | Actual |
 |---|---|
-| **BEST Existence** | The system shows up on time for the human — every round it can. |
-| **BEST Enlightenment by clarity** | One card, one job. They know what to do without fear or noise. |
-| **THE MOST Helpful** | Minimum stake. Max honest use of every opportunity. Bankroll protected. |
+| “ENTER now on 🔵” | Human still had time; color was the subject |
+| “DO NOT BET” | Zero stake — protection happened |
+| “GALE same color” | Same color, min stake — not a freestyle chase |
+| “Result WIN/LOSS” | Round closed; no confusion |
 
-When those three live in every fragment of the whole — we'll know.
+If stated ≠ actual subject of the matter → that piece failed, no matter the metric.
 
-## Intended results > “proof”
+### 5. Ambition: get it all — XXX
 
-Proof-as-vanity does not matter.  
-**Intended results in any single part / piece of the whole of it** — that is what matters.
+Outcome: **get it all.**  
 
-Every skin, gate, floor, chat, gale, result, interval, second, KEEP row, overflow slot, prep-hold, trash-block — each must carry an **intended result** toward:
+Even when disempowered / constrained / thin volume — still get **the most** that situation can yield.  
+North star remains as high as **$100k+/day/chat** when volume+WR+density allow.  
+Floor: never less than the maximum honest capture of **literally everything** available in that moment.
 
-> Get as much return as we can from **literally everything**  
-> in existence, created, invented, built, or still to add —  
-> with ambition up to **$100,000+ / day / chat** when volume + WR + density allow,  
-> and never less than the maximum that fragment can honestly contribute.
-
-We do not invent guaranteed dollars.  
-We do invent and wire every lever that can turn potential into real return.
+Direction, not a fake certificate — but the direction is **all of it**, not a polite fraction.
 
 ## The blank → one living path
 
-We turn every fragment —
-
-- every skin, template, gate, floor, chat, gale, result, interval, second  
-- KEEP that still has edge or ops truth  
-- trash that must never waste a human’s attention  
-- every chat: Mr_iv4 densest; UNIQUE_g1 clocks; gN overflow; none left empty  
-- every second of prep (30s…400s+) invested until time-to-bet is real  
-
-— into a path where a person can:
-
-1. **See** what matters in that exact second  
-2. **Act** with the smallest stake and the clearest instruction  
-3. **Not miss** a round they could have used  
-4. **Not burn** a round that was already gone  
-5. **Understand** what happened — win or loss — without confusion  
-
-## When we'll know (real OR turnable-into-real)
-
-| State | Meaning |
-|---|---|
-| **REAL** | Existence + clarity + help live in the pieces; intended results fire; human walks it. |
-| **CAN_BECOME_REAL** | Wires + fragments are aimed; gaps known; every piece has an intended result — turning is underway. |
-| **NOT_YET** | Labels without intended results. Idle potential. |
-
-Ambition target (not a guarantee): **max capture → as far as $100k+/day/chat when the path and the market allow.**  
-Floor: **everything literally used** — no wasted KEEP, no dead chat, no late burn, no unused second.
-
-## How we speak while we build
-
-- Honest about uncertainty (WR, volume, casino ticks).  
-- Ambition is max return from everything — not a fake certificate.  
-- Clarity + timing + completeness in **every piece**.  
-- Modules are servants of the path, not the name of the path.
+Every skin, gate, floor, chat, gale, result, interval, second, KEEP, overflow, prep-hold, trash-block  
+→ one path where a human can see, act, not miss, not burn, understand.
 
 ## Temporary handle
 
 **Human Return Path** (`human_return_path`) — until the blank fills.  
-Code may say densifier / skyscraper. Those are wires.  
-The creation: **a human, every round they can use, with time enough to act — from literally everything.**
+Wires may say densifier / skyscraper. The creation is the always-on truths above, lived.

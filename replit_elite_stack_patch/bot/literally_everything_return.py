@@ -231,21 +231,33 @@ def build() -> Dict[str, Any]:
     return {
         "built_at": datetime.now(timezone.utc).isoformat(),
         "law": "Only when a path is real — or can become turned into real — we'll know.",
-        "north_stars": {
-            "BEST_Existence": "Show up on time every round we can",
-            "BEST_Enlightenment_by_clarity": "One card, one job — no fear, no noise",
-            "THE_MOST_Helpful": "Min stake, max honest use, bankroll protected",
+        "always_on": {
+            "on_time_every_round_TRUTHFULLY": (
+                "On time for every round we have. "
+                "Misses we 'couldn't' ≈ nothing next to what we got — center delivery."
+            ),
+            "TRUE_Enlightenment_every_time": (
+                "One card · one job · one color · one action. Every time. All the time."
+            ),
+            "Truthfully_Helpful_every_time": (
+                "Min stake · max honest use · protection. Every time. All the time."
+            ),
         },
-        "intended_results_rule": (
+        "intended_results_XXX": (
             "Proof-as-vanity does not matter. "
-            "Intended results in every part/piece of the whole do."
+            "Always the actual mattered literal correct stated "
+            "EFFECT/AFFECT/OUTCOME (stated·transmitted·promised·guaranteed) — "
+            "subject of the matter for that pretended/stated result. "
+            "Every time. All the time."
         ),
-        "ambition": {
+        "ambition_XXX": {
+            "outcome": "get_it_all",
+            "even_when_disempowered": "get_the_most_that_moment_can_yield",
             "per_chat_day_usd_north_star": 100_000,
-            "mode": "get_as_much_as_we_can_from_literally_everything",
+            "mode": "literally_everything_available",
             "honesty": (
-                "North star is direction under volume+WR+density — not a guarantee. "
-                "Every fragment must still maximize its honest contribution."
+                "Direction under volume+WR+density — not a fake certificate. "
+                "Floor = max honest capture of everything available in that moment."
             ),
         },
         "stats": {
@@ -272,8 +284,9 @@ def main() -> int:
         json.dumps(
             {
                 "law": pack["law"],
-                "north_stars": pack["north_stars"],
-                "ambition": pack["ambition"],
+                "always_on": pack["always_on"],
+                "intended_results_XXX": pack["intended_results_XXX"],
+                "ambition_XXX": pack["ambition_XXX"],
                 "stats": pack["stats"],
                 "wrote": str(OUT),
             },

@@ -92,25 +92,33 @@ def essence() -> Dict[str, str]:
             "Labels (densifier, skyscraper, museum) are wires. "
             "The creation is a human who still has time to bet."
         ),
-        "BEST_Existence": "Show up on time for the human — every round we can.",
-        "BEST_Enlightenment_by_clarity": "One card, one job — no fear, no noise.",
-        "THE_MOST_Helpful": (
-            "Clear card. Minimum stake. Max honest use of every opportunity. "
-            "No late spam. No invented gales."
+        "on_time_every_round_TRUTHFULLY": (
+            "On time for every round we have. "
+            "The rounds we 'couldn't' are almost nothing next to the ones we got — "
+            "do not center excuses; center delivery."
         ),
-        "intended_results": (
+        "TRUE_Enlightenment_every_time": (
+            "One card · one job · one color · one action. "
+            "No fear, no noise. Every time. All the time."
+        ),
+        "Truthfully_Helpful_every_time": (
+            "Min stake · max honest use · DO NOT BET = zero. "
+            "No late spam · no invented gales. Every time. All the time."
+        ),
+        "intended_results_XXX": (
             "Proof-as-vanity does not matter. "
-            "Intended results in every part/piece of the whole do."
+            "Always the actual mattered literal correct stated "
+            "EFFECT / AFFECT / OUTCOME — stated, transmitted, promised, guaranteed — "
+            "the subject of the matter for that pretended/stated result. "
+            "Every time. All the time. Stated ≠ actual subject → piece failed."
         ),
-        "ambition": (
-            "Get as much as we can from literally everything — "
-            "north star $100k+/day/chat when volume+WR+density allow; "
-            "never less than each fragment can honestly contribute."
+        "ambition_XXX": (
+            "Outcome: get it all. "
+            "Even when disempowered / constrained — get the most that moment can yield. "
+            "North star $100k+/day/chat when volume+WR+density allow. "
+            "Floor: maximum honest capture of literally everything available."
         ),
-        "honesty": (
-            "North star is direction, not a fake certificate. "
-            "We maximize capture of real windows."
-        ),
+        "always": "Every time. All the time. Truthfully.",
     }
 
 
@@ -148,20 +156,24 @@ def path_is_real() -> Dict[str, Any]:
 
     checks = [
         {
-            "id": "BEST_Existence",
-            "intended_result": "ENTER lands with time to bet",
+            "id": "on_time_every_round_TRUTHFULLY",
+            "stated_subject": "ENTER while human still has seconds",
+            "actual_effect_ok": ttb_n >= 20,
             "ok": ttb_n >= 20,
             "have": ttb_n,
+            "note": "Center delivery of rounds we have — not excuses for rare couldn't",
         },
         {
-            "id": "BEST_Enlightenment_by_clarity",
-            "intended_result": "Long signals invested; results aligned; path pin clear",
+            "id": "TRUE_Enlightenment_every_time",
+            "stated_subject": "One card · one job · clear act",
+            "actual_effect_ok": prep_n >= 5 or res_n >= 5,
             "ok": prep_n >= 5 or res_n >= 5,
             "have": {"prep": prep_n, "results_aligned": res_n},
         },
         {
-            "id": "THE_MOST_Helpful",
-            "intended_result": "Late/trash burns stopped; quiet chats filled",
+            "id": "Truthfully_Helpful_every_time",
+            "stated_subject": "Protect + fill — late/trash stopped; quiet chats used",
+            "actual_effect_ok": (late_n + trash_n) >= 5 or gap_n >= 3,
             "ok": (late_n + trash_n) >= 5 or gap_n >= 3,
             "have": {
                 "late_plus_trash": late_n + trash_n,
@@ -170,8 +182,12 @@ def path_is_real() -> Dict[str, Any]:
             },
         },
         {
-            "id": "literally_everything",
-            "intended_result": "Every fragment has an intended result aimed at max return",
+            "id": "intended_results_XXX",
+            "stated_subject": (
+                "Every fragment's stated outcome = actual effect/affect "
+                "(not vanity proof)"
+            ),
+            "actual_effect_ok": pieces_n >= 100 and wired_n + becoming_n >= 100,
             "ok": pieces_n >= 100 and wired_n + becoming_n >= 100,
             "have": {
                 "pieces": pieces_n,
@@ -180,8 +196,18 @@ def path_is_real() -> Dict[str, Any]:
             },
         },
         {
+            "id": "ambition_XXX_get_it_all",
+            "stated_subject": (
+                "Get it all — even when disempowered, get the most that moment yields"
+            ),
+            "actual_effect_ok": open_gaps <= 1 and gap_n >= 1,
+            "ok": open_gaps <= 1 or gap_n >= 3,
+            "have": {"open_gaps": open_gaps, "gaps_filled": gap_n},
+        },
+        {
             "id": "return_loop",
-            "intended_result": "Human walks it and wants to shape it — only they mark this",
+            "stated_subject": "Human walks it and wants to shape it — only they mark this",
+            "actual_effect_ok": bool(proof.get("human_return_loop_confirmed")),
             "ok": bool(proof.get("human_return_loop_confirmed")),
             "have": proof.get("human_return_loop_confirmed", False),
         },
@@ -218,15 +244,18 @@ def path_is_real() -> Dict[str, Any]:
         "verdict": verdict,
         "line": line,
         "checks": checks,
-        "north_stars": [
-            "BEST_Existence",
-            "BEST_Enlightenment_by_clarity",
-            "THE_MOST_Helpful",
+        "always_on": [
+            "on_time_every_round_TRUTHFULLY",
+            "TRUE_Enlightenment_every_time",
+            "Truthfully_Helpful_every_time",
+            "intended_results_XXX",
+            "ambition_XXX_get_it_all",
         ],
         "ambition_per_chat_day_usd_north_star": 100_000,
         "rule": (
             "Only when a path is real — or can become turned into real — we'll know. "
-            "Intended results in every piece > vanity proof."
+            "Every time · all the time · truthfully. "
+            "Stated subject of the matter = actual effect. Get it all."
         ),
     }
 
@@ -320,9 +349,9 @@ def pin_card(chat_key: str) -> str:
             "5) DO NOT BET / expired → skip. That is protection.",
             "6) Never invent bets. The card is the only teacher.",
             "",
-            "We hold long signals until you still have time.",
-            "We skip late noise. We fill quiet chats when we can.",
-            "Your job: follow. Minimum stake. Every real chance.",
+            "On time for every round we have. Clear every time. Helpful every time.",
+            "What the card states is the only subject — follow that outcome.",
+            "Your job: follow. Minimum stake. Get every real chance.",
         ]
     )
 

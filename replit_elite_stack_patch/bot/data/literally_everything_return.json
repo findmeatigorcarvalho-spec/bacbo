@@ -1,16 +1,18 @@
 {
-  "built_at": "2026-08-06T04:01:49.657363+00:00",
+  "built_at": "2026-08-06T04:27:10.760219+00:00",
   "law": "Only when a path is real — or can become turned into real — we'll know.",
-  "north_stars": {
-    "BEST_Existence": "Show up on time every round we can",
-    "BEST_Enlightenment_by_clarity": "One card, one job — no fear, no noise",
-    "THE_MOST_Helpful": "Min stake, max honest use, bankroll protected"
+  "always_on": {
+    "on_time_every_round_TRUTHFULLY": "On time for every round we have. Misses we 'couldn't' ≈ nothing next to what we got — center delivery.",
+    "TRUE_Enlightenment_every_time": "One card · one job · one color · one action. Every time. All the time.",
+    "Truthfully_Helpful_every_time": "Min stake · max honest use · protection. Every time. All the time."
   },
-  "intended_results_rule": "Proof-as-vanity does not matter. Intended results in every part/piece of the whole do.",
-  "ambition": {
+  "intended_results_XXX": "Proof-as-vanity does not matter. Always the actual mattered literal correct stated EFFECT/AFFECT/OUTCOME (stated·transmitted·promised·guaranteed) — subject of the matter for that pretended/stated result. Every time. All the time.",
+  "ambition_XXX": {
+    "outcome": "get_it_all",
+    "even_when_disempowered": "get_the_most_that_moment_can_yield",
     "per_chat_day_usd_north_star": 100000,
-    "mode": "get_as_much_as_we_can_from_literally_everything",
-    "honesty": "North star is direction under volume+WR+density — not a guarantee. Every fragment must still maximize its honest contribution."
+    "mode": "literally_everything_available",
+    "honesty": "Direction under volume+WR+density — not a fake certificate. Floor = max honest capture of everything available in that moment."
   },
   "stats": {
     "pieces": 214,
