@@ -123,41 +123,47 @@ STAKE_POLICY = {
 
 
 def playbook_card(chat_key: str) -> str:
-    """Telegram-ready pinned instruction for one chat (12-year-old readable)."""
-    if chat_key in ("mr_iv4", "money", "penthouse"):
-        header = (
-            "🏛 Mr_iv4 — MONEY PENTHOUSE\n"
-            "This is the main profit chat.\n"
-        )
-        focus = "Most ENTER NOW / gale / WIN-LOSS land here."
-    elif chat_key in ("unique_g1", "g1", "countdown"):
-        header = (
-            "⏱ UNIQUE_g1 — COUNTDOWN / SNIPER\n"
-            "Fast clocks. Bet in the seconds shown.\n"
-        )
-        focus = "JANELA / Sinal Retido / FLASH live here."
-    else:
-        header = (
-            "📤 UNIQUE_gN — OVERFLOW\n"
-            "Same game as the main chats — just less crowded.\n"
-        )
-        focus = "If you see ENTER here, treat it like Mr_iv4 / g1."
+    """Telegram-ready pin — human path first; labels are secondary."""
+    try:
+        import sys
+        from pathlib import Path
 
-    lines = [
-        header,
-        f"Focus: {focus}",
-        "",
-        "HOW TO MAKE MONEY HERE (simple):",
-        "1) See ENTER + color → bet MINIMUM on that color.",
-        "2) See timer / JANELA → bet BEFORE 0.",
-        "3) See GALE / again → same color, MINIMUM again.",
-        "4) See WIN → stop that round.",
-        "5) See DO NOT BET / EXPIRED → skip.",
-        "6) Never invent your own bets.",
-        "",
-        "One card = one job. Follow the card. Minimum stake. Every signal.",
-    ]
-    return "\n".join(lines)
+        for root in (
+            Path(__file__).resolve().parents[2] / "replit_elite_stack_patch" / "bot",
+            Path("/home/runner/workspace/bot"),
+            Path("/workspace/replit_elite_stack_patch/bot"),
+        ):
+            if (root / "human_return_path.py").is_file():
+                s = str(root)
+                if s not in sys.path:
+                    sys.path.insert(0, s)
+                from human_return_path import pin_card
+
+                return pin_card(chat_key)
+    except Exception:
+        pass
+    if chat_key in ("mr_iv4", "money", "penthouse"):
+        where, focus = "This is the main money path.", "Most ENTER / gale / WIN-LOSS live here."
+    elif chat_key in ("unique_g1", "g1", "countdown"):
+        where, focus = "This is the fast-clock path.", "JANELA / timers — bet in the seconds you see."
+    else:
+        where, focus = "Same path, quieter room.", "If ENTER appears here, treat it as real."
+    return "\n".join(
+        [
+            "THE PATH (not a brand — what you do)",
+            where,
+            focus,
+            "",
+            "1) ENTER + color → bet MINIMUM on that color.",
+            "2) Seconds on the card → bet BEFORE 0.",
+            "3) GALE / again → same color, MINIMUM.",
+            "4) WIN → round over. LOSS + no gale → round over.",
+            "5) DO NOT BET / expired → skip. That is protection.",
+            "6) Never invent bets. The card is the only teacher.",
+            "",
+            "Your job: follow. Minimum stake. Every real chance.",
+        ]
+    )
 
 
 def chat_map() -> Dict[str, Any]:

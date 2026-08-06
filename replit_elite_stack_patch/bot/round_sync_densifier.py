@@ -479,6 +479,7 @@ class RoundSyncDensifier:
         # Same-round density: already have a fire in this chat this round?
         # Extra signals → fill gap chats (1/round everywhere) before DEDUP drop.
         existing = self.chat_round_count(chat_name, phase.round_id)
+        gap_filled = False
         if existing >= 1 and not force_now:
             gaps = self.densify_gaps()
             for gap in gaps:
@@ -486,8 +487,15 @@ class RoundSyncDensifier:
                 if alt and alt != chat_name and self.chat_round_count(alt, phase.round_id) < 1:
                     chat_name = alt
                     key = fire_key or f"{chat_name}:{phase.round_id}:{hash(body) & 0xFFFFFFFF:x}"
+                    gap_filled = True
                     break
             else:
+                try:
+                    from human_return_path import record as _hr
+
+                    _hr("late_prevented", "DEDUP — no gap chat; avoided double-burn", chat=chat_name)
+                except Exception:
+                    pass
                 return SyncDecision(
                     "DEDUP",
                     f"already {existing} fire(s) in {chat_name} round {phase.round_id}; no gap chat",
@@ -529,6 +537,16 @@ class RoundSyncDensifier:
                     },
                 )
             )
+            try:
+                from human_return_path import record as _hr
+
+                _hr(
+                    "prep_hold",
+                    f"Clock A={clock_a:.0f}s invest {delay:.1f}s → TTB≈{ttb_ideal():.0f}s",
+                    chat=chat_name,
+                )
+            except Exception:
+                pass
             return SyncDecision(
                 "HOLD_PREP",
                 f"Clock A={clock_a:.0f}s → invest {delay:.1f}s → release at TTB≈{ttb_ideal():.0f}s",
@@ -543,6 +561,19 @@ class RoundSyncDensifier:
         if force_now or phase.phase in {"BET_WINDOW", "INTERVAL_OPEN"}:
             # INTERVAL_OPEN / BET_WINDOW: arm so user has full TTB to click
             self.record_fire(chat_name, phase.round_id, key, score)
+            try:
+                from human_return_path import record as _hr
+
+                _hr(
+                    "ttb_fire",
+                    phase.reason,
+                    chat=chat_name,
+                    ttb=phase.ttb_remaining,
+                )
+                if gap_filled:
+                    _hr("gap_fill", f"filled quiet chat {chat_name}", chat=chat_name)
+            except Exception:
+                pass
             return SyncDecision(
                 "FIRE_NOW",
                 phase.reason,

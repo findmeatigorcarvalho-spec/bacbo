@@ -1,4 +1,9 @@
-# Profit Skyscraper — how to use every chat (simple)
+# The path — how a human uses every chat
+
+We are not naming the finished thing yet. Scaffold labels (skyscraper, densifier) are wires.  
+**What we are creating:** a path where you still have time to act, every round we can give you.
+
+See `WHAT_WE_ARE_CREATING.md`. Status: `python3 bot/human_return_path.py`
 
 Built from the full museum (827 templates) → **KEEP 777 / TRASH 50**, plus 120 registry skins and live floors/gates.
 

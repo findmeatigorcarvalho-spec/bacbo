@@ -1,10 +1,13 @@
-# Round Sync Densifier — 1 signal/round + perfect time-to-bet
+# Round sync (wire) — servant of the Human Return Path
 
-## Goal
+**This filename is a handle, not the creation.**  
+See `WHAT_WE_ARE_CREATING.md` and `python3 bot/human_return_path.py`.
+
+## What this wire does for a human
 
 Every chat gets **~1 signal per BacBo round** (minimum **1 per 2 rounds**).  
-Every fire lands when the user still has time to bet.  
-Spare prep time (30s…400s+) is **invested**, not wasted as a late spam.
+Every fire lands when the human still has time to bet.  
+Spare prep time (30s…400s+) is **invested**, not wasted as late spam.
 
 ## Clocks (do not mix)
 
