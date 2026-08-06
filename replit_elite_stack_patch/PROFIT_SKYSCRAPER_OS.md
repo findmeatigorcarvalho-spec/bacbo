@@ -17,7 +17,7 @@ Autonomous distribution + kid-simple play layer over the full Telegram skin/gate
 
 ```bash
 curl -fsSL -o /tmp/SKY.sh \
-  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806f'
+  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806g'
 bash /tmp/SKY.sh
 ```
 
@@ -27,6 +27,7 @@ Then pin the texts from `bot/data/chat_playbook_cards.json` in each chat.
 
 | File | Role |
 |---|---|
+| `bot/config/bundle_organizer.py` | **One AI organizer** — every valuable signal → best chat |
 | `bot/config/profit_chat_bundle.py` | Bundle identity + situation routing |
 | `bot/config/profit_skyscraper.py` | Chat map + play rules + APEX-first |
 | `bot/config/keep_allowlist.py` | KEEP/TRASH live gate |
