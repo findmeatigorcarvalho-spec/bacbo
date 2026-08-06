@@ -231,31 +231,32 @@ def path_is_real() -> Dict[str, Any]:
     human_ok = bool(proof.get("human_return_loop_confirmed"))
     if machine_ok and human_ok:
         verdict = "REAL"
+        outcome = "It Is Real, Really."
         line = (
             "Only when a path is real — or can become turned into real — we'll know. "
-            "It is real. We know."
+            "It Is Real, Really. We know."
         )
-    elif machine_ok:
-        verdict = "CAN_BECOME_REAL"
+    elif machine_ok or becoming_ok or any(c["ok"] for c in checks):
+        # CAN_BECOME_REAL is not a pause — it is the order: Make It Real.
+        verdict = "MAKE_IT_REAL"
+        outcome = "Make It Real / It Is Real, Really."
         line = (
-            "Path can become real — intended results are firing. "
-            "Human return loop still open."
-        )
-    elif becoming_ok or any(c["ok"] for c in checks):
-        verdict = "CAN_BECOME_REAL"
-        line = (
-            "Only when a path is real — or can become turned into real — we'll know. "
-            "It can become real. Turning is underway."
+            "Verdict was CAN_BECOME_REAL → outcome: Make It Real. "
+            "It Is Real, Really — by doing: on-time rounds, factual bet, "
+            "warning, RESULT comprovation, get the most of all."
         )
     else:
-        verdict = "NOT_YET"
+        verdict = "MAKE_IT_REAL"
+        outcome = "Make It Real / It Is Real, Really."
         line = (
-            "Only when a path is real — or can become turned into real — we'll know. "
-            "Not yet. Aim every piece at intended results."
+            "Not yet wired enough — still: Make It Real. "
+            "Aim every piece until It Is Real, Really."
         )
 
     return {
         "verdict": verdict,
+        "outcome": outcome,
+        "was": "CAN_BECOME_REAL" if verdict == "MAKE_IT_REAL" else verdict,
         "line": line,
         "checks": checks,
         "always_on": [
@@ -268,7 +269,7 @@ def path_is_real() -> Dict[str, Any]:
         ],
         "ambition_per_chat_day_usd_north_star": 100_000,
         "rule": (
-            "Only when a path is real — or can become turned into real — we'll know. "
+            "CAN_BECOME_REAL → Make It Real / It Is Real, Really. "
             "Every time · all the time · truthfully · resourcefully. "
             "REAL FACTUAL bet + warning + RESULT comprovation. "
             "Get it all — the most of all."

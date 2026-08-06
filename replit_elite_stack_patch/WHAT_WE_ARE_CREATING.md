@@ -8,6 +8,15 @@ A label is a handle. **Creation is what a human can feel, follow, and return fro
 **Only when a path is real — or can become turned into real — we'll know.**  
 Not before. Not by naming it early.
 
+### Verdict → outcome
+
+| Verdict | Outcome (the work) |
+|---|---|
+| `CAN_BECOME_REAL` | **Make It Real / It Is Real, Really.** |
+| `REAL` | **It Is Real, Really.** We know. |
+
+`CAN_BECOME_REAL` is not a pause. It is the order: **Make It Real.**
+
 ## Always-on truths (every time · all the time)
 
 ### 1. On time, every round — TRUTHFULLY
