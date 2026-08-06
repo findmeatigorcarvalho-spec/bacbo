@@ -19,7 +19,20 @@ from dataclasses import dataclass, field
 from typing import Any
 
 
-REAL_COUNTDOWN_MAX = float(os.environ.get("PACKER_REAL_COUNTDOWN_MAX", "30"))
+# With ROUND_SYNC: real countdown = TTB release max (~12s). Else legacy 30s.
+def _real_countdown_max() -> float:
+    if os.environ.get("ROUND_SYNC", "1").strip().lower() not in {"0", "false", "no", "off"}:
+        try:
+            return float(os.environ.get("TTB_RELEASE_MAX_SECS") or os.environ.get("PACKER_REAL_COUNTDOWN_MAX") or "12")
+        except ValueError:
+            return 12.0
+    try:
+        return float(os.environ.get("PACKER_REAL_COUNTDOWN_MAX", "30"))
+    except ValueError:
+        return 30.0
+
+
+REAL_COUNTDOWN_MAX = _real_countdown_max()
 
 
 @dataclass

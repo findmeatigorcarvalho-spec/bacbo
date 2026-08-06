@@ -43,4 +43,10 @@ Then pin the texts from `bot/data/chat_playbook_cards.json` in each chat.
 5. DO NOT BET / EXPIRED → skip  
 6. Never invent bets  
 
+### Round sync densifier
+- Target **1 signal/round/chat** (min 1 per 2)
+- Prep invest up to **400s** → release at **TTB≈10s**
+- RESULT aligned to **interval start**
+- See `ROUND_SYNC_DENSIFIER.md`
+
 Honesty: the OS maximizes capture of real windows at min stake. Dollar totals depend on platform volume/WR — not a guarantee.

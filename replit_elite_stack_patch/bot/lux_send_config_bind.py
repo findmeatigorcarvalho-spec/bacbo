@@ -68,7 +68,51 @@ def _wrap_send(fn: Callable) -> Callable:
         except Exception as exc:
             print("[SKIN-GATE] skip:", repr(exc))
 
-        # Hub: route original engine skins to Gunique #1 vs money #2
+        # Round sync densifier — invest prep seconds, release at perfect TTB.
+        # HOLD_* → queue for outbox releaser; never burn a late window.
+        try:
+            import time as _time
+
+            from round_sync_densifier import (
+                HeldFire,
+                decide_fire,
+                decide_result,
+                enabled as _rs_on,
+                get_clock,
+                get_densifier,
+            )
+
+            if _rs_on() and isinstance(msg, str) and msg.strip():
+                rd = decide_result(msg)
+                if rd.action == "HOLD_RESULT":
+                    phase = get_clock().phase_at()
+                    get_densifier()._enqueue(
+                        HeldFire(
+                            fire_key=f"result:{phase.round_id}:{hash(msg) & 0xFFFFFFFF:x}",
+                            text=msg,
+                            color="",
+                            family_id="RESULT",
+                            signal_kind="RESULT",
+                            score=0.0,
+                            chat="Mr_iv4",
+                            clock_a_secs=None,
+                            detected_at=_time.time(),
+                            ideal_release_at=phase.next_interval_start,
+                            round_id=phase.round_id + 1,
+                            source="engine_result",
+                            meta={"kind": "result_align"},
+                        )
+                    )
+                    print(f"[ROUND-SYNC] HOLD_RESULT {rd.reason}")
+                    return None
+                fd = decide_fire(msg, source="engine")
+                if fd.action in {"HOLD_PREP", "TOO_LATE", "DEDUP"}:
+                    print(f"[ROUND-SYNC] {fd.action} {fd.reason}")
+                    return None
+        except Exception as exc:
+            print("[ROUND-SYNC] skip:", repr(exc))
+
+        # Hub: route original engine skins to money penthouse / countdown / spill
         prev_target = None
         cfg = None
         route_reason = None

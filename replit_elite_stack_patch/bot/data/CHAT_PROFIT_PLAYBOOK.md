@@ -55,6 +55,17 @@ Built from the full museum (827 templates) → **KEEP 777 / TRASH 50**, plus 120
 3. Soft-cap → spill to UNIQUE_gN **immediately** (never delay a bet window).
 4. Results glue to the exact chat of the parent fire.
 5. Peak floors (JUN10, ELITE_V2, …) stay as gates; their skins ride the shelves.
+6. **Round sync densifier:** target **1 signal per round** per chat (min 1 per 2).
+7. Long JANELA (30s…400s) is **prep invest** — held, then released at ~10s time-to-bet.
+8. RESULT cards prefer **interval start** so the color matches the round that just closed.
+
+## Timing (follow to the T)
+
+| Moment | What you see | What you do |
+|---|---|---|
+| Interval start (~every 10s) | RESULT (last color) +/or ENTER | Read color; get ready |
+| Bet window (~12s…3s left) | ENTER + color | Bet **minimum** NOW |
+| Locked (&lt;3s) | DO NOT BET / silence | Skip — next round |
 
 ## Inventory snapshot
 

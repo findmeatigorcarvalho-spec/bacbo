@@ -837,6 +837,50 @@ async def main() -> None:
             last = await client.send_message(dest, body)
         return last
 
+    async def _release_round_sync_holds() -> int:
+        """Flush prep-invested fires/results at perfect TTB / interval start."""
+        try:
+            from round_sync_densifier import enabled as _rs_on, pop_ready, status as _rs_status
+        except Exception:
+            return 0
+        if not _rs_on():
+            return 0
+        ready = pop_ready()
+        n = 0
+        for held in ready:
+            body = held.text or ""
+            if not body.strip():
+                continue
+            chat = (held.chat or "Mr_iv4").strip()
+            dest = entity
+            if chat.upper().startswith("UNIQUE_G") or chat in {
+                "UNIQUE_g1",
+                "5855678138",
+            }:
+                dest = (await _resolve_peer_entity(chat)) or cd_entity or entity
+            else:
+                dest = (await _resolve_peer_entity(chat)) or entity
+            try:
+                await client.send_message(dest, body)
+                n += 1
+                print(
+                    f"[ROUND-SYNC] RELEASE chat={chat} round={held.round_id} "
+                    f"score={held.score} family={held.family_id} src={held.source}"
+                )
+            except Exception as exc:
+                print("[ROUND-SYNC] RELEASE FAIL:", repr(exc))
+        if tick % HEARTBEAT_EVERY == 0:
+            try:
+                st = _rs_status()
+                print(
+                    f"[ROUND-SYNC] phase={st['phase']['phase']} "
+                    f"ttb={st['phase']['ttb_remaining']} "
+                    f"hold={st['hold_queue']} gaps={len(st.get('density_gaps') or [])}"
+                )
+            except Exception:
+                pass
+        return n
+
     print(
         f"[Outbox] ONLINE money={getattr(entity, 'username', None) or peer} "
         f"id={getattr(entity, 'id', '?')} "
@@ -1115,6 +1159,25 @@ async def main() -> None:
                             continue
                     except Exception as exc:
                         print("[Outbox] skin_gate skip:", repr(exc))
+                    # Round sync: invest prep → release at TTB; never burn late window
+                    try:
+                        from round_sync_densifier import decide_fire
+
+                        sync = decide_fire(
+                            body,
+                            score=float(score or 0),
+                            signal_kind=str(row.get("signal_kind") or ""),
+                            source="outbox",
+                            fire_key=f"outbox:{row['id']}",
+                        )
+                        if sync.action in {"HOLD_PREP", "TOO_LATE", "DEDUP"}:
+                            write_int(SIG_STATE, row["id"])
+                            print(
+                                f"[ROUND-SYNC] outbox fire {row['id']} {sync.action} {sync.reason}"
+                            )
+                            continue
+                    except Exception as exc:
+                        print("[ROUND-SYNC] outbox fire skip:", repr(exc))
                     await _send_all(dests, body)
                     write_int(SIG_STATE, row["id"])
                     print(
@@ -1197,6 +1260,54 @@ async def main() -> None:
                             continue
                     except Exception as exc:
                         print("[Outbox] skin_gate result skip:", repr(exc))
+                    try:
+                        from round_sync_densifier import (
+                            HeldFire,
+                            decide_result,
+                            get_clock,
+                            get_densifier,
+                        )
+
+                        rsync = decide_result(res_body)
+                        if rsync.action == "HOLD_RESULT":
+                            phase = get_clock().phase_at()
+                            # Nudge clock from observed resolve timing
+                            try:
+                                import datetime as _dt
+
+                                ra = row.get("resolved_at")
+                                if ra:
+                                    # SQLite UTC-ish text → epoch best-effort
+                                    pass
+                                get_clock().nudge_from_resolve(time.time())
+                            except Exception:
+                                pass
+                            get_densifier()._enqueue(
+                                HeldFire(
+                                    fire_key=f"outbox_res:{row['id']}",
+                                    text=res_body,
+                                    color=str(row.get("color") or ""),
+                                    family_id="RESULT",
+                                    signal_kind=str(row.get("signal_kind") or "RESULT"),
+                                    score=0.0,
+                                    chat="Mr_iv4"
+                                    if "COUNTDOWN" not in str(lane).upper()
+                                    else "UNIQUE_g1",
+                                    clock_a_secs=None,
+                                    detected_at=time.time(),
+                                    ideal_release_at=phase.next_interval_start,
+                                    round_id=phase.round_id + 1,
+                                    source="outbox_result",
+                                    meta={"kind": "result_align", "id": row["id"]},
+                                )
+                            )
+                            write_int(RES_STATE, row["id"])
+                            print(
+                                f"[ROUND-SYNC] outbox result {row['id']} HOLD_RESULT {rsync.reason}"
+                            )
+                            continue
+                    except Exception as exc:
+                        print("[ROUND-SYNC] outbox result skip:", repr(exc))
                     await _send_all(dests, res_body)
                     write_int(RES_STATE, row["id"])
                     print(
@@ -1232,8 +1343,21 @@ async def main() -> None:
             if "AuthKey" in err or "authorization key" in err.lower():
                 print("[Outbox] FATAL session conflict — exiting")
                 break
+        try:
+            await _release_round_sync_holds()
+        except Exception as exc:
+            print("[ROUND-SYNC] release tick skip:", repr(exc))
         tick += 1
-        await asyncio.sleep(5)
+        # Tighter loop when holds are waiting for exact TTB
+        sleep_s = 5
+        try:
+            from round_sync_densifier import enabled as _rs_on, status as _rs_status
+
+            if _rs_on() and int((_rs_status() or {}).get("hold_queue") or 0) > 0:
+                sleep_s = 1
+        except Exception:
+            sleep_s = 5
+        await asyncio.sleep(sleep_s)
 
     try:
         await client.disconnect()
