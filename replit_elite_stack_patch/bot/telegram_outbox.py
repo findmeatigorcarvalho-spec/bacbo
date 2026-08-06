@@ -647,6 +647,52 @@ async def main() -> None:
         f"(HUB_MAX engine owns original skins when fire_cards=0)"
     )
 
+    # Cache resolved overflow peers for this outbox session (never delay on miss).
+    _peer_entity_cache: dict[str, object] = {}
+
+    async def _resolve_peer_entity(peer: str | None):
+        """Resolve Mr_iv4 / UNIQUE_gN. Fail-open None → caller uses primary (no delay)."""
+        if not peer:
+            return None
+        key = str(peer).lstrip("@").strip()
+        if not key:
+            return None
+        # Known primaries
+        if key in {"6774605259", "Mr_iv4", "mr_iv4"} or key == str(
+            getattr(entity, "id", "")
+        ):
+            return entity
+        if key in {
+            "UNIQUE_g1",
+            "unique_g1",
+            "5855678138",
+            str(cd_peer),
+            str(getattr(cd_entity, "id", "") or ""),
+        }:
+            return cd_entity
+        if key in _peer_entity_cache:
+            return _peer_entity_cache[key]
+        if key.lstrip("-").isdigit():
+            try:
+                ent = await client.get_entity(int(key))
+                _peer_entity_cache[key] = ent
+                return ent
+            except Exception as exc:
+                print(f"[Outbox] peer resolve id={key} fail:", repr(exc))
+                return None
+        try:
+            ent = await client.get_entity(key if key.startswith("@") else f"@{key}")
+            _peer_entity_cache[key] = ent
+            return ent
+        except Exception:
+            try:
+                ent = await client.get_entity(key)
+                _peer_entity_cache[key] = ent
+                return ent
+            except Exception as exc:
+                print(f"[Outbox] peer resolve @{key} fail (spill skip→primary):", repr(exc))
+                return None
+
     def _lane_dests(
         signal_kind: str | None,
         text: str | None = None,
@@ -655,7 +701,13 @@ async def main() -> None:
         is_result: bool = False,
         peer_slot: str | None = None,
     ):
-        """Return (primary_dest, lane_name, mirror_dests). Hub trust can force GUNIQUE/MONEY."""
+        """Return (primary_dest, lane_name, mirror_dests). Hub trust can force GUNIQUE/MONEY.
+
+        Profit skyscraper: soft-cap spill via chat_router (never delay). Overflow
+        peer strings are resolved asynchronously by the send loop when needed;
+        this sync helper returns primary MONEY/COUNTDOWN entities plus an optional
+        spill_peer name in lane_name metadata via SKYSCRAPER:* lane tags.
+        """
         # Hub trust / persisted parent slot wins when set
         slot = (peer_slot or "").upper().strip()
         if not slot and is_result and signal_id is not None:
@@ -675,6 +727,38 @@ async def main() -> None:
             return entity, "MONEY_FALLBACK_FROM_GUNIQUE", []
         if slot == "MONEY":
             return entity, "MONEY", []
+
+        # Profit skyscraper router (shelf + soft-cap spill, never delay)
+        try:
+            from chat_router import route_card
+
+            meta = {"is_result": is_result} if is_result else {}
+            target = route_card(
+                text,
+                signal_id=str(signal_id) if signal_id is not None else None,
+                signal_kind=signal_kind,
+                meta=meta,
+            )
+            if getattr(target, "suppressed", False):
+                return entity, f"SUPPRESSED:{getattr(target, 'reason', '')}", []
+            peer = getattr(target, "peer", None)
+            shelf = getattr(target, "shelf_id", "") or ""
+            reason = getattr(target, "reason", "") or ""
+            # Map shelf → primary entity; overflow peers tagged for async resolve
+            if peer and str(peer).upper().startswith("UNIQUE_G") and str(peer).upper() != "UNIQUE_G1":
+                # Spill candidate — prefer COUNTDOWN entity as fail-open if gN missing
+                base = cd_entity if cd_entity is not None else entity
+                return base, f"SKYSCRAPER_SPILL:{peer}:{shelf}:{reason}", []
+            if shelf in {"SHELF_COUNTDOWN", "SHELF_SNIPER"} or (
+                peer and str(peer).upper() in {"UNIQUE_G1", "5855678138"}
+            ):
+                if cd_entity is not None:
+                    return cd_entity, f"SKYSCRAPER_CD:{shelf}:{reason}", []
+                return entity, "MONEY_FALLBACK_FROM_CD", []
+            if peer:
+                return entity, f"SKYSCRAPER_MONEY:{shelf}:{reason}", []
+        except Exception as exc:
+            print("[Outbox] skyscraper route error:", repr(exc))
 
         try:
             from dual_lane_router import (
@@ -732,6 +816,20 @@ async def main() -> None:
             except Exception:
                 mirrors.append(cd_entity)
         return entity, "MONEY", mirrors
+
+    async def _apply_spill(dest, lane: str):
+        """If lane tags SKYSCRAPER_SPILL:UNIQUE_gN, resolve that chat NOW (never wait)."""
+        if not isinstance(lane, str) or not lane.startswith("SKYSCRAPER_SPILL:"):
+            return dest, lane
+        parts = lane.split(":")
+        peer = parts[1] if len(parts) > 1 else ""
+        ent = await _resolve_peer_entity(peer)
+        if ent is not None:
+            print(f"[Outbox] spill → @{peer} (never delay)")
+            return ent, lane
+        # Chat not created yet — send to primary immediately (no queue).
+        print(f"[Outbox] spill @{peer} unresolved → primary NOW (never delay)")
+        return dest, lane + ":FALLBACK_PRIMARY"
 
     async def _send_all(dests, body: str):
         last = None
@@ -989,6 +1087,7 @@ async def main() -> None:
                         is_result=False,
                         peer_slot=peer_slot,
                     )
+                    dest, lane = await _apply_spill(dest, lane)
                     if HUB_MAX:
                         try:
                             from hub_dispatch import stamp_route_label
@@ -1078,6 +1177,7 @@ async def main() -> None:
                             is_result=True,
                             peer_slot=slot,
                         )
+                        dest, lane = await _apply_spill(dest, lane)
                     dests = [dest] + list(mirrors)
                     try:
                         from skin_gate import evaluate_send_gate, log_block

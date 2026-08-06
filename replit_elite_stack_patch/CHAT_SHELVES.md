@@ -90,6 +90,6 @@ Unset overflow env → defaults to UNIQUE_g2…g5 automatically.
 ## Rules
 
 1. RESULT / forensic / expire **glue under parent fire’s exact chat** (including overflow)
-2. Never drop a fire because a chat is full — **overflow, then delay**
+2. Never drop a fire because a chat is full — **overflow / mint UNIQUE_gN, never delay**
 3. Skin gate may retire losers; vault keeps CREATED_ONLY
 4. Building rank (census) informs priority; shelf map places product

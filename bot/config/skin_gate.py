@@ -138,6 +138,30 @@ def evaluate_send_gate(
             lane=match.lane,
             reason=f"blocked:{','.join(matched)}",
         )
+
+    # Museum triage TRASH fingerprints — never wire junk to live chats
+    try:
+        from bot.config.keep_allowlist import should_block_as_trash
+
+        trash_hit, trash_reason = should_block_as_trash(
+            match.family_id,
+            registry_family=match.family_id,
+            text=text,
+        )
+        if trash_hit:
+            return SendGateDecision(
+                blocked=True,
+                family_id=match.family_id,
+                kind=match.kind,
+                gate_keys=match.gate_keys,
+                matched_keys=("trash_allowlist",),
+                role=match.role,
+                lane=match.lane,
+                reason=trash_reason,
+            )
+    except Exception:
+        pass
+
     return SendGateDecision(
         blocked=False,
         family_id=match.family_id,

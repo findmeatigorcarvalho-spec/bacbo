@@ -167,12 +167,48 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
 
     money = _as_target(money_peer())
     gunique = _as_target(gunique_peer())
-    gunique_first = os.environ.get("HUB_GUNIQUE_FIRST", "1").strip().lower() not in {
-        "0",
-        "false",
-        "no",
-        "off",
-    }
+    # Profit skyscraper: Mr_iv4 is money penthouse. Countdown/sniper stay on g1.
+    # Legacy HUB_GUNIQUE_FIRST only wins when HUB_MONEY_FIRST=0 and skyscraper off.
+    money_first = True
+    try:
+        from bot.config.profit_skyscraper import money_first as _mf
+
+        money_first = _mf()
+    except Exception:
+        money_first = os.environ.get("HUB_MONEY_FIRST", "1").strip().lower() not in {
+            "0",
+            "false",
+            "no",
+            "off",
+        }
+    gunique_first = (not money_first) and os.environ.get(
+        "HUB_GUNIQUE_FIRST", "1"
+    ).strip().lower() not in {"0", "false", "no", "off"}
+
+    # Results glue to last FIRE chat (engine path has no signal_id).
+    if _is_result(body):
+        last = _load_last_target()
+        return (last if last is not None else money), "result→parent"
+
+    # Soft-cap spill via chat_router for FIRE/ops (never delay).
+    try:
+        from chat_router import route_card
+
+        target = route_card(body)
+        if getattr(target, "suppressed", False):
+            return money, f"router_suppressed:{getattr(target, 'reason', '')}"
+        peer = getattr(target, "peer", None)
+        if peer:
+            dest = _as_target(str(peer))
+            reason = (
+                f"skyscraper:{getattr(target, 'reason', '')}:"
+                f"{getattr(target, 'shelf_id', '')}"
+            )
+            if getattr(target, "role", "") == "FIRE" or _FIRE_HINT.search(body):
+                _save_last(dest, role="FIRE", reason=reason)
+            return dest, reason
+    except Exception:
+        pass
 
     # Chat shelves: countdown peak / sniper → Gunique (not DB-kinds-only)
     try:
@@ -192,7 +228,7 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
     except Exception:
         pass
 
-    # Ops / schedule noise → money (#2). Allow SEQUÊNCIA QUENTE/FRIA without
+    # Ops / schedule noise → money penthouse. Allow SEQUÊNCIA QUENTE/FRIA without
     # treating them as enter-fires (they share the SEQUÊNCIA token).
     if _OPS_HINT.search(body) and not re.search(
         r"(APOSTE AGORA|ENTER NOW|GOLDEN SIGNAL|FLASH SIGNAL|SOLO ELITE)",
@@ -200,10 +236,6 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
         re.I,
     ):
         return money, "ops→money"
-
-    if _is_result(body):
-        last = _load_last_target()
-        return (last if last is not None else money), "result→parent"
 
     # Timed / countdown fires → Gunique
     try:
@@ -215,7 +247,12 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
     except Exception:
         pass
 
-    # Trust-first: original enter skins → Gunique #1
+    # Money-first (default): ENTER skins → Mr_iv4 penthouse
+    if money_first and (_TRUST_FIRE.search(body) or _FIRE_HINT.search(body)):
+        _save_last(money, role="FIRE", reason="money_first→mr_iv4")
+        return money, "money_first→mr_iv4"
+
+    # Legacy trust-first: original enter skins → Gunique #1
     if gunique_first and (_TRUST_FIRE.search(body) or _FIRE_HINT.search(body)):
         _save_last(gunique, role="FIRE", reason="trust_skin→gunique")
         return gunique, "trust_skin→gunique"

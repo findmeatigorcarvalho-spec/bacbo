@@ -78,6 +78,23 @@ _LUXURY_FORCE_KEYS = {
     "TELEGRAM_TARGET_PEER",
     "TELEGRAM_COUNTDOWN_PEER",
     "GUNIQUE_PEER",
+    "PROFIT_SKYSCRAPER",
+    "HUB_MONEY_FIRST",
+    "HUB_GUNIQUE_FIRST",
+    "TELEGRAM_TRASH_BLOCK",
+    "TELEGRAM_SKIN_GATE",
+    "TELEGRAM_SHELF_OVERFLOW_PEERS",
+}
+
+_SKYSCRAPER_FORCE_KEYS = {
+    "PROFIT_SKYSCRAPER",
+    "HUB_MONEY_FIRST",
+    "HUB_GUNIQUE_FIRST",
+    "TELEGRAM_TRASH_BLOCK",
+    "TELEGRAM_SKIN_GATE",
+    "TELEGRAM_SHELF_OVERFLOW_PEERS",
+    "TELEGRAM_TARGET_PEER",
+    "TELEGRAM_COUNTDOWN_PEER",
 }
 
 
@@ -110,6 +127,17 @@ def _env() -> dict[str, str]:
     # Defaults first; luxury_building.env overwrites policy keys (fixes Secret=shadow).
     _load_dotenv_file(ROOT / ".env", env)
     _load_dotenv_file(ROOT / "luxury_building.env", env, force_keys=_LUXURY_FORCE_KEYS)
+    # Profit skyscraper: Mr_iv4 money-first + trash block + never-delay spill.
+    _load_dotenv_file(
+        BOT / "data" / "profit_skyscraper.env",
+        env,
+        force_keys=_SKYSCRAPER_FORCE_KEYS,
+    )
+    _load_dotenv_file(
+        ROOT / "profit_skyscraper.env",
+        env,
+        force_keys=_SKYSCRAPER_FORCE_KEYS,
+    )
     session_path = ROOT / ".telegram_session_string"
     if session_path.exists():
         _sv = session_path.read_text(errors="ignore").strip()
