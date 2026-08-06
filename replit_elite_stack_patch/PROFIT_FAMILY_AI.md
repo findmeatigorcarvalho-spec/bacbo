@@ -74,8 +74,22 @@ python3 -c "from bot.config.result_essence_engine import family_ai_manifest; imp
 
 ```bash
 curl -fsSL -o /tmp/SKY.sh \
-  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806h'
+  'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260806i'
 bash /tmp/SKY.sh
+```
+
+After it finishes, **do not paste the DONE text back into the shell** — those lines are messages, not commands.  
+Safe check only:
+
+```bash
+python3 - <<'PY'
+from pathlib import Path
+from bot.config.bundle_organizer import organize
+from bot.config.result_essence_engine import load_atlas
+print("atlas", load_atlas()["stats"]["keep_scored"])
+print("peer", organize("SOLO ELITE SIGNAL\nENTER NOW").peer)
+print("env", Path("bot/data/profit_skyscraper.env").read_text().splitlines()[:8])
+PY
 ```
 
 **Reality: It Is Real truthfully.**
