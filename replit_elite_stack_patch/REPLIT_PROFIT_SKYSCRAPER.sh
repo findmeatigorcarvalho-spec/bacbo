@@ -2,7 +2,7 @@
 # Profit Family AI + One AI Organizer + UNIQUE_g1 APEX Bundle (Mr_iv4 REMOVED).
 #
 #   curl -fsSL -o /tmp/SKY.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260807a'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260807d'
 #   bash /tmp/SKY.sh
 #
 # Do NOT paste the printed DONE lines back into the shell — they are messages, not commands.
@@ -12,7 +12,7 @@ cd "$ROOT"
 PY="${PY:-python3}"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260807a"
+V="20260807d"
 OK=0
 FAIL=0
 
@@ -34,7 +34,7 @@ pull() {
 echo "-- config --"
 # ALWAYS overwrite skin_families/registry — older Replit copies miss canonical_family_id.
 for f in keep_allowlist.py profit_skyscraper.py profit_chat_bundle.py bundle_organizer.py \
-         result_essence_engine.py skin_gate.py chat_shelves.py chat_router.py \
+         result_essence_engine.py fire_result_law.py skin_gate.py chat_shelves.py chat_router.py \
          skin_families.py registry.py __init__.py; do
   pull "bot/config/${f}" "${RAW}/bot/config/${f}?v=${V}"
 done
@@ -63,7 +63,9 @@ PROFIT_CHAT_BUNDLE=1
 BUNDLE_ORGANIZER=1
 RESULT_ESSENCE_ENGINE=1
 PROFIT_FAMILY_AI=1
+FIRE_RESULT_LAW=1
 RESULT_ATTACH_IMMEDIATE=1
+HUB_OUTBOX_RESULT_CARDS=1
 HUB_G1_APEX_FIRST=1
 HUB_MONEY_FIRST=0
 HUB_GUNIQUE_FIRST=1
@@ -92,8 +94,8 @@ source "$ENVF"
 set +a
 
 echo "-- compile --"
-if $PY -m py_compile bot/config/result_essence_engine.py bot/config/bundle_organizer.py \
-  bot/config/profit_chat_bundle.py bot/config/chat_router.py 2>&1; then
+if $PY -m py_compile bot/config/fire_result_law.py bot/config/result_essence_engine.py \
+  bot/config/bundle_organizer.py bot/config/profit_chat_bundle.py bot/config/chat_router.py 2>&1; then
   echo "  OK  py_compile config"
 else
   echo "  WARN py_compile config (non-fatal if deps missing)"
@@ -106,6 +108,7 @@ from pathlib import Path
 sys.path.insert(0, ".")
 errs = []
 for p in [
+    "bot/config/fire_result_law.py",
     "bot/config/result_essence_engine.py",
     "bot/config/bundle_organizer.py",
     "bot/config/profit_chat_bundle.py",
@@ -121,20 +124,33 @@ for p in [
 try:
     from bot.config.result_essence_engine import family_ai_manifest, load_atlas
     from bot.config.bundle_organizer import organize
+    from bot.config.fire_result_law import (
+        law_banner,
+        law_enabled,
+        outbox_must_emit_result_cards,
+        result_skin_required,
+    )
     a = load_atlas()
     m = family_ai_manifest()
     d = organize("SOLO ELITE SIGNAL\nENTER NOW")
+    print(law_banner())
     print(json.dumps({
         "model": m.get("model"),
         "layers": m.get("layers"),
         "keep_scored": (a.get("stats") or {}).get("keep_scored"),
         "sample_peer": d.peer,
         "sample_becomes": d.becomes,
+        "fire_result_law": law_enabled(),
+        "result_skin_required": result_skin_required(),
+        "outbox_result_cards": outbox_must_emit_result_cards(),
         "primary_env": __import__("os").environ.get("TELEGRAM_PRIMARY_PEER"),
         "exclude": __import__("os").environ.get("TELEGRAM_EXCLUDE_PEERS"),
+        "HUB_OUTBOX_RESULT_CARDS": __import__("os").environ.get("HUB_OUTBOX_RESULT_CARDS"),
     }, indent=2))
     if d.peer != "UNIQUE_g1":
         errs.append(f"expected UNIQUE_g1 got {d.peer}")
+    if not law_enabled() or not outbox_must_emit_result_cards():
+        errs.append("FIRE↔RESULT law not fully ON")
 except Exception as exc:
     errs.append(repr(exc))
     print("VERIFY_EXC", repr(exc))

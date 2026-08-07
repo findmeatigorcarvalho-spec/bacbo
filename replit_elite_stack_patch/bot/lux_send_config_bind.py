@@ -121,8 +121,21 @@ def _wrap_send(fn: Callable) -> Callable:
                     print(f"[ROUND-SYNC] HOLD_RESULT {rd.reason}")
                     return None
                 fd = decide_fire(msg, source="engine")
-                if fd.action in {"HOLD_PREP", "TOO_LATE", "DEDUP"}:
-                    print(f"[ROUND-SYNC] {fd.action} {fd.reason}")
+                action = fd.action
+                try:
+                    from bot.config.fire_result_law import decide_fire_override
+
+                    ov = decide_fire_override(action, msg)
+                    if ov:
+                        print(
+                            f"[FIRE↔RESULT LAW] engine {action}→{ov} "
+                            f"(result-paired must fire)"
+                        )
+                        action = ov
+                except Exception:
+                    pass
+                if action in {"HOLD_PREP", "TOO_LATE", "DEDUP"}:
+                    print(f"[ROUND-SYNC] {action} {fd.reason}")
                     return None
         except Exception as exc:
             print("[ROUND-SYNC] skip:", repr(exc))

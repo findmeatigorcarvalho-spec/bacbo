@@ -85,7 +85,10 @@ ENV_KEYS = {
     "HUB_CATCHUP_MAX_PER_TICK": "4",
     "HUB_ENGINE_ROUTE": "1",
     "HUB_OUTBOX_FIRE_CARDS": "0",
-    "HUB_OUTBOX_RESULT_CARDS": "0",
+    # FIRE↔RESULT law: every FIRE gets RESULT card template skin (outbox guarantee).
+    "HUB_OUTBOX_RESULT_CARDS": "1",
+    "FIRE_RESULT_LAW": "1",
+    "RESULT_ATTACH_IMMEDIATE": "1",
     "LUXURY_TOWER_MERGE": "1",
     "FALLBACKS_ENABLED": "1",
 }

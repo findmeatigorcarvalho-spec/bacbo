@@ -67,9 +67,17 @@ HUB_OUTBOX_FIRE_CARDS = _env_flag(
     "HUB_OUTBOX_FIRE_CARDS",
     "1" if not HUB_MAX else "0",
 )
+# FIRE↔RESULT law: default ON — every FIRE gets a RESULT card template skin.
+# Even under HUB_MAX (engine owns FIRE skins), outbox still guarantees RESULT.
+try:
+    from bot.config.fire_result_law import outbox_must_emit_result_cards as _must_res
+
+    _RESULT_DEFAULT = "1" if _must_res() else ("1" if not HUB_MAX else "0")
+except Exception:
+    _RESULT_DEFAULT = "1"
 HUB_OUTBOX_RESULT_CARDS = _env_flag(
     "HUB_OUTBOX_RESULT_CARDS",
-    "1" if not HUB_MAX else "0",
+    _RESULT_DEFAULT,
 )
 
 
@@ -1077,6 +1085,7 @@ async def main() -> None:
                     print("[Outbox] hub throttle skip:", repr(exc))
 
             lane_by_id: dict[int, tuple] = {}
+            result_ids = {int(r["id"]) for r in results}
             for row in rows:
                 try:
                     floor = _row_floor(row)
@@ -1159,10 +1168,28 @@ async def main() -> None:
                             source="outbox",
                             fire_key=f"outbox:{row['id']}",
                         )
-                        if sync.action in {"HOLD_PREP", "TOO_LATE", "DEDUP"}:
+                        action = sync.action
+                        try:
+                            from bot.config.fire_result_law import decide_fire_override
+
+                            ov = decide_fire_override(
+                                action,
+                                body,
+                                signal_kind=str(row.get("signal_kind") or ""),
+                                has_result_row=int(row["id"]) in result_ids,
+                            )
+                            if ov:
+                                print(
+                                    f"[FIRE↔RESULT LAW] outbox fire {row['id']} "
+                                    f"{action}→{ov} (result-paired must fire)"
+                                )
+                                action = ov
+                        except Exception:
+                            pass
+                        if action in {"HOLD_PREP", "TOO_LATE", "DEDUP"}:
                             write_int(SIG_STATE, row["id"])
                             print(
-                                f"[ROUND-SYNC] outbox fire {row['id']} {sync.action} {sync.reason}"
+                                f"[ROUND-SYNC] outbox fire {row['id']} {action} {sync.reason}"
                             )
                             continue
                     except Exception as exc:
@@ -1201,7 +1228,24 @@ async def main() -> None:
 
             for row in results:
                 try:
-                    if HUB_MAX and not HUB_OUTBOX_RESULT_CARDS:
+                    # FIRE↔RESULT law: never skip RESULT card template skins.
+                    _law_force_result = False
+                    try:
+                        from bot.config.fire_result_law import (
+                            law_enabled,
+                            outbox_must_emit_result_cards,
+                        )
+
+                        _law_force_result = (
+                            law_enabled() or outbox_must_emit_result_cards()
+                        )
+                    except Exception:
+                        _law_force_result = True
+                    if (
+                        HUB_MAX
+                        and not HUB_OUTBOX_RESULT_CARDS
+                        and not _law_force_result
+                    ):
                         write_int(RES_STATE, row["id"])
                         print(
                             "[Outbox] HUB skip result card (engine owns skin)",
@@ -1209,6 +1253,12 @@ async def main() -> None:
                             row["outcome"],
                         )
                         continue
+                    if _law_force_result and not HUB_OUTBOX_RESULT_CARDS:
+                        print(
+                            "[FIRE↔RESULT LAW] forcing RESULT card skin",
+                            row["id"],
+                            row["outcome"],
+                        )
                     res_body = fmt_result(row)
                     cached = lane_by_id.get(int(row["id"]))
                     if cached:

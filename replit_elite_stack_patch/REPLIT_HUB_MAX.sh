@@ -113,7 +113,10 @@ export HUB_NO_SHRINK_GATES=1
 export HUB_ORIGINAL_CARD_SKINS=1
 export HUB_ENGINE_ROUTE=1
 export HUB_OUTBOX_FIRE_CARDS=0
-export HUB_OUTBOX_RESULT_CARDS=0
+# FIRE↔RESULT law: every FIRE gets RESULT card template skin
+export HUB_OUTBOX_RESULT_CARDS=1
+export FIRE_RESULT_LAW=1
+export RESULT_ATTACH_IMMEDIATE=1
 export PACKER_REAL_COUNTDOWN_MAX=30
 $PY bot/hub_max_boot.py | tee logs/hub_max_boot.log
 

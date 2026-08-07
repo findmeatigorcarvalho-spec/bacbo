@@ -14,13 +14,16 @@ Model (locked):
     UNIQUE_g5  IMPACT      — RESULT comprovation / heavy ops
     UNIQUE_g6+ ELASTIC     — mint under pressure; never delay
 
-RESULT law (locked):
-  Every RESULT attaches immediately under its own FIRE — bottom of that
-  signal's chat — with zero intentional delay. No interval hold for glue.
+FIRE ↔ RESULT law (locked):
+  1) Every signal that has / will have a RESULT attached MUST FIRE.
+  2) Every FIRE that goes out MUST get a RESULT card template/skin
+     glued under it in the same chat — immediately, zero intentional delay.
 
 Env:
   BUNDLE_ORGANIZER=1              (default on)
+  FIRE_RESULT_LAW=1               (default on — inseparability)
   RESULT_ATTACH_IMMEDIATE=1       (default on — zero delay RESULT glue)
+  HUB_OUTBOX_RESULT_CARDS=1       (outbox guarantees RESULT template skin)
 """
 from __future__ import annotations
 

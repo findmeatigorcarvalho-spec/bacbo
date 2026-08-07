@@ -691,7 +691,15 @@ class RoundSyncDensifier:
         force_now: bool = False,
     ) -> SyncDecision:
         # Locked law: RESULT attaches under its FIRE immediately — no delay.
-        if force_now or result_attach_immediate():
+        # FIRE↔RESULT law + RESULT_ATTACH_IMMEDIATE: glue RESULT under FIRE now.
+        _law_now = False
+        try:
+            from bot.config.fire_result_law import result_skin_required
+
+            _law_now = result_skin_required()
+        except Exception:
+            _law_now = True
+        if force_now or result_attach_immediate() or _law_now:
             return SyncDecision(
                 "RESULT_NOW",
                 "attach_immediate_under_fire",

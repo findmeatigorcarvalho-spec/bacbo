@@ -15,9 +15,13 @@ Sources (offline atlas + live consult):
   profit_organism_report.json       — vault perfect / dollar scaffold
   vault_patterns.json               — W/L patterns when present
 
+FIRE ↔ RESULT law (locked with this layer):
+  Every result-paired signal MUST FIRE; every FIRE MUST get a RESULT card skin.
+
 Env:
   RESULT_ESSENCE_ENGINE=1           (default on)
   PROFIT_FAMILY_AI=1                (alias)
+  FIRE_RESULT_LAW=1                 (inseparable FIRE↔RESULT)
 """
 from __future__ import annotations
 
