@@ -664,6 +664,15 @@ async def main() -> None:
         f"result_cards={int(HUB_OUTBOX_RESULT_CARDS)} "
         f"(HUB_MAX engine owns original skins when fire_cards=0)"
     )
+    try:
+        from bot.config.fire_result_law import law_banner, law_enabled
+
+        if law_enabled():
+            print(law_banner())
+    except Exception:
+        print(
+            "[FIRE↔RESULT LAW] ON (fallback) — every FIRE gets RESULT card skin"
+        )
 
     # Cache resolved overflow peers for this outbox session (never delay on miss).
     _peer_entity_cache: dict[str, object] = {}
