@@ -2,7 +2,7 @@
 # Profit Family AI + One AI Organizer + UNIQUE_g1 APEX Bundle (Mr_iv4 REMOVED).
 #
 #   curl -fsSL -o /tmp/SKY.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260807f'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260807g'
 #   bash /tmp/SKY.sh
 #
 # Do NOT paste the printed DONE lines back into the shell — they are messages, not commands.
@@ -12,7 +12,7 @@ cd "$ROOT"
 PY="${PY:-python3}"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260807f"
+V="20260807g"
 OK=0
 FAIL=0
 

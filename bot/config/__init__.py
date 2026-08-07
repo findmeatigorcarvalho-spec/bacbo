@@ -174,6 +174,74 @@ _SCOREBOARD_PLACAR_RE = re.compile(
     re.I,
 )
 
+# ── Bacbo/utils knobs — TYPED defaults (never "" for numbers) ────────────────
+# CrashGuard: unary -: 'str'  and  str+int  came from empty-string materialization.
+SIGNAL_DEDUP_SECS = float(_env("SIGNAL_DEDUP_SECS", default="8") or "8")
+LOSS_COOLDOWN_THRESHOLD = int(float(_env("LOSS_COOLDOWN_THRESHOLD", default="3") or "3"))
+LOSS_COOLDOWN_DURATION = float(_env("LOSS_COOLDOWN_DURATION", default="300") or "300")
+COOLDOWN_THRESHOLD_BUMP = int(float(_env("COOLDOWN_THRESHOLD_BUMP", default="1") or "1"))
+POST_LOSS_PAUSE_SECS = float(_env("POST_LOSS_PAUSE_SECS", default="30") or "30")
+AUTO_QUARANTINE_LOSSES = int(float(_env("AUTO_QUARANTINE_LOSSES", default="5") or "5"))
+AUTO_QUARANTINE_SECS = float(_env("AUTO_QUARANTINE_SECS", default="600") or "600")
+ROLLING_WR_WINDOW = int(float(_env("ROLLING_WR_WINDOW", default="20") or "20"))
+ROLLING_WR_MIN_PCT = float(_env("ROLLING_WR_MIN_PCT", default="55") or "55")
+ROLLING_WR_MUTE_SECS = float(_env("ROLLING_WR_MUTE_SECS", default="300") or "300")
+PRE_ALERT_THRESHOLD = int(float(_env("PRE_ALERT_THRESHOLD", default="2") or "2"))
+SOLO_LOSS_COOLDOWN = float(_env("SOLO_LOSS_COOLDOWN", default="120") or "120")
+VIP_ROOMS: List[str] = []
+VIP_SILENCE_THRESHOLD = int(float(_env("VIP_SILENCE_THRESHOLD", default="3") or "3"))
+MOMENTUM_SOLO_MIN = int(float(_env("MOMENTUM_SOLO_MIN", default="2") or "2"))
+MOMENTUM_LOSS_REQUIRE = int(float(_env("MOMENTUM_LOSS_REQUIRE", default="1") or "1"))
+MOMENTUM_COLD_REQUIRE = int(float(_env("MOMENTUM_COLD_REQUIRE", default="1") or "1"))
+_ACCUM_HOLD_SECS = float(_env("_ACCUM_HOLD_SECS", "ACCUM_HOLD_SECS", default="3") or "3")
+_WEAK_COMBO_BLOCKLIST: Set[Any] = set()
+_WEAK_GOLDEN_PAIRS: Set[Any] = set()
+_SEQ_MAX_LEN = int(float(_env("_SEQ_MAX_LEN", default="8") or "8"))
+_SCAN_ALERT_COOLDOWN = float(_env("_SCAN_ALERT_COOLDOWN", default="30") or "30")
+_KG_CACHE_TTL = float(_env("_KG_CACHE_TTL", default="60") or "60")
+_OUTCOME_CONFIRM_WINDOW = float(_env("_OUTCOME_CONFIRM_WINDOW", default="45") or "45")
+IMAGE_RESULT_ROOMS: List[str] = []
+IMAGE_ENTRY_ROOMS: List[str] = []
+BAC_BO_TIE_PROB = float(_env("BAC_BO_TIE_PROB", default="0.09") or "0.09")
+_HIGH_CONFIDENCE_ZONES: Dict[str, Any] = {}
+RESEARCH_TARGET = TARGET
+_HOUR_WR_STATIC: Dict[str, Any] = {}
+_HOUR_COLOR_WR: Dict[str, Any] = {}
+_SEND_TIMEOUT = float(_env("_SEND_TIMEOUT", "SEND_TIMEOUT", default="20") or "20")
+_SEND_RETRIES = int(float(_env("_SEND_RETRIES", "SEND_RETRIES", default="3") or "3"))
+_SEND_QUIET_TIMEOUT = float(
+    _env("_SEND_QUIET_TIMEOUT", "SEND_QUIET_TIMEOUT", default="10") or "10"
+)
+HEARTBEAT_INTERVAL = float(_env("HEARTBEAT_INTERVAL", default="30") or "30")
+DB_HEARTBEAT_INTERVAL = float(_env("DB_HEARTBEAT_INTERVAL", default="60") or "60")
+ROOM_SYNC_INTERVAL = float(_env("ROOM_SYNC_INTERVAL", default="120") or "120")
+ROOM_REVALIDATE_CYCLES = int(float(_env("ROOM_REVALIDATE_CYCLES", default="5") or "5"))
+DAILY_REPORT_HOUR = int(float(_env("DAILY_REPORT_HOUR", default="0") or "0"))
+TIE_PRESSURE_THRESHOLD = int(float(_env("TIE_PRESSURE_THRESHOLD", default="3") or "3"))
+_FINGERPRINT_SCAN_HOURS = int(float(_env("_FINGERPRINT_SCAN_HOURS", default="6") or "6"))
+AUTO_DISCOVER_ADD_SIG_PCT = float(_env("AUTO_DISCOVER_ADD_SIG_PCT", default="70") or "70")
+AUTO_DISCOVER_ADD_RES_PCT = float(_env("AUTO_DISCOVER_ADD_RES_PCT", default="70") or "70")
+AUTO_DISCOVER_SCAN_MSGS = int(float(_env("AUTO_DISCOVER_SCAN_MSGS", default="200") or "200"))
+_KELLY_RETRAIN_EVERY = int(float(_env("_KELLY_RETRAIN_EVERY", default="50") or "50"))
+AUTO_DISCOVER_INTERVAL = float(_env("AUTO_DISCOVER_INTERVAL", default="3600") or "3600")
+AUTO_DISCOVER_INITIAL_DELAY = float(
+    _env("AUTO_DISCOVER_INITIAL_DELAY", default="120") or "120"
+)
+AUTO_DISCOVER_REMOVE_SIG_PCT = float(
+    _env("AUTO_DISCOVER_REMOVE_SIG_PCT", default="40") or "40"
+)
+AUTO_DISCOVER_REMOVE_RES_PCT = float(
+    _env("AUTO_DISCOVER_REMOVE_RES_PCT", default="40") or "40"
+)
+_FINGERPRINT_MIN_RESULTS = int(float(_env("_FINGERPRINT_MIN_RESULTS", default="5") or "5"))
+_FINGERPRINT_MAX_TIME_DRIFT = float(
+    _env("_FINGERPRINT_MAX_TIME_DRIFT", default="30") or "30"
+)
+_FINGERPRINT_MIN_MATCH = int(float(_env("_FINGERPRINT_MIN_MATCH", default="3") or "3"))
+_FINGERPRINT_MATCH_WINDOW = float(
+    _env("_FINGERPRINT_MATCH_WINDOW", default="120") or "120"
+)
+
 __all__ += [
     "API_ID",
     "API_HASH",
@@ -214,6 +282,59 @@ __all__ += [
     "_GALE_OPTIONAL_RE",
     "_ENTRADA_FINALIZADA_RE",
     "_SCOREBOARD_PLACAR_RE",
+    "SIGNAL_DEDUP_SECS",
+    "LOSS_COOLDOWN_THRESHOLD",
+    "LOSS_COOLDOWN_DURATION",
+    "COOLDOWN_THRESHOLD_BUMP",
+    "POST_LOSS_PAUSE_SECS",
+    "AUTO_QUARANTINE_LOSSES",
+    "AUTO_QUARANTINE_SECS",
+    "ROLLING_WR_WINDOW",
+    "ROLLING_WR_MIN_PCT",
+    "ROLLING_WR_MUTE_SECS",
+    "PRE_ALERT_THRESHOLD",
+    "SOLO_LOSS_COOLDOWN",
+    "VIP_ROOMS",
+    "VIP_SILENCE_THRESHOLD",
+    "MOMENTUM_SOLO_MIN",
+    "MOMENTUM_LOSS_REQUIRE",
+    "MOMENTUM_COLD_REQUIRE",
+    "_ACCUM_HOLD_SECS",
+    "_WEAK_COMBO_BLOCKLIST",
+    "_WEAK_GOLDEN_PAIRS",
+    "_SEQ_MAX_LEN",
+    "_SCAN_ALERT_COOLDOWN",
+    "_KG_CACHE_TTL",
+    "_OUTCOME_CONFIRM_WINDOW",
+    "IMAGE_RESULT_ROOMS",
+    "IMAGE_ENTRY_ROOMS",
+    "BAC_BO_TIE_PROB",
+    "_HIGH_CONFIDENCE_ZONES",
+    "RESEARCH_TARGET",
+    "_HOUR_WR_STATIC",
+    "_HOUR_COLOR_WR",
+    "_SEND_TIMEOUT",
+    "_SEND_RETRIES",
+    "_SEND_QUIET_TIMEOUT",
+    "HEARTBEAT_INTERVAL",
+    "DB_HEARTBEAT_INTERVAL",
+    "ROOM_SYNC_INTERVAL",
+    "ROOM_REVALIDATE_CYCLES",
+    "DAILY_REPORT_HOUR",
+    "TIE_PRESSURE_THRESHOLD",
+    "_FINGERPRINT_SCAN_HOURS",
+    "AUTO_DISCOVER_ADD_SIG_PCT",
+    "AUTO_DISCOVER_ADD_RES_PCT",
+    "AUTO_DISCOVER_SCAN_MSGS",
+    "_KELLY_RETRAIN_EVERY",
+    "AUTO_DISCOVER_INTERVAL",
+    "AUTO_DISCOVER_INITIAL_DELAY",
+    "AUTO_DISCOVER_REMOVE_SIG_PCT",
+    "AUTO_DISCOVER_REMOVE_RES_PCT",
+    "_FINGERPRINT_MIN_RESULTS",
+    "_FINGERPRINT_MAX_TIME_DRIFT",
+    "_FINGERPRINT_MIN_MATCH",
+    "_FINGERPRINT_MATCH_WINDOW",
 ]
 
 
@@ -289,6 +410,49 @@ def _is_regex_name(name: str) -> bool:
     )
 
 
+def _is_numeric_name(name: str) -> bool:
+    """Names that signal_handler uses in arithmetic / unary minus."""
+    u = name.upper()
+    suffixes = (
+        "_SECS",
+        "_SECONDS",
+        "_TIMEOUT",
+        "_INTERVAL",
+        "_THRESHOLD",
+        "_DURATION",
+        "_WINDOW",
+        "_TTL",
+        "_DELAY",
+        "_PCT",
+        "_PROB",
+        "_RETRIES",
+        "_CYCLES",
+        "_EVERY",
+        "_MSGS",
+        "_HOUR",
+        "_HOURS",
+        "_BUMP",
+        "_LOSSES",
+        "_REQUIRE",
+        "_LEN",
+        "_COOLDOWN",
+        "_DRIFT",
+        "_MATCH",
+        "_RESULTS",
+        "_MIN",
+        "_MAX",
+        "_LIMIT",
+        "_COUNT",
+        "_SIZE",
+        "_RATE",
+    )
+    if any(name.endswith(s) for s in suffixes):
+        return True
+    if any(k in u for k in ("DELAY", "TIMEOUT", "INTERVAL", "THRESHOLD", "COOLDOWN")):
+        return True
+    return False
+
+
 def _as_compiled_re(val: Any) -> Any:
     """Ensure .search() exists — strings become compiled patterns."""
     if hasattr(val, "search") and callable(getattr(val, "search")):
@@ -301,11 +465,56 @@ def _as_compiled_re(val: Any) -> Any:
     return _NEVER_RE
 
 
+def _as_number(name: str, val: Any, *, default: float = 0.0) -> Any:
+    if isinstance(val, bool):
+        return int(val)
+    if isinstance(val, (int, float)):
+        return val
+    if isinstance(val, str):
+        s = val.strip()
+        if not s:
+            # Prefer float for time-like names (unary-/subtraction safe)
+            u = name.upper()
+            if any(
+                name.endswith(x)
+                for x in (
+                    "_SECS",
+                    "_SECONDS",
+                    "_TIMEOUT",
+                    "_INTERVAL",
+                    "_DURATION",
+                    "_TTL",
+                    "_DELAY",
+                    "_PCT",
+                    "_PROB",
+                    "_COOLDOWN",
+                    "_DRIFT",
+                    "_WINDOW",
+                )
+            ) or any(k in u for k in ("DELAY", "TIMEOUT", "INTERVAL", "COOLDOWN")):
+                return float(default if default else 5.0)
+            return int(default)
+        try:
+            return float(s) if ("." in s or "E" in s.upper()) else int(s)
+        except Exception:
+            return float(default if default else 0.0)
+    try:
+        return float(val)
+    except Exception:
+        return float(default)
+
+
 def _default_for(name: str) -> Any:
     g = globals()
     if name in g:
         val = g[name]
-        return _as_compiled_re(val) if _is_regex_name(name) else val
+        if _is_regex_name(name):
+            return _as_compiled_re(val)
+        if _is_numeric_name(name) and (
+            val == "" or val is None or (isinstance(val, str) and not val.strip())
+        ):
+            return _as_number(name, "", default=5.0)
+        return val
     u = name.upper()
     if name in {"API_ID", "TELEGRAM_API_ID"}:
         return API_ID
@@ -322,14 +531,27 @@ def _default_for(name: str) -> Any:
         return _NEVER_RE
     if name.endswith("_ROOMS") or name.endswith("_ROOM_IDS"):
         return []
-    if name.startswith("_KNOWN_") or name.endswith("_SET"):
+    if (
+        name.startswith("_KNOWN_")
+        or name.endswith("_SET")
+        or name.endswith("_BLOCKLIST")
+        or name.endswith("_PAIRS")
+    ):
         return set()
-    if name.endswith("_TIERS") or name.endswith("_MAP") or name.endswith("_DICT"):
+    if (
+        name.endswith("_TIERS")
+        or name.endswith("_MAP")
+        or name.endswith("_DICT")
+        or name.endswith("_ZONES")
+        or name.endswith("_STATIC")
+        or name.endswith("_WR")
+    ):
         return {}
-    if "DELAY" in u or name.endswith("_SECS") or name.endswith("_SECONDS"):
-        return 5.0
-    if "TIMEOUT" in u or "INTERVAL" in u:
-        return 10.0
+    if _is_numeric_name(name):
+        ev = _env(name)
+        if ev != "":
+            return _as_number(name, ev, default=5.0)
+        return _as_number(name, "", default=5.0)
     if "SESSION" in u and "STRING" in u:
         return TELEGRAM_SESSION_STRING
     if "SESSION" in u:
@@ -340,14 +562,11 @@ def _default_for(name: str) -> Any:
         return OWNER_ID or ""
     if name.startswith("IS_") or name.endswith("_ENABLED") or name.startswith("ENABLE_"):
         return True
-    if name.endswith("_MIN") or name.endswith("_MAX") or name.endswith("_LIMIT"):
-        return 0
-    # env mirror
+    # env mirror (non-numeric leftovers)
     ev = _env(name)
     if ev != "":
-        if ev.replace(".", "", 1).isdigit():
-            return float(ev) if "." in ev else int(ev)
         return ev
+    # NEVER default bare numeric-looking unknowns to "" — 0 is safer than unary- crash
     return ""
 
 
@@ -360,18 +579,30 @@ def _ensure_all_config_imports() -> List[str]:
         if name not in g:
             g[name] = _default_for(name)
             created.append(name)
-        elif _is_regex_name(name):
-            # Repair prior bad materialization (empty str → compiled re)
-            fixed = _as_compiled_re(g[name])
-            if fixed is not g[name]:
-                g[name] = fixed
+        else:
+            val = g[name]
+            if _is_regex_name(name):
+                fixed = _as_compiled_re(val)
+                if fixed is not val:
+                    g[name] = fixed
+                    created.append(name)
+            elif _is_numeric_name(name) and (
+                val == ""
+                or val is None
+                or (isinstance(val, str) and not str(val).strip())
+            ):
+                g[name] = _as_number(name, "", default=5.0)
                 created.append(name)
         if name not in __all__:
             __all__.append(name)
-    # Absolute harden: every *_RE in module dict must support .search
+    # Absolute harden pass
     for name, val in list(g.items()):
-        if isinstance(name, str) and _is_regex_name(name) and not hasattr(val, "search"):
+        if not isinstance(name, str):
+            continue
+        if _is_regex_name(name) and not hasattr(val, "search"):
             g[name] = _as_compiled_re(val)
+        elif _is_numeric_name(name) and isinstance(val, str):
+            g[name] = _as_number(name, val, default=5.0)
     return created
 
 
