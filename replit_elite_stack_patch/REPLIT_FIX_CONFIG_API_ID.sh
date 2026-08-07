@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # Typed config surface + runtime re/num harden + restart.
 #   curl -fsSL -o /tmp/FIXCFG.sh \
-# Prefer REPLIT_FIX_LIVE_NOW.sh?v=20260807h for full live repair.
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_CONFIG_API_ID.sh?v=20260807h'
+# Prefer REPLIT_FIX_LIVE_NOW.sh?v=20260807i for full live repair.
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_CONFIG_API_ID.sh?v=20260807i'
 #   bash /tmp/FIXCFG.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260807h"
+V="20260807i"
 
 echo "========== FIX config (typed knobs + regex/num harden) =========="
 mkdir -p bot/config
@@ -31,45 +31,10 @@ if [[ -f bot/signal_handler.py && -f bot/hotfix_signal_handler.py ]]; then
   python3 bot/hotfix_signal_handler.py 2>/dev/null || true
 fi
 
-# Inject lux_re_harden into bacbo boot (idempotent)
-python3 - <<'PY'
-from pathlib import Path
-marker = "lux_re_harden"
-block = """
-try:
-    import lux_re_harden  # noqa: F401
-    print("[LUXURY] re-harden loaded")
-except Exception as _lux_reh_exc:
-    print("[LUXURY] re-harden skipped:", _lux_reh_exc)
-"""
-for p in [Path("bacbo_royal_complete.py"), Path("bot/bacbo_royal_complete.py")]:
-    if not p.is_file():
-        continue
-    src = p.read_text(encoding="utf-8", errors="ignore")
-    if marker in src:
-        print("re-harden already injected in", p)
-        continue
-    anchor = None
-    for a in (
-        'print("[LUXURY] send-config-bind loaded")',
-        "import lux_send_config_bind",
-        'if __name__ == "__main__"',
-        "run_forever()",
-    ):
-        if a in src:
-            anchor = a
-            break
-    if anchor is None:
-        p.write_text(src + "\n" + block + "\n", encoding="utf-8")
-        print("appended re-harden to", p)
-        continue
-    idx = src.find(anchor)
-    nl = src.find("\n", idx)
-    if nl < 0:
-        nl = len(src)
-    p.write_text(src[: nl + 1] + block + src[nl + 1 :], encoding="utf-8")
-    print("injected re-harden into", p)
-PY
+# Never mid-file inject (caused SyntaxError try-without-except at ~725).
+curl -fsSL -o bot/fix_bacbo_syntax.py \
+  "${RAW}/replit_elite_stack_patch/bot/fix_bacbo_syntax.py?v=${V}" || true
+python3 -u bot/fix_bacbo_syntax.py || true
 
 python3 - <<'PY'
 import re, sys, types

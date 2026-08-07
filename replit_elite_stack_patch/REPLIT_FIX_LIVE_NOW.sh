@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # One-shot: typed config + ESTUDO kill + bacbo stay-up + restart.
 #   curl -fsSL -o /tmp/LIVE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_LIVE_NOW.sh?v=20260807h'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_LIVE_NOW.sh?v=20260807i'
 #   bash /tmp/LIVE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260807h"
+V="20260807i"
 PY="${PY:-python3}"
 
 echo "========== FIX LIVE NOW (typed config + ESTUDO block + bacbo stay-up) =========="
@@ -30,9 +30,11 @@ pull bot/config/__init__.py "${RAW}/bot/config/__init__.py?v=${V}"
 pull bot/config/keep_allowlist.py "${RAW}/bot/config/keep_allowlist.py?v=${V}"
 pull bot/config/fire_result_law.py "${RAW}/bot/config/fire_result_law.py?v=${V}" || true
 for f in lux_re_harden.py lux_send_config_bind.py runtime_supervisor.py telegram_outbox.py \
-         hotfix_signal_handler.py hub_max_boot.py; do
+         hotfix_signal_handler.py hub_max_boot.py fix_bacbo_syntax.py; do
   pull "bot/${f}" "${RAW}/replit_elite_stack_patch/bot/${f}?v=${V}" || true
 done
+pull replit_elite_stack_patch/REPLIT_FIX_BACBO_SYNTAX.sh \
+  "${RAW}/replit_elite_stack_patch/REPLIT_FIX_BACBO_SYNTAX.sh?v=${V}" || true
 # Force env knobs
 ENVF=bot/data/profit_skyscraper.env
 touch "$ENVF"
@@ -68,35 +70,9 @@ if [[ -f luxury_building.env ]]; then
   done
 fi
 
-# Inject re-harden early (idempotent)
-$PY - <<'PY'
-from pathlib import Path
-marker = "lux_re_harden"
-block = """
-try:
-    import lux_re_harden  # noqa: F401
-    print("[LUXURY] re-harden loaded")
-except Exception as _lux_reh_exc:
-    print("[LUXURY] re-harden skipped:", _lux_reh_exc)
-"""
-for p in [Path("bacbo_royal_complete.py"), Path("bot/bacbo_royal_complete.py")]:
-    if not p.is_file():
-        continue
-    src = p.read_text(encoding="utf-8", errors="ignore")
-    if marker in src:
-        print("re-harden already injected in", p)
-        continue
-    for a in ("import lux_send_config_bind", 'if __name__ == "__main__"', "run_forever()"):
-        if a in src:
-            idx = src.find(a)
-            nl = src.find("\n", idx)
-            p.write_text(src[: nl + 1] + block + src[nl + 1 :], encoding="utf-8")
-            print("injected re-harden into", p)
-            break
-    else:
-        p.write_text(src + "\n" + block + "\n", encoding="utf-8")
-        print("appended re-harden to", p)
-PY
+# CRITICAL: repair SyntaxError from prior mid-try injects (line ~725)
+echo "-- fix bacbo syntax --"
+$PY -u bot/fix_bacbo_syntax.py
 
 if [[ -f bot/signal_handler.py && -f bot/hotfix_signal_handler.py ]]; then
   $PY bot/hotfix_signal_handler.py 2>/dev/null || true
