@@ -3,14 +3,61 @@ Runtime bind: ensure `config` exists in __main__ / bacbo globals and wrap send()
 
 Fixes: send() failed: name 'config' is not defined
 even when `import config` appears at module top (nested scope / local assignment).
+
+Also:
+  - trash G2 ESTUDO / study spam
+  - dedupe identical bodies within a short window (stop 14× floods)
 """
 from __future__ import annotations
 
 import functools
+import hashlib
 import os
 import sys
+import time
 import types
 from typing import Any, Callable, Optional
+
+# body_hash → last_sent_monotonic
+_RECENT_SENDS: dict[str, float] = {}
+_DEDUP_SECS = float(os.environ.get("LUX_SEND_DEDUP_SECS", "45") or "45")
+_ESTUDO_RE = None
+
+
+def _estudo_blocked(msg: str | None) -> bool:
+    if not msg:
+        return False
+    u = msg.upper()
+    return (
+        "G2 ESTUDO" in u
+        or "G1 ESTUDO" in u
+        or "G3 ESTUDO" in u
+        or "ESTUDO |" in u
+    )
+
+
+def _dedup_hit(msg: str | None) -> bool:
+    if not msg or not msg.strip():
+        return False
+    try:
+        secs = float(os.environ.get("LUX_SEND_DEDUP_SECS", str(_DEDUP_SECS)) or "45")
+    except Exception:
+        secs = 45.0
+    if secs <= 0:
+        return False
+    key = hashlib.sha1(msg.strip().encode("utf-8", "ignore")).hexdigest()
+    now = time.monotonic()
+    # prune
+    if len(_RECENT_SENDS) > 400:
+        cutoff = now - max(secs, 60.0)
+        for k, t in list(_RECENT_SENDS.items()):
+            if t < cutoff:
+                _RECENT_SENDS.pop(k, None)
+    prev = _RECENT_SENDS.get(key)
+    if prev is not None and (now - prev) < secs:
+        return True
+    _RECENT_SENDS[key] = now
+    return False
 
 
 def _ensure_config(ns: dict) -> Any:
@@ -56,6 +103,14 @@ def _wrap_send(fn: Callable) -> Callable:
             _ensure_config(main.__dict__)
 
         msg = _extract_msg(args, kwargs)
+
+        # Hard drop study spam before any routing (G2 ESTUDO floods)
+        if _estudo_blocked(msg):
+            print("[LUXURY] drop ESTUDO study spam")
+            return None
+        if _dedup_hit(msg):
+            print("[LUXURY] drop duplicate send (dedup window)")
+            return None
 
         # Skin family gate — retire/disable Telegram skins via EngineGateRegistry
         try:

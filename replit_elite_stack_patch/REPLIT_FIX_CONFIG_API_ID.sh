@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 # Typed config surface + runtime re/num harden + restart.
 #   curl -fsSL -o /tmp/FIXCFG.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_CONFIG_API_ID.sh?v=20260807g'
+# Prefer REPLIT_FIX_LIVE_NOW.sh?v=20260807h for full live repair.
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_CONFIG_API_ID.sh?v=20260807h'
 #   bash /tmp/FIXCFG.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260807g"
+V="20260807h"
 
 echo "========== FIX config (typed knobs + regex/num harden) =========="
 mkdir -p bot/config

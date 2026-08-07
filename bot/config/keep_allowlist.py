@@ -166,6 +166,17 @@ def trash_text_needles() -> Set[str]:
     return {n for n in needles if n and len(n) >= 3}
 
 
+# Live study/shadow spam — never wire to UNIQUE_g1 (not a bettable ENTER).
+_HARD_TRASH_TEXT = (
+    "G2 ESTUDO",
+    "G1 ESTUDO",
+    "G3 ESTUDO",
+    "ESTUDO |",
+    "🔷 G2 ESTUDO",
+    "🔷 G1 ESTUDO",
+)
+
+
 def should_block_as_trash(
     family_id: Optional[str] = None,
     *,
@@ -178,6 +189,11 @@ def should_block_as_trash(
         return True, f"trash_blocked:{family_id or registry_family or '?'}"
     body = (text or "").strip()
     if body:
+        # Hard block engine study spam (duplicate NEUTRO/PROMISSORA floods)
+        upper = body.upper()
+        for needle in _HARD_TRASH_TEXT:
+            if needle.upper() in upper:
+                return True, f"trash_estudo:{needle}"
         first = body.splitlines()[0].strip()[:120]
         for needle in trash_text_needles():
             if not needle:

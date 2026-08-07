@@ -397,21 +397,71 @@ def main() -> int:
     def _is_delayed_sender(name: str) -> bool:
         return name.startswith("fallback") or name == "telegram_outbox"
 
+    def _bacbo_alive_secs() -> float:
+        """How long the current bacbo process has been up (0 if none)."""
+        pid = _find_bacbo_pid()
+        if not pid:
+            return 0.0
+        try:
+            # /proc/<pid>/stat field 22 = starttime (clock ticks); use mtime of /proc/pid
+            st = Path(f"/proc/{pid}").stat()
+            return max(0.0, time.time() - st.st_ctime)
+        except Exception:
+            return 0.1  # exists but age unknown — treat as alive
+
+    def _dump_bot_live_tail(reason: str) -> None:
+        try:
+            logp = LOG_DIR / "bot_live.log"
+            if not logp.is_file():
+                print(f"[Supervisor] {reason}: no bot_live.log yet")
+                return
+            lines = logp.read_text(encoding="utf-8", errors="ignore").splitlines()
+            # Prefer lines after the newest supervisor start marker
+            last = -1
+            for i, ln in enumerate(lines):
+                if "supervisor starting bot_live" in ln:
+                    last = i
+            chunk = lines[last + 1 :] if last >= 0 else lines[-40:]
+            print(f"[Supervisor] {reason}: bot_live tail ({len(chunk)} lines)")
+            for ln in chunk[-40:]:
+                print(ln)
+        except Exception as exc:
+            print(f"[Supervisor] {reason}: log dump fail {exc!r}")
+
+    bacbo_ready_secs = float(env.get("BACBO_READY_SECS", "45") or "45")
+    bot_live_fails = 0
+
     try:
         tick = 0
         while True:
             for name, (cmd, proc, last_start) in list(processes.items()):
                 if proc is None or proc.poll() is not None:
-                    if _is_delayed_sender(name) and (time.time() - boot_t0) < fallback_delay:
-                        continue
+                    # Outbox/fallbacks: wait boot delay AND bacbo healthy (session owner).
+                    if _is_delayed_sender(name):
+                        if (time.time() - boot_t0) < fallback_delay:
+                            continue
+                        alive = _bacbo_alive_secs()
+                        if alive < bacbo_ready_secs:
+                            if tick % 2 == 0:
+                                print(
+                                    f"[Supervisor] hold {name}: bacbo_alive={alive:.0f}s "
+                                    f"< ready={bacbo_ready_secs:.0f}s"
+                                )
+                            continue
                     if name == "bot_live":
                         existing = _find_bacbo_pid()
                         if existing:
                             print(f"[Supervisor] re-adopting bacbo pid={existing}")
                             processes[name] = (cmd, _AdoptedProc(existing), time.time())
+                            bot_live_fails = 0
                             continue
-                    if time.time() - last_start < 10:
-                        time.sleep(10 - (time.time() - last_start))
+                        if proc is not None and proc.poll() is not None:
+                            bot_live_fails += 1
+                            _dump_bot_live_tail(f"bot_live exited (fail#{bot_live_fails})")
+                    # Back off harder when bacbo keeps dying
+                    min_gap = 10.0 if name != "bot_live" else min(60.0, 10.0 + 5.0 * bot_live_fails)
+                    if time.time() - last_start < min_gap:
+                        time.sleep(min_gap - (time.time() - last_start))
                     print(f"[Supervisor] starting/restarting {name}")
                     proc = _start(name, cmd, env)
                     processes[name] = (cmd, proc, time.time())

@@ -857,6 +857,11 @@ async def main() -> None:
         return dest, lane + ":FALLBACK_PRIMARY"
 
     async def _send_all(dests, body: str):
+        # Never flood UNIQUE with engine study spam / identical repeats.
+        bu = (body or "").upper()
+        if "G2 ESTUDO" in bu or "G1 ESTUDO" in bu or "ESTUDO |" in bu:
+            print("[Outbox] drop ESTUDO study spam")
+            return None
         last = None
         for dest in dests:
             last = await client.send_message(dest, body)
