@@ -148,6 +148,32 @@ COLOR_ICON = _COLOR_ICON_SHORT
 COLOR_ICON_SHORT = _COLOR_ICON_SHORT
 _COLOR_EMOJI = _COLOR_ICON_SHORT
 
+# Compiled regexes — signal_handler/utils call .search(); NEVER export plain str.
+_NEVER_RE = re.compile(r"(?!)")  # intentional no-match placeholder
+_WIN_STREAK_RE = re.compile(
+    r"(?P<n>\d+)\s*(?:Greens?|greens?|WINS?|wins?|✅)\s*(?:seguidos?|seguidas?|streak|em\s*sequencia|em\s*sequência)",
+    re.I,
+)
+_GALE1_RE = re.compile(
+    r"(?:GALE\s*1|G1|primeiro\s*gale|1[ºo°]?\s*gale|entrada\s*gale\s*1)",
+    re.I,
+)
+_GALE_OPTIONAL_RE = re.compile(
+    r"(?:GALE|gale)\s*(?:opcional|optional|0|zero)?|até\s*gale|ate\s*gale|max\s*gale|máx(?:imo)?\s*gale",
+    re.I,
+)
+_ENTRADA_FINALIZADA_RE = re.compile(
+    r"ENTRADA\s*FINALIZADA|entrada\s*finalizada|RESULTADO\s*FINAL|"
+    r"✅\s*GREEN|❌\s*(?:RED|LOSS)|GREEN\b|LOSS\b|WIN\b",
+    re.I,
+)
+_SCOREBOARD_PLACAR_RE = re.compile(
+    r"(?:Placar|PLACAR|Scoreboard|Score)\s*[:：]?\s*.*?(?:✅|❌|\d+)|"
+    r"Acertamos\s+[\d.,]+\s*%|"
+    r"✅\s*\d+\s*[|｜]\s*❌\s*\d+",
+    re.I,
+)
+
 __all__ += [
     "API_ID",
     "API_HASH",
@@ -183,6 +209,11 @@ __all__ += [
     "COLOR_ICON",
     "COLOR_ICON_SHORT",
     "_COLOR_EMOJI",
+    "_WIN_STREAK_RE",
+    "_GALE1_RE",
+    "_GALE_OPTIONAL_RE",
+    "_ENTRADA_FINALIZADA_RE",
+    "_SCOREBOARD_PLACAR_RE",
 ]
 
 
@@ -248,10 +279,33 @@ def _scan_import_names() -> List[str]:
     return out
 
 
+def _is_regex_name(name: str) -> bool:
+    u = name.upper()
+    return (
+        name.endswith("_RE")
+        or name.endswith("_REGEX")
+        or name.endswith("_PATTERN")
+        or u.endswith("_COMPILED")
+    )
+
+
+def _as_compiled_re(val: Any) -> Any:
+    """Ensure .search() exists — strings become compiled patterns."""
+    if hasattr(val, "search") and callable(getattr(val, "search")):
+        return val
+    if isinstance(val, str):
+        try:
+            return re.compile(val, re.I) if val.strip() else _NEVER_RE
+        except re.error:
+            return _NEVER_RE
+    return _NEVER_RE
+
+
 def _default_for(name: str) -> Any:
     g = globals()
     if name in g:
-        return g[name]
+        val = g[name]
+        return _as_compiled_re(val) if _is_regex_name(name) else val
     u = name.upper()
     if name in {"API_ID", "TELEGRAM_API_ID"}:
         return API_ID
@@ -263,6 +317,9 @@ def _default_for(name: str) -> Any:
         return dict(_COLOR_ICON_SHORT)
     if "COLOR" in u and "EMOJI" in u:
         return dict(_COLOR_ICON_SHORT)
+    # CRITICAL: signal_handler calls name.search(text) — must be compiled re
+    if _is_regex_name(name):
+        return _NEVER_RE
     if name.endswith("_ROOMS") or name.endswith("_ROOM_IDS"):
         return []
     if name.startswith("_KNOWN_") or name.endswith("_SET"):
@@ -303,8 +360,18 @@ def _ensure_all_config_imports() -> List[str]:
         if name not in g:
             g[name] = _default_for(name)
             created.append(name)
+        elif _is_regex_name(name):
+            # Repair prior bad materialization (empty str → compiled re)
+            fixed = _as_compiled_re(g[name])
+            if fixed is not g[name]:
+                g[name] = fixed
+                created.append(name)
         if name not in __all__:
             __all__.append(name)
+    # Absolute harden: every *_RE in module dict must support .search
+    for name, val in list(g.items()):
+        if isinstance(name, str) and _is_regex_name(name) and not hasattr(val, "search"):
+            g[name] = _as_compiled_re(val)
     return created
 
 

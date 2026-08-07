@@ -12,7 +12,7 @@ cd "$ROOT"
 PY="${PY:-python3}"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260807d"
+V="20260807e"
 OK=0
 FAIL=0
 
