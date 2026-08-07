@@ -1,19 +1,19 @@
 """bot.config package — credentials for bacbo + Profit Family AI modules.
 
 On Replit, PYTHONPATH includes `bot/`, so `from config import API_ID` resolves here.
-This file MUST export every name bacbo imports from config (API_ID, SESSION_FILE, …).
+`from config import X` does NOT call __getattr__ — every imported name must exist
+in this module's dict. We scan bacbo + bot/*.py and materialize all of them.
 """
 from __future__ import annotations
 
-import ast
 import os
 import re
 from pathlib import Path
-from typing import Any, List
+from typing import Any, Dict, List, Set
 
 __all__: list[str] = []
 
-# ── Credentials (bacbo_royal_complete needs these) ───────────────────────────
+# ── dotenv ───────────────────────────────────────────────────────────────────
 def _load_dotenv(path: Path) -> None:
     if not path.is_file():
         return
@@ -33,7 +33,7 @@ def _load_dotenv(path: Path) -> None:
         pass
 
 
-_ROOT = Path(__file__).resolve().parents[2]  # .../workspace when bot/config/
+_ROOT = Path(__file__).resolve().parents[2]
 if not (_ROOT / "bacbo_royal_complete.py").is_file():
     _ROOT = Path("/home/runner/workspace")
 for _p in (
@@ -54,7 +54,7 @@ def _env(*keys: str, default: str = "") -> str:
     return default
 
 
-# Canonical names bacbo expects
+# ── Core credentials ─────────────────────────────────────────────────────────
 API_ID = _env("TELEGRAM_API_ID", "API_ID")
 API_HASH = _env("TELEGRAM_API_HASH", "API_HASH")
 try:
@@ -69,7 +69,6 @@ TARGET = _env(
     "TARGET",
     default="UNIQUE_g1",
 )
-# Never keep excluded Mr_iv4 as TARGET after Profit Chat Bundle pivot
 if str(TARGET).lstrip("@") in {"Mr_iv4", "mr_iv4", "6774605259"}:
     TARGET = "UNIQUE_g1"
 
@@ -87,7 +86,6 @@ TELEGRAM_SESSION_STRING = _env(
 PHONE = _env("TELEGRAM_PHONE", "PHONE")
 BOT_TOKEN = _env("TELEGRAM_BOT_TOKEN", "BOT_TOKEN")
 
-# Session paths — bacbo imports SESSION_FILE
 _sess_string_path = _ROOT / ".telegram_session_string"
 _sess_sqlite_default = _ROOT / "bacbo_royal.session"
 SESSION_FILE = _env(
@@ -100,7 +98,6 @@ SESSION = SESSION_FILE
 STRING_SESSION = TELEGRAM_SESSION_STRING
 TELEGRAM_STRING_SESSION = TELEGRAM_SESSION_STRING
 
-# Materialize session string file if secret present
 if len(TELEGRAM_SESSION_STRING) > 50:
     try:
         if (
@@ -121,7 +118,6 @@ elif _sess_string_path.is_file():
     except Exception:
         pass
 
-# Extra common aliases bacbo forks use
 DB_PATH = _env("BACBO_DB", "DB_PATH", default=str(_ROOT / "bot" / "bacbo.db"))
 DATABASE = DB_PATH
 DB_FILE = DB_PATH
@@ -130,6 +126,27 @@ ADMIN_ID = OWNER_ID
 CHAT_ID = TARGET
 PEER = TARGET
 GUNIQUE_PEER = TELEGRAM_COUNTDOWN_PEER
+
+# Bacbo / utils private constants (safe defaults — overridden if env sets them)
+RECONNECT_DELAY = float(_env("RECONNECT_DELAY", default="5") or "5")
+_BOOT_GRACE_SECS = float(_env("_BOOT_GRACE_SECS", "BOOT_GRACE_SECS", default="30") or "30")
+PROTECTED_ROOMS: List[str] = []
+_KNOWN_DEAD_ROOMS: Set[str] = set()
+ROOM_TIERS: Dict[str, Any] = {}
+_COLOR_ICON_SHORT = {
+    "red": "🔴",
+    "blue": "🔵",
+    "tie": "🟡",
+    "player": "🔵",
+    "banker": "🔴",
+    "R": "🔴",
+    "B": "🔵",
+    "T": "🟡",
+}
+_COLOR_ICON = _COLOR_ICON_SHORT
+COLOR_ICON = _COLOR_ICON_SHORT
+COLOR_ICON_SHORT = _COLOR_ICON_SHORT
+_COLOR_EMOJI = _COLOR_ICON_SHORT
 
 __all__ += [
     "API_ID",
@@ -156,109 +173,150 @@ __all__ += [
     "CHAT_ID",
     "PEER",
     "GUNIQUE_PEER",
+    "RECONNECT_DELAY",
+    "_BOOT_GRACE_SECS",
+    "PROTECTED_ROOMS",
+    "_KNOWN_DEAD_ROOMS",
+    "ROOM_TIERS",
+    "_COLOR_ICON_SHORT",
+    "_COLOR_ICON",
+    "COLOR_ICON",
+    "COLOR_ICON_SHORT",
+    "_COLOR_EMOJI",
 ]
 
 
-def _bacbo_import_names() -> List[str]:
-    """Parse `from config import (...)` in bacbo_royal_complete.py."""
-    path = _ROOT / "bacbo_royal_complete.py"
-    if not path.is_file():
-        path = Path("/home/runner/workspace/bacbo_royal_complete.py")
-    if not path.is_file():
-        return []
-    try:
-        src = path.read_text(encoding="utf-8", errors="ignore")
-    except Exception:
-        return []
-    # Match first from-config import block (paren or single-line)
-    m = re.search(
-        r"from\s+config\s+import\s*\((.*?)\)",
-        src,
-        flags=re.S,
-    )
-    if not m:
-        m = re.search(r"from\s+config\s+import\s+([^\n]+)", src)
-        if not m:
-            return []
-        return [x.strip() for x in m.group(1).split(",") if x.strip() and x.strip() != "*"]
-    body = m.group(1)
+def _parse_from_config_names(src: str) -> List[str]:
     names: List[str] = []
-    for part in body.split(","):
-        part = part.strip()
-        if not part or part.startswith("#"):
+    for m in re.finditer(r"from\s+config\s+import\s*\((.*?)\)", src, flags=re.S):
+        for part in m.group(1).split(","):
+            part = part.split("#", 1)[0].strip()
+            if " as " in part:
+                part = part.split(" as ", 1)[-1].strip()
+            if part.isidentifier():
+                names.append(part)
+    for m in re.finditer(r"from\s+config\s+import\s+([^\n(]+)", src):
+        chunk = m.group(1).strip()
+        if chunk.startswith("("):
             continue
-        # strip trailing comments / "as" aliases → export the bound name
-        part = part.split("#", 1)[0].strip()
-        if " as " in part:
-            part = part.split(" as ", 1)[-1].strip()
-        if part.isidentifier():
-            names.append(part)
+        for part in chunk.split(","):
+            part = part.split("#", 1)[0].strip()
+            if " as " in part:
+                part = part.split(" as ", 1)[-1].strip()
+            if part.isidentifier() and part != "*":
+                names.append(part)
     return names
 
 
-def _ensure_bacbo_names() -> None:
-    """Fill any name bacbo imports that we don't already define."""
-    g = globals()
-    defaults = {
-        "API_ID": API_ID,
-        "API_HASH": API_HASH,
-        "TARGET": TARGET,
-        "SESSION_FILE": SESSION_FILE,
-        "SESSION_PATH": SESSION_FILE,
-        "SESSION": SESSION_FILE,
-        "STRING_SESSION": TELEGRAM_SESSION_STRING,
-        "TELEGRAM_SESSION_STRING": TELEGRAM_SESSION_STRING,
-        "PHONE": PHONE,
-        "BOT_TOKEN": BOT_TOKEN,
-        "DB_PATH": DB_PATH,
-        "DATABASE": DB_PATH,
-        "OWNER_ID": OWNER_ID,
-        "CHAT_ID": TARGET,
-        "PEER": TARGET,
-    }
-    for name in _bacbo_import_names():
-        if name in g and g[name] not in (None, ""):
+def _scan_import_names() -> List[str]:
+    found: List[str] = []
+    roots = [_ROOT, Path("/home/runner/workspace")]
+    seen_files: Set[str] = set()
+    for root in roots:
+        if not root.is_dir():
             continue
-        if name in defaults:
-            g[name] = defaults[name]
-        elif name.endswith("_PEER") or name in {"TARGET", "CHAT", "CHAT_ID"}:
-            g[name] = TARGET
-        elif "SESSION" in name and "STRING" in name:
-            g[name] = TELEGRAM_SESSION_STRING
-        elif "SESSION" in name:
-            g[name] = SESSION_FILE
-        elif name in {"API_ID", "TELEGRAM_API_ID"}:
-            g[name] = API_ID
-        elif name in {"API_HASH", "TELEGRAM_API_HASH"}:
-            g[name] = API_HASH
-        else:
-            # Last resort: empty / env mirror so import succeeds; bacbo may set later
-            g[name] = _env(name, default="")
+        candidates = [root / "bacbo_royal_complete.py"]
+        bot = root / "bot"
+        if bot.is_dir():
+            candidates.extend(bot.glob("*.py"))
+            candidates.extend(bot.glob("**/*.py"))
+        for path in candidates:
+            try:
+                key = str(path.resolve())
+            except Exception:
+                key = str(path)
+            if key in seen_files or not path.is_file():
+                continue
+            seen_files.add(key)
+            # skip this package's own files to avoid noise
+            if "bot/config/" in key.replace("\\", "/"):
+                continue
+            try:
+                src = path.read_text(encoding="utf-8", errors="ignore")
+            except Exception:
+                continue
+            if "from config import" not in src:
+                continue
+            found.extend(_parse_from_config_names(src))
+    # dedupe preserve order
+    out: List[str] = []
+    seen: Set[str] = set()
+    for n in found:
+        if n not in seen:
+            seen.add(n)
+            out.append(n)
+    return out
+
+
+def _default_for(name: str) -> Any:
+    g = globals()
+    if name in g:
+        return g[name]
+    u = name.upper()
+    if name in {"API_ID", "TELEGRAM_API_ID"}:
+        return API_ID
+    if name in {"API_HASH", "TELEGRAM_API_HASH"}:
+        return API_HASH
+    if name in {"TARGET", "CHAT_ID", "PEER", "CHAT", "TELEGRAM_TARGET_PEER"}:
+        return TARGET
+    if "COLOR" in u and "ICON" in u:
+        return dict(_COLOR_ICON_SHORT)
+    if "COLOR" in u and "EMOJI" in u:
+        return dict(_COLOR_ICON_SHORT)
+    if name.endswith("_ROOMS") or name.endswith("_ROOM_IDS"):
+        return []
+    if name.startswith("_KNOWN_") or name.endswith("_SET"):
+        return set()
+    if name.endswith("_TIERS") or name.endswith("_MAP") or name.endswith("_DICT"):
+        return {}
+    if "DELAY" in u or name.endswith("_SECS") or name.endswith("_SECONDS"):
+        return 5.0
+    if "TIMEOUT" in u or "INTERVAL" in u:
+        return 10.0
+    if "SESSION" in u and "STRING" in u:
+        return TELEGRAM_SESSION_STRING
+    if "SESSION" in u:
+        return SESSION_FILE
+    if name.endswith("_PATH") or name.endswith("_FILE"):
+        return str(_ROOT / name.lower())
+    if name.endswith("_ID") and name != "API_ID":
+        return OWNER_ID or ""
+    if name.startswith("IS_") or name.endswith("_ENABLED") or name.startswith("ENABLE_"):
+        return True
+    if name.endswith("_MIN") or name.endswith("_MAX") or name.endswith("_LIMIT"):
+        return 0
+    # env mirror
+    ev = _env(name)
+    if ev != "":
+        if ev.replace(".", "", 1).isdigit():
+            return float(ev) if "." in ev else int(ev)
+        return ev
+    return ""
+
+
+def _ensure_all_config_imports() -> List[str]:
+    """Materialize every name any local file imports from config."""
+    g = globals()
+    names = _scan_import_names()
+    created: List[str] = []
+    for name in names:
+        if name not in g:
+            g[name] = _default_for(name)
+            created.append(name)
         if name not in __all__:
             __all__.append(name)
+    return created
 
 
-_ensure_bacbo_names()
+_CREATED = _ensure_all_config_imports()
 
 
-def __getattr__(name: str) -> Any:  # pep 562 — catch late/odd imports
-    if name.startswith("_"):
+def __getattr__(name: str) -> Any:
+    if name.startswith("__"):
         raise AttributeError(name)
-    # Prefer env
-    val = _env(name)
-    if val != "":
-        globals()[name] = val
-        return val
-    if "SESSION" in name and "STRING" not in name:
-        globals()[name] = SESSION_FILE
-        return SESSION_FILE
-    if "SESSION" in name:
-        globals()[name] = TELEGRAM_SESSION_STRING
-        return TELEGRAM_SESSION_STRING
-    if name in {"TARGET", "CHAT_ID", "PEER", "CHAT"}:
-        return TARGET
-    globals()[name] = ""
-    return ""
+    val = _default_for(name)
+    globals()[name] = val
+    return val
 
 
 # ── Package APIs (fail-open) ─────────────────────────────────────────────────
