@@ -2,7 +2,7 @@
 # Profit Family AI + One AI Organizer + UNIQUE_g1 APEX Bundle (Mr_iv4 REMOVED).
 #
 #   curl -fsSL -o /tmp/SKY.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260807d'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_PROFIT_SKYSCRAPER.sh?v=20260807f'
 #   bash /tmp/SKY.sh
 #
 # Do NOT paste the printed DONE lines back into the shell — they are messages, not commands.
@@ -12,7 +12,7 @@ cd "$ROOT"
 PY="${PY:-python3}"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260807e"
+V="20260807f"
 OK=0
 FAIL=0
 
@@ -41,7 +41,7 @@ done
 
 echo "-- bot runtime --"
 for f in hub_engine_route.py telegram_outbox.py dual_lane_router.py chat_router.py chat_shelves.py \
-         skin_gate.py lux_send_config_bind.py window_packer.py round_sync_densifier.py \
+         skin_gate.py lux_send_config_bind.py lux_re_harden.py window_packer.py round_sync_densifier.py \
          human_return_path.py literally_everything_return.py factual_card_contract.py \
          runtime_supervisor.py hub_max_boot.py hub_dispatch.py build_profit_skyscraper_brain.py \
          build_result_essence_atlas.py triage_museum_keep_trash.py; do

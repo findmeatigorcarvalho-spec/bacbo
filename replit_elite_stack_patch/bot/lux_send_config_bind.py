@@ -206,6 +206,18 @@ def patch_module(mod: Any) -> int:
 
 
 def apply(silent: bool = False) -> int:
+    # Repair *_RE string bindings before/while send wraps (CrashGuard fix).
+    try:
+        from lux_re_harden import apply as _re_harden
+
+        _re_harden(silent=True)
+    except Exception:
+        try:
+            from bot.lux_re_harden import apply as _re_harden  # type: ignore
+
+            _re_harden(silent=True)
+        except Exception:
+            pass
     patched = 0
     for name in ("__main__", "bacbo_royal_complete", "bacbo"):
         mod = sys.modules.get(name)
