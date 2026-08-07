@@ -73,9 +73,84 @@ def _backup_candidates(path: Path) -> list[Path]:
     return out
 
 
+def _fix_nested_reharden_inside_scb(text: str) -> tuple[str, bool]:
+    """Fix reharden injected inside send-config-bind try (user paste ~725)."""
+    pat = re.compile(
+        r"# --- LUXURY_SEND_CONFIG_BIND \(auto\) ---\n"
+        r"try:\n"
+        r"(?P<body>(?:[ \t]+.+\n)*?)"
+        r"\ntry:\n"
+        r"[ \t]+import lux_re_harden[^\n]*\n"
+        r"(?:[ \t]+.+\n)*?"
+        r"except Exception as _lux_reh_exc:\n"
+        r"(?:[ \t]+.+\n)*?"
+        r"(?P<scb_except>except Exception as _lux_scb_exc:\n"
+        r"(?:[ \t]+.+\n)*?)"
+        r"(?P<end># --- end LUXURY_SEND_CONFIG_BIND ---\n?)",
+        re.M,
+    )
+
+    def _repl(m: re.Match[str]) -> str:
+        body = m.group("body")
+        if not body.endswith("\n"):
+            body += "\n"
+        return (
+            "# --- LUXURY_SEND_CONFIG_BIND (auto) ---\n"
+            "try:\n"
+            f"{body}"
+            f"{m.group('scb_except')}"
+            f"{m.group('end')}"
+            "\n# --- lux_re_harden (moved out of send-config-bind try) ---\n"
+            "try:\n"
+            "    import lux_re_harden  # noqa: F401\n"
+            '    print("[LUXURY] re-harden loaded")\n'
+            "except Exception as _lux_reh_exc:\n"
+            '    print("[LUXURY] re-harden skipped:", _lux_reh_exc)\n'
+            "# --- end lux_re_harden ---\n"
+        )
+
+    new, n = pat.subn(_repl, text, count=1)
+    if n:
+        return new, True
+
+    # Looser fallback without section markers
+    pat2 = re.compile(
+        r"(try:\n"
+        r"[ \t]+import lux_send_config_bind[^\n]*\n"
+        r"[ \t]+print\(\"\[LUXURY\] send-config-bind loaded\"\)\n)"
+        r"\n?try:\n"
+        r"[ \t]+import lux_re_harden[^\n]*\n"
+        r"[ \t]+print\(\"\[LUXURY\] re-harden loaded\"\)\n"
+        r"except Exception as _lux_reh_exc:\n"
+        r"[ \t]+print\(\"\[LUXURY\] re-harden skipped:\", _lux_reh_exc\)\n"
+        r"(except Exception as _lux_scb_exc:\n"
+        r"[ \t]+print\(\"\[LUXURY\] send-config-bind skipped:\", _lux_scb_exc\)\n)",
+        re.M,
+    )
+
+    def _repl2(m: re.Match[str]) -> str:
+        return (
+            m.group(1)
+            + m.group(2)
+            + "\n# --- lux_re_harden (moved out of send-config-bind try) ---\n"
+            + "try:\n"
+            + "    import lux_re_harden  # noqa: F401\n"
+            + '    print("[LUXURY] re-harden loaded")\n'
+            + "except Exception as _lux_reh_exc:\n"
+            + '    print("[LUXURY] re-harden skipped:", _lux_reh_exc)\n'
+            + "# --- end lux_re_harden ---\n"
+        )
+
+    new2, n2 = pat2.subn(_repl2, text, count=1)
+    return (new2, True) if n2 else (text, False)
+
+
 def _strip_reharden_blocks(text: str) -> str:
     """Remove prior lux_re_harden injects so we can re-append at EOF safely."""
-    # Multiline try/import lux_re_harden/except blocks
+    text2, fixed = _fix_nested_reharden_inside_scb(text)
+    if fixed:
+        return text2
+    # Multiline try/import lux_re_harden/except blocks (standalone)
     pat = re.compile(
         r"\n[ \t]*try:\n"
         r"(?:[ \t]+.+\n)*?"
@@ -86,7 +161,13 @@ def _strip_reharden_blocks(text: str) -> str:
         re.M,
     )
     text2 = pat.sub("\n", text)
-    # EOF marker comment blocks
+    text2 = re.sub(
+        r"\n# --- lux_re_harden[^\n]*---\n"
+        r"[\s\S]*?"
+        r"# --- end lux_re_harden ---\n?",
+        "\n",
+        text2,
+    )
     text2 = re.sub(
         r"\n# --- lux_re_harden \(safe EOF inject; do not move inside try\) ---"
         r"[\s\S]*?(?=\n# ---|\Z)",
@@ -143,37 +224,44 @@ def repair() -> dict:
         report["actions"].append("already_valid")
     else:
         _show(err, src)
-        # Prefer restore from known-good backup
-        restored = False
-        for c in _backup_candidates(path):
-            if c.resolve() == bak.resolve():
-                continue
-            try:
-                t = c.read_text(encoding="utf-8", errors="ignore")
-                if _parse(t) is not None:
-                    continue
-            except Exception:
-                continue
-            path.write_text(t, encoding="utf-8")
-            report["actions"].append(f"restored_from:{c}")
-            src = t
-            restored = True
-            break
-
-        if not restored:
-            text = _strip_reharden_blocks(src)
-            report["actions"].append("stripped_reharden_blocks")
-            err2 = _parse(text)
-            if err2 is not None:
-                text = _close_orphan_try(text, err2)
-                report["actions"].append("closed_orphan_try")
-            err3 = _parse(text)
-            if err3 is not None:
-                _show(err3, text)
-                raise SystemExit(f"UNREPAIRED:{err3.lineno}:{err3.msg}")
+        # 1) Exact known damage: reharden nested inside send-config-bind try
+        text, nested_fixed = _fix_nested_reharden_inside_scb(src)
+        if nested_fixed and _parse(text) is None:
             path.write_text(text, encoding="utf-8")
             src = text
-            report["actions"].append("surgical_ok")
+            report["actions"].append("fixed_nested_reharden_in_scb")
+        else:
+            # 2) Prefer restore from known-good backup
+            restored = False
+            for c in _backup_candidates(path):
+                if c.resolve() == bak.resolve():
+                    continue
+                try:
+                    t = c.read_text(encoding="utf-8", errors="ignore")
+                    if _parse(t) is not None:
+                        continue
+                except Exception:
+                    continue
+                path.write_text(t, encoding="utf-8")
+                report["actions"].append(f"restored_from:{c}")
+                src = t
+                restored = True
+                break
+
+            if not restored:
+                text = _strip_reharden_blocks(src)
+                report["actions"].append("stripped_reharden_blocks")
+                err2 = _parse(text)
+                if err2 is not None:
+                    text = _close_orphan_try(text, err2)
+                    report["actions"].append("closed_orphan_try")
+                err3 = _parse(text)
+                if err3 is not None:
+                    _show(err3, text)
+                    raise SystemExit(f"UNREPAIRED:{err3.lineno}:{err3.msg}")
+                path.write_text(text, encoding="utf-8")
+                src = text
+                report["actions"].append("surgical_ok")
 
     # Ensure safe EOF reharden (and remove mid-file copies first)
     src = path.read_text(encoding="utf-8", errors="ignore")

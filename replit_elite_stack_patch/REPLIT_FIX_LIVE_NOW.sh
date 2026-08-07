@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # One-shot: typed config + ESTUDO kill + bacbo stay-up + restart.
 #   curl -fsSL -o /tmp/LIVE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_LIVE_NOW.sh?v=20260807i'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_LIVE_NOW.sh?v=20260807j'
 #   bash /tmp/LIVE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260807i"
+V="20260807j"
 PY="${PY:-python3}"
 
 echo "========== FIX LIVE NOW (typed config + ESTUDO block + bacbo stay-up) =========="
