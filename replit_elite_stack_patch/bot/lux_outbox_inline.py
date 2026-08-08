@@ -110,10 +110,21 @@ def apply() -> bool:
             _ARMED = True
         return False
     ok = patch_telethon()
+    if not ok:
+        # telethon may import a moment later — one deferred retry on the
+        # *main* thread via threading.Timer is OK (only calls patch_telethon,
+        # never client.loop).
+        try:
+            import threading
+
+            threading.Timer(1.0, patch_telethon).start()
+            threading.Timer(3.0, patch_telethon).start()
+        except Exception:
+            pass
     if not _ARMED:
         _ARMED = True
         print("[OUTBOX-INLINE] arm — will start after client.connect() on bacbo loop")
-    return ok
+    return True
 
 
 if enabled():
