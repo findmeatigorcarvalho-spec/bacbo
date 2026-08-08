@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # Repair bacbo_royal_complete.py SyntaxError (broken try from bad inject).
 #   curl -fsSL -o /tmp/FIXSYN.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_BACBO_SYNTAX.sh?v=20260807k'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_FIX_BACBO_SYNTAX.sh?v=20260807m'
 #   bash /tmp/FIXSYN.sh && bash /tmp/LIVE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260807k"
+V="20260807m"
 PY="${PY:-python3}"
 
 echo "========== FIX bacbo SYNTAX =========="

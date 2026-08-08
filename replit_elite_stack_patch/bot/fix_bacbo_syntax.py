@@ -74,75 +74,116 @@ def _backup_candidates(path: Path) -> list[Path]:
 
 
 def _fix_nested_reharden_inside_scb(text: str) -> tuple[str, bool]:
-    """Fix reharden injected inside send-config-bind try (user paste ~725)."""
-    pat = re.compile(
-        r"# --- LUXURY_SEND_CONFIG_BIND \(auto\) ---\n"
-        r"try:\n"
-        r"(?P<body>(?:[ \t]+.+\n)*?)"
-        r"\ntry:\n"
-        r"[ \t]+import lux_re_harden[^\n]*\n"
-        r"(?:[ \t]+.+\n)*?"
-        r"except Exception as _lux_reh_exc:\n"
-        r"(?:[ \t]+.+\n)*?"
-        r"(?P<scb_except>except Exception as _lux_scb_exc:\n"
-        r"(?:[ \t]+.+\n)*?)"
-        r"(?P<end># --- end LUXURY_SEND_CONFIG_BIND ---\n?)",
-        re.M,
-    )
+    """Fix reharden injected inside send-config-bind try (user paste ~725).
 
-    def _repl(m: re.Match[str]) -> str:
-        body = m.group("body")
-        if not body.endswith("\n"):
-            body += "\n"
-        return (
-            "# --- LUXURY_SEND_CONFIG_BIND (auto) ---\n"
-            "try:\n"
-            f"{body}"
-            f"{m.group('scb_except')}"
-            f"{m.group('end')}"
-            "\n# --- lux_re_harden (moved out of send-config-bind try) ---\n"
-            "try:\n"
-            "    import lux_re_harden  # noqa: F401\n"
-            '    print("[LUXURY] re-harden loaded")\n'
-            "except Exception as _lux_reh_exc:\n"
-            '    print("[LUXURY] re-harden skipped:", _lux_reh_exc)\n'
-            "# --- end lux_re_harden ---\n"
-        )
+    Line-based (tolerant of blank lines / CRLF) — regex kept missing this.
+    """
+    # Normalize newlines for matching; restore \n on write.
+    raw = text.replace("\r\n", "\n").replace("\r", "\n")
+    lines = raw.splitlines(keepends=True)
 
-    new, n = pat.subn(_repl, text, count=1)
-    if n:
-        return new, True
+    def _strip(i: int) -> str:
+        return lines[i].strip()
 
-    # Looser fallback without section markers
-    pat2 = re.compile(
-        r"(try:\n"
-        r"[ \t]+import lux_send_config_bind[^\n]*\n"
-        r"[ \t]+print\(\"\[LUXURY\] send-config-bind loaded\"\)\n)"
-        r"\n?try:\n"
-        r"[ \t]+import lux_re_harden[^\n]*\n"
-        r"[ \t]+print\(\"\[LUXURY\] re-harden loaded\"\)\n"
-        r"except Exception as _lux_reh_exc:\n"
-        r"[ \t]+print\(\"\[LUXURY\] re-harden skipped:\", _lux_reh_exc\)\n"
-        r"(except Exception as _lux_scb_exc:\n"
-        r"[ \t]+print\(\"\[LUXURY\] send-config-bind skipped:\", _lux_scb_exc\)\n)",
-        re.M,
-    )
+    start = None
+    for i, ln in enumerate(lines):
+        if "LUXURY_SEND_CONFIG_BIND (auto)" in ln:
+            start = i
+            break
+    if start is None:
+        return text, False
 
-    def _repl2(m: re.Match[str]) -> str:
-        return (
-            m.group(1)
-            + m.group(2)
-            + "\n# --- lux_re_harden (moved out of send-config-bind try) ---\n"
-            + "try:\n"
-            + "    import lux_re_harden  # noqa: F401\n"
-            + '    print("[LUXURY] re-harden loaded")\n'
-            + "except Exception as _lux_reh_exc:\n"
-            + '    print("[LUXURY] re-harden skipped:", _lux_reh_exc)\n'
-            + "# --- end lux_re_harden ---\n"
-        )
+    # Expect: start, try:, import lux_send..., print loaded, [blanks], try: reharden...
+    i = start + 1
+    while i < len(lines) and not _strip(i):
+        i += 1
+    if i >= len(lines) or _strip(i) != "try:":
+        return text, False
+    try_scb = i
+    i += 1
+    # collect body until a nested bare `try:` (reharden) or except
+    body_idxs: list[int] = []
+    reharden_try = None
+    while i < len(lines):
+        s = _strip(i)
+        if s == "try:" and any(
+            "lux_re_harden" in _strip(j)
+            for j in range(i + 1, min(i + 4, len(lines)))
+        ):
+            reharden_try = i
+            break
+        if s.startswith("except Exception as _lux_scb_exc"):
+            # already correct structure
+            return text, False
+        if s.startswith("# --- end LUXURY_SEND_CONFIG_BIND"):
+            return text, False
+        body_idxs.append(i)
+        i += 1
+    if reharden_try is None:
+        return text, False
 
-    new2, n2 = pat2.subn(_repl2, text, count=1)
-    return (new2, True) if n2 else (text, False)
+    # Walk reharden try/except block
+    i = reharden_try + 1
+    while i < len(lines) and (
+        not _strip(i)
+        or _strip(i).startswith("import lux_re_harden")
+        or "re-harden loaded" in _strip(i)
+        or _strip(i).startswith("except Exception as _lux_reh_exc")
+        or "re-harden skipped" in _strip(i)
+    ):
+        i += 1
+        # stop when we hit scb except
+        if i < len(lines) and _strip(i).startswith("except Exception as _lux_scb_exc"):
+            break
+    if i >= len(lines) or not _strip(i).startswith("except Exception as _lux_scb_exc"):
+        # maybe reharden except then scb except — advance past reharden except body
+        while i < len(lines) and not _strip(i).startswith("except Exception as _lux_scb_exc"):
+            i += 1
+    if i >= len(lines) or not _strip(i).startswith("except Exception as _lux_scb_exc"):
+        return text, False
+    scb_except_start = i
+    i += 1
+    while i < len(lines):
+        s = _strip(i)
+        if s.startswith("# --- end LUXURY_SEND_CONFIG_BIND"):
+            break
+        if s.startswith("# ---") and "LUXURY" in s:
+            break
+        i += 1
+    if i >= len(lines) or "end LUXURY_SEND_CONFIG_BIND" not in _strip(i):
+        return text, False
+    end_idx = i
+
+    # Rebuild: scb try + body + scb except + end, then reharden block after
+    out: list[str] = []
+    out.extend(lines[: start + 1])  # through marker
+    # keep blank lines between marker and try if any
+    out.extend(lines[start + 1 : try_scb])
+    out.append(lines[try_scb])  # try:
+    for bi in body_idxs:
+        # skip blank-only lines that were between body and nested try? keep non-empty body
+        if _strip(bi) or True:
+            # drop trailing blanks from body (they sat before nested try)
+            pass
+    # body without trailing blank lines
+    body_lines = [lines[bi] for bi in body_idxs]
+    while body_lines and not body_lines[-1].strip():
+        body_lines.pop()
+    out.extend(body_lines)
+    out.extend(lines[scb_except_start:end_idx + 1])
+    out.append("\n")
+    out.append("# --- lux_re_harden (moved out of send-config-bind try) ---\n")
+    out.append("try:\n")
+    out.append("    import lux_re_harden  # noqa: F401\n")
+    out.append('    print("[LUXURY] re-harden loaded")\n')
+    out.append("except Exception as _lux_reh_exc:\n")
+    out.append('    print("[LUXURY] re-harden skipped:", _lux_reh_exc)\n')
+    out.append("# --- end lux_re_harden ---\n")
+    out.extend(lines[end_idx + 1 :])
+    new = "".join(out)
+    if _parse(new) is not None:
+        return text, False
+    return new, True
 
 
 def _strip_reharden_blocks(text: str) -> str:
