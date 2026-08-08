@@ -1,17 +1,22 @@
 """Start telegram_outbox on bacbo's TelegramClient (one session).
 
-Prevents AuthKeyDuplicatedError from a second outbox process stealing the
-StringSession and killing bot_live.
+Never touch ``client.loop`` from a Timer/thread — Telethon's ``.loop``
+property calls ``get_running_loop()`` and raises in non-async threads
+(that traceback storm was killing stability).
+
+We patch ``TelegramClient.connect`` / ``start`` so the outbox task is
+scheduled with ``asyncio.create_task`` *inside* bacbo's running loop.
 """
 from __future__ import annotations
 
 import asyncio
+import functools
 import os
-import threading
 from typing import Any
 
 _STARTED = False
-_LOCK = threading.Lock()
+_PATCHED = False
+_ARMED = False
 
 
 def enabled() -> bool:
@@ -23,90 +28,92 @@ def enabled() -> bool:
     }
 
 
-def _get_client() -> Any:
-    try:
-        import state as st  # type: ignore
-
-        c = getattr(st, "client", None)
-        if c is not None:
-            return c
-    except Exception:
-        pass
-    try:
-        import sys
-
-        main = sys.modules.get("__main__")
-        if main is not None:
-            c = getattr(main, "client", None)
-            if c is not None:
-                return c
-            st = getattr(main, "state", None)
-            if st is not None:
-                c = getattr(st, "client", None)
-                if c is not None:
-                    return c
-    except Exception:
-        pass
-    return None
-
-
-def _schedule_on_client(client: Any) -> bool:
+async def _boot_outbox(client: Any) -> None:
     global _STARTED
-    loop = getattr(client, "loop", None)
-    if loop is None or not getattr(loop, "is_running", lambda: False)():
-        return False
-
-    with _LOCK:
-        if _STARTED:
-            return True
-        _STARTED = True
-
-    async def _runner() -> None:
-        for _ in range(40):
-            try:
-                if client.is_connected():
-                    break
-            except Exception:
-                pass
-            await asyncio.sleep(0.5)
-        # Let dialogs / subscribe settle before RESULT polling
-        await asyncio.sleep(5.0)
-        try:
-            import telegram_outbox as ob
-
-            print("[OUTBOX-INLINE] starting on bacbo client (shared session)")
-            await ob.run_inline(client)
-        except Exception as exc:
-            print("[OUTBOX-INLINE] stopped:", repr(exc))
-
+    if _STARTED:
+        return
+    _STARTED = True
+    # Let auth / dialogs / subscribe settle
+    await asyncio.sleep(8.0)
     try:
-        asyncio.run_coroutine_threadsafe(_runner(), loop)
-        print("[OUTBOX-INLINE] scheduled on bacbo client.loop")
+        import telegram_outbox as ob
+
+        print("[OUTBOX-INLINE] starting on bacbo client (shared session)")
+        await ob.run_inline(client)
+    except Exception as exc:
+        print("[OUTBOX-INLINE] stopped:", repr(exc))
+        # allow one retry path on next connect if this was early
+        # (keep _STARTED True to avoid task storms)
+
+
+def _spawn(client: Any) -> None:
+    if _STARTED:
+        return
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        return
+    try:
+        loop.create_task(_boot_outbox(client))
+        print("[OUTBOX-INLINE] scheduled create_task on running loop")
+    except Exception as exc:
+        print("[OUTBOX-INLINE] create_task fail:", repr(exc))
+
+
+def _wrap_async(orig):
+    if getattr(orig, "_lux_outbox_inline_wrapped", False):
+        return orig
+
+    @functools.wraps(orig)
+    async def _wrapped(self, *args, **kwargs):
+        result = await orig(self, *args, **kwargs)
+        try:
+            _spawn(self)
+        except Exception as exc:
+            print("[OUTBOX-INLINE] spawn after connect skip:", repr(exc))
+        return result
+
+    _wrapped._lux_outbox_inline_wrapped = True  # type: ignore[attr-defined]
+    return _wrapped
+
+
+def patch_telethon() -> bool:
+    global _PATCHED
+    if _PATCHED:
+        return True
+    try:
+        from telethon import TelegramClient  # type: ignore
+    except Exception as exc:
+        print("[OUTBOX-INLINE] telethon missing:", repr(exc))
+        return False
+    try:
+        if hasattr(TelegramClient, "connect"):
+            TelegramClient.connect = _wrap_async(TelegramClient.connect)  # type: ignore
+        if hasattr(TelegramClient, "start"):
+            # start may be sync or async depending on version — only wrap if coroutine
+            st = getattr(TelegramClient, "start")
+            if asyncio.iscoroutinefunction(st):
+                TelegramClient.start = _wrap_async(st)  # type: ignore
+        _PATCHED = True
+        print("[OUTBOX-INLINE] patched TelegramClient.connect")
         return True
     except Exception as exc:
-        print("[OUTBOX-INLINE] schedule fail:", repr(exc))
-        with _LOCK:
-            _STARTED = False
+        print("[OUTBOX-INLINE] patch fail:", repr(exc))
         return False
 
 
 def apply() -> bool:
+    global _ARMED
     if not enabled():
-        print("[OUTBOX-INLINE] off")
+        if not _ARMED:
+            print("[OUTBOX-INLINE] off")
+            _ARMED = True
         return False
-
-    def _try() -> None:
-        if _STARTED:
-            return
-        client = _get_client()
-        if client is None:
-            return
-        _schedule_on_client(client)
-
-    for d in (3.0, 6.0, 12.0, 20.0, 35.0, 55.0, 90.0, 120.0):
-        threading.Timer(d, _try).start()
-    print("[OUTBOX-INLINE] arm — attach to bacbo client when loop is running")
-    return True
+    ok = patch_telethon()
+    if not _ARMED:
+        _ARMED = True
+        print("[OUTBOX-INLINE] arm — will start after client.connect() on bacbo loop")
+    return ok
 
 
 if enabled():
