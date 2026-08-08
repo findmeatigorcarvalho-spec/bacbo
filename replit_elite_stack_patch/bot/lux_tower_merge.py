@@ -227,12 +227,14 @@ def merge_candidate(
             rooms = []
             if agreeing_rooms:
                 rooms = [str(r) for r in agreeing_rooms]
+            n_prop = max(len(proposals), len(rooms), 1)
             observe_fire(
                 floors=[p["floor"] for p in proposals],
                 rooms=rooms,
                 color=color,
                 kind=kind,
-                origin="COALITION" if len(rooms) >= 2 else "SOLO_FACT",
+                origin="COALITION" if n_prop >= 2 else "SOLO_FACT",
+                mode="COALITION" if n_prop >= 2 else "SINGULAR",
             )
         except Exception:
             pass

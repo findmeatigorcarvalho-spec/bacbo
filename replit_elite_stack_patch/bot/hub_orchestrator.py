@@ -157,7 +157,7 @@ def orchestrate(
             }
         )
 
-    return {
+    out = {
         "primary": primary,
         "spill": spill,
         "dropped_opp": dropped,
@@ -169,7 +169,16 @@ def orchestrate(
             f"score={primary.get('score')}"
         ),
         "ts": time.time(),
+        "mode": "COALITION" if len(winners) >= 2 or dropped else "SINGULAR",
     }
+    # Watchdog: every coalition / singular hub decision + opp locks
+    try:
+        from hub_impact_learner import observe_hub_decision
+
+        observe_hub_decision(out)
+    except Exception:
+        pass
+    return out
 
 
 def pick_primary(

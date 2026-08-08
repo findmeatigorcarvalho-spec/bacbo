@@ -36,10 +36,17 @@ rooms / sensors
 | **HUB_ORCHESTRATOR=1** | Picks primary + spill peers from free proposals |
 | **SAFE_MERGE** (old) | ≤1 card — compresses peak days into one pipe — **not** the goal |
 
-## Impact learner / watchdog
+## Impact learner / watchdog (always most resourceful)
 
-`hub_impact_learner.py` watches **every** singular gate fire and **every** coalition fire → RESULT.  
-It attributes win/loss/tie to `floor:*`, `room:@*`, `origin:SOLO_FACT|COALITION`, `kind:*`, then boosts hub scores so the next pick is more resourceful (volume + WR + better decisions).
+`hub_impact_learner.py` watches **every**:
+- singular gate / floor / camada fire → RESULT
+- coalition of signal fires (many same-color proposers) → RESULT
+- opposite-color same-window LOCKS (and whether the lock was right)
+
+It attributes win/loss/tie to `floor:*`, `room:@*`, `origin:*`, `mode:SINGULAR|COALITION`, `kind:*`, `lock:OPP_COLOR`, then boosts hub scores so the next pick is more resourceful — volume, WR, primary, spill, opp-lock, choices.
+
+Ledger: `bot/data/hub_impact_ledger.jsonl`  
+Scores: `bot/data/hub_impact_scores.json` (`resourcefulness_snapshot()`)
 
 ## Room resolve (FloodWait)
 

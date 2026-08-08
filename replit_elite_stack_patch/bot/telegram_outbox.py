@@ -1416,14 +1416,30 @@ async def main() -> None:
                                 rooms_agreed = _json.loads(rooms_agreed)
                             except Exception:
                                 rooms_agreed = [rooms_agreed]
+                        rooms_list = list(rooms_agreed or [])
+                        mode = (
+                            "COALITION"
+                            if len(rooms_list) >= 2
+                            else "SINGULAR"
+                        )
                         observe_result(
                             signal_id=row["id"],
                             outcome=str(row["outcome"] or ""),
                             predicted=str(row["color"] or ""),
                             floors=[str(row.get("source_floor") or "")],
-                            rooms=list(rooms_agreed or []),
+                            rooms=rooms_list,
                             kind=str(row.get("signal_kind") or ""),
                             primary_floor=str(row.get("source_floor") or ""),
+                            origin=(
+                                "COALITION"
+                                if mode == "COALITION"
+                                else "SOLO_FACT"
+                            ),
+                            mode=mode,
+                            actual_color=actual_color(
+                                str(row["color"] or ""),
+                                str(row["outcome"] or ""),
+                            ),
                         )
                     except Exception:
                         pass
