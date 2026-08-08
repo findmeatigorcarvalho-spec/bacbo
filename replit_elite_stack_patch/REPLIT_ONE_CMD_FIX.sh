@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808l'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808m'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808l"
+V="20260808m"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -24,6 +24,7 @@ for pair in \
   "bot/hub_orchestrator.py|replit_elite_stack_patch/bot/hub_orchestrator.py" \
   "bot/hub_impact_learner.py|replit_elite_stack_patch/bot/hub_impact_learner.py" \
   "bot/lux_chat_watchdog.py|replit_elite_stack_patch/bot/lux_chat_watchdog.py" \
+  "bot/lux_outbox_inline.py|replit_elite_stack_patch/bot/lux_outbox_inline.py" \
   "bot/lux_dialog_resolve.py|replit_elite_stack_patch/bot/lux_dialog_resolve.py" \
   "bot/hub_max_boot.py|replit_elite_stack_patch/bot/hub_max_boot.py" \
   "bot/lux_tower_merge.py|replit_elite_stack_patch/bot/lux_tower_merge.py" \
@@ -404,7 +405,8 @@ for kv in \
   LUX_BLOCK_ESTUDO=1 \
   LUX_SKIP_RESOLVE_USERNAME=1 \
   BACBO_READY_SECS=12 \
-  FALLBACK_START_DELAY_SECS=15
+  FALLBACK_START_DELAY_SECS=15 \
+  TELEGRAM_OUTBOX_INLINE=1
 do
   k="${kv%%=*}"
   grep -q "^${k}=" "$ENVF" 2>/dev/null && sed -i "s|^${k}=.*|${kv}|" "$ENVF" || echo "$kv" >> "$ENVF"
@@ -512,35 +514,49 @@ pkill -f 'runtime_supervisor.py|bacbo_royal_complete.py|telegram_outbox.py|run_b
 rm -f bot/data/runtime_supervisor.lock bot/data/telegram_outbox.lock 2>/dev/null || true
 sleep 2
 nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
-# Boot + auth(~8-12s) + outbox delay — wait until outbox is up (no restart thrash)
-sleep 25
-echo "-- wait outbox (bacbo auth+ready) --"
-OUTBOX_UP=0
+# Boot + auth — bacbo must STAY up (outbox is INLINE on same client, no 2nd process)
+sleep 30
+echo "-- wait bacbo stable (outbox INLINE — no telegram_outbox.py process) --"
+# Kill any leftover standalone outbox that would AuthKey-fight bacbo
+pkill -f 'telegram_outbox.py' 2>/dev/null || true
+BACBO_STABLE=0
+INLINE_OK=0
 for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
-  if pgrep -f 'telegram_outbox.py' >/dev/null 2>&1; then
-    OUTBOX_UP=1
-    echo "OUTBOX_UP after ~$((35 + i * 5))s"
-    break
+  if pgrep -f 'run_bacbo_live.py' >/dev/null 2>&1; then
+    BACBO_STABLE=1
+    if awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
+      | grep -qE 'OUTBOX-INLINE\] (scheduled|starting)|mode=INLINE'; then
+      INLINE_OK=1
+      echo "BACBO_STABLE+INLINE after ~$((30 + i * 5))s"
+      break
+    fi
+    # still up — keep waiting for inline attach
+    if [[ "$i" -ge 6 ]]; then
+      echo "BACBO_STABLE (inline attach pending) t=~$((30 + i * 5))s"
+    fi
+  else
+    BACBO_STABLE=0
+    echo "bacbo not up yet / flapping t=~$((30 + i * 5))s"
   fi
   sleep 5
 done
-if [[ "$OUTBOX_UP" -eq 0 ]]; then
-  echo "OUTBOX_PENDING — supervisor still holding (see hold telegram_outbox lines)"
-fi
 
 echo "---- procs ----"
 pgrep -af 'runtime_supervisor|telegram_outbox|bacbo_royal|run_bacbo_live' || true
+if pgrep -f 'telegram_outbox.py' >/dev/null 2>&1; then
+  echo "WARN: standalone telegram_outbox still running — killing (AuthKey risk)"
+  pkill -f 'telegram_outbox.py' 2>/dev/null || true
+fi
 echo "---- bot_live (post-restart only) ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | tail -n 50 || tail -n 40 logs/bot_live.log
 echo "---- fresh errors / gate ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO-KILL|CHAT-WATCH|DROP ESTUDO|run_bacbo_live|run_forever|BootGrace' \
-  | tail -n 40 || true
+  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO-KILL|CHAT-WATCH|DROP ESTUDO|OUTBOX-INLINE|AuthKey|run_bacbo_live|run_forever|BootGrace' \
+  | tail -n 50 || true
 echo "---- supervisor ----"
-tail -n 50 /tmp/luxury_supervisor.log 2>/dev/null || true
+tail -n 40 /tmp/luxury_supervisor.log 2>/dev/null || true
 echo "---- chat watchdog stats ----"
 $PY - <<'PY' 2>/dev/null || true
-import json
 from pathlib import Path
 p = Path("bot/data/chat_watchdog_stats.json")
 print(p.read_text() if p.is_file() else "no stats yet")
@@ -558,10 +574,12 @@ else
   echo "BACBO_DOWN — see tails above"
   exit 1
 fi
-if [[ "$OUTBOX_UP" -eq 1 ]]; then
-  echo "OUTBOX_OK"
+if [[ "$INLINE_OK" -eq 1 ]]; then
+  echo "OUTBOX_INLINE_OK"
+elif [[ "$BACBO_ALIVE" -eq 1 ]]; then
+  echo "OUTBOX_INLINE_PENDING — check logs for [OUTBOX-INLINE]"
 else
-  echo "OUTBOX_NOT_YET — run: sleep 20; pgrep -af telegram_outbox"
+  echo "OUTBOX_INLINE_NO_BACBO"
 fi
 echo "========== DONE =========="
-echo "Expect: no G2 ESTUDO on UNIQUE_g1; [CHAT-WATCH] DROP ESTUDO in logs; pgrep shows supervisor|run_bacbo_live|telegram_outbox"
+echo "Expect: BACBO_UP + OUTBOX_INLINE_OK; pgrep: supervisor|run_bacbo_live (NO telegram_outbox.py)"

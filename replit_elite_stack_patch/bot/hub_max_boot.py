@@ -100,6 +100,8 @@ ENV_KEYS = {
     "FALLBACKS_ENABLED": "1",
     "BACBO_READY_SECS": "12",
     "FALLBACK_START_DELAY_SECS": "15",
+    # Outbox MUST share bacbo's client — standalone steals AuthKey and kills bot_live
+    "TELEGRAM_OUTBOX_INLINE": "1",
     "BUNDLE_ORGANIZER": "1",
 }
 

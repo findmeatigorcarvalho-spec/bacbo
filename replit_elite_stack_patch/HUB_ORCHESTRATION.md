@@ -48,6 +48,12 @@ It attributes win/loss/tie to `floor:*`, `room:@*`, `origin:*`, `mode:SINGULAR|C
 Ledger: `bot/data/hub_impact_ledger.jsonl`  
 Scores: `bot/data/hub_impact_scores.json` (`resourcefulness_snapshot()`)
 
+## Outbox INLINE (one Telegram session)
+
+`TELEGRAM_OUTBOX_INLINE=1` (default) runs RESULT outbox **on bacbo's TelegramClient**.  
+A standalone `telegram_outbox.py` process with the same StringSession causes **AuthKeyDuplicatedError** and kills `bot_live` (`BACBO_DOWN`).  
+Expect `pgrep`: `runtime_supervisor` + `run_bacbo_live` only — **no** `telegram_outbox.py`.
+
 ## Chat watchdog (what lands / what never leaves)
 
 `lux_chat_watchdog.py` watches **every** Telegram outbound path:

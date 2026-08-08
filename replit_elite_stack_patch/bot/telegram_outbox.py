@@ -1,14 +1,14 @@
 """
-telegram_outbox.py — SINGLE Telethon client for all fallback Telegram cards.
+telegram_outbox.py — RESULT/fire card sender for the luxury hub.
 
-Why: bacbo + fallback_signal + fallback_result all used the same StringSession.
-Concurrent MTProto clients on one auth key cause silent disconnects / no chat
-delivery. This process owns the session for:
-  - startup ONLINE ping
-  - consensus signal cards
-  - result cards under their signal
+CRITICAL: never open a second MTProto client on the same StringSession as bacbo.
+That AuthKey fight kills bot_live (BACBO_DOWN) the moment outbox connects.
 
-Enable via TELEGRAM_SINGLE_OUTBOX=1 (runtime_supervisor default when set).
+Preferred mode (default):
+  TELEGRAM_OUTBOX_INLINE=1  → run on bacbo's existing TelegramClient (one session)
+
+Legacy standalone process (dangerous with live bacbo):
+  TELEGRAM_OUTBOX_INLINE=0 + TELEGRAM_SINGLE_OUTBOX=1
 """
 from __future__ import annotations
 
@@ -581,41 +581,78 @@ async def _resolve_gunique(client, peer: str | None):
     return None
 
 
-async def main() -> None:
+def inline_enabled() -> bool:
+    return os.environ.get("TELEGRAM_OUTBOX_INLINE", "1").strip().lower() not in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }
+
+
+async def run_inline(existing_client) -> None:
+    """Run outbox poll loop on bacbo's live client (one session — no AuthKey war)."""
+    await main(existing_client=existing_client)
+
+
+async def main(existing_client=None) -> None:
     global DB
     load_env()
-    lock_fd = _acquire_lock()
+    inline = existing_client is not None
+    lock_fd = None
+    if not inline:
+        lock_fd = _acquire_lock()
     # Re-resolve after env load (BACBO_DB may appear in .env)
     DB = _resolve_db()
     boot_tag = _tag_floor_name()
-    print(f"[Outbox] boot_tag_floor={boot_tag} db={DB}")
+    mode = "INLINE(shared-client)" if inline else "STANDALONE(own-session)"
+    print(f"[Outbox] boot_tag_floor={boot_tag} db={DB} mode={mode}")
     if not DB.exists():
         print(f"[Outbox] FATAL: DB missing at {DB}")
-        os.close(lock_fd)
+        if lock_fd is not None:
+            os.close(lock_fd)
         return
-    api_id = os.getenv("TELEGRAM_API_ID") or os.getenv("API_ID")
-    api_hash = os.getenv("TELEGRAM_API_HASH") or os.getenv("API_HASH")
-    if not api_id or not api_hash:
-        try:
-            api_id = api_id or str(getattr(config, "API_ID", "") or getattr(config, "TELEGRAM_API_ID", ""))
-            api_hash = api_hash or str(getattr(config, "API_HASH", "") or getattr(config, "TELEGRAM_API_HASH", ""))
-        except Exception:
-            pass
-    session = _load_telegram_session()
-    target = getattr(config, "TARGET", None)
+
     peer = (
         os.environ.get("TELEGRAM_PRIMARY_PEER")
         or os.environ.get("TELEGRAM_TARGET_PEER")
         or "UNIQUE_g1"
     )
+    target = getattr(config, "TARGET", None)
 
-    client = TelegramClient(StringSession(session), int(api_id), str(api_hash))
-    await client.connect()
-    if not await client.is_user_authorized():
-        print("[Outbox] FAIL: session not authorized")
-        await client.disconnect()
-        os.close(lock_fd)
-        return
+    if inline:
+        client = existing_client
+        if client is None:
+            print("[Outbox] INLINE FAIL: no client")
+            return
+        try:
+            if not client.is_connected():
+                await client.connect()
+        except Exception as exc:
+            print("[Outbox] INLINE connect check:", repr(exc))
+    else:
+        api_id = os.getenv("TELEGRAM_API_ID") or os.getenv("API_ID")
+        api_hash = os.getenv("TELEGRAM_API_HASH") or os.getenv("API_HASH")
+        if not api_id or not api_hash:
+            try:
+                api_id = api_id or str(
+                    getattr(config, "API_ID", "") or getattr(config, "TELEGRAM_API_ID", "")
+                )
+                api_hash = api_hash or str(
+                    getattr(config, "API_HASH", "")
+                    or getattr(config, "TELEGRAM_API_HASH", "")
+                )
+            except Exception:
+                pass
+        session = _load_telegram_session()
+        client = TelegramClient(StringSession(session), int(api_id), str(api_hash))
+        await client.connect()
+        if not await client.is_user_authorized():
+            print("[Outbox] FAIL: session not authorized")
+            await client.disconnect()
+            if lock_fd is not None:
+                os.close(lock_fd)
+            return
 
     try:
         entity = await _resolve_target(client, target)
@@ -1475,15 +1512,25 @@ async def main() -> None:
             sleep_s = 5
         await asyncio.sleep(sleep_s)
 
-    try:
-        await client.disconnect()
-    except Exception:
-        pass
-    try:
-        os.close(lock_fd)
-    except Exception:
-        pass
+    if not inline:
+        try:
+            await client.disconnect()
+        except Exception:
+            pass
+        try:
+            if lock_fd is not None:
+                os.close(lock_fd)
+        except Exception:
+            pass
+    else:
+        print("[Outbox] INLINE loop ended (bacbo client left connected)")
 
 
 if __name__ == "__main__":
+    if inline_enabled():
+        print(
+            "[Outbox] REFUSING standalone start — TELEGRAM_OUTBOX_INLINE=1 "
+            "(would AuthKey-fight bacbo). Set INLINE=0 to force standalone."
+        )
+        raise SystemExit(0)
     asyncio.run(main())

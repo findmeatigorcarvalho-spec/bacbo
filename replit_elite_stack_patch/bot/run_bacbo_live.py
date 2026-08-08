@@ -80,6 +80,15 @@ _os.environ.setdefault("VOLUME_MODE", "EXPLOSION")
 _os.environ.setdefault("V2_PROPOSERS", "1")
 _os.environ.setdefault("HUB_ORCHESTRATOR", "1")
 _os.environ.setdefault("LUXURY_NO_HOUR_BLOCKS", "1")
+_os.environ.setdefault("TELEGRAM_OUTBOX_INLINE", "1")
+
+# RESULT outbox shares bacbo's TelegramClient — never a second session
+try:
+    import lux_outbox_inline as _obi
+
+    print("[BOOT] outbox_inline:", "OK" if _obi.apply() else "OFF")
+except Exception as exc:
+    print("[BOOT] outbox_inline fail:", repr(exc))
 
 bacbo = ROOT / "bacbo_royal_complete.py"
 if not bacbo.is_file():

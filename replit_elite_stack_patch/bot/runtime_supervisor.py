@@ -220,6 +220,7 @@ def _env() -> dict[str, str]:
     env.setdefault("HUB_OUTBOX_RESULT_CARDS", "1")
     env.setdefault("BACBO_READY_SECS", "12")
     env.setdefault("FALLBACK_START_DELAY_SECS", "15")
+    env.setdefault("TELEGRAM_OUTBOX_INLINE", "1")
     env.setdefault("HUB_IMPACT_LEARNER", "1")
     env.setdefault("LUX_SKIP_RESOLVE_USERNAME", "1")
     env["PYTHONPATH"] = f"{BOT}:{ROOT}:{env.get('PYTHONPATH', '')}"
@@ -454,14 +455,28 @@ def main() -> int:
                 except Exception:
                     pass
 
+    outbox_inline = env.get("TELEGRAM_OUTBOX_INLINE", "1").strip().lower() not in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }
+    # Always kill standalone outbox when inline — second session AuthKey-kills bacbo
+    if outbox_inline:
+        _kill_pat("telegram_outbox.py")
+        print(
+            "[Supervisor] TELEGRAM_OUTBOX_INLINE=1 — outbox runs on bacbo client "
+            "(no second MTProto session)"
+        )
+
     if fallbacks_enabled:
-        if single_outbox and (BOT / "telegram_outbox.py").exists():
+        if single_outbox and (BOT / "telegram_outbox.py").exists() and not outbox_inline:
             processes["telegram_outbox"] = (
                 [sys.executable, "-u", str(BOT / "telegram_outbox.py")],
                 None,
                 0.0,
             )
-        else:
+        elif not single_outbox:
             processes["fallback_sender"] = (
                 [sys.executable, "-u", str(BOT / "fallback_signal_sender.py")],
                 None,
@@ -482,7 +497,7 @@ def main() -> int:
         f"fallbacks_enabled={fallbacks_enabled} "
         f"single_outbox={single_outbox} fallback_start_delay_secs={fallback_delay}"
     )
-    if single_outbox:
+    if single_outbox or outbox_inline:
         _kill_pat("fallback_signal_sender.py")
         _kill_pat("fallback_result_sender.py")
         _kill_pat("telegram_outbox.py")
