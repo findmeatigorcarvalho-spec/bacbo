@@ -337,6 +337,14 @@ def patch_module(mod: Any) -> int:
 
 
 def apply(silent: bool = False) -> int:
+    # Minimal ESTUDO kill first (import hook + telethon patch)
+    try:
+        import lux_estudo_kill as _ek
+
+        if _ek.patch_telethon():
+            pass
+    except Exception:
+        pass
     # Repair *_RE string bindings before/while send wraps (CrashGuard fix).
     try:
         from lux_re_harden import apply as _re_harden

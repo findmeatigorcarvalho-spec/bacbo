@@ -337,8 +337,55 @@ def repair() -> dict:
         _show(errf, src2)
         raise SystemExit(f"FINAL_PARSE_FAIL:{errf.lineno}:{errf.msg}")
     path.write_text(src2 if src2.endswith("\n") else src2 + "\n", encoding="utf-8")
+    # Critical: bind must run before asyncio.run(main()), not after it at EOF
+    src3 = _ensure_scb_before_main(
+        path.read_text(encoding="utf-8", errors="ignore"), report
+    )
+    errm = _parse(src3)
+    if errm is not None:
+        _show(errm, src3)
+        raise SystemExit(f"PREMAIN_PARSE_FAIL:{errm.lineno}:{errm.msg}")
+    path.write_text(src3 if src3.endswith("\n") else src3 + "\n", encoding="utf-8")
     report["actions"].append("parse_ok")
     return report
+
+
+def _ensure_scb_before_main(src: str, report: dict) -> str:
+    """Duplicate ESTUDO gate import before blocking if __name__ / asyncio.run."""
+    lines = src.splitlines(keepends=True)
+    main_i = None
+    for i, ln in enumerate(lines):
+        s = ln.strip()
+        if s.startswith("if __name__") and "__main__" in s:
+            main_i = i
+            break
+    if main_i is None:
+        for i, ln in enumerate(lines):
+            if ln.startswith("asyncio.run(") or ln.startswith(
+                "asyncio.get_event_loop().run_until_complete"
+            ):
+                main_i = i
+        if main_i is None:
+            report.setdefault("actions", []).append("no_main_block_found")
+            return src
+    pre = "".join(lines[:main_i])
+    if "import lux_estudo_kill" in pre or "send-config-bind loaded (pre-main)" in pre:
+        report.setdefault("actions", []).append("scb_already_before_main")
+        return src
+    early = """
+# --- LUXURY_SEND_CONFIG_BIND (pre-main; must run before asyncio.run) ---
+try:
+    import lux_estudo_kill  # noqa: F401
+    import lux_send_config_bind  # noqa: F401
+    print("[LUXURY] send-config-bind loaded (pre-main)")
+except Exception as _lux_scb_exc:
+    print("[LUXURY] send-config-bind skipped:", _lux_scb_exc)
+# --- end LUXURY_SEND_CONFIG_BIND pre-main ---
+
+"""
+    lines.insert(main_i, early)
+    report.setdefault("actions", []).append("scb_injected_before_main")
+    return "".join(lines)
 
 
 if __name__ == "__main__":

@@ -293,7 +293,17 @@ def _python_pids_with(needle: str) -> list[int]:
 
 
 def _find_bacbo_pids() -> list[int]:
-    return _python_pids_with("bacbo_royal_complete.py")
+    # Launcher (run_bacbo_live) OR direct bacbo script
+    pids = _python_pids_with("run_bacbo_live.py")
+    pids += _python_pids_with("bacbo_royal_complete.py")
+    # unique preserve order
+    seen: set[int] = set()
+    out: list[int] = []
+    for p in pids:
+        if p not in seen:
+            seen.add(p)
+            out.append(p)
+    return out
 
 
 def _find_bacbo_pid() -> int | None:
@@ -348,9 +358,17 @@ def main() -> int:
     single_outbox = env.get("TELEGRAM_SINGLE_OUTBOX", "1").strip() not in ("0", "false", "False", "no")
     fallback_delay = float(env.get("FALLBACK_START_DELAY_SECS", "20"))
     boot_t0 = time.time()
+    # Prefer launcher so ESTUDO/dedup gate loads BEFORE bacbo main (EOF binds never run).
+    launcher = BOT / "run_bacbo_live.py"
+    bot_cmd = (
+        [sys.executable, "-u", str(launcher)]
+        if launcher.is_file()
+        else [sys.executable, "-u", str(ROOT / "bacbo_royal_complete.py")]
+    )
     processes: dict[str, tuple[list[str], subprocess.Popen | _AdoptedProc | None, float]] = {
-        "bot_live": ([sys.executable, "-u", str(ROOT / "bacbo_royal_complete.py")], None, 0.0),
+        "bot_live": (bot_cmd, None, 0.0),
     }
+    print(f"[Supervisor] bot_live cmd={' '.join(bot_cmd)}")
     existing_pids = _find_bacbo_pids()
     if existing_pids:
         keep = min(existing_pids)

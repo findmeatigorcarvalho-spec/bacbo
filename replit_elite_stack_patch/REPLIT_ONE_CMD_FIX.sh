@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808d'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808e'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808d"
+V="20260808e"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -19,6 +19,8 @@ for pair in \
   "bot/fix_bacbo_syntax.py|replit_elite_stack_patch/bot/fix_bacbo_syntax.py" \
   "bot/fix_bacbo_state.py|replit_elite_stack_patch/bot/fix_bacbo_state.py" \
   "bot/state.py|replit_elite_stack_patch/bot/state.py" \
+  "bot/lux_estudo_kill.py|replit_elite_stack_patch/bot/lux_estudo_kill.py" \
+  "bot/run_bacbo_live.py|replit_elite_stack_patch/bot/run_bacbo_live.py" \
   "bot/lux_re_harden.py|replit_elite_stack_patch/bot/lux_re_harden.py" \
   "bot/lux_send_config_bind.py|replit_elite_stack_patch/bot/lux_send_config_bind.py" \
   "bot/runtime_supervisor.py|replit_elite_stack_patch/bot/runtime_supervisor.py" \
@@ -316,9 +318,12 @@ if not ok:
 print("DONE_FIX")
 ENDPY
 
-echo "-- diagnose/fix bacbo syntax --"
+echo "-- diagnose/fix bacbo syntax + pre-main ESTUDO gate --"
 $PY -u /tmp/fix_bacbo_now.py
+# Force pre-main inject even when already parse-ok
+$PY -u bot/fix_bacbo_syntax.py || true
 $PY -m py_compile bacbo_royal_complete.py 2>/dev/null || $PY -m py_compile bot/bacbo_royal_complete.py
+$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py
 echo "PY_COMPILE_OK"
 
 echo "-- fix NameError state (line ~146) --"
@@ -383,25 +388,26 @@ PY
 echo "-- restart --"
 # Mark log so we ignore stale SyntaxError/NameError lines
 echo "===== ONE_CMD ${V} restart $(date -u +%Y-%m-%dT%H:%M:%SZ) =====" >> logs/bot_live.log
-pkill -f 'runtime_supervisor.py|bacbo_royal_complete.py|telegram_outbox.py' 2>/dev/null || true
+pkill -f 'runtime_supervisor.py|bacbo_royal_complete.py|telegram_outbox.py|run_bacbo_live.py' 2>/dev/null || true
 rm -f bot/data/runtime_supervisor.lock bot/data/telegram_outbox.lock 2>/dev/null || true
 sleep 2
 nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
 sleep 40
 
 echo "---- procs ----"
-pgrep -af 'runtime_supervisor|telegram_outbox|bacbo_royal' || true
+pgrep -af 'runtime_supervisor|telegram_outbox|bacbo_royal|run_bacbo_live' || true
 echo "---- bot_live (post-restart only) ----"
-# Only lines after our marker
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | tail -n 50 || tail -n 40 logs/bot_live.log
-echo "---- fresh errors ----"
+echo "---- fresh errors / gate ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO|run_forever|BootGrace' \
-  | tail -n 30 || true
+  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO-KILL|run_bacbo_live|run_forever|BootGrace|drop ESTUDO' \
+  | tail -n 40 || true
 echo "---- supervisor ----"
-tail -n 40 /tmp/luxury_supervisor.log 2>/dev/null || true
+tail -n 50 /tmp/luxury_supervisor.log 2>/dev/null || true
 
-if pgrep -f 'bacbo_royal_complete.py' >/dev/null; then
+BACBO_ALIVE=0
+pgrep -f 'run_bacbo_live.py|bacbo_royal_complete.py' >/dev/null && BACBO_ALIVE=1
+if [[ "$BACBO_ALIVE" -eq 1 ]]; then
   if awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | grep -q "NameError: name 'state'"; then
     echo "BACBO_UP_BUT_STATE_NAMEERROR"
     exit 1
@@ -412,4 +418,4 @@ else
   exit 1
 fi
 echo "========== DONE =========="
-echo "Syntax OK + state bound + ESTUDO gate loaded. Watch UNIQUE_g1 for FIRE→RESULT."
+echo "Launcher preloads ESTUDO kill BEFORE main. pgrep: runtime_supervisor|run_bacbo_live|telegram_outbox"
