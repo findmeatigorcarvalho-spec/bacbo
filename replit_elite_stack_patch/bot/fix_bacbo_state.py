@@ -59,13 +59,16 @@ def _find_bacbo(root: Path) -> Path | None:
     return None
 
 
-def _dump_context(src: str, around: int = 146, window: int = 25) -> None:
-    lines = src.splitlines()
-    a = max(0, around - span - 1)
-    b = min(len(lines), around + span)
-    print(f"----- bacbo lines {a+1}-{b} -----")
-    for i in range(a, b):
-        print(f"{i+1}: {lines[i][:160]}")
+def _dump_context(src: str, around: int = 146, radius: int = 25) -> None:
+    try:
+        lines = src.splitlines()
+        a = max(0, around - radius - 1)
+        b = min(len(lines), around + radius)
+        print(f"----- bacbo lines {a+1}-{b} -----")
+        for i in range(a, b):
+            print(f"{i+1}: {lines[i][:160]}")
+    except Exception as exc:
+        print("[fix_bacbo_state] dump skipped:", repr(exc))
 
 
 def _find_ctor(src: str) -> tuple[re.Match[str] | None, str]:
