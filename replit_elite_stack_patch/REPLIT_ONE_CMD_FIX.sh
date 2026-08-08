@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808e'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808f'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808e"
+V="20260808f"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -320,8 +320,29 @@ ENDPY
 
 echo "-- diagnose/fix bacbo syntax + pre-main ESTUDO gate --"
 $PY -u /tmp/fix_bacbo_now.py
-# Force pre-main inject even when already parse-ok
-$PY -u bot/fix_bacbo_syntax.py || true
+# Lightweight pre-main inject only (full regex strip hangs on 2.5MB file)
+$PY -u - <<'PY'
+from pathlib import Path
+import sys
+sys.path.insert(0, "bot")
+from fix_bacbo_syntax import _ensure_scb_before_main, _parse, _show
+p = Path("bacbo_royal_complete.py")
+if not p.is_file():
+    p = Path("bot/bacbo_royal_complete.py")
+src = p.read_text(encoding="utf-8", errors="ignore")
+rep = {"actions": []}
+out = _ensure_scb_before_main(src, rep)
+print("PREMAIN", rep)
+if out != src:
+    err = _parse(out)
+    if err is not None:
+        _show(err, out)
+        raise SystemExit(2)
+    p.write_text(out if out.endswith("\n") else out + "\n", encoding="utf-8")
+    print("PREMAIN_WROTE", p)
+else:
+    print("PREMAIN_ALREADY_OK")
+PY
 $PY -m py_compile bacbo_royal_complete.py 2>/dev/null || $PY -m py_compile bot/bacbo_royal_complete.py
 $PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py
 echo "PY_COMPILE_OK"

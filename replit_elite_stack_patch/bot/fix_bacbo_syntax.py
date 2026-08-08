@@ -278,48 +278,67 @@ def repair() -> dict:
     err = _parse(src)
     if err is None:
         report["actions"].append("already_valid")
+        # Fast path: do NOT regex-strip the 2.5MB megafile (hangs Replit).
+        # Only ensure pre-main ESTUDO gate + missing EOF binds.
+        src2 = src
+        if "import lux_send_config_bind" not in src2:
+            src2 = src2.rstrip() + EOF_SCB
+            report["actions"].append("appended_send_config_bind_eof")
+        if "import lux_re_harden" not in src2:
+            src2 = src2.rstrip() + EOF_REHARDEN
+            report["actions"].append("appended_reharden_eof")
+        src3 = _ensure_scb_before_main(src2, report)
+        if src3 != src:
+            errm = _parse(src3)
+            if errm is not None:
+                _show(errm, src3)
+                raise SystemExit(f"PREMAIN_PARSE_FAIL:{errm.lineno}:{errm.msg}")
+            path.write_text(src3 if src3.endswith("\n") else src3 + "\n", encoding="utf-8")
+        report["actions"].append("parse_ok")
+        print("[fix_bacbo_syntax]", report)
+        return report
+
+    _show(err, src)
+    # 1) Exact known damage: reharden nested inside send-config-bind try
+    text, nested_fixed = _fix_nested_reharden_inside_scb(src)
+    if nested_fixed and _parse(text) is None:
+        path.write_text(text, encoding="utf-8")
+        src = text
+        report["actions"].append("fixed_nested_reharden_in_scb")
     else:
-        _show(err, src)
-        # 1) Exact known damage: reharden nested inside send-config-bind try
-        text, nested_fixed = _fix_nested_reharden_inside_scb(src)
-        if nested_fixed and _parse(text) is None:
+        # 2) Prefer restore from known-good backup
+        restored = False
+        for c in _backup_candidates(path):
+            if c.resolve() == bak.resolve():
+                continue
+            try:
+                t = c.read_text(encoding="utf-8", errors="ignore")
+                if _parse(t) is not None:
+                    continue
+            except Exception:
+                continue
+            path.write_text(t, encoding="utf-8")
+            report["actions"].append(f"restored_from:{c}")
+            src = t
+            restored = True
+            break
+
+        if not restored:
+            text = _strip_reharden_blocks(src)
+            report["actions"].append("stripped_reharden_blocks")
+            err2 = _parse(text)
+            if err2 is not None:
+                text = _close_orphan_try(text, err2)
+                report["actions"].append("closed_orphan_try")
+            err3 = _parse(text)
+            if err3 is not None:
+                _show(err3, text)
+                raise SystemExit(f"UNREPAIRED:{err3.lineno}:{err3.msg}")
             path.write_text(text, encoding="utf-8")
             src = text
-            report["actions"].append("fixed_nested_reharden_in_scb")
-        else:
-            # 2) Prefer restore from known-good backup
-            restored = False
-            for c in _backup_candidates(path):
-                if c.resolve() == bak.resolve():
-                    continue
-                try:
-                    t = c.read_text(encoding="utf-8", errors="ignore")
-                    if _parse(t) is not None:
-                        continue
-                except Exception:
-                    continue
-                path.write_text(t, encoding="utf-8")
-                report["actions"].append(f"restored_from:{c}")
-                src = t
-                restored = True
-                break
+            report["actions"].append("surgical_ok")
 
-            if not restored:
-                text = _strip_reharden_blocks(src)
-                report["actions"].append("stripped_reharden_blocks")
-                err2 = _parse(text)
-                if err2 is not None:
-                    text = _close_orphan_try(text, err2)
-                    report["actions"].append("closed_orphan_try")
-                err3 = _parse(text)
-                if err3 is not None:
-                    _show(err3, text)
-                    raise SystemExit(f"UNREPAIRED:{err3.lineno}:{err3.msg}")
-                path.write_text(text, encoding="utf-8")
-                src = text
-                report["actions"].append("surgical_ok")
-
-    # Ensure safe EOF reharden + send-config-bind (never nest inside each other)
+    # Broken-file path: strip + ensure EOF binds (strip only when needed)
     src = path.read_text(encoding="utf-8", errors="ignore")
     src2 = _strip_reharden_blocks(src)
     if "import lux_send_config_bind" not in src2:
@@ -337,7 +356,6 @@ def repair() -> dict:
         _show(errf, src2)
         raise SystemExit(f"FINAL_PARSE_FAIL:{errf.lineno}:{errf.msg}")
     path.write_text(src2 if src2.endswith("\n") else src2 + "\n", encoding="utf-8")
-    # Critical: bind must run before asyncio.run(main()), not after it at EOF
     src3 = _ensure_scb_before_main(
         path.read_text(encoding="utf-8", errors="ignore"), report
     )
@@ -347,6 +365,7 @@ def repair() -> dict:
         raise SystemExit(f"PREMAIN_PARSE_FAIL:{errm.lineno}:{errm.msg}")
     path.write_text(src3 if src3.endswith("\n") else src3 + "\n", encoding="utf-8")
     report["actions"].append("parse_ok")
+    print("[fix_bacbo_syntax]", report)
     return report
 
 
