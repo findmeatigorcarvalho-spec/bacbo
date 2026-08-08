@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808b'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808c'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808b"
+V="20260808c"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -17,6 +17,8 @@ mkdir -p bot bot/config logs bot/data
 echo "-- pull --"
 for pair in \
   "bot/fix_bacbo_syntax.py|replit_elite_stack_patch/bot/fix_bacbo_syntax.py" \
+  "bot/fix_bacbo_state.py|replit_elite_stack_patch/bot/fix_bacbo_state.py" \
+  "bot/state.py|replit_elite_stack_patch/bot/state.py" \
   "bot/lux_re_harden.py|replit_elite_stack_patch/bot/lux_re_harden.py" \
   "bot/lux_send_config_bind.py|replit_elite_stack_patch/bot/lux_send_config_bind.py" \
   "bot/runtime_supervisor.py|replit_elite_stack_patch/bot/runtime_supervisor.py" \
@@ -26,6 +28,13 @@ for pair in \
 do
   dest="${pair%%|*}"
   rel="${pair##*|}"
+  # Never clobber a larger existing state.py with a smaller template unless missing/proxy-less
+  if [[ "$dest" == "bot/state.py" && -f "$dest" ]]; then
+    if grep -q "LUXURY_CLIENT_PROXY" "$dest" 2>/dev/null; then
+      echo "  KEEP $dest (proxy present)"
+      continue
+    fi
+  fi
   if curl -fsSL --connect-timeout 20 --max-time 90 -o "$dest" "${RAW}/${rel}?v=${V}"; then
     echo "  OK $dest"
   else
@@ -307,10 +316,34 @@ if not ok:
 print("DONE_FIX")
 ENDPY
 
-echo "-- diagnose/fix bacbo --"
+echo "-- diagnose/fix bacbo syntax --"
 $PY -u /tmp/fix_bacbo_now.py
 $PY -m py_compile bacbo_royal_complete.py 2>/dev/null || $PY -m py_compile bot/bacbo_royal_complete.py
 echo "PY_COMPILE_OK"
+
+echo "-- fix NameError state (line ~146) --"
+$PY -u bot/fix_bacbo_state.py
+$PY -m py_compile bacbo_royal_complete.py
+$PY -m py_compile bot/state.py
+# Prove bare name is bound before first state.client assign
+$PY -u - <<'PY'
+from pathlib import Path
+import re, ast
+p = Path("bacbo_royal_complete.py")
+src = p.read_text(encoding="utf-8", errors="replace")
+ast.parse(src)
+lines = src.splitlines()
+idx = next(i for i, ln in enumerate(lines) if re.search(r"^state\.client\s*=\s*TelegramClient\(", ln) or re.search(r"^_lux_state_mod\.client\s*=\s*TelegramClient\(", ln))
+pre = "\n".join(lines[:idx])
+assert "state = _lux_state_mod" in pre or "import state as _lux_state_mod" in pre, (
+    f"state still unbound before client assign at line {idx+1}"
+)
+print("STATE_BIND_OK line", idx + 1)
+print("HAS_SESSION_BIND", "LUXURY_SESSION_AND_BIND" in src)
+# show 12 lines around bind
+for j in range(max(0, idx - 12), min(len(lines), idx + 3)):
+    print(f"{j+1}: {lines[j][:140]}")
+PY
 
 # Force ESTUDO kill env
 ENVF=bot/data/profit_skyscraper.env
@@ -348,24 +381,35 @@ print("TRASH_SELFTEST_OK", why)
 PY
 
 echo "-- restart --"
+# Mark log so we ignore stale SyntaxError/NameError lines
+echo "===== ONE_CMD ${V} restart $(date -u +%Y-%m-%dT%H:%M:%SZ) =====" >> logs/bot_live.log
 pkill -f 'runtime_supervisor.py|bacbo_royal_complete.py|telegram_outbox.py' 2>/dev/null || true
 rm -f bot/data/runtime_supervisor.lock bot/data/telegram_outbox.lock 2>/dev/null || true
 sleep 2
 nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
-sleep 35
+sleep 40
 
 echo "---- procs ----"
 pgrep -af 'runtime_supervisor|telegram_outbox|bacbo_royal' || true
-echo "---- bot_live (estudo/bind/syntax) ----"
-grep -E 'ESTUDO|send-config-bind|SyntaxError|re-harden|BACBO|LUXURY' logs/bot_live.log 2>/dev/null | tail -n 40 || true
+echo "---- bot_live (post-restart only) ----"
+# Only lines after our marker
+awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | tail -n 50 || tail -n 40 logs/bot_live.log
+echo "---- fresh errors ----"
+awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
+  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO|run_forever|BootGrace' \
+  | tail -n 30 || true
 echo "---- supervisor ----"
-tail -n 35 /tmp/luxury_supervisor.log 2>/dev/null || true
+tail -n 40 /tmp/luxury_supervisor.log 2>/dev/null || true
 
 if pgrep -f 'bacbo_royal_complete.py' >/dev/null; then
+  if awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | grep -q "NameError: name 'state'"; then
+    echo "BACBO_UP_BUT_STATE_NAMEERROR"
+    exit 1
+  fi
   echo "BACBO_UP"
 else
   echo "BACBO_DOWN — see tails above"
   exit 1
 fi
 echo "========== DONE =========="
-echo "Those G2 ESTUDO repeats WERE duplicates — gate drops them + near-score variants."
+echo "Syntax OK + state bound + ESTUDO gate loaded. Watch UNIQUE_g1 for FIRE→RESULT."

@@ -111,9 +111,35 @@ def apply(root: Path | None = None) -> dict:
     original = src
     changed: list[str] = []
 
-    # Already healthy?
+    # Ensure bot/state.py exists (import state as _lux_state_mod needs it)
+    state_py = root / "bot" / "state.py"
+    if not state_py.is_file():
+        state_py.parent.mkdir(parents=True, exist_ok=True)
+        # Prefer repo template if present next to this fixer
+        here = Path(__file__).resolve().parent / "state.py"
+        if here.is_file():
+            state_py.write_text(here.read_text(encoding="utf-8"), encoding="utf-8")
+        else:
+            state_py.write_text(
+                "client = None\nme = None\nrunning = True\nengine = None\n",
+                encoding="utf-8",
+            )
+        print("[fix_bacbo_state] wrote missing", state_py)
+        changed.append("wrote_state_py")
+
+    # Already healthy? Must have bind BEFORE first bare state.client use.
+    first_client = None
+    for i, ln in enumerate(src.splitlines()):
+        if re.search(r"^(state|_lux_state_mod)\.client\s*=\s*TelegramClient\(", ln):
+            first_client = i
+            break
+    bind_ok = False
+    if first_client is not None and "state = _lux_state_mod" in src:
+        pre = "\n".join(src.splitlines()[:first_client])
+        bind_ok = "state = _lux_state_mod" in pre or "LUXURY_SESSION_AND_BIND" in pre
+
     if (
-        "state = _lux_state_mod" in src
+        bind_ok
         and re.search(r"(state|_lux_state_mod)\.client\s*=\s*TelegramClient\(", src)
         and "LUXURY_SESSION_AND_BIND" in src
     ):
@@ -129,9 +155,16 @@ def apply(root: Path | None = None) -> dict:
             changed.append("state_name_force_only")
             ast.parse(src)
             path.write_text(src, encoding="utf-8")
-        else:
-            print("[fix_bacbo_state] already OK", path)
-            return {"path": str(path), "changed": False, "reason": "already_bound"}
+            print("[fix_bacbo_state] force before engine", path)
+            return {"path": str(path), "changed": changed, "reason": "force_only"}
+        print("[fix_bacbo_state] already OK", path)
+        return {"path": str(path), "changed": False, "reason": "already_bound"}
+
+    if first_client is not None and not bind_ok:
+        print(
+            f"[fix_bacbo_state] state unbound before client assign at line {first_client + 1}"
+        )
+        _dump_context(src, around=first_client + 1)
 
     # Extract ctor BEFORE stripping bind block (bind may hold the only TelegramClient line)
     m_pre, ctor = _find_ctor(src)
