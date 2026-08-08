@@ -220,6 +220,16 @@ def observe_hub_decision(decision: dict[str, Any]) -> None:
     for p in [primary, *spill]:
         for r in p.get("rooms") or []:
             rooms.append(str(r).strip().lower().lstrip("@"))
+    color_map = decision.get("color_map") or {}
+    opp_colors = list(decision.get("opp_locked_colors") or [])
+    if not opp_colors:
+        opp_colors = sorted(
+            {
+                str(p.get("color") or "").lower()
+                for p in dropped
+                if str(p.get("color") or "").strip()
+            }
+        )
     ev = {
         "type": "hub_decision",
         "ts": time.time(),
@@ -235,8 +245,15 @@ def observe_hub_decision(decision: dict[str, Any]) -> None:
         "opp_locked_floors": [
             str(p.get("floor") or "").upper() for p in dropped
         ],
+        "opp_locked_colors": opp_colors,
+        # which proposers said which color (for result causality later)
+        "color_map": color_map,
         "floors": floors,
         "rooms": rooms,
+        "understand": (
+            f"picked={color} locked={opp_colors or ['none']} "
+            f"same={n_same} opp_n={len(dropped)}"
+        ),
     }
     with _LOCK:
         data = _load()
@@ -443,7 +460,52 @@ def resourcefulness_snapshot() -> dict[str, Any]:
         "mode_coalition": impact_score("mode:COALITION", 50.0),
         "mode_singular": impact_score("mode:SINGULAR", 50.0),
         "emanate": (
-            "same-color coalitions scored; opp locks audited; "
-            "primary picks biased toward proven volume+WR proposers"
+            "same-color coalitions scored; opp locks audited "
+            "(which color won / which locked / what RESULT did); "
+            "primary picks biased toward proven volume+WR proposers; "
+            "chat watchdog knows what lands or never leaves"
         ),
+    }
+
+
+def understand_lock_matrix(limit: int = 40) -> dict[str, Any]:
+    """Read recent hub_decision + result pairs: which/when/what happened or didn't."""
+    rows: list[dict[str, Any]] = []
+    try:
+        if LEDGER.is_file():
+            lines = LEDGER.read_text(encoding="utf-8").splitlines()[-max(50, limit * 3) :]
+            for ln in lines:
+                try:
+                    rows.append(json.loads(ln))
+                except Exception:
+                    continue
+    except Exception:
+        pass
+    decisions = [r for r in rows if r.get("type") == "hub_decision"][-limit:]
+    results = [r for r in rows if r.get("type") == "result"][-limit:]
+    return {
+        "recent_decisions": [
+            {
+                "understand": d.get("understand"),
+                "color": d.get("color"),
+                "opp_locked_colors": d.get("opp_locked_colors"),
+                "primary_floor": d.get("primary_floor"),
+                "mode": d.get("mode"),
+                "n_same_color": d.get("n_same_color"),
+                "n_opp_locked": d.get("n_opp_locked"),
+            }
+            for d in decisions
+        ],
+        "recent_results": [
+            {
+                "outcome": r.get("outcome"),
+                "predicted": r.get("predicted"),
+                "actual": r.get("actual"),
+                "lock_correct": r.get("lock_correct"),
+                "mode": r.get("mode"),
+                "floors": r.get("floors"),
+            }
+            for r in results
+        ],
+        "opportunities": (_load().get("opportunities") or {}),
     }

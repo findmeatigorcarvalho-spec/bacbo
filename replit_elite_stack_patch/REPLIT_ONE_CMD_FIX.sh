@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808i'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808j'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808i"
+V="20260808j"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -23,6 +23,7 @@ for pair in \
   "bot/run_bacbo_live.py|replit_elite_stack_patch/bot/run_bacbo_live.py" \
   "bot/hub_orchestrator.py|replit_elite_stack_patch/bot/hub_orchestrator.py" \
   "bot/hub_impact_learner.py|replit_elite_stack_patch/bot/hub_impact_learner.py" \
+  "bot/lux_chat_watchdog.py|replit_elite_stack_patch/bot/lux_chat_watchdog.py" \
   "bot/lux_dialog_resolve.py|replit_elite_stack_patch/bot/lux_dialog_resolve.py" \
   "bot/hub_max_boot.py|replit_elite_stack_patch/bot/hub_max_boot.py" \
   "bot/lux_tower_merge.py|replit_elite_stack_patch/bot/lux_tower_merge.py" \
@@ -399,6 +400,8 @@ for kv in \
   ROLLING_WR_MUTE_SECS=0 \
   AUTO_QUARANTINE_SECS=0 \
   HUB_IMPACT_LEARNER=1 \
+  LUX_CHAT_WATCHDOG=1 \
+  LUX_BLOCK_ESTUDO=1 \
   LUX_SKIP_RESOLVE_USERNAME=1 \
   BACBO_READY_SECS=25
 do
@@ -413,10 +416,22 @@ sys.path.insert(0, "bot")
 os.environ["FREE_PROPOSE"] = "1"
 os.environ["VOLUME_MODE"] = "EXPLOSION"
 os.environ["HUB_ORCHESTRATOR"] = "1"
+import lux_chat_watchdog as cw
+assert cw.apply()
+s = "🔷 G2 ESTUDO | @robobacbodados\n🔵 BLUE G0 🟡 Empate 🔥 | 📊 NEUTRO 1.09"
+assert cw.estudo_blocked(s), "estudo must block"
+s_zw = "🔷 G2\u200b ESTUDO | @robobacbodados\n🔵 BLUE G0 | 📊 NEUTRO 1.09"
+assert cw.estudo_blocked(s_zw), "zw estudo must block"
+assert not cw.estudo_blocked("💎 SOLO ELITE\nENTER NOW")
+ok, why = cw.gate_outbound(msg=s, path="selftest", final=True)
+assert ok is False and why == "ESTUDO", (ok, why)
+ok2, why2 = cw.gate_outbound(
+    msg="💎 SOLO ELITE\nENTER NOW", path="selftest", final=True
+)
+assert ok2 is True, (ok2, why2)
+print("CHAT_WATCHDOG_OK", cw.snapshot())
 from lux_send_config_bind import _estudo_blocked, _dedup_hit
-s = "🔷 G2 ESTUDO | @robobacbodados\n🔵 BLUE G0 🟡 Empate 🔥 | 📊 NEUTRO 1.07"
-assert _estudo_blocked(s), "estudo must block"
-assert not _estudo_blocked("💎 SOLO ELITE\nENTER NOW")
+assert _estudo_blocked(s), "bind estudo must block"
 a = "🔷 X\n🔵 BLUE G0 | 📊 NEUTRO 1.07"
 b = "🔷 X\n🔵 BLUE G0 | 📊 NEUTRO 0.81"
 assert _dedup_hit(a) is False
@@ -436,14 +451,16 @@ assert dec["color"] == "red", dec  # 90+70 beats single 95
 assert dec["primary"]["floor"] == "JUN19", dec
 assert len(dec["spill"]) == 1 and dec["spill"][0]["floor"] == "MAY10"
 assert len(dec["dropped_opp"]) == 1
-print("HUB_ORCH_OK", dec["why"])
+assert "blue" in (dec.get("opp_locked_colors") or []), dec
+assert dec.get("color_map", {}).get("red"), dec
+print("HUB_ORCH_OK", dec["why"], "lock", dec.get("opp_locked_colors"))
 from hub_impact_learner import (
     observe_result,
     observe_fire,
     floor_boost,
     resourcefulness_snapshot,
+    understand_lock_matrix,
 )
-# singular fire
 observe_fire(
     signal_id="s1",
     floors=["SOLO_GATE"],
@@ -452,7 +469,6 @@ observe_fire(
     kind="SOLO",
     mode="SINGULAR",
 )
-# coalition of signal fires
 observe_fire(
     signal_id="c1",
     floors=["JUN19", "MAY10"],
@@ -475,10 +491,12 @@ observe_result(
     actual_color="red",
 )
 snap = resourcefulness_snapshot()
+matrix = understand_lock_matrix()
 assert floor_boost("JUN19") >= 50.0
 assert snap.get("opportunities"), snap
 print("IMPACT_LEARN_OK", "JUN19", floor_boost("JUN19"), "mode", dec.get("mode"))
 print("RESOURCEFUL", snap.get("emanate"), "opp", snap.get("opportunities"))
+print("LOCK_MATRIX", matrix.get("opportunities"), "n_dec", len(matrix.get("recent_decisions") or []))
 import lux_dialog_resolve as dr
 assert dr.apply()
 print("DIALOG_RESOLVE_OK")
@@ -501,7 +519,7 @@ echo "---- bot_live (post-restart only) ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | tail -n 50 || tail -n 40 logs/bot_live.log
 echo "---- fresh errors / gate ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO-KILL|run_bacbo_live|run_forever|BootGrace|drop ESTUDO' \
+  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO-KILL|CHAT-WATCH|run_bacbo_live|run_forever|BootGrace|drop ESTUDO' \
   | tail -n 40 || true
 echo "---- supervisor ----"
 tail -n 50 /tmp/luxury_supervisor.log 2>/dev/null || true

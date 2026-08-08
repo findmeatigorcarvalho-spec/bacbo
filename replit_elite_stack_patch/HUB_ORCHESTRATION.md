@@ -48,6 +48,20 @@ It attributes win/loss/tie to `floor:*`, `room:@*`, `origin:*`, `mode:SINGULAR|C
 Ledger: `bot/data/hub_impact_ledger.jsonl`  
 Scores: `bot/data/hub_impact_scores.json` (`resourcefulness_snapshot()`)
 
+## Chat watchdog (what lands / what never leaves)
+
+`lux_chat_watchdog.py` watches **every** Telegram outbound path:
+`send_message`, `send_file(caption)`, and `TelegramClient.__call__` (SendMessageRequest).
+
+- G2 ESTUDO / study spam → HARD DROP (unicode-normalized)
+- near-duplicate floods → DROP
+- ledger: `bot/data/chat_watchdog_ledger.jsonl` + `chat_watchdog_stats.json`
+
+## Opp-color LOCK causality
+
+Hub decisions store `color_map` + `opp_locked_colors`.  
+After RESULT, learner records whether the lock was right/wrong — so it keeps emanating the best from all proposers (which said what, what locked, what happened).
+
 ## Room resolve (FloodWait)
 
 `lux_dialog_resolve.py` — `@rooms` via dialog cache / InputPeer only.  

@@ -157,6 +157,18 @@ def orchestrate(
             }
         )
 
+    # Full color map — watchdog learns which said what, what locked, what won
+    color_map = {
+        c: [
+            {
+                "floor": str(p.get("floor") or "").upper(),
+                "score": float(p.get("score") or 0.0),
+                "rooms": list(p.get("rooms") or []),
+            }
+            for p in items
+        ]
+        for c, items in by_color.items()
+    }
     out = {
         "primary": primary,
         "spill": spill,
@@ -170,6 +182,8 @@ def orchestrate(
         ),
         "ts": time.time(),
         "mode": "COALITION" if len(winners) >= 2 or dropped else "SINGULAR",
+        "color_map": color_map,
+        "opp_locked_colors": [c for c in by_color.keys() if c != win_color],
     }
     # Watchdog: every coalition / singular hub decision + opp locks
     try:

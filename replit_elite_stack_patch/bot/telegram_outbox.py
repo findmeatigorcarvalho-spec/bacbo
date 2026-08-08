@@ -857,6 +857,12 @@ async def main() -> None:
         return dest, lane + ":FALLBACK_PRIMARY"
 
     def _estudo_spam(body: str | None) -> bool:
+        try:
+            from lux_chat_watchdog import estudo_blocked
+
+            return bool(estudo_blocked(body))
+        except Exception:
+            pass
         if not body:
             return False
         bu = body.upper()
@@ -866,6 +872,7 @@ async def main() -> None:
             or "G3 ESTUDO" in bu
             or "ESTUDO |" in bu
             or "ESTUDO :" in bu
+            or ("ESTUDO" in bu and ("NEUTRO" in bu or "🔵" in body or "🔴" in body))
         ):
             return True
         first = body.splitlines()[0].upper() if body else ""

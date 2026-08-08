@@ -32,6 +32,12 @@ _TG_SEND_PATCHED = False
 
 def _estudo_blocked(msg: str | None) -> bool:
     """Hard-drop engine study spam (G2 ESTUDO floods on UNIQUE_g1)."""
+    try:
+        from lux_chat_watchdog import estudo_blocked as _eb
+
+        return bool(_eb(msg))
+    except Exception:
+        pass
     if not msg:
         return False
     if os.environ.get("LUX_BLOCK_ESTUDO", "1").strip().lower() in {
@@ -49,11 +55,14 @@ def _estudo_blocked(msg: str | None) -> bool:
         or "G0 ESTUDO" in u
         or "ESTUDO |" in u
         or "ESTUDO :" in u
+        or ("ESTUDO" in u and ("🔴" in msg or "🔵" in msg or "NEUTRO" in u))
     ):
         return True
     # First line often: "🔷 G2 ESTUDO | @channel"
     first = msg.splitlines()[0] if msg else ""
     if _ESTUDO_RE.search(first) or _ESTUDO_RE.search(msg[:160]):
+        return True
+    if "ESTUDO" in first.upper():
         return True
     return False
 
@@ -180,13 +189,33 @@ def _wrap_send(fn: Callable) -> Callable:
 
         msg = _extract_msg(args, kwargs)
 
-        # Hard drop study spam before any routing (G2 ESTUDO floods)
-        if _estudo_blocked(msg):
-            print("[LUXURY] drop ESTUDO study spam")
-            return None
-        if _dedup_hit(msg):
-            print("[LUXURY] drop duplicate send (dedup window)")
-            return None
+        # Nuclear chat watchdog + ESTUDO / trash / dedup (before any routing)
+        try:
+            from lux_chat_watchdog import gate_outbound
+
+            # pre-check only — Telethon edge commits dedup / sent ledger
+            ok, why = gate_outbound(
+                msg=msg, entity=None, path="engine_send", final=False
+            )
+            if not ok:
+                print(f"[LUXURY] drop via chat_watchdog: {why}")
+                return None
+        except Exception:
+            if _estudo_blocked(msg):
+                print("[LUXURY] drop ESTUDO study spam")
+                return None
+            if _dedup_hit(msg):
+                print("[LUXURY] drop duplicate send (dedup window)")
+                return None
+            try:
+                from config.keep_allowlist import should_block_as_trash
+
+                hit, why = should_block_as_trash(text=msg or "")
+                if hit:
+                    print(f"[LUXURY] drop trash: {why}")
+                    return None
+            except Exception:
+                pass
 
         # Skin family gate — retire/disable Telegram skins via EngineGateRegistry
         try:
