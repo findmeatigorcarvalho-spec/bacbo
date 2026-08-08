@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808j'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808k'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808j"
+V="20260808k"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -511,7 +511,21 @@ pkill -f 'runtime_supervisor.py|bacbo_royal_complete.py|telegram_outbox.py|run_b
 rm -f bot/data/runtime_supervisor.lock bot/data/telegram_outbox.lock 2>/dev/null || true
 sleep 2
 nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
-sleep 40
+# Boot flap + BACBO_READY_SECS(25) + outbox delay — wait until outbox is up
+sleep 35
+echo "-- wait outbox (bacbo ready ≥25s) --"
+OUTBOX_UP=0
+for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+  if pgrep -f 'telegram_outbox.py' >/dev/null 2>&1; then
+    OUTBOX_UP=1
+    echo "OUTBOX_UP after ~$((35 + i * 5))s"
+    break
+  fi
+  sleep 5
+done
+if [[ "$OUTBOX_UP" -eq 0 ]]; then
+  echo "OUTBOX_PENDING — supervisor still holding (see hold telegram_outbox lines)"
+fi
 
 echo "---- procs ----"
 pgrep -af 'runtime_supervisor|telegram_outbox|bacbo_royal|run_bacbo_live' || true
@@ -519,10 +533,17 @@ echo "---- bot_live (post-restart only) ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | tail -n 50 || tail -n 40 logs/bot_live.log
 echo "---- fresh errors / gate ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO-KILL|CHAT-WATCH|run_bacbo_live|run_forever|BootGrace|drop ESTUDO' \
+  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO-KILL|CHAT-WATCH|DROP ESTUDO|run_bacbo_live|run_forever|BootGrace' \
   | tail -n 40 || true
 echo "---- supervisor ----"
 tail -n 50 /tmp/luxury_supervisor.log 2>/dev/null || true
+echo "---- chat watchdog stats ----"
+$PY - <<'PY' 2>/dev/null || true
+import json
+from pathlib import Path
+p = Path("bot/data/chat_watchdog_stats.json")
+print(p.read_text() if p.is_file() else "no stats yet")
+PY
 
 BACBO_ALIVE=0
 pgrep -f 'run_bacbo_live.py|bacbo_royal_complete.py' >/dev/null && BACBO_ALIVE=1
@@ -536,5 +557,10 @@ else
   echo "BACBO_DOWN — see tails above"
   exit 1
 fi
+if [[ "$OUTBOX_UP" -eq 1 ]]; then
+  echo "OUTBOX_OK"
+else
+  echo "OUTBOX_NOT_YET — run: sleep 20; pgrep -af telegram_outbox"
+fi
 echo "========== DONE =========="
-echo "Launcher preloads ESTUDO kill BEFORE main. pgrep: runtime_supervisor|run_bacbo_live|telegram_outbox"
+echo "Expect: no G2 ESTUDO on UNIQUE_g1; [CHAT-WATCH] DROP ESTUDO in logs; pgrep shows supervisor|run_bacbo_live|telegram_outbox"

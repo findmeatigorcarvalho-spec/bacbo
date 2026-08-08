@@ -45,6 +45,7 @@ _STATS: dict[str, Any] = {
     "updated_at": 0,
 }
 _PATCHED = False
+_ANNOUNCED = False
 _ZW_RE = re.compile(r"[\u200b\u200c\u200d\ufeff\u00ad]")
 _ESTUDO_RE = re.compile(
     r"(?:G\s*[0-9]+\s*ESTUDO|\bESTUDO\b\s*[|：:]|🔷\s*G\s*[0-9]+\s*ESTUDO)",
@@ -381,8 +382,9 @@ def snapshot() -> dict[str, Any]:
         return dict(_STATS)
 
 
-def apply() -> bool:
+def apply(*, quiet: bool = False) -> bool:
     """Best-effort Telethon patch; gate functions always usable."""
+    global _ANNOUNCED
     ok = patch(force=True)
     # Keep the gate on top even if something else rebinds telethon methods later.
     try:
@@ -390,7 +392,7 @@ def apply() -> bool:
 
         def _re():
             try:
-                patch(force=True)
+                patch(force=True)  # idempotent — no log spam
             except Exception:
                 pass
 
@@ -398,10 +400,12 @@ def apply() -> bool:
             threading.Timer(d, _re).start()
     except Exception:
         pass
-    if ok:
-        print("[CHAT-WATCH] nuclear ESTUDO + chat ledger ON")
-    else:
-        print("[CHAT-WATCH] gate ready (Telethon patch pending/retry)")
+    if not quiet and not _ANNOUNCED:
+        _ANNOUNCED = True
+        if ok:
+            print("[CHAT-WATCH] nuclear ESTUDO + chat ledger ON")
+        else:
+            print("[CHAT-WATCH] gate ready (Telethon patch pending/retry)")
     return True
 
 
