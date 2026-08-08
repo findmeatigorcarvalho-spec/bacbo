@@ -1405,6 +1405,28 @@ async def main() -> None:
                         )
                     except Exception:
                         pass
+                    try:
+                        from hub_impact_learner import observe_result
+
+                        rooms_agreed = row.get("rooms_agreed") or []
+                        if isinstance(rooms_agreed, str):
+                            try:
+                                import json as _json
+
+                                rooms_agreed = _json.loads(rooms_agreed)
+                            except Exception:
+                                rooms_agreed = [rooms_agreed]
+                        observe_result(
+                            signal_id=row["id"],
+                            outcome=str(row["outcome"] or ""),
+                            predicted=str(row["color"] or ""),
+                            floors=[str(row.get("source_floor") or "")],
+                            rooms=list(rooms_agreed or []),
+                            kind=str(row.get("signal_kind") or ""),
+                            primary_floor=str(row.get("source_floor") or ""),
+                        )
+                    except Exception:
+                        pass
                 except Exception as exc:
                     print("[Outbox] SEND RESULT FAIL id=", row["id"], repr(exc))
                     break

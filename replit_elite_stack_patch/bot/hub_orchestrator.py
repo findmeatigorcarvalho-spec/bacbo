@@ -81,13 +81,29 @@ def orchestrate(
             "why": "no_proposals",
         }
 
-    # Normalize
+    # Normalize + impact-learner enrich (watchdog WR/volume scores)
+    try:
+        from hub_impact_learner import enrich_proposal_score, enabled as _learn_on
+
+        learn = _learn_on()
+    except Exception:
+        learn = False
+        enrich_proposal_score = None  # type: ignore
+
     norm: list[dict[str, Any]] = []
     for p in proposals:
         q = dict(p)
         q["color"] = str(q.get("color") or "").strip().lower()
-        q["score"] = float(q.get("score") or q.get("strength") or 0.0)
+        base = float(q.get("score") or q.get("strength") or 0.0)
         q["floor"] = str(q.get("floor") or q.get("winner_floor") or "?").upper()
+        if learn and enrich_proposal_score is not None:
+            try:
+                q["score"] = float(enrich_proposal_score(q))
+                q["score_base"] = base
+            except Exception:
+                q["score"] = base
+        else:
+            q["score"] = base
         norm.append(q)
 
     by_color: dict[str, list[dict[str, Any]]] = {}

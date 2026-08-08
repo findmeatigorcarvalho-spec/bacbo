@@ -219,6 +219,8 @@ def _env() -> dict[str, str]:
     env.setdefault("RESULT_ATTACH_IMMEDIATE", "1")
     env.setdefault("HUB_OUTBOX_RESULT_CARDS", "1")
     env.setdefault("BACBO_READY_SECS", "25")
+    env.setdefault("HUB_IMPACT_LEARNER", "1")
+    env.setdefault("LUX_SKIP_RESOLVE_USERNAME", "1")
     env["PYTHONPATH"] = f"{BOT}:{ROOT}:{env.get('PYTHONPATH', '')}"
     print(
         f"[Supervisor] EDGE_POLICY_MODE={env.get('EDGE_POLICY_MODE')} "

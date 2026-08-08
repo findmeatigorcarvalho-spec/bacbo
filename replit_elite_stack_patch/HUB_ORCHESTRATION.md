@@ -36,15 +36,27 @@ rooms / sensors
 | **HUB_ORCHESTRATOR=1** | Picks primary + spill peers from free proposals |
 | **SAFE_MERGE** (old) | ≤1 card — compresses peak days into one pipe — **not** the goal |
 
+## Impact learner / watchdog
+
+`hub_impact_learner.py` watches **every** singular gate fire and **every** coalition fire → RESULT.  
+It attributes win/loss/tie to `floor:*`, `room:@*`, `origin:SOLO_FACT|COALITION`, `kind:*`, then boosts hub scores so the next pick is more resourceful (volume + WR + better decisions).
+
+## Room resolve (FloodWait)
+
+`lux_dialog_resolve.py` — `@rooms` via dialog cache / InputPeer only.  
+**Never** hammer `ResolveUsername` while flooded (that starvation kills all proposers).
+
 ## Honesty
 
 Hub maximizes capture of real windows with the best card the machines offer.  
 Dollar ROI / “win every round” is ambition, not a physics guarantee — Bac Bo has variance.  
-Volume restoration (many free proposers + hub pick) is step one.
+Volume restoration (many free proposers + hub pick + live rooms) is step one.
 
 ## Code
 
-- `bot/hub_orchestrator.py` — pick primary + spill
+- `bot/hub_orchestrator.py` — pick primary + spill (+ learner enrich)
+- `bot/hub_impact_learner.py` — fire/result watchdog → scores
+- `bot/lux_dialog_resolve.py` — no ResolveUsername FloodWait
 - `bot/v2_floor_proposers.py` — enqueue / referee
 - `bot/lux_tower_merge.py` — wires free proposers + hub pick
 - `bot/edge_live_policy.py` — `FREE_PROPOSE` skips mute BLOCKs

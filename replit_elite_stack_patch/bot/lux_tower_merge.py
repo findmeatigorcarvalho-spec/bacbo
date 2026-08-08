@@ -221,6 +221,21 @@ def merge_candidate(
                 enqueue_proposal(p)
         except Exception as exc:
             print("[TOWER] enqueue_proposal skip:", repr(exc))
+        try:
+            from hub_impact_learner import observe_fire
+
+            rooms = []
+            if agreeing_rooms:
+                rooms = [str(r) for r in agreeing_rooms]
+            observe_fire(
+                floors=[p["floor"] for p in proposals],
+                rooms=rooms,
+                color=color,
+                kind=kind,
+                origin="COALITION" if len(rooms) >= 2 else "SOLO_FACT",
+            )
+        except Exception:
+            pass
 
     if allows:
         # HUB orchestrator picks primary among free proposers (not just merge stamp)

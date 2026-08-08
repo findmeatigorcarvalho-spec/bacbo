@@ -20,11 +20,25 @@ for p in (str(BOT), str(ROOT)):
 
 print("[BOOT] run_bacbo_live: preloading HUB + ESTUDO gates…")
 try:
+    import lux_dialog_resolve as _dr
+
+    print("[BOOT] dialog_resolve:", "OK" if _dr.apply() else "FAIL")
+except Exception as exc:
+    print("[BOOT] dialog_resolve fail:", repr(exc))
+
+try:
     import hub_max_boot as _hub
 
     print("[BOOT] hub_max_boot:", _hub.apply())
 except Exception as exc:
     print("[BOOT] hub_max_boot fail:", repr(exc))
+
+try:
+    import hub_impact_learner as _hil  # noqa: F401
+
+    print("[BOOT] hub_impact_learner: ON")
+except Exception as exc:
+    print("[BOOT] hub_impact_learner fail:", repr(exc))
 
 try:
     import lux_no_hour_blocks as _nhb

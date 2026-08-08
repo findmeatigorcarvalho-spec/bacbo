@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808g'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808h'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808g"
+V="20260808h"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -22,6 +22,8 @@ for pair in \
   "bot/lux_estudo_kill.py|replit_elite_stack_patch/bot/lux_estudo_kill.py" \
   "bot/run_bacbo_live.py|replit_elite_stack_patch/bot/run_bacbo_live.py" \
   "bot/hub_orchestrator.py|replit_elite_stack_patch/bot/hub_orchestrator.py" \
+  "bot/hub_impact_learner.py|replit_elite_stack_patch/bot/hub_impact_learner.py" \
+  "bot/lux_dialog_resolve.py|replit_elite_stack_patch/bot/lux_dialog_resolve.py" \
   "bot/hub_max_boot.py|replit_elite_stack_patch/bot/hub_max_boot.py" \
   "bot/lux_tower_merge.py|replit_elite_stack_patch/bot/lux_tower_merge.py" \
   "bot/v2_floor_proposers.py|replit_elite_stack_patch/bot/v2_floor_proposers.py" \
@@ -396,6 +398,8 @@ for kv in \
   EDGE_LUXURY_FLOOR_GATE=0 \
   ROLLING_WR_MUTE_SECS=0 \
   AUTO_QUARANTINE_SECS=0 \
+  HUB_IMPACT_LEARNER=1 \
+  LUX_SKIP_RESOLVE_USERNAME=1 \
   BACBO_READY_SECS=25
 do
   k="${kv%%=*}"
@@ -433,6 +437,21 @@ assert dec["primary"]["floor"] == "JUN19", dec
 assert len(dec["spill"]) == 1 and dec["spill"][0]["floor"] == "MAY10"
 assert len(dec["dropped_opp"]) == 1
 print("HUB_ORCH_OK", dec["why"])
+from hub_impact_learner import observe_result, floor_boost
+observe_result(
+    signal_id="t",
+    outcome="win",
+    predicted="red",
+    floors=["JUN19", "MAY10"],
+    rooms=["robobacbodados", "m8sinais"],
+    kind="GOLDEN",
+    origin="COALITION",
+    primary_floor="JUN19",
+)
+print("IMPACT_LEARN_OK", "JUN19", floor_boost("JUN19"))
+import lux_dialog_resolve as dr
+assert dr.apply()
+print("DIALOG_RESOLVE_OK")
 import hub_max_boot
 print("HUB_BOOT", hub_max_boot.apply())
 PY

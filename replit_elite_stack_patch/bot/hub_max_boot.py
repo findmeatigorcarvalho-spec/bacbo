@@ -220,7 +220,7 @@ def apply() -> dict:
             "gunique_first_24_7": True,
             "real_countdown_release_lte_30s": True,
         },
-        "chat_priority": [cd, peer, "SOLO", "GOLDEN", "SEQUENCE", "MIX", "OPS"],
+        "chat_priority": list(CHAT_PRIORITY),
         "env_path": str(ENV_PATH),
         "env_keys": keys,
         "packer_ok": packer_ok,
