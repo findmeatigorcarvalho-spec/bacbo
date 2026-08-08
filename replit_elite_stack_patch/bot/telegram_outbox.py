@@ -856,10 +856,24 @@ async def main() -> None:
         print(f"[Outbox] spill @{peer} unresolved → primary NOW (never delay)")
         return dest, lane + ":FALLBACK_PRIMARY"
 
+    def _estudo_spam(body: str | None) -> bool:
+        if not body:
+            return False
+        bu = body.upper()
+        if (
+            "G2 ESTUDO" in bu
+            or "G1 ESTUDO" in bu
+            or "G3 ESTUDO" in bu
+            or "ESTUDO |" in bu
+            or "ESTUDO :" in bu
+        ):
+            return True
+        first = body.splitlines()[0].upper() if body else ""
+        return "ESTUDO" in first
+
     async def _send_all(dests, body: str):
         # Never flood UNIQUE with engine study spam / identical repeats.
-        bu = (body or "").upper()
-        if "G2 ESTUDO" in bu or "G1 ESTUDO" in bu or "ESTUDO |" in bu:
+        if _estudo_spam(body):
             print("[Outbox] drop ESTUDO study spam")
             return None
         last = None
@@ -880,6 +894,9 @@ async def main() -> None:
         for held in ready:
             body = held.text or ""
             if not body.strip():
+                continue
+            if _estudo_spam(body):
+                print("[Outbox] drop ESTUDO from round-sync hold")
                 continue
             chat = (held.chat or "UNIQUE_g1").strip()
             if chat in {"6774605259", "Mr_iv4", "mr_iv4"}:

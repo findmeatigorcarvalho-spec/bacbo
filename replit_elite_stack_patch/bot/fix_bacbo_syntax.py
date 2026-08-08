@@ -17,7 +17,18 @@ CANDIDATES = [
     Path("/home/runner/workspace/bacbo_royal_complete.py"),
 ]
 
-EOF_BLOCK = """
+EOF_SCB = """
+
+# --- LUXURY_SEND_CONFIG_BIND (auto) ---
+try:
+    import lux_send_config_bind  # noqa: F401
+    print("[LUXURY] send-config-bind loaded")
+except Exception as _lux_scb_exc:
+    print("[LUXURY] send-config-bind skipped:", _lux_scb_exc)
+# --- end LUXURY_SEND_CONFIG_BIND ---
+"""
+
+EOF_REHARDEN = """
 
 # --- lux_re_harden (safe EOF inject; do not move inside try) ---
 try:
@@ -25,7 +36,11 @@ try:
     print("[LUXURY] re-harden loaded")
 except Exception as _lux_reh_exc:
     print("[LUXURY] re-harden skipped:", _lux_reh_exc)
+# --- end lux_re_harden ---
 """
+
+# Back-compat alias
+EOF_BLOCK = EOF_REHARDEN
 
 
 def _find() -> Path:
@@ -304,11 +319,16 @@ def repair() -> dict:
                 src = text
                 report["actions"].append("surgical_ok")
 
-    # Ensure safe EOF reharden (and remove mid-file copies first)
+    # Ensure safe EOF reharden + send-config-bind (never nest inside each other)
     src = path.read_text(encoding="utf-8", errors="ignore")
     src2 = _strip_reharden_blocks(src)
+    if "import lux_send_config_bind" not in src2:
+        src2 = src2.rstrip() + EOF_SCB
+        report["actions"].append("appended_send_config_bind_eof")
+    else:
+        report["actions"].append("send_config_bind_present")
     if "import lux_re_harden" not in src2:
-        src2 = src2.rstrip() + EOF_BLOCK
+        src2 = src2.rstrip() + EOF_REHARDEN
         report["actions"].append("appended_reharden_eof")
     else:
         report["actions"].append("reharden_still_present_after_strip")

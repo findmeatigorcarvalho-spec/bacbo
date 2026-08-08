@@ -5,14 +5,15 @@ Fixes: send() failed: name 'config' is not defined
 even when `import config` appears at module top (nested scope / local assignment).
 
 Also:
-  - trash G2 ESTUDO / study spam
-  - dedupe identical bodies within a short window (stop 14× floods)
+  - trash G2 ESTUDO / study spam (engine send + Telethon send_message)
+  - dedupe identical / near-identical bodies within a short window (stop 14× floods)
 """
 from __future__ import annotations
 
 import functools
 import hashlib
 import os
+import re
 import sys
 import time
 import types
@@ -20,32 +21,63 @@ from typing import Any, Callable, Optional
 
 # body_hash → last_sent_monotonic
 _RECENT_SENDS: dict[str, float] = {}
-_DEDUP_SECS = float(os.environ.get("LUX_SEND_DEDUP_SECS", "45") or "45")
-_ESTUDO_RE = None
+_DEDUP_SECS = float(os.environ.get("LUX_SEND_DEDUP_SECS", "90") or "90")
+_ESTUDO_RE = re.compile(
+    r"(?:G[0-9]+\s*ESTUDO|\bESTUDO\b\s*[|:]|🔷\s*G[0-9]+\s*ESTUDO)",
+    re.IGNORECASE,
+)
+_SCORE_TAIL_RE = re.compile(r"\b\d+\.\d{1,3}\b\s*$")
+_TG_SEND_PATCHED = False
 
 
 def _estudo_blocked(msg: str | None) -> bool:
+    """Hard-drop engine study spam (G2 ESTUDO floods on UNIQUE_g1)."""
     if not msg:
         return False
+    if os.environ.get("LUX_BLOCK_ESTUDO", "1").strip().lower() in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }:
+        return False
     u = msg.upper()
-    return (
+    if (
         "G2 ESTUDO" in u
         or "G1 ESTUDO" in u
         or "G3 ESTUDO" in u
+        or "G0 ESTUDO" in u
         or "ESTUDO |" in u
-    )
+        or "ESTUDO :" in u
+    ):
+        return True
+    # First line often: "🔷 G2 ESTUDO | @channel"
+    first = msg.splitlines()[0] if msg else ""
+    if _ESTUDO_RE.search(first) or _ESTUDO_RE.search(msg[:160]):
+        return True
+    return False
+
+
+def _norm_dedup_key(msg: str) -> str:
+    """Normalize so score flicker (1.07 vs 0.81) still counts as one flood."""
+    t = msg.strip()
+    # Drop trailing decimal scores on each line
+    lines = []
+    for ln in t.splitlines():
+        lines.append(_SCORE_TAIL_RE.sub("", ln).rstrip())
+    return "\n".join(lines).casefold()
 
 
 def _dedup_hit(msg: str | None) -> bool:
     if not msg or not msg.strip():
         return False
     try:
-        secs = float(os.environ.get("LUX_SEND_DEDUP_SECS", str(_DEDUP_SECS)) or "45")
+        secs = float(os.environ.get("LUX_SEND_DEDUP_SECS", str(_DEDUP_SECS)) or "90")
     except Exception:
-        secs = 45.0
+        secs = 90.0
     if secs <= 0:
         return False
-    key = hashlib.sha1(msg.strip().encode("utf-8", "ignore")).hexdigest()
+    key = hashlib.sha1(_norm_dedup_key(msg).encode("utf-8", "ignore")).hexdigest()
     now = time.monotonic()
     # prune
     if len(_RECENT_SENDS) > 400:
@@ -58,6 +90,50 @@ def _dedup_hit(msg: str | None) -> bool:
         return True
     _RECENT_SENDS[key] = now
     return False
+
+
+def _tg_message_text(args: tuple, kwargs: dict) -> str | None:
+    # Telethon: send_message(entity, message, ...)
+    if len(args) >= 2 and isinstance(args[1], str):
+        return args[1]
+    for key in ("message", "msg", "text", "body"):
+        v = kwargs.get(key)
+        if isinstance(v, str):
+            return v
+    return None
+
+
+def _patch_telethon_send_message() -> bool:
+    """Nuclear ESTUDO/dedup gate — catches paths that bypass engine send()."""
+    global _TG_SEND_PATCHED
+    if _TG_SEND_PATCHED:
+        return True
+    try:
+        from telethon.client.messages import MessageMethods  # type: ignore
+    except Exception as exc:
+        print("[LUXURY] telethon send_message patch skip:", repr(exc))
+        return False
+    orig = getattr(MessageMethods, "send_message", None)
+    if not callable(orig) or getattr(orig, "_lux_estudo_wrapped", False):
+        _TG_SEND_PATCHED = True
+        return True
+
+    @functools.wraps(orig)
+    async def _wrapped(self, *args, **kwargs):
+        msg = _tg_message_text(args, kwargs)
+        if _estudo_blocked(msg):
+            print("[LUXURY] drop ESTUDO via telethon send_message")
+            return None
+        if _dedup_hit(msg):
+            print("[LUXURY] drop duplicate via telethon send_message")
+            return None
+        return await orig(self, *args, **kwargs)
+
+    _wrapped._lux_estudo_wrapped = True  # type: ignore[attr-defined]
+    MessageMethods.send_message = _wrapped  # type: ignore[method-assign]
+    _TG_SEND_PATCHED = True
+    print("[LUXURY] telethon send_message ESTUDO/dedup gate ON")
+    return True
 
 
 def _ensure_config(ns: dict) -> Any:
@@ -274,6 +350,8 @@ def apply(silent: bool = False) -> int:
         except Exception:
             pass
     patched = 0
+    if _patch_telethon_send_message():
+        patched += 1
     for name in ("__main__", "bacbo_royal_complete", "bacbo"):
         mod = sys.modules.get(name)
         if mod is not None:
@@ -293,7 +371,7 @@ def _schedule_retries() -> None:
     try:
         import threading
 
-        delays = (0.2, 1.0, 3.0, 8.0, 20.0)
+        delays = (0.2, 1.0, 3.0, 8.0, 20.0, 45.0)
         for d in delays:
             threading.Timer(d, lambda: apply(silent=True)).start()
     except Exception:

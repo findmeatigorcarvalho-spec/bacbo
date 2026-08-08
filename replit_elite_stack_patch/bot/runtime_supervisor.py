@@ -201,6 +201,10 @@ def _env() -> dict[str, str]:
     env.setdefault("BOT_TZ", "America/Sao_Paulo")
     env.setdefault("TELEGRAM_COUNTDOWN_PEER", "UNIQUE_g1")
     env.setdefault("GUNIQUE_PEER", "UNIQUE_g1")
+    # Kill G2 ESTUDO study floods + identical/near-identical spam on UNIQUE_g1
+    env.setdefault("LUX_BLOCK_ESTUDO", "1")
+    env.setdefault("LUX_SEND_DEDUP_SECS", "90")
+    env.setdefault("TELEGRAM_TRASH_BLOCK", "1")
     env["PYTHONPATH"] = f"{BOT}:{ROOT}:{env.get('PYTHONPATH', '')}"
     print(
         f"[Supervisor] EDGE_POLICY_MODE={env.get('EDGE_POLICY_MODE')} "

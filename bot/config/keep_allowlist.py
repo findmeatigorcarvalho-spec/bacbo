@@ -171,7 +171,9 @@ _HARD_TRASH_TEXT = (
     "G2 ESTUDO",
     "G1 ESTUDO",
     "G3 ESTUDO",
+    "G0 ESTUDO",
     "ESTUDO |",
+    "ESTUDO :",
     "🔷 G2 ESTUDO",
     "🔷 G1 ESTUDO",
 )
@@ -194,6 +196,9 @@ def should_block_as_trash(
         for needle in _HARD_TRASH_TEXT:
             if needle.upper() in upper:
                 return True, f"trash_estudo:{needle}"
+        first_line = body.splitlines()[0].upper() if body else ""
+        if "ESTUDO" in first_line:
+            return True, "trash_estudo:first_line"
         first = body.splitlines()[0].strip()[:120]
         for needle in trash_text_needles():
             if not needle:
