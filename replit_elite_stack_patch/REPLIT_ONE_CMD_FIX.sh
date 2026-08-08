@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808k'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808l'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808k"
+V="20260808l"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -403,7 +403,8 @@ for kv in \
   LUX_CHAT_WATCHDOG=1 \
   LUX_BLOCK_ESTUDO=1 \
   LUX_SKIP_RESOLVE_USERNAME=1 \
-  BACBO_READY_SECS=25
+  BACBO_READY_SECS=12 \
+  FALLBACK_START_DELAY_SECS=15
 do
   k="${kv%%=*}"
   grep -q "^${k}=" "$ENVF" 2>/dev/null && sed -i "s|^${k}=.*|${kv}|" "$ENVF" || echo "$kv" >> "$ENVF"
@@ -511,9 +512,9 @@ pkill -f 'runtime_supervisor.py|bacbo_royal_complete.py|telegram_outbox.py|run_b
 rm -f bot/data/runtime_supervisor.lock bot/data/telegram_outbox.lock 2>/dev/null || true
 sleep 2
 nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
-# Boot flap + BACBO_READY_SECS(25) + outbox delay — wait until outbox is up
-sleep 35
-echo "-- wait outbox (bacbo ready ≥25s) --"
+# Boot + auth(~8-12s) + outbox delay — wait until outbox is up (no restart thrash)
+sleep 25
+echo "-- wait outbox (bacbo auth+ready) --"
 OUTBOX_UP=0
 for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
   if pgrep -f 'telegram_outbox.py' >/dev/null 2>&1; then

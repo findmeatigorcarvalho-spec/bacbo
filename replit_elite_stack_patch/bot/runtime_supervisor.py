@@ -218,7 +218,8 @@ def _env() -> dict[str, str]:
     env.setdefault("FIRE_RESULT_LAW", "1")
     env.setdefault("RESULT_ATTACH_IMMEDIATE", "1")
     env.setdefault("HUB_OUTBOX_RESULT_CARDS", "1")
-    env.setdefault("BACBO_READY_SECS", "25")
+    env.setdefault("BACBO_READY_SECS", "12")
+    env.setdefault("FALLBACK_START_DELAY_SECS", "15")
     env.setdefault("HUB_IMPACT_LEARNER", "1")
     env.setdefault("LUX_SKIP_RESOLVE_USERNAME", "1")
     env["PYTHONPATH"] = f"{BOT}:{ROOT}:{env.get('PYTHONPATH', '')}"
@@ -335,17 +336,29 @@ def _kill_pat(pat: str) -> None:
             pass
 
 
-def _reap_duplicates(*, single_outbox: bool) -> None:
-    """Keep oldest bacbo/outbox; always kill legacy dual-fallback stealers."""
+def _reap_duplicates(
+    *,
+    single_outbox: bool,
+    keep_bacbo_pid: int | None = None,
+) -> None:
+    """Kill orphan bacbos/outboxes — NEVER kill the supervised bot_live PID.
+
+    Old bug: keep=min(pids) killed the freshly supervised child while a dying
+    older copy still lingered → restart thrash → bacbo_alive never reached
+    ready secs → outbox never started.
+    """
     bacbos = _find_bacbo_pids()
-    if len(bacbos) > 1:
-        keep = min(bacbos)
+    if bacbos:
+        if keep_bacbo_pid and keep_bacbo_pid in bacbos:
+            keep = keep_bacbo_pid
+        else:
+            keep = min(bacbos)
         for pid in bacbos:
             if pid == keep:
                 continue
             try:
                 os.kill(pid, signal.SIGKILL)
-                print(f"[Supervisor] killed extra bacbo pid={pid} keep={keep}")
+                print(f"[Supervisor] killed orphan bacbo pid={pid} keep={keep}")
             except Exception:
                 pass
     if single_outbox:
@@ -353,12 +366,54 @@ def _reap_duplicates(*, single_outbox: bool) -> None:
         _kill_pat("fallback_result_sender.py")
         opids = _python_pids_with("telegram_outbox.py")
         if len(opids) > 1:
-            for pid in opids[1:]:
+            keep_o = min(opids)
+            for pid in opids:
+                if pid == keep_o:
+                    continue
                 try:
                     os.kill(pid, signal.SIGKILL)
                     print(f"[Supervisor] killed extra outbox pid={pid}")
                 except Exception:
                     pass
+
+
+def _kill_all_bacbo_and_wait(timeout: float = 8.0) -> None:
+    """Hard-clear every bacbo before a fresh start (avoid AuthKey dual-session)."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        pids = _find_bacbo_pids()
+        if not pids:
+            return
+        for pid in pids:
+            try:
+                os.kill(pid, signal.SIGKILL)
+                print(f"[Supervisor] pre-start kill bacbo pid={pid}")
+            except Exception:
+                pass
+        time.sleep(0.4)
+    left = _find_bacbo_pids()
+    if left:
+        print(f"[Supervisor] WARN bacbo still alive after kill: {left}")
+
+
+def _bacbo_authenticated_in_log() -> bool:
+    """True when current bot_live boot reached Telegram auth (session owner)."""
+    try:
+        logp = LOG_DIR / "bot_live.log"
+        if not logp.is_file():
+            return False
+        lines = logp.read_text(encoding="utf-8", errors="ignore").splitlines()
+        last = -1
+        for i, ln in enumerate(lines):
+            if "supervisor starting bot_live" in ln:
+                last = i
+        chunk = lines[last + 1 :] if last >= 0 else lines[-80:]
+        for ln in chunk:
+            if "Authenticated as" in ln or "dialogs warmed" in ln:
+                return True
+    except Exception:
+        pass
+    return False
 
 
 def main() -> int:
@@ -372,7 +427,7 @@ def main() -> int:
     # Delay fallbacks so bacbo can take WAL ownership / finish boot before readers attach.
     fallbacks_enabled = env.get("FALLBACKS_ENABLED", "1").strip() not in ("0", "false", "False", "no")
     single_outbox = env.get("TELEGRAM_SINGLE_OUTBOX", "1").strip() not in ("0", "false", "False", "no")
-    fallback_delay = float(env.get("FALLBACK_START_DELAY_SECS", "20"))
+    fallback_delay = float(env.get("FALLBACK_START_DELAY_SECS", "15"))
     boot_t0 = time.time()
     # Prefer launcher so ESTUDO/dedup gate loads BEFORE bacbo main (EOF binds never run).
     launcher = BOT / "run_bacbo_live.py"
@@ -466,8 +521,27 @@ def main() -> int:
         except Exception as exc:
             print(f"[Supervisor] {reason}: log dump fail {exc!r}")
 
-    bacbo_ready_secs = float(env.get("BACBO_READY_SECS", "45") or "45")
+    bacbo_ready_secs = float(env.get("BACBO_READY_SECS", "12") or "12")
     bot_live_fails = 0
+    bot_live_grace_until = 0.0  # no orphan-reap during subscribe boot
+
+    def _owned_bacbo_pid() -> int | None:
+        proc = processes.get("bot_live", (None, None, 0.0))[1]
+        if proc is None:
+            return None
+        if proc.poll() is not None:
+            return None
+        return int(getattr(proc, "pid", 0) or 0) or None
+
+    def _bacbo_ready_for_outbox() -> tuple[bool, str]:
+        alive = _bacbo_alive_secs()
+        auth = _bacbo_authenticated_in_log()
+        # Authenticated + ≥8s is enough; else wait full ready secs.
+        if auth and alive >= min(8.0, bacbo_ready_secs):
+            return True, f"auth+alive={alive:.0f}s"
+        if alive >= bacbo_ready_secs:
+            return True, f"alive={alive:.0f}s"
+        return False, f"bacbo_alive={alive:.0f}s auth={int(auth)} ready={bacbo_ready_secs:.0f}s"
 
     try:
         tick = 0
@@ -478,34 +552,48 @@ def main() -> int:
                     if _is_delayed_sender(name):
                         if (time.time() - boot_t0) < fallback_delay:
                             continue
-                        alive = _bacbo_alive_secs()
-                        if alive < bacbo_ready_secs:
+                        ready, why = _bacbo_ready_for_outbox()
+                        if not ready:
                             if tick % 2 == 0:
-                                print(
-                                    f"[Supervisor] hold {name}: bacbo_alive={alive:.0f}s "
-                                    f"< ready={bacbo_ready_secs:.0f}s"
-                                )
+                                print(f"[Supervisor] hold {name}: {why}")
                             continue
+                        print(f"[Supervisor] release {name}: {why}")
                     if name == "bot_live":
                         existing = _find_bacbo_pid()
-                        if existing:
+                        owned = None
+                        if proc is not None:
+                            owned = int(getattr(proc, "pid", 0) or 0) or None
+                        # Prefer re-adopt only if it's NOT the just-dead owned pid
+                        if existing and existing != owned:
                             print(f"[Supervisor] re-adopting bacbo pid={existing}")
                             processes[name] = (cmd, _AdoptedProc(existing), time.time())
                             bot_live_fails = 0
+                            bot_live_grace_until = time.time() + 45.0
                             continue
                         if proc is not None and proc.poll() is not None:
                             bot_live_fails += 1
                             _dump_bot_live_tail(f"bot_live exited (fail#{bot_live_fails})")
+                        # Clear corpses so Telethon session isn't dual-owned
+                        _kill_all_bacbo_and_wait(6.0)
+                        time.sleep(2.0)
                     # Back off harder when bacbo keeps dying
-                    min_gap = 10.0 if name != "bot_live" else min(60.0, 10.0 + 5.0 * bot_live_fails)
+                    min_gap = 10.0 if name != "bot_live" else min(60.0, 8.0 + 4.0 * bot_live_fails)
                     if time.time() - last_start < min_gap:
                         time.sleep(min_gap - (time.time() - last_start))
                     print(f"[Supervisor] starting/restarting {name}")
+                    if name == "bot_live":
+                        _kill_all_bacbo_and_wait(4.0)
                     proc = _start(name, cmd, env)
                     processes[name] = (cmd, proc, time.time())
+                    if name == "bot_live":
+                        bot_live_grace_until = time.time() + 45.0
             tick += 1
             if tick % 3 == 0:  # ~15s
-                _reap_duplicates(single_outbox=single_outbox)
+                if time.time() >= bot_live_grace_until:
+                    _reap_duplicates(
+                        single_outbox=single_outbox,
+                        keep_bacbo_pid=_owned_bacbo_pid(),
+                    )
             time.sleep(5)
     except KeyboardInterrupt:
         print("[Supervisor] stopping")
