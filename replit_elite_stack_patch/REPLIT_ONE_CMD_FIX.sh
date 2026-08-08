@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808f'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808g'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808f"
+V="20260808g"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -21,6 +21,12 @@ for pair in \
   "bot/state.py|replit_elite_stack_patch/bot/state.py" \
   "bot/lux_estudo_kill.py|replit_elite_stack_patch/bot/lux_estudo_kill.py" \
   "bot/run_bacbo_live.py|replit_elite_stack_patch/bot/run_bacbo_live.py" \
+  "bot/hub_orchestrator.py|replit_elite_stack_patch/bot/hub_orchestrator.py" \
+  "bot/hub_max_boot.py|replit_elite_stack_patch/bot/hub_max_boot.py" \
+  "bot/lux_tower_merge.py|replit_elite_stack_patch/bot/lux_tower_merge.py" \
+  "bot/v2_floor_proposers.py|replit_elite_stack_patch/bot/v2_floor_proposers.py" \
+  "bot/edge_live_policy.py|replit_elite_stack_patch/bot/edge_live_policy.py" \
+  "bot/lux_no_hour_blocks.py|replit_elite_stack_patch/bot/lux_no_hour_blocks.py" \
   "bot/lux_re_harden.py|replit_elite_stack_patch/bot/lux_re_harden.py" \
   "bot/lux_send_config_bind.py|replit_elite_stack_patch/bot/lux_send_config_bind.py" \
   "bot/runtime_supervisor.py|replit_elite_stack_patch/bot/runtime_supervisor.py" \
@@ -380,21 +386,33 @@ for kv in \
   LUX_SEND_DEDUP_SECS=90 \
   HUB_OUTBOX_RESULT_CARDS=1 \
   FIRE_RESULT_LAW=1 \
-  BACBO_READY_SECS=45
+  RESULT_ATTACH_IMMEDIATE=1 \
+  HUB_MAX=1 \
+  HUB_ORCHESTRATOR=1 \
+  VOLUME_MODE=EXPLOSION \
+  V2_PROPOSERS=1 \
+  FREE_PROPOSE=1 \
+  LUXURY_NO_HOUR_BLOCKS=1 \
+  EDGE_LUXURY_FLOOR_GATE=0 \
+  ROLLING_WR_MUTE_SECS=0 \
+  AUTO_QUARANTINE_SECS=0 \
+  BACBO_READY_SECS=25
 do
   k="${kv%%=*}"
   grep -q "^${k}=" "$ENVF" 2>/dev/null && sed -i "s|^${k}=.*|${kv}|" "$ENVF" || echo "$kv" >> "$ENVF"
 done
 
-echo "-- self-test ESTUDO drop --"
+echo "-- self-test ESTUDO + HUB orchestrator --"
 $PY -u - <<'PY'
-import sys
+import sys, os
 sys.path.insert(0, "bot")
+os.environ["FREE_PROPOSE"] = "1"
+os.environ["VOLUME_MODE"] = "EXPLOSION"
+os.environ["HUB_ORCHESTRATOR"] = "1"
 from lux_send_config_bind import _estudo_blocked, _dedup_hit
 s = "🔷 G2 ESTUDO | @robobacbodados\n🔵 BLUE G0 🟡 Empate 🔥 | 📊 NEUTRO 1.07"
 assert _estudo_blocked(s), "estudo must block"
 assert not _estudo_blocked("💎 SOLO ELITE\nENTER NOW")
-# near-dup score flicker
 a = "🔷 X\n🔵 BLUE G0 | 📊 NEUTRO 1.07"
 b = "🔷 X\n🔵 BLUE G0 | 📊 NEUTRO 0.81"
 assert _dedup_hit(a) is False
@@ -404,6 +422,19 @@ from config.keep_allowlist import should_block_as_trash
 hit, why = should_block_as_trash(text=s)
 assert hit, why
 print("TRASH_SELFTEST_OK", why)
+from hub_orchestrator import orchestrate
+dec = orchestrate([
+    {"floor": "JUN19", "color": "red", "score": 90, "window_id": "t1"},
+    {"floor": "MAY10", "color": "red", "score": 70, "window_id": "t1"},
+    {"floor": "LIVE", "color": "blue", "score": 95, "window_id": "t1"},
+])
+assert dec["color"] == "red", dec  # 90+70 beats single 95
+assert dec["primary"]["floor"] == "JUN19", dec
+assert len(dec["spill"]) == 1 and dec["spill"][0]["floor"] == "MAY10"
+assert len(dec["dropped_opp"]) == 1
+print("HUB_ORCH_OK", dec["why"])
+import hub_max_boot
+print("HUB_BOOT", hub_max_boot.apply())
 PY
 
 echo "-- restart --"

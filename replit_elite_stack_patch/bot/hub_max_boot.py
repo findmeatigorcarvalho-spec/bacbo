@@ -57,8 +57,15 @@ CHAT_PRIORITY = [
 
 ENV_KEYS = {
     "HUB_MAX": "1",
+    "HUB_ORCHESTRATOR": "1",
     "VOLUME_MODE": "EXPLOSION",
     "V2_PROPOSERS": "1",
+    "FREE_PROPOSE": "1",
+    # No hour / WR / volume mute on propose path (24/7 into hub)
+    "LUXURY_NO_HOUR_BLOCKS": "1",
+    "EDGE_LUXURY_FLOOR_GATE": "0",
+    "ROLLING_WR_MUTE_SECS": "0",
+    "AUTO_QUARANTINE_SECS": "0",
     "TELEGRAM_MIRROR_MONEY_TO_GUNIQUE": "0",
     "TELEGRAM_SINGLE_OUTBOX": "1",
     "TELEGRAM_PRIMARY_PEER": "UNIQUE_g1",
@@ -81,8 +88,8 @@ ENV_KEYS = {
     "HUB_NO_SHRINK_GATES": "1",
     "HUB_ORIGINAL_CARD_SKINS": "1",
     "HUB_STRIP_NOISE_ONLY": "1",
-    "HUB_GUNIQUE_TRUST_MIN": "78",
-    "HUB_CATCHUP_MAX_PER_TICK": "4",
+    "HUB_GUNIQUE_TRUST_MIN": "50",
+    "HUB_CATCHUP_MAX_PER_TICK": "8",
     "HUB_ENGINE_ROUTE": "1",
     "HUB_OUTBOX_FIRE_CARDS": "0",
     # FIRE↔RESULT law: every FIRE gets RESULT card template skin (outbox guarantee).
@@ -91,6 +98,8 @@ ENV_KEYS = {
     "RESULT_ATTACH_IMMEDIATE": "1",
     "LUXURY_TOWER_MERGE": "1",
     "FALLBACKS_ENABLED": "1",
+    "BACBO_READY_SECS": "25",
+    "BUNDLE_ORGANIZER": "1",
 }
 
 

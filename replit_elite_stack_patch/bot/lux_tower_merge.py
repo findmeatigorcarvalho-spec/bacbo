@@ -144,6 +144,19 @@ def merge_candidate(
 
     allows: list[tuple[tuple, dict[str, Any], str]] = []
     blocks: list[tuple[str, str]] = []
+    proposals: list[dict[str, Any]] = []
+    free = os.environ.get("FREE_PROPOSE", "1").strip().lower() not in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }
+    v2 = os.environ.get("V2_PROPOSERS", "0").strip().lower() not in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }
 
     for floor in floors:
         if floor in blocked:
@@ -158,20 +171,93 @@ def merge_candidate(
             )
         except Exception as exc:
             blocks.append((floor, f"eval_error:{exc}"))
-            continue
+            if free:
+                # Still propose — hub decides; mute gates do not kill propose path
+                v = {
+                    "action": "ALLOW",
+                    "reason": f"FREE_PROPOSE_EVAL_ERR:{exc}",
+                    "matched": [],
+                    "mode": os.environ.get("EDGE_POLICY_MODE", "luxury"),
+                    "score": 0.0,
+                }
+            else:
+                continue
         action = str(v.get("action") or "")
+        # FREE_PROPOSE: convert mute BLOCKs into proposals (hub orchestrates)
+        if free and action in {"BLOCK", "SHADOW_BLOCK"}:
+            reason0 = str(v.get("reason") or "")
+            if "EDGE_FLOOR_BLOCKED" in reason0 and floor in blocked:
+                blocks.append((floor, reason0))
+                continue
+            v = dict(v)
+            v["action"] = "ALLOW"
+            v["reason"] = f"FREE_PROPOSE·was:{reason0}"
+            action = "ALLOW"
         if action in {"ALLOW", "SHADOW_ALLOW"}:
             allows.append((_rank(v, floor, peaks), v, floor))
+            strength = _strength_map().get(floor, 0.0)
+            proposals.append(
+                {
+                    "floor": floor,
+                    "color": color,
+                    "kind": kind,
+                    "score": float(strength or 0.0)
+                    + (10.0 if action == "ALLOW" else 5.0),
+                    "window_id": f"{kind}:{color}:{hour}",
+                    "lane": "MONEY",
+                    "reason": str(v.get("reason") or ""),
+                    "engine_floor": engine_floor,
+                }
+            )
         elif action in {"BLOCK", "SHADOW_BLOCK"}:
             blocks.append((floor, str(v.get("reason") or action)))
 
+    # v2: every allow is a free proposer into the hub queue
+    if v2 and proposals:
+        try:
+            from v2_floor_proposers import enqueue_proposal
+
+            for p in proposals:
+                enqueue_proposal(p)
+        except Exception as exc:
+            print("[TOWER] enqueue_proposal skip:", repr(exc))
+
     if allows:
-        allows.sort(key=lambda x: x[0], reverse=True)
-        _score, best_v, best_floor = allows[0]
+        # HUB orchestrator picks primary among free proposers (not just merge stamp)
+        best_floor = None
+        best_v = None
+        try:
+            from hub_orchestrator import enabled as _hub_on, orchestrate
+
+            if _hub_on() and proposals:
+                decision = orchestrate(proposals, primary_peer="UNIQUE_g1")
+                prim = decision.get("primary") or {}
+                best_floor = str(prim.get("floor") or "")
+                print(f"[HUB] {decision.get('why')}")
+        except Exception as exc:
+            print("[HUB] orchestrate skip:", repr(exc))
+
+        if not best_floor:
+            allows.sort(key=lambda x: x[0], reverse=True)
+            _score, best_v, best_floor = allows[0]
+        else:
+            for _sc, vv, ff in allows:
+                if ff == best_floor:
+                    best_v = vv
+                    break
+            if best_v is None:
+                allows.sort(key=lambda x: x[0], reverse=True)
+                _score, best_v, best_floor = allows[0]
+
         out = dict(best_v)
+        out["action"] = "ALLOW"
         out["winner_floor"] = best_floor
         out["tower_allows"] = [f for _, _, f in allows]
-        out["reason"] = f"TOWER_MERGE {best_floor} · {best_v.get('reason', '')}"
+        out["hub_proposals"] = len(proposals)
+        out["reason"] = (
+            f"HUB_ORCH {best_floor} · {len(allows)} proposers · "
+            f"{best_v.get('reason', '')}"
+        )
         return out
 
     # Nobody allowed

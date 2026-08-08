@@ -205,6 +205,20 @@ def _env() -> dict[str, str]:
     env.setdefault("LUX_BLOCK_ESTUDO", "1")
     env.setdefault("LUX_SEND_DEDUP_SECS", "90")
     env.setdefault("TELEGRAM_TRASH_BLOCK", "1")
+    # HUB free-propose → orchestrate (no hour/WR/volume mute on propose)
+    env.setdefault("HUB_MAX", "1")
+    env.setdefault("HUB_ORCHESTRATOR", "1")
+    env.setdefault("VOLUME_MODE", "EXPLOSION")
+    env.setdefault("V2_PROPOSERS", "1")
+    env.setdefault("FREE_PROPOSE", "1")
+    env.setdefault("LUXURY_NO_HOUR_BLOCKS", "1")
+    env.setdefault("EDGE_LUXURY_FLOOR_GATE", "0")
+    env.setdefault("ROLLING_WR_MUTE_SECS", "0")
+    env.setdefault("AUTO_QUARANTINE_SECS", "0")
+    env.setdefault("FIRE_RESULT_LAW", "1")
+    env.setdefault("RESULT_ATTACH_IMMEDIATE", "1")
+    env.setdefault("HUB_OUTBOX_RESULT_CARDS", "1")
+    env.setdefault("BACBO_READY_SECS", "25")
     env["PYTHONPATH"] = f"{BOT}:{ROOT}:{env.get('PYTHONPATH', '')}"
     print(
         f"[Supervisor] EDGE_POLICY_MODE={env.get('EDGE_POLICY_MODE')} "

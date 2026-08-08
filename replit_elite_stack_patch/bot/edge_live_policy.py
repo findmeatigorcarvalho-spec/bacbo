@@ -359,7 +359,7 @@ def evaluate_one(
             )
         return _verdict("SHADOW_ALLOW", "EDGE_NO_MATCH", [], mode, legacy_warning)
 
-    # Hard floor blocks always apply outside shadow.
+    # Hard floor blocks always apply outside shadow (toxic JUN12A/B only).
     if floor in blocked_floors:
         return _verdict(
             "BLOCK",
@@ -368,6 +368,17 @@ def evaluate_one(
             mode,
             legacy_warning,
         )
+
+    free_propose = os.environ.get("FREE_PROPOSE", "1").strip().lower() not in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }
+    # FREE_PROPOSE: no WR/loss/volume mute on propose path — hub orchestrates output.
+    if free_propose:
+        floor_gate = False
+        matched_loss = []  # do not BLOCK propose for loss-risk cells
 
     if matched_loss:
         return _verdict(
