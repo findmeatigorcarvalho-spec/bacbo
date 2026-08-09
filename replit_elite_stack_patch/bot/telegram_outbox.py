@@ -426,24 +426,76 @@ def _write_peer_cache(path: Path, target: str, ent) -> None:
         pass
 
 
+_EXCLUDED_MONEY = {"6774605259", "Mr_iv4", "mr_iv4", "6774605259"}
+_APEX_ID_DEFAULT = "5855678138"
+
+
+def _is_excluded_peer(val) -> bool:
+    s = str(val or "").strip().lstrip("@")
+    if not s:
+        return False
+    if s in _EXCLUDED_MONEY:
+        return True
+    return s.lstrip("-").isdigit() and s.lstrip("-") in {"6774605259"}
+
+
 async def _resolve_target(client, target):
+    """Resolve primary send peer — ALWAYS APEX (UNIQUE_g1). Never Mr_iv4."""
     cache = HERE / "data" / "telegram_target_entity.json"
     cache.parent.mkdir(parents=True, exist_ok=True)
-    peer = os.environ.get("TELEGRAM_TARGET_PEER") or os.environ.get("TARGET_PEER_ID")
-    if peer and str(peer).lstrip("-").isdigit():
-        return await client.get_entity(int(peer))
-    if isinstance(target, int) or (isinstance(target, str) and str(target).lstrip("-").isdigit()):
-        return await client.get_entity(int(target))
+    # Prefer explicit APEX numeric ids from hub env
+    for env_key in (
+        "TELEGRAM_PRIMARY_PEER_ID",
+        "TELEGRAM_GUNIQUE_PEER_ID",
+        "GUNIQUE_PEER_ID",
+        "TELEGRAM_TARGET_PEER",
+        "TARGET_PEER_ID",
+    ):
+        raw = _clean_peer(os.environ.get(env_key))
+        if raw and raw.lstrip("-").isdigit() and not _is_excluded_peer(raw):
+            try:
+                ent = await client.get_entity(int(raw))
+                _write_peer_cache(cache, "UNIQUE_g1", ent)
+                print(f"[Outbox] primary resolve OK via {env_key}={raw} id={ent.id}")
+                return ent
+            except Exception as exc:
+                print(f"[Outbox] primary {env_key} fail:", repr(exc))
+    # Default APEX numeric (Profit Chat Bundle #1)
+    try:
+        ent = await client.get_entity(int(_APEX_ID_DEFAULT))
+        _write_peer_cache(cache, "UNIQUE_g1", ent)
+        print(f"[Outbox] primary resolve OK via APEX default id={_APEX_ID_DEFAULT}")
+        return ent
+    except Exception as exc:
+        print("[Outbox] primary APEX default fail:", repr(exc))
+    # Dialogs / gunique path (never use config.TARGET if Mr_iv4)
+    if _is_excluded_peer(target):
+        print(f"[Outbox] ignoring excluded config.TARGET={target!r} → UNIQUE_g1")
+        target = "UNIQUE_g1"
+    # Drop stale cache pointing at Mr_iv4
     if cache.exists():
         try:
             data = json.loads(cache.read_text())
-            if data.get("id") is not None:
-                return await client.get_entity(int(data["id"]))
+            cid = data.get("id")
+            cun = str(data.get("username") or "")
+            if cid is not None and not _is_excluded_peer(cid) and not _is_excluded_peer(cun):
+                return await client.get_entity(int(cid))
+            print("[Outbox] purging stale primary cache (excluded peer)")
+            cache.unlink(missing_ok=True)
         except Exception:
             pass
+    # Reuse Gunique resolver (dialogs, no ResolveUsername hammer)
+    ent = await _resolve_gunique(client, "UNIQUE_g1")
+    if ent is not None:
+        _write_peer_cache(cache, "UNIQUE_g1", ent)
+        return ent
     if target is None:
-        raise RuntimeError("TARGET missing — set TELEGRAM_TARGET_PEER=UNIQUE_g1")
+        raise RuntimeError("TARGET missing — set TELEGRAM_GUNIQUE_PEER_ID=5855678138")
     ent = await client.get_entity(target)
+    if _is_excluded_peer(getattr(ent, "id", None)) or _is_excluded_peer(
+        getattr(ent, "username", None)
+    ):
+        raise RuntimeError(f"resolved excluded money peer {ent!r}")
     _write_peer_cache(cache, str(target), ent)
     return ent
 
@@ -660,7 +712,7 @@ async def main(existing_client=None) -> None:
         entity = await _resolve_target(client, target)
     except Exception as exc:
         print("[Outbox] resolve peer fallback:", exc)
-        entity = await client.get_entity(int(peer))
+        entity = await client.get_entity(int(_APEX_ID_DEFAULT))
 
     # Profit Chat Bundle: APEX=UNIQUE_g1 owns money + countdown.
     # Mr_iv4 removed. RESULT always same chat as parent fire.
@@ -672,6 +724,8 @@ async def main(existing_client=None) -> None:
         or os.environ.get("TELEGRAM_GUNIQUE_PEER")
         or "UNIQUE_g1"
     )
+    if _is_excluded_peer(cd_peer):
+        cd_peer = "UNIQUE_g1"
     cd_entity = await _resolve_gunique(client, cd_peer) if cd_peer else None
     if cd_entity is not None:
         print(
@@ -683,6 +737,18 @@ async def main(existing_client=None) -> None:
             f"[Outbox] APEX NOT READY peer=@{cd_peer} — will soft-retry; "
             "set TELEGRAM_GUNIQUE_PEER_ID=5855678138 if FloodWait / UsernameNotOccupied"
         )
+    # Hard redirect: never keep Mr_iv4 as "money" primary
+    try:
+        if _is_excluded_peer(getattr(entity, "id", None)) or _is_excluded_peer(
+            getattr(entity, "username", None)
+        ):
+            print(
+                f"[Outbox] REDIRECT excluded money peer "
+                f"{getattr(entity, 'username', None)}/{getattr(entity, 'id', None)} → APEX"
+            )
+            entity = cd_entity or await client.get_entity(int(_APEX_ID_DEFAULT))
+    except Exception as exc:
+        print("[Outbox] excluded-money redirect fail:", repr(exc))
     try:
         mid = int(getattr(entity, "id", 0) or 0)
         cid = int(getattr(cd_entity, "id", 0) or 0) if cd_entity is not None else 0
@@ -717,25 +783,42 @@ async def main(existing_client=None) -> None:
     _peer_entity_cache: dict[str, object] = {}
 
     async def _resolve_peer_entity(peer: str | None):
-        """Resolve UNIQUE_gN / APEX. Mr_iv4 redirects to APEX. Fail-open → primary."""
+        """Resolve UNIQUE_gN / APEX via id/dialogs. Never ResolveUsername (FloodWait)."""
         if not peer:
             return None
         key = str(peer).lstrip("@").strip()
         if not key:
             return None
         # Excluded former money king → APEX (UNIQUE_g1)
-        if key in {"6774605259", "Mr_iv4", "mr_iv4"}:
+        if _is_excluded_peer(key):
             return cd_entity or entity
-        if key == str(getattr(entity, "id", "")) or key in {
-            "UNIQUE_g1",
+        if key == str(getattr(entity, "id", "")) or key.casefold() in {
             "unique_g1",
             "5855678138",
-            str(cd_peer),
+            str(cd_peer or "").casefold(),
             str(getattr(cd_entity, "id", "") or ""),
         }:
             return cd_entity or entity
         if key in _peer_entity_cache:
             return _peer_entity_cache[key]
+        # Env override: TELEGRAM_G2_PEER_ID … TELEGRAM_G5_PEER_ID
+        env_map = {
+            "unique_g2": "TELEGRAM_G2_PEER_ID",
+            "unique_g3": "TELEGRAM_G3_PEER_ID",
+            "unique_g4": "TELEGRAM_G4_PEER_ID",
+            "unique_g5": "TELEGRAM_G5_PEER_ID",
+        }
+        ek = env_map.get(key.casefold())
+        if ek:
+            raw = _clean_peer(os.environ.get(ek))
+            if raw and raw.lstrip("-").isdigit():
+                try:
+                    ent = await client.get_entity(int(raw))
+                    _peer_entity_cache[key] = ent
+                    print(f"[Outbox] spill @{key} OK via {ek}={raw}")
+                    return ent
+                except Exception as exc:
+                    print(f"[Outbox] spill {ek} fail:", repr(exc))
         if key.lstrip("-").isdigit():
             try:
                 ent = await client.get_entity(int(key))
@@ -744,18 +827,44 @@ async def main(existing_client=None) -> None:
             except Exception as exc:
                 print(f"[Outbox] peer resolve id={key} fail:", repr(exc))
                 return None
+        # Dialogs scan (same strategy as Gunique — no ResolveUsername)
+        want = key.casefold()
         try:
-            ent = await client.get_entity(key if key.startswith("@") else f"@{key}")
-            _peer_entity_cache[key] = ent
-            return ent
-        except Exception:
-            try:
-                ent = await client.get_entity(key)
-                _peer_entity_cache[key] = ent
-                return ent
-            except Exception as exc:
-                print(f"[Outbox] peer resolve @{key} fail (spill skip→primary):", repr(exc))
-                return None
+            async for d in client.iter_dialogs():
+                ent = d.entity
+                uname = (getattr(ent, "username", None) or "").casefold()
+                if uname == want or uname == f"@{want}".lstrip("@"):
+                    _peer_entity_cache[key] = ent
+                    print(
+                        f"[Outbox] spill @{key} OK via dialogs id={getattr(ent, 'id', '?')}"
+                    )
+                    return ent
+        except Exception as exc:
+            print(f"[Outbox] spill @{key} dialogs fail:", repr(exc))
+        # room_entity_cache.json (lux_dialog_resolve)
+        try:
+            from lux_dialog_resolve import _cache_rec, _input_peer
+
+            rec = _cache_rec(key)
+            if rec:
+                inp = _input_peer(rec)
+                if inp is not None:
+                    ent = await client.get_entity(inp)
+                    _peer_entity_cache[key] = ent
+                    print(f"[Outbox] spill @{key} OK via room_entity_cache")
+                    return ent
+                if rec.get("peer_id") is not None:
+                    ent = await client.get_entity(int(rec["peer_id"]))
+                    _peer_entity_cache[key] = ent
+                    print(f"[Outbox] spill @{key} OK via cache peer_id")
+                    return ent
+        except Exception as exc:
+            print(f"[Outbox] spill @{key} cache fail:", repr(exc))
+        print(
+            f"[Outbox] peer resolve @{key} fail (spill skip→primary): "
+            "no dialogs/cache hit (ResolveUsername disabled)"
+        )
+        return None
 
     def _lane_dests(
         signal_kind: str | None,
