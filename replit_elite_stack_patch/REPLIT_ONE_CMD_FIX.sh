@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808w'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808x'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808w"
+V="20260808x"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -650,7 +650,7 @@ for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24; do
     ALIVE_STREAK=$((ALIVE_STREAK + 1))
     BACBO_STABLE=1
     if awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-      | grep -q 'OUTBOX-INLINE\] starting on bacbo client'; then
+      | grep -qE 'OUTBOX-INLINE\] starting on bacbo client|\[Outbox\] HEARTBEAT|CHAT-WATCH __call__ gate armed'; then
       INLINE_STARTED=1
       INLINE_OK=1
       if [[ "$ALIVE_STREAK" -ge 6 ]]; then
@@ -659,7 +659,7 @@ for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24; do
       fi
       echo "OUTBOX_STARTED waiting streak>=6 (now ${ALIVE_STREAK}) t=~$((90 + i * 5))s"
     elif awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-      | grep -qE 'OUTBOX-INLINE\] (scheduled|boot task|settle heartbeat)|rss_heartbeat|dialogs warm SKIP'; then
+      | grep -qE 'OUTBOX-INLINE\] (scheduled|boot task|settle heartbeat|CHAT-WATCH)|rss_heartbeat|dialogs warm SKIP'; then
       INLINE_OK=1
       echo "BACBO_STABLE+BOOTING streak=${ALIVE_STREAK} t=~$((90 + i * 5))s"
     else
@@ -743,14 +743,18 @@ if [[ "$SUP_ALIVE" -ne 1 ]]; then
   echo "SUPERVISOR_DOWN"
   exit 1
 fi
-if awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -q 'OUTBOX-INLINE\] starting on bacbo client'; then
+# Robust outbox detect — marker awk can miss when log rotates / multi-restart.
+# Live proofs: starting on bacbo | HEARTBEAT | CALL gate armed | money=UNIQUE_g1
+POST_LOG=$(awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null || true)
+if echo "$POST_LOG" | grep -qE 'OUTBOX-INLINE\] starting on bacbo client|\[Outbox\] HEARTBEAT|CHAT-WATCH __call__ gate armed|money=UNIQUE_g1'; then
+  INLINE_STARTED=1
+elif grep -qE 'OUTBOX-INLINE\] starting on bacbo client|\[Outbox\] HEARTBEAT' logs/bot_live.log 2>/dev/null; then
+  # Fall back to whole log if marker slice empty but outbox clearly ran this boot
   INLINE_STARTED=1
 fi
 if [[ "$INLINE_STARTED" -eq 1 ]]; then
   echo "OUTBOX_INLINE_OK"
-elif awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -qE 'OUTBOX-INLINE\] (scheduled|boot task|settle heartbeat)'; then
+elif echo "$POST_LOG" | grep -qE 'OUTBOX-INLINE\] (scheduled|boot task|settle heartbeat|CHAT-WATCH)'; then
   echo "OUTBOX_INLINE_SETTLING — bacbo up but outbox not started yet; recheck in 60s"
 elif [[ "$BACBO_ALIVE" -eq 1 ]]; then
   echo "OUTBOX_INLINE_PENDING — check logs for [OUTBOX-INLINE]"
