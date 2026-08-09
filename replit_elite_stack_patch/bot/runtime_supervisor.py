@@ -223,13 +223,31 @@ def _env() -> dict[str, str]:
     env.setdefault("TELEGRAM_OUTBOX_INLINE", "1")
     env.setdefault("HUB_IMPACT_LEARNER", "1")
     env.setdefault("LUX_SKIP_RESOLVE_USERNAME", "1")
+    # FORCE session/outbox settles — hub_max_boot used to pin stale 12/55 and win
+    env["TELEGRAM_OUTBOX_INLINE"] = "1"
+    env["TELEGRAM_OUTBOX_STARTUP_PING"] = "0"
+    env["OUTBOX_INLINE_SETTLE_SECS"] = env.get("OUTBOX_INLINE_SETTLE_SECS") or "70"
+    if float(env.get("OUTBOX_INLINE_SETTLE_SECS") or "0") < 60:
+        env["OUTBOX_INLINE_SETTLE_SECS"] = "70"
+    env["BACBO_SESSION_SETTLE_SECS"] = env.get("BACBO_SESSION_SETTLE_SECS") or "28"
+    if float(env.get("BACBO_SESSION_SETTLE_SECS") or "0") < 20:
+        env["BACBO_SESSION_SETTLE_SECS"] = "28"
+    env["BACBO_AUTHKEY_SETTLE_SECS"] = env.get("BACBO_AUTHKEY_SETTLE_SECS") or "40"
+    if float(env.get("BACBO_AUTHKEY_SETTLE_SECS") or "0") < 30:
+        env["BACBO_AUTHKEY_SETTLE_SECS"] = "40"
+    env["LUX_SESSION_GUARD"] = "1"
+    env.setdefault("LUX_SESSION_RECONNECTS", "12")
+    env.setdefault("LUX_DIALOG_WARM", "cache")
     env["PYTHONPATH"] = f"{BOT}:{ROOT}:{env.get('PYTHONPATH', '')}"
     print(
         f"[Supervisor] EDGE_POLICY_MODE={env.get('EDGE_POLICY_MODE')} "
         f"FLOOR_GATE={env.get('EDGE_LUXURY_FLOOR_GATE')} "
         f"FALLBACKS={env.get('FALLBACKS_ENABLED')} "
         f"OUTBOX={env.get('TELEGRAM_SINGLE_OUTBOX')} "
-        f"CD_PEER={env.get('TELEGRAM_COUNTDOWN_PEER')}"
+        f"CD_PEER={env.get('TELEGRAM_COUNTDOWN_PEER')} "
+        f"SETTLE={env.get('BACBO_SESSION_SETTLE_SECS')}/"
+        f"{env.get('OUTBOX_INLINE_SETTLE_SECS')} "
+        f"DIALOG_WARM={env.get('LUX_DIALOG_WARM')}"
     )
     return env
 
@@ -563,12 +581,14 @@ def main() -> int:
     )
     if single_outbox or outbox_inline:
         _session_settlers()
-    # Fresh supervisor boot after ONE_CMD pkill: AuthKey may still be held
+    # Fresh supervisor boot after ONE_CMD pkill: AuthKey may still be held.
+    # Cap cold-start — ONE_CMD already waited ~35s; don't stack another full 40s
+    # of downtime (false BACBO_DOWN during settle windows).
     if processes["bot_live"][1] is None:
-        settle0 = _session_settle_secs(authkey_flavor=True)
+        settle0 = min(20.0, _session_settle_secs(authkey_flavor=False))
         print(
             f"[Supervisor] cold-start AuthKey settle {settle0:.0f}s "
-            "(prevents immediate reconnect kick)"
+            "(ONE_CMD already pre-settled)"
         )
         time.sleep(settle0)
 
@@ -659,13 +679,21 @@ def main() -> int:
                             bot_live_fails += 1
                             code = proc.poll()
                             authkey_death = False
+                            sigkill = code == -9 or code == 137
                             _dump_bot_live_tail(
                                 f"bot_live exited (fail#{bot_live_fails} code={code})"
                             )
+                            if sigkill:
+                                print(
+                                    "[Supervisor] SIGKILL code=-9 — likely Replit OOM "
+                                    "or external pkill (not AuthKey). Check "
+                                    "[BOOT] rss_heartbeat in bot_live.log",
+                                    flush=True,
+                                )
                             # Highlight crash signatures
                             try:
                                 logp = LOG_DIR / "bot_live.log"
-                                tail = logp.read_text(encoding="utf-8", errors="ignore").splitlines()[-80:]
+                                tail = logp.read_text(encoding="utf-8", errors="ignore").splitlines()[-100:]
                                 hits = [
                                     ln
                                     for ln in tail
@@ -681,10 +709,12 @@ def main() -> int:
                                             "SystemExit",
                                             "EXITING",
                                             "got SIGTERM",
+                                            "rss_heartbeat",
+                                            "dialogs warm",
                                         )
                                     )
                                 ]
-                                for ln in hits[-12:]:
+                                for ln in hits[-16:]:
                                     print(f"[Supervisor] crash-sig: {ln}")
                                 authkey_death = any(
                                     "AuthKey" in ln or "auth-key" in ln.lower()
@@ -695,9 +725,19 @@ def main() -> int:
                             # Clear corpses once + long AuthKey settle (only after death)
                             _kill_all_bacbo_and_wait(
                                 10.0,
-                                authkey_flavor=authkey_death or bot_live_fails >= 2,
+                                authkey_flavor=(
+                                    authkey_death or bot_live_fails >= 2 or sigkill
+                                ),
                             )
                             time.sleep(2.0)
+                            if sigkill:
+                                # Extra cool-down so we don't thrash into more OOM kills
+                                cool = min(180.0, 60.0 + 30.0 * bot_live_fails)
+                                print(
+                                    f"[Supervisor] SIGKILL cool-down {cool:.0f}s",
+                                    flush=True,
+                                )
+                                time.sleep(cool)
                         else:
                             # First start: just ensure no session thieves
                             _session_settlers()
@@ -705,7 +745,7 @@ def main() -> int:
                     min_gap = (
                         10.0
                         if name != "bot_live"
-                        else min(120.0, 20.0 + 10.0 * bot_live_fails)
+                        else min(180.0, 25.0 + 15.0 * bot_live_fails)
                     )
                     if time.time() - last_start < min_gap:
                         time.sleep(min_gap - (time.time() - last_start))

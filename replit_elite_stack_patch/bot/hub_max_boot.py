@@ -103,9 +103,13 @@ ENV_KEYS = {
     # Outbox MUST share bacbo's client — standalone steals AuthKey and kills bot_live
     "TELEGRAM_OUTBOX_INLINE": "1",
     "TELEGRAM_OUTBOX_STARTUP_PING": "0",
-    "OUTBOX_INLINE_SETTLE_SECS": "55",
+    "OUTBOX_INLINE_SETTLE_SECS": "70",
     "LUX_SESSION_GUARD": "1",
-    "BACBO_SESSION_SETTLE_SECS": "12",
+    "LUX_SESSION_RECONNECTS": "12",
+    "BACBO_SESSION_SETTLE_SECS": "28",
+    "BACBO_AUTHKEY_SETTLE_SECS": "40",
+    # Skip heavy iter_dialogs warm when cache already hot (cuts boot RSS / OOM -9)
+    "LUX_DIALOG_WARM": "cache",
     "BUNDLE_ORGANIZER": "1",
 }
 

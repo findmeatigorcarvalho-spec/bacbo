@@ -94,6 +94,37 @@ _os.environ.setdefault("TELEGRAM_OUTBOX_STARTUP_PING", "0")
 _os.environ.setdefault("OUTBOX_INLINE_SETTLE_SECS", "70")
 _os.environ.setdefault("LUX_SESSION_GUARD", "1")
 _os.environ.setdefault("LUX_SESSION_RECONNECTS", "12")
+_os.environ.setdefault("LUX_DIALOG_WARM", "cache")
+
+
+def _rss_mb() -> float:
+    try:
+        with open("/proc/self/status", encoding="utf-8") as fh:
+            for ln in fh:
+                if ln.startswith("VmRSS:"):
+                    return int(ln.split()[1]) / 1024.0
+    except Exception:
+        pass
+    return -1.0
+
+
+def _start_rss_heartbeat() -> None:
+    """Log RSS every 5s for 3 min — proves OOM vs external SIGKILL on exit -9."""
+    import threading
+    import time as _t
+
+    def _run() -> None:
+        for i in range(36):
+            rss = _rss_mb()
+            print(f"[BOOT] rss_heartbeat #{i + 1} rss_mb={rss:.1f}", flush=True)
+            _t.sleep(5.0)
+
+    try:
+        threading.Thread(target=_run, name="lux_rss_hb", daemon=True).start()
+        print(f"[BOOT] rss_heartbeat ON start_rss_mb={_rss_mb():.1f}", flush=True)
+    except Exception as exc:
+        print("[BOOT] rss_heartbeat skip:", repr(exc), flush=True)
+
 
 # RESULT outbox shares bacbo's TelegramClient — never a second session
 try:
@@ -110,10 +141,14 @@ if not bacbo.is_file():
     raise SystemExit(f"MISSING bacbo_royal_complete.py under {ROOT}")
 
 print(f"[BOOT] run_bacbo_live: exec {bacbo}")
+_start_rss_heartbeat()
 
 
 def _on_exit() -> None:
-    print("[BOOT] run_bacbo_live atexit — process ending")
+    print(
+        f"[BOOT] run_bacbo_live atexit — process ending rss_mb={_rss_mb():.1f}",
+        flush=True,
+    )
 
 
 atexit.register(_on_exit)

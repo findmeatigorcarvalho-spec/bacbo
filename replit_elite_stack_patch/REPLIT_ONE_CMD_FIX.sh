@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808q'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808r'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808q"
+V="20260808r"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -413,11 +413,31 @@ for kv in \
   LUX_SESSION_GUARD=1 \
   LUX_SESSION_RECONNECTS=12 \
   BACBO_SESSION_SETTLE_SECS=28 \
-  BACBO_AUTHKEY_SETTLE_SECS=40
+  BACBO_AUTHKEY_SETTLE_SECS=40 \
+  LUX_DIALOG_WARM=cache
 do
   k="${kv%%=*}"
   grep -q "^${k}=" "$ENVF" 2>/dev/null && sed -i "s|^${k}=.*|${kv}|" "$ENVF" || echo "$kv" >> "$ENVF"
 done
+
+# Also force luxury_building.env (hub_max_boot / supervisor read this — was pinning 12/55)
+LUXENV=luxury_building.env
+touch "$LUXENV"
+for kv in \
+  TELEGRAM_OUTBOX_INLINE=1 \
+  TELEGRAM_OUTBOX_STARTUP_PING=0 \
+  OUTBOX_INLINE_SETTLE_SECS=70 \
+  LUX_SESSION_GUARD=1 \
+  LUX_SESSION_RECONNECTS=12 \
+  BACBO_SESSION_SETTLE_SECS=28 \
+  BACBO_AUTHKEY_SETTLE_SECS=40 \
+  LUX_DIALOG_WARM=cache
+do
+  k="${kv%%=*}"
+  grep -q "^${k}=" "$LUXENV" 2>/dev/null && sed -i "s|^${k}=.*|${kv}|" "$LUXENV" || echo "$kv" >> "$LUXENV"
+done
+echo "-- luxury_building.env session keys --"
+grep -E 'OUTBOX_INLINE_SETTLE|BACBO_SESSION_SETTLE|BACBO_AUTHKEY|LUX_DIALOG_WARM|LUX_SESSION' "$LUXENV" || true
 
 echo "-- self-test ESTUDO + HUB orchestrator --"
 $PY -u - <<'PY'
@@ -517,6 +537,8 @@ PY
 echo "-- restart --"
 # Mark log so we ignore stale SyntaxError/NameError lines
 echo "===== ONE_CMD ${V} restart $(date -u +%Y-%m-%dT%H:%M:%SZ) =====" >> logs/bot_live.log
+# Kill competing stacks that SIGKILL bacbo mid-subscribe (code=-9)
+pkill -TERM -f 'REPLIT_ONE_STACK|REPLIT_FIX_|REPLIT_FIRE|REPLIT_PEAK|REPLIT_LUXURY|start_luxury' 2>/dev/null || true
 # Graceful stop first (SIGTERM) so Telethon can release AuthKey
 pkill -TERM -f 'runtime_supervisor.py|bacbo_royal_complete.py|telegram_outbox.py|run_bacbo_live.py|museum_unique_poster.py|museum_first5_poster.py|museum_chrono_poster.py|fallback_signal_sender.py|fallback_result_sender.py' 2>/dev/null || true
 sleep 6
@@ -525,37 +547,57 @@ rm -f bot/data/runtime_supervisor.lock bot/data/telegram_outbox.lock 2>/dev/null
 # CRITICAL: Telegram holds AuthKey after kill — do NOT reconnect in 2s
 echo "-- AuthKey settle 35s after kill (prevents mid-subscribe kick loop) --"
 sleep 35
+# Free memory before spawn (Replit SIGKILL -9 = OOM)
+$PY - <<'PY' || true
+import gc; gc.collect()
+print("GC_OK")
+PY
+free -m 2>/dev/null | head -n 2 || true
 nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
-# Supervisor itself cold-starts with another ~40s settle before spawning bacbo
+# Supervisor cold-starts ~40s then spawns bacbo
 echo "-- wait supervisor cold-start + bacbo connect (~90s) --"
 sleep 90
-echo "-- wait bacbo stable (outbox INLINE — no telegram_outbox.py process) --"
-# Kill any leftover standalone outbox that would AuthKey-fight bacbo
+echo "-- wait bacbo STAY UP (SIGKILL -9 was killing mid-subscribe) --"
 pkill -TERM -f 'telegram_outbox.py' 2>/dev/null || true
 pkill -TERM -f 'museum_unique_poster.py|museum_first5_poster.py|museum_chrono_poster.py' 2>/dev/null || true
 BACBO_STABLE=0
 INLINE_OK=0
 INLINE_STARTED=0
-for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18; do
+ALIVE_STREAK=0
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24; do
   if pgrep -f 'run_bacbo_live.py' >/dev/null 2>&1; then
+    ALIVE_STREAK=$((ALIVE_STREAK + 1))
     BACBO_STABLE=1
     if awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
       | grep -q 'OUTBOX-INLINE\] starting on bacbo client'; then
       INLINE_STARTED=1
       INLINE_OK=1
-      echo "BACBO_STABLE+OUTBOX_STARTED after ~$((90 + i * 5))s"
-      break
-    fi
-    if awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-      | grep -qE 'OUTBOX-INLINE\] (scheduled|boot task|settle heartbeat)'; then
+      if [[ "$ALIVE_STREAK" -ge 6 ]]; then
+        echo "BACBO_STABLE+OUTBOX_STARTED streak=${ALIVE_STREAK} t=~$((90 + i * 5))s"
+        break
+      fi
+      echo "OUTBOX_STARTED waiting streak>=6 (now ${ALIVE_STREAK}) t=~$((90 + i * 5))s"
+    elif awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
+      | grep -qE 'OUTBOX-INLINE\] (scheduled|boot task|settle heartbeat)|rss_heartbeat|dialogs warm SKIP'; then
       INLINE_OK=1
-      echo "BACBO_STABLE+INLINE_SETTLING t=~$((90 + i * 5))s"
-    elif [[ "$i" -ge 6 ]]; then
-      echo "BACBO_STABLE (inline attach pending) t=~$((90 + i * 5))s"
+      echo "BACBO_STABLE+BOOTING streak=${ALIVE_STREAK} t=~$((90 + i * 5))s"
+    else
+      echo "BACBO_STABLE streak=${ALIVE_STREAK} t=~$((90 + i * 5))s"
     fi
   else
+    ALIVE_STREAK=0
     BACBO_STABLE=0
-    echo "bacbo not up yet / flapping t=~$((90 + i * 5))s"
+    # If supervisor is mid AuthKey settle, this is expected — do not panic
+    if grep -q 'AuthKey settle\|SIGKILL cool-down\|cold-start AuthKey' /tmp/luxury_supervisor.log 2>/dev/null \
+      && ! grep -qE 'starting/restarting bot_live$' /tmp/luxury_supervisor.log 2>/dev/null; then
+      echo "bacbo down — supervisor settling t=~$((90 + i * 5))s"
+    else
+      echo "bacbo not up yet / flapping t=~$((90 + i * 5))s"
+    fi
+    # Surface -9 quickly
+    if grep -q 'code=-9' /tmp/luxury_supervisor.log 2>/dev/null; then
+      echo "WARN: saw exit code=-9 (SIGKILL/OOM) — dialog warm cache + cool-down active"
+    fi
   fi
   sleep 5
 done
@@ -567,36 +609,40 @@ if pgrep -f 'telegram_outbox.py' >/dev/null 2>&1; then
   pkill -TERM -f 'telegram_outbox.py' 2>/dev/null || true
 fi
 echo "---- bot_live (post-restart only) ----"
-awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | tail -n 60 || tail -n 40 logs/bot_live.log
+awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | tail -n 80 || tail -n 40 logs/bot_live.log
 echo "---- fresh errors / gate ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO-KILL|CHAT-WATCH|DROP ESTUDO|OUTBOX-INLINE|AuthKey|SESSION-GUARD|run_bacbo_live|run_forever|BootGrace|crash-sig|got SIGTERM|EXITING' \
-  | tail -n 60 || true
+  | grep -E 'NameError|SyntaxError|Traceback|rss_heartbeat|dialogs warm|OUTBOX-INLINE|AuthKey|SESSION-GUARD|code=-9|SIGKILL|got SIGTERM|EXITING|DROP ESTUDO' \
+  | tail -n 80 || true
 echo "---- supervisor ----"
-tail -n 50 /tmp/luxury_supervisor.log 2>/dev/null || true
+tail -n 60 /tmp/luxury_supervisor.log 2>/dev/null || true
+echo "---- memory ----"
+free -m 2>/dev/null || true
 
-# Final settle — prove still alive AFTER outbox settle (70s) + subscribe
-echo "-- final alive recheck (80s) — must survive outbox settle --"
-sleep 80
+# Final recheck — do NOT kill supervisor if it is mid-settle/restart (that caused thrash)
+echo "-- final alive recheck (90s) — must survive subscribe + outbox settle --"
+sleep 90
 pkill -TERM -f 'telegram_outbox.py' 2>/dev/null || true
 pkill -TERM -f 'museum_unique_poster.py|museum_first5_poster.py|museum_chrono_poster.py' 2>/dev/null || true
 if ! pgrep -f 'run_bacbo_live.py' >/dev/null 2>&1; then
-  echo "BACBO_DIED_AFTER_BOOT — one supervisor kick (with AuthKey settle)"
-  pkill -TERM -f 'runtime_supervisor.py' 2>/dev/null || true
-  sleep 4
-  pkill -KILL -f 'runtime_supervisor.py|run_bacbo_live.py|bacbo_royal_complete.py' 2>/dev/null || true
-  rm -f bot/data/runtime_supervisor.lock 2>/dev/null || true
-  sleep 30
-  nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
-  # cold-start settle + boot + outbox settle
-  sleep 120
+  if pgrep -f 'runtime_supervisor.py' >/dev/null 2>&1; then
+    echo "BACBO_DOWN_BUT_SUPERVISOR_ALIVE — letting supervisor recover (no hard kick)"
+    # Wait one more recovery window (cool-down + settle + boot)
+    sleep 120
+  else
+    echo "BACBO_DIED_AFTER_BOOT — supervisor dead; one clean restart"
+    rm -f bot/data/runtime_supervisor.lock 2>/dev/null || true
+    sleep 20
+    nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
+    sleep 120
+  fi
 fi
 echo "---- procs (final) ----"
 pgrep -af 'runtime_supervisor|telegram_outbox|run_bacbo_live' || true
 echo "---- exit markers ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -E 'SESSION-GUARD|atexit|EXITING|returned normally|AuthKey|FATAL|boot task|settle heartbeat|starting on bacbo|got SIGTERM|reconnect' \
-  | tail -n 40 || true
+  | grep -E 'SESSION-GUARD|atexit|EXITING|rss_heartbeat|AuthKey|FATAL|boot task|settle heartbeat|starting on bacbo|got SIGTERM|dialogs warm' \
+  | tail -n 50 || true
 
 BACBO_ALIVE=0
 pgrep -f 'run_bacbo_live.py|bacbo_royal_complete.py' >/dev/null && BACBO_ALIVE=1
@@ -609,14 +655,13 @@ if [[ "$BACBO_ALIVE" -eq 1 ]]; then
   fi
   echo "BACBO_UP"
 else
-  echo "BACBO_DOWN — see tails above"
+  echo "BACBO_DOWN — see tails above (if code=-9: Replit OOM / external SIGKILL)"
   exit 1
 fi
 if [[ "$SUP_ALIVE" -ne 1 ]]; then
   echo "SUPERVISOR_DOWN"
   exit 1
 fi
-# Strict: only OK when outbox actually started (not just "boot task alive")
 if awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
   | grep -q 'OUTBOX-INLINE\] starting on bacbo client'; then
   INLINE_STARTED=1
@@ -634,4 +679,4 @@ fi
 echo "========== DONE =========="
 echo "Expect: BACBO_UP + OUTBOX_INLINE_OK; pgrep: supervisor|run_bacbo_live (NO telegram_outbox.py)"
 echo "Recheck: pgrep -af 'runtime_supervisor|run_bacbo_live'"
-echo "Logs: grep -E 'OUTBOX-INLINE|SESSION-GUARD|HUB pick|DROP ESTUDO|EXITING|got SIGTERM' logs/bot_live.log | tail -n 40"
+echo "Logs: grep -E 'rss_heartbeat|OUTBOX-INLINE|SESSION-GUARD|dialogs warm|EXITING|got SIGTERM' logs/bot_live.log | tail -n 40"
