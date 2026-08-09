@@ -356,7 +356,7 @@ else:
     print("PREMAIN_ALREADY_OK")
 PY
 $PY -m py_compile bacbo_royal_complete.py 2>/dev/null || $PY -m py_compile bot/bacbo_royal_complete.py
-$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py
+$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_flask_guard.py
 echo "PY_COMPILE_OK"
 
 echo "-- fix NameError state (line ~146) --"
