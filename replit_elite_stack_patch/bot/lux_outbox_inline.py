@@ -15,6 +15,7 @@ _STARTED = False
 _SCHEDULED = False
 _PATCHED = False
 _ARMED = False
+_CLIENT_ID: int | None = None
 
 
 def enabled() -> bool:
@@ -28,9 +29,17 @@ def enabled() -> bool:
 
 def _settle_secs() -> float:
     try:
-        return float(os.environ.get("OUTBOX_INLINE_SETTLE_SECS", "55") or "55")
+        return float(os.environ.get("OUTBOX_INLINE_SETTLE_SECS", "70") or "70")
     except Exception:
-        return 55.0
+        return 70.0
+
+
+def _reset_for_retry(reason: str) -> None:
+    """Allow a later connect/reconnect to re-arm the outbox boot task."""
+    global _STARTED, _SCHEDULED
+    _STARTED = False
+    _SCHEDULED = False
+    print(f"[OUTBOX-INLINE] reset for retry ({reason})", flush=True)
 
 
 async def _boot_outbox(client: Any) -> None:
@@ -41,29 +50,60 @@ async def _boot_outbox(client: Any) -> None:
     settle = _settle_secs()
     print(
         f"[OUTBOX-INLINE] boot task alive — waiting {settle:.0f}s "
-        f"for subscribe settle"
+        f"for subscribe settle",
+        flush=True,
     )
-    await asyncio.sleep(settle)
+    # Heartbeat so logs prove we are still alive during settle
+    left = settle
+    while left > 0:
+        step = min(10.0, left)
+        await asyncio.sleep(step)
+        left -= step
+        try:
+            ok = bool(client.is_connected())
+        except Exception:
+            ok = False
+        print(
+            f"[OUTBOX-INLINE] settle heartbeat left={left:.0f}s connected={int(ok)}",
+            flush=True,
+        )
+        if not ok:
+            print(
+                "[OUTBOX-INLINE] client disconnected during settle — abort",
+                flush=True,
+            )
+            _reset_for_retry("disconnect-during-settle")
+            return
     try:
         if not client.is_connected():
-            print("[OUTBOX-INLINE] client disconnected during settle — abort")
+            print(
+                "[OUTBOX-INLINE] client disconnected during settle — abort",
+                flush=True,
+            )
+            _reset_for_retry("disconnect-after-settle")
             return
     except Exception as exc:
-        print("[OUTBOX-INLINE] connected check:", repr(exc))
+        print("[OUTBOX-INLINE] connected check:", repr(exc), flush=True)
+        _reset_for_retry("connected-check-fail")
         return
     # Never spam UNIQUE_g1 with OUTBOX ONLINE during live boot
     os.environ.setdefault("TELEGRAM_OUTBOX_STARTUP_PING", "0")
     try:
         import telegram_outbox as ob
 
-        print("[OUTBOX-INLINE] starting on bacbo client (shared session)")
+        print("[OUTBOX-INLINE] starting on bacbo client (shared session)", flush=True)
         await ob.run_inline(client)
+    except asyncio.CancelledError:
+        print("[OUTBOX-INLINE] cancelled", flush=True)
+        _reset_for_retry("cancelled")
+        raise
     except Exception as exc:
-        print("[OUTBOX-INLINE] stopped:", repr(exc))
+        print("[OUTBOX-INLINE] stopped:", repr(exc), flush=True)
+        _reset_for_retry("stopped")
 
 
 def _spawn(client: Any) -> None:
-    global _SCHEDULED
+    global _SCHEDULED, _CLIENT_ID
     if _STARTED or _SCHEDULED:
         return
     try:
@@ -72,14 +112,15 @@ def _spawn(client: Any) -> None:
         return
     try:
         _SCHEDULED = True
+        _CLIENT_ID = id(client)
         try:
             loop.create_task(_boot_outbox(client), name="lux_outbox_inline")
         except TypeError:
             loop.create_task(_boot_outbox(client))
-        print("[OUTBOX-INLINE] scheduled create_task on running loop")
+        print("[OUTBOX-INLINE] scheduled create_task on running loop", flush=True)
     except Exception as exc:
         _SCHEDULED = False
-        print("[OUTBOX-INLINE] create_task fail:", repr(exc))
+        print("[OUTBOX-INLINE] create_task fail:", repr(exc), flush=True)
 
 
 def _wrap_async(orig):
@@ -92,7 +133,7 @@ def _wrap_async(orig):
         try:
             _spawn(self)
         except Exception as exc:
-            print("[OUTBOX-INLINE] spawn after connect skip:", repr(exc))
+            print("[OUTBOX-INLINE] spawn after connect skip:", repr(exc), flush=True)
         return result
 
     _wrapped._lux_outbox_inline_wrapped = True  # type: ignore[attr-defined]
@@ -106,7 +147,7 @@ def patch_telethon() -> bool:
     try:
         from telethon import TelegramClient  # type: ignore
     except Exception as exc:
-        print("[OUTBOX-INLINE] telethon missing:", repr(exc))
+        print("[OUTBOX-INLINE] telethon missing:", repr(exc), flush=True)
         return False
     try:
         if hasattr(TelegramClient, "connect"):
@@ -115,10 +156,10 @@ def patch_telethon() -> bool:
         if st is not None and asyncio.iscoroutinefunction(st):
             TelegramClient.start = _wrap_async(st)  # type: ignore
         _PATCHED = True
-        print("[OUTBOX-INLINE] patched TelegramClient.connect")
+        print("[OUTBOX-INLINE] patched TelegramClient.connect", flush=True)
         return True
     except Exception as exc:
-        print("[OUTBOX-INLINE] patch fail:", repr(exc))
+        print("[OUTBOX-INLINE] patch fail:", repr(exc), flush=True)
         return False
 
 
@@ -126,7 +167,7 @@ def apply() -> bool:
     global _ARMED
     if not enabled():
         if not _ARMED:
-            print("[OUTBOX-INLINE] off")
+            print("[OUTBOX-INLINE] off", flush=True)
             _ARMED = True
         return False
     ok = patch_telethon()
@@ -140,7 +181,10 @@ def apply() -> bool:
             pass
     if not _ARMED:
         _ARMED = True
-        print("[OUTBOX-INLINE] arm — will start after client.connect() on bacbo loop")
+        print(
+            "[OUTBOX-INLINE] arm — will start after client.connect() on bacbo loop",
+            flush=True,
+        )
     return True
 
 

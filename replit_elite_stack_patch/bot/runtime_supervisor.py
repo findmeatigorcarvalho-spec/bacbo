@@ -332,9 +332,28 @@ def _find_bacbo_pid() -> int | None:
 def _kill_pat(pat: str) -> None:
     for pid in _python_pids_with(pat):
         try:
+            os.kill(pid, signal.SIGTERM)
+        except Exception:
+            pass
+    time.sleep(0.5)
+    for pid in _python_pids_with(pat):
+        try:
             os.kill(pid, signal.SIGKILL)
         except Exception:
             pass
+
+
+def _session_settlers() -> None:
+    """Kill every other MTProto user of the same StringSession."""
+    for pat in (
+        "telegram_outbox.py",
+        "fallback_signal_sender.py",
+        "fallback_result_sender.py",
+        "museum_unique_poster.py",
+        "museum_first5_poster.py",
+        "museum_chrono_poster.py",
+    ):
+        _kill_pat(pat)
 
 
 def _reap_duplicates(
@@ -358,13 +377,21 @@ def _reap_duplicates(
             if pid == keep:
                 continue
             try:
+                os.kill(pid, signal.SIGTERM)
+                print(f"[Supervisor] SIGTERM orphan bacbo pid={pid} keep={keep}")
+            except Exception:
+                pass
+        time.sleep(1.0)
+        for pid in _find_bacbo_pids():
+            if pid == keep:
+                continue
+            try:
                 os.kill(pid, signal.SIGKILL)
                 print(f"[Supervisor] killed orphan bacbo pid={pid} keep={keep}")
             except Exception:
                 pass
     if single_outbox:
-        _kill_pat("fallback_signal_sender.py")
-        _kill_pat("fallback_result_sender.py")
+        _session_settlers()
         opids = _python_pids_with("telegram_outbox.py")
         if len(opids) > 1:
             keep_o = min(opids)
@@ -378,14 +405,30 @@ def _reap_duplicates(
                     pass
 
 
-def _kill_all_bacbo_and_wait(timeout: float = 15.0) -> None:
+def _session_settle_secs(*, authkey_flavor: bool = False) -> float:
+    base = float(os.environ.get("BACBO_SESSION_SETTLE_SECS", "28") or "28")
+    if authkey_flavor:
+        base = max(base, float(os.environ.get("BACBO_AUTHKEY_SETTLE_SECS", "40") or "40"))
+    return max(12.0, base)
+
+
+def _kill_all_bacbo_and_wait(
+    timeout: float = 15.0,
+    *,
+    authkey_flavor: bool = False,
+) -> None:
     """Graceful then hard clear — SIGKILL-only leaves Telegram AuthKey held.
 
     Flow: SIGTERM → wait → SIGKILL → extra settle so MTProto releases the key
     before the next connect (prevents silent AuthKeyDuplicated exits).
     """
+    _session_settlers()
     pids = _find_bacbo_pids()
     if not pids:
+        settle = _session_settle_secs(authkey_flavor=authkey_flavor)
+        # Still settle — prior ONE_CMD/pkill may have left AuthKey held with no PID
+        print(f"[Supervisor] no bacbo PIDs — AuthKey settle {settle:.0f}s anyway")
+        time.sleep(settle)
         return
     for pid in pids:
         try:
@@ -394,7 +437,7 @@ def _kill_all_bacbo_and_wait(timeout: float = 15.0) -> None:
         except Exception:
             pass
     # Let Telethon disconnect cleanly
-    deadline = time.time() + min(6.0, timeout * 0.4)
+    deadline = time.time() + min(8.0, max(4.0, timeout * 0.5))
     while time.time() < deadline:
         if not _find_bacbo_pids():
             break
@@ -406,7 +449,7 @@ def _kill_all_bacbo_and_wait(timeout: float = 15.0) -> None:
         except Exception:
             pass
     # Critical: wait for Telegram to drop the old auth-key session
-    settle = max(8.0, float(os.environ.get("BACBO_SESSION_SETTLE_SECS", "12") or "12"))
+    settle = _session_settle_secs(authkey_flavor=authkey_flavor)
     print(f"[Supervisor] session settle {settle:.0f}s (AuthKey release)")
     time.sleep(settle)
     left = _find_bacbo_pids()
@@ -480,7 +523,7 @@ def main() -> int:
     }
     # Always kill standalone outbox when inline — second session AuthKey-kills bacbo
     if outbox_inline:
-        _kill_pat("telegram_outbox.py")
+        _session_settlers()
         print(
             "[Supervisor] TELEGRAM_OUTBOX_INLINE=1 — outbox runs on bacbo client "
             "(no second MTProto session)"
@@ -507,6 +550,10 @@ def main() -> int:
     env["FALLBACK_SEND_BLOCKED"] = env.get("FALLBACK_SEND_BLOCKED", "0")
     env["FALLBACK_MIN_BLOCKED_SCORE"] = env.get("FALLBACK_MIN_BLOCKED_SCORE", "6.0")
     env["TELEGRAM_SINGLE_OUTBOX"] = "1" if single_outbox else "0"
+    env.setdefault("BACBO_SESSION_SETTLE_SECS", "28")
+    env.setdefault("BACBO_AUTHKEY_SETTLE_SECS", "40")
+    env.setdefault("OUTBOX_INLINE_SETTLE_SECS", "70")
+    env.setdefault("LUX_SESSION_GUARD", "1")
 
     print("[Supervisor] starting. Logs in /home/runner/workspace/logs/")
     print(
@@ -515,9 +562,15 @@ def main() -> int:
         f"single_outbox={single_outbox} fallback_start_delay_secs={fallback_delay}"
     )
     if single_outbox or outbox_inline:
-        _kill_pat("fallback_signal_sender.py")
-        _kill_pat("fallback_result_sender.py")
-        _kill_pat("telegram_outbox.py")
+        _session_settlers()
+    # Fresh supervisor boot after ONE_CMD pkill: AuthKey may still be held
+    if processes["bot_live"][1] is None:
+        settle0 = _session_settle_secs(authkey_flavor=True)
+        print(
+            f"[Supervisor] cold-start AuthKey settle {settle0:.0f}s "
+            "(prevents immediate reconnect kick)"
+        )
+        time.sleep(settle0)
 
     def _is_delayed_sender(name: str) -> bool:
         return name.startswith("fallback") or name == "telegram_outbox"
@@ -605,6 +658,7 @@ def main() -> int:
                         if proc is not None and proc.poll() is not None:
                             bot_live_fails += 1
                             code = proc.poll()
+                            authkey_death = False
                             _dump_bot_live_tail(
                                 f"bot_live exited (fail#{bot_live_fails} code={code})"
                             )
@@ -619,34 +673,48 @@ def main() -> int:
                                         k in ln
                                         for k in (
                                             "AuthKey",
+                                            "SESSION-GUARD",
                                             "Traceback",
                                             "Error",
                                             "Killed",
                                             "MemoryError",
                                             "SystemExit",
+                                            "EXITING",
+                                            "got SIGTERM",
                                         )
                                     )
                                 ]
                                 for ln in hits[-12:]:
                                     print(f"[Supervisor] crash-sig: {ln}")
+                                authkey_death = any(
+                                    "AuthKey" in ln or "auth-key" in ln.lower()
+                                    for ln in hits
+                                )
                             except Exception:
                                 pass
-                        # Clear corpses so Telethon session isn't dual-owned
-                        _kill_all_bacbo_and_wait(8.0)
-                        time.sleep(3.0)
+                            # Clear corpses once + long AuthKey settle (only after death)
+                            _kill_all_bacbo_and_wait(
+                                10.0,
+                                authkey_flavor=authkey_death or bot_live_fails >= 2,
+                            )
+                            time.sleep(2.0)
+                        else:
+                            # First start: just ensure no session thieves
+                            _session_settlers()
                     # Back off harder when bacbo keeps dying
-                    min_gap = 10.0 if name != "bot_live" else min(90.0, 12.0 + 6.0 * bot_live_fails)
+                    min_gap = (
+                        10.0
+                        if name != "bot_live"
+                        else min(120.0, 20.0 + 10.0 * bot_live_fails)
+                    )
                     if time.time() - last_start < min_gap:
                         time.sleep(min_gap - (time.time() - last_start))
                     print(f"[Supervisor] starting/restarting {name}")
-                    if name == "bot_live":
-                        _kill_all_bacbo_and_wait(5.0)
-                        time.sleep(2.0)
                     proc = _start(name, cmd, env)
                     processes[name] = (cmd, proc, time.time())
                     if name == "bot_live":
-                        # Long grace — subscribe of ~70 rooms must finish
-                        bot_live_grace_until = time.time() + 120.0
+                        # Long grace — subscribe of ~70 rooms + outbox settle
+                        bot_live_grace_until = time.time() + 180.0
             tick += 1
             if tick % 4 == 0:  # ~20s
                 if time.time() >= bot_live_grace_until:

@@ -91,8 +91,9 @@ _os.environ.setdefault("HUB_ORCHESTRATOR", "1")
 _os.environ.setdefault("LUXURY_NO_HOUR_BLOCKS", "1")
 _os.environ.setdefault("TELEGRAM_OUTBOX_INLINE", "1")
 _os.environ.setdefault("TELEGRAM_OUTBOX_STARTUP_PING", "0")
-_os.environ.setdefault("OUTBOX_INLINE_SETTLE_SECS", "55")
+_os.environ.setdefault("OUTBOX_INLINE_SETTLE_SECS", "70")
 _os.environ.setdefault("LUX_SESSION_GUARD", "1")
+_os.environ.setdefault("LUX_SESSION_RECONNECTS", "12")
 
 # RESULT outbox shares bacbo's TelegramClient — never a second session
 try:
