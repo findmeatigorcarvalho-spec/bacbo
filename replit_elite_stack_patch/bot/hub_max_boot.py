@@ -110,11 +110,14 @@ ENV_KEYS = {
     "BACBO_AUTHKEY_SETTLE_SECS": "40",
     # Skip heavy iter_dialogs warm when cache already hot (cuts boot RSS / OOM -9)
     "LUX_DIALOG_WARM": "cache",
+    "LUX_FLASK_GUARD": "1",
+    "FLASK_DEBUG": "0",
     "BUNDLE_ORGANIZER": "1",
 }
 
 
 def _upsert_env(path: Path, keys: dict[str, str]) -> None:
+    """Upsert keys; drop duplicate bare/export lines for the same key."""
     lines: list[str] = []
     if path.exists():
         lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
@@ -122,12 +125,19 @@ def _upsert_env(path: Path, keys: dict[str, str]) -> None:
     out: list[str] = []
     for line in lines:
         stripped = line.strip()
-        if stripped.startswith("export ") and "=" in stripped:
-            k = stripped[len("export ") :].split("=", 1)[0].strip()
-            if k in keys:
-                out.append(f"export {k}={keys[k]}")
-                seen.add(k)
-                continue
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            out.append(line)
+            continue
+        body = stripped
+        if body.startswith("export "):
+            body = body[len("export ") :].strip()
+        k = body.split("=", 1)[0].strip()
+        if k in keys:
+            if k in seen:
+                continue  # drop duplicate
+            out.append(f"export {k}={keys[k]}")
+            seen.add(k)
+            continue
         out.append(line)
     for k, v in keys.items():
         if k not in seen:

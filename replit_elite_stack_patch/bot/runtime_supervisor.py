@@ -238,6 +238,11 @@ def _env() -> dict[str, str]:
     env["LUX_SESSION_GUARD"] = "1"
     env.setdefault("LUX_SESSION_RECONNECTS", "12")
     env.setdefault("LUX_DIALOG_WARM", "cache")
+    env["LUX_FLASK_GUARD"] = "1"
+    env["FLASK_DEBUG"] = "0"
+    env["FLASK_ENV"] = "production"
+    # Prevent Werkzeug reloader from treating this as a monitor process
+    env["WERKZEUG_RUN_MAIN"] = "true"
     env["PYTHONPATH"] = f"{BOT}:{ROOT}:{env.get('PYTHONPATH', '')}"
     print(
         f"[Supervisor] EDGE_POLICY_MODE={env.get('EDGE_POLICY_MODE')} "
@@ -685,9 +690,10 @@ def main() -> int:
                             )
                             if sigkill:
                                 print(
-                                    "[Supervisor] SIGKILL code=-9 — likely Replit OOM "
-                                    "or external pkill (not AuthKey). Check "
-                                    "[BOOT] rss_heartbeat in bot_live.log",
+                                    "[Supervisor] SIGKILL code=-9 — not AuthKey. "
+                                    "If RSS was ~200-400MB with free RAM: Flask/Werkzeug "
+                                    "reloader or external pkill. Look for [FLASK-GUARD] "
+                                    "+ rss_heartbeat in bot_live.log",
                                     flush=True,
                                 )
                             # Highlight crash signatures

@@ -21,6 +21,14 @@ for p in (str(BOT), str(ROOT)):
         sys.path.insert(0, p)
 
 print("[BOOT] run_bacbo_live: preloading HUB + ESTUDO gates…")
+# FIRST: kill Flask reloader — it SIGKILL -9's the process when boot writes files
+try:
+    import lux_flask_guard as _fg
+
+    print("[BOOT] flask_guard:", "OK" if _fg.apply() else "FAIL")
+except Exception as exc:
+    print("[BOOT] flask_guard fail:", repr(exc))
+
 try:
     import lux_session_guard as _sg
 
@@ -95,6 +103,9 @@ _os.environ.setdefault("OUTBOX_INLINE_SETTLE_SECS", "70")
 _os.environ.setdefault("LUX_SESSION_GUARD", "1")
 _os.environ.setdefault("LUX_SESSION_RECONNECTS", "12")
 _os.environ.setdefault("LUX_DIALOG_WARM", "cache")
+_os.environ.setdefault("LUX_FLASK_GUARD", "1")
+_os.environ["FLASK_DEBUG"] = "0"
+_os.environ["FLASK_ENV"] = "production"
 
 
 def _rss_mb() -> float:

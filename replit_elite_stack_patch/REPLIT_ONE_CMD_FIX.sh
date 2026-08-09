@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808r'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808s'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808r"
+V="20260808s"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -26,6 +26,7 @@ for pair in \
   "bot/lux_chat_watchdog.py|replit_elite_stack_patch/bot/lux_chat_watchdog.py" \
   "bot/lux_outbox_inline.py|replit_elite_stack_patch/bot/lux_outbox_inline.py" \
   "bot/lux_session_guard.py|replit_elite_stack_patch/bot/lux_session_guard.py" \
+  "bot/lux_flask_guard.py|replit_elite_stack_patch/bot/lux_flask_guard.py" \
   "bot/lux_dialog_resolve.py|replit_elite_stack_patch/bot/lux_dialog_resolve.py" \
   "bot/hub_max_boot.py|replit_elite_stack_patch/bot/hub_max_boot.py" \
   "bot/lux_tower_merge.py|replit_elite_stack_patch/bot/lux_tower_merge.py" \
@@ -414,30 +415,54 @@ for kv in \
   LUX_SESSION_RECONNECTS=12 \
   BACBO_SESSION_SETTLE_SECS=28 \
   BACBO_AUTHKEY_SETTLE_SECS=40 \
-  LUX_DIALOG_WARM=cache
+  LUX_DIALOG_WARM=cache \
+  LUX_FLASK_GUARD=1 \
+  FLASK_DEBUG=0
 do
   k="${kv%%=*}"
   grep -q "^${k}=" "$ENVF" 2>/dev/null && sed -i "s|^${k}=.*|${kv}|" "$ENVF" || echo "$kv" >> "$ENVF"
 done
 
-# Also force luxury_building.env (hub_max_boot / supervisor read this — was pinning 12/55)
+# Force luxury_building.env — strip duplicate bare/export lines for session keys
 LUXENV=luxury_building.env
 touch "$LUXENV"
-for kv in \
-  TELEGRAM_OUTBOX_INLINE=1 \
-  TELEGRAM_OUTBOX_STARTUP_PING=0 \
-  OUTBOX_INLINE_SETTLE_SECS=70 \
-  LUX_SESSION_GUARD=1 \
-  LUX_SESSION_RECONNECTS=12 \
-  BACBO_SESSION_SETTLE_SECS=28 \
-  BACBO_AUTHKEY_SETTLE_SECS=40 \
-  LUX_DIALOG_WARM=cache
-do
-  k="${kv%%=*}"
-  grep -q "^${k}=" "$LUXENV" 2>/dev/null && sed -i "s|^${k}=.*|${kv}|" "$LUXENV" || echo "$kv" >> "$LUXENV"
-done
-echo "-- luxury_building.env session keys --"
-grep -E 'OUTBOX_INLINE_SETTLE|BACBO_SESSION_SETTLE|BACBO_AUTHKEY|LUX_DIALOG_WARM|LUX_SESSION' "$LUXENV" || true
+$PY - <<'PY'
+from pathlib import Path
+p = Path("luxury_building.env")
+keys = {
+    "TELEGRAM_OUTBOX_INLINE": "1",
+    "TELEGRAM_OUTBOX_STARTUP_PING": "0",
+    "OUTBOX_INLINE_SETTLE_SECS": "70",
+    "LUX_SESSION_GUARD": "1",
+    "LUX_SESSION_RECONNECTS": "12",
+    "BACBO_SESSION_SETTLE_SECS": "28",
+    "BACBO_AUTHKEY_SETTLE_SECS": "40",
+    "LUX_DIALOG_WARM": "cache",
+    "LUX_FLASK_GUARD": "1",
+    "FLASK_DEBUG": "0",
+    "FLASK_ENV": "production",
+    "WERKZEUG_RUN_MAIN": "true",
+}
+lines = p.read_text(encoding="utf-8", errors="ignore").splitlines() if p.exists() else []
+seen=set(); out=[]
+for line in lines:
+    s=line.strip()
+    if not s or s.startswith("#") or "=" not in s:
+        out.append(line); continue
+    body=s[7:].strip() if s.startswith("export ") else s
+    k=body.split("=",1)[0].strip()
+    if k in keys:
+        if k in seen: continue
+        out.append(f"export {k}={keys[k]}"); seen.add(k); continue
+    out.append(line)
+for k,v in keys.items():
+    if k not in seen:
+        out.append(f"export {k}={v}")
+p.write_text("\n".join(out).rstrip()+"\n", encoding="utf-8")
+print("LUXENV_SESSION_KEYS_OK")
+for k in keys:
+    print(f"  {k}={keys[k]}")
+PY
 
 echo "-- self-test ESTUDO + HUB orchestrator --"
 $PY -u - <<'PY'
@@ -612,7 +637,7 @@ echo "---- bot_live (post-restart only) ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | tail -n 80 || tail -n 40 logs/bot_live.log
 echo "---- fresh errors / gate ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -E 'NameError|SyntaxError|Traceback|rss_heartbeat|dialogs warm|OUTBOX-INLINE|AuthKey|SESSION-GUARD|code=-9|SIGKILL|got SIGTERM|EXITING|DROP ESTUDO' \
+  | grep -E 'NameError|SyntaxError|Traceback|rss_heartbeat|dialogs warm|OUTBOX-INLINE|FLASK-GUARD|AuthKey|SESSION-GUARD|code=-9|SIGKILL|got SIGTERM|EXITING|DROP ESTUDO' \
   | tail -n 80 || true
 echo "---- supervisor ----"
 tail -n 60 /tmp/luxury_supervisor.log 2>/dev/null || true
@@ -641,7 +666,7 @@ echo "---- procs (final) ----"
 pgrep -af 'runtime_supervisor|telegram_outbox|run_bacbo_live' || true
 echo "---- exit markers ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -E 'SESSION-GUARD|atexit|EXITING|rss_heartbeat|AuthKey|FATAL|boot task|settle heartbeat|starting on bacbo|got SIGTERM|dialogs warm' \
+  | grep -E 'SESSION-GUARD|FLASK-GUARD|atexit|EXITING|rss_heartbeat|AuthKey|FATAL|boot task|settle heartbeat|starting on bacbo|got SIGTERM|dialogs warm' \
   | tail -n 50 || true
 
 BACBO_ALIVE=0
@@ -679,4 +704,4 @@ fi
 echo "========== DONE =========="
 echo "Expect: BACBO_UP + OUTBOX_INLINE_OK; pgrep: supervisor|run_bacbo_live (NO telegram_outbox.py)"
 echo "Recheck: pgrep -af 'runtime_supervisor|run_bacbo_live'"
-echo "Logs: grep -E 'rss_heartbeat|OUTBOX-INLINE|SESSION-GUARD|dialogs warm|EXITING|got SIGTERM' logs/bot_live.log | tail -n 40"
+echo "Logs: grep -E 'FLASK-GUARD|rss_heartbeat|OUTBOX-INLINE|starting on bacbo|EXITING|got SIGTERM' logs/bot_live.log | tail -n 40"
