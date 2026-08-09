@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808o'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808p'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808o"
+V="20260808p"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -25,6 +25,7 @@ for pair in \
   "bot/hub_impact_learner.py|replit_elite_stack_patch/bot/hub_impact_learner.py" \
   "bot/lux_chat_watchdog.py|replit_elite_stack_patch/bot/lux_chat_watchdog.py" \
   "bot/lux_outbox_inline.py|replit_elite_stack_patch/bot/lux_outbox_inline.py" \
+  "bot/lux_session_guard.py|replit_elite_stack_patch/bot/lux_session_guard.py" \
   "bot/lux_dialog_resolve.py|replit_elite_stack_patch/bot/lux_dialog_resolve.py" \
   "bot/hub_max_boot.py|replit_elite_stack_patch/bot/hub_max_boot.py" \
   "bot/lux_tower_merge.py|replit_elite_stack_patch/bot/lux_tower_merge.py" \
@@ -406,7 +407,11 @@ for kv in \
   LUX_SKIP_RESOLVE_USERNAME=1 \
   BACBO_READY_SECS=12 \
   FALLBACK_START_DELAY_SECS=15 \
-  TELEGRAM_OUTBOX_INLINE=1
+  TELEGRAM_OUTBOX_INLINE=1 \
+  TELEGRAM_OUTBOX_STARTUP_PING=0 \
+  OUTBOX_INLINE_SETTLE_SECS=55 \
+  LUX_SESSION_GUARD=1 \
+  BACBO_SESSION_SETTLE_SECS=12
 do
   k="${kv%%=*}"
   grep -q "^${k}=" "$ENVF" 2>/dev/null && sed -i "s|^${k}=.*|${kv}|" "$ENVF" || echo "$kv" >> "$ENVF"
@@ -555,19 +560,24 @@ awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
 echo "---- supervisor ----"
 tail -n 40 /tmp/luxury_supervisor.log 2>/dev/null || true
 
-# Final settle — prove still alive 20s later (catch post-boot death)
-echo "-- final alive recheck (20s) --"
-sleep 20
+# Final settle — prove still alive after subscribe (~70 rooms) + session settle
+echo "-- final alive recheck (55s) --"
+sleep 55
 pkill -f 'telegram_outbox.py' 2>/dev/null || true
 if ! pgrep -f 'run_bacbo_live.py' >/dev/null 2>&1; then
   echo "BACBO_DIED_AFTER_BOOT — one supervisor kick"
   pkill -f 'runtime_supervisor.py' 2>/dev/null || true
-  sleep 2
+  sleep 3
   nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
-  sleep 35
+  # SIGTERM+session settle inside supervisor before bot starts again
+  sleep 70
 fi
 echo "---- procs (final) ----"
 pgrep -af 'runtime_supervisor|telegram_outbox|run_bacbo_live' || true
+echo "---- exit markers ----"
+awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
+  | grep -E 'SESSION-GUARD|atexit|EXITING|returned normally|AuthKey|FATAL|boot task|starting on bacbo' \
+  | tail -n 30 || true
 
 BACBO_ALIVE=0
 pgrep -f 'run_bacbo_live.py|bacbo_royal_complete.py' >/dev/null && BACBO_ALIVE=1

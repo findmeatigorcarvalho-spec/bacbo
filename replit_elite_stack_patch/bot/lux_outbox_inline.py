@@ -1,10 +1,8 @@
 """Start telegram_outbox on bacbo's TelegramClient (one session).
 
-Never touch ``client.loop`` from a Timer/thread — Telethon's ``.loop``
-property calls ``get_running_loop()`` and raises in non-async threads.
-
-Patch ``TelegramClient.connect`` and ``asyncio.create_task`` the outbox
-*inside* bacbo's running loop. Only one task per process.
+Never touch ``client.loop`` from a Timer/thread.
+Wait until subscribe has had time to finish before starting RESULT polling
+(starting too early during room-subscribe correlates with disconnect exits).
 """
 from __future__ import annotations
 
@@ -28,14 +26,33 @@ def enabled() -> bool:
     }
 
 
+def _settle_secs() -> float:
+    try:
+        return float(os.environ.get("OUTBOX_INLINE_SETTLE_SECS", "55") or "55")
+    except Exception:
+        return 55.0
+
+
 async def _boot_outbox(client: Any) -> None:
     global _STARTED
     if _STARTED:
         return
     _STARTED = True
-    print("[OUTBOX-INLINE] boot task alive — waiting for subscribe settle")
-    # Let auth / dialogs / subscribe settle
-    await asyncio.sleep(12.0)
+    settle = _settle_secs()
+    print(
+        f"[OUTBOX-INLINE] boot task alive — waiting {settle:.0f}s "
+        f"for subscribe settle"
+    )
+    await asyncio.sleep(settle)
+    try:
+        if not client.is_connected():
+            print("[OUTBOX-INLINE] client disconnected during settle — abort")
+            return
+    except Exception as exc:
+        print("[OUTBOX-INLINE] connected check:", repr(exc))
+        return
+    # Never spam UNIQUE_g1 with OUTBOX ONLINE during live boot
+    os.environ.setdefault("TELEGRAM_OUTBOX_STARTUP_PING", "0")
     try:
         import telegram_outbox as ob
 
@@ -55,16 +72,11 @@ def _spawn(client: Any) -> None:
         return
     try:
         _SCHEDULED = True
-        loop.create_task(_boot_outbox(client), name="lux_outbox_inline")
-        print("[OUTBOX-INLINE] scheduled create_task on running loop")
-    except TypeError:
-        # py3.10 may not accept name=
         try:
+            loop.create_task(_boot_outbox(client), name="lux_outbox_inline")
+        except TypeError:
             loop.create_task(_boot_outbox(client))
-            print("[OUTBOX-INLINE] scheduled create_task on running loop")
-        except Exception as exc:
-            _SCHEDULED = False
-            print("[OUTBOX-INLINE] create_task fail:", repr(exc))
+        print("[OUTBOX-INLINE] scheduled create_task on running loop")
     except Exception as exc:
         _SCHEDULED = False
         print("[OUTBOX-INLINE] create_task fail:", repr(exc))

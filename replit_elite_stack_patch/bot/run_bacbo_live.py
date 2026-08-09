@@ -7,8 +7,10 @@ loads the kill gate first, then runs bacbo as __main__.
 """
 from __future__ import annotations
 
+import atexit
 import runpy
 import sys
+import traceback
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +21,13 @@ for p in (str(BOT), str(ROOT)):
         sys.path.insert(0, p)
 
 print("[BOOT] run_bacbo_live: preloading HUB + ESTUDO gates…")
+try:
+    import lux_session_guard as _sg
+
+    print("[BOOT] session_guard:", "OK" if _sg.apply() else "FAIL")
+except Exception as exc:
+    print("[BOOT] session_guard fail:", repr(exc))
+
 try:
     import lux_chat_watchdog as _cw
 
@@ -81,6 +90,9 @@ _os.environ.setdefault("V2_PROPOSERS", "1")
 _os.environ.setdefault("HUB_ORCHESTRATOR", "1")
 _os.environ.setdefault("LUXURY_NO_HOUR_BLOCKS", "1")
 _os.environ.setdefault("TELEGRAM_OUTBOX_INLINE", "1")
+_os.environ.setdefault("TELEGRAM_OUTBOX_STARTUP_PING", "0")
+_os.environ.setdefault("OUTBOX_INLINE_SETTLE_SECS", "55")
+_os.environ.setdefault("LUX_SESSION_GUARD", "1")
 
 # RESULT outbox shares bacbo's TelegramClient — never a second session
 try:
@@ -97,4 +109,23 @@ if not bacbo.is_file():
     raise SystemExit(f"MISSING bacbo_royal_complete.py under {ROOT}")
 
 print(f"[BOOT] run_bacbo_live: exec {bacbo}")
-runpy.run_path(str(bacbo), run_name="__main__")
+
+
+def _on_exit() -> None:
+    print("[BOOT] run_bacbo_live atexit — process ending")
+
+
+atexit.register(_on_exit)
+
+try:
+    runpy.run_path(str(bacbo), run_name="__main__")
+    print("[BOOT] run_bacbo_live: bacbo main returned normally (disconnect?)")
+except SystemExit as exc:
+    print("[BOOT] run_bacbo_live SystemExit:", repr(exc))
+    raise
+except BaseException as exc:
+    print("[BOOT] run_bacbo_live FATAL:", repr(exc))
+    traceback.print_exc()
+    raise
+finally:
+    print("[BOOT] run_bacbo_live EXITING")

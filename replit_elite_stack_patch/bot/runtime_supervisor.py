@@ -378,20 +378,37 @@ def _reap_duplicates(
                     pass
 
 
-def _kill_all_bacbo_and_wait(timeout: float = 8.0) -> None:
-    """Hard-clear every bacbo before a fresh start (avoid AuthKey dual-session)."""
-    deadline = time.time() + timeout
+def _kill_all_bacbo_and_wait(timeout: float = 15.0) -> None:
+    """Graceful then hard clear — SIGKILL-only leaves Telegram AuthKey held.
+
+    Flow: SIGTERM → wait → SIGKILL → extra settle so MTProto releases the key
+    before the next connect (prevents silent AuthKeyDuplicated exits).
+    """
+    pids = _find_bacbo_pids()
+    if not pids:
+        return
+    for pid in pids:
+        try:
+            os.kill(pid, signal.SIGTERM)
+            print(f"[Supervisor] SIGTERM bacbo pid={pid}")
+        except Exception:
+            pass
+    # Let Telethon disconnect cleanly
+    deadline = time.time() + min(6.0, timeout * 0.4)
     while time.time() < deadline:
-        pids = _find_bacbo_pids()
-        if not pids:
-            return
-        for pid in pids:
-            try:
-                os.kill(pid, signal.SIGKILL)
-                print(f"[Supervisor] pre-start kill bacbo pid={pid}")
-            except Exception:
-                pass
-        time.sleep(0.4)
+        if not _find_bacbo_pids():
+            break
+        time.sleep(0.3)
+    for pid in _find_bacbo_pids():
+        try:
+            os.kill(pid, signal.SIGKILL)
+            print(f"[Supervisor] SIGKILL bacbo pid={pid}")
+        except Exception:
+            pass
+    # Critical: wait for Telegram to drop the old auth-key session
+    settle = max(8.0, float(os.environ.get("BACBO_SESSION_SETTLE_SECS", "12") or "12"))
+    print(f"[Supervisor] session settle {settle:.0f}s (AuthKey release)")
+    time.sleep(settle)
     left = _find_bacbo_pids()
     if left:
         print(f"[Supervisor] WARN bacbo still alive after kill: {left}")

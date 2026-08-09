@@ -592,6 +592,8 @@ def inline_enabled() -> bool:
 
 async def run_inline(existing_client) -> None:
     """Run outbox poll loop on bacbo's live client (one session — no AuthKey war)."""
+    # Never blast OUTBOX ONLINE during live subscribe boot
+    os.environ.setdefault("TELEGRAM_OUTBOX_STARTUP_PING", "0")
     await main(existing_client=existing_client)
 
 
