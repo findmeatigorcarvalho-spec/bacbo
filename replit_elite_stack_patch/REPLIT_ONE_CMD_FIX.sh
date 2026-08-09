@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808n'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808o'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808n"
+V="20260808o"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -525,12 +525,11 @@ for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
   if pgrep -f 'run_bacbo_live.py' >/dev/null 2>&1; then
     BACBO_STABLE=1
     if awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-      | grep -qE 'OUTBOX-INLINE\] (scheduled|starting)|mode=INLINE'; then
+      | grep -qE 'OUTBOX-INLINE\] (scheduled|boot task|starting)|mode=INLINE'; then
       INLINE_OK=1
       echo "BACBO_STABLE+INLINE after ~$((30 + i * 5))s"
       break
     fi
-    # still up — keep waiting for inline attach
     if [[ "$i" -ge 6 ]]; then
       echo "BACBO_STABLE (inline attach pending) t=~$((30 + i * 5))s"
     fi
@@ -551,19 +550,29 @@ echo "---- bot_live (post-restart only) ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | tail -n 50 || tail -n 40 logs/bot_live.log
 echo "---- fresh errors / gate ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO-KILL|CHAT-WATCH|DROP ESTUDO|OUTBOX-INLINE|AuthKey|run_bacbo_live|run_forever|BootGrace' \
+  | grep -E 'NameError|SyntaxError|Traceback|send-config-bind|ESTUDO-KILL|CHAT-WATCH|DROP ESTUDO|OUTBOX-INLINE|AuthKey|run_bacbo_live|run_forever|BootGrace|crash-sig' \
   | tail -n 50 || true
 echo "---- supervisor ----"
 tail -n 40 /tmp/luxury_supervisor.log 2>/dev/null || true
-echo "---- chat watchdog stats ----"
-$PY - <<'PY' 2>/dev/null || true
-from pathlib import Path
-p = Path("bot/data/chat_watchdog_stats.json")
-print(p.read_text() if p.is_file() else "no stats yet")
-PY
+
+# Final settle — prove still alive 20s later (catch post-boot death)
+echo "-- final alive recheck (20s) --"
+sleep 20
+pkill -f 'telegram_outbox.py' 2>/dev/null || true
+if ! pgrep -f 'run_bacbo_live.py' >/dev/null 2>&1; then
+  echo "BACBO_DIED_AFTER_BOOT — one supervisor kick"
+  pkill -f 'runtime_supervisor.py' 2>/dev/null || true
+  sleep 2
+  nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
+  sleep 35
+fi
+echo "---- procs (final) ----"
+pgrep -af 'runtime_supervisor|telegram_outbox|run_bacbo_live' || true
 
 BACBO_ALIVE=0
 pgrep -f 'run_bacbo_live.py|bacbo_royal_complete.py' >/dev/null && BACBO_ALIVE=1
+SUP_ALIVE=0
+pgrep -f 'runtime_supervisor.py' >/dev/null && SUP_ALIVE=1
 if [[ "$BACBO_ALIVE" -eq 1 ]]; then
   if awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | grep -q "NameError: name 'state'"; then
     echo "BACBO_UP_BUT_STATE_NAMEERROR"
@@ -574,6 +583,14 @@ else
   echo "BACBO_DOWN — see tails above"
   exit 1
 fi
+if [[ "$SUP_ALIVE" -ne 1 ]]; then
+  echo "SUPERVISOR_DOWN"
+  exit 1
+fi
+if awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
+  | grep -qE 'OUTBOX-INLINE\] (scheduled|boot task|starting)'; then
+  INLINE_OK=1
+fi
 if [[ "$INLINE_OK" -eq 1 ]]; then
   echo "OUTBOX_INLINE_OK"
 elif [[ "$BACBO_ALIVE" -eq 1 ]]; then
@@ -583,3 +600,4 @@ else
 fi
 echo "========== DONE =========="
 echo "Expect: BACBO_UP + OUTBOX_INLINE_OK; pgrep: supervisor|run_bacbo_live (NO telegram_outbox.py)"
+echo "Recheck anytime: pgrep -af 'runtime_supervisor|run_bacbo_live'"

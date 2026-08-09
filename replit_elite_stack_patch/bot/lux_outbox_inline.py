@@ -1,11 +1,10 @@
 """Start telegram_outbox on bacbo's TelegramClient (one session).
 
 Never touch ``client.loop`` from a Timer/thread — Telethon's ``.loop``
-property calls ``get_running_loop()`` and raises in non-async threads
-(that traceback storm was killing stability).
+property calls ``get_running_loop()`` and raises in non-async threads.
 
-We patch ``TelegramClient.connect`` / ``start`` so the outbox task is
-scheduled with ``asyncio.create_task`` *inside* bacbo's running loop.
+Patch ``TelegramClient.connect`` and ``asyncio.create_task`` the outbox
+*inside* bacbo's running loop. Only one task per process.
 """
 from __future__ import annotations
 
@@ -15,6 +14,7 @@ import os
 from typing import Any
 
 _STARTED = False
+_SCHEDULED = False
 _PATCHED = False
 _ARMED = False
 
@@ -33,8 +33,9 @@ async def _boot_outbox(client: Any) -> None:
     if _STARTED:
         return
     _STARTED = True
+    print("[OUTBOX-INLINE] boot task alive — waiting for subscribe settle")
     # Let auth / dialogs / subscribe settle
-    await asyncio.sleep(8.0)
+    await asyncio.sleep(12.0)
     try:
         import telegram_outbox as ob
 
@@ -42,21 +43,30 @@ async def _boot_outbox(client: Any) -> None:
         await ob.run_inline(client)
     except Exception as exc:
         print("[OUTBOX-INLINE] stopped:", repr(exc))
-        # allow one retry path on next connect if this was early
-        # (keep _STARTED True to avoid task storms)
 
 
 def _spawn(client: Any) -> None:
-    if _STARTED:
+    global _SCHEDULED
+    if _STARTED or _SCHEDULED:
         return
     try:
         loop = asyncio.get_running_loop()
     except RuntimeError:
         return
     try:
-        loop.create_task(_boot_outbox(client))
+        _SCHEDULED = True
+        loop.create_task(_boot_outbox(client), name="lux_outbox_inline")
         print("[OUTBOX-INLINE] scheduled create_task on running loop")
+    except TypeError:
+        # py3.10 may not accept name=
+        try:
+            loop.create_task(_boot_outbox(client))
+            print("[OUTBOX-INLINE] scheduled create_task on running loop")
+        except Exception as exc:
+            _SCHEDULED = False
+            print("[OUTBOX-INLINE] create_task fail:", repr(exc))
     except Exception as exc:
+        _SCHEDULED = False
         print("[OUTBOX-INLINE] create_task fail:", repr(exc))
 
 
@@ -89,11 +99,9 @@ def patch_telethon() -> bool:
     try:
         if hasattr(TelegramClient, "connect"):
             TelegramClient.connect = _wrap_async(TelegramClient.connect)  # type: ignore
-        if hasattr(TelegramClient, "start"):
-            # start may be sync or async depending on version — only wrap if coroutine
-            st = getattr(TelegramClient, "start")
-            if asyncio.iscoroutinefunction(st):
-                TelegramClient.start = _wrap_async(st)  # type: ignore
+        st = getattr(TelegramClient, "start", None)
+        if st is not None and asyncio.iscoroutinefunction(st):
+            TelegramClient.start = _wrap_async(st)  # type: ignore
         _PATCHED = True
         print("[OUTBOX-INLINE] patched TelegramClient.connect")
         return True
@@ -111,9 +119,6 @@ def apply() -> bool:
         return False
     ok = patch_telethon()
     if not ok:
-        # telethon may import a moment later — one deferred retry on the
-        # *main* thread via threading.Timer is OK (only calls patch_telethon,
-        # never client.loop).
         try:
             import threading
 

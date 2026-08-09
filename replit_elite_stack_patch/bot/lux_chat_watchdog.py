@@ -364,15 +364,23 @@ def patch(*, force: bool = False) -> bool:
             ok = True
     except Exception as exc:
         print("[CHAT-WATCH] MessageMethods patch skip:", repr(exc))
-    try:
-        from telethon import TelegramClient  # type: ignore
+    # __call__ wrap is optional — can disturb Telethon subscribe/updates.
+    # send_message + send_file already catch ESTUDO. Default OFF for stability.
+    if os.environ.get("LUX_CHAT_WATCH_CALL", "0").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }:
+        try:
+            from telethon import TelegramClient  # type: ignore
 
-        call = getattr(TelegramClient, "__call__", None)
-        if callable(call):
-            TelegramClient.__call__ = _wrap_call(call)  # type: ignore
-            ok = True
-    except Exception as exc:
-        print("[CHAT-WATCH] TelegramClient.__call__ patch skip:", repr(exc))
+            call = getattr(TelegramClient, "__call__", None)
+            if callable(call):
+                TelegramClient.__call__ = _wrap_call(call)  # type: ignore
+                ok = True
+        except Exception as exc:
+            print("[CHAT-WATCH] TelegramClient.__call__ patch skip:", repr(exc))
     _PATCHED = ok
     return ok
 

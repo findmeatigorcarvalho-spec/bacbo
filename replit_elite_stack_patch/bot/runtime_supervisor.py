@@ -587,28 +587,63 @@ def main() -> int:
                             continue
                         if proc is not None and proc.poll() is not None:
                             bot_live_fails += 1
-                            _dump_bot_live_tail(f"bot_live exited (fail#{bot_live_fails})")
+                            code = proc.poll()
+                            _dump_bot_live_tail(
+                                f"bot_live exited (fail#{bot_live_fails} code={code})"
+                            )
+                            # Highlight crash signatures
+                            try:
+                                logp = LOG_DIR / "bot_live.log"
+                                tail = logp.read_text(encoding="utf-8", errors="ignore").splitlines()[-80:]
+                                hits = [
+                                    ln
+                                    for ln in tail
+                                    if any(
+                                        k in ln
+                                        for k in (
+                                            "AuthKey",
+                                            "Traceback",
+                                            "Error",
+                                            "Killed",
+                                            "MemoryError",
+                                            "SystemExit",
+                                        )
+                                    )
+                                ]
+                                for ln in hits[-12:]:
+                                    print(f"[Supervisor] crash-sig: {ln}")
+                            except Exception:
+                                pass
                         # Clear corpses so Telethon session isn't dual-owned
-                        _kill_all_bacbo_and_wait(6.0)
-                        time.sleep(2.0)
+                        _kill_all_bacbo_and_wait(8.0)
+                        time.sleep(3.0)
                     # Back off harder when bacbo keeps dying
-                    min_gap = 10.0 if name != "bot_live" else min(60.0, 8.0 + 4.0 * bot_live_fails)
+                    min_gap = 10.0 if name != "bot_live" else min(90.0, 12.0 + 6.0 * bot_live_fails)
                     if time.time() - last_start < min_gap:
                         time.sleep(min_gap - (time.time() - last_start))
                     print(f"[Supervisor] starting/restarting {name}")
                     if name == "bot_live":
-                        _kill_all_bacbo_and_wait(4.0)
+                        _kill_all_bacbo_and_wait(5.0)
+                        time.sleep(2.0)
                     proc = _start(name, cmd, env)
                     processes[name] = (cmd, proc, time.time())
                     if name == "bot_live":
-                        bot_live_grace_until = time.time() + 45.0
+                        # Long grace — subscribe of ~70 rooms must finish
+                        bot_live_grace_until = time.time() + 120.0
             tick += 1
-            if tick % 3 == 0:  # ~15s
+            if tick % 4 == 0:  # ~20s
                 if time.time() >= bot_live_grace_until:
                     _reap_duplicates(
                         single_outbox=single_outbox,
                         keep_bacbo_pid=_owned_bacbo_pid(),
                     )
+            # Heartbeat so we know supervisor itself is alive
+            if tick % 12 == 0:
+                pid = _owned_bacbo_pid()
+                print(
+                    f"[Supervisor] heartbeat bacbo_pid={pid} "
+                    f"alive={_bacbo_alive_secs():.0f}s fails={bot_live_fails}"
+                )
             time.sleep(5)
     except KeyboardInterrupt:
         print("[Supervisor] stopping")
