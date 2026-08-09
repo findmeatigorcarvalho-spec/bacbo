@@ -111,6 +111,7 @@ ENV_KEYS = {
     # Skip heavy iter_dialogs warm when cache already hot (cuts boot RSS / OOM -9)
     "LUX_DIALOG_WARM": "cache",
     "LUX_FLASK_GUARD": "1",
+    "LUX_KEEPALIVE_OFF": "1",
     "FLASK_DEBUG": "0",
     "BUNDLE_ORGANIZER": "1",
 }

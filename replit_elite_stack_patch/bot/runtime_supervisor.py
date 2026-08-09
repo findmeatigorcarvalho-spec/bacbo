@@ -239,10 +239,18 @@ def _env() -> dict[str, str]:
     env.setdefault("LUX_SESSION_RECONNECTS", "12")
     env.setdefault("LUX_DIALOG_WARM", "cache")
     env["LUX_FLASK_GUARD"] = "1"
+    env["LUX_KEEPALIVE_OFF"] = "1"
     env["FLASK_DEBUG"] = "0"
     env["FLASK_ENV"] = "production"
     # Prevent Werkzeug reloader from treating this as a monitor process
     env["WERKZEUG_RUN_MAIN"] = "true"
+    # Supervisor itself should not hold the web PORT either
+    for k in list(env.keys()):
+        ku = k.upper()
+        if ku in {"PORT", "REPLIT_SOCKET", "REPLIT_SOCKETS", "REPLIT_PORT"} or (
+            "REPLIT" in ku and "SOCKET" in ku
+        ):
+            env.pop(k, None)
     env["PYTHONPATH"] = f"{BOT}:{ROOT}:{env.get('PYTHONPATH', '')}"
     print(
         f"[Supervisor] EDGE_POLICY_MODE={env.get('EDGE_POLICY_MODE')} "
@@ -262,13 +270,26 @@ def _start(name: str, cmd: list[str], env: dict[str, str]) -> subprocess.Popen:
     log_path = LOG_DIR / f"{name}.log"
     fh = open(log_path, "ab", buffering=0)
     fh.write(f"\n--- supervisor starting {name} at {time.strftime('%Y-%m-%d %H:%M:%S')} ---\n".encode())
+    # Child env: never inherit Replit web PORT/socket (KeepAlive steal → SIGKILL -9)
+    child_env = dict(env)
+    for k in list(child_env.keys()):
+        ku = k.upper()
+        if ku in {"PORT", "REPLIT_SOCKET", "REPLIT_SOCKETS", "REPLIT_PORT"} or (
+            "REPLIT" in ku and "SOCKET" in ku
+        ):
+            child_env.pop(k, None)
+    child_env["LUX_KEEPALIVE_OFF"] = "1"
+    child_env["LUX_FLASK_GUARD"] = "1"
+    child_env["FLASK_DEBUG"] = "0"
+    # Stay in supervisor session — new sessions were dying under Replit Shell
     return subprocess.Popen(
         cmd,
         cwd=str(ROOT),
-        env=env,
+        env=child_env,
         stdout=fh,
         stderr=subprocess.STDOUT,
-        start_new_session=True,
+        start_new_session=False,
+        close_fds=True,
     )
 
 

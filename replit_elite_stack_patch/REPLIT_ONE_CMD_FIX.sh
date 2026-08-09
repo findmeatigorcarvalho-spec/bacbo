@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808s'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808t'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808s"
+V="20260808t"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -27,6 +27,8 @@ for pair in \
   "bot/lux_outbox_inline.py|replit_elite_stack_patch/bot/lux_outbox_inline.py" \
   "bot/lux_session_guard.py|replit_elite_stack_patch/bot/lux_session_guard.py" \
   "bot/lux_flask_guard.py|replit_elite_stack_patch/bot/lux_flask_guard.py" \
+  "bot/lux_keepalive_off.py|replit_elite_stack_patch/bot/lux_keepalive_off.py" \
+  "bot/fix_bacbo_keepalive.py|replit_elite_stack_patch/bot/fix_bacbo_keepalive.py" \
   "bot/lux_dialog_resolve.py|replit_elite_stack_patch/bot/lux_dialog_resolve.py" \
   "bot/hub_max_boot.py|replit_elite_stack_patch/bot/hub_max_boot.py" \
   "bot/lux_tower_merge.py|replit_elite_stack_patch/bot/lux_tower_merge.py" \
@@ -356,7 +358,9 @@ else:
     print("PREMAIN_ALREADY_OK")
 PY
 $PY -m py_compile bacbo_royal_complete.py 2>/dev/null || $PY -m py_compile bot/bacbo_royal_complete.py
-$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_flask_guard.py
+$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_flask_guard.py bot/lux_keepalive_off.py bot/fix_bacbo_keepalive.py
+echo "-- disable KeepAlive in megafile (PORT steal → SIGKILL -9) --"
+$PY -u bot/fix_bacbo_keepalive.py || true
 echo "PY_COMPILE_OK"
 
 echo "-- fix NameError state (line ~146) --"
@@ -417,6 +421,7 @@ for kv in \
   BACBO_AUTHKEY_SETTLE_SECS=40 \
   LUX_DIALOG_WARM=cache \
   LUX_FLASK_GUARD=1 \
+  LUX_KEEPALIVE_OFF=1 \
   FLASK_DEBUG=0
 do
   k="${kv%%=*}"
@@ -439,6 +444,7 @@ keys = {
     "BACBO_AUTHKEY_SETTLE_SECS": "40",
     "LUX_DIALOG_WARM": "cache",
     "LUX_FLASK_GUARD": "1",
+    "LUX_KEEPALIVE_OFF": "1",
     "FLASK_DEBUG": "0",
     "FLASK_ENV": "production",
     "WERKZEUG_RUN_MAIN": "true",
@@ -572,17 +578,28 @@ rm -f bot/data/runtime_supervisor.lock bot/data/telegram_outbox.lock 2>/dev/null
 # CRITICAL: Telegram holds AuthKey after kill — do NOT reconnect in 2s
 echo "-- AuthKey settle 35s after kill (prevents mid-subscribe kick loop) --"
 sleep 35
-# Free memory before spawn (Replit SIGKILL -9 = OOM)
+# Free memory + show cgroup limit (host free≠cgroup max)
 $PY - <<'PY' || true
-import gc; gc.collect()
+import gc, pathlib
+gc.collect()
 print("GC_OK")
+for p in (
+    pathlib.Path("/sys/fs/cgroup/memory.max"),
+    pathlib.Path("/sys/fs/cgroup/memory/memory.limit_in_bytes"),
+    pathlib.Path("/sys/fs/cgroup/memory.high"),
+):
+    if p.is_file():
+        print(f"CGROUP {p}={p.read_text().strip()}")
 PY
 free -m 2>/dev/null | head -n 2 || true
+# Strip PORT from this shell so children cannot steal Replit web fd
+unset PORT REPLIT_SOCKET REPLIT_SOCKETS REPLIT_PORT 2>/dev/null || true
+export LUX_KEEPALIVE_OFF=1 LUX_FLASK_GUARD=1 FLASK_DEBUG=0
 nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
-# Supervisor cold-starts ~40s then spawns bacbo
+# Supervisor cold-starts then spawns bacbo (KeepAlive OFF)
 echo "-- wait supervisor cold-start + bacbo connect (~90s) --"
 sleep 90
-echo "-- wait bacbo STAY UP (SIGKILL -9 was killing mid-subscribe) --"
+echo "-- wait bacbo STAY UP (expect NO KeepAlive bind; SIGKILL was PORT steal) --"
 pkill -TERM -f 'telegram_outbox.py' 2>/dev/null || true
 pkill -TERM -f 'museum_unique_poster.py|museum_first5_poster.py|museum_chrono_poster.py' 2>/dev/null || true
 BACBO_STABLE=0
@@ -621,7 +638,7 @@ for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24; do
     fi
     # Surface -9 quickly
     if grep -q 'code=-9' /tmp/luxury_supervisor.log 2>/dev/null; then
-      echo "WARN: saw exit code=-9 (SIGKILL/OOM) — dialog warm cache + cool-down active"
+      echo "WARN: saw exit code=-9 (SIGKILL) — if KeepAlive still binds PORT, patch failed"
     fi
   fi
   sleep 5
@@ -637,7 +654,7 @@ echo "---- bot_live (post-restart only) ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null | tail -n 80 || tail -n 40 logs/bot_live.log
 echo "---- fresh errors / gate ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -E 'NameError|SyntaxError|Traceback|rss_heartbeat|dialogs warm|OUTBOX-INLINE|FLASK-GUARD|AuthKey|SESSION-GUARD|code=-9|SIGKILL|got SIGTERM|EXITING|DROP ESTUDO' \
+  | grep -E 'NameError|SyntaxError|Traceback|rss_heartbeat|dialogs warm|OUTBOX-INLINE|FLASK-GUARD|KEEPALIVE|AuthKey|SESSION-GUARD|code=-9|SIGKILL|got SIGTERM|EXITING|DROP ESTUDO|KeepAlive' \
   | tail -n 80 || true
 echo "---- supervisor ----"
 tail -n 60 /tmp/luxury_supervisor.log 2>/dev/null || true
@@ -666,7 +683,7 @@ echo "---- procs (final) ----"
 pgrep -af 'runtime_supervisor|telegram_outbox|run_bacbo_live' || true
 echo "---- exit markers ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
-  | grep -E 'SESSION-GUARD|FLASK-GUARD|atexit|EXITING|rss_heartbeat|AuthKey|FATAL|boot task|settle heartbeat|starting on bacbo|got SIGTERM|dialogs warm' \
+  | grep -E 'SESSION-GUARD|FLASK-GUARD|KEEPALIVE|atexit|EXITING|rss_heartbeat|AuthKey|FATAL|boot task|settle heartbeat|starting on bacbo|got SIGTERM|dialogs warm|KeepAlive' \
   | tail -n 50 || true
 
 BACBO_ALIVE=0
@@ -704,4 +721,5 @@ fi
 echo "========== DONE =========="
 echo "Expect: BACBO_UP + OUTBOX_INLINE_OK; pgrep: supervisor|run_bacbo_live (NO telegram_outbox.py)"
 echo "Recheck: pgrep -af 'runtime_supervisor|run_bacbo_live'"
-echo "Logs: grep -E 'FLASK-GUARD|rss_heartbeat|OUTBOX-INLINE|starting on bacbo|EXITING|got SIGTERM' logs/bot_live.log | tail -n 40"
+echo "Logs: grep -E 'KEEPALIVE|KeepAlive|rss_heartbeat|OUTBOX-INLINE|starting on bacbo|EXITING' logs/bot_live.log | tail -n 40"
+echo "Expect: [KEEPALIVE-OFF] ON and NO '[KeepAlive] Flask bound' line"

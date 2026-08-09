@@ -21,7 +21,14 @@ for p in (str(BOT), str(ROOT)):
         sys.path.insert(0, p)
 
 print("[BOOT] run_bacbo_live: preloading HUB + ESTUDO gates…")
-# FIRST: kill Flask reloader — it SIGKILL -9's the process when boot writes files
+# FIRST: strip Replit PORT / pre-bound fd — KeepAlive bind → SIGKILL -9
+try:
+    import lux_keepalive_off as _ka
+
+    print("[BOOT] keepalive_off:", "OK" if _ka.apply() else "FAIL")
+except Exception as exc:
+    print("[BOOT] keepalive_off fail:", repr(exc))
+
 try:
     import lux_flask_guard as _fg
 
@@ -104,8 +111,12 @@ _os.environ.setdefault("LUX_SESSION_GUARD", "1")
 _os.environ.setdefault("LUX_SESSION_RECONNECTS", "12")
 _os.environ.setdefault("LUX_DIALOG_WARM", "cache")
 _os.environ.setdefault("LUX_FLASK_GUARD", "1")
+_os.environ.setdefault("LUX_KEEPALIVE_OFF", "1")
 _os.environ["FLASK_DEBUG"] = "0"
 _os.environ["FLASK_ENV"] = "production"
+# Never let child KeepAlive steal Replit web PORT
+for _k in ("PORT", "REPLIT_SOCKET", "REPLIT_SOCKETS", "REPLIT_PORT"):
+    _os.environ.pop(_k, None)
 
 
 def _rss_mb() -> float:
