@@ -112,10 +112,10 @@ def _tg_message_text(args: tuple, kwargs: dict) -> str | None:
     return None
 
 
-def _patch_telethon_send_message() -> bool:
+def _patch_telethon_send_message(*, force: bool = False) -> bool:
     """Nuclear ESTUDO/dedup gate — catches paths that bypass engine send()."""
     global _TG_SEND_PATCHED
-    if _TG_SEND_PATCHED:
+    if _TG_SEND_PATCHED and not force:
         return True
     try:
         from telethon.client.messages import MessageMethods  # type: ignore
@@ -123,7 +123,9 @@ def _patch_telethon_send_message() -> bool:
         print("[LUXURY] telethon send_message patch skip:", repr(exc))
         return False
     orig = getattr(MessageMethods, "send_message", None)
-    if not callable(orig) or getattr(orig, "_lux_estudo_wrapped", False):
+    if not callable(orig):
+        return False
+    if getattr(orig, "_lux_estudo_wrapped", False):
         _TG_SEND_PATCHED = True
         return True
 

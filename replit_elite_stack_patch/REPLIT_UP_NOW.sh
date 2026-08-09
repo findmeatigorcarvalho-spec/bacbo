@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Instant bring-up — no full pull. Use when pgrep is empty.
-#   bash <(curl -fsSL 'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UP_NOW.sh?v=20260808v')
+#   bash <(curl -fsSL 'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UP_NOW.sh?v=20260808w')
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
@@ -9,6 +9,8 @@ mkdir -p logs bot/data
 
 unset PORT REPLIT_SOCKET REPLIT_SOCKETS REPLIT_PORT 2>/dev/null || true
 export LUX_KEEPALIVE_OFF=1 LUX_FLASK_GUARD=1 FLASK_DEBUG=0
+export LUX_CHAT_WATCHDOG=1 LUX_BLOCK_ESTUDO=1
+export LUX_CHAT_WATCH_CALL=0 LUX_CHAT_WATCH_CALL_AFTER_SETTLE=1
 export FLASK_ENV=production WERKZEUG_RUN_MAIN=true
 
 # Soft clear only bot/outbox — leave babysitter alone

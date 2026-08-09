@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808v'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808w'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808v"
+V="20260808w"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -411,6 +411,8 @@ for kv in \
   HUB_IMPACT_LEARNER=1 \
   LUX_CHAT_WATCHDOG=1 \
   LUX_BLOCK_ESTUDO=1 \
+  LUX_CHAT_WATCH_CALL=0 \
+  LUX_CHAT_WATCH_CALL_AFTER_SETTLE=1 \
   LUX_SKIP_RESOLVE_USERNAME=1 \
   BACBO_READY_SECS=12 \
   FALLBACK_START_DELAY_SECS=15 \
@@ -447,6 +449,10 @@ keys = {
     "LUX_DIALOG_WARM": "cache",
     "LUX_FLASK_GUARD": "1",
     "LUX_KEEPALIVE_OFF": "1",
+    "LUX_CHAT_WATCHDOG": "1",
+    "LUX_BLOCK_ESTUDO": "1",
+    "LUX_CHAT_WATCH_CALL": "0",
+    "LUX_CHAT_WATCH_CALL_AFTER_SETTLE": "1",
     "FLASK_DEBUG": "0",
     "FLASK_ENV": "production",
     "WERKZEUG_RUN_MAIN": "true",
@@ -485,6 +491,8 @@ s = "🔷 G2 ESTUDO | @robobacbodados\n🔵 BLUE G0 🟡 Empate 🔥 | 📊 NEUT
 assert cw.estudo_blocked(s), "estudo must block"
 s_zw = "🔷 G2\u200b ESTUDO | @robobacbodados\n🔵 BLUE G0 | 📊 NEUTRO 1.09"
 assert cw.estudo_blocked(s_zw), "zw estudo must block"
+s_baixa = "🔷 G2 ESTUDO | @M8SINAIS\n🔴 RED G0 | 🟡 BAIXA 0.67"
+assert cw.estudo_blocked(s_baixa), "BAIXA estudo must block"
 assert not cw.estudo_blocked("💎 SOLO ELITE\nENTER NOW")
 ok, why = cw.gate_outbound(msg=s, path="selftest", final=True)
 assert ok is False and why == "ESTUDO", (ok, why)
@@ -492,6 +500,25 @@ ok2, why2 = cw.gate_outbound(
     msg="💎 SOLO ELITE\nENTER NOW", path="selftest", final=True
 )
 assert ok2 is True, (ok2, why2)
+# Nested Invoke* → SendMessageRequest must be visible to CALL wrap helpers
+class _Send:
+    def __init__(self):
+        self.message = s_baixa
+        self.peer = "UNIQUE_g1"
+class _Invoke:
+    def __init__(self, inner):
+        self.query = inner
+assert any(
+    type(r).__name__ == "_Send" for r in cw._iter_tl_requests(_Invoke(_Send()))
+)
+assert cw._request_text(_Send()) == s_baixa
+# Force CALL wrap install (post-settle path) when Telethon present
+try:
+    import telethon  # noqa: F401
+    assert cw.install_call_wrap(force_env=True)
+    print("CALL_WRAP_INSTALL_OK")
+except ImportError:
+    print("CALL_WRAP_INSTALL_SKIP")
 print("CHAT_WATCHDOG_OK", cw.snapshot())
 from lux_send_config_bind import _estudo_blocked, _dedup_hit
 assert _estudo_blocked(s), "bind estudo must block"
@@ -687,7 +714,7 @@ if ! pgrep -f 'run_bacbo_live.py' >/dev/null 2>&1; then
     echo "BACBO_DIED_AFTER_BOOT — supervisor dead; one clean restart"
     rm -f bot/data/runtime_supervisor.lock 2>/dev/null || true
     sleep 20
-    nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
+    setsid $PY -u bot/runtime_supervisor.py >>/tmp/luxury_supervisor.log 2>&1 </dev/null &
     sleep 120
   fi
 fi

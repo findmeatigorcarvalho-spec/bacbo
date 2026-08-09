@@ -112,6 +112,11 @@ _os.environ.setdefault("LUX_SESSION_RECONNECTS", "12")
 _os.environ.setdefault("LUX_DIALOG_WARM", "cache")
 _os.environ.setdefault("LUX_FLASK_GUARD", "1")
 _os.environ.setdefault("LUX_KEEPALIVE_OFF", "1")
+_os.environ.setdefault("LUX_CHAT_WATCHDOG", "1")
+_os.environ.setdefault("LUX_BLOCK_ESTUDO", "1")
+# CALL wrap armed post-settle (outbox_inline / chat_watchdog timer)
+_os.environ.setdefault("LUX_CHAT_WATCH_CALL", "0")
+_os.environ.setdefault("LUX_CHAT_WATCH_CALL_AFTER_SETTLE", "1")
 _os.environ["FLASK_DEBUG"] = "0"
 _os.environ["FLASK_ENV"] = "production"
 # Never let child KeepAlive steal Replit web PORT

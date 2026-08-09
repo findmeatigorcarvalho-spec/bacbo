@@ -205,6 +205,10 @@ def _env() -> dict[str, str]:
     env.setdefault("LUX_BLOCK_ESTUDO", "1")
     env.setdefault("LUX_SEND_DEDUP_SECS", "90")
     env.setdefault("TELEGRAM_TRASH_BLOCK", "1")
+    env.setdefault("LUX_CHAT_WATCHDOG", "1")
+    # CALL wrap OFF at boot (subscribe-safe); armed after settle by outbox/watchdog
+    env.setdefault("LUX_CHAT_WATCH_CALL", "0")
+    env.setdefault("LUX_CHAT_WATCH_CALL_AFTER_SETTLE", "1")
     # HUB free-propose → orchestrate (no hour/WR/volume mute on propose)
     env.setdefault("HUB_MAX", "1")
     env.setdefault("HUB_ORCHESTRATOR", "1")
@@ -354,21 +358,41 @@ def _python_pids_with(needle: str) -> list[int]:
     return sorted(found)
 
 
+def _pid_cmdline(pid: int) -> str:
+    try:
+        raw = Path(f"/proc/{pid}/cmdline").read_bytes()
+        return raw.replace(b"\x00", b" ").decode("utf-8", "ignore")
+    except Exception:
+        return ""
+
+
+def _is_gated_bacbo(pid: int) -> bool:
+    """True only when launcher preloaded ESTUDO/HUB gates."""
+    cmd = _pid_cmdline(pid)
+    return "run_bacbo_live.py" in cmd
+
+
 def _find_bacbo_pids() -> list[int]:
-    # Launcher (run_bacbo_live) OR direct bacbo script
-    pids = _python_pids_with("run_bacbo_live.py")
-    pids += _python_pids_with("bacbo_royal_complete.py")
-    # unique preserve order
+    # Prefer gated launcher; bare megafile alone has no ESTUDO preload.
+    gated = _python_pids_with("run_bacbo_live.py")
+    bare = _python_pids_with("bacbo_royal_complete.py")
     seen: set[int] = set()
     out: list[int] = []
-    for p in pids:
+    for p in gated + bare:
         if p not in seen:
             seen.add(p)
             out.append(p)
     return out
 
 
+def _find_gated_bacbo_pids() -> list[int]:
+    return [p for p in _find_bacbo_pids() if _is_gated_bacbo(p)]
+
+
 def _find_bacbo_pid() -> int | None:
+    gated = _find_gated_bacbo_pids()
+    if gated:
+        return gated[0]
     pids = _find_bacbo_pids()
     return pids[0] if pids else None
 
@@ -546,11 +570,36 @@ def main() -> int:
     }
     print(f"[Supervisor] bot_live cmd={' '.join(bot_cmd)}")
     existing_pids = _find_bacbo_pids()
-    if existing_pids:
-        keep = min(existing_pids)
-        print(f"[Supervisor] adopting existing bacbo pid={keep} (seen={existing_pids})")
+    gated_pids = _find_gated_bacbo_pids()
+    if existing_pids and not gated_pids:
+        # Bare bacbo_royal_complete without run_bacbo_live = ESTUDO flood vector.
+        print(
+            f"[Supervisor] REFUSE adopt ungated bacbo {existing_pids} "
+            f"— kill + relaunch via run_bacbo_live",
+            flush=True,
+        )
+        for pid in existing_pids:
+            try:
+                os.kill(pid, signal.SIGTERM)
+            except Exception:
+                pass
+        time.sleep(2.0)
+        for pid in existing_pids:
+            try:
+                os.kill(pid, signal.SIGKILL)
+                print(f"[Supervisor] killed ungated bacbo pid={pid}", flush=True)
+            except Exception:
+                pass
+        settle = _session_settle_secs(authkey_flavor=True)
+        print(f"[Supervisor] AuthKey settle after ungated kill {settle:.0f}s", flush=True)
+        time.sleep(settle)
+        existing_pids = []
+        gated_pids = []
+    if gated_pids:
+        keep = min(gated_pids)
+        print(f"[Supervisor] adopting GATED bacbo pid={keep} (seen={existing_pids})")
         processes["bot_live"] = (processes["bot_live"][0], _AdoptedProc(keep), time.time())
-        # Kill extras immediately
+        # Kill extras immediately (including any bare megafile siblings)
         for pid in existing_pids:
             if pid != keep:
                 try:
@@ -691,16 +740,32 @@ def main() -> int:
                         print(f"[Supervisor] release {name}: {why}")
                     if name == "bot_live":
                         existing = _find_bacbo_pid()
+                        gated = _find_gated_bacbo_pids()
                         owned = None
                         if proc is not None:
                             owned = int(getattr(proc, "pid", 0) or 0) or None
-                        # Prefer re-adopt only if it's NOT the just-dead owned pid
-                        if existing and existing != owned:
-                            print(f"[Supervisor] re-adopting bacbo pid={existing}")
-                            processes[name] = (cmd, _AdoptedProc(existing), time.time())
+                        # Prefer re-adopt only GATED launcher — never bare megafile
+                        adopt_pid = None
+                        if gated:
+                            for g in gated:
+                                if g != owned:
+                                    adopt_pid = g
+                                    break
+                        if adopt_pid:
+                            print(f"[Supervisor] re-adopting GATED bacbo pid={adopt_pid}")
+                            processes[name] = (cmd, _AdoptedProc(adopt_pid), time.time())
                             bot_live_fails = 0
                             bot_live_grace_until = time.time() + 45.0
                             continue
+                        if existing and existing != owned and not _is_gated_bacbo(existing):
+                            print(
+                                f"[Supervisor] skip re-adopt ungated bacbo pid={existing}",
+                                flush=True,
+                            )
+                            try:
+                                os.kill(existing, signal.SIGKILL)
+                            except Exception:
+                                pass
                         if proc is not None and proc.poll() is not None:
                             bot_live_fails += 1
                             code = proc.poll()

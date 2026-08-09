@@ -10,11 +10,14 @@ Patches (and re-patches):
   MessageMethods.send_message
   MessageMethods.send_file          (caption)
   TelegramClient.__call__           (SendMessageRequest / SendMediaRequest)
+    — installed AFTER subscribe settle (boot-time CALL wrap can disturb auth)
 
 Env:
   LUX_CHAT_WATCHDOG=1     (default on)
   LUX_BLOCK_ESTUDO=1
   LUX_SEND_DEDUP_SECS=90
+  LUX_CHAT_WATCH_CALL=0                 # boot-time (keep 0)
+  LUX_CHAT_WATCH_CALL_AFTER_SETTLE=1    # install CALL wrap post-settle
 """
 from __future__ import annotations
 
@@ -27,7 +30,7 @@ import threading
 import time
 import unicodedata
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Iterator, Optional
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
@@ -43,17 +46,29 @@ _STATS: dict[str, Any] = {
     "drop_trash": 0,
     "by_peer": {},
     "updated_at": 0,
+    "call_wrap": 0,
 }
 _PATCHED = False
+_CALL_PATCHED = False
 _ANNOUNCED = False
+_REPATCH_STARTED = False
+_SETTLE_CALL_ARMED = False
 _ZW_RE = re.compile(r"[\u200b\u200c\u200d\ufeff\u00ad]")
 _ESTUDO_RE = re.compile(
     r"(?:G\s*[0-9]+\s*ESTUDO|\bESTUDO\b\s*[|：:]|🔷\s*G\s*[0-9]+\s*ESTUDO)",
     re.IGNORECASE,
 )
 _SIGNALISH_RE = re.compile(
-    r"(?:🔴|🔵|RED|BLUE|G0|G1|G2|NEUTRO|PROMISSORA|EMPATE)",
+    r"(?:🔴|🔵|🟡|RED|BLUE|G0|G1|G2|NEUTRO|PROMISSORA|EMPATE|BAIXA)",
     re.IGNORECASE,
+)
+_SEND_NAMES = frozenset(
+    {
+        "SendMessageRequest",
+        "SendMediaRequest",
+        "SendMultiMediaRequest",
+        "SendInlineBotResultRequest",
+    }
 )
 
 
@@ -317,6 +332,82 @@ def _wrap_send_file(orig):
     return _wrapped
 
 
+def _iter_tl_requests(request: Any) -> Iterator[Any]:
+    """Yield request + nested TLRequest wrappers (InvokeWithLayer, etc.)."""
+    seen: set[int] = set()
+    stack: list[Any] = [request]
+    while stack:
+        cur = stack.pop()
+        if cur is None:
+            continue
+        cid = id(cur)
+        if cid in seen:
+            continue
+        seen.add(cid)
+        yield cur
+        for attr in ("request", "query", "data", "msg_request"):
+            try:
+                inner = getattr(cur, attr, None)
+            except Exception:
+                inner = None
+            if inner is not None and id(inner) not in seen:
+                stack.append(inner)
+
+
+def _request_text(req: Any) -> Optional[str]:
+    for attr in ("message", "caption", "text", "msg"):
+        try:
+            v = getattr(req, attr, None)
+        except Exception:
+            v = None
+        if isinstance(v, str) and v.strip():
+            return v
+        # rare: message is bytes
+        if isinstance(v, (bytes, bytearray)):
+            try:
+                return v.decode("utf-8", "ignore")
+            except Exception:
+                pass
+    # SendMultiMediaRequest: multi_media[].message
+    try:
+        multi = getattr(req, "multi_media", None) or []
+        parts = []
+        for item in multi:
+            m = getattr(item, "message", None)
+            if isinstance(m, str) and m.strip():
+                parts.append(m)
+        if parts:
+            return "\n".join(parts)
+    except Exception:
+        pass
+    return None
+
+
+def _dropped_updates() -> Any:
+    """Return a harmless Updates so callers don't crash/retry-spam on DROP."""
+    try:
+        from telethon.tl.types import Updates  # type: ignore
+
+        return Updates(
+            updates=[],
+            users=[],
+            chats=[],
+            date=int(time.time()),
+            seq=0,
+        )
+    except Exception:
+        return None
+
+
+def _call_wrap_wanted() -> bool:
+    return os.environ.get("LUX_CHAT_WATCH_CALL", "0").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }
+
+
 def _wrap_call(orig):
     if getattr(orig, "_lux_chat_watchdog", False):
         return orig
@@ -324,32 +415,25 @@ def _wrap_call(orig):
     @functools.wraps(orig)
     async def _wrapped(self: Any, request: Any, *args: Any, **kwargs: Any):
         if enabled() and request is not None:
-            name = type(request).__name__
-            if name in {
-                "SendMessageRequest",
-                "SendMediaRequest",
-                "SendMultiMediaRequest",
-            }:
-                msg = getattr(request, "message", None)
-                if not isinstance(msg, str):
-                    msg = getattr(request, "caption", None)
-                peer = getattr(request, "peer", None)
+            for req in _iter_tl_requests(request):
+                name = type(req).__name__
+                if name not in _SEND_NAMES:
+                    continue
+                msg = _request_text(req)
+                peer = getattr(req, "peer", None)
                 if isinstance(msg, str):
                     ok, _why = gate_outbound(
                         msg=msg, entity=peer, path=f"__call__:{name}"
                     )
                     if not ok:
-                        return None
+                        return _dropped_updates()
         return await orig(self, request, *args, **kwargs)
 
     _wrapped._lux_chat_watchdog = True  # type: ignore[attr-defined]
     return _wrapped
 
 
-def patch(*, force: bool = False) -> bool:
-    global _PATCHED
-    if _PATCHED and not force:
-        return True
+def _patch_message_methods() -> bool:
     ok = False
     try:
         from telethon.client.messages import MessageMethods  # type: ignore
@@ -364,25 +448,131 @@ def patch(*, force: bool = False) -> bool:
             ok = True
     except Exception as exc:
         print("[CHAT-WATCH] MessageMethods patch skip:", repr(exc))
-    # __call__ wrap is optional — can disturb Telethon subscribe/updates.
-    # send_message + send_file already catch ESTUDO. Default OFF for stability.
-    if os.environ.get("LUX_CHAT_WATCH_CALL", "0").strip().lower() in {
-        "1",
-        "true",
-        "yes",
-        "on",
-    }:
-        try:
-            from telethon import TelegramClient  # type: ignore
+    return ok
 
-            call = getattr(TelegramClient, "__call__", None)
+
+def install_call_wrap(*, force_env: bool = True) -> bool:
+    """Install TelegramClient.__call__ gate (safe AFTER subscribe settle)."""
+    global _CALL_PATCHED
+    if force_env:
+        os.environ["LUX_CHAT_WATCH_CALL"] = "1"
+    if not _call_wrap_wanted():
+        return False
+    ok = False
+    targets: list[Any] = []
+    try:
+        from telethon import TelegramClient  # type: ignore
+
+        targets.append(TelegramClient)
+    except Exception as exc:
+        print("[CHAT-WATCH] TelegramClient import skip:", repr(exc))
+    try:
+        from telethon.client.telegrambaseclient import TelegramBaseClient  # type: ignore
+
+        targets.append(TelegramBaseClient)
+    except Exception:
+        pass
+    for cls in targets:
+        try:
+            call = getattr(cls, "__call__", None)
             if callable(call):
-                TelegramClient.__call__ = _wrap_call(call)  # type: ignore
+                setattr(cls, "__call__", _wrap_call(call))
                 ok = True
         except Exception as exc:
-            print("[CHAT-WATCH] TelegramClient.__call__ patch skip:", repr(exc))
+            print(f"[CHAT-WATCH] {getattr(cls, '__name__', cls)}.__call__ skip:", repr(exc))
+    if ok:
+        _CALL_PATCHED = True
+        with _LOCK:
+            _STATS["call_wrap"] = 1
+        print("[CHAT-WATCH] __call__ ESTUDO gate ON (SendMessage*/nested)", flush=True)
+    return ok
+
+
+def patch(*, force: bool = False) -> bool:
+    global _PATCHED
+    if _PATCHED and not force and (not _call_wrap_wanted() or _CALL_PATCHED):
+        return True
+    ok = _patch_message_methods()
+    # __call__ wrap: OFF at boot by default; ON when env says so (post-settle).
+    if _call_wrap_wanted():
+        if install_call_wrap(force_env=False):
+            ok = True
     _PATCHED = ok
     return ok
+
+
+def arm_call_wrap_after_settle() -> None:
+    """Schedule CALL wrap after OUTBOX settle — does not touch subscribe path."""
+    global _SETTLE_CALL_ARMED
+    if _SETTLE_CALL_ARMED:
+        return
+    if os.environ.get("LUX_CHAT_WATCH_CALL_AFTER_SETTLE", "1").strip().lower() in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }:
+        return
+    _SETTLE_CALL_ARMED = True
+    try:
+        settle = float(os.environ.get("OUTBOX_INLINE_SETTLE_SECS", "70") or "70")
+    except Exception:
+        settle = 70.0
+    # A bit after outbox settle so subscribe is fully quiet
+    delay = max(45.0, settle + 8.0)
+
+    def _go() -> None:
+        try:
+            install_call_wrap(force_env=True)
+            patch(force=True)
+        except Exception as exc:
+            print("[CHAT-WATCH] post-settle CALL wrap fail:", repr(exc), flush=True)
+
+    try:
+        threading.Timer(delay, _go).start()
+        print(
+            f"[CHAT-WATCH] CALL wrap armed for t+{delay:.0f}s (post-settle)",
+            flush=True,
+        )
+    except Exception as exc:
+        print("[CHAT-WATCH] arm CALL wrap skip:", repr(exc), flush=True)
+
+
+def _start_forever_repatch() -> None:
+    global _REPATCH_STARTED
+    if _REPATCH_STARTED:
+        return
+    _REPATCH_STARTED = True
+
+    def _loop() -> None:
+        # Burst early, then steady forever — survive late telethon rebinds.
+        t0 = time.monotonic()
+        for d in (2.0, 8.0, 20.0, 45.0, 90.0):
+            left = d - (time.monotonic() - t0)
+            if left > 0:
+                time.sleep(left)
+            try:
+                patch(force=True)
+            except Exception:
+                pass
+        while True:
+            time.sleep(20.0)
+            try:
+                patch(force=True)
+                if _call_wrap_wanted():
+                    install_call_wrap(force_env=False)
+            except Exception:
+                pass
+
+    try:
+        threading.Thread(target=_loop, name="lux_chat_watch_repatch", daemon=True).start()
+    except Exception:
+        # Fallback to one-shot timers
+        for d in (2.0, 8.0, 20.0, 45.0, 90.0):
+            try:
+                threading.Timer(d, lambda: patch(force=True)).start()
+            except Exception:
+                pass
 
 
 def snapshot() -> dict[str, Any]:
@@ -394,20 +584,8 @@ def apply(*, quiet: bool = False) -> bool:
     """Best-effort Telethon patch; gate functions always usable."""
     global _ANNOUNCED
     ok = patch(force=True)
-    # Keep the gate on top even if something else rebinds telethon methods later.
-    try:
-        delays = (2.0, 8.0, 20.0, 45.0, 90.0)
-
-        def _re():
-            try:
-                patch(force=True)  # idempotent — no log spam
-            except Exception:
-                pass
-
-        for d in delays:
-            threading.Timer(d, _re).start()
-    except Exception:
-        pass
+    _start_forever_repatch()
+    arm_call_wrap_after_settle()
     if not quiet and not _ANNOUNCED:
         _ANNOUNCED = True
         if ok:

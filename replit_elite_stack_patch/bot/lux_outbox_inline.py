@@ -88,6 +88,16 @@ async def _boot_outbox(client: Any) -> None:
         return
     # Never spam UNIQUE_g1 with OUTBOX ONLINE during live boot
     os.environ.setdefault("TELEGRAM_OUTBOX_STARTUP_PING", "0")
+    # Post-settle: install __call__ ESTUDO gate (unsafe during subscribe).
+    try:
+        import lux_chat_watchdog as _cw
+
+        os.environ["LUX_CHAT_WATCH_CALL"] = "1"
+        if _cw.install_call_wrap(force_env=True):
+            print("[OUTBOX-INLINE] CHAT-WATCH __call__ gate armed", flush=True)
+        _cw.patch(force=True)
+    except Exception as exc:
+        print("[OUTBOX-INLINE] CHAT-WATCH CALL arm skip:", repr(exc), flush=True)
     try:
         import telegram_outbox as ob
 
