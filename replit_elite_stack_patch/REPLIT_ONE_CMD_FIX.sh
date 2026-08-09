@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808u'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808v'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808u"
+V="20260808v"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -39,6 +39,8 @@ for pair in \
   "bot/lux_send_config_bind.py|replit_elite_stack_patch/bot/lux_send_config_bind.py" \
   "bot/runtime_supervisor.py|replit_elite_stack_patch/bot/runtime_supervisor.py" \
   "bot/telegram_outbox.py|replit_elite_stack_patch/bot/telegram_outbox.py" \
+  "bot/lux_babysitter.sh|replit_elite_stack_patch/bot/lux_babysitter.sh" \
+  "REPLIT_UP_NOW.sh|replit_elite_stack_patch/REPLIT_UP_NOW.sh" \
   "bot/config/keep_allowlist.py|bot/config/keep_allowlist.py" \
   "bot/config/__init__.py|bot/config/__init__.py"
 do
@@ -569,6 +571,7 @@ echo "-- restart --"
 # Mark log so we ignore stale SyntaxError/NameError lines
 echo "===== ONE_CMD ${V} restart $(date -u +%Y-%m-%dT%H:%M:%SZ) =====" >> logs/bot_live.log
 # Kill competing stacks that SIGKILL bacbo mid-subscribe (code=-9)
+# NOTE: never kill lux_babysitter.sh — it keeps supervisor alive after Shell close
 pkill -TERM -f 'REPLIT_ONE_STACK|REPLIT_FIX_|REPLIT_FIRE|REPLIT_PEAK|REPLIT_LUXURY|start_luxury' 2>/dev/null || true
 # Graceful stop first (SIGTERM) so Telethon can release AuthKey
 pkill -TERM -f 'runtime_supervisor.py|bacbo_royal_complete.py|telegram_outbox.py|run_bacbo_live.py|museum_unique_poster.py|museum_first5_poster.py|museum_chrono_poster.py|fallback_signal_sender.py|fallback_result_sender.py' 2>/dev/null || true
@@ -595,7 +598,16 @@ free -m 2>/dev/null | head -n 2 || true
 # Strip PORT from this shell so children cannot steal Replit web fd
 unset PORT REPLIT_SOCKET REPLIT_SOCKETS REPLIT_PORT 2>/dev/null || true
 export LUX_KEEPALIVE_OFF=1 LUX_FLASK_GUARD=1 FLASK_DEBUG=0
-nohup $PY -u bot/runtime_supervisor.py > /tmp/luxury_supervisor.log 2>&1 &
+# setsid: survive Replit Shell tab close (bare nohup still dies with session)
+setsid $PY -u bot/runtime_supervisor.py >>/tmp/luxury_supervisor.log 2>&1 </dev/null &
+# Babysitter restarts supervisor if the whole process tree vanishes
+chmod +x bot/lux_babysitter.sh 2>/dev/null || true
+if ! pgrep -f '[l]ux_babysitter.sh' >/dev/null 2>&1; then
+  setsid bash bot/lux_babysitter.sh >>logs/babysitter.log 2>&1 </dev/null &
+  echo "babysitter armed pid=$!"
+else
+  echo "babysitter already running"
+fi
 # Supervisor cold-starts then spawns bacbo (KeepAlive OFF)
 echo "-- wait supervisor cold-start + bacbo connect (~90s) --"
 sleep 90
@@ -680,7 +692,7 @@ if ! pgrep -f 'run_bacbo_live.py' >/dev/null 2>&1; then
   fi
 fi
 echo "---- procs (final) ----"
-pgrep -af 'runtime_supervisor|telegram_outbox|run_bacbo_live' || true
+pgrep -af 'lux_babysitter|runtime_supervisor|telegram_outbox|run_bacbo_live' || true
 echo "---- exit markers ----"
 awk "/ONE_CMD ${V} restart/{flag=1;next} flag" logs/bot_live.log 2>/dev/null \
   | grep -E 'SESSION-GUARD|FLASK-GUARD|KEEPALIVE|atexit|EXITING|rss_heartbeat|AuthKey|FATAL|boot task|settle heartbeat|starting on bacbo|got SIGTERM|dialogs warm|KeepAlive' \
@@ -719,7 +731,8 @@ else
   echo "OUTBOX_INLINE_NO_BACBO"
 fi
 echo "========== DONE =========="
-echo "Expect: BACBO_UP + OUTBOX_INLINE_OK; pgrep: supervisor|run_bacbo_live (NO telegram_outbox.py)"
-echo "Recheck: pgrep -af 'runtime_supervisor|run_bacbo_live'"
-echo "Logs: grep -E 'KEEPALIVE|KeepAlive|rss_heartbeat|OUTBOX-INLINE|starting on bacbo|EXITING' logs/bot_live.log | tail -n 40"
-echo "Expect: [KEEPALIVE-OFF] ON and NO '[KeepAlive] Flask bound' line"
+echo "Expect: BACBO_UP + OUTBOX_INLINE_OK; pgrep: babysitter|supervisor|run_bacbo_live"
+echo "Recheck: pgrep -af 'lux_babysitter|runtime_supervisor|run_bacbo_live'"
+echo "If empty later (Shell closed / Replit sleep): bash REPLIT_UP_NOW.sh"
+echo "Enable Replit Always On if the whole VM sleeps when idle."
+echo "Logs: grep -E 'KEEPALIVE|OUTBOX-INLINE|starting on bacbo|money=' logs/bot_live.log | tail -n 40"
