@@ -16,8 +16,10 @@ Env:
   LUX_CHAT_WATCHDOG=1     (default on)
   LUX_BLOCK_ESTUDO=1
   LUX_SEND_DEDUP_SECS=90
-  LUX_CHAT_WATCH_CALL=0                 # boot-time (keep 0)
-  LUX_CHAT_WATCH_CALL_AFTER_SETTLE=1    # install CALL wrap post-settle
+  LUX_CHAT_WATCH_CALL=0                 # boot-time class patch (keep 0 until connect)
+  LUX_CHAT_WATCH_CALL_ON_CONNECT=1      # arm ESTUDO-only __call__ immediately on connect
+  LUX_CHAT_WATCH_CALL_AFTER_SETTLE=1    # reaffirm CALL wrap post-settle
+  LUX_CHAT_WATCH_CALL_EARLY_SECS=12     # backup early arm after AuthKey settle window
 """
 from __future__ import annotations
 
@@ -53,13 +55,39 @@ _CALL_PATCHED = False
 _ANNOUNCED = False
 _REPATCH_STARTED = False
 _SETTLE_CALL_ARMED = False
+_EARLY_CALL_ARMED = False
 _ZW_RE = re.compile(r"[\u200b\u200c\u200d\ufeff\u00ad]")
+# Cyrillic/Greek lookalikes that slip past naive "ESTUDO" string checks
+_HOMO_MAP = str.maketrans(
+    {
+        "Е": "E",
+        "е": "e",
+        "Ε": "E",
+        "ε": "e",
+        "Ѕ": "S",
+        "ѕ": "s",
+        "Τ": "T",
+        "τ": "t",
+        "Т": "T",
+        "т": "t",
+        "Ο": "O",
+        "ο": "o",
+        "О": "O",
+        "о": "o",
+        "Ⅾ": "D",
+        "ⅾ": "d",
+        "Ι": "I",
+        "ι": "i",
+        "І": "I",
+        "і": "i",
+    }
+)
 _ESTUDO_RE = re.compile(
-    r"(?:G\s*[0-9]+\s*ESTUDO|\bESTUDO\b\s*[|：:]|🔷\s*G\s*[0-9]+\s*ESTUDO)",
+    r"(?:G\s*[0-9]+\s*ESTUDO|\bESTUDO\b\s*[|：:/]|🔷\s*G\s*[0-9]+\s*ESTUDO)",
     re.IGNORECASE,
 )
 _SIGNALISH_RE = re.compile(
-    r"(?:🔴|🔵|🟡|RED|BLUE|G0|G1|G2|NEUTRO|PROMISSORA|EMPATE|BAIXA)",
+    r"(?:🔴|🔵|🟡|RED|BLUE|G0|G1|G2|NEUTRO|PROMISSORA|EMPATE|BAIXA|@\w+)",
     re.IGNORECASE,
 )
 _SEND_NAMES = frozenset(
@@ -86,6 +114,12 @@ def _clean(text: str) -> str:
     t = _ZW_RE.sub("", t)
     # collapse weird spaces
     t = re.sub(r"[\u00a0\u1680\u2000-\u200a\u202f\u205f\u3000]", " ", t)
+    try:
+        t = t.translate(_HOMO_MAP)
+    except Exception:
+        pass
+    # "E S T U D O" / "E.S.T.U.D.O" style evasion → ESTUDO
+    t = re.sub(r"\bE[\s.\-_]*S[\s.\-_]*T[\s.\-_]*U[\s.\-_]*D[\s.\-_]*O\b", "ESTUDO", t, flags=re.I)
     return t
 
 
@@ -99,7 +133,7 @@ def estudo_blocked(msg: Optional[str]) -> bool:
         "off",
     }:
         return False
-    raw = _clean(msg)
+    raw = _clean(str(msg))
     u = raw.upper()
     # Hard needles (post-normalize)
     for n in (
@@ -108,11 +142,14 @@ def estudo_blocked(msg: Optional[str]) -> bool:
         "G3 ESTUDO",
         "G0 ESTUDO",
         "G4 ESTUDO",
+        "G5 ESTUDO",
         "ESTUDO |",
         "ESTUDO :",
         "ESTUDO：",
+        "ESTUDO /",
         "🔷 G2 ESTUDO",
         "🔷 G1 ESTUDO",
+        "🔷 G3 ESTUDO",
     ):
         if n.upper() in u:
             return True
@@ -122,6 +159,9 @@ def estudo_blocked(msg: Optional[str]) -> bool:
     if _ESTUDO_RE.search(first) or _ESTUDO_RE.search(raw[:200]):
         return True
     if "ESTUDO" in first.upper():
+        return True
+    # Any outbound with ESTUDO + tipster @handles (classic G2 study flood)
+    if "ESTUDO" in u and raw.count("@") >= 1:
         return True
     return False
 
@@ -177,14 +217,35 @@ def _peer_label(entity: Any) -> str:
         return repr(entity)[:80]
 
 
+def _coerce_text(v: Any) -> Optional[str]:
+    if isinstance(v, str):
+        return v
+    if isinstance(v, (bytes, bytearray)):
+        try:
+            return v.decode("utf-8", "ignore")
+        except Exception:
+            return None
+    # Telethon Message / custom builders
+    for attr in ("message", "text", "raw_text", "caption"):
+        try:
+            inner = getattr(v, attr, None)
+        except Exception:
+            inner = None
+        if isinstance(inner, str) and inner.strip():
+            return inner
+    return None
+
+
 def _extract_text_from_send(args: tuple, kwargs: dict) -> Optional[str]:
     # send_message(entity, message, ...)
-    if len(args) >= 2 and isinstance(args[1], str):
-        return args[1]
+    if len(args) >= 2:
+        t = _coerce_text(args[1])
+        if t is not None:
+            return t
     for key in ("message", "msg", "text", "body", "caption"):
-        v = kwargs.get(key)
-        if isinstance(v, str):
-            return v
+        t = _coerce_text(kwargs.get(key))
+        if t is not None:
+            return t
     return None
 
 
@@ -544,8 +605,56 @@ def patch(*, force: bool = False) -> bool:
     return ok
 
 
+def arm_call_wrap_immediate(*, reason: str = "connect") -> bool:
+    """Arm ESTUDO-only __call__ gate NOW (safe — no dedup on this path)."""
+    if os.environ.get("LUX_CHAT_WATCH_CALL_ON_CONNECT", "1").strip().lower() in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }:
+        return False
+    try:
+        ok = bool(install_call_wrap(force_env=True))
+        patch(force=True)
+        print(
+            f"[CHAT-WATCH] __call__ ESTUDO gate IMMEDIATE ({reason}) ok={int(ok)}",
+            flush=True,
+        )
+        return ok
+    except Exception as exc:
+        print(
+            f"[CHAT-WATCH] immediate CALL wrap fail ({reason}):",
+            repr(exc),
+            flush=True,
+        )
+        return False
+
+
+def arm_call_wrap_early() -> None:
+    """Backup early arm — closes the pre-settle ESTUDO window without waiting 70s+."""
+    global _EARLY_CALL_ARMED
+    if _EARLY_CALL_ARMED:
+        return
+    _EARLY_CALL_ARMED = True
+    try:
+        delay = float(os.environ.get("LUX_CHAT_WATCH_CALL_EARLY_SECS", "12") or "12")
+    except Exception:
+        delay = 12.0
+    delay = max(5.0, delay)
+
+    def _go() -> None:
+        arm_call_wrap_immediate(reason=f"early_t+{delay:.0f}s")
+
+    try:
+        threading.Timer(delay, _go).start()
+        print(f"[CHAT-WATCH] CALL wrap early-arm t+{delay:.0f}s", flush=True)
+    except Exception as exc:
+        print("[CHAT-WATCH] early CALL arm skip:", repr(exc), flush=True)
+
+
 def arm_call_wrap_after_settle() -> None:
-    """Schedule CALL wrap after OUTBOX settle — does not touch subscribe path."""
+    """Reaffirm CALL wrap after OUTBOX settle."""
     global _SETTLE_CALL_ARMED
     if _SETTLE_CALL_ARMED:
         return
@@ -561,24 +670,34 @@ def arm_call_wrap_after_settle() -> None:
         settle = float(os.environ.get("OUTBOX_INLINE_SETTLE_SECS", "70") or "70")
     except Exception:
         settle = 70.0
-    # A bit after outbox settle so subscribe is fully quiet
     delay = max(45.0, settle + 8.0)
 
     def _go() -> None:
         try:
             install_call_wrap(force_env=True)
             patch(force=True)
+            print("[CHAT-WATCH] post-settle CALL wrap reaffirmed", flush=True)
         except Exception as exc:
             print("[CHAT-WATCH] post-settle CALL wrap fail:", repr(exc), flush=True)
 
     try:
         threading.Timer(delay, _go).start()
         print(
-            f"[CHAT-WATCH] CALL wrap armed for t+{delay:.0f}s (post-settle)",
+            f"[CHAT-WATCH] CALL wrap reaffirm armed for t+{delay:.0f}s (post-settle)",
             flush=True,
         )
     except Exception as exc:
         print("[CHAT-WATCH] arm CALL wrap skip:", repr(exc), flush=True)
+
+
+def _rebind_engine_send() -> None:
+    """Re-wrap megafile send() — bacbo often defines it late / rebinds it."""
+    try:
+        import lux_send_config_bind as scb
+
+        scb.apply(silent=True)
+    except Exception:
+        pass
 
 
 def _start_forever_repatch() -> None:
@@ -588,20 +707,24 @@ def _start_forever_repatch() -> None:
     _REPATCH_STARTED = True
 
     def _loop() -> None:
-        # Burst early, then steady forever — survive late telethon rebinds.
+        # Burst early, then steady forever — survive late telethon / send rebinds.
         t0 = time.monotonic()
-        for d in (2.0, 8.0, 20.0, 45.0, 90.0):
+        for d in (1.0, 3.0, 8.0, 20.0, 45.0, 90.0):
             left = d - (time.monotonic() - t0)
             if left > 0:
                 time.sleep(left)
             try:
                 patch(force=True)
+                _rebind_engine_send()
+                if _call_wrap_wanted():
+                    install_call_wrap(force_env=False)
             except Exception:
                 pass
         while True:
-            time.sleep(20.0)
+            time.sleep(15.0)
             try:
                 patch(force=True)
+                _rebind_engine_send()
                 if _call_wrap_wanted():
                     install_call_wrap(force_env=False)
             except Exception:
@@ -610,8 +733,7 @@ def _start_forever_repatch() -> None:
     try:
         threading.Thread(target=_loop, name="lux_chat_watch_repatch", daemon=True).start()
     except Exception:
-        # Fallback to one-shot timers
-        for d in (2.0, 8.0, 20.0, 45.0, 90.0):
+        for d in (1.0, 3.0, 8.0, 20.0, 45.0, 90.0):
             try:
                 threading.Timer(d, lambda: patch(force=True)).start()
             except Exception:
@@ -628,6 +750,7 @@ def apply(*, quiet: bool = False) -> bool:
     global _ANNOUNCED
     ok = patch(force=True)
     _start_forever_repatch()
+    arm_call_wrap_early()
     arm_call_wrap_after_settle()
     if not quiet and not _ANNOUNCED:
         _ANNOUNCED = True

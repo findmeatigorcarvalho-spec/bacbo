@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808z'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260809a'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808z"
+V="20260809a"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -415,6 +415,8 @@ for kv in \
   LUX_CHAT_WATCHDOG=1 \
   LUX_BLOCK_ESTUDO=1 \
   LUX_CHAT_WATCH_CALL=0 \
+  LUX_CHAT_WATCH_CALL_ON_CONNECT=1 \
+  LUX_CHAT_WATCH_CALL_EARLY_SECS=12 \
   LUX_CHAT_WATCH_CALL_AFTER_SETTLE=1 \
   EMANATION_LAWS=1 \
   COLOR_TRUTH_FACTUAL=1 \
@@ -460,6 +462,8 @@ keys = {
     "LUX_CHAT_WATCHDOG": "1",
     "LUX_BLOCK_ESTUDO": "1",
     "LUX_CHAT_WATCH_CALL": "0",
+    "LUX_CHAT_WATCH_CALL_ON_CONNECT": "1",
+    "LUX_CHAT_WATCH_CALL_EARLY_SECS": "12",
     "LUX_CHAT_WATCH_CALL_AFTER_SETTLE": "1",
     "EMANATION_LAWS": "1",
     "COLOR_TRUTH_FACTUAL": "1",
@@ -506,9 +510,16 @@ s_zw = "🔷 G2\u200b ESTUDO | @robobacbodados\n🔵 BLUE G0 | 📊 NEUTRO 1.09"
 assert cw.estudo_blocked(s_zw), "zw estudo must block"
 s_baixa = "🔷 G2 ESTUDO | @M8SINAIS\n🔴 RED G0 | 🟡 BAIXA 0.67"
 assert cw.estudo_blocked(s_baixa), "BAIXA estudo must block"
+s_flood = "🔷 G2 ESTUDO | @martinswinbacbo / @robobacbodados / @sinaisbacboangola"
+assert cw.estudo_blocked(s_flood), "multi-handle estudo flood must block"
+s_spaced = "🔷 G2 E S T U D O | @robobacbodados\n🔵 BLUE G0"
+assert cw.estudo_blocked(s_spaced), "spaced ESTUDO must block"
 assert not cw.estudo_blocked("💎 SOLO ELITE\nENTER NOW")
 ok, why = cw.gate_outbound(msg=s, path="selftest", final=True)
 assert ok is False and why == "ESTUDO", (ok, why)
+# Immediate CALL arm helper must exist (closes pre-settle leak window)
+assert callable(cw.arm_call_wrap_immediate)
+print("IMMEDIATE_CALL_ARM_API_OK")
 ok2, why2 = cw.gate_outbound(
     msg="💎 SOLO ELITE\nENTER NOW", path="selftest", final=True
 )

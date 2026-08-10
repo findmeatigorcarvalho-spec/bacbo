@@ -112,6 +112,20 @@ def _tg_message_text(args: tuple, kwargs: dict) -> str | None:
     return None
 
 
+def _send_already_gated(fn: Any) -> bool:
+    """True if fn or its __wrapped__ chain already has our ESTUDO gate."""
+    cur: Any = fn
+    seen: set[int] = set()
+    while cur is not None and id(cur) not in seen:
+        seen.add(id(cur))
+        if getattr(cur, "_lux_estudo_wrapped", False):
+            return True
+        if getattr(cur, "_lux_chat_watchdog", False):
+            return True
+        cur = getattr(cur, "__wrapped__", None)
+    return False
+
+
 def _patch_telethon_send_message(*, force: bool = False) -> bool:
     """Nuclear ESTUDO/dedup gate — catches paths that bypass engine send()."""
     global _TG_SEND_PATCHED
@@ -125,7 +139,8 @@ def _patch_telethon_send_message(*, force: bool = False) -> bool:
     orig = getattr(MessageMethods, "send_message", None)
     if not callable(orig):
         return False
-    if getattr(orig, "_lux_estudo_wrapped", False):
+    # Never nest wraps — forever-repatch + chat_watchdog would stack forever.
+    if _send_already_gated(orig):
         _TG_SEND_PATCHED = True
         return True
 

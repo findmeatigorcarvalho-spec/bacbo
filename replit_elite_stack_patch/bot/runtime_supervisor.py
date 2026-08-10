@@ -203,6 +203,8 @@ def _env() -> dict[str, str]:
     env.setdefault("GUNIQUE_PEER", "UNIQUE_g1")
     # Kill G2 ESTUDO study floods + identical/near-identical spam on UNIQUE_g1
     env.setdefault("LUX_BLOCK_ESTUDO", "1")
+    env.setdefault("LUX_CHAT_WATCH_CALL_ON_CONNECT", "1")
+    env.setdefault("LUX_CHAT_WATCH_CALL_EARLY_SECS", "12")
     env.setdefault("LUX_SEND_DEDUP_SECS", "90")
     env.setdefault("TELEGRAM_TRASH_BLOCK", "1")
     env.setdefault("LUX_CHAT_WATCHDOG", "1")

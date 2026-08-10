@@ -172,10 +172,14 @@ _HARD_TRASH_TEXT = (
     "G1 ESTUDO",
     "G3 ESTUDO",
     "G0 ESTUDO",
+    "G4 ESTUDO",
+    "G5 ESTUDO",
     "ESTUDO |",
     "ESTUDO :",
+    "ESTUDO /",
     "🔷 G2 ESTUDO",
     "🔷 G1 ESTUDO",
+    "🔷 G3 ESTUDO",
 )
 
 

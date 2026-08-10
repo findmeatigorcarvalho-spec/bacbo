@@ -47,6 +47,15 @@ async def _boot_outbox(client: Any) -> None:
     if _STARTED:
         return
     _STARTED = True
+    # Arm ESTUDO-only __call__ IMMEDIATELY on connect — do not wait 70s settle.
+    # (Full gate with dedup on __call__ was unsafe; ESTUDO/trash-only is fine.)
+    try:
+        import lux_chat_watchdog as _cw
+
+        if _cw.arm_call_wrap_immediate(reason="outbox_connect"):
+            print("[OUTBOX-INLINE] CHAT-WATCH __call__ armed IMMEDIATE", flush=True)
+    except Exception as exc:
+        print("[OUTBOX-INLINE] CHAT-WATCH immediate arm skip:", repr(exc), flush=True)
     settle = _settle_secs()
     print(
         f"[OUTBOX-INLINE] boot task alive — waiting {settle:.0f}s "

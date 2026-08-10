@@ -117,6 +117,8 @@ ENV_KEYS = {
     "LUX_CHAT_WATCHDOG": "1",
     "LUX_BLOCK_ESTUDO": "1",
     "LUX_CHAT_WATCH_CALL": "0",
+    "LUX_CHAT_WATCH_CALL_ON_CONNECT": "1",
+    "LUX_CHAT_WATCH_CALL_EARLY_SECS": "12",
     "LUX_CHAT_WATCH_CALL_AFTER_SETTLE": "1",
     # EMANATION LAWS — factual color, vertical signal#, hermetic chats
     "EMANATION_LAWS": "1",
