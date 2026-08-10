@@ -5,18 +5,23 @@
 # SOLO/GOLDEN/etc. are just kinds — not buckets that swallow other skins.
 #
 # Resume (default — do NOT reset if already mid-parade):
+#   # STOP live bacbo first OR use a second session — never AuthKey-war the money bot.
+#   pkill -f 'run_bacbo_live|runtime_supervisor' || true; sleep 35
 #   curl -fsSL -o /tmp/MUSEUM.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UNIQUE_MUSEUM.sh?v=20260804j'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UNIQUE_MUSEUM.sh?v=20260809d'
 #   bash /tmp/MUSEUM.sh
 #
 # Only if you need a clean redo:
 #   MUSEUM_RESET=1 bash /tmp/MUSEUM.sh
+#
+# Batch sample first (recommended):
+#   MUSEUM_LIMIT=40 MUSEUM_OFFSET=0 bash /tmp/MUSEUM.sh
 set -euo pipefail
 cd /home/runner/workspace 2>/dev/null || cd "$(pwd)"
 
 REF="${BACBO_REF:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${REF}/replit_elite_stack_patch"
-VER="20260804j"
+VER="20260809d"
 
 echo "UNIQUE_MUSEUM cwd=$(pwd) ref=${REF}"
 echo "AXIS: CHRONO_EVERYTHING_EXISTENCE — fingerprint-first (every template)"

@@ -395,6 +395,7 @@ def _ensure_scb_before_main(src: str, report: dict) -> str:
 # --- LUXURY_SEND_CONFIG_BIND (pre-main; must run before asyncio.run) ---
 try:
     import lux_estudo_kill  # noqa: F401
+    import lux_estudo_source_kill  # noqa: F401
     import lux_send_config_bind  # noqa: F401
     print("[LUXURY] send-config-bind loaded (pre-main)")
 except Exception as _lux_scb_exc:

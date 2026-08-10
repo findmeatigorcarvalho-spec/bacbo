@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260809c'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260809d'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260809c"
+V="20260809d"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -20,6 +20,7 @@ for pair in \
   "bot/fix_bacbo_state.py|replit_elite_stack_patch/bot/fix_bacbo_state.py" \
   "bot/state.py|replit_elite_stack_patch/bot/state.py" \
   "bot/lux_estudo_kill.py|replit_elite_stack_patch/bot/lux_estudo_kill.py" \
+  "bot/lux_estudo_source_kill.py|replit_elite_stack_patch/bot/lux_estudo_source_kill.py" \
   "bot/run_bacbo_live.py|replit_elite_stack_patch/bot/run_bacbo_live.py" \
   "bot/hub_orchestrator.py|replit_elite_stack_patch/bot/hub_orchestrator.py" \
   "bot/hub_impact_learner.py|replit_elite_stack_patch/bot/hub_impact_learner.py" \
@@ -364,7 +365,7 @@ else:
     print("PREMAIN_ALREADY_OK")
 PY
 $PY -m py_compile bacbo_royal_complete.py 2>/dev/null || $PY -m py_compile bot/bacbo_royal_complete.py
-$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_flask_guard.py bot/lux_keepalive_off.py bot/fix_bacbo_keepalive.py
+$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_estudo_source_kill.py bot/lux_chat_watchdog.py bot/lux_flask_guard.py bot/lux_keepalive_off.py bot/fix_bacbo_keepalive.py
 echo "-- disable KeepAlive in megafile (PORT steal → SIGKILL -9) --"
 $PY -u bot/fix_bacbo_keepalive.py || true
 echo "PY_COMPILE_OK"
@@ -415,10 +416,13 @@ for kv in \
   HUB_IMPACT_LEARNER=1 \
   LUX_CHAT_WATCHDOG=1 \
   LUX_BLOCK_ESTUDO=1 \
-  LUX_CHAT_WATCH_CALL=0 \
+  LUX_CHAT_WATCH_CALL=1 \
+  LUX_CHAT_WATCH_CALL_BOOT=1 \
   LUX_CHAT_WATCH_CALL_ON_CONNECT=1 \
-  LUX_CHAT_WATCH_CALL_EARLY_SECS=12 \
+  LUX_CHAT_WATCH_CALL_EARLY_SECS=3 \
   LUX_CHAT_WATCH_CALL_AFTER_SETTLE=1 \
+  LUX_BLOCK_FORWARDS=1 \
+  LUX_ESTUDO_SOURCE_KILL=1 \
   EMANATION_LAWS=1 \
   COLOR_TRUTH_FACTUAL=1 \
   SIGNAL_BUNDLE_VERTICAL=1 \
@@ -462,10 +466,13 @@ keys = {
     "LUX_KEEPALIVE_OFF": "1",
     "LUX_CHAT_WATCHDOG": "1",
     "LUX_BLOCK_ESTUDO": "1",
-    "LUX_CHAT_WATCH_CALL": "0",
+    "LUX_CHAT_WATCH_CALL": "1",
+    "LUX_CHAT_WATCH_CALL_BOOT": "1",
     "LUX_CHAT_WATCH_CALL_ON_CONNECT": "1",
-    "LUX_CHAT_WATCH_CALL_EARLY_SECS": "12",
+    "LUX_CHAT_WATCH_CALL_EARLY_SECS": "3",
     "LUX_CHAT_WATCH_CALL_AFTER_SETTLE": "1",
+    "LUX_BLOCK_FORWARDS": "1",
+    "LUX_ESTUDO_SOURCE_KILL": "1",
     "EMANATION_LAWS": "1",
     "COLOR_TRUTH_FACTUAL": "1",
     "SIGNAL_BUNDLE_VERTICAL": "1",
@@ -592,6 +599,18 @@ assert her._valid_target(cfg.TARGET), cfg.TARGET
 dest, why = her.pick_target_for_text("🔥 SEQUENCE blue streak\nENTER NOW")
 assert her._valid_target(dest), (dest, why)
 print("EMPTY_TARGET_REPAIR_OK", dest, why)
+# TL constructor + source kill APIs
+assert callable(cw._patch_tl_constructors)
+assert callable(cw.EstudoBlocked)
+import lux_estudo_source_kill as esk
+def _fake_estudo_emit(msg="🔷 G2 ESTUDO | @x"):
+    return msg
+class _M: pass
+_m = _M()
+_m.emit_estudo_card = _fake_estudo_emit
+assert esk.neutralize_module(_m, label="t") >= 1
+assert getattr(_m.emit_estudo_card, "_lux_estudo_source_killed", False)
+print("ESTUDO_SOURCE_KILL_OK")
 from hub_orchestrator import orchestrate
 dec = orchestrate([
     {"floor": "JUN19", "color": "red", "score": 90, "window_id": "t1"},

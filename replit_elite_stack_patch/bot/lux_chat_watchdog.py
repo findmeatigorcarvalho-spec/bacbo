@@ -96,8 +96,15 @@ _SEND_NAMES = frozenset(
         "SendMediaRequest",
         "SendMultiMediaRequest",
         "SendInlineBotResultRequest",
+        "ForwardMessagesRequest",
     }
 )
+_TL_PATCHED = False
+_ORIG_TL_INIT: dict[str, Any] = {}
+
+
+class EstudoBlocked(Exception):
+    """Raised when a TL send constructor would emit ESTUDO study spam."""
 
 
 def enabled() -> bool:
@@ -494,11 +501,31 @@ def _wrap_call(orig):
                 name = type(req).__name__
                 if name not in _SEND_NAMES:
                     continue
+                peer = getattr(req, "peer", None)
+                peer_l = _peer_label(peer)
+                # Block all forwards — study spam sometimes bypasses as ForwardMessages
+                if name == "ForwardMessagesRequest" and os.environ.get(
+                    "LUX_BLOCK_FORWARDS", "1"
+                ).strip().lower() not in {"0", "false", "no", "off"}:
+                    _bump("drop_estudo", peer_l)
+                    _append(
+                        {
+                            "type": "drop",
+                            "why": "FORWARD",
+                            "path": f"__call__:{name}",
+                            "peer": peer_l,
+                            "ts": time.time(),
+                            "preview": "",
+                        }
+                    )
+                    print(
+                        f"[CHAT-WATCH] DROP forward via __call__:{name} peer={peer_l}",
+                        flush=True,
+                    )
+                    return _dropped_updates()
                 msg = _request_text(req)
                 if not isinstance(msg, str):
                     continue
-                peer = getattr(req, "peer", None)
-                peer_l = _peer_label(peer)
                 if estudo_blocked(msg):
                     _bump("drop_estudo", peer_l)
                     _append(
@@ -512,7 +539,8 @@ def _wrap_call(orig):
                         }
                     )
                     print(
-                        f"[CHAT-WATCH] DROP ESTUDO via __call__:{name} peer={peer_l}"
+                        f"[CHAT-WATCH] DROP ESTUDO via __call__:{name} peer={peer_l}",
+                        flush=True,
                     )
                     return _dropped_updates()
                 try:
@@ -536,12 +564,16 @@ def _wrap_call(orig):
                         )
                         print(
                             f"[CHAT-WATCH] DROP trash via __call__:{name} "
-                            f"{why} peer={peer_l}"
+                            f"{why} peer={peer_l}",
+                            flush=True,
                         )
                         return _dropped_updates()
                 except Exception:
                     pass
-        return await orig(self, request, *args, **kwargs)
+        try:
+            return await orig(self, request, *args, **kwargs)
+        except EstudoBlocked:
+            return _dropped_updates()
 
     _wrapped._lux_chat_watchdog = True  # type: ignore[attr-defined]
     return _wrapped
@@ -560,13 +592,138 @@ def _patch_message_methods() -> bool:
         if callable(sf):
             MessageMethods.send_file = _wrap_send_file(sf)  # type: ignore
             ok = True
+        # Captured bound-method bypass: also wrap forward_messages
+        fw = getattr(MessageMethods, "forward_messages", None)
+        if callable(fw) and not getattr(fw, "_lux_chat_watchdog", False):
+
+            @functools.wraps(fw)
+            async def _fw_wrapped(self: Any, *args: Any, **kwargs: Any):
+                # Study floods sometimes arrive as forwards — never forward into money chat.
+                if enabled() and os.environ.get("LUX_BLOCK_FORWARDS", "1").strip().lower() not in {
+                    "0",
+                    "false",
+                    "no",
+                    "off",
+                }:
+                    print("[CHAT-WATCH] DROP forward_messages (ESTUDO/flood harden)", flush=True)
+                    _bump("drop_estudo", "forward")
+                    _append(
+                        {
+                            "type": "drop",
+                            "why": "FORWARD",
+                            "path": "forward_messages",
+                            "peer": "?",
+                            "ts": time.time(),
+                            "preview": "",
+                        }
+                    )
+                    return []
+                return await fw(self, *args, **kwargs)
+
+            _fw_wrapped._lux_chat_watchdog = True  # type: ignore[attr-defined]
+            MessageMethods.forward_messages = _fw_wrapped  # type: ignore[method-assign]
+            ok = True
     except Exception as exc:
         print("[CHAT-WATCH] MessageMethods patch skip:", repr(exc))
     return ok
 
 
+def _tl_message_from_init(args: tuple, kwargs: dict) -> Optional[str]:
+    # SendMessageRequest(peer, message, ...)
+    if len(args) >= 2 and isinstance(args[1], str):
+        return args[1]
+    for key in ("message", "caption", "text", "msg"):
+        v = kwargs.get(key)
+        if isinstance(v, str):
+            return v
+    return None
+
+
+def _patch_tl_constructors() -> bool:
+    """Patch TL request __init__ — catches captured send_message bypasses."""
+    global _TL_PATCHED
+    try:
+        from telethon.tl.functions.messages import (  # type: ignore
+            SendMediaRequest,
+            SendMessageRequest,
+            SendMultiMediaRequest,
+        )
+    except Exception as exc:
+        print("[CHAT-WATCH] TL constructor patch skip:", repr(exc))
+        return False
+
+    patched = 0
+    for cls in (SendMessageRequest, SendMediaRequest, SendMultiMediaRequest):
+        name = cls.__name__
+        if getattr(cls.__init__, "_lux_chat_watchdog", False):
+            patched += 1
+            continue
+        orig = _ORIG_TL_INIT.get(name) or cls.__init__
+        _ORIG_TL_INIT[name] = orig
+
+        def _make(orig_init, cname: str):
+            @functools.wraps(orig_init)
+            def _init(self, *args, **kwargs):
+                msg = _tl_message_from_init(args, kwargs)
+                if enabled() and isinstance(msg, str) and estudo_blocked(msg):
+                    _bump("drop_estudo", f"tl:{cname}")
+                    _append(
+                        {
+                            "type": "drop",
+                            "why": "ESTUDO",
+                            "path": f"tl_init:{cname}",
+                            "peer": "?",
+                            "ts": time.time(),
+                            "preview": _clean(msg)[:160],
+                        }
+                    )
+                    print(
+                        f"[CHAT-WATCH] DROP ESTUDO via tl_init:{cname}",
+                        flush=True,
+                    )
+                    raise EstudoBlocked(cname)
+                return orig_init(self, *args, **kwargs)
+
+            _init._lux_chat_watchdog = True  # type: ignore[attr-defined]
+            return _init
+
+        try:
+            cls.__init__ = _make(orig, name)  # type: ignore[method-assign]
+            patched += 1
+        except Exception as exc:
+            print(f"[CHAT-WATCH] TL {name} init patch fail:", repr(exc))
+
+    # Wrap send_message to swallow EstudoBlocked → silent None (no crash spam)
+    try:
+        from telethon.client.messages import MessageMethods  # type: ignore
+
+        sm = getattr(MessageMethods, "send_message", None)
+        if callable(sm) and not getattr(sm, "_lux_estudo_exc_guard", False):
+            inner = sm
+
+            @functools.wraps(inner)
+            async def _guard(self: Any, *args: Any, **kwargs: Any):
+                try:
+                    return await inner(self, *args, **kwargs)
+                except EstudoBlocked:
+                    return None
+
+            _guard._lux_estudo_exc_guard = True  # type: ignore[attr-defined]
+            # Preserve prior markers if present
+            if getattr(inner, "_lux_chat_watchdog", False):
+                _guard._lux_chat_watchdog = True  # type: ignore[attr-defined]
+            MessageMethods.send_message = _guard  # type: ignore[method-assign]
+    except Exception:
+        pass
+
+    _TL_PATCHED = patched > 0
+    if _TL_PATCHED:
+        print(f"[CHAT-WATCH] TL constructor ESTUDO gate ON n={patched}", flush=True)
+    return _TL_PATCHED
+
+
 def install_call_wrap(*, force_env: bool = True) -> bool:
-    """Install TelegramClient.__call__ gate (safe AFTER subscribe settle)."""
+    """Install TelegramClient.__call__ ESTUDO-only gate."""
     global _CALL_PATCHED
     if force_env:
         os.environ["LUX_CHAT_WATCH_CALL"] = "1"
@@ -604,12 +761,19 @@ def install_call_wrap(*, force_env: bool = True) -> bool:
 
 def patch(*, force: bool = False) -> bool:
     global _PATCHED
-    if _PATCHED and not force and (not _call_wrap_wanted() or _CALL_PATCHED):
+    if _PATCHED and not force and _TL_PATCHED and (not _call_wrap_wanted() or _CALL_PATCHED):
         return True
     ok = _patch_message_methods()
-    # __call__ wrap: OFF at boot by default; ON when env says so (post-settle).
-    if _call_wrap_wanted():
-        if install_call_wrap(force_env=False):
+    if _patch_tl_constructors():
+        ok = True
+    # ESTUDO-only CALL wrap — always preferred ON (safe; no dedup).
+    if _call_wrap_wanted() or os.environ.get("LUX_CHAT_WATCH_CALL_BOOT", "1").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }:
+        if install_call_wrap(force_env=True):
             ok = True
     _PATCHED = ok
     return ok

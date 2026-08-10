@@ -89,6 +89,13 @@ except Exception as exc:
     print("[BOOT] run_bacbo_live: lux_estudo_kill fail:", repr(exc))
 
 try:
+    import lux_estudo_source_kill as _esk
+
+    print("[BOOT] estudo_source_kill:", _esk.apply())
+except Exception as exc:
+    print("[BOOT] estudo_source_kill fail:", repr(exc))
+
+try:
     import lux_send_config_bind as _lux  # noqa: F401
 
     _lux.apply(silent=True)
@@ -114,11 +121,14 @@ _os.environ.setdefault("LUX_FLASK_GUARD", "1")
 _os.environ.setdefault("LUX_KEEPALIVE_OFF", "1")
 _os.environ.setdefault("LUX_CHAT_WATCHDOG", "1")
 _os.environ.setdefault("LUX_BLOCK_ESTUDO", "1")
-# CALL wrap: off at import; armed IMMEDIATE on connect + early timer + post-settle
-_os.environ.setdefault("LUX_CHAT_WATCH_CALL", "0")
+# CALL wrap ON from boot (ESTUDO-only — safe). Also TL constructor + source kill.
+_os.environ.setdefault("LUX_CHAT_WATCH_CALL", "1")
+_os.environ.setdefault("LUX_CHAT_WATCH_CALL_BOOT", "1")
 _os.environ.setdefault("LUX_CHAT_WATCH_CALL_ON_CONNECT", "1")
-_os.environ.setdefault("LUX_CHAT_WATCH_CALL_EARLY_SECS", "12")
+_os.environ.setdefault("LUX_CHAT_WATCH_CALL_EARLY_SECS", "3")
 _os.environ.setdefault("LUX_CHAT_WATCH_CALL_AFTER_SETTLE", "1")
+_os.environ.setdefault("LUX_BLOCK_FORWARDS", "1")
+_os.environ.setdefault("LUX_ESTUDO_SOURCE_KILL", "1")
 _os.environ.setdefault("EMANATION_LAWS", "1")
 _os.environ.setdefault("COLOR_TRUTH_FACTUAL", "1")
 _os.environ.setdefault("SIGNAL_BUNDLE_VERTICAL", "1")
