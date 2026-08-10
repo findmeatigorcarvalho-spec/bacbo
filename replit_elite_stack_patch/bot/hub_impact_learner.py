@@ -360,6 +360,15 @@ def observe_result(
             _opp_inc(data, "primary_wins")
         elif loss:
             _opp_inc(data, "primary_losses")
+        # Persist factual winning color for hub orchestrate (LAW 1)
+        if actual in {"blue", "red", "tie"}:
+            data["last_factual"] = {
+                "color": actual,
+                "ts": time.time(),
+                "signal_id": signal_id,
+                "predicted": pred,
+                "outcome": outc,
+            }
         _save(data)
         _append(
             {
@@ -380,6 +389,63 @@ def observe_result(
                 "weight": weight,
             }
         )
+
+
+def latest_factual_color(*, max_age_secs: float = 120.0) -> str:
+    """Most recent RESULT-derived actual winning color (LAW: factual truth).
+
+    Used by hub_orchestrate when committee must defer to reality.
+    Returns '' when unknown / stale.
+    """
+    try:
+        if not LEDGER.is_file():
+            return ""
+        lines = LEDGER.read_text(encoding="utf-8").splitlines()[-80:]
+    except Exception:
+        return ""
+    now = time.time()
+    for ln in reversed(lines):
+        try:
+            row = json.loads(ln)
+        except Exception:
+            continue
+        if row.get("type") != "result":
+            continue
+        actual = str(row.get("actual") or "").strip().lower()
+        if actual not in {"blue", "red"}:
+            continue
+        ts = float(row.get("ts") or 0)
+        if ts and (now - ts) > max_age_secs:
+            return ""
+        return actual
+    # fallback: scores blob
+    with _LOCK:
+        data = _load()
+        fc = str((data.get("last_factual") or {}).get("color") or "").lower()
+        ts = float((data.get("last_factual") or {}).get("ts") or 0)
+    if fc in {"blue", "red"} and ts and (now - ts) <= max_age_secs:
+        return fc
+    return ""
+
+
+def last_opp_locked_floors() -> list[str]:
+    """Opp-locked floors from the most recent hub_decision (for RESULT learn)."""
+    try:
+        if not LEDGER.is_file():
+            return []
+        lines = LEDGER.read_text(encoding="utf-8").splitlines()[-60:]
+    except Exception:
+        return []
+    for ln in reversed(lines):
+        try:
+            row = json.loads(ln)
+        except Exception:
+            continue
+        if row.get("type") != "hub_decision":
+            continue
+        floors = row.get("opp_locked_floors") or []
+        return [str(f).upper() for f in floors if str(f).strip()]
+    return []
 
 
 def impact_score(key: str, default: float = 50.0) -> float:

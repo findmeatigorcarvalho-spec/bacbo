@@ -1026,15 +1026,32 @@ async def main(existing_client=None) -> None:
         first = body.splitlines()[0].upper() if body else ""
         return "ESTUDO" in first
 
-    async def _send_all(dests, body: str):
+    async def _send_all(dests, body: str, *, reply_to: int | None = None):
         # Never flood UNIQUE with engine study spam / identical repeats.
         if _estudo_spam(body):
             print("[Outbox] drop ESTUDO study spam")
             return None
         last = None
+        kwargs: dict = {}
+        if reply_to:
+            kwargs["reply_to"] = int(reply_to)
         for dest in dests:
-            last = await client.send_message(dest, body)
+            last = await client.send_message(dest, body, **kwargs)
         return last
+
+    def _hermetic_dests(dest, mirrors):
+        """LAW 3 — hermetic chats: no cross-chat mirrors."""
+        try:
+            try:
+                from bot.config.emanation_laws import chat_hermetic
+            except ImportError:
+                from config.emanation_laws import chat_hermetic
+
+            if chat_hermetic():
+                return [dest]
+        except Exception:
+            pass
+        return [dest] + list(mirrors or [])
 
     async def _release_round_sync_holds() -> int:
         """Flush prep-invested fires/results at perfect TTB / interval start."""
@@ -1205,23 +1222,42 @@ async def main(existing_client=None) -> None:
 
             last_res = read_int(RES_STATE)
             lookback_res = f"-{RESULT_LOOKBACK_HOURS} hours"
-            results = conn.execute(
-                """
-                SELECT id, fired_at, resolved_at, signal_kind, color, outcome,
-                       won_at_gale, secs_to_result, source_floor
-                FROM consensus_signals
-                WHERE id > ?
-                  AND outcome IN ('win','loss','tie')
-                  AND (
-                    fired_at IS NULL
-                    OR fired_at >= datetime('now', ?)
-                    OR id > ? - 50
-                  )
-                ORDER BY id ASC
-                LIMIT 30
-                """,
-                (last_res, lookback_res, last_res),
-            ).fetchall()
+            try:
+                results = conn.execute(
+                    """
+                    SELECT id, fired_at, resolved_at, signal_kind, color, outcome,
+                           won_at_gale, secs_to_result, source_floor, rooms_agreed
+                    FROM consensus_signals
+                    WHERE id > ?
+                      AND outcome IN ('win','loss','tie')
+                      AND (
+                        fired_at IS NULL
+                        OR fired_at >= datetime('now', ?)
+                        OR id > ? - 50
+                      )
+                    ORDER BY id ASC
+                    LIMIT 30
+                    """,
+                    (last_res, lookback_res, last_res),
+                ).fetchall()
+            except sqlite3.OperationalError:
+                results = conn.execute(
+                    """
+                    SELECT id, fired_at, resolved_at, signal_kind, color, outcome,
+                           won_at_gale, secs_to_result, source_floor
+                    FROM consensus_signals
+                    WHERE id > ?
+                      AND outcome IN ('win','loss','tie')
+                      AND (
+                        fired_at IS NULL
+                        OR fired_at >= datetime('now', ?)
+                        OR id > ? - 50
+                      )
+                    ORDER BY id ASC
+                    LIMIT 30
+                    """,
+                    (last_res, lookback_res, last_res),
+                ).fetchall()
 
             if tick % HEARTBEAT_EVERY == 0:
                 try:
@@ -1271,7 +1307,146 @@ async def main(existing_client=None) -> None:
                     print("[Outbox] hub throttle skip:", repr(exc))
 
             lane_by_id: dict[int, tuple] = {}
-            result_ids = {int(r["id"]) for r in results}
+            fire_msg_by_id: dict[int, int] = {}
+            results_by_id = {int(r["id"]): r for r in results}
+            result_ids = set(results_by_id)
+            results_done: set[int] = set()
+
+            async def _emit_result_row(row) -> bool:
+                """Send RESULT under its FIRE (vertical bundle). Returns True if sent/skip-finalized."""
+                rid = int(row["id"])
+                if rid in results_done:
+                    return True
+                _law_force_result = False
+                try:
+                    from bot.config.fire_result_law import (
+                        law_enabled,
+                        outbox_must_emit_result_cards,
+                    )
+
+                    _law_force_result = law_enabled() or outbox_must_emit_result_cards()
+                except Exception:
+                    _law_force_result = True
+                if HUB_MAX and not HUB_OUTBOX_RESULT_CARDS and not _law_force_result:
+                    write_int(RES_STATE, rid)
+                    results_done.add(rid)
+                    return True
+                res_body = fmt_result(row)
+                cached = lane_by_id.get(rid)
+                if cached:
+                    dest, lane, mirrors = cached
+                else:
+                    slot = None
+                    if HUB_MAX:
+                        try:
+                            from hub_dispatch import parent_peer_slot
+
+                            slot = parent_peer_slot(rid)
+                        except Exception:
+                            slot = None
+                    dest, lane, mirrors = _lane_dests(
+                        row["signal_kind"],
+                        text=res_body,
+                        signal_id=rid,
+                        is_result=True,
+                        peer_slot=slot,
+                    )
+                    dest, lane = await _apply_spill(dest, lane)
+                dests = _hermetic_dests(dest, mirrors)
+                try:
+                    from skin_gate import evaluate_send_gate, log_block
+
+                    gate = evaluate_send_gate(res_body, signal_kind=row["signal_kind"])
+                    if gate.blocked:
+                        log_block(gate, where=f"outbox_result id={rid}")
+                        write_int(RES_STATE, rid)
+                        results_done.add(rid)
+                        return True
+                except Exception as exc:
+                    print("[Outbox] skin_gate result skip:", repr(exc))
+                reply_to = None
+                try:
+                    try:
+                        from bot.config.emanation_laws import result_reply_to_fire
+                        from bot.config.signal_bundle_queue import fire_message_id
+                    except ImportError:
+                        from config.emanation_laws import result_reply_to_fire
+                        from config.signal_bundle_queue import fire_message_id
+
+                    if result_reply_to_fire():
+                        reply_to = fire_msg_by_id.get(rid) or fire_message_id(rid)
+                except Exception:
+                    reply_to = fire_msg_by_id.get(rid)
+                await _send_all(dests, res_body, reply_to=reply_to)
+                write_int(RES_STATE, rid)
+                results_done.add(rid)
+                print(
+                    "[Outbox] sent result",
+                    rid,
+                    row["outcome"],
+                    row["secs_to_result"],
+                    "lane",
+                    lane,
+                    "reply_to",
+                    reply_to,
+                    "hermetic",
+                    len(dests) == 1,
+                )
+                try:
+                    from zero_miss_ledger import record_resolve
+
+                    pred = str(row["color"] or "")
+                    outc = str(row["outcome"] or "")
+                    record_resolve(
+                        signal_id=rid,
+                        outcome=outc,
+                        predicted=pred,
+                        actual=actual_color(pred, outc),
+                        g0=int(row["won_at_gale"] or 0) == 0 and outc == "win",
+                    )
+                except Exception:
+                    pass
+                try:
+                    from hub_impact_learner import (
+                        last_opp_locked_floors,
+                        observe_result,
+                    )
+
+                    try:
+                        rooms_agreed = row["rooms_agreed"]
+                    except (KeyError, IndexError):
+                        rooms_agreed = []
+                    if isinstance(rooms_agreed, str):
+                        try:
+                            import json as _json
+
+                            rooms_agreed = _json.loads(rooms_agreed)
+                        except Exception:
+                            rooms_agreed = [rooms_agreed]
+                    rooms_list = list(rooms_agreed or [])
+                    mode = "COALITION" if len(rooms_list) >= 2 else "SINGULAR"
+                    observe_result(
+                        signal_id=rid,
+                        outcome=str(row["outcome"] or ""),
+                        predicted=str(row["color"] or ""),
+                        floors=[str(row["source_floor"] or "")],
+                        rooms=rooms_list,
+                        kind=str(row["signal_kind"] or ""),
+                        primary_floor=str(row["source_floor"] or ""),
+                        origin=(
+                            "COALITION" if mode == "COALITION" else "SOLO_FACT"
+                        ),
+                        mode=mode,
+                        actual_color=actual_color(
+                            str(row["color"] or ""),
+                            str(row["outcome"] or ""),
+                        ),
+                        opp_locked_floors=last_opp_locked_floors(),
+                    )
+                except Exception:
+                    pass
+                return True
+
             for row in rows:
                 try:
                     floor = _row_floor(row)
@@ -1323,7 +1498,7 @@ async def main(existing_client=None) -> None:
                             body = stamp_route_label(body, lane)
                         except Exception:
                             pass
-                    dests = [dest] + list(mirrors)
+                    dests = _hermetic_dests(dest, mirrors)
                     lane_by_id[int(row["id"])] = (dest, lane, mirrors)
                     try:
                         from skin_gate import evaluate_send_gate, log_block
@@ -1380,8 +1555,26 @@ async def main(existing_client=None) -> None:
                             continue
                     except Exception as exc:
                         print("[ROUND-SYNC] outbox fire skip:", repr(exc))
-                    await _send_all(dests, body)
+                    sent_msg = await _send_all(dests, body)
                     write_int(SIG_STATE, row["id"])
+                    # LAW 2 — remember FIRE msg so RESULT can sit under it
+                    try:
+                        mid = int(getattr(sent_msg, "id", 0) or 0)
+                        if mid:
+                            fire_msg_by_id[int(row["id"])] = mid
+                            try:
+                                from bot.config.signal_bundle_queue import remember_fire
+                            except ImportError:
+                                from config.signal_bundle_queue import remember_fire
+
+                            remember_fire(
+                                row["id"],
+                                message_id=mid,
+                                peer=str(lane or ""),
+                                chat_id=getattr(sent_msg, "chat_id", None),
+                            )
+                    except Exception:
+                        pass
                     print(
                         "[Outbox] sent signal",
                         row["id"],
@@ -1390,11 +1583,30 @@ async def main(existing_client=None) -> None:
                         floor,
                         "lane",
                         lane,
-                        "mirrors",
-                        len(mirrors),
+                        "hermetic",
+                        len(dests) == 1,
                         "score",
                         score,
                     )
+                    # Vertical bundle: RESULT for THIS signal right under FIRE
+                    try:
+                        try:
+                            from bot.config.emanation_laws import signal_bundle_vertical
+                        except ImportError:
+                            from config.emanation_laws import signal_bundle_vertical
+
+                        _vert = signal_bundle_vertical()
+                    except Exception:
+                        _vert = True
+                    if _vert and int(row["id"]) in results_by_id:
+                        try:
+                            await _emit_result_row(results_by_id[int(row["id"])])
+                            print(
+                                f"[EMANATION] vertical bundle #{row['id']} "
+                                f"FIRE→RESULT glued"
+                            )
+                        except Exception as exc:
+                            print("[EMANATION] vertical RESULT glue fail:", repr(exc))
                     try:
                         from zero_miss_ledger import record_proposal
 
@@ -1412,192 +1624,12 @@ async def main(existing_client=None) -> None:
                     print("[Outbox] SEND SIGNAL FAIL id=", row["id"], repr(exc))
                     break
 
+            # Remaining RESULTs (FIRE already sent earlier, or RESULT-only catch-up)
             for row in results:
                 try:
-                    # FIRE↔RESULT law: never skip RESULT card template skins.
-                    _law_force_result = False
-                    try:
-                        from bot.config.fire_result_law import (
-                            law_enabled,
-                            outbox_must_emit_result_cards,
-                        )
-
-                        _law_force_result = (
-                            law_enabled() or outbox_must_emit_result_cards()
-                        )
-                    except Exception:
-                        _law_force_result = True
-                    if (
-                        HUB_MAX
-                        and not HUB_OUTBOX_RESULT_CARDS
-                        and not _law_force_result
-                    ):
-                        write_int(RES_STATE, row["id"])
-                        print(
-                            "[Outbox] HUB skip result card (engine owns skin)",
-                            row["id"],
-                            row["outcome"],
-                        )
+                    if int(row["id"]) in results_done:
                         continue
-                    if _law_force_result and not HUB_OUTBOX_RESULT_CARDS:
-                        print(
-                            "[FIRE↔RESULT LAW] forcing RESULT card skin",
-                            row["id"],
-                            row["outcome"],
-                        )
-                    res_body = fmt_result(row)
-                    cached = lane_by_id.get(int(row["id"]))
-                    if cached:
-                        dest, lane, mirrors = cached
-                    else:
-                        slot = None
-                        if HUB_MAX:
-                            try:
-                                from hub_dispatch import parent_peer_slot
-
-                                slot = parent_peer_slot(int(row["id"]))
-                            except Exception:
-                                slot = None
-                        dest, lane, mirrors = _lane_dests(
-                            row["signal_kind"],
-                            text=res_body,
-                            signal_id=int(row["id"]),
-                            is_result=True,
-                            peer_slot=slot,
-                        )
-                        dest, lane = await _apply_spill(dest, lane)
-                    dests = [dest] + list(mirrors)
-                    try:
-                        from skin_gate import evaluate_send_gate, log_block
-
-                        gate = evaluate_send_gate(
-                            res_body, signal_kind=row["signal_kind"]
-                        )
-                        if gate.blocked:
-                            log_block(gate, where=f"outbox_result id={row['id']}")
-                            write_int(RES_STATE, row["id"])
-                            print(
-                                "[Outbox] SKIN-GATE skip result",
-                                row["id"],
-                                gate.family_id,
-                                gate.matched_keys,
-                            )
-                            continue
-                    except Exception as exc:
-                        print("[Outbox] skin_gate result skip:", repr(exc))
-                    try:
-                        from round_sync_densifier import (
-                            HeldFire,
-                            decide_result,
-                            get_clock,
-                            get_densifier,
-                        )
-
-                        # RESULT attaches under its own FIRE immediately.
-                        rsync = decide_result(res_body, force_now=True)
-                        if rsync.action == "HOLD_RESULT":
-                            phase = get_clock().phase_at()
-                            try:
-                                get_clock().nudge_from_resolve(time.time())
-                            except Exception:
-                                pass
-                            parent_chat = "UNIQUE_g1"
-                            try:
-                                from hub_dispatch import parent_peer_slot
-
-                                slot = parent_peer_slot(int(row["id"]))
-                                if slot:
-                                    parent_chat = str(slot)
-                            except Exception:
-                                pass
-                            get_densifier()._enqueue(
-                                HeldFire(
-                                    fire_key=f"outbox_res:{row['id']}",
-                                    text=res_body,
-                                    color=str(row.get("color") or ""),
-                                    family_id="RESULT",
-                                    signal_kind=str(row.get("signal_kind") or "RESULT"),
-                                    score=0.0,
-                                    chat=parent_chat,
-                                    clock_a_secs=None,
-                                    detected_at=time.time(),
-                                    ideal_release_at=phase.next_interval_start,
-                                    round_id=phase.round_id + 1,
-                                    source="outbox_result",
-                                    meta={"kind": "result_align", "id": row["id"]},
-                                )
-                            )
-                            write_int(RES_STATE, row["id"])
-                            print(
-                                f"[ROUND-SYNC] outbox result {row['id']} HOLD_RESULT {rsync.reason}"
-                            )
-                            continue
-                    except Exception as exc:
-                        print("[ROUND-SYNC] outbox result skip:", repr(exc))
-                    await _send_all(dests, res_body)
-                    write_int(RES_STATE, row["id"])
-                    print(
-                        "[Outbox] sent result",
-                        row["id"],
-                        row["outcome"],
-                        row["secs_to_result"],
-                        "lane",
-                        lane,
-                        "mirrors",
-                        len(mirrors),
-                    )
-                    try:
-                        from zero_miss_ledger import record_resolve
-
-                        pred = str(row["color"] or "")
-                        outc = str(row["outcome"] or "")
-                        record_resolve(
-                            signal_id=row["id"],
-                            outcome=outc,
-                            predicted=pred,
-                            actual=actual_color(pred, outc),
-                            g0=int(row["won_at_gale"] or 0) == 0 and outc == "win",
-                        )
-                    except Exception:
-                        pass
-                    try:
-                        from hub_impact_learner import observe_result
-
-                        rooms_agreed = row.get("rooms_agreed") or []
-                        if isinstance(rooms_agreed, str):
-                            try:
-                                import json as _json
-
-                                rooms_agreed = _json.loads(rooms_agreed)
-                            except Exception:
-                                rooms_agreed = [rooms_agreed]
-                        rooms_list = list(rooms_agreed or [])
-                        mode = (
-                            "COALITION"
-                            if len(rooms_list) >= 2
-                            else "SINGULAR"
-                        )
-                        observe_result(
-                            signal_id=row["id"],
-                            outcome=str(row["outcome"] or ""),
-                            predicted=str(row["color"] or ""),
-                            floors=[str(row.get("source_floor") or "")],
-                            rooms=rooms_list,
-                            kind=str(row.get("signal_kind") or ""),
-                            primary_floor=str(row.get("source_floor") or ""),
-                            origin=(
-                                "COALITION"
-                                if mode == "COALITION"
-                                else "SOLO_FACT"
-                            ),
-                            mode=mode,
-                            actual_color=actual_color(
-                                str(row["color"] or ""),
-                                str(row["outcome"] or ""),
-                            ),
-                        )
-                    except Exception:
-                        pass
+                    await _emit_result_row(row)
                 except Exception as exc:
                     print("[Outbox] SEND RESULT FAIL id=", row["id"], repr(exc))
                     break

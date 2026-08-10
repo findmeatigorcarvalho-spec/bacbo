@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808x'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260808y'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260808x"
+V="20260808y"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -42,7 +42,10 @@ for pair in \
   "bot/lux_babysitter.sh|replit_elite_stack_patch/bot/lux_babysitter.sh" \
   "REPLIT_UP_NOW.sh|replit_elite_stack_patch/REPLIT_UP_NOW.sh" \
   "bot/config/keep_allowlist.py|bot/config/keep_allowlist.py" \
-  "bot/config/__init__.py|bot/config/__init__.py"
+  "bot/config/__init__.py|bot/config/__init__.py" \
+  "bot/config/emanation_laws.py|bot/config/emanation_laws.py" \
+  "bot/config/signal_bundle_queue.py|bot/config/signal_bundle_queue.py" \
+  "bot/config/fire_result_law.py|bot/config/fire_result_law.py"
 do
   dest="${pair%%|*}"
   rel="${pair##*|}"
@@ -413,6 +416,11 @@ for kv in \
   LUX_BLOCK_ESTUDO=1 \
   LUX_CHAT_WATCH_CALL=0 \
   LUX_CHAT_WATCH_CALL_AFTER_SETTLE=1 \
+  EMANATION_LAWS=1 \
+  COLOR_TRUTH_FACTUAL=1 \
+  SIGNAL_BUNDLE_VERTICAL=1 \
+  CHAT_HERMETIC=1 \
+  RESULT_REPLY_TO_FIRE=1 \
   LUX_SKIP_RESOLVE_USERNAME=1 \
   BACBO_READY_SECS=12 \
   FALLBACK_START_DELAY_SECS=15 \
@@ -453,6 +461,11 @@ keys = {
     "LUX_BLOCK_ESTUDO": "1",
     "LUX_CHAT_WATCH_CALL": "0",
     "LUX_CHAT_WATCH_CALL_AFTER_SETTLE": "1",
+    "EMANATION_LAWS": "1",
+    "COLOR_TRUTH_FACTUAL": "1",
+    "SIGNAL_BUNDLE_VERTICAL": "1",
+    "CHAT_HERMETIC": "1",
+    "RESULT_REPLY_TO_FIRE": "1",
     "FLASK_DEBUG": "0",
     "FLASK_ENV": "production",
     "WERKZEUG_RUN_MAIN": "true",
@@ -544,6 +557,27 @@ assert len(dec["dropped_opp"]) == 1
 assert "blue" in (dec.get("opp_locked_colors") or []), dec
 assert dec.get("color_map", {}).get("red"), dec
 print("HUB_ORCH_OK", dec["why"], "lock", dec.get("opp_locked_colors"))
+# EMANATION: factual color overrides committee when known
+from config.emanation_laws import (
+    chat_hermetic,
+    color_truth_factual,
+    factual_color_from_outcome,
+    law_banner as em_banner,
+    signal_bundle_vertical,
+)
+assert color_truth_factual() and signal_bundle_vertical() and chat_hermetic()
+assert factual_color_from_outcome("blue", "loss") == "red"
+assert factual_color_from_outcome("red", "win") == "red"
+fact_dec = orchestrate(
+    [
+        {"floor": "JUN19", "color": "red", "score": 90, "window_id": "t2"},
+        {"floor": "LIVE", "color": "blue", "score": 95, "window_id": "t2"},
+    ],
+    factual_color="blue",
+)
+assert fact_dec["color"] == "blue", fact_dec
+assert fact_dec.get("color_truth") == "FACTUAL", fact_dec
+print("EMANATION_OK", em_banner(), fact_dec["why"])
 from hub_impact_learner import (
     observe_result,
     observe_fire,

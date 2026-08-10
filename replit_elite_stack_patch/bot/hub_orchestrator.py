@@ -1,24 +1,17 @@
 """HUB AI — free proposers in → orchestrated best card+RESULT out.
 
-User model (locked):
-  Every signal gate / config / setup / camada / floor / system proposes
-  freely 24/7 into the HUB (no hour / volume / WR mute on the propose path).
-
-  Many proposers can agree the same color for the same round (e.g. 20 say RED).
-  Next round maybe 10 say BLUE. The HUB scores strength, then chooses:
-    · which ONE primary card+RESULT fits that round + APEX chat
-    · how / when / where to place secondary same-color cards (spill chats)
-    · opposite-color same-window → lock (cannot bet both ways)
-
-  Floors are only one class of proposer. Skins, gates, factory camadas,
-  and other systems also feed the hub as they get wired.
-
-FIRE ↔ RESULT: every chosen FIRE gets a RESULT skin under it immediately.
+EMANATION model (locked) — see bot/config/emanation_laws.py:
+  · Absorb 100% of every floor/camada/system proposal (FREE_PROPOSE).
+  · Same-color = coalition strength. Opposite-color = LOCK + learn.
+  · Color truth = FACTUAL win when known; committee is provisional only.
+  · Emit complete vertical bundles per chat (FIRE→RESULT→gale).
+  · Chats are hermetic — each stream unaware of siblings.
 
 Env:
   HUB_ORCHESTRATOR=1     (default on when HUB_MAX=1)
   VOLUME_MODE=EXPLOSION  free same-color multi; opp-color lock
   FREE_PROPOSE=1         propose path ignores mute gates
+  COLOR_TRUTH_FACTUAL=1  factual RESULT color overrides committee
 """
 from __future__ import annotations
 
@@ -58,15 +51,22 @@ def orchestrate(
     proposals: list[dict[str, Any]],
     *,
     primary_peer: str = "UNIQUE_g1",
+    factual_color: Optional[str] = None,
 ) -> dict[str, Any]:
     """Pick primary card + spill list from free proposals for one window/round.
+
+    Color truth:
+      · If factual_color (actual winning color) is known → that color WINS.
+        Opp proposers stay LOCKED for learner watchdog (not deleted from memory).
+      · Else provisional coalition aggregate (sum scores) — until RESULT speaks.
 
     Returns:
       {
         primary: proposal | None,   # best card for APEX / primary_peer
-        spill: [proposal, ...],     # same-color extras for g2…gN
-        dropped_opp: [...],         # opposite-color losers
+        spill: [proposal, ...],     # same-color extras for g2…gN (hermetic clones)
+        dropped_opp: [...],         # opposite-color LOCK (learn/watchdog)
         color: str,
+        color_truth: FACTUAL|PROVISIONAL,
         n_in: int,
         why: str,
       }
@@ -77,6 +77,7 @@ def orchestrate(
             "spill": [],
             "dropped_opp": [],
             "color": "",
+            "color_truth": "NONE",
             "n_in": 0,
             "why": "no_proposals",
         }
@@ -121,15 +122,37 @@ def orchestrate(
             "spill": [],
             "dropped_opp": [],
             "color": best.get("color") or "",
+            "color_truth": "UNTYPED",
             "n_in": len(norm),
             "why": "untyped_best_score",
         }
 
-    # Winning color = highest aggregate strength (sum of scores)
+    # Winning color = factual truth when known; else provisional coalition.
     def _agg(items: list[dict[str, Any]]) -> float:
         return sum(p["score"] for p in items) + 0.01 * len(items)
 
-    win_color = max(by_color.keys(), key=lambda c: _agg(by_color[c]))
+    # Only explicit factual_color (same-window truth). Do NOT auto-pull the
+    # previous round's RESULT — that would poison the next window's pick.
+    fact = str(factual_color or "").strip().lower()
+    if fact in {"b", "azul", "🔵"}:
+        fact = "blue"
+    elif fact in {"r", "vermelho", "🔴"}:
+        fact = "red"
+
+    color_truth = "PROVISIONAL"
+    if fact and fact in by_color:
+        # LAW: fire the color that is actually winning / won.
+        win_color = fact
+        color_truth = "FACTUAL"
+    elif fact and fact in {"blue", "red"} and fact not in by_color:
+        # Reality spoke a color no proposer held — keep best provisional,
+        # but tag so learner sees the miss.
+        win_color = max(by_color.keys(), key=lambda c: _agg(by_color[c]))
+        color_truth = "FACTUAL_MISS"
+    else:
+        win_color = max(by_color.keys(), key=lambda c: _agg(by_color[c]))
+        color_truth = "PROVISIONAL"
+
     winners = sorted(by_color[win_color], key=lambda p: p["score"], reverse=True)
     dropped = []
     for c, items in by_color.items():
@@ -174,10 +197,12 @@ def orchestrate(
         "spill": spill,
         "dropped_opp": dropped,
         "color": win_color,
+        "color_truth": color_truth,
+        "factual_color": fact or "",
         "n_in": len(norm),
         "why": (
-            f"HUB pick {win_color} from {len(winners)} same-color proposers "
-            f"(dropped {len(dropped)} opp); primary={primary.get('floor')} "
+            f"HUB {color_truth} pick {win_color} from {len(winners)} same-color "
+            f"proposers (locked {len(dropped)} opp); primary={primary.get('floor')} "
             f"score={primary.get('score')}"
         ),
         "ts": time.time(),

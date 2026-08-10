@@ -118,6 +118,12 @@ ENV_KEYS = {
     "LUX_BLOCK_ESTUDO": "1",
     "LUX_CHAT_WATCH_CALL": "0",
     "LUX_CHAT_WATCH_CALL_AFTER_SETTLE": "1",
+    # EMANATION LAWS — factual color, vertical signal#, hermetic chats
+    "EMANATION_LAWS": "1",
+    "COLOR_TRUTH_FACTUAL": "1",
+    "SIGNAL_BUNDLE_VERTICAL": "1",
+    "CHAT_HERMETIC": "1",
+    "RESULT_REPLY_TO_FIRE": "1",
 }
 
 

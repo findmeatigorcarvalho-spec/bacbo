@@ -209,6 +209,12 @@ def _env() -> dict[str, str]:
     # CALL wrap OFF at boot (subscribe-safe); armed after settle by outbox/watchdog
     env.setdefault("LUX_CHAT_WATCH_CALL", "0")
     env.setdefault("LUX_CHAT_WATCH_CALL_AFTER_SETTLE", "1")
+    # EMANATION LAWS
+    env.setdefault("EMANATION_LAWS", "1")
+    env.setdefault("COLOR_TRUTH_FACTUAL", "1")
+    env.setdefault("SIGNAL_BUNDLE_VERTICAL", "1")
+    env.setdefault("CHAT_HERMETIC", "1")
+    env.setdefault("RESULT_REPLY_TO_FIRE", "1")
     # HUB free-propose → orchestrate (no hour/WR/volume mute on propose)
     env.setdefault("HUB_MAX", "1")
     env.setdefault("HUB_ORCHESTRATOR", "1")
