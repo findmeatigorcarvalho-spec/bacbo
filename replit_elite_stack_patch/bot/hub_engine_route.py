@@ -31,9 +31,9 @@ LAST_DEST = DATA / "hub_engine_last_dest.json"
 GUNIQUE_CACHE = DATA / "telegram_gunique_entity.json"
 
 _FIRE_HINT = re.compile(
-    r"(ENTER NOW|SEQU[EÊ]NCIA|GOLDEN SIGNAL|SOLO ELITE|FLASH SIGNAL|"
+    r"(ENTER NOW|SEQU[EÊ]NCIA|SEQUENCE|GOLDEN SIGNAL|SOLO ELITE|FLASH SIGNAL|"
     r"APOSTE AGORA|JANELA|COUNTDOWN|Sinal Retido|BAC BO SIGNAL|"
-    r"PLATINUM|CONFIRMED ENTRY)",
+    r"PLATINUM|CONFIRMED ENTRY|🔥)",
     re.I,
 )
 _OPS_HINT = re.compile(
@@ -50,7 +50,7 @@ _RESULT_HINT = re.compile(
     re.I,
 )
 _TRUST_FIRE = re.compile(
-    r"(GOLDEN SIGNAL|SOLO ELITE|SEQU[EÊ]NCIA|FLASH SIGNAL|"
+    r"(GOLDEN SIGNAL|SOLO ELITE|SEQU[EÊ]NCIA|SEQUENCE|FLASH SIGNAL|"
     r"PLATINUM|JANELA\s*:|🟢\s*\d+s|APOSTE AGORA)",
     re.I,
 )
@@ -124,10 +124,30 @@ def gunique_peer() -> str:
 def _as_target(peer: str) -> Any:
     p = _clean(peer)
     if not p:
-        return p
+        return None
+    if p in {"6774605259", "Mr_iv4", "mr_iv4"}:
+        return None
     if p.lstrip("-").isdigit():
         return int(p)
     return f"@{p}"
+
+
+def apex_target() -> Any:
+    """Never-empty APEX destination (UNIQUE_g1)."""
+    dest = _as_target(gunique_peer() or money_peer() or "UNIQUE_g1")
+    if dest is None or dest == "" or dest == 0:
+        return "@UNIQUE_g1"
+    return dest
+
+
+def _valid_target(dest: Any) -> bool:
+    if dest is None:
+        return False
+    if isinstance(dest, str) and not dest.strip().strip("@"):
+        return False
+    if dest == 0:
+        return False
+    return True
 
 
 def _save_last(dest: Any, *, role: str, reason: str) -> None:
@@ -188,20 +208,22 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
         pass
 
     # ONE AI ORGANIZER + Profit Chat Bundle (UNIQUE_g1 APEX; Mr_iv4 removed).
-    apex = _as_target(gunique_peer() or money_peer())
+    apex = apex_target()
     # Results glue to last FIRE chat immediately (engine path often has no signal_id).
     if _is_result(body):
         last = _load_last_target()
-        return (last if last is not None else apex), "result_attach_immediate→parent"
+        dest = last if _valid_target(last) else apex
+        return dest, "result_attach_immediate→parent"
     try:
         from bot.config.bundle_organizer import organize
 
         org = organize(body, role="FIRE", is_result=False)
         if org.peer:
             dest = _as_target(str(org.peer))
-            if _FIRE_HINT.search(body) or _TRUST_FIRE.search(body):
-                _save_last(dest, role="FIRE", reason=f"organize:{org.why}")
-            return dest, f"organize:{org.why}"
+            if _valid_target(dest):
+                if _FIRE_HINT.search(body) or _TRUST_FIRE.search(body):
+                    _save_last(dest, role="FIRE", reason=f"organize:{org.why}")
+                return dest, f"organize:{org.why}"
     except Exception:
         pass
     try:
@@ -210,9 +232,10 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
         peer, why = peer_for_signal(body, is_result=False, role="FIRE")
         if peer:
             dest = _as_target(str(peer))
-            if _FIRE_HINT.search(body) or _TRUST_FIRE.search(body):
-                _save_last(dest, role="FIRE", reason=f"bundle:{why}")
-            return dest, f"bundle:{why}"
+            if _valid_target(dest):
+                if _FIRE_HINT.search(body) or _TRUST_FIRE.search(body):
+                    _save_last(dest, role="FIRE", reason=f"bundle:{why}")
+                return dest, f"bundle:{why}"
     except Exception:
         pass
 
@@ -226,13 +249,14 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
         peer = getattr(target, "peer", None)
         if peer and str(peer) not in {"6774605259", "Mr_iv4", "mr_iv4"}:
             dest = _as_target(str(peer))
-            reason = (
-                f"skyscraper:{getattr(target, 'reason', '')}:"
-                f"{getattr(target, 'shelf_id', '')}"
-            )
-            if getattr(target, "role", "") == "FIRE" or _FIRE_HINT.search(body):
-                _save_last(dest, role="FIRE", reason=reason)
-            return dest, reason
+            if _valid_target(dest):
+                reason = (
+                    f"skyscraper:{getattr(target, 'reason', '')}:"
+                    f"{getattr(target, 'shelf_id', '')}"
+                )
+                if getattr(target, "role", "") == "FIRE" or _FIRE_HINT.search(body):
+                    _save_last(dest, role="FIRE", reason=reason)
+                return dest, reason
     except Exception:
         pass
 
@@ -247,6 +271,8 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
         if str(peer) in {"6774605259", "Mr_iv4", "mr_iv4"}:
             peer = "UNIQUE_g1"
         dest = _as_target(str(peer))
+        if not _valid_target(dest):
+            dest = apex
         if shelf.role == "FIRE":
             _save_last(dest, role="FIRE", reason=f"shelf:{shelf.shelf_id}")
         return dest, f"shelf:{shelf.shelf_id}:{shelf.family_id}"
@@ -254,7 +280,7 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
         pass
 
     if _OPS_HINT.search(body) and not re.search(
-        r"(APOSTE AGORA|ENTER NOW|GOLDEN SIGNAL|FLASH SIGNAL|SOLO ELITE)",
+        r"(APOSTE AGORA|ENTER NOW|GOLDEN SIGNAL|FLASH SIGNAL|SOLO ELITE|SEQUENCE)",
         body,
         re.I,
     ):
@@ -269,10 +295,28 @@ def pick_target_for_text(text: str | None) -> tuple[Any | None, str]:
 
 
 def apply_target_to_config(cfg: Any, target: Any) -> Any:
-    """Set config.TARGET for one send; return previous value."""
+    """Set config.TARGET for one send; return previous value.
+
+    Never writes an empty TARGET — falls back to APEX UNIQUE_g1.
+    """
     prev = getattr(cfg, "TARGET", None)
+    dest = target if _valid_target(target) else apex_target()
     try:
-        cfg.TARGET = target
+        cfg.TARGET = dest
     except Exception:
         pass
     return prev
+
+
+def ensure_config_target(cfg: Any) -> Any:
+    """If config.TARGET is blank/invalid, force APEX. Returns the TARGET used."""
+    cur = getattr(cfg, "TARGET", None)
+    if _valid_target(cur):
+        return cur
+    dest = apex_target()
+    try:
+        cfg.TARGET = dest
+        print(f"[HUB-ROUTE] empty TARGET repaired → {dest!r}", flush=True)
+    except Exception:
+        pass
+    return dest

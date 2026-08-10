@@ -207,12 +207,22 @@ def dedup_hit(msg: Optional[str], *, commit: bool = True) -> bool:
 def _peer_label(entity: Any) -> str:
     if entity is None:
         return "?"
+    # Bare str/int peers — do NOT getattr("title") on str (returns str.title method)
+    if isinstance(entity, str):
+        return entity or "?"
+    if isinstance(entity, int):
+        return str(entity)
     for attr in ("username", "title", "first_name"):
         v = getattr(entity, attr, None)
-        if v:
+        if isinstance(v, str) and v:
+            return v
+        if v is not None and not callable(v):
             return str(v)
     try:
-        return str(getattr(entity, "id", entity))
+        eid = getattr(entity, "id", None)
+        if eid is not None and not callable(eid):
+            return str(eid)
+        return str(entity)[:80]
     except Exception:
         return repr(entity)[:80]
 

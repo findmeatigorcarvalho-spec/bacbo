@@ -321,41 +321,79 @@ def _wrap_send(fn: Callable) -> Callable:
         prev_target = None
         cfg = None
         route_reason = None
+        applied_dest = None
         try:
             from hub_engine_route import (
                 apply_target_to_config,
+                ensure_config_target,
                 hub_route_enabled,
                 pick_target_for_text,
+                _valid_target,
+                apex_target,
             )
+
+            # Resolve config early — always repair blank TARGET before send()
+            if isinstance(g, dict) and g.get("config") is not None:
+                cfg = g.get("config")
+            elif isinstance(mod, types.ModuleType):
+                cfg = getattr(mod, "config", None)
+            if cfg is None and isinstance(main, types.ModuleType):
+                cfg = getattr(main, "config", None)
+            if cfg is None:
+                try:
+                    import config as cfg  # type: ignore
+                except Exception:
+                    cfg = None
 
             if hub_route_enabled():
                 dest, route_reason = pick_target_for_text(msg)
-                if dest is not None:
-                    if isinstance(g, dict) and g.get("config") is not None:
-                        cfg = g.get("config")
-                    elif isinstance(mod, types.ModuleType):
-                        cfg = getattr(mod, "config", None)
-                    if cfg is None and isinstance(main, types.ModuleType):
-                        cfg = getattr(main, "config", None)
-                    if cfg is None:
-                        import config as cfg  # type: ignore
-                    prev_target = apply_target_to_config(cfg, dest)
+                if cfg is not None:
+                    if dest is not None and _valid_target(dest):
+                        prev_target = apply_target_to_config(cfg, dest)
+                        applied_dest = dest
+                    else:
+                        # Even when route returns None, never leave TARGET=""
+                        prev_target = getattr(cfg, "TARGET", None)
+                        applied_dest = ensure_config_target(cfg)
+                        if dest is None and route_reason:
+                            pass  # keep reason
+                        else:
+                            route_reason = route_reason or "ensure_apex"
                     if os.environ.get("HUB_ENGINE_ROUTE_LOG", "1").strip() not in {
                         "0",
                         "false",
                         "no",
                         "off",
                     }:
-                        print(f"[HUB-ROUTE] dest={dest} reason={route_reason}")
+                        print(
+                            f"[HUB-ROUTE] dest={applied_dest} reason={route_reason}",
+                            flush=True,
+                        )
+            elif cfg is not None:
+                ensure_config_target(cfg)
         except Exception as exc:
             print("[HUB-ROUTE] skip:", repr(exc))
+            try:
+                if cfg is not None:
+                    from hub_engine_route import ensure_config_target
+
+                    ensure_config_target(cfg)
+            except Exception:
+                pass
 
         try:
             return await fn(*args, **kwargs)
         finally:
+            # Restore previous TARGET only when it was a valid peer.
+            # Restoring "" races concurrent sends → entity "" failures.
             if cfg is not None and prev_target is not None:
                 try:
-                    cfg.TARGET = prev_target
+                    from hub_engine_route import _valid_target, apex_target
+
+                    if _valid_target(prev_target):
+                        cfg.TARGET = prev_target
+                    else:
+                        cfg.TARGET = apex_target()
                 except Exception:
                     pass
 

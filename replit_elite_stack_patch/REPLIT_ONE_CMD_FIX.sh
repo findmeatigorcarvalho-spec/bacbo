@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260809b'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260809c'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260809b"
+V="20260809c"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -31,6 +31,7 @@ for pair in \
   "bot/fix_bacbo_keepalive.py|replit_elite_stack_patch/bot/fix_bacbo_keepalive.py" \
   "bot/lux_dialog_resolve.py|replit_elite_stack_patch/bot/lux_dialog_resolve.py" \
   "bot/hub_max_boot.py|replit_elite_stack_patch/bot/hub_max_boot.py" \
+  "bot/hub_engine_route.py|replit_elite_stack_patch/bot/hub_engine_route.py" \
   "bot/lux_tower_merge.py|replit_elite_stack_patch/bot/lux_tower_merge.py" \
   "bot/v2_floor_proposers.py|replit_elite_stack_patch/bot/v2_floor_proposers.py" \
   "bot/edge_live_policy.py|replit_elite_stack_patch/bot/edge_live_policy.py" \
@@ -571,6 +572,26 @@ fixed = rh.harden_namespace(ns, label="selftest")
 assert isinstance(ns["_SOLO_GLOBAL_BAD_UTC"], frozenset), ns
 assert isinstance(ns["_ACCUM_HOLD_SECS"], (int, float)), ns
 print("SOLO_BAD_UTC_REPAIR_OK", fixed)
+# Empty TARGET must never reach Telethon (was: send() failed entity "")
+import types as _types
+import hub_engine_route as her
+os.environ["HUB_MAX"] = "1"
+os.environ["HUB_ENGINE_ROUTE"] = "1"
+os.environ.setdefault("TELEGRAM_PRIMARY_PEER", "UNIQUE_g1")
+os.environ.setdefault("TELEGRAM_GUNIQUE_PEER_ID", "5855678138")
+assert her._as_target("") is None
+assert her._valid_target("") is False
+assert her._valid_target("@UNIQUE_g1") is True
+apex = her.apex_target()
+assert her._valid_target(apex), apex
+cfg = _types.SimpleNamespace(TARGET="")
+her.ensure_config_target(cfg)
+assert her._valid_target(cfg.TARGET), cfg.TARGET
+her.apply_target_to_config(cfg, "")
+assert her._valid_target(cfg.TARGET), cfg.TARGET
+dest, why = her.pick_target_for_text("🔥 SEQUENCE blue streak\nENTER NOW")
+assert her._valid_target(dest), (dest, why)
+print("EMPTY_TARGET_REPAIR_OK", dest, why)
 from hub_orchestrator import orchestrate
 dec = orchestrate([
     {"floor": "JUN19", "color": "red", "score": 90, "window_id": "t1"},
