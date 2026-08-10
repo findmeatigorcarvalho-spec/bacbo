@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260809a'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260809b'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260809a"
+V="20260809b"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -555,6 +555,22 @@ from config.keep_allowlist import should_block_as_trash
 hit, why = should_block_as_trash(text=s)
 assert hit, why
 print("TRASH_SELFTEST_OK", why)
+# Corrupted _SOLO_GLOBAL_BAD_UTC (float) must be repaired — was killing AccumHold FIRE
+import types
+import lux_no_hour_blocks as nhb
+import lux_re_harden as rh
+fake = types.ModuleType("signal_handler_selftest")
+fake._SOLO_GLOBAL_BAD_UTC = 18.0  # live crash shape
+sys.modules["signal_handler_selftest"] = fake
+assert nhb.neutralize_module(fake) >= 1
+assert isinstance(fake._SOLO_GLOBAL_BAD_UTC, (set, frozenset))
+assert (18 in fake._SOLO_GLOBAL_BAD_UTC) is False
+# re-harden must NOT turn setish names into floats
+ns = {"_SOLO_GLOBAL_BAD_UTC": "", "_ACCUM_HOLD_SECS": ""}
+fixed = rh.harden_namespace(ns, label="selftest")
+assert isinstance(ns["_SOLO_GLOBAL_BAD_UTC"], frozenset), ns
+assert isinstance(ns["_ACCUM_HOLD_SECS"], (int, float)), ns
+print("SOLO_BAD_UTC_REPAIR_OK", fixed)
 from hub_orchestrator import orchestrate
 dec = orchestrate([
     {"floor": "JUN19", "color": "red", "score": 90, "window_id": "t1"},

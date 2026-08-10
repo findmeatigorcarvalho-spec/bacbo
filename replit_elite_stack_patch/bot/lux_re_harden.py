@@ -100,9 +100,22 @@ def _is_re_name(name: str) -> bool:
     return name.endswith("_RE") or name.endswith("_REGEX") or name.endswith("_PATTERN")
 
 
+# Never coerce set-like hour-block attrs to float (breaks `hour in ATTR`).
+_NEVER_NUM_FRAGMENTS = (
+    "BAD_UTC",
+    "BAD_HOURS",
+    "HOUR_BLOCK",
+    "BLOCKED_HOURS",
+    "COLOR_HOUR",
+)
+
+
 def _is_num_name(name: str) -> bool:
     if name in _CANON_NUM:
         return True
+    u = (name or "").upper()
+    if any(frag in u for frag in _NEVER_NUM_FRAGMENTS):
+        return False
     suffixes = (
         "_SECS",
         "_SECONDS",
@@ -171,6 +184,12 @@ def harden_namespace(ns: dict, *, label: str = "") -> List[str]:
     for name, val in list(ns.items()):
         if not isinstance(name, str):
             continue
+        # Repair corrupted hour-block containers before numeric hardening
+        if any(frag in name.upper() for frag in _NEVER_NUM_FRAGMENTS):
+            if not isinstance(val, (set, frozenset, list, dict, tuple)) and not callable(val):
+                ns[name] = frozenset()
+                fixed.append(name)
+                continue
         if _is_re_name(name):
             new = _as_re(name, val)
             if new is not val or not hasattr(val, "search"):
@@ -247,6 +266,16 @@ def apply(silent: bool = False) -> Tuple[int, List[str]]:
         if fixed:
             total += len(fixed)
             reports.append(f"{name}:{len(fixed)}")
+
+    # After numeric repair, force hour-block attrs back to empty set-like
+    try:
+        import lux_no_hour_blocks as _nhb
+
+        n_hb = _nhb.sweep_loaded_gates()
+        if n_hb and not silent:
+            print(f"[LUXURY] re-harden → no_hour_blocks repaired={n_hb}")
+    except Exception:
+        pass
 
     if not silent:
         print(f"[LUXURY] re-harden applied fixes={total} where={reports[:12]}")
