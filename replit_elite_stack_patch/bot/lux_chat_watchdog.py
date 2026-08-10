@@ -414,19 +414,62 @@ def _wrap_call(orig):
 
     @functools.wraps(orig)
     async def _wrapped(self: Any, request: Any, *args: Any, **kwargs: Any):
+        # Nuclear safety net ONLY for ESTUDO/trash.
+        # Do NOT run full gate_outbound(dedup) here: send_message already
+        # commits dedup with final=True, then Telethon hits __call__ — a second
+        # dedup pass false-drops the real send (empty Updates / never lands).
         if enabled() and request is not None:
             for req in _iter_tl_requests(request):
                 name = type(req).__name__
                 if name not in _SEND_NAMES:
                     continue
                 msg = _request_text(req)
+                if not isinstance(msg, str):
+                    continue
                 peer = getattr(req, "peer", None)
-                if isinstance(msg, str):
-                    ok, _why = gate_outbound(
-                        msg=msg, entity=peer, path=f"__call__:{name}"
+                peer_l = _peer_label(peer)
+                if estudo_blocked(msg):
+                    _bump("drop_estudo", peer_l)
+                    _append(
+                        {
+                            "type": "drop",
+                            "why": "ESTUDO",
+                            "path": f"__call__:{name}",
+                            "peer": peer_l,
+                            "ts": time.time(),
+                            "preview": _clean(msg)[:160],
+                        }
                     )
-                    if not ok:
+                    print(
+                        f"[CHAT-WATCH] DROP ESTUDO via __call__:{name} peer={peer_l}"
+                    )
+                    return _dropped_updates()
+                try:
+                    try:
+                        from config.keep_allowlist import should_block_as_trash
+                    except ImportError:
+                        from bot.config.keep_allowlist import should_block_as_trash
+
+                    hit, why = should_block_as_trash(text=_clean(msg))
+                    if hit:
+                        _bump("drop_trash", peer_l)
+                        _append(
+                            {
+                                "type": "drop",
+                                "why": why,
+                                "path": f"__call__:{name}",
+                                "peer": peer_l,
+                                "ts": time.time(),
+                                "preview": _clean(msg)[:160],
+                            }
+                        )
+                        print(
+                            f"[CHAT-WATCH] DROP trash via __call__:{name} "
+                            f"{why} peer={peer_l}"
+                        )
                         return _dropped_updates()
+                except Exception:
+                    pass
         return await orig(self, request, *args, **kwargs)
 
     _wrapped._lux_chat_watchdog = True  # type: ignore[attr-defined]
