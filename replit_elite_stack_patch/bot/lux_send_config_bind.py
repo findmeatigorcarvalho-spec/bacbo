@@ -329,7 +329,6 @@ def _wrap_send(fn: Callable) -> Callable:
                 hub_route_enabled,
                 pick_target_for_text,
                 _valid_target,
-                apex_target,
             )
 
             # Resolve config early — always repair blank TARGET before send()
