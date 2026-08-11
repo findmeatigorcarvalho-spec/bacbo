@@ -133,6 +133,12 @@ def _spawn(client: Any) -> None:
         _SCHEDULED = True
         _CLIENT_ID = id(client)
         try:
+            import lux_chat_watchdog as _cw
+
+            _cw.harden_client_instance(client)
+        except Exception as exc:
+            print("[OUTBOX-INLINE] instance ESTUDO harden skip:", repr(exc), flush=True)
+        try:
             loop.create_task(_boot_outbox(client), name="lux_outbox_inline")
         except TypeError:
             loop.create_task(_boot_outbox(client))

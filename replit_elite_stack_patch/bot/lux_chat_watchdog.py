@@ -290,6 +290,8 @@ def _bump(stat: str, peer: str = "") -> None:
 def _append(ev: dict[str, Any]) -> None:
     try:
         DATA.mkdir(parents=True, exist_ok=True)
+        ev.setdefault("pid", os.getpid())
+        ev.setdefault("ppid", os.getppid())
         with LEDGER.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(ev, ensure_ascii=False) + "\n")
     except Exception:
@@ -408,6 +410,84 @@ def _wrap_send_file(orig):
 
     _wrapped._lux_chat_watchdog = True  # type: ignore[attr-defined]
     return _wrapped
+
+
+def harden_client_instance(client: Any) -> bool:
+    """Gate this exact client + delete leaked outgoing ESTUDO from other sessions.
+
+    Class patches do not change a send_message method captured before patching.
+    Instance wrapping closes that gap for the live bacbo client. The outgoing
+    event firewall is a backstop: if another authorization of the same account
+    posts ESTUDO into a chat, delete it as soon as this live client receives
+    the outgoing update.
+    """
+    if client is None or getattr(client, "_lux_instance_hardened", False):
+        return False
+    patched = 0
+    for name, text_fn in (
+        ("send_message", lambda a, k: _extract_text_from_send(a, k)),
+        ("send_file", lambda a, k: _coerce_text(k.get("caption"))),
+    ):
+        original = getattr(client, name, None)
+        if not callable(original):
+            continue
+
+        async def _wrapped(*args: Any, _orig=original, _name=name, _text=text_fn, **kwargs: Any):
+            msg = _text(args, kwargs)
+            ent = _extract_entity(args, kwargs)
+            # Pre-check only: the class-level wrapper commits dedup/sent state.
+            # A second final gate here would false-drop every real send.
+            ok, _why = gate_outbound(
+                msg=msg, entity=ent, path=f"instance:{_name}", final=False
+            )
+            if not ok:
+                return None
+            return await _orig(*args, **kwargs)
+
+        setattr(client, name, _wrapped)
+        patched += 1
+
+    try:
+        from telethon import events  # type: ignore
+
+        async def _outgoing_backstop(event: Any) -> None:
+            body = _coerce_text(getattr(event, "raw_text", None)) or ""
+            if not estudo_blocked(body):
+                return
+            chat_id = getattr(event, "chat_id", None)
+            msg_id = getattr(event, "id", None)
+            _bump("drop_estudo", str(chat_id or "?"))
+            _append(
+                {
+                    "type": "delete_outgoing",
+                    "why": "ESTUDO",
+                    "path": "outgoing_event_backstop",
+                    "peer": str(chat_id or "?"),
+                    "ts": time.time(),
+                    "preview": _clean(body)[:160],
+                    "message_id": msg_id,
+                }
+            )
+            try:
+                await event.delete()
+            except Exception:
+                try:
+                    await client.delete_messages(chat_id, msg_id)
+                except Exception as exc:
+                    print("[CHAT-WATCH] ESTUDO backstop delete fail:", repr(exc), flush=True)
+                    return
+            print(
+                f"[CHAT-WATCH] DELETE leaked ESTUDO outgoing chat={chat_id} msg={msg_id}",
+                flush=True,
+            )
+
+        client.add_event_handler(_outgoing_backstop, events.NewMessage(outgoing=True))
+        patched += 1
+    except Exception as exc:
+        print("[CHAT-WATCH] outgoing ESTUDO backstop skip:", repr(exc), flush=True)
+    client._lux_instance_hardened = True
+    print(f"[CHAT-WATCH] instance ESTUDO harden ON n={patched} pid={os.getpid()}", flush=True)
+    return patched > 0
 
 
 def _iter_tl_requests(request: Any) -> Iterator[Any]:

@@ -428,6 +428,9 @@ def _session_settlers() -> None:
         "museum_unique_poster.py",
         "museum_first5_poster.py",
         "museum_chrono_poster.py",
+        # A bare megafile has no pre-main watchdog and is a known ESTUDO
+        # flood vector. The supervised child is run_bacbo_live.py, not this.
+        "bacbo_royal_complete.py",
     ):
         _kill_pat(pat)
 
