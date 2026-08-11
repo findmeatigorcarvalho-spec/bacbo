@@ -47,9 +47,10 @@ def _safe_peer(peer: str) -> str:
     return "".join(c if c.isalnum() or c in "-_" else "_" for c in (peer or "museum"))
 
 
-def _progress_path(peer: str) -> Path:
-    """Separate resume files per museum chat so chrono ≠ old registry dump."""
-    return DATA / f"museum_progress_{_safe_peer(peer)}.json"
+def _progress_path(peer: str, namespace: str = "") -> Path:
+    """Separate resume files by chat *and* review pass."""
+    suffix = f"_{_safe_peer(namespace)}" if namespace.strip() else ""
+    return DATA / f"museum_progress_{_safe_peer(peer)}{suffix}.json"
 
 
 def _cache_path(peer: str) -> Path:
@@ -144,11 +145,14 @@ def _load_progress(path: Path) -> dict:
 def _save_progress(path: Path, p: dict) -> None:
     DATA.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(p, indent=2), encoding="utf-8")
-    # keep legacy path mirrored for the default chrono peer
-    try:
-        PROGRESS.write_text(json.dumps(p, indent=2), encoding="utf-8")
-    except Exception:
-        pass
+    # Keep the historical compatibility mirror only for the un-namespaced
+    # default pass. FIRE review progress must never mark the full parade done.
+    default_path = _progress_path("UNIQUE_museum_chrono")
+    if path == default_path:
+        try:
+            PROGRESS.write_text(json.dumps(p, indent=2), encoding="utf-8")
+        except Exception:
+            pass
 
 
 async def _sleep_fw(client, seconds: float) -> None:
@@ -209,7 +213,7 @@ async def _resolve_or_create_museum(client, title: str, username: str):
         CreateChannelRequest,
         UpdateUsernameRequest,
     )
-    from telethon.errors import UsernameOccupiedError, UsernameInvalidError
+    from telethon.errors import FloodWaitError, UsernameOccupiedError, UsernameInvalidError
 
     cache_path = _cache_path(title)
     want_title = title.casefold()
@@ -237,6 +241,7 @@ async def _resolve_or_create_museum(client, title: str, username: str):
             print("cache miss:", repr(exc))
 
     # 2) username / title resolve first (fast; avoids long dialog scans)
+    username_rate_limited = False
     for cand in (f"@{want_user}" if want_user else None, want_user, title):
         if not cand:
             continue
@@ -251,9 +256,21 @@ async def _resolve_or_create_museum(client, title: str, username: str):
                     _write_cache(cache_path, ent, title)
                     return ent
                 break
+            except FloodWaitError as exc:
+                # Never retry a ResolveUsernameRequest during a long server
+                # cooldown. A known dialog is enough to resolve this museum.
+                username_rate_limited = True
+                print(
+                    f"username resolve rate-limited ({getattr(exc, 'seconds', '?')}s) "
+                    "— skipping direct resolves; scanning dialogs",
+                    flush=True,
+                )
+                break
             except Exception as exc:
                 print(f"get_entity {cand!r} failed: {exc!r}")
                 await asyncio.sleep(2 * attempt)
+        if username_rate_limited:
+            break
 
     # 3) exact dialog match only (cap scan — do not hang forever)
     print("scanning dialogs for exact title/username match …")
@@ -344,7 +361,8 @@ async def main() -> int:
         or pack.get("chat_username")
         or "UNIQUE_museum_chrono"
     ).strip().lstrip("@")
-    prog_path = _progress_path(title)
+    progress_namespace = (os.environ.get("MUSEUM_PROGRESS_NAMESPACE") or "").strip()
+    prog_path = _progress_path(title, progress_namespace)
 
     session = _session()
     if not session:
@@ -387,6 +405,7 @@ async def main() -> int:
     progress = _load_progress(prog_path)
     progress["museum_id"] = int(getattr(entity, "id", 0) or 0)
     progress["axis"] = pack.get("axis") or "CHRONO_FIRST_EXISTENCE"
+    progress["namespace"] = progress_namespace or "all"
     done = set(progress.get("done_family_ids") or [])
 
     slice_items = items[offset:]

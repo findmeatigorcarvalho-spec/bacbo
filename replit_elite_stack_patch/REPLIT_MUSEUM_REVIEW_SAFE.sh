@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Safe museum review lane: cannot reuse the live bacbo StringSession.
 #
-# Required once (separate Telegram account which is admin of the museum chat):
+# Required once (a new StringSession; it may be the same Telegram account as
+# live bacbo, but must never be the same StringSession):
 #   export MUSEUM_TELEGRAM_SESSION_STRING='...'
 #   export MUSEUM_TELEGRAM_API_ID='...'
 #   export MUSEUM_TELEGRAM_API_HASH='...'
@@ -14,7 +15,7 @@ cd /home/runner/workspace 2>/dev/null || cd "$(dirname "$0")/.."
 
 REF="${BACBO_REF:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${REF}/replit_elite_stack_patch"
-VER="20260811a"
+VER="20260811b"
 MODE="${MUSEUM_REVIEW_MODE:-ledger}" # ledger, fires, types, or pairs
 LIMIT="${MUSEUM_LIMIT:-20}"
 OFFSET="${MUSEUM_OFFSET:-0}"
@@ -67,8 +68,10 @@ echo "MUSEUM_SAFE_LANE mode=${MODE} peer=${MUSEUM_PEER} offset=${OFFSET} limit=$
 echo "Live bacbo is not stopped or contacted."
 if [[ "$MODE" == "fires" ]]; then
   export MUSEUM_ROLE_FILTER="FIRE"
+  export MUSEUM_PROGRESS_NAMESPACE="fires-review"
   python3 -u bot/museum_unique_poster.py | tee -a logs/museum_review_fires.log
 elif [[ "$MODE" == "types" ]]; then
+  export MUSEUM_PROGRESS_NAMESPACE="types-review"
   python3 -u bot/museum_unique_poster.py | tee -a logs/museum_review_types.log
 elif [[ "$MODE" == "pairs" ]]; then
   python3 -u bot/museum_chrono_poster.py | tee -a logs/museum_review_pairs.log
