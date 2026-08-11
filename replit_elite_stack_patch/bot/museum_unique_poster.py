@@ -408,7 +408,10 @@ async def main() -> int:
     progress["namespace"] = progress_namespace or "all"
     done = set(progress.get("done_family_ids") or [])
 
-    slice_items = items[offset:]
+    # Resume by *pending* item, not just by raw catalog offset. This means
+    # `MUSEUM_OFFSET=0 MUSEUM_LIMIT=10` advances on every rerun instead of
+    # repeatedly selecting the first already-reviewed FIRE card.
+    slice_items = [item for item in items[offset:] if item["family_id"] not in done]
     if limit > 0:
         slice_items = slice_items[:limit]
 
@@ -441,9 +444,6 @@ async def main() -> int:
     sent = int(progress.get("sent") or 0)
     for n, item in enumerate(slice_items, start=1 + offset):
         fid = item["family_id"]
-        if fid in done:
-            print(f"skip done {fid}")
-            continue
 
         idx = int(item.get("chrono_order") or n)
         role = item.get("role") or "?"
