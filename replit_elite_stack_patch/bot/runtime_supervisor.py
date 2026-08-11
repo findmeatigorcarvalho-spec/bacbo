@@ -198,7 +198,7 @@ def _env() -> dict[str, str]:
     else:
         env.setdefault("EDGE_POLICY_MODE", "shadow")
     env.setdefault("EDGE_LEGACY_355_WARN", "1")
-    env.setdefault("BOT_TZ", "America/Sao_Paulo")
+    env.setdefault("BOT_TZ", "America/New_York")
     env.setdefault("TELEGRAM_COUNTDOWN_PEER", "UNIQUE_g1")
     env.setdefault("GUNIQUE_PEER", "UNIQUE_g1")
     # Kill G2 ESTUDO study floods + identical/near-identical spam on UNIQUE_g1

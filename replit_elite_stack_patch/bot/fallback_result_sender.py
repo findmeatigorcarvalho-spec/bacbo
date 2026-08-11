@@ -2,7 +2,7 @@
 fallback_result_sender.py - rich Telegram result cards from resolved DB signals.
 
 Watches consensus_signals for newly resolved rows and sends a forensic result
-card with BRT/EDT time and exact secs_to_result interval.
+card with Pawtucket, Rhode Island time and exact secs_to_result interval.
 """
 from __future__ import annotations
 
@@ -10,7 +10,6 @@ import asyncio
 import os
 import sqlite3
 import sys
-from datetime import datetime, timedelta
 from pathlib import Path
 
 from telethon import TelegramClient
@@ -22,6 +21,7 @@ try:
 except Exception:
     pass
 import config  # noqa: E402
+from card_timezone import pawtucket_forensic, pawtucket_time  # noqa: E402
 
 
 HERE = Path(__file__).resolve().parent
@@ -82,17 +82,6 @@ def actual_color(predicted: str, outcome: str) -> str:
     return "unknown"
 
 
-def fmt_time(fired_at: str | None) -> tuple[str, str]:
-    try:
-        fired_dt = datetime.strptime((fired_at or "")[:19], "%Y-%m-%d %H:%M:%S")
-        return (
-            (fired_dt - timedelta(hours=3)).strftime("%H:%M"),
-            (fired_dt - timedelta(hours=4)).strftime("%H:%M"),
-        )
-    except Exception:
-        return "--:--", "--:--"
-
-
 def color_icon(color: str) -> str:
     if color == "blue":
         return "🔵"
@@ -107,7 +96,7 @@ def fmt(row: sqlite3.Row) -> str:
     predicted = (row["color"] or "").lower()
     outcome = (row["outcome"] or "").lower()
     actual = actual_color(predicted, outcome)
-    brt, edt = fmt_time(row["fired_at"])
+    local_time = pawtucket_time(row["fired_at"])
     secs = row["secs_to_result"]
     secs_txt = f"{float(secs):.1f}s" if secs is not None else "-"
     gale = int(row["won_at_gale"] or 0)
@@ -125,14 +114,14 @@ def fmt(row: sqlite3.Row) -> str:
     banner = actual_icon * 10
     return (
         f"{banner}\n"
-        f"⏰  {brt} BRT  ·  {edt} EDT\n"
+        f"⏰  {local_time} Pawtucket, RI\n"
         f"{banner}\n"
         f"🔔 {result_icon} {result_label}  ·  #{row['id']}\n"
         f"🎲 Apostou: {pred_icon} {predicted.upper()}  →  Saiu: {actual_icon} {actual.upper()}\n"
         f"🔍 SINAL #{row['id']} — RESUMIDO FORENSE\n"
         f"  Tipo: {row['signal_kind']} · Cor: {predicted.upper()}\n"
-        f"  Disparado: {row['fired_at']} UTC\n"
-        f"  Resolvido: {row['resolved_at'] or ''} UTC\n"
+        f"  Disparado: {pawtucket_forensic(row['fired_at'])} (Pawtucket, RI)\n"
+        f"  Resolvido: {pawtucket_forensic(row['resolved_at'])} (Pawtucket, RI)\n"
         f"  ⏱ Intervalo: {secs_txt}\n"
         f"  Resultado: {result_icon} {result_label}\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━━\n"

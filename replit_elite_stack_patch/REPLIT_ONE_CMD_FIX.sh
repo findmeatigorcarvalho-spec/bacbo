@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260809d'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260811e'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260809d"
+V="20260811e"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -41,6 +41,9 @@ for pair in \
   "bot/lux_send_config_bind.py|replit_elite_stack_patch/bot/lux_send_config_bind.py" \
   "bot/runtime_supervisor.py|replit_elite_stack_patch/bot/runtime_supervisor.py" \
   "bot/telegram_outbox.py|replit_elite_stack_patch/bot/telegram_outbox.py" \
+  "bot/fallback_result_sender.py|replit_elite_stack_patch/bot/fallback_result_sender.py" \
+  "bot/card_timezone.py|replit_elite_stack_patch/bot/card_timezone.py" \
+  "bot/fix_tz_utils.py|replit_elite_stack_patch/bot/fix_tz_utils.py" \
   "bot/lux_babysitter.sh|replit_elite_stack_patch/bot/lux_babysitter.sh" \
   "REPLIT_UP_NOW.sh|replit_elite_stack_patch/REPLIT_UP_NOW.sh" \
   "bot/config/keep_allowlist.py|bot/config/keep_allowlist.py" \
@@ -365,7 +368,8 @@ else:
     print("PREMAIN_ALREADY_OK")
 PY
 $PY -m py_compile bacbo_royal_complete.py 2>/dev/null || $PY -m py_compile bot/bacbo_royal_complete.py
-$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_estudo_source_kill.py bot/lux_chat_watchdog.py bot/lux_flask_guard.py bot/lux_keepalive_off.py bot/fix_bacbo_keepalive.py
+$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_estudo_source_kill.py bot/lux_chat_watchdog.py bot/card_timezone.py bot/telegram_outbox.py bot/fallback_result_sender.py bot/lux_flask_guard.py bot/lux_keepalive_off.py bot/fix_bacbo_keepalive.py
+BOT_TZ=America/New_York $PY bot/fix_tz_utils.py
 echo "-- disable KeepAlive in megafile (PORT steal → SIGKILL -9) --"
 $PY -u bot/fix_bacbo_keepalive.py || true
 echo "PY_COMPILE_OK"
@@ -428,6 +432,7 @@ for kv in \
   SIGNAL_BUNDLE_VERTICAL=1 \
   CHAT_HERMETIC=1 \
   RESULT_REPLY_TO_FIRE=1 \
+  BOT_TZ=America/New_York \
   LUX_SKIP_RESOLVE_USERNAME=1 \
   BACBO_READY_SECS=12 \
   FALLBACK_START_DELAY_SECS=15 \
@@ -598,7 +603,18 @@ her.apply_target_to_config(cfg, "")
 assert her._valid_target(cfg.TARGET), cfg.TARGET
 dest, why = her.pick_target_for_text("🔥 SEQUENCE blue streak\nENTER NOW")
 assert her._valid_target(dest), (dest, why)
-print("EMPTY_TARGET_REPAIR_OK", dest, why)
+from lux_send_config_bind import _coerce_empty_entity
+coerced_args, coerced_kwargs = _coerce_empty_entity(("", "test"), {})
+assert her._valid_target(coerced_args[0]), coerced_args
+coerced_args2, coerced_kwargs2 = _coerce_empty_entity((), {"entity": "", "message": "test"})
+assert her._valid_target(coerced_kwargs2["entity"]), coerced_kwargs2
+print("EMPTY_TARGET_REPAIR_OK", dest, why, "telethon_coerce=OK")
+# All live card timestamps must be Pawtucket, Rhode Island (DST-aware).
+from card_timezone import pawtucket_forensic, pawtucket_time
+assert pawtucket_time("2026-08-11 15:56:00") == "11:56"
+assert pawtucket_forensic("2026-08-11 15:56:00").endswith("EDT")
+assert pawtucket_forensic("2026-01-11 15:56:00").endswith("EST")
+print("PAWTUCKET_TIME_OK", pawtucket_forensic("2026-08-11 15:56:00"))
 # TL constructor + source kill APIs
 assert callable(cw._patch_tl_constructors)
 assert callable(cw.EstudoBlocked)

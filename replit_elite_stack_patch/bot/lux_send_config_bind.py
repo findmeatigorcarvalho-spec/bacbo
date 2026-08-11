@@ -11,6 +11,7 @@ Also:
 from __future__ import annotations
 
 import functools
+import importlib
 import hashlib
 import os
 import re
@@ -126,6 +127,44 @@ def _send_already_gated(fn: Any) -> bool:
     return False
 
 
+def _coerce_empty_entity(args: tuple, kwargs: dict) -> tuple[tuple, dict]:
+    """Last-line guard: Telethon must never receive entity='' or None."""
+    entity = args[0] if args else kwargs.get("entity")
+    if entity is not None and (not isinstance(entity, str) or entity.strip().strip("@")):
+        return args, kwargs
+    try:
+        from hub_engine_route import apex_target
+
+        fallback = apex_target()
+    except Exception:
+        fallback = "@UNIQUE_g1"
+    if args:
+        return (fallback, *args[1:]), kwargs
+    out = dict(kwargs)
+    out["entity"] = fallback
+    return args, out
+
+
+def _all_config_modules(*candidates: Any) -> list[Any]:
+    """Return every loaded spelling of config (config and bot.config differ)."""
+    out: list[Any] = []
+    seen: set[int] = set()
+
+    def _add(item: Any) -> None:
+        if item is not None and hasattr(item, "TARGET") and id(item) not in seen:
+            seen.add(id(item))
+            out.append(item)
+
+    for candidate in candidates:
+        _add(candidate)
+    for name in ("config", "bot.config"):
+        try:
+            _add(importlib.import_module(name))
+        except Exception:
+            pass
+    return out
+
+
 def _patch_telethon_send_message(*, force: bool = False) -> bool:
     """Nuclear ESTUDO/dedup gate — catches paths that bypass engine send()."""
     global _TG_SEND_PATCHED
@@ -146,6 +185,7 @@ def _patch_telethon_send_message(*, force: bool = False) -> bool:
 
     @functools.wraps(orig)
     async def _wrapped(self, *args, **kwargs):
+        args, kwargs = _coerce_empty_entity(args, kwargs)
         msg = _tg_message_text(args, kwargs)
         if _estudo_blocked(msg):
             print("[LUXURY] drop ESTUDO via telethon send_message")
@@ -318,7 +358,8 @@ def _wrap_send(fn: Callable) -> Callable:
             print("[ROUND-SYNC] skip:", repr(exc))
 
         # Hub: route original engine skins to money penthouse / countdown / spill
-        prev_target = None
+        prev_targets: dict[int, Any] = {}
+        configs: list[Any] = []
         cfg = None
         route_reason = None
         applied_dest = None
@@ -344,16 +385,27 @@ def _wrap_send(fn: Callable) -> Callable:
                 except Exception:
                     cfg = None
 
+            configs = _all_config_modules(
+                cfg,
+                g.get("config") if isinstance(g, dict) else None,
+                getattr(mod, "config", None) if isinstance(mod, types.ModuleType) else None,
+                getattr(main, "config", None) if isinstance(main, types.ModuleType) else None,
+            )
+            if configs:
+                cfg = configs[0]
+
             if hub_route_enabled():
                 dest, route_reason = pick_target_for_text(msg)
-                if cfg is not None:
+                if configs:
                     if dest is not None and _valid_target(dest):
-                        prev_target = apply_target_to_config(cfg, dest)
+                        for current in configs:
+                            prev_targets[id(current)] = apply_target_to_config(current, dest)
                         applied_dest = dest
                     else:
-                        # Even when route returns None, never leave TARGET=""
-                        prev_target = getattr(cfg, "TARGET", None)
-                        applied_dest = ensure_config_target(cfg)
+                        # Even when route returns None, never leave TARGET="".
+                        for current in configs:
+                            prev_targets[id(current)] = getattr(current, "TARGET", None)
+                            applied_dest = ensure_config_target(current)
                         if dest is None and route_reason:
                             pass  # keep reason
                         else:
@@ -368,8 +420,10 @@ def _wrap_send(fn: Callable) -> Callable:
                             f"[HUB-ROUTE] dest={applied_dest} reason={route_reason}",
                             flush=True,
                         )
-            elif cfg is not None:
-                ensure_config_target(cfg)
+            elif configs:
+                for current in configs:
+                    prev_targets[id(current)] = getattr(current, "TARGET", None)
+                    ensure_config_target(current)
         except Exception as exc:
             print("[HUB-ROUTE] skip:", repr(exc))
             try:
@@ -383,16 +437,19 @@ def _wrap_send(fn: Callable) -> Callable:
         try:
             return await fn(*args, **kwargs)
         finally:
-            # Restore previous TARGET only when it was a valid peer.
-            # Restoring "" races concurrent sends → entity "" failures.
-            if cfg is not None and prev_target is not None:
+            # Inner engine send() can clear a different config spelling after
+            # our pre-send repair. Restore/revalidate every one on exit.
+            if configs:
                 try:
-                    from hub_engine_route import _valid_target, apex_target
+                    from hub_engine_route import _valid_target, apex_target, ensure_config_target
 
-                    if _valid_target(prev_target):
-                        cfg.TARGET = prev_target
-                    else:
-                        cfg.TARGET = apex_target()
+                    for current in _all_config_modules(*configs):
+                        prev = prev_targets.get(id(current))
+                        if _valid_target(prev):
+                            current.TARGET = prev
+                        else:
+                            current.TARGET = apex_target()
+                        ensure_config_target(current)
                 except Exception:
                     pass
 

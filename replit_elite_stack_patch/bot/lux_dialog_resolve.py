@@ -99,6 +99,17 @@ def apply() -> bool:
         return True
 
     async def _get_entity(self, entity):  # noqa: ANN001
+        # Last-line target safety: a direct engine path may bypass config
+        # routing. Never pass a blank peer to Telethon.
+        if entity is None or (isinstance(entity, str) and not entity.strip().strip("@")):
+            try:
+                from hub_engine_route import apex_target
+
+                entity = apex_target()
+            except Exception:
+                entity = "@UNIQUE_g1"
+            print(f"[LUXURY] blank get_entity repaired → {entity!r}", flush=True)
+
         if not getattr(self, "_lux_dialogs_warmed", False):
             mode = _warm_mode()
             cached = _cache_count()

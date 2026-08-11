@@ -21,7 +21,7 @@ try:
 except Exception:  # pragma: no cover
     ZoneInfo = None  # type: ignore
 
-_BOT_TZ = os.environ.get("BOT_TZ") or os.environ.get("TZ_NAME") or "America/Sao_Paulo"
+_BOT_TZ = os.environ.get("BOT_TZ") or os.environ.get("TZ_NAME") or "America/New_York"
 DISPLAY_TZ = _BOT_TZ  # string name used by cards / learning
 
 
@@ -45,6 +45,7 @@ def now_local() -> datetime:
 # aliases used across modules
 local_now = now_local
 TZ_NAME = DISPLAY_TZ
+# Compatibility alias for legacy imports. Its value is Pawtucket/ET, not BRT.
 BRT_TZ = DISPLAY_TZ
 
 

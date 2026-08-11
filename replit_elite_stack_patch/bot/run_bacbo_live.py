@@ -103,6 +103,21 @@ try:
 except Exception as exc:
     print("[BOOT] run_bacbo_live: lux_send_config_bind fail:", repr(exc))
 
+try:
+    import importlib as _importlib
+    from hub_engine_route import ensure_config_target as _ensure_target
+
+    _n_target_cfg = 0
+    for _name in ("config", "bot.config"):
+        try:
+            _ensure_target(_importlib.import_module(_name))
+            _n_target_cfg += 1
+        except Exception:
+            pass
+    print(f"[BOOT] Pawtucket target harden configs={_n_target_cfg}")
+except Exception as exc:
+    print("[BOOT] target harden fail:", repr(exc))
+
 # Force free-propose / explosion for this process even if env file lagged
 import os as _os
 
