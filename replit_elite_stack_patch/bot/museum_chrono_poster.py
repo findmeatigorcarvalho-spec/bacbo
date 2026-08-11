@@ -29,6 +29,18 @@ FALLBACK = HERE / "data" / "museum_first5_fire_result.json"
 
 
 def _session() -> str:
+    # The safe review launcher requires a dedicated museum account. Do not
+    # fall back to the money bot's StringSession when that boundary is armed.
+    museum = (os.environ.get("MUSEUM_TELEGRAM_SESSION_STRING") or "").strip()
+    if len(museum) > 50:
+        return museum
+    if os.environ.get("MUSEUM_REQUIRE_SEPARATE_SESSION", "0").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }:
+        return ""
     for key in ("TELEGRAM_SESSION_STRING", "TELEGRAM_STRING_SESSION", "STRING_SESSION"):
         v = (os.environ.get(key) or "").strip()
         if len(v) > 50:
@@ -89,8 +101,16 @@ async def main() -> int:
     from telethon import TelegramClient
     from telethon.sessions import StringSession
 
-    api_id = os.getenv("TELEGRAM_API_ID") or os.getenv("API_ID")
-    api_hash = os.getenv("TELEGRAM_API_HASH") or os.getenv("API_HASH")
+    api_id = (
+        os.getenv("MUSEUM_TELEGRAM_API_ID")
+        or os.getenv("TELEGRAM_API_ID")
+        or os.getenv("API_ID")
+    )
+    api_hash = (
+        os.getenv("MUSEUM_TELEGRAM_API_HASH")
+        or os.getenv("TELEGRAM_API_HASH")
+        or os.getenv("API_HASH")
+    )
     if not api_id or not api_hash:
         try:
             import config  # type: ignore
@@ -103,7 +123,11 @@ async def main() -> int:
         print("NO_API_ID_HASH")
         return 5
 
-    peer = (os.environ.get("TELEGRAM_TARGET_PEER") or "6774605259").strip().lstrip("@")
+    peer = (
+        os.environ.get("MUSEUM_TELEGRAM_TARGET_PEER")
+        or os.environ.get("TELEGRAM_TARGET_PEER")
+        or "UNIQUE_museum_chrono"
+    ).strip().lstrip("@")
     client = TelegramClient(StringSession(session), int(api_id), api_hash)
     await client.connect()
     if not await client.is_user_authorized():

@@ -1,0 +1,432 @@
+{
+  "schema_version": 1,
+  "instructions": "For every FIRE/RESULT family set decision to exactly G1_APEX, SPECIALIST, VAULT, or RETIRE. Keep PENDING_REVIEW until reviewed. No decision file value changes routing by itself.",
+  "families": {
+    "FIRE_EMERGINDO": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_CONFIRMED_ENTER": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_SOLO_ELITE_ENTER": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_GOLDEN_ENTER": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_SEQUENCE_ENTER": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_PLATINUM_ENTER": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_AUTO_TIE": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_WIN_TIER": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_LOSS_TIER": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_GALE_ENTRE_NOVAMENTE": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_EMPATE": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_GALE_RETENTATIVA": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_GREEN_LEGACY_G0": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_GREEN_LEGACY_G1": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_JANELA_TIMED": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_ULTRA_TIE": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_TIMED_WINDOW": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_EMPATE_DIRETO_G0": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_G0_DIRETO": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_PREPARE_G1": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_FLASH_WIN": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_GREEN_COMPACT_G0": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_GREEN_COMPACT_G1": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_COMPACT_HASH": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_COMPACT_LOSS_HASH": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_COMPACT_WIN_HASH": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_COMPACT_TIE_HASH": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_SOLO_APOSTAR": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_SEQUENCE_APOSTAR": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_GOLDEN_APOSTAR": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_PLATINUM_APOSTAR": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_FLASH_APOSTAR": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_SEQUENCIA_ENTER_NOW": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_SINAL_RETIDO_LIBERADO": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "CD_FIRE_TIMER_BRT_EDT_APOSTAR": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "CD_FIRE_QUANTUM_LOCK": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "CD_FIRE_RUSH_NS_LEFT": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_FORENSIC_INTERVALO": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_BELL_GANHOU": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_GOD_TIER": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_GOLDEN_ENTRE_AGORA": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_G0_MISS_ENTRE_G1": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_ORACLE_CARD": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_COLOR_BANNER": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_ENTER_NOW_GENERIC": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_ENTRE_AGORA_GENERIC": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_APOSTE_AGORA": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_G0_ENTRADA_DIRETA": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_DEPTH_G0_ONLY": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_INVERTED_CONTRARIO": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_ORACLE_LOCK": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_CERTIFIED_ELITE": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_GRADE_BANNER": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_HOT_STREAK": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_DOUBLE_TIE_LOCK": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_GALE_1_FACA_AGORA": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_G0_ACERTOU_PRIMEIRA": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_GALE_RECOVERED_CHAIN": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_EMPATE_DINHEIRO_DEVOLVIDO": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_EMPATE_PROTECAO": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "CD_RES_GREEN_G_BRT": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "CD_RES_RODADAS_TEMPO": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "CD_RES_BELL_GANHOU": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_APOSTAR_EMPATE": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_NAMED_EDGE_BANNER": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_G2_RESERVE": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_G2_RESERVE_WIN": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "FIRE_FLASH_CONFIRMADO": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_AUTO_WIN": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_AUTO_LOSS": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    },
+    "RESULT_FINAL_LOSS_AFTER_G3": {
+      "decision": "PENDING_REVIEW",
+      "shelf": "",
+      "paired_result_family": "",
+      "review_note": ""
+    }
+  }
+}

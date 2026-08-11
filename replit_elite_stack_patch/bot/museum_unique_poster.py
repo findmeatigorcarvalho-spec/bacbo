@@ -58,6 +58,18 @@ def _cache_path(peer: str) -> Path:
 
 
 def _session() -> str:
+    # Safe museum lane: a dedicated account/session is mandatory.  Never
+    # silently fall back to bacbo's .telegram_session_string while it is live.
+    museum = (os.environ.get("MUSEUM_TELEGRAM_SESSION_STRING") or "").strip()
+    if len(museum) > 50:
+        return museum
+    if os.environ.get("MUSEUM_REQUIRE_SEPARATE_SESSION", "0").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }:
+        return ""
     for key in ("TELEGRAM_SESSION_STRING", "TELEGRAM_STRING_SESSION", "STRING_SESSION"):
         v = (os.environ.get(key) or "").strip()
         if len(v) > 50:
@@ -75,8 +87,18 @@ def _session() -> str:
 
 
 def _api() -> tuple[str, str]:
-    api_id = os.getenv("TELEGRAM_API_ID") or os.getenv("API_ID") or ""
-    api_hash = os.getenv("TELEGRAM_API_HASH") or os.getenv("API_HASH") or ""
+    api_id = (
+        os.getenv("MUSEUM_TELEGRAM_API_ID")
+        or os.getenv("TELEGRAM_API_ID")
+        or os.getenv("API_ID")
+        or ""
+    )
+    api_hash = (
+        os.getenv("MUSEUM_TELEGRAM_API_HASH")
+        or os.getenv("TELEGRAM_API_HASH")
+        or os.getenv("API_HASH")
+        or ""
+    )
     if api_id and api_hash:
         return api_id, api_hash
     try:
@@ -294,6 +316,19 @@ async def main() -> int:
         print("empty catalog")
         return 2
 
+    # Review in deliberate slices (e.g. FIRE first) before the all-template
+    # archaeology pass. Empty means the complete 827-template catalog.
+    role_filter = {
+        x.strip().upper()
+        for x in (os.environ.get("MUSEUM_ROLE_FILTER") or "").split(",")
+        if x.strip()
+    }
+    if role_filter:
+        items = [x for x in items if (x.get("role") or "").upper() in role_filter]
+        if not items:
+            print("EMPTY_ROLE_FILTER", ",".join(sorted(role_filter)))
+            return 2
+
     dry = os.environ.get("MUSEUM_DRY_RUN", "0").strip().lower() in {"1", "true", "yes"}
     reset = os.environ.get("MUSEUM_RESET", "0").strip().lower() in {"1", "true", "yes"}
     sleep_fire = float(os.environ.get("MUSEUM_SLEEP_FIRE", "2.0"))
@@ -313,7 +348,10 @@ async def main() -> int:
 
     session = _session()
     if not session:
-        print("NO_TELEGRAM_SESSION — run on Replit with .telegram_session_string")
+        print(
+            "NO_MUSEUM_TELEGRAM_SESSION — set MUSEUM_TELEGRAM_SESSION_STRING "
+            "(safe lane never uses the live bacbo session)"
+        )
         return 3
     api_id, api_hash = _api()
     if not api_id or not api_hash:
@@ -358,7 +396,7 @@ async def main() -> int:
     total = len(items)
     stats = pack.get("stats") or {}
     header = (
-        "🏛 MUSEUM — LITERALLY EVERYTHING (final triage)\n"
+        "🏛 MUSEUM — REVIEW CATALOG\n"
         "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         f"Axis: {pack.get('axis') or 'CHRONO_EVERYTHING_EXISTENCE'}\n"
         f"Items: {total} "
@@ -366,6 +404,7 @@ async def main() -> int:
         f"never-fired {stats.get('never_fired_code_order', '?')})\n"
         f"Raw TG types scanned: {stats.get('raw_tg_types_scanned', '?')} "
         "→ distinct templates\n"
+        f"Role filter: {', '.join(sorted(role_filter)) if role_filter else 'ALL'}\n"
         "Includes FIRE · RESULT · OPS · ONLINE · news/update · heartbeats\n"
         "Order: 1st existence → #1 · code-only never-fired at end\n"
         "Purpose: last-stage triage — trash vs profit · noise vs value\n"
