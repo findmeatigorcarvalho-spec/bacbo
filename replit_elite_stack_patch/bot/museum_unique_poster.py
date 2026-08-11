@@ -39,6 +39,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent if (HERE.parent / ".telegram_session_string").exists() else Path.cwd()
 DATA = HERE / "data"
 CATALOG = DATA / "museum_full_catalog.json"
+LEDGER = DATA / "signal_ledger.json"
 PROGRESS = DATA / "museum_unique_progress.json"
 CACHE = DATA / "telegram_museum_entity.json"
 
@@ -56,6 +57,21 @@ def _progress_path(peer: str, namespace: str = "") -> Path:
 def _cache_path(peer: str) -> Path:
     """Separate entity cache per museum title — never reuse UNIQUE_museum for chrono."""
     return DATA / f"telegram_museum_entity_{_safe_peer(peer)}.json"
+
+
+def _canonical_roles() -> dict[str, str]:
+    """Registry family → role, from the offline decision ledger if present."""
+    if not LEDGER.exists():
+        return {}
+    try:
+        ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
+        return {
+            str(row.get("family_id")): str(row.get("role") or "").upper()
+            for row in (ledger.get("families") or [])
+            if row.get("family_id")
+        }
+    except Exception:
+        return {}
 
 
 def _session() -> str:
@@ -346,6 +362,29 @@ async def main() -> int:
             print("EMPTY_ROLE_FILTER", ",".join(sorted(role_filter)))
             return 2
 
+    # Canonical-role selection is stricter than raw archaeology role labels:
+    # old TG rows may call an entry a RESULT/UNKNOWN even though its registered
+    # engine family is FIRE. This is the mode used to review every one of the
+    # 43 canonical FIRE families before live routing decisions.
+    canonical_role_filter = {
+        x.strip().upper()
+        for x in (os.environ.get("MUSEUM_CANONICAL_ROLE_FILTER") or "").split(",")
+        if x.strip()
+    }
+    if canonical_role_filter:
+        canonical_roles = _canonical_roles()
+        if not canonical_roles:
+            print("MISSING_SIGNAL_LEDGER_FOR_CANONICAL_FILTER")
+            return 2
+        items = [
+            x
+            for x in items
+            if canonical_roles.get(str(x.get("registry_family") or "")) in canonical_role_filter
+        ]
+        if not items:
+            print("EMPTY_CANONICAL_ROLE_FILTER", ",".join(sorted(canonical_role_filter)))
+            return 2
+
     dry = os.environ.get("MUSEUM_DRY_RUN", "0").strip().lower() in {"1", "true", "yes"}
     reset = os.environ.get("MUSEUM_RESET", "0").strip().lower() in {"1", "true", "yes"}
     sleep_fire = float(os.environ.get("MUSEUM_SLEEP_FIRE", "2.0"))
@@ -427,6 +466,8 @@ async def main() -> int:
         f"Raw TG types scanned: {stats.get('raw_tg_types_scanned', '?')} "
         "→ distinct templates\n"
         f"Role filter: {', '.join(sorted(role_filter)) if role_filter else 'ALL'}\n"
+        f"Canonical registry filter: "
+        f"{', '.join(sorted(canonical_role_filter)) if canonical_role_filter else 'ALL'}\n"
         "Includes FIRE · RESULT · OPS · ONLINE · news/update · heartbeats\n"
         "Order: 1st existence → #1 · code-only never-fired at end\n"
         "Purpose: last-stage triage — trash vs profit · noise vs value\n"

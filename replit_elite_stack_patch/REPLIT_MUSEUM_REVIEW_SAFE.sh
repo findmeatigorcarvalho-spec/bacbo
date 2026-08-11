@@ -15,7 +15,7 @@ cd /home/runner/workspace 2>/dev/null || cd "$(dirname "$0")/.."
 
 REF="${BACBO_REF:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${REF}/replit_elite_stack_patch"
-VER="20260811b"
+VER="20260811d"
 MODE="${MUSEUM_REVIEW_MODE:-ledger}" # ledger, fires, types, or pairs
 LIMIT="${MUSEUM_LIMIT:-20}"
 OFFSET="${MUSEUM_OFFSET:-0}"
@@ -67,7 +67,8 @@ export MUSEUM_TELEGRAM_TARGET_PEER="${MUSEUM_TELEGRAM_TARGET_PEER:-UNIQUE_museum
 echo "MUSEUM_SAFE_LANE mode=${MODE} peer=${MUSEUM_PEER} offset=${OFFSET} limit=${LIMIT}"
 echo "Live bacbo is not stopped or contacted."
 if [[ "$MODE" == "fires" ]]; then
-  export MUSEUM_ROLE_FILTER="FIRE"
+  unset MUSEUM_ROLE_FILTER
+  export MUSEUM_CANONICAL_ROLE_FILTER="FIRE"
   export MUSEUM_PROGRESS_NAMESPACE="fires-review"
   python3 -u bot/museum_unique_poster.py | tee -a logs/museum_review_fires.log
 elif [[ "$MODE" == "types" ]]; then
