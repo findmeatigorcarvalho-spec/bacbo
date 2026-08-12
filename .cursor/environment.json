@@ -1,0 +1,4 @@
+{
+  "name": "bacbo bot",
+  "install": "python3 -m compileall -q bot tests"
+}
