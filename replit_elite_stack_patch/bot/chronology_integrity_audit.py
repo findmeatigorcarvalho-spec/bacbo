@@ -136,8 +136,14 @@ def _classify(row: dict[str, Any], grace: float) -> tuple[str, str, str]:
     has_tg = bool(row.get("tg_fire_post_at") or row.get("tg_result_post_at"))
     has_casino = bool(row.get("casino_betting_closed_at"))
     matched = bool(row.get("casino_round_id"))
+    # The human operator watching the table is the legitimate round-truth
+    # observer; label that separately from an automated casino feed instead of
+    # treating either one as the only real evidence.
+    observed_by_human = str(row.get("casino_source") or "").startswith("observer")
     tier = (
-        "E5_CASINO_MATCHED"
+        "E4_OBSERVER_CONFIRMED"
+        if observed_by_human and matched
+        else "E5_CASINO_MATCHED"
         if matched
         else "E4_CASINO_DIRECT"
         if has_casino
@@ -148,7 +154,9 @@ def _classify(row: dict[str, Any], grace: float) -> tuple[str, str, str]:
         else "E0_INCOMPLETE"
     )
     if not has_casino:
-        return tier, "INCONCLUSIVE_NO_CASINO", "No matched direct casino betting-close time."
+        if matched:
+            return tier, "OBSERVER_COLOR_ONLY", "Observer confirmed color; no betting-close time recorded."
+        return tier, "INCONCLUSIVE_NO_CASINO", "No confirmed round betting-close time."
     if not row.get("tg_result_post_at"):
         return tier, "INCONCLUSIVE_NO_TG_RESULT", "No Telegram RESULT delivery timestamp."
     tg_close = row.get("tg_result_minus_close_secs")

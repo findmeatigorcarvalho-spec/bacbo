@@ -45,6 +45,8 @@ for pair in \
   "bot/card_timezone.py|replit_elite_stack_patch/bot/card_timezone.py" \
   "bot/chronology_evidence.py|replit_elite_stack_patch/bot/chronology_evidence.py" \
   "bot/chronology_integrity_audit.py|replit_elite_stack_patch/bot/chronology_integrity_audit.py" \
+  "bot/observer_confirm.py|replit_elite_stack_patch/bot/observer_confirm.py" \
+  "bot/truth_verifier.py|replit_elite_stack_patch/bot/truth_verifier.py" \
   "bot/build_evidence_manifest.py|replit_elite_stack_patch/bot/build_evidence_manifest.py" \
   "bot/fix_tz_utils.py|replit_elite_stack_patch/bot/fix_tz_utils.py" \
   "bot/lux_babysitter.sh|replit_elite_stack_patch/bot/lux_babysitter.sh" \
@@ -372,7 +374,7 @@ else:
     print("PREMAIN_ALREADY_OK")
 PY
 $PY -m py_compile bacbo_royal_complete.py 2>/dev/null || $PY -m py_compile bot/bacbo_royal_complete.py
-$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_estudo_source_kill.py bot/lux_chat_watchdog.py bot/card_timezone.py bot/chronology_evidence.py bot/chronology_integrity_audit.py bot/build_evidence_manifest.py bot/telegram_outbox.py bot/fallback_result_sender.py bot/lux_flask_guard.py bot/lux_keepalive_off.py bot/fix_bacbo_keepalive.py
+$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_estudo_source_kill.py bot/lux_chat_watchdog.py bot/card_timezone.py bot/chronology_evidence.py bot/chronology_integrity_audit.py bot/observer_confirm.py bot/build_evidence_manifest.py bot/telegram_outbox.py bot/fallback_result_sender.py bot/lux_flask_guard.py bot/lux_keepalive_off.py bot/fix_bacbo_keepalive.py
 BOT_TZ=America/New_York $PY bot/fix_tz_utils.py
 $PY bot/build_evidence_manifest.py
 $PY bot/chronology_evidence.py >/tmp/chronology_evidence_report.txt
