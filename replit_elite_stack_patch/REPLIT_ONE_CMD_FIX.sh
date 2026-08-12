@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260812a'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260812b'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260812a"
+V="20260812b"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -375,7 +375,7 @@ else:
 PY
 $PY -m py_compile bacbo_royal_complete.py 2>/dev/null || $PY -m py_compile bot/bacbo_royal_complete.py
 $PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_estudo_source_kill.py bot/lux_chat_watchdog.py bot/card_timezone.py bot/chronology_evidence.py bot/chronology_integrity_audit.py bot/observer_confirm.py bot/build_evidence_manifest.py bot/telegram_outbox.py bot/fallback_result_sender.py bot/lux_flask_guard.py bot/lux_keepalive_off.py bot/fix_bacbo_keepalive.py
-BOT_TZ=America/New_York $PY bot/fix_tz_utils.py
+BOT_TZ=America/Sao_Paulo $PY bot/fix_tz_utils.py
 $PY bot/build_evidence_manifest.py
 $PY bot/chronology_evidence.py >/tmp/chronology_evidence_report.txt
 echo "CHRONOLOGY_EVIDENCE_OK bot/data/chronology_evidence_report.json"
@@ -443,7 +443,7 @@ for kv in \
   SIGNAL_BUNDLE_VERTICAL=1 \
   CHAT_HERMETIC=1 \
   RESULT_REPLY_TO_FIRE=1 \
-  BOT_TZ=America/New_York \
+  BOT_TZ=America/Sao_Paulo \
   LUX_SKIP_RESOLVE_USERNAME=1 \
   BACBO_READY_SECS=12 \
   FALLBACK_START_DELAY_SECS=15 \
@@ -626,6 +626,14 @@ assert pawtucket_time("2026-08-11 15:56:00") == "11:56"
 assert pawtucket_forensic("2026-08-11 15:56:00").endswith("EDT")
 assert pawtucket_forensic("2026-01-11 15:56:00").endswith("EST")
 print("PAWTUCKET_TIME_OK", pawtucket_forensic("2026-08-11 15:56:00"))
+# Card display is Pawtucket, but the ENGINE clock must stay exactly as the
+# original system. local_hour() drives hour gates and countdown targets, so a
+# zone change here shifts every timed card. Display must never retune logic.
+import tz_utils
+assert tz_utils.DISPLAY_TZ == "America/Sao_Paulo", (
+    f"engine clock drifted to {tz_utils.DISPLAY_TZ}; countdown timing would shift"
+)
+print("ENGINE_TZ_OK", tz_utils.DISPLAY_TZ, "local_hour", tz_utils.local_hour())
 # TL constructor + source kill APIs
 assert callable(cw._patch_tl_constructors)
 assert callable(cw.EstudoBlocked)

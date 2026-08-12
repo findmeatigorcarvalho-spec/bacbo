@@ -21,8 +21,11 @@ try:
 except Exception:  # pragma: no cover
     ZoneInfo = None  # type: ignore
 
-_BOT_TZ = os.environ.get("BOT_TZ") or os.environ.get("TZ_NAME") or "America/New_York"
-DISPLAY_TZ = _BOT_TZ  # string name used by cards / learning
+# Engine clock. Hour gates, floor windows and countdown targets are calibrated
+# against this zone, so it must stay exactly as the original system.  Card
+# display uses card_timezone (Pawtucket) and never reads this value.
+_BOT_TZ = os.environ.get("BOT_TZ") or os.environ.get("TZ_NAME") or "America/Sao_Paulo"
+DISPLAY_TZ = _BOT_TZ  # string name used by learning / engine hour logic
 
 
 def _zone():

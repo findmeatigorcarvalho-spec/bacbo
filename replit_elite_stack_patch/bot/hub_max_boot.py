@@ -112,7 +112,7 @@ ENV_KEYS = {
     "LUX_DIALOG_WARM": "cache",
     "LUX_FLASK_GUARD": "1",
     "LUX_KEEPALIVE_OFF": "1",
-    "BOT_TZ": "America/New_York",
+    "BOT_TZ": "America/Sao_Paulo",
     "FLASK_DEBUG": "0",
     "BUNDLE_ORGANIZER": "1",
     "LUX_CHAT_WATCHDOG": "1",
