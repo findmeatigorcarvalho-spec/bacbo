@@ -452,10 +452,50 @@ def harden_client_instance(client: Any) -> bool:
 
         async def _outgoing_backstop(event: Any) -> None:
             body = _coerce_text(getattr(event, "raw_text", None)) or ""
-            if not estudo_blocked(body):
-                return
             chat_id = getattr(event, "chat_id", None)
             msg_id = getattr(event, "id", None)
+            msg_date = getattr(event, "date", None)
+            # Durable delivery evidence for every Telegram-bound card. This
+            # captures the real Telegram message ID/date after delivery, even
+            # when engine FIRE bypasses the outbox.
+            try:
+                from chronology_evidence import append_event
+
+                role = "UNKNOWN"
+                family_id = ""
+                try:
+                    from config.skin_families import classify_telegram_skin
+
+                    match = classify_telegram_skin(body)
+                    role = str(getattr(match, "role", None) or "UNKNOWN")
+                    family_id = str(getattr(match, "family_id", None) or "")
+                except Exception:
+                    pass
+                sid_match = re.search(r"(?:SINAL|SIGNAL)\s*#\s*(\d+)|#(\d+)", body, re.I)
+                signal_id = (
+                    int(next(x for x in sid_match.groups() if x))
+                    if sid_match
+                    else None
+                )
+                append_event(
+                    "telegram_outgoing_observed",
+                    telegram_message_id=int(msg_id) if msg_id else None,
+                    telegram_post_at=(
+                        msg_date.isoformat() if hasattr(msg_date, "isoformat") else str(msg_date or "")
+                    ),
+                    peer=str(chat_id or "?"),
+                    signal_id=signal_id,
+                    role=role,
+                    family_id=family_id,
+                    reply_to=getattr(event, "reply_to_msg_id", None),
+                    preview=_clean(body)[:240],
+                    is_estudo=estudo_blocked(body),
+                )
+            except Exception as exc:
+                print("[CHAT-WATCH] chronology outgoing skip:", repr(exc), flush=True)
+
+            if not estudo_blocked(body):
+                return
             _bump("drop_estudo", str(chat_id or "?"))
             _append(
                 {

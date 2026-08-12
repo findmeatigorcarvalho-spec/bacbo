@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260811f'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260812a'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260811f"
+V="20260812a"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -43,6 +43,9 @@ for pair in \
   "bot/telegram_outbox.py|replit_elite_stack_patch/bot/telegram_outbox.py" \
   "bot/fallback_result_sender.py|replit_elite_stack_patch/bot/fallback_result_sender.py" \
   "bot/card_timezone.py|replit_elite_stack_patch/bot/card_timezone.py" \
+  "bot/chronology_evidence.py|replit_elite_stack_patch/bot/chronology_evidence.py" \
+  "bot/chronology_integrity_audit.py|replit_elite_stack_patch/bot/chronology_integrity_audit.py" \
+  "bot/build_evidence_manifest.py|replit_elite_stack_patch/bot/build_evidence_manifest.py" \
   "bot/fix_tz_utils.py|replit_elite_stack_patch/bot/fix_tz_utils.py" \
   "bot/lux_babysitter.sh|replit_elite_stack_patch/bot/lux_babysitter.sh" \
   "REPLIT_UP_NOW.sh|replit_elite_stack_patch/REPLIT_UP_NOW.sh" \
@@ -368,8 +371,13 @@ else:
     print("PREMAIN_ALREADY_OK")
 PY
 $PY -m py_compile bacbo_royal_complete.py 2>/dev/null || $PY -m py_compile bot/bacbo_royal_complete.py
-$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_estudo_source_kill.py bot/lux_chat_watchdog.py bot/card_timezone.py bot/telegram_outbox.py bot/fallback_result_sender.py bot/lux_flask_guard.py bot/lux_keepalive_off.py bot/fix_bacbo_keepalive.py
+$PY -m py_compile bot/run_bacbo_live.py bot/lux_estudo_kill.py bot/lux_estudo_source_kill.py bot/lux_chat_watchdog.py bot/card_timezone.py bot/chronology_evidence.py bot/chronology_integrity_audit.py bot/build_evidence_manifest.py bot/telegram_outbox.py bot/fallback_result_sender.py bot/lux_flask_guard.py bot/lux_keepalive_off.py bot/fix_bacbo_keepalive.py
 BOT_TZ=America/New_York $PY bot/fix_tz_utils.py
+$PY bot/build_evidence_manifest.py
+$PY bot/chronology_evidence.py >/tmp/chronology_evidence_report.txt
+echo "CHRONOLOGY_EVIDENCE_OK bot/data/chronology_evidence_report.json"
+$PY bot/chronology_integrity_audit.py >/tmp/chronology_integrity_audit.txt
+echo "CHRONOLOGY_INTEGRITY_OK bot/data/chronology_integrity_audit.json"
 echo "-- disable KeepAlive in megafile (PORT steal → SIGKILL -9) --"
 $PY -u bot/fix_bacbo_keepalive.py || true
 echo "PY_COMPILE_OK"

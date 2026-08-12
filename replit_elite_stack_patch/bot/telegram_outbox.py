@@ -1366,7 +1366,30 @@ async def main(existing_client=None) -> None:
                         reply_to = fire_msg_by_id.get(rid) or fire_message_id(rid)
                 except Exception:
                     reply_to = fire_msg_by_id.get(rid)
-                await _send_all(dests, res_body, reply_to=reply_to)
+                result_msg = await _send_all(dests, res_body, reply_to=reply_to)
+                try:
+                    from chronology_evidence import record_result_delivery
+
+                    record_result_delivery(
+                        signal_id=rid,
+                        telegram_message_id=getattr(result_msg, "id", None),
+                        telegram_date=getattr(result_msg, "date", None),
+                        fired_at=row["fired_at"],
+                        resolved_at=row["resolved_at"],
+                        outcome=str(row["outcome"] or ""),
+                        predicted_color=str(row["color"] or ""),
+                        actual_color=actual_color(
+                            str(row["color"] or ""), str(row["outcome"] or "")
+                        ),
+                        peer=str(
+                            getattr(result_msg, "chat_id", None)
+                            or getattr(dests[0], "id", None)
+                            or dests[0]
+                        ),
+                        reply_to=reply_to,
+                    )
+                except Exception as exc:
+                    print("[Outbox] chronology result delivery skip:", repr(exc))
                 write_int(RES_STATE, rid)
                 results_done.add(rid)
                 print(
