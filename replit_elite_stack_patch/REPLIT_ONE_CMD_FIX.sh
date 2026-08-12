@@ -49,6 +49,7 @@ for pair in \
   "bot/fix_tz_utils.py|replit_elite_stack_patch/bot/fix_tz_utils.py" \
   "bot/lux_babysitter.sh|replit_elite_stack_patch/bot/lux_babysitter.sh" \
   "REPLIT_UP_NOW.sh|replit_elite_stack_patch/REPLIT_UP_NOW.sh" \
+  "REPLIT_EVIDENCE_SNAPSHOT.sh|replit_elite_stack_patch/REPLIT_EVIDENCE_SNAPSHOT.sh" \
   "bot/config/keep_allowlist.py|bot/config/keep_allowlist.py" \
   "bot/config/__init__.py|bot/config/__init__.py" \
   "bot/config/emanation_laws.py|bot/config/emanation_laws.py" \
