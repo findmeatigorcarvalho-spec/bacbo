@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260819b'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260819c'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260819b"
+V="20260819c"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -392,22 +392,63 @@ echo "-- fix NameError state (line ~146) --"
 $PY -u bot/fix_bacbo_state.py
 $PY -m py_compile bacbo_royal_complete.py
 $PY -m py_compile bot/state.py
-echo "-- self-heal state.py required attrs (never destructive) --"
+echo "-- self-heal state.py required attrs (scans megafile; never destructive) --"
 $PY -u - <<'PY'
+import re
 from pathlib import Path
-p = Path("bot/state.py")
-src = p.read_text(encoding="utf-8", errors="replace")
-required = {"_quarantine_tasks": "{}"}
-missing = [name for name in required if name not in src]
-if missing:
-    add = "\n\n# --- LUXURY_STATE_FALLBACK_ATTRS (auto) ---\n"
-    for name in missing:
-        add += f"{name} = {required[name]}\n"
-    add += "# --- end LUXURY_STATE_FALLBACK_ATTRS ---\n"
-    p.write_text(src.rstrip("\n") + add, encoding="utf-8")
-    print("STATE_SELF_HEAL patched", missing)
-else:
-    print("STATE_SELF_HEAL already ok")
+
+# Whack-a-mole (one AttributeError -> one fix -> one crash cycle to find the
+# next one) costs minutes of downtime per missing name. Instead, scan every
+# `state.NAME` reference the live megafile actually makes and pre-provision
+# any name our minimal state.py template does not already define.
+mega = None
+for cand in ("bacbo_royal_complete.py", "bot/bacbo_royal_complete.py"):
+    p = Path(cand)
+    if p.is_file():
+        mega = p
+        break
+if mega is None:
+    print("STATE_SELF_HEAL skip: bacbo_royal_complete.py not found")
+    raise SystemExit(0)
+
+mega_src = mega.read_text(encoding="utf-8", errors="replace")
+# state.NAME (attribute read/assign) but not state.client.foo (nested calls
+# still start with a valid top-level name, which is what we need).
+referenced = set(re.findall(r"\bstate\.([A-Za-z_][A-Za-z0-9_]*)", mega_src))
+
+state_py = Path("bot/state.py")
+state_src = state_py.read_text(encoding="utf-8", errors="replace")
+defined = set(re.findall(r"^([A-Za-z_][A-Za-z0-9_]*)\s*[:=]", state_src, re.M))
+# Names the proxy class / module already provides structurally.
+defined |= {"client", "me", "running", "engine", "learner", "bind", "on"}
+
+missing = sorted(n for n in referenced if n not in defined and not n.startswith("__"))
+if not missing:
+    print("STATE_SELF_HEAL already ok — 0 missing of", len(referenced), "referenced")
+    raise SystemExit(0)
+
+
+def default_for(name: str) -> str:
+    n = name.lower()
+    if n.endswith(("_tasks", "_map", "_cache", "_index", "_counts", "_scores", "_by_id", "_state")):
+        return "{}"
+    if n.endswith(("_sequence", "_history", "_queue", "_log", "_events", "_list")):
+        return "[]"
+    if n.endswith("_set"):
+        return "set()"
+    if n.endswith(("_count", "_total", "_n")):
+        return "0"
+    if n.endswith(("_flag", "_enabled", "_active", "_ready")):
+        return "False"
+    return "None"
+
+
+add = ["\n\n# --- LUXURY_STATE_FALLBACK_ATTRS (auto; scanned from megafile) ---"]
+for name in missing:
+    add.append(f"{name} = {default_for(name)}")
+add.append("# --- end LUXURY_STATE_FALLBACK_ATTRS ---\n")
+state_py.write_text(state_src.rstrip("\n") + "\n" + "\n".join(add), encoding="utf-8")
+print(f"STATE_SELF_HEAL patched {len(missing)} attrs:", missing)
 PY
 $PY -m py_compile bot/state.py
 # Prove bare name is bound before first state.client assign

@@ -15,7 +15,7 @@ cd /home/runner/workspace 2>/dev/null || cd "$(dirname "$0")/.."
 
 REF="${BACBO_REF:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${REF}/replit_elite_stack_patch"
-VER="20260811d"
+VER="20260819b"
 MODE="${MUSEUM_REVIEW_MODE:-ledger}" # ledger, fires, types, or pairs
 LIMIT="${MUSEUM_LIMIT:-20}"
 OFFSET="${MUSEUM_OFFSET:-0}"
@@ -28,7 +28,9 @@ require() {
   fi
 }
 
-mkdir -p bot/data logs
+ROOT_RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${REF}"
+
+mkdir -p bot/data bot/config logs
 for rel in \
   bot/museum_unique_poster.py \
   bot/museum_chrono_poster.py \
@@ -38,6 +40,8 @@ for rel in \
   bot/data/museum_triage_keep_trash.json; do
   curl -fsSL -o "$rel" "${RAW}/${rel}?v=${VER}"
 done
+# skin_families.py lives at repo root bot/config/, not under replit_elite_stack_patch/.
+curl -fsSL -o bot/config/skin_families.py "${ROOT_RAW}/bot/config/skin_families.py?v=${VER}"
 
 python3 -m py_compile bot/museum_unique_poster.py bot/museum_chrono_poster.py bot/build_signal_ledger.py
 python3 bot/build_signal_ledger.py
