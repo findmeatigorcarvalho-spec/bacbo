@@ -59,6 +59,13 @@ except Exception as exc:
     print("[BOOT] free-volume fail:", repr(exc))
 
 try:
+    import operator_lock as _olock
+
+    _olock.boot()
+except Exception as exc:
+    print("[BOOT] operator-lock fail:", repr(exc))
+
+try:
     import lux_dialog_resolve as _dr
 
     print("[BOOT] dialog_resolve:", "OK" if _dr.apply() else "FAIL")

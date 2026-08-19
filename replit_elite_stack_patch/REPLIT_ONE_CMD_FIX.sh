@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260819e'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260819f'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260819e"
+V="20260819f"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -47,6 +47,8 @@ for pair in \
   "bot/lux_live_db.py|replit_elite_stack_patch/bot/lux_live_db.py" \
   "bot/g2_coalition.py|replit_elite_stack_patch/bot/g2_coalition.py" \
   "bot/lux_free_volume.py|replit_elite_stack_patch/bot/lux_free_volume.py" \
+  "bot/operator_lock.py|replit_elite_stack_patch/bot/operator_lock.py" \
+  "bot/data/OPERATOR_LOCK.md|replit_elite_stack_patch/bot/data/OPERATOR_LOCK.md" \
   "bot/hub_dispatch.py|replit_elite_stack_patch/bot/hub_dispatch.py" \
   "bot/chronology_evidence.py|replit_elite_stack_patch/bot/chronology_evidence.py" \
   "bot/chronology_integrity_audit.py|replit_elite_stack_patch/bot/chronology_integrity_audit.py" \
