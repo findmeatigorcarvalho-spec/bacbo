@@ -66,6 +66,10 @@ ENV_KEYS = {
     "EDGE_LUXURY_FLOOR_GATE": "0",
     "ROLLING_WR_MUTE_SECS": "0",
     "AUTO_QUARANTINE_SECS": "0",
+    "LUX_FREE_VOLUME": "1",
+    "HUB_GUNIQUE_TRUST_MIN": "0",
+    "HUB_CATCHUP_MAX_PER_TICK": "24",
+    "LUX_SEND_DEDUP_SECS": "12",
     "TELEGRAM_MIRROR_MONEY_TO_GUNIQUE": "0",
     "TELEGRAM_SINGLE_OUTBOX": "1",
     "TELEGRAM_PRIMARY_PEER": "UNIQUE_g1",
@@ -88,8 +92,6 @@ ENV_KEYS = {
     "HUB_NO_SHRINK_GATES": "1",
     "HUB_ORIGINAL_CARD_SKINS": "1",
     "HUB_STRIP_NOISE_ONLY": "1",
-    "HUB_GUNIQUE_TRUST_MIN": "50",
-    "HUB_CATCHUP_MAX_PER_TICK": "8",
     "HUB_ENGINE_ROUTE": "1",
     "HUB_OUTBOX_FIRE_CARDS": "0",
     # FIRE↔RESULT law: every FIRE gets RESULT card template skin (outbox guarantee).
@@ -181,6 +183,13 @@ def apply() -> dict:
     if cd in {"6774605259", "Mr_iv4", "mr_iv4"}:
         cd = "UNIQUE_g1"
     keys = dict(ENV_KEYS)
+    try:
+        from lux_free_volume import FORCE_ENV, boot as _free_boot
+
+        keys.update(FORCE_ENV)
+        _free_boot()
+    except Exception as exc:
+        print("[hub_max_boot] free-volume skip:", repr(exc))
     keys["TELEGRAM_PRIMARY_PEER"] = peer
     keys["TELEGRAM_TARGET_PEER"] = peer
     keys["TELEGRAM_COUNTDOWN_PEER"] = cd

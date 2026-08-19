@@ -35,8 +35,22 @@ _KIND_TRUST = {
     "CD_TIMER": 90,
 }
 
-GUNIQUE_TRUST_MIN = float(os.environ.get("HUB_GUNIQUE_TRUST_MIN", "78"))
-CATCHUP_MAX_PER_TICK = int(os.environ.get("HUB_CATCHUP_MAX_PER_TICK", "4"))
+GUNIQUE_TRUST_MIN = float(os.environ.get("HUB_GUNIQUE_TRUST_MIN", "0"))
+CATCHUP_MAX_PER_TICK = int(os.environ.get("HUB_CATCHUP_MAX_PER_TICK", "24"))
+
+
+def _trust_min() -> float:
+    try:
+        return float(os.environ.get("HUB_GUNIQUE_TRUST_MIN", "0") or "0")
+    except Exception:
+        return 0.0
+
+
+def _catchup_max() -> int:
+    try:
+        return max(1, int(os.environ.get("HUB_CATCHUP_MAX_PER_TICK", "24") or "24"))
+    except Exception:
+        return 24
 
 
 def hub_enabled() -> bool:
@@ -92,7 +106,8 @@ def trust_score(
     if kind == "GOLDEN" and rooms >= 2:
         base += 3
     total = min(100.0, base + score_pts + room_pts + floor_pts)
-    to_gunique = bool(gunique_first() and total >= GUNIQUE_TRUST_MIN)
+    trust_min = _trust_min()
+    to_gunique = bool(gunique_first() and total >= trust_min)
     return {
         "trust": round(total, 2),
         "to_gunique": to_gunique,
@@ -102,11 +117,11 @@ def trust_score(
         "floor": floor or "LIVE",
         "rooms": rooms,
         "color": (color or "").lower(),
-        "threshold": GUNIQUE_TRUST_MIN,
+        "threshold": trust_min,
         "reason": (
-            f"trust {total:.1f}>={GUNIQUE_TRUST_MIN} → Gunique #1"
+            f"trust {total:.1f}>={trust_min} → Gunique #1"
             if to_gunique
-            else f"trust {total:.1f}<{GUNIQUE_TRUST_MIN} → APEX g1 (Mr_iv4 out)"
+            else f"trust {total:.1f}<{trust_min} → APEX g1 (Mr_iv4 out)"
         ),
     }
 
@@ -176,7 +191,7 @@ def log_dispatch(signal_id: Any, info: dict[str, Any]) -> None:
 def throttle_rows(rows: list) -> list:
     if not rows:
         return []
-    max_n = max(1, CATCHUP_MAX_PER_TICK)
+    max_n = _catchup_max()
     if len(rows) <= max_n:
         return list(rows)
     ranked = sorted(rows, key=lambda r: int(r["id"]), reverse=True)

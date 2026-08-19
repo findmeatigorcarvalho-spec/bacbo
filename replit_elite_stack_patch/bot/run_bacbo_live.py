@@ -51,6 +51,14 @@ except Exception as exc:
     print("[BOOT] chat_watchdog fail:", repr(exc))
 
 try:
+    import lux_free_volume as _fv
+
+    _fv.boot()
+    print("[BOOT] free-volume OK")
+except Exception as exc:
+    print("[BOOT] free-volume fail:", repr(exc))
+
+try:
     import lux_dialog_resolve as _dr
 
     print("[BOOT] dialog_resolve:", "OK" if _dr.apply() else "FAIL")

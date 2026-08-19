@@ -2,7 +2,7 @@
 # Instant bring-up after a crash — heals state + picks the real DB, then starts
 # babysitter/supervisor. Use when pgrep is empty.
 #   curl -fsSL -o /tmp/UP.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UP_NOW.sh?v=20260819d'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UP_NOW.sh?v=20260819e'
 #   bash /tmp/UP.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
@@ -10,19 +10,26 @@ cd "$ROOT"
 PY="${PY:-python3}"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}/replit_elite_stack_patch"
-V="20260819d"
+V="20260819e"
 mkdir -p logs bot/data
 
 unset PORT REPLIT_SOCKET REPLIT_SOCKETS REPLIT_PORT 2>/dev/null || true
 export LUX_KEEPALIVE_OFF=1 LUX_FLASK_GUARD=1 FLASK_DEBUG=0
 export LUX_CHAT_WATCHDOG=1 LUX_BLOCK_ESTUDO=1
 export LUX_G2_COALITION_TO_G1=1
+export LUX_FREE_VOLUME=1
+export FREE_PROPOSE=1
+export VOLUME_MODE=EXPLOSION
+export EDGE_LUXURY_FLOOR_GATE=0
+export ROLLING_WR_MUTE_SECS=0
+export HUB_GUNIQUE_TRUST_MIN=0
+export LUX_SEND_DEDUP_SECS=12
 export LUX_CHAT_WATCH_CALL=0 LUX_CHAT_WATCH_CALL_AFTER_SETTLE=1
 export FLASK_ENV=production WERKZEUG_RUN_MAIN=true
 
 echo "========== UP NOW ${V} =========="
 echo "-- pull heal/db/g2 (small; does not clobber state.py) --"
-for rel in bot/lux_state_heal.py bot/lux_live_db.py bot/g2_coalition.py bot/lux_send_config_bind.py bot/telegram_outbox.py; do
+for rel in bot/lux_state_heal.py bot/lux_live_db.py bot/g2_coalition.py bot/lux_free_volume.py bot/lux_send_config_bind.py bot/telegram_outbox.py bot/hub_dispatch.py bot/hub_max_boot.py; do
   if curl -fsSL --connect-timeout 20 --max-time 90 -o "$rel" "${RAW}/${rel}?v=${V}"; then
     echo "  OK $rel"
   else
@@ -38,6 +45,10 @@ fi
 if [[ -f bot/lux_live_db.py ]]; then
   echo "-- live DB probe --"
   $PY -u bot/lux_live_db.py || true
+fi
+if [[ -f bot/lux_free_volume.py ]]; then
+  echo "-- free-volume --"
+  $PY -u bot/lux_free_volume.py || true
 fi
 
 # Soft clear only bot/outbox — leave babysitter if we will restart supervisor

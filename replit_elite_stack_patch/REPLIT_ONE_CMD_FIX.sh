@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260819d'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260819e'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260819d"
+V="20260819e"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -46,6 +46,8 @@ for pair in \
   "bot/lux_state_heal.py|replit_elite_stack_patch/bot/lux_state_heal.py" \
   "bot/lux_live_db.py|replit_elite_stack_patch/bot/lux_live_db.py" \
   "bot/g2_coalition.py|replit_elite_stack_patch/bot/g2_coalition.py" \
+  "bot/lux_free_volume.py|replit_elite_stack_patch/bot/lux_free_volume.py" \
+  "bot/hub_dispatch.py|replit_elite_stack_patch/bot/hub_dispatch.py" \
   "bot/chronology_evidence.py|replit_elite_stack_patch/bot/chronology_evidence.py" \
   "bot/chronology_integrity_audit.py|replit_elite_stack_patch/bot/chronology_integrity_audit.py" \
   "bot/observer_confirm.py|replit_elite_stack_patch/bot/observer_confirm.py" \
@@ -400,6 +402,8 @@ $PY -u bot/lux_state_heal.py
 $PY -m py_compile bot/state.py
 echo "-- live DB probe (must have consensus_signals) --"
 $PY -u bot/lux_live_db.py || true
+echo "-- free-volume: unshrink FIRE/RESULT onto UNIQUE_g1 --"
+$PY -u bot/lux_free_volume.py || true
 # Prove bare name is bound before first state.client assign
 $PY -u - <<'PY'
 from pathlib import Path
@@ -426,7 +430,11 @@ touch "$ENVF"
 for kv in \
   TELEGRAM_TRASH_BLOCK=1 \
   LUX_BLOCK_ESTUDO=1 \
-  LUX_SEND_DEDUP_SECS=90 \
+  LUX_SEND_DEDUP_SECS=12 \
+  LUX_FREE_VOLUME=1 \
+  LUX_G2_COALITION_TO_G1=1 \
+  HUB_GUNIQUE_TRUST_MIN=0 \
+  HUB_CATCHUP_MAX_PER_TICK=24 \
   HUB_OUTBOX_RESULT_CARDS=1 \
   FIRE_RESULT_LAW=1 \
   RESULT_ATTACH_IMMEDIATE=1 \

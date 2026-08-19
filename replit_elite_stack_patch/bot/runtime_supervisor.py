@@ -189,7 +189,7 @@ def _env() -> dict[str, str]:
             # Never stay observe-only shadow when luxury building is installed.
             mode = "luxury"
         env["EDGE_POLICY_MODE"] = mode
-        env.setdefault("EDGE_LUXURY_FLOOR_GATE", "1")
+        env["EDGE_LUXURY_FLOOR_GATE"] = "0"
         env.setdefault("FALLBACK_SEND_BLOCKED", "0")
         env.setdefault("FALLBACKS_ENABLED", "1")
         env.setdefault("TELEGRAM_SINGLE_OUTBOX", "1")
@@ -209,7 +209,7 @@ def _env() -> dict[str, str]:
     env.setdefault("OUTBOX_SIGNAL_LOOKBACK_HOURS", "6")
     env.setdefault("LUX_CHAT_WATCH_CALL_ON_CONNECT", "1")
     env.setdefault("LUX_CHAT_WATCH_CALL_EARLY_SECS", "12")
-    env.setdefault("LUX_SEND_DEDUP_SECS", "90")
+    env.setdefault("LUX_SEND_DEDUP_SECS", "12")
     env.setdefault("TELEGRAM_TRASH_BLOCK", "1")
     env.setdefault("LUX_CHAT_WATCHDOG", "1")
     # CALL wrap OFF at boot (subscribe-safe); armed after settle by outbox/watchdog
@@ -228,9 +228,21 @@ def _env() -> dict[str, str]:
     env.setdefault("V2_PROPOSERS", "1")
     env.setdefault("FREE_PROPOSE", "1")
     env.setdefault("LUXURY_NO_HOUR_BLOCKS", "1")
-    env.setdefault("EDGE_LUXURY_FLOOR_GATE", "0")
-    env.setdefault("ROLLING_WR_MUTE_SECS", "0")
-    env.setdefault("AUTO_QUARANTINE_SECS", "0")
+    # FORCE — a prior setdefault(1) when luxury_building.env existed kept the
+    # floor gate ON and starved volume. Overwrite, do not setdefault.
+    env["EDGE_LUXURY_FLOOR_GATE"] = "0"
+    env["ROLLING_WR_MUTE_SECS"] = "0"
+    env["AUTO_QUARANTINE_SECS"] = "0"
+    try:
+        from lux_free_volume import apply_env as _free_env
+
+        _free_env(env)
+    except Exception as exc:
+        print("[Supervisor] free-volume skip:", repr(exc))
+        env["LUX_FREE_VOLUME"] = "1"
+        env["HUB_GUNIQUE_TRUST_MIN"] = "0"
+        env["HUB_CATCHUP_MAX_PER_TICK"] = "24"
+        env["LUX_SEND_DEDUP_SECS"] = "12"
     env.setdefault("FIRE_RESULT_LAW", "1")
     env.setdefault("RESULT_ATTACH_IMMEDIATE", "1")
     env.setdefault("HUB_OUTBOX_RESULT_CARDS", "1")
