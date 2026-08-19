@@ -2,7 +2,7 @@
 # Instant bring-up after a crash — heals state + picks the real DB, then starts
 # babysitter/supervisor. Use when pgrep is empty.
 #   curl -fsSL -o /tmp/UP.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UP_NOW.sh?v=20260819f'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UP_NOW.sh?v=20260819g'
 #   bash /tmp/UP.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
@@ -10,7 +10,7 @@ cd "$ROOT"
 PY="${PY:-python3}"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}/replit_elite_stack_patch"
-V="20260819f"
+V="20260819g"
 mkdir -p logs bot/data
 
 unset PORT REPLIT_SOCKET REPLIT_SOCKETS REPLIT_PORT 2>/dev/null || true
@@ -29,7 +29,7 @@ export FLASK_ENV=production WERKZEUG_RUN_MAIN=true
 
 echo "========== UP NOW ${V} =========="
 echo "-- pull heal/db/g2 (small; does not clobber state.py) --"
-for rel in bot/lux_state_heal.py bot/lux_live_db.py bot/g2_coalition.py bot/lux_free_volume.py bot/lux_send_config_bind.py bot/telegram_outbox.py bot/hub_dispatch.py bot/hub_max_boot.py; do
+for rel in bot/lux_state_heal.py bot/lux_live_db.py bot/g2_coalition.py bot/lux_free_volume.py bot/lux_no_hour_blocks.py bot/operator_lock.py bot/data/OPERATOR_LOCK.md bot/lux_send_config_bind.py bot/telegram_outbox.py bot/hub_dispatch.py bot/hub_max_boot.py; do
   if curl -fsSL --connect-timeout 20 --max-time 90 -o "$rel" "${RAW}/${rel}?v=${V}"; then
     echo "  OK $rel"
   else
@@ -50,6 +50,20 @@ if [[ -f bot/lux_free_volume.py ]]; then
   echo "-- free-volume --"
   $PY -u bot/lux_free_volume.py || true
 fi
+if [[ -f bot/lux_no_hour_blocks.py ]]; then
+  echo "-- no-hour-blocks (wipe AutoCHB JSON before boot) --"
+  $PY -u bot/lux_no_hour_blocks.py || true
+fi
+
+echo "-- quarantine empty sibling DBs (never touch live bot/bacbo.db) --"
+for f in bacbo.db bot/data/bacbo.db; do
+  if [[ -f "$f" ]]; then
+    sz=$(stat -c%s "$f" 2>/dev/null || echo 0)
+    if [[ "$sz" -lt 1000000 ]]; then
+      mv -f "$f" "${f}.decoy.${V}" && echo "  decoy $f size=$sz"
+    fi
+  fi
+done
 
 # Soft clear only bot/outbox — leave babysitter if we will restart supervisor
 pkill -TERM -f 'runtime_supervisor.py|run_bacbo_live.py|telegram_outbox.py' 2>/dev/null || true

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260819f'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260819g'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260819f"
+V="20260819g"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -406,6 +406,8 @@ echo "-- live DB probe (must have consensus_signals) --"
 $PY -u bot/lux_live_db.py || true
 echo "-- free-volume: unshrink FIRE/RESULT onto UNIQUE_g1 --"
 $PY -u bot/lux_free_volume.py || true
+echo "-- no-hour-blocks: wipe AutoCHB / AutoIntel hour mutes --"
+$PY -u bot/lux_no_hour_blocks.py || true
 # Prove bare name is bound before first state.client assign
 $PY -u - <<'PY'
 from pathlib import Path

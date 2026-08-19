@@ -131,6 +131,18 @@ def promote_fire_result_families(path: Path | None = None) -> dict[str, Any]:
 def boot() -> dict[str, Any]:
     env = apply_env()
     promo = promote_fire_result_families()
+    hour_json: dict[str, Any] = {}
+    try:
+        from lux_no_hour_blocks import clear_persist_json as _clear_hours
+
+        hour_json = _clear_hours()
+        print(
+            "[FREE-VOLUME] hour-blocks json",
+            f"chb={hour_json.get('color_hour_blocks')}",
+            f"intel={hour_json.get('intelligence_bad_hours')}",
+        )
+    except Exception as exc:
+        print("[FREE-VOLUME] hour-blocks skip", repr(exc))
     print(
         "[FREE-VOLUME] ON",
         f"floor_gate={env.get('EDGE_LUXURY_FLOOR_GATE')}",
@@ -140,7 +152,7 @@ def boot() -> dict[str, Any]:
         f"catchup={env.get('HUB_CATCHUP_MAX_PER_TICK')}",
         f"promoted={len(promo.get('promoted') or [])}",
     )
-    return {"env": env, "ledger": promo}
+    return {"env": env, "ledger": promo, "hour_blocks": hour_json}
 
 
 if __name__ == "__main__":
