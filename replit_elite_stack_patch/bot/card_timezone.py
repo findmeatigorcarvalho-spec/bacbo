@@ -37,3 +37,24 @@ def pawtucket_forensic(value: str | None) -> str:
     if dt is None:
         return "—"
     return dt.astimezone(PAWTUCKET_TZ).strftime("%Y-%m-%d %H:%M:%S %Z")
+
+
+def pawtucket_banner(value: str | None) -> str:
+    """Header clock for a card.
+
+    A backlog row can be emitted days after it fired, so the date is included
+    whenever the round is not from today.  Without it, an old result reads as if
+    it just happened.
+    """
+    dt = parse_db_utc(value)
+    if dt is None:
+        return "--:-- Pawtucket, RI"
+    local = dt.astimezone(PAWTUCKET_TZ)
+    today = datetime.now(tz=PAWTUCKET_TZ).date()
+    if local.date() == today:
+        return f"{local:%H:%M} Pawtucket, RI"
+    age_days = (today - local.date()).days
+    return (
+        f"{local:%Y-%m-%d %H:%M} Pawtucket, RI"
+        f"  ·  ATRASADO {age_days}d (round antigo)"
+    )

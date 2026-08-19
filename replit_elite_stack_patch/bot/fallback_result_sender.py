@@ -21,7 +21,7 @@ try:
 except Exception:
     pass
 import config  # noqa: E402
-from card_timezone import pawtucket_forensic, pawtucket_time  # noqa: E402
+from card_timezone import pawtucket_banner, pawtucket_forensic  # noqa: E402
 
 
 HERE = Path(__file__).resolve().parent
@@ -96,7 +96,7 @@ def fmt(row: sqlite3.Row) -> str:
     predicted = (row["color"] or "").lower()
     outcome = (row["outcome"] or "").lower()
     actual = actual_color(predicted, outcome)
-    local_time = pawtucket_time(row["fired_at"])
+    local_time = pawtucket_banner(row["fired_at"])
     secs = row["secs_to_result"]
     secs_txt = f"{float(secs):.1f}s" if secs is not None else "-"
     gale = int(row["won_at_gale"] or 0)
@@ -114,7 +114,7 @@ def fmt(row: sqlite3.Row) -> str:
     banner = actual_icon * 10
     return (
         f"{banner}\n"
-        f"⏰  {local_time} Pawtucket, RI\n"
+        f"⏰  {local_time}\n"
         f"{banner}\n"
         f"🔔 {result_icon} {result_label}  ·  #{row['id']}\n"
         f"🎲 Apostou: {pred_icon} {predicted.upper()}  →  Saiu: {actual_icon} {actual.upper()}\n"
