@@ -123,7 +123,12 @@ def _append_ledger(obs: Observation) -> None:
 
 
 def coalition_score(scores: list[float]) -> dict:
-    """Distinct scores only — copies of the same number do not add votes."""
+    """Different scores for the same round ADD. Copies of the same number do not.
+
+    1.78 fourteen times is one 1.78. 1.78 and 1.59 together are 3.37, not the mean.
+    Historical truth-weight (each gate/floor's hit vs factual color) is applied
+    by the caller when those weights exist — this function only collapses copies.
+    """
     uniq: list[float] = []
     seen: set[str] = set()
     for s in scores:
@@ -137,7 +142,7 @@ def coalition_score(scores: list[float]) -> dict:
     return {
         "n_raw": len(scores),
         "n_distinct": len(uniq),
-        "score": round(sum(uniq) / len(uniq), 4),
+        "score": round(sum(uniq), 4),
         "min": min(uniq),
         "max": max(uniq),
         "distinct": uniq,
@@ -182,7 +187,7 @@ def format_card(items: list[Observation]) -> str:
         f"{emoji} {col} G0\n"
         f"📊 distinct scores: {distinct_txt or '—'}\n"
         f"🧮 coalition score {cs['score']:.2f}  "
-        f"(mean of {cs['n_distinct']} distinct · raw copies {cs['n_raw']})\n"
+        f"(SUM of {cs['n_distinct']} distinct · raw copies {cs['n_raw']} ignored)\n"
         f"🧾 same-score repeats were collapsed — not extra votes"
         f"{inv_line}"
     )
