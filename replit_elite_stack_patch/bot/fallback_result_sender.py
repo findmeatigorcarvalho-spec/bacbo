@@ -23,10 +23,14 @@ except Exception:
 import config  # noqa: E402
 from card_timezone import pawtucket_banner, pawtucket_forensic  # noqa: E402
 
-
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
-DB = HERE / "bacbo.db"
+try:
+    from lux_live_db import resolve_db as _live_resolve_db
+
+    DB = _live_resolve_db(log=True)
+except Exception:
+    DB = HERE / "bacbo.db"
 STATE = HERE / "data/fallback_result_sender_state.txt"
 
 

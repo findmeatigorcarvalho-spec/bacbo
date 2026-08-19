@@ -102,6 +102,36 @@ def _dedup_hit(msg: str | None) -> bool:
     return False
 
 
+def _replace_text(args: tuple, kwargs: dict, text: str) -> tuple[tuple, dict]:
+    """Swap the outbound body for a coalesced G2 card, keeping the same peer."""
+    if len(args) >= 2 and isinstance(args[1], str):
+        return (args[0], text, *args[2:]), kwargs
+    if args and isinstance(args[0], str) and "entity" in kwargs:
+        return (text, *args[1:]), kwargs
+    out = dict(kwargs)
+    for key in ("message", "msg", "text", "body"):
+        if key in out and isinstance(out[key], str):
+            out[key] = text
+            return args, out
+    if args and isinstance(args[0], str):
+        return (text, *args[1:]), kwargs
+    out["message"] = text
+    return args, out
+
+
+async def _maybe_g2_coalition(msg: str | None) -> str | None:
+    """If this is a G2 ESTUDO burst, wait the window and return ONE card (or None)."""
+    try:
+        from g2_coalition import hold_until_window, is_g2_estudo
+
+        if not is_g2_estudo(msg):
+            return None
+        return await hold_until_window(msg)
+    except Exception as exc:
+        print("[LUXURY] g2 coalition skip:", repr(exc))
+        return None
+
+
 def _tg_message_text(args: tuple, kwargs: dict) -> str | None:
     # Telethon: send_message(entity, message, ...)
     if len(args) >= 2 and isinstance(args[1], str):
@@ -188,9 +218,13 @@ def _patch_telethon_send_message(*, force: bool = False) -> bool:
         args, kwargs = _coerce_empty_entity(args, kwargs)
         msg = _tg_message_text(args, kwargs)
         if _estudo_blocked(msg):
-            print("[LUXURY] drop ESTUDO via telethon send_message")
-            return None
-        if _dedup_hit(msg):
+            card = await _maybe_g2_coalition(msg)
+            if card:
+                args, kwargs = _replace_text(args, kwargs, card)
+            else:
+                print("[LUXURY] drop ESTUDO via telethon send_message")
+                return None
+        if _dedup_hit(_tg_message_text(args, kwargs)):
             print("[LUXURY] drop duplicate via telethon send_message")
             return None
         return await orig(self, *args, **kwargs)
@@ -255,12 +289,26 @@ def _wrap_send(fn: Callable) -> Callable:
                 msg=msg, entity=None, path="engine_send", final=False
             )
             if not ok:
-                print(f"[LUXURY] drop via chat_watchdog: {why}")
-                return None
+                if why and "ESTUDO" in str(why).upper():
+                    card = await _maybe_g2_coalition(msg)
+                    if card:
+                        args, kwargs = _replace_text(args, kwargs, card)
+                        msg = card
+                    else:
+                        print(f"[LUXURY] drop via chat_watchdog: {why}")
+                        return None
+                else:
+                    print(f"[LUXURY] drop via chat_watchdog: {why}")
+                    return None
         except Exception:
             if _estudo_blocked(msg):
-                print("[LUXURY] drop ESTUDO study spam")
-                return None
+                card = await _maybe_g2_coalition(msg)
+                if card:
+                    args, kwargs = _replace_text(args, kwargs, card)
+                    msg = card
+                else:
+                    print("[LUXURY] drop ESTUDO study spam")
+                    return None
             if _dedup_hit(msg):
                 print("[LUXURY] drop duplicate send (dedup window)")
                 return None

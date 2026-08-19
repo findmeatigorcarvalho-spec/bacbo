@@ -30,6 +30,10 @@ except Exception:
     pass
 import config  # noqa: E402
 from card_timezone import pawtucket_banner, pawtucket_forensic  # noqa: E402
+try:
+    from lux_live_db import resolve_db as _live_resolve_db
+except Exception:
+    _live_resolve_db = None  # type: ignore
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -46,8 +50,10 @@ STARTUP_PING = os.environ.get("TELEGRAM_OUTBOX_STARTUP_PING", "1").strip() not i
     "no",
 }
 # Lookback must be wide: SQLite datetime('now') is UTC; engine fired_at can drift.
-SIGNAL_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_SIGNAL_LOOKBACK_HOURS", "48"))
-RESULT_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_RESULT_LOOKBACK_HOURS", "72"))
+# Keep it SHORT so a restart cannot dump multi-day backlog RESULT cards
+# (18 Aug 18:46 dump of #2745–#2746 from 13 Aug was `id > last-50` ignoring age).
+SIGNAL_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_SIGNAL_LOOKBACK_HOURS", "6"))
+RESULT_LOOKBACK_HOURS = int(os.environ.get("OUTBOX_RESULT_LOOKBACK_HOURS", "6"))
 HEARTBEAT_EVERY = int(os.environ.get("OUTBOX_HEARTBEAT_EVERY", "12"))  # ~60s at 5s sleep
 # NEVER default-mirror. User wants TOTAL SEPARATION, not duplication:
 # Profit Chat Bundle: APEX=UNIQUE_g1 (#1). Mr_iv4 removed. Results glue under parent.
@@ -82,7 +88,16 @@ HUB_OUTBOX_RESULT_CARDS = _env_flag(
 
 
 def _resolve_db() -> Path:
-    """Use the live engine DB (freshest bacbo.db), not a stale sibling copy."""
+    """Use the live engine DB that actually has consensus_signals.
+
+    Newest-mtime was wrong: an empty sibling created by a failed connect
+    would win and crash with 'no such table: consensus_signals'.
+    """
+    if _live_resolve_db is not None:
+        try:
+            return _live_resolve_db(log=True)
+        except Exception as exc:
+            print("[Outbox] live-db resolve failed:", repr(exc))
     env = (os.environ.get("BACBO_DB") or os.environ.get("DB_PATH") or "").strip()
     candidates: list[Path] = []
     if env:
@@ -96,14 +111,20 @@ def _resolve_db() -> Path:
             Path("/home/runner/workspace/bacbo.db"),
         ]
     )
-    existing = [p for p in candidates if p.exists() and p.is_file()]
+    existing = [
+        p for p in candidates if p.exists() and p.is_file() and p.stat().st_size > 64
+    ]
     if not existing:
         return HERE / "bacbo.db"
-    existing.sort(key=lambda p: p.stat().st_mtime, reverse=True)
-    return existing[0]
-
-
 DB = _resolve_db()
+
+
+def _rebind_db() -> Path:
+    """Re-pick the live DB if the first choice had no consensus_signals."""
+    global DB
+    DB = _resolve_db()
+    print(f"[Outbox] rebound DB → {DB}")
+    return DB
 
 
 def load_env() -> None:
@@ -129,11 +150,9 @@ def write_int(path: Path, value: int) -> None:
 
 
 def _db_ro() -> sqlite3.Connection:
+    """Read-only connect. Never create an empty bacbo.db as a side effect."""
     uri = f"file:{DB}?mode=ro&cache=shared"
-    try:
-        conn = sqlite3.connect(uri, uri=True, timeout=60.0)
-    except Exception:
-        conn = sqlite3.connect(str(DB), timeout=60.0)
+    conn = sqlite3.connect(uri, uri=True, timeout=60.0)
     conn.row_factory = sqlite3.Row
     try:
         conn.execute("PRAGMA busy_timeout=60000")
@@ -1139,7 +1158,8 @@ async def main(existing_client=None) -> None:
         conn0.close()
         print(
             f"[Outbox] db_max_id={mx[0]} db_max_fired={mx[1]} "
-            f"sig_state={read_int(SIG_STATE)} res_state={read_int(RES_STATE)}"
+            f"sig_state={read_int(SIG_STATE)} res_state={read_int(RES_STATE)} "
+            f"db={DB}"
         )
         # When outbox does not send fire/result cards, snap cursors to DB tip so we
         # do not walk a thousand-row historical backlog printing skip lines.
@@ -1155,7 +1175,12 @@ async def main(existing_client=None) -> None:
                 write_int(RES_STATE, tip)
                 print(f"[Outbox] HUB snap result cursor {cur}→{tip} (engine owns skins)")
     except Exception as exc:
-        print("[Outbox] db probe FAIL:", repr(exc))
+        print("[Outbox] db probe FAIL:", repr(exc), "db=", DB)
+        if "no such table" in str(exc).lower():
+            try:
+                _rebind_db()
+            except Exception:
+                pass
 
     tick = 0
     gunique_retry_every = max(1, int(os.environ.get("GUNIQUE_RESOLVE_RETRY_TICKS", "6")))
@@ -1190,14 +1215,22 @@ async def main(existing_client=None) -> None:
                       AND (
                         fired_at IS NULL
                         OR fired_at >= datetime('now', ?)
-                        OR id > ? - 50
                       )
                     ORDER BY id ASC
                     LIMIT 30
                     """,
-                    (last_sig, lookback_sig, last_sig),
+                    (last_sig, lookback_sig),
                 ).fetchall()
-            except sqlite3.OperationalError:
+            except sqlite3.OperationalError as exc:
+                if "no such table" in str(exc).lower():
+                    print("[Outbox] missing consensus_signals — rebinding DB")
+                    try:
+                        conn.close()
+                    except Exception:
+                        pass
+                    _rebind_db()
+                    await asyncio.sleep(3)
+                    continue
                 rows = conn.execute(
                     """
                     SELECT id, fired_at, signal_kind, color, rooms_agreed, source_floor, total_score
@@ -1222,12 +1255,11 @@ async def main(existing_client=None) -> None:
                       AND (
                         fired_at IS NULL
                         OR fired_at >= datetime('now', ?)
-                        OR id > ? - 50
                       )
                     ORDER BY id ASC
                     LIMIT 30
                     """,
-                    (last_res, lookback_res, last_res),
+                    (last_res, lookback_res),
                 ).fetchall()
             except sqlite3.OperationalError:
                 results = conn.execute(
@@ -1240,12 +1272,11 @@ async def main(existing_client=None) -> None:
                       AND (
                         fired_at IS NULL
                         OR fired_at >= datetime('now', ?)
-                        OR id > ? - 50
                       )
                     ORDER BY id ASC
                     LIMIT 30
                     """,
-                    (last_res, lookback_res, last_res),
+                    (last_res, lookback_res),
                 ).fetchall()
 
             if tick % HEARTBEAT_EVERY == 0:
