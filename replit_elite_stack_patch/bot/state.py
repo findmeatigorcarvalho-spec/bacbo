@@ -12,6 +12,10 @@ me = None
 running = True
 engine = None
 learner = None
+# Some megafile code paths read this without a hasattr guard (room mute /
+# cooldown quarantine timers). Keep it defined even in the minimal template
+# so a fresh state.py can never crash the bot with AttributeError.
+_quarantine_tasks: dict = {}
 
 # --- LUXURY_CLIENT_PROXY (auto) ---
 class _LuxClientProxy:

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260819a'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260819b'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260819a"
+V="20260819b"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -61,11 +61,14 @@ do
   dest="${pair%%|*}"
   rel="${pair##*|}"
   # Never clobber a larger existing state.py with a smaller template unless missing/proxy-less
-  if [[ "$dest" == "bot/state.py" && -f "$dest" ]]; then
-    if grep -q "LUXURY_CLIENT_PROXY" "$dest" 2>/dev/null; then
-      echo "  KEEP $dest (proxy present)"
-      continue
-    fi
+  # NEVER overwrite a live bot/state.py. It can carry attributes the running
+  # megafile depends on (e.g. _quarantine_tasks) that our minimal template
+  # does not know about. An overwrite here previously caused a live crash
+  # loop ("module 'state' has no attribute '_quarantine_tasks'"). Only write
+  # when the file is missing entirely, or when explicitly forced.
+  if [[ "$dest" == "bot/state.py" && -f "$dest" && "${LUX_STATE_FORCE_REFRESH:-0}" != "1" ]]; then
+    echo "  KEEP $dest (exists — never clobber live state; LUX_STATE_FORCE_REFRESH=1 to override)"
+    continue
   fi
   if curl -fsSL --connect-timeout 20 --max-time 90 -o "$dest" "${RAW}/${rel}?v=${V}"; then
     echo "  OK $dest"
@@ -388,6 +391,24 @@ echo "PY_COMPILE_OK"
 echo "-- fix NameError state (line ~146) --"
 $PY -u bot/fix_bacbo_state.py
 $PY -m py_compile bacbo_royal_complete.py
+$PY -m py_compile bot/state.py
+echo "-- self-heal state.py required attrs (never destructive) --"
+$PY -u - <<'PY'
+from pathlib import Path
+p = Path("bot/state.py")
+src = p.read_text(encoding="utf-8", errors="replace")
+required = {"_quarantine_tasks": "{}"}
+missing = [name for name in required if name not in src]
+if missing:
+    add = "\n\n# --- LUXURY_STATE_FALLBACK_ATTRS (auto) ---\n"
+    for name in missing:
+        add += f"{name} = {required[name]}\n"
+    add += "# --- end LUXURY_STATE_FALLBACK_ATTRS ---\n"
+    p.write_text(src.rstrip("\n") + add, encoding="utf-8")
+    print("STATE_SELF_HEAL patched", missing)
+else:
+    print("STATE_SELF_HEAL already ok")
+PY
 $PY -m py_compile bot/state.py
 # Prove bare name is bound before first state.client assign
 $PY -u - <<'PY'
