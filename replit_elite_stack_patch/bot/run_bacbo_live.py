@@ -21,6 +21,14 @@ for p in (str(BOT), str(ROOT)):
         sys.path.insert(0, p)
 
 print("[BOOT] run_bacbo_live: preloading HUB + ESTUDO gates…")
+try:
+    import lux_state_heal as _stheal
+
+    _stheal.ensure_runtime_maps()
+    _stheal.start_maps_sweep()
+    print("[BOOT] state-maps: ON")
+except Exception as exc:
+    print("[BOOT] state-maps fail:", repr(exc))
 # FIRST: strip Replit PORT / pre-bound fd — KeepAlive bind → SIGKILL -9
 try:
     import lux_keepalive_off as _ka

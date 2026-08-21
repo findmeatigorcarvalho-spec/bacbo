@@ -34,6 +34,43 @@ GETATTR_END = "# --- end LUXURY_STATE_GETATTR ---"
 
 STRUCTURAL = {"client", "me", "running", "engine", "learner", "bind", "on"}
 
+# Always dicts — signal_handler does state._rooms.get(chat_id).
+ALWAYS_DICT = {
+    "_rooms",
+    "_pending",
+    "_results",
+    "_quarantine_tasks",
+    "_room_depth",
+    "_room_recency",
+    "_room_rti",
+    "_room_color_acc",
+    "_color_markov",
+    "_markov_engine",
+    "_pipeline_predictions",
+    "_g0_miss_insight_tracking",
+    "_indep_learn_seen",
+    "_resolved_auto_outcome_cids",
+    "_result_dispatched_cids",
+    "_result_last_outcome_by_cid",
+    "_gale_chain_ids",
+    "_event_seen_ids",
+    "_poll_seen_ids",
+    "_cid_first_mover",
+    "_room_speed_history",
+    "_room_color_flip_history",
+    "_room_last_2_colors",
+    "_room_first_mover_total",
+    "_room_first_mover_wins",
+    "_room_gale_exit_ts",
+    "_room_last_entry_color",
+    "_room_last_entry_ts",
+    "_room_solo_loss_time",
+    "_room_scan_time",
+}
+
+GET_RX = re.compile(r"\bstate\.([A-Za-z_][A-Za-z0-9_]*)\.get\s*\(")
+ITEM_RX = re.compile(r"\bstate\.([A-Za-z_][A-Za-z0-9_]*)\[")
+
 
 def _root() -> Path:
     for cand in ROOT_CANDIDATES:
@@ -42,8 +79,27 @@ def _root() -> Path:
     return Path.cwd()
 
 
-def default_expr(name: str) -> str:
+def mapping_names(root: Path) -> set[str]:
+    """Names used as state.X.get(...) or state.X[k] — must be dicts, never None."""
+    found: set[str] = set(ALWAYS_DICT)
+    for path in _iter_py_files(root):
+        try:
+            text = path.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+        found.update(GET_RX.findall(text))
+        found.update(ITEM_RX.findall(text))
+    return found
+
+
+def default_expr(name: str, dict_names: set[str] | None = None) -> str:
+    if dict_names and name in dict_names:
+        return "{}"
     n = name.lower()
+    if name in ALWAYS_DICT or n.endswith(
+        ("_rooms", "_handles", "_clients", "_peers", "_by_chat", "_by_room")
+    ):
+        return "{}"
     if n.endswith("_lock") or n == "lock":
         return "asyncio.Lock()"
     if n.endswith(
@@ -61,36 +117,7 @@ def default_expr(name: str) -> str:
         )
     ):
         return "{}"
-    if n in {
-        "_pending",
-        "_results",
-        "_room_depth",
-        "_room_recency",
-        "_room_rti",
-        "_room_color_acc",
-        "_color_markov",
-        "_markov_engine",
-        "_pipeline_predictions",
-        "_g0_miss_insight_tracking",
-        "_indep_learn_seen",
-        "_resolved_auto_outcome_cids",
-        "_result_dispatched_cids",
-        "_result_last_outcome_by_cid",
-        "_gale_chain_ids",
-        "_event_seen_ids",
-        "_poll_seen_ids",
-        "_cid_first_mover",
-        "_room_speed_history",
-        "_room_color_flip_history",
-        "_room_last_2_colors",
-        "_room_first_mover_total",
-        "_room_first_mover_wins",
-        "_room_gale_exit_ts",
-        "_room_last_entry_color",
-        "_room_last_entry_ts",
-        "_room_solo_loss_time",
-        "_room_scan_time",
-    }:
+    if n in ALWAYS_DICT:
         return "{}"
     if n.endswith(("_ids", "_seen")):
         return "set()"
@@ -111,7 +138,10 @@ def default_expr(name: str) -> str:
         return "0"
     if n.endswith(("_flag", "_enabled", "_active", "_ready", "_scanning")):
         return "False"
-    if n.endswith(("_txt", "_line", "_reason", "_kind", "_color", "_room", "_phase")):
+    if n.endswith(("_txt", "_line", "_reason", "_kind", "_color", "_phase")):
+        return "''"
+    # `_room` (singular) is often a string handle; `_rooms` is the map (above).
+    if n.endswith("_room"):
         return "''"
     if n.endswith(("_task", "_until", "_time", "_ts", "_wall", "_pct", "_id")):
         return "None"
@@ -192,9 +222,12 @@ def __getattr__(name):
     n = name.lower()
     if n.endswith("_lock") or n == "lock":
         val = asyncio.Lock()
-    elif n.endswith(("_tasks", "_map", "_cache", "_index", "_counts", "_scores", "_by_id", "_state", "_tracking", "_buffer")) or name in {{
-        "_pending", "_results", "_room_depth", "_room_recency", "_room_rti",
-    }}:
+    elif (
+        n.endswith(("_rooms", "_handles", "_clients", "_peers", "_tasks", "_map", "_cache", "_index", "_counts", "_scores", "_by_id", "_state", "_tracking", "_buffer"))
+        or name in {{
+            "_rooms", "_pending", "_results", "_room_depth", "_room_recency", "_room_rti",
+        }}
+    ):
         val = {{}}
     elif n.endswith(("_ids", "_seen", "_set")):
         val = set()
@@ -224,16 +257,19 @@ def heal(root: Path | None = None) -> dict:
     src = _strip_block(src, FALLBACK_BEGIN, FALLBACK_END)
     src = _strip_block(src, GETATTR_BEGIN, GETATTR_END)
     src = _ensure_asyncio_import(src)
-    # A previous healer set `_lock = None`, which still crashes `async with`.
-    def _lock_repl(m: re.Match[str]) -> str:
+    dict_names = mapping_names(root)
+
+    def _none_repl(m: re.Match[str]) -> str:
         name = m.group(1)
-        if name.endswith("_lock") or name == "lock":
-            return f"{name} = asyncio.Lock()"
+        expr = default_expr(name, dict_names)
+        if expr != "None":
+            return f"{name} = {expr}"
         return m.group(0)
 
-    src = re.sub(r"^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*None\s*$", _lock_repl, src, flags=re.M)
+    # Previous healers left `_rooms = None` / `_lock = None` in the file.
+    src = re.sub(r"^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*None\s*$", _none_repl, src, flags=re.M)
 
-    referenced = referenced_names(root)
+    referenced = referenced_names(root) | dict_names
     defined = _defined_names(src)
     missing = sorted(n for n in referenced if n not in defined and not n.startswith("__"))
 
@@ -242,7 +278,7 @@ def heal(root: Path | None = None) -> dict:
         f"{FALLBACK_BEGIN} (auto; scanned {len(referenced)} refs from live .py) ---",
     ]
     for name in missing:
-        add.append(f"{name} = {default_expr(name)}")
+        add.append(f"{name} = {default_expr(name, dict_names)}")
     add.append(FALLBACK_END)
     add.append(GETATTR_BLOCK)
     new_src = src.rstrip("\n") + "\n" + "\n".join(add) + "\n"
@@ -254,7 +290,9 @@ def heal(root: Path | None = None) -> dict:
     ns: dict = {}
     exec(compile(new_src, str(state_py), "exec"), ns, ns)
     lock = ns.get("_lock")
+    rooms = ns.get("_rooms")
     lock_ok = type(lock).__name__ == "Lock"
+    rooms_ok = isinstance(rooms, dict)
     return {
         "ok": True,
         "path": str(state_py),
@@ -262,10 +300,62 @@ def heal(root: Path | None = None) -> dict:
         "patched": len(missing),
         "lock_type": type(lock).__name__,
         "lock_ok": lock_ok,
+        "rooms_type": type(rooms).__name__,
+        "rooms_ok": rooms_ok,
         "has_outcome_sequence": "_outcome_sequence" in ns,
         "has_getattr": "__getattr__" in ns,
         "sample_missing_head": missing[:12],
     }
+
+
+def ensure_runtime_maps(state_mod: object | None = None, *, silent: bool = False) -> dict:
+    """Coerce None maps on the live state module. Call at every boot."""
+    if state_mod is None:
+        try:
+            import state as state_mod  # type: ignore
+        except Exception as exc:
+            return {"ok": False, "error": repr(exc)}
+    coerced: list[str] = []
+    for name in ALWAYS_DICT:
+        cur = getattr(state_mod, name, None)
+        if not isinstance(cur, dict):
+            setattr(state_mod, name, {})
+            coerced.append(name)
+    rooms = getattr(state_mod, "_rooms", None)
+    ok = isinstance(rooms, dict)
+    if coerced or not silent:
+        print(
+            "[STATE-MAPS]",
+            "OK" if ok else "FAIL",
+            f"coerced={coerced or 'none'}",
+            f"rooms={type(rooms).__name__}",
+        )
+    return {"ok": ok, "coerced": coerced}
+
+
+def start_maps_sweep() -> None:
+    """Megafile may assign `_rooms = None` after heal. Keep it a dict."""
+    try:
+        import threading
+        import time
+
+        def _loop() -> None:
+            for d in (0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 40.0):
+                time.sleep(d)
+                try:
+                    ensure_runtime_maps(silent=True)
+                except Exception:
+                    pass
+            while True:
+                time.sleep(15.0)
+                try:
+                    ensure_runtime_maps(silent=True)
+                except Exception:
+                    pass
+
+        threading.Thread(target=_loop, name="lux_state_maps_sweep", daemon=True).start()
+    except Exception:
+        pass
 
 
 def main() -> int:
@@ -278,6 +368,7 @@ def main() -> int:
         f"patched={report['patched']}",
         f"referenced={report['referenced']}",
         f"lock={report['lock_type']}",
+        f"rooms={report.get('rooms_type')}",
         f"getattr={int(report['has_getattr'])}",
         f"outcome_sequence={int(report['has_outcome_sequence'])}",
     )
@@ -285,6 +376,9 @@ def main() -> int:
         print("STATE_HEAL_HEAD", report["sample_missing_head"])
     if not report["lock_ok"]:
         print("STATE_HEAL_WARN _lock is not asyncio.Lock — async with will still fail")
+        return 1
+    if not report.get("rooms_ok"):
+        print("STATE_HEAL_WARN _rooms is not a dict — signal_handler .get() will crash")
         return 1
     return 0
 

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260821a'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260821b'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260821a"
+V="20260821b"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -44,6 +44,7 @@ for pair in \
   "bot/fallback_result_sender.py|replit_elite_stack_patch/bot/fallback_result_sender.py" \
   "bot/card_timezone.py|replit_elite_stack_patch/bot/card_timezone.py" \
   "bot/lux_state_heal.py|replit_elite_stack_patch/bot/lux_state_heal.py" \
+  "bot/hotfix_signal_handler.py|replit_elite_stack_patch/bot/hotfix_signal_handler.py" \
   "bot/lux_live_db.py|replit_elite_stack_patch/bot/lux_live_db.py" \
   "bot/g2_coalition.py|replit_elite_stack_patch/bot/g2_coalition.py" \
   "bot/lux_free_volume.py|replit_elite_stack_patch/bot/lux_free_volume.py" \
@@ -52,6 +53,7 @@ for pair in \
   "bot/round_sync_densifier.py|replit_elite_stack_patch/bot/round_sync_densifier.py" \
   "bot/operator_lock.py|replit_elite_stack_patch/bot/operator_lock.py" \
   "bot/data/OPERATOR_LOCK.md|replit_elite_stack_patch/bot/data/OPERATOR_LOCK.md" \
+  "bot/data/peak_lock_config.json|replit_elite_stack_patch/bot/data/peak_lock_config.json" \
   "bot/hub_dispatch.py|replit_elite_stack_patch/bot/hub_dispatch.py" \
   "bot/chronology_evidence.py|replit_elite_stack_patch/bot/chronology_evidence.py" \
   "bot/chronology_integrity_audit.py|replit_elite_stack_patch/bot/chronology_integrity_audit.py" \
@@ -402,9 +404,11 @@ echo "-- fix NameError state (line ~146) --"
 $PY -u bot/fix_bacbo_state.py
 $PY -m py_compile bacbo_royal_complete.py
 $PY -m py_compile bot/state.py
-echo "-- self-heal state.py (scan ALL live .py; asyncio.Lock for *_lock; never None) --"
+echo "-- self-heal state.py (scan ALL live .py; Lock for *_lock; dict for _rooms) --"
 $PY -u bot/lux_state_heal.py
 $PY -m py_compile bot/state.py
+echo "-- hotfix signal_handler _rooms.get --"
+$PY -u bot/hotfix_signal_handler.py || true
 echo "-- live DB probe (must have consensus_signals) --"
 $PY -u bot/lux_live_db.py || true
 echo "-- free-volume: unshrink FIRE/RESULT onto UNIQUE_g1 --"
@@ -625,6 +629,10 @@ fixed = rh.harden_namespace(ns, label="selftest")
 assert isinstance(ns["_SOLO_GLOBAL_BAD_UTC"], frozenset), ns
 assert isinstance(ns["_ACCUM_HOLD_SECS"], (int, float)), ns
 print("SOLO_BAD_UTC_REPAIR_OK", fixed)
+from lux_state_heal import default_expr
+assert default_expr("_rooms") == "{}"
+assert default_expr("_lock") == "asyncio.Lock()"
+print("ROOMS_DICT_DEFAULT_OK")
 # Empty TARGET must never reach Telethon (was: send() failed entity "")
 import types as _types
 import hub_engine_route as her

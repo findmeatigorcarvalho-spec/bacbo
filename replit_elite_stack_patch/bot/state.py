@@ -22,6 +22,7 @@ _lock = asyncio.Lock()
 _outcome_sequence: list = []
 _pending: dict = {}
 _results: dict = {}
+_rooms: dict = {}
 
 # --- LUXURY_CLIENT_PROXY (auto) ---
 class _LuxClientProxy:
@@ -75,9 +76,12 @@ def __getattr__(name):
     n = name.lower()
     if n.endswith("_lock") or n == "lock":
         val = asyncio.Lock()
-    elif n.endswith(
-        ("_tasks", "_map", "_cache", "_index", "_counts", "_scores", "_by_id", "_state", "_tracking", "_buffer")
-    ) or name in {"_pending", "_results", "_room_depth", "_room_recency", "_room_rti"}:
+    elif (
+        n.endswith(
+            ("_rooms", "_handles", "_tasks", "_map", "_cache", "_index", "_counts", "_scores", "_by_id", "_state", "_tracking", "_buffer")
+        )
+        or name in {"_pending", "_results", "_rooms", "_room_depth", "_room_recency", "_room_rti"}
+    ):
         val = {}
     elif n.endswith(("_ids", "_seen", "_set")):
         val = set()

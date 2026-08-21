@@ -29,6 +29,7 @@ DECISIONS = DATA / "signal_ledger_decisions.json"
 CATALOG = DATA / "museum_full_catalog.json"
 REVIEW_MD = DATA / "SIGNAL_LEDGER_REVIEW.md"
 PEAK = DATA / "peak_fidelity_ranker_report.json"
+PEAK_LOCK = DATA / "peak_lock_config.json"
 
 ALREADY_WORKING_MIN_SENDS = 10
 PEAK_DAY_MIN = 50
@@ -103,22 +104,36 @@ def _museum_working(catalog: dict[str, Any]) -> list[dict[str, Any]]:
     return rows
 
 
-def _peak_floors(peak: dict[str, Any]) -> list[dict[str, Any]]:
+def _peak_floors(*blobs: dict[str, Any]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for r in peak.get("ranking") or peak.get("floors") or peak.get("ranked") or []:
-        if not isinstance(r, dict):
+    seen: set[str] = set()
+    for peak in blobs:
+        if not isinstance(peak, dict):
             continue
-        n = int(r.get("peak_n") or r.get("peak_day_n") or 0)
-        if n < PEAK_DAY_MIN:
-            continue
-        rows.append(
-            {
-                "floor": r.get("floor") or r.get("name") or r.get("id"),
-                "peak_day": r.get("peak_day"),
-                "peak_n": n,
-                "peak_wr": r.get("peak_wr"),
-            }
+        seq = (
+            list(peak.get("ranking") or [])
+            + list(peak.get("floors") or [])
+            + list(peak.get("towers") or [])
+            + list(peak.get("ranked") or [])
         )
+        for r in seq:
+            if not isinstance(r, dict):
+                continue
+            n = int(r.get("peak_n") or r.get("peak_day_n") or r.get("max_day_signals") or 0)
+            if n < PEAK_DAY_MIN:
+                continue
+            floor = str(r.get("floor") or r.get("name") or r.get("id") or "")
+            if floor in seen:
+                continue
+            seen.add(floor)
+            rows.append(
+                {
+                    "floor": floor,
+                    "peak_day": r.get("peak_day") or r.get("max_day"),
+                    "peak_n": n,
+                    "peak_wr": r.get("peak_wr") or r.get("max_day_wr"),
+                }
+            )
     return rows
 
 
@@ -127,9 +142,10 @@ def apply_already_working() -> dict[str, Any]:
     ledger = _load(LEDGER)
     catalog = _load(CATALOG)
     peak = _load(PEAK)
+    peak_lock = _load(PEAK_LOCK)
     counts = _counts_from_ledger(ledger)
     museum = _museum_working(catalog)
-    peak_floors = _peak_floors(peak)
+    peak_floors = _peak_floors(peak, peak_lock)
 
     decisions = _load(DECISIONS)
     families = decisions.get("families")

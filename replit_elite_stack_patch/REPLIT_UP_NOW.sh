@@ -2,7 +2,7 @@
 # Instant bring-up after a crash — heals state + picks the real DB, then starts
 # babysitter/supervisor. Use when pgrep is empty.
 #   curl -fsSL -o /tmp/UP.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UP_NOW.sh?v=20260821a'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UP_NOW.sh?v=20260821b'
 #   bash /tmp/UP.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
@@ -10,7 +10,7 @@ cd "$ROOT"
 PY="${PY:-python3}"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}/replit_elite_stack_patch"
-V="20260821a"
+V="20260821b"
 mkdir -p logs bot/data
 
 unset PORT REPLIT_SOCKET REPLIT_SOCKETS REPLIT_PORT 2>/dev/null || true
@@ -29,7 +29,7 @@ export FLASK_ENV=production WERKZEUG_RUN_MAIN=true
 
 echo "========== UP NOW ${V} =========="
 echo "-- pull heal/db/g2 (small; does not clobber state.py) --"
-for rel in bot/lux_state_heal.py bot/lux_live_db.py bot/g2_coalition.py bot/lux_free_volume.py bot/lux_no_hour_blocks.py bot/reality_law.py bot/window_packer.py bot/round_sync_densifier.py bot/operator_lock.py bot/data/OPERATOR_LOCK.md bot/lux_send_config_bind.py bot/telegram_outbox.py bot/hub_dispatch.py bot/hub_max_boot.py; do
+for rel in bot/lux_state_heal.py bot/hotfix_signal_handler.py bot/lux_live_db.py bot/g2_coalition.py bot/lux_free_volume.py bot/lux_no_hour_blocks.py bot/reality_law.py bot/window_packer.py bot/round_sync_densifier.py bot/operator_lock.py bot/data/OPERATOR_LOCK.md bot/data/peak_lock_config.json bot/lux_send_config_bind.py bot/telegram_outbox.py bot/hub_dispatch.py bot/hub_max_boot.py bot/run_bacbo_live.py; do
   if curl -fsSL --connect-timeout 20 --max-time 90 -o "$rel" "${RAW}/${rel}?v=${V}"; then
     echo "  OK $rel"
   else
@@ -41,6 +41,10 @@ if [[ -f bot/lux_state_heal.py ]]; then
   echo "-- heal state.py --"
   $PY -u bot/lux_state_heal.py || true
   $PY -m py_compile bot/state.py
+fi
+if [[ -f bot/hotfix_signal_handler.py ]]; then
+  echo "-- hotfix signal_handler _rooms --"
+  $PY -u bot/hotfix_signal_handler.py || true
 fi
 if [[ -f bot/lux_live_db.py ]]; then
   echo "-- live DB probe --"
