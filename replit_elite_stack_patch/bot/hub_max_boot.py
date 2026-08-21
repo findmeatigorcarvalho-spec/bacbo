@@ -48,9 +48,6 @@ CHAT_PRIORITY = [
     "UNIQUE_g3",  # VOLUME
     "UNIQUE_g4",  # ASSERTIVE
     "UNIQUE_g5",  # IMPACT
-    "SOLO",
-    "GOLDEN",
-    "SEQUENCE",
     "MIX",
     "OPS",
 ]
@@ -85,8 +82,11 @@ ENV_KEYS = {
     "HUB_G1_APEX_FIRST": "1",
     "HUB_MONEY_FIRST": "0",
     "PACKER_REAL_COUNTDOWN_MAX": "12",
-    "PACKER_HUB_CHAT": "APEX",
-    "HUB_CHAT_PRIORITY": "UNIQUE_g1,UNIQUE_g2,UNIQUE_g3,UNIQUE_g4,UNIQUE_g5,SOLO,GOLDEN,SEQUENCE,MIX,OPS",
+    "PACKER_HOLD_UNTIL_REAL": "0",
+    "PRINTED_SECS_ARE_OUTCOME": "1",
+    "PACKER_HUB_CHAT": "UNIQUE_g1",
+    "PACKER_CHATS": "UNIQUE_g1,UNIQUE_g2,UNIQUE_g3,UNIQUE_g4,UNIQUE_g5",
+    "HUB_CHAT_PRIORITY": "UNIQUE_g1,UNIQUE_g2,UNIQUE_g3,UNIQUE_g4,UNIQUE_g5,MIX,OPS",
     "HUB_GUNIQUE_FIRST": "1",
     "HUB_CONFIG_SEPARATE": "1",
     "HUB_NO_SHRINK_GATES": "1",
@@ -247,15 +247,33 @@ def apply() -> dict:
         p = WindowPacker()
         t0 = time.time()
         d1 = p.intake(
-            SignalCandidate("boot_long", "COUNTDOWN", "red", 87, 5, 78, detected_at=t0),
+            SignalCandidate("boot_15", "COUNTDOWN", "red", 15, 5, 78, detected_at=t0),
             now=t0,
         )
         d2 = p.intake(
-            SignalCandidate("boot_solo", "SOLO_ELITE", "blue", None, 4, 80, detected_at=t0 + 1),
+            SignalCandidate(
+                "boot_solo",
+                "SOLO_ELITE",
+                "blue",
+                None,
+                4,
+                80,
+                preferred_chat="UNIQUE_g2",
+                detected_at=t0 + 1,
+            ),
             now=t0 + 1,
         )
-        packer_ok = d1.action == "HOLD_UNTIL_REAL" and d2.action == "ALLOW"
-        packer_demo = {"long": d1.action, "solo": d2.action}
+        packer_ok = (
+            d1.action == "ALLOW"
+            and d1.original_secs == 15
+            and d1.card_timing_note == "⏱ 15s"
+            and d2.action == "ALLOW"
+        )
+        packer_demo = {
+            "timed": d1.action,
+            "timed_secs": d1.original_secs,
+            "solo": d2.action,
+        }
     except Exception as exc:
         packer_demo = {"error": repr(exc)}
 
@@ -266,7 +284,8 @@ def apply() -> dict:
             "no_shrink_gates": True,
             "original_card_skins": True,
             "gunique_first_24_7": True,
-            "real_countdown_release_lte_30s": True,
+            "printed_secs_are_outcome": True,
+            "do_not_hold_fire_for_packer_window": True,
         },
         "chat_priority": list(CHAT_PRIORITY),
         "env_path": str(ENV_PATH),
@@ -274,10 +293,10 @@ def apply() -> dict:
         "packer_ok": packer_ok,
         "packer_demo": packer_demo,
         "next": [
-            "Gunique (#1) fills first 24/7",
-            "Money chat (#2) next",
-            "Specialists cascade — elastic spawn if >~3/min",
-            "Each config fires like its own best volume day",
+            "UNIQUE_g1 fills first 24/7",
+            "UNIQUE_g2…g5 cascade — live shelves, not SOLO/GOLDEN/SEQUENCE chats",
+            "Printed seconds on the FIRE card are the outcome timer",
+            "Each system fires like its own best volume day",
         ],
     }
     STATUS.write_text(json.dumps(status, indent=2), encoding="utf-8")

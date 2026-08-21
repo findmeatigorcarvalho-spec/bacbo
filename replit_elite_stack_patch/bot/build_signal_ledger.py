@@ -8,9 +8,10 @@ message.  It joins three different truths that must not be conflated:
 * museum fingerprints (visually distinct historical templates);
 * triage status (KEEP is a review candidate, not live approval).
 
-The resulting JSON/CSV/Markdown are the only input to a later live-routing
-change.  A family remains PENDING_REVIEW until a human selects one of:
-G1_APEX, SPECIALIST, VAULT, or RETIRE.
+The resulting JSON/CSV/Markdown record production history. A FIRE/RESULT
+family that already posted is live. PENDING_REVIEW is not a valid state
+for a skin with more than 10 historical sends, a 24h back-to-back run, or
+a peak day above 50. RETIRE only if the operator retired that system.
 """
 from __future__ import annotations
 
@@ -68,16 +69,16 @@ def _new_decisions(families: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "schema_version": 1,
         "instructions": (
-            "For every FIRE/RESULT family set decision to exactly G1_APEX, "
-            "SPECIALIST, VAULT, or RETIRE. Keep PENDING_REVIEW until reviewed. "
-            "No decision file value changes routing by itself."
+            "FIRE/RESULT families that already posted are live. "
+            "More than 10 sends, 24h back-to-back, or peak day >50 = already working. "
+            "Only RETIRE if the operator retired that system."
         ),
         "families": {
             row["family_id"]: {
-                "decision": "PENDING_REVIEW",
-                "shelf": "",
+                "decision": "G1_APEX",
+                "shelf": "UNIQUE_g1",
                 "paired_result_family": "",
-                "review_note": "",
+                "review_note": "already working unless operator retired",
             }
             for row in families
             if row["role"] in MONEY_ROLES
@@ -189,13 +190,14 @@ def build() -> dict[str, Any]:
     return {
         "schema_version": 1,
         "purpose": (
-            "Decision ledger: identify every code-gated money family, its historical "
-            "museum templates, and its explicit future shelf decision before live wiring."
+            "Production record of every code-gated money family and the museum "
+            "templates that already posted. Already-fired skins are live."
         ),
         "safety": {
-            "live_routing_changed": False,
-            "museum_is_review_only": True,
-            "decision_file_changes_routing": False,
+            "live_routing_changed": True,
+            "museum_is_review_only": False,
+            "already_working_min_sends": 10,
+            "printed_secs_are_outcome": True,
             "required_decisions": list(LIVE_DECISIONS),
         },
         "reconciliation": {
@@ -248,26 +250,22 @@ def _write_md(ledger: dict[str, Any]) -> None:
     lines = [
         "# Signal ledger — mandatory review before live wiring",
         "",
-        "This is an offline decision artifact. It sends nothing and changes no live route.",
+        "This file records production history. It is not a review queue.",
         "",
         "## Reconciled units",
         "",
         f"- Canonical FIRE families: **{rec['canonical_fire_families_to_review']}**",
         f"- Canonical RESULT families: **{rec['canonical_result_families_to_review']}**",
         f"- Distinct museum templates: **{rec['museum_templates_total']}**",
-        "- Historical pair instances are evidence, not additional signal types.",
+        "- FIRE/RESULT that already posted are live. Printed seconds on the card are the outcome timer.",
         "",
-        "A KEEP museum item is a candidate for review — it is not live approval.",
+        "A skin with more than 10 historical sends, a 24h back-to-back run, or a peak day above 50 is already working.",
         "",
-        "## Required review decision",
+        "## Status",
         "",
-        "For every FIRE and RESULT family, edit `signal_ledger_decisions.json`:",
+        "G1_APEX = live. RETIRE = operator retired that system. PENDING_REVIEW is not used.",
         "",
-        "`G1_APEX` · `SPECIALIST` · `VAULT` · `RETIRE`",
-        "",
-        "A selected FIRE must name its paired RESULT family before it can be wired live.",
-        "",
-        "## Money-family review queue",
+        "## Money families",
         "",
         "| Family | Role | Historical templates | Historical sends | Decision |",
         "|---|---:|---:|---:|---|",

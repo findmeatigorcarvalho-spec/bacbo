@@ -95,3 +95,24 @@ The timed `🔵… ⏰ Pawtucket Apostou→Saiu` card is a **RESULT** family (WI
 - Four clocks (source, DB, Telegram, casino)
 
 Do not describe this as “in anyone’s head.” It is in these files.
+
+## Reality laws (not a second catalog, not a review queue)
+
+Production history is already true. Writing it to JSON does not make it true;
+the posting already happened. Do not ask the operator to “confirm” a skin
+that already ran.
+
+1. **Already working.** Any FIRE or RESULT template/skin that posted **more
+   than 10 of itself** is working unless the operator retired that system.
+   Same for a **back-to-back run longer than 24h** or a **peak day above 50
+   signals**. PENDING_REVIEW is not a valid state for that history.
+
+2. **Printed seconds = outcome timer.** If the FIRE card said `15 sec`, the
+   outcome materialized in **exactly 15 seconds**, every time. Wall-clock
+   hour and packer/round-sync “countdown window” do not change that number.
+   Do not HOLD the FIRE until remaining ≤ 12s or ≤ 30s. Post the FIRE with
+   the printed seconds on the card; RESULT sits under that FIRE when those
+   seconds have elapsed (when the round actually resolved).
+
+3. **SOLO / GOLDEN / SEQUENCE are skins, not chats.** Live shelves are
+   `UNIQUE_g1`…`gN`. Mr_iv4 is the birth chat of the catalog.

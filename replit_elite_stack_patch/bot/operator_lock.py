@@ -19,6 +19,12 @@ FACTS = {
     "coalition_distinct_scores_sum": True,
     "same_score_copies_are_one_vote": True,
     "bundle_is_all_systems_plus_all_skins_plus_all_shelves": True,
+    "production_history_is_already_true": True,
+    "already_working_min_sends": 10,
+    "peak_day_min_signals": 50,
+    "back_to_back_24h_already_working": True,
+    "printed_seconds_are_outcome_timer": True,
+    "do_not_hold_fire_for_packer_window": True,
 }
 
 
@@ -41,6 +47,8 @@ def boot() -> dict:
         f"bytes={len(text)}",
         "SYSTEM≠SKIN≠CHAT",
         "SOLO/GOLDEN/SEQUENCE=labels-only",
+        "printed-secs=outcome",
+        "already-working=>10",
         "UNKNOWN museum=550",
     )
     return {"ok": ok, "path": str(LOCK_MD), "facts": FACTS}

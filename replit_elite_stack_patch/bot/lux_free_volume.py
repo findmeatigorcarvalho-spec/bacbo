@@ -48,6 +48,8 @@ FORCE_ENV: dict[str, str] = {
     "HUB_OUTBOX_RESULT_CARDS": "1",
     "FIRE_RESULT_LAW": "1",
     "RESULT_ATTACH_IMMEDIATE": "1",
+    "PACKER_HOLD_UNTIL_REAL": "0",
+    "PRINTED_SECS_ARE_OUTCOME": "1",
     "LUX_G2_COALITION_TO_G1": "1",
 }
 
@@ -116,7 +118,7 @@ def promote_fire_result_families(path: Path | None = None) -> dict[str, Any]:
     data["free_volume"] = True
     data["instructions"] = (
         "FIRE/RESULT families are G1_APEX under LUX_FREE_VOLUME. "
-        "OPS stay PENDING_REVIEW. RETIRE stays retired."
+        "OPS stay OPS. RETIRE stays retired. FIRE/RESULT that already posted are live."
     )
     try:
         p.parent.mkdir(parents=True, exist_ok=True)
@@ -143,6 +145,13 @@ def boot() -> dict[str, Any]:
         )
     except Exception as exc:
         print("[FREE-VOLUME] hour-blocks skip", repr(exc))
+    reality: dict[str, Any] = {}
+    try:
+        import reality_law as _rl
+
+        reality = _rl.boot()
+    except Exception as exc:
+        print("[FREE-VOLUME] reality-law skip", repr(exc))
     print(
         "[FREE-VOLUME] ON",
         f"floor_gate={env.get('EDGE_LUXURY_FLOOR_GATE')}",
@@ -152,7 +161,7 @@ def boot() -> dict[str, Any]:
         f"catchup={env.get('HUB_CATCHUP_MAX_PER_TICK')}",
         f"promoted={len(promo.get('promoted') or [])}",
     )
-    return {"env": env, "ledger": promo, "hour_blocks": hour_json}
+    return {"env": env, "ledger": promo, "hour_blocks": hour_json, "reality": reality}
 
 
 if __name__ == "__main__":

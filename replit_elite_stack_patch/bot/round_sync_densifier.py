@@ -119,6 +119,21 @@ def result_align() -> bool:
     }
 
 
+def printed_secs_are_outcome() -> bool:
+    """Printed N on the FIRE card is the outcome timer. Do not HOLD for TTB window."""
+    try:
+        from reality_law import printed_secs_are_outcome as _ps
+
+        return bool(_ps())
+    except Exception:
+        return os.environ.get("PRINTED_SECS_ARE_OUTCOME", "1").strip().lower() not in {
+            "0",
+            "false",
+            "no",
+            "off",
+        }
+
+
 def result_attach_immediate() -> bool:
     """RESULT under its own FIRE now — default ON (zero intentional delay)."""
     return os.environ.get("RESULT_ATTACH_IMMEDIATE", "1").strip().lower() not in {
@@ -515,6 +530,10 @@ class RoundSyncDensifier:
                     chat=chat_name,
                     fire_key=key,
                 )
+
+        # Printed N is the outcome timer. Do not HOLD until a 12s TTB remainder.
+        if printed_secs_are_outcome():
+            force_now = True
 
         # Long Clock A (30s…400s): always invest spare seconds until live TTB.
         # Card still shows ORIGINAL seconds; we only release when remaining ≤ max.

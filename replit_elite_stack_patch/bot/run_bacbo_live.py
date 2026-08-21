@@ -66,6 +66,13 @@ except Exception as exc:
     print("[BOOT] operator-lock fail:", repr(exc))
 
 try:
+    import reality_law as _rlaw
+
+    _rlaw.boot()
+except Exception as exc:
+    print("[BOOT] reality-law fail:", repr(exc))
+
+try:
     import lux_dialog_resolve as _dr
 
     print("[BOOT] dialog_resolve:", "OK" if _dr.apply() else "FAIL")
@@ -140,6 +147,8 @@ _os.environ.setdefault("FREE_PROPOSE", "1")
 _os.environ.setdefault("VOLUME_MODE", "EXPLOSION")
 _os.environ.setdefault("V2_PROPOSERS", "1")
 _os.environ.setdefault("HUB_ORCHESTRATOR", "1")
+_os.environ["PRINTED_SECS_ARE_OUTCOME"] = "1"
+_os.environ["PACKER_HOLD_UNTIL_REAL"] = "0"
 _os.environ.setdefault("LUXURY_NO_HOUR_BLOCKS", "1")
 _os.environ.setdefault("TELEGRAM_OUTBOX_INLINE", "1")
 _os.environ.setdefault("TELEGRAM_OUTBOX_STARTUP_PING", "0")

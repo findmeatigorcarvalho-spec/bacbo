@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260819g'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260821a'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260819g"
+V="20260821a"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -47,6 +47,9 @@ for pair in \
   "bot/lux_live_db.py|replit_elite_stack_patch/bot/lux_live_db.py" \
   "bot/g2_coalition.py|replit_elite_stack_patch/bot/g2_coalition.py" \
   "bot/lux_free_volume.py|replit_elite_stack_patch/bot/lux_free_volume.py" \
+  "bot/reality_law.py|replit_elite_stack_patch/bot/reality_law.py" \
+  "bot/window_packer.py|replit_elite_stack_patch/bot/window_packer.py" \
+  "bot/round_sync_densifier.py|replit_elite_stack_patch/bot/round_sync_densifier.py" \
   "bot/operator_lock.py|replit_elite_stack_patch/bot/operator_lock.py" \
   "bot/data/OPERATOR_LOCK.md|replit_elite_stack_patch/bot/data/OPERATOR_LOCK.md" \
   "bot/hub_dispatch.py|replit_elite_stack_patch/bot/hub_dispatch.py" \
@@ -408,6 +411,8 @@ echo "-- free-volume: unshrink FIRE/RESULT onto UNIQUE_g1 --"
 $PY -u bot/lux_free_volume.py || true
 echo "-- no-hour-blocks: wipe AutoCHB / AutoIntel hour mutes --"
 $PY -u bot/lux_no_hour_blocks.py || true
+echo "-- reality-law: printed seconds = outcome; already-working skins are live --"
+$PY -u bot/reality_law.py || true
 # Prove bare name is bound before first state.client assign
 $PY -u - <<'PY'
 from pathlib import Path
@@ -442,6 +447,8 @@ for kv in \
   HUB_OUTBOX_RESULT_CARDS=1 \
   FIRE_RESULT_LAW=1 \
   RESULT_ATTACH_IMMEDIATE=1 \
+  PRINTED_SECS_ARE_OUTCOME=1 \
+  PACKER_HOLD_UNTIL_REAL=0 \
   HUB_MAX=1 \
   HUB_ORCHESTRATOR=1 \
   VOLUME_MODE=EXPLOSION \

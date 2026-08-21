@@ -7,12 +7,15 @@ Hard product law — no exceptions when FIRE_RESULT_LAW=1 (default ON):
       comprovation DNA must go live.)
 
   2) Every FIRE that goes out MUST get a RESULT card template/skin
-     glued under it in the same chat, immediately (zero intentional delay).
-     Same signal_id vertical: FIRE → RESULT → gale (see emanation_laws).
+     glued under it in the same chat when the round resolves.
+     The seconds printed on the FIRE card ARE the time until that
+     outcome materializes (15s on the card = 15s to RESULT). Do not
+     HOLD the FIRE until a 12s/30s packing remainder.
 
 Env:
   FIRE_RESULT_LAW=1              (default on)
-  RESULT_ATTACH_IMMEDIATE=1      (glue now — paired with this law)
+  PRINTED_SECS_ARE_OUTCOME=1     (printed N is the outcome timer)
+  RESULT_ATTACH_IMMEDIATE=1      (once the round resolves, glue RESULT now)
   HUB_OUTBOX_RESULT_CARDS=1      (outbox guarantees RESULT template skin)
   EMANATION_LAWS=1               (factual color + hermetic + vertical bundle)
 """
@@ -143,6 +146,6 @@ def law_banner() -> str:
     return (
         "[FIRE↔RESULT LAW] ON — "
         "result-paired signals MUST FIRE; "
-        "every FIRE MUST get RESULT card skin under it (same chat, now)"
+        "every FIRE MUST get RESULT card skin under it (same chat, when printed seconds / round resolve)"
         + extra
     )
