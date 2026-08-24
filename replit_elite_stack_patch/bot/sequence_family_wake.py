@@ -35,6 +35,8 @@ FAMILY_IDS = (
 )
 KIND_NEEDLES = ("SEQUENCE", "SEQUENCIA", "SEQUÊNCIA")
 HEADER = "📊 SEQUENCE SIGNAL — ENTER NOW 📊"
+# Floors that already fired this family (DB attribution + floor factory cells).
+PEAK_FLOORS = ("LIVE", "MAR19", "ELITE_V2", "ELITE_V2_PEAK")
 # Printed countdown on the live family card the operator started with (#2725).
 FAMILY_PRINTED_SECS = 28.5
 FORCE_ENV: dict[str, str] = {
@@ -77,13 +79,43 @@ def apply_env(env: dict[str, str] | None = None) -> dict[str, str]:
     return {k: str(os.environ.get(k, "")) for k in FORCE_ENV}
 
 
+def peak_floors() -> list[str]:
+    """Every floor that already fired this family — each free-fires its own stream."""
+    found: list[str] = []
+    try:
+        import json
+        from pathlib import Path
+
+        data = Path(__file__).resolve().parent / "data"
+        report = json.loads(
+            (data / "g0_secs_round_offset_report.json").read_text(encoding="utf-8")
+        )
+        for cell in report.get("cells") or []:
+            if not isinstance(cell, dict):
+                continue
+            if "SEQUENC" not in str(cell.get("signal_kind") or "").upper():
+                continue
+            floor = str(cell.get("floor") or "").upper().strip()
+            if floor and floor not in found:
+                found.append(floor)
+    except Exception:
+        pass
+    for floor in PEAK_FLOORS:
+        if floor not in found:
+            found.append(floor)
+    return found
+
+
 def boot() -> dict[str, str]:
     out = apply_env()
+    floors = peak_floors()
+    os.environ["SEQUENCE_PEAK_FLOORS"] = ",".join(floors)
     print(
         "[SEQUENCE] forensic countdown IS the FIRE — "
         f"printed {FAMILY_PRINTED_SECS}s = outcome timer · "
         "Apostou→Saiu is the call · UNIQUE_g1"
     )
+    print(f"[SEQUENCE] free-fire floors ({len(floors)}): {', '.join(floors)}")
     return out
 
 
@@ -137,9 +169,23 @@ def skip_after_resolve_forensic(row: Any = None, *, signal_kind: str | None = No
     """Do not re-post the same countdown card after SQLite outcome.
 
     The FIRE already carried Apostou→Saiu and the printed interval. A second
-    copy after resolve is what got misread as 'already happened.'
+    identical copy after resolve is what got misread as 'already happened.'
+
+    A G0 win is identical to what the FIRE already said, so it is dropped.
+    Anything else (loss, tie, or a gale recovery) is NOT identical, so the
+    room still gets that card — a bankroll must never go silent on a miss.
     """
-    return forensic_as_fire() and is_sequence_family(row, signal_kind=signal_kind)
+    if not (forensic_as_fire() and is_sequence_family(row, signal_kind=signal_kind)):
+        return False
+    outcome = str(_get(row, "outcome") or "").strip().lower()
+    if outcome and outcome != "win":
+        return False
+    try:
+        if int(_get(row, "won_at_gale") or 0) != 0:
+            return False
+    except (TypeError, ValueError):
+        pass
+    return True
 
 
 def is_sequence_museum_body(text: str | None) -> bool:
@@ -406,6 +452,14 @@ def main() -> int:
     assert sequence_outbox_owns_fire(demo)
     assert forensic_as_fire()
     assert skip_after_resolve_forensic(demo)
+    assert skip_after_resolve_forensic(R(signal_kind="SEQUENCE", outcome="win"))
+    # A miss or a gale recovery is not what the FIRE said — that card still posts.
+    assert not skip_after_resolve_forensic(R(signal_kind="SEQUENCE", outcome="loss"))
+    assert not skip_after_resolve_forensic(R(signal_kind="SEQUENCE", outcome="tie"))
+    assert not skip_after_resolve_forensic(
+        R(signal_kind="SEQUENCE", outcome="win", won_at_gale=1)
+    )
+    assert "LIVE" in peak_floors()
     fire = fmt_live_sequence_fire(demo, floor="LIVE")
     assert is_forensic_fire_body(fire)
     assert "RESUMIDO FORENSE" in fire
