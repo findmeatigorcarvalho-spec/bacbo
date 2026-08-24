@@ -136,3 +136,10 @@ outcome timer. Outbox posts that skin at FIRE time with Apostou and Saiu
 as the predicted color. Do not wait for SQLite outcome and then re-post
 the same card as “already happened.” Museum `📊 SEQUENCE SIGNAL — ENTER NOW 📊`
 stays in the catalog as a sibling FIRE. Other families are not flattened.
+
+Free-fire floors for this family (each its own stream, peak-day gates):
+`LIVE`, `MAR19`, `ELITE_V2`, `ELITE_V2_PEAK`.
+
+A G0 win repeats what the FIRE already said, so that duplicate is dropped.
+A miss, tie, or gale recovery is **not** what the FIRE said — that card still
+posts. The room never goes silent on a loss.
