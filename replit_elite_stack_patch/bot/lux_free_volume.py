@@ -46,6 +46,8 @@ FORCE_ENV: dict[str, str] = {
     # G2 ESTUDO 14-copy bursts are handled by g2_coalition, not this window.
     "LUX_SEND_DEDUP_SECS": "12",
     "HUB_OUTBOX_RESULT_CARDS": "1",
+    "SEQUENCE_FAMILY_WAKE": "1",
+    "SEQUENCE_OUTBOX_FIRE": "1",
     "FIRE_RESULT_LAW": "1",
     "RESULT_ATTACH_IMMEDIATE": "1",
     "PACKER_HOLD_UNTIL_REAL": "0",

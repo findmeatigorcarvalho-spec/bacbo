@@ -94,6 +94,9 @@ ENV_KEYS = {
     "HUB_STRIP_NOISE_ONLY": "1",
     "HUB_ENGINE_ROUTE": "1",
     "HUB_OUTBOX_FIRE_CARDS": "0",
+    # SEQUENCE family: outbox posts museum ENTER NOW FIRE (engine was silent).
+    "SEQUENCE_FAMILY_WAKE": "1",
+    "SEQUENCE_OUTBOX_FIRE": "1",
     # FIRE↔RESULT law: every FIRE gets RESULT card template skin (outbox guarantee).
     "HUB_OUTBOX_RESULT_CARDS": "1",
     "FIRE_RESULT_LAW": "1",
@@ -190,14 +193,23 @@ def apply() -> dict:
         _free_boot()
     except Exception as exc:
         print("[hub_max_boot] free-volume skip:", repr(exc))
+    try:
+        from sequence_family_wake import FORCE_ENV as _SEQ_ENV, boot as _seq_boot
+
+        keys.update(_SEQ_ENV)
+        _seq_boot()
+    except Exception as exc:
+        print("[hub_max_boot] sequence-family skip:", repr(exc))
     keys["TELEGRAM_PRIMARY_PEER"] = peer
     keys["TELEGRAM_TARGET_PEER"] = peer
     keys["TELEGRAM_COUNTDOWN_PEER"] = cd
     keys["GUNIQUE_PEER"] = cd
     keys["TELEGRAM_EXCLUDE_PEERS"] = "Mr_iv4,6774605259"
     keys["HUB_CHAT_PRIORITY"] = (
-        f"{cd},UNIQUE_g2,UNIQUE_g3,UNIQUE_g4,UNIQUE_g5,SOLO,GOLDEN,SEQUENCE,MIX,OPS"
+        f"{cd},UNIQUE_g2,UNIQUE_g3,UNIQUE_g4,UNIQUE_g5,MIX,OPS"
     )
+    keys["SEQUENCE_FAMILY_WAKE"] = "1"
+    keys["SEQUENCE_OUTBOX_FIRE"] = "1"
     # Numeric id bypasses ResolveUsername FloodWait / UsernameNotOccupied
     gid = ""
     for id_key in (

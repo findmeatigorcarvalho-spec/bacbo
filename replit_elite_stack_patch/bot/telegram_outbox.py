@@ -69,6 +69,8 @@ def _env_flag(name: str, default: str = "0") -> bool:
 
 # When HUB_MAX: engine owns original rich skins; outbox must not duplicate fire cards.
 # Set HUB_OUTBOX_FIRE_CARDS=1 only for gap-fill / debug.
+# SEQUENCE family is the exception: engine has not been posting ENTER NOW, so the
+# outbox owns that FIRE while SEQUENCE_FAMILY_WAKE=1 (forensic RESULT still follows).
 HUB_OUTBOX_FIRE_CARDS = _env_flag(
     "HUB_OUTBOX_FIRE_CARDS",
     "1" if not HUB_MAX else "0",
@@ -263,7 +265,31 @@ def _stamp_floor(signal_id: int, floor: str) -> None:
         print("[Outbox] stamp_floor failed:", repr(exc))
 
 
+def _sequence_owns_fire(row: sqlite3.Row | None = None, signal_kind: str | None = None) -> bool:
+    try:
+        from sequence_family_wake import sequence_outbox_owns_fire
+
+        return bool(sequence_outbox_owns_fire(row, signal_kind=signal_kind))
+    except Exception:
+        kind = ""
+        if signal_kind:
+            kind = signal_kind
+        elif row is not None:
+            try:
+                kind = str(row["signal_kind"] or "")
+            except Exception:
+                kind = ""
+        return "SEQUENCE" in kind.upper()
+
+
 def fmt_consensus(row: sqlite3.Row, floor: str | None = None) -> str:
+    if _sequence_owns_fire(row):
+        try:
+            from sequence_family_wake import fmt_sequence_enter_now
+
+            return fmt_sequence_enter_now(row, floor=floor or _row_floor(row))
+        except Exception as exc:
+            print("[Outbox] sequence ENTER NOW fmt fail:", repr(exc))
     color = (row["color"] or "").lower()
     score = _row_score(row)
     floor_name = floor or _row_floor(row)
@@ -1137,7 +1163,7 @@ async def main(existing_client=None) -> None:
                 f"Tag floor: {boot_tag}\n"
                 f"DB: {DB.name}\n"
                 "Mr_iv4 REMOVED. All primary ENTER + clocks + gale home here.\n"
-                f"Outbox fire cards: {'ON' if HUB_OUTBOX_FIRE_CARDS else 'OFF (engine owns skins)'}\n"
+                f"Outbox fire cards: {'ON' if HUB_OUTBOX_FIRE_CARDS else 'OFF (engine owns skins; SEQUENCE ENTER NOW gap-fill ON)'}\n"
                 f"HUB_MAX={int(HUB_MAX)} · bundle spill g2…gN · never delay."
             )
             try:
@@ -1495,8 +1521,9 @@ async def main(existing_client=None) -> None:
                     floor = _row_floor(row)
                     _stamp_floor(int(row["id"]), floor)
                     score = _row_score(row)
-                    if HUB_MAX and not HUB_OUTBOX_FIRE_CARDS:
+                    if HUB_MAX and not HUB_OUTBOX_FIRE_CARDS and not _sequence_owns_fire(row):
                         # Engine already posted the original skin; do not double-card.
+                        # SEQUENCE is the gap: engine never posted ENTER NOW, so outbox fires it.
                         write_int(SIG_STATE, row["id"])
                         print(
                             "[Outbox] HUB skip fire card (engine owns skin)",
@@ -1526,6 +1553,13 @@ async def main(existing_client=None) -> None:
                             body = fmt_consensus(row, floor=floor)
                     else:
                         body = fmt_consensus(row, floor=floor)
+                    if _sequence_owns_fire(row):
+                        print(
+                            "[Outbox] SEQUENCE ENTER NOW fire",
+                            row["id"],
+                            floor,
+                            row["color"],
+                        )
                     dest, lane, mirrors = _lane_dests(
                         row["signal_kind"],
                         text=body,
@@ -1536,11 +1570,18 @@ async def main(existing_client=None) -> None:
                     dest, lane = await _apply_spill(dest, lane)
                     if HUB_MAX:
                         try:
-                            from hub_dispatch import stamp_route_label
+                            from sequence_family_wake import is_sequence_museum_body
 
-                            body = stamp_route_label(body, lane)
+                            _seq_body = is_sequence_museum_body(body)
                         except Exception:
-                            pass
+                            _seq_body = False
+                        if not _seq_body:
+                            try:
+                                from hub_dispatch import stamp_route_label
+
+                                body = stamp_route_label(body, lane)
+                            except Exception:
+                                pass
                     dests = _hermetic_dests(dest, mirrors)
                     lane_by_id[int(row["id"])] = (dest, lane, mirrors)
                     try:

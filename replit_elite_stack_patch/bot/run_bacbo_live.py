@@ -81,6 +81,14 @@ except Exception as exc:
     print("[BOOT] reality-law fail:", repr(exc))
 
 try:
+    import sequence_family_wake as _seqfam
+
+    _seqfam.boot()
+    print("[BOOT] sequence-family-wake: ON")
+except Exception as exc:
+    print("[BOOT] sequence-family-wake fail:", repr(exc))
+
+try:
     import lux_dialog_resolve as _dr
 
     print("[BOOT] dialog_resolve:", "OK" if _dr.apply() else "FAIL")

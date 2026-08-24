@@ -116,3 +116,13 @@ that already ran.
 
 3. **SOLO / GOLDEN / SEQUENCE are skins, not chats.** Live shelves are
    `UNIQUE_g1`…`gN`. Mr_iv4 is the birth chat of the catalog.
+
+## SEQUENCE family first
+
+The forensic `⏰ Pawtucket / Apostou → Saiu` card with `Tipo: SEQUENCE` is
+the RESULT of the SEQUENCE FIRE family, not the FIRE itself. Peak FIRE is
+museum `FIRE_SEQUENCE_ENTER`: `📊 SEQUENCE SIGNAL — ENTER NOW 📊`.
+`HUB_OUTBOX_FIRE_CARDS=0` skipped that FIRE (assumed the engine posted it).
+With `SEQUENCE_FAMILY_WAKE=1` the outbox posts ENTER NOW to UNIQUE_g1, then
+the same forensic RESULT under it after resolve. Other FIRE families are
+not flattened; this is the first family to fire free again.

@@ -15,12 +15,15 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import time
 from pathlib import Path
 from typing import Any
 
-
 HERE = Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0, str(HERE))
+
 DATA = HERE / "data"
 PEER_STATE = DATA / "hub_peer_by_signal.json"
 TRUST_LOG = DATA / "hub_trust_dispatch.jsonl"
@@ -230,6 +233,23 @@ def stamp_route_label(body: str, actual_lane: str) -> str:
     return "\n".join(out)
 
 
+def _seq_enter_now(row: Any, *, floor: str, trust: dict[str, Any]) -> str | None:
+    try:
+        from sequence_family_wake import enabled, fmt_sequence_enter_now
+
+        if enabled():
+            return fmt_sequence_enter_now(row, floor=floor, trust=trust)
+    except Exception:
+        try:
+            from bot.sequence_family_wake import enabled, fmt_sequence_enter_now
+
+            if enabled():
+                return fmt_sequence_enter_now(row, floor=floor, trust=trust)
+        except Exception:
+            return None
+    return None
+
+
 def fmt_original_fire(row: Any, *, floor: str, trust: dict[str, Any]) -> str:
     kind = str(_row_get(row, "signal_kind") or trust.get("kind") or "SIGNAL").upper()
     color = str(_row_get(row, "color") or trust.get("color") or "").lower()
@@ -300,16 +320,20 @@ def fmt_original_fire(row: Any, *, floor: str, trust: dict[str, Any]) -> str:
             "_After result: /win · /loss · /tie_"
         )
 
-    if kind == "SEQUENCE":
+    if kind == "SEQUENCE" or "SEQUENC" in str(kind or "").upper():
+        museum = _seq_enter_now(row, floor=floor, trust=trust)
+        if museum:
+            return museum
         return (
-            "🔥 SEQUÊNCIA — ENTER NOW 🔥\n"
+            "📊 SEQUENCE SIGNAL — ENTER NOW 📊\n"
+            "\n"
             "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-            f"🎯 Cor: {emoji} {color_label}\n"
-            f"📊 Score: {score:.0f} · Trust {trust_n}\n"
-            f"🏛 Floor: {floor} · Room: {rooms or '—'}\n"
-            f"📡 Route: {slot}\n"
-            "━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-            "⚡ ENTER NOW\n"
+            "\n"
+            f"🎯 Enter: {emoji} {color_label}\n"
+            "   └ _Primary bet — full bankroll_\n"
+            "\n"
+            "⚡ ENTER NOW — PATTERN CONFIRMED\n"
+            "\n"
             "_After result: /win · /loss · /tie_"
         )
 
