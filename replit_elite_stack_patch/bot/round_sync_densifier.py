@@ -376,6 +376,13 @@ def extract_clock_a(text: str) -> Optional[float]:
 
 
 def is_fire_text(text: str) -> bool:
+    try:
+        from sequence_family_wake import forensic_is_live_fire
+
+        if forensic_is_live_fire(text):
+            return True
+    except Exception:
+        pass
     if _DO_NOT_BET_RE.search(text or ""):
         return False
     if _RESULT_RE.search(text or "") and not _ENTER_RE.search(text or ""):

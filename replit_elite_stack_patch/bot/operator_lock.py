@@ -25,6 +25,9 @@ FACTS = {
     "back_to_back_24h_already_working": True,
     "printed_seconds_are_outcome_timer": True,
     "do_not_hold_fire_for_packer_window": True,
+    "forensic_countdown_is_fire": True,
+    "printed_intervalo_is_outcome_timer": True,
+    "saiu_on_forensic_card_is_the_call": True,
 }
 
 
@@ -48,6 +51,7 @@ def boot() -> dict:
         "SYSTEM≠SKIN≠CHAT",
         "SOLO/GOLDEN/SEQUENCE=labels-only",
         "printed-secs=outcome",
+        "forensic-countdown=FIRE",
         "already-working=>10",
         "UNKNOWN museum=550",
     )

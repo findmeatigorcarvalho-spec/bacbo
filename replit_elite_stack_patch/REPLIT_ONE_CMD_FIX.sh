@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ONE command — do not paste anything else into this.
 #   curl -fsSL -o /tmp/ONE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260824a'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_ONE_CMD_FIX.sh?v=20260824b'
 #   bash /tmp/ONE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
 cd "$ROOT"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}"
-V="20260824a"
+V="20260824b"
 PY="${PY:-python3}"
 
 echo "========== ONE CMD FIX ${V} =========="
@@ -56,6 +56,7 @@ for pair in \
   "bot/data/peak_lock_config.json|replit_elite_stack_patch/bot/data/peak_lock_config.json" \
   "bot/hub_dispatch.py|replit_elite_stack_patch/bot/hub_dispatch.py" \
   "bot/sequence_family_wake.py|replit_elite_stack_patch/bot/sequence_family_wake.py" \
+  "bot/dual_lane_router.py|replit_elite_stack_patch/bot/dual_lane_router.py" \
   "bot/chronology_evidence.py|replit_elite_stack_patch/bot/chronology_evidence.py" \
   "bot/chronology_integrity_audit.py|replit_elite_stack_patch/bot/chronology_integrity_audit.py" \
   "bot/observer_confirm.py|replit_elite_stack_patch/bot/observer_confirm.py" \
@@ -418,7 +419,7 @@ echo "-- no-hour-blocks: wipe AutoCHB / AutoIntel hour mutes --"
 $PY -u bot/lux_no_hour_blocks.py || true
 echo "-- reality-law: printed seconds = outcome; already-working skins are live --"
 $PY -u bot/reality_law.py || true
-echo "-- sequence-family: museum ENTER NOW FIRE under forensic RESULT --"
+echo "-- sequence-family: forensic countdown FIRE (printed secs = outcome) --"
 $PY -u bot/sequence_family_wake.py || true
 # Prove bare name is bound before first state.client assign
 $PY -u - <<'PY'

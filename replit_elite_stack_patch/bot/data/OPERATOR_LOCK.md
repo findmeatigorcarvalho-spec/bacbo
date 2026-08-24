@@ -28,6 +28,9 @@ impression. It is the saved product facts.
 
 G2 ESTUDO lines and the timed `⏰ Pawtucket / Apostou → Saiu` cards are
 **their own styles**. They are not Golden, not Solo, not Sequence.
+The Apostou→Saiu countdown card is a live FIRE skin: printed Intervalo is
+the outcome timer. Production already proved the predicted color
+materializes in that exact countdown. Do not treat Saiu as a finished ball.
 Many museum fingerprints have **no registry label** (role UNKNOWN).
 Those still count. We are looking for every FIRE and RESULT template
 that ever posted, labeled or not.
@@ -82,7 +85,10 @@ COLOR_BANNER (historically huge send count), G0_ACERTOU_PRIMEIRA, GALE_RECOVERED
 EMPATE_DINHEIRO_DEVOLVIDO, EMPATE_PROTECAO, CD_RES_GREEN_G_BRT, CD_RES_RODADAS_TEMPO,
 CD_RES_BELL_GANHOU, G2_RESERVE_WIN, AUTO_WIN, AUTO_LOSS, FINAL_LOSS_AFTER_G3.
 
-The timed `🔵… ⏰ Pawtucket Apostou→Saiu` card is a **RESULT** family (WIN/LOSS tier + timed window + color banner), not a FIRE and not SOLO/GOLDEN/SEQUENCE.
+The timed `🔵… ⏰ Pawtucket Apostou→Saiu` card is its own countdown FIRE
+skin (WIN/LOSS tier + timed window + color banner). Printed Intervalo is
+the outcome timer. It is not SOLO/GOLDEN/SEQUENCE-the-label, and it is not
+a post-hoc report. Awaken it as it already ran.
 
 ## What else besides peak day / WR / volume / G0
 
@@ -111,18 +117,22 @@ that already ran.
    outcome materialized in **exactly 15 seconds**, every time. Wall-clock
    hour and packer/round-sync “countdown window” do not change that number.
    Do not HOLD the FIRE until remaining ≤ 12s or ≤ 30s. Post the FIRE with
-   the printed seconds on the card; RESULT sits under that FIRE when those
-   seconds have elapsed (when the round actually resolved).
+   the printed seconds on the card.
 
 3. **SOLO / GOLDEN / SEQUENCE are skins, not chats.** Live shelves are
    `UNIQUE_g1`…`gN`. Mr_iv4 is the birth chat of the catalog.
 
-## SEQUENCE family first
+4. **Forensic Apostou→Saiu countdown is a FIRE.** The predicted color and
+   the printed Intervalo are the call. That color materializes in that
+   exact countdown — already proven in production. Do not argue whether
+   the card is “before” or “after” the ball. Do not tell the operator
+   Saiu is a finished round they should not bet.
 
-The forensic `⏰ Pawtucket / Apostou → Saiu` card with `Tipo: SEQUENCE` is
-the RESULT of the SEQUENCE FIRE family, not the FIRE itself. Peak FIRE is
-museum `FIRE_SEQUENCE_ENTER`: `📊 SEQUENCE SIGNAL — ENTER NOW 📊`.
-`HUB_OUTBOX_FIRE_CARDS=0` skipped that FIRE (assumed the engine posted it).
-With `SEQUENCE_FAMILY_WAKE=1` the outbox posts ENTER NOW to UNIQUE_g1, then
-the same forensic RESULT under it after resolve. Other FIRE families are
-not flattened; this is the first family to fire free again.
+## SEQUENCE / forensic family first
+
+The UNIQUE_g1 card `⏰ Pawtucket / Apostou → Saiu / Tipo: SEQUENCE` is the
+live FIRE for this family. Printed Intervalo (28.5s on #2725) is the
+outcome timer. Outbox posts that skin at FIRE time with Apostou and Saiu
+as the predicted color. Do not wait for SQLite outcome and then re-post
+the same card as “already happened.” Museum `📊 SEQUENCE SIGNAL — ENTER NOW 📊`
+stays in the catalog as a sibling FIRE. Other families are not flattened.

@@ -10,7 +10,8 @@ SPLIT KEY (locked)
 1) Classify ROLE first: FIRE (color-coming / enter) vs RESULT (outcome).
 2) Only FIRE templates choose the Telegram lane.
 3) RESULT always inherits the parent FIRE's lane (same chat as the signal).
-4) Result metadata like "⏱ Intervalo: 31.3s" NEVER makes a card a countdown fire.
+4) Printed Intervalo on the forensic Apostou→Saiu card IS the outcome timer
+   (this family fires as a countdown FIRE). Do not treat Saiu as a finished ball.
 
 LANES (Profit Chat Bundle — Mr_iv4 REMOVED)
 ─────
@@ -29,7 +30,7 @@ RESULT families (never lane-select by themselves)
 ─────────────────────────────────────────────────
   Plain: G0/G1/G2 win/loss, "✅ WIN — SOLO_ELITE", "blue win on G0", forensic resumido
   Ops:   G1 EXPIROU, G2 MISS, session stop — still RESULTS; glue under parent fire
-  Clock C on results (⏱ Intervalo fire→resolve) is REPORTING, never Clock A.
+  Forensic Apostou→Saiu Intervalo is the outcome timer on that FIRE family.
   See TIMING_CLOCKS.md + fire_origin.py (COALITION vs SOLO_FACT).
 """
 from __future__ import annotations
@@ -182,6 +183,19 @@ def classify_role(
         return ROLE_FIRE
     body = str(text or meta.get("text") or meta.get("card_text") or "")
     if body and _RESULT_BODY.search(body):
+        try:
+            from sequence_family_wake import forensic_is_live_fire
+
+            if forensic_is_live_fire(body) and meta.get("is_result") not in (
+                1,
+                True,
+                "1",
+                "true",
+                "yes",
+            ):
+                return ROLE_FIRE
+        except Exception:
+            pass
         # Forensic / win-loss skins are results even if they also say Intervalo Ns
         return ROLE_RESULT
     if kind in _CD_FIRE_KINDS or ctype in _CD_FIRE_KINDS or ctype.startswith("CD_FIRE"):

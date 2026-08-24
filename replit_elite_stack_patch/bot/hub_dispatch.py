@@ -235,16 +235,16 @@ def stamp_route_label(body: str, actual_lane: str) -> str:
 
 def _seq_enter_now(row: Any, *, floor: str, trust: dict[str, Any]) -> str | None:
     try:
-        from sequence_family_wake import enabled, fmt_sequence_enter_now
+        from sequence_family_wake import enabled, fmt_live_sequence_fire
 
         if enabled():
-            return fmt_sequence_enter_now(row, floor=floor, trust=trust)
+            return fmt_live_sequence_fire(row, floor=floor, trust=trust)
     except Exception:
         try:
-            from bot.sequence_family_wake import enabled, fmt_sequence_enter_now
+            from bot.sequence_family_wake import enabled, fmt_live_sequence_fire
 
             if enabled():
-                return fmt_sequence_enter_now(row, floor=floor, trust=trust)
+                return fmt_live_sequence_fire(row, floor=floor, trust=trust)
         except Exception:
             return None
     return None

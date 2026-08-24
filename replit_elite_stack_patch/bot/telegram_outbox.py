@@ -285,11 +285,11 @@ def _sequence_owns_fire(row: sqlite3.Row | None = None, signal_kind: str | None 
 def fmt_consensus(row: sqlite3.Row, floor: str | None = None) -> str:
     if _sequence_owns_fire(row):
         try:
-            from sequence_family_wake import fmt_sequence_enter_now
+            from sequence_family_wake import fmt_live_sequence_fire
 
-            return fmt_sequence_enter_now(row, floor=floor or _row_floor(row))
+            return fmt_live_sequence_fire(row, floor=floor or _row_floor(row))
         except Exception as exc:
-            print("[Outbox] sequence ENTER NOW fmt fail:", repr(exc))
+            print("[Outbox] sequence forensic FIRE fmt fail:", repr(exc))
     color = (row["color"] or "").lower()
     score = _row_score(row)
     floor_name = floor or _row_floor(row)
@@ -939,7 +939,7 @@ async def main(existing_client=None) -> None:
         try:
             from chat_router import route_card
 
-            meta = {"is_result": is_result} if is_result else {}
+            meta = {"is_result": True} if is_result else {"is_fire": True}
             target = route_card(
                 text,
                 signal_id=str(signal_id) if signal_id is not None else None,
@@ -975,7 +975,11 @@ async def main(existing_client=None) -> None:
             )
 
             parent = parent_lane_for(signal_id) if signal_id is not None else None
-            meta = {"is_result": is_result, "parent_lane": parent} if is_result else {}
+            meta = (
+                {"is_result": True, "parent_lane": parent}
+                if is_result
+                else {"is_fire": True, "parent_lane": parent}
+            )
             lane = route_lane(
                 signal_kind=signal_kind,
                 text=text,
@@ -1363,6 +1367,20 @@ async def main(existing_client=None) -> None:
                 rid = int(row["id"])
                 if rid in results_done:
                     return True
+                try:
+                    from sequence_family_wake import skip_after_resolve_forensic
+
+                    if skip_after_resolve_forensic(row):
+                        write_int(RES_STATE, rid)
+                        results_done.add(rid)
+                        print(
+                            "[Outbox] skip after-resolve forensic — "
+                            "countdown card already fired as the call",
+                            rid,
+                        )
+                        return True
+                except Exception:
+                    pass
                 _law_force_result = False
                 try:
                     from bot.config.fire_result_law import (
@@ -1555,7 +1573,7 @@ async def main(existing_client=None) -> None:
                         body = fmt_consensus(row, floor=floor)
                     if _sequence_owns_fire(row):
                         print(
-                            "[Outbox] SEQUENCE ENTER NOW fire",
+                            "[Outbox] SEQUENCE forensic countdown FIRE",
                             row["id"],
                             floor,
                             row["color"],
@@ -1570,9 +1588,9 @@ async def main(existing_client=None) -> None:
                     dest, lane = await _apply_spill(dest, lane)
                     if HUB_MAX:
                         try:
-                            from sequence_family_wake import is_sequence_museum_body
+                            from sequence_family_wake import is_forensic_fire_body, is_sequence_museum_body
 
-                            _seq_body = is_sequence_museum_body(body)
+                            _seq_body = is_forensic_fire_body(body) or is_sequence_museum_body(body)
                         except Exception:
                             _seq_body = False
                         if not _seq_body:

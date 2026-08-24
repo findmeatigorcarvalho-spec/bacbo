@@ -20,15 +20,16 @@ Examples: `JANELA: 1s para apostar`, `🟢 1s 🟢`, `11s`, `17s`, classic CD_FI
 Different sense from Clock A: A = “enter by T”; B = “outcome expected around T / next G0.”  
 If a template only has ENTER NOW with no A and no B → money/coalition style fire.
 
-## CLOCK C — RESOLVE INTERVAL (forensic reporting)
+## CLOCK C — printed interval on the forensic countdown FIRE
 
-**On the RESULT.** Answers: *how long did fire→resolved actually take?*
+On the Apostou→Saiu / RESUMIDO FORENSE card, printed `⏱ Intervalo` **is the
+outcome timer**. The predicted color materializes in that exact countdown.
+Already proven in production. Do not treat this skin as post-hoc reporting
+and do not tell the operator Saiu is a finished ball.
 
-Example: `⏱ Intervalo: 31.3s` / `16.6s` on RESUMIDO FORENSE.
-
-- **Never** a reason to call the card a countdown fire.
-- **Never** the same thing as Clock A’s `JANELA: 1s`.
-- Clock C can be 132s after a fire that had Clock A = 1s. Both can be true: you had 1s to enter; the round resolved 132s after fire timestamp.
+Clock A (`JANELA: 1s para apostar`) is still a different machine (urgency
+to click). Do not mix them. Do not mix this family's printed Intervalo with
+Clock A either — Intervalo here is the outcome timer.
 
 ## One-line test
 

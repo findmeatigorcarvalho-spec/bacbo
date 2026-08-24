@@ -11,6 +11,9 @@ Laws locked from live Telegram history (Mr_iv4 + UNIQUE_gN), not from chat memor
    materializes. If the card said 15s, the result arrived in 15s — every time.
    A packer/round-sync "window" does not rewrite that number and must not
    HOLD the FIRE until some 12s/30s remainder.
+4. The forensic Apostou→Saiu countdown card is a FIRE. Printed Intervalo is
+   the outcome timer. The predicted color materializes in that countdown.
+   Already proven. Do not treat Saiu as a finished ball.
 
 This module applies those laws to routing files. It does not invent a second
 truth store.

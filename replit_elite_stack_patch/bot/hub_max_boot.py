@@ -94,9 +94,11 @@ ENV_KEYS = {
     "HUB_STRIP_NOISE_ONLY": "1",
     "HUB_ENGINE_ROUTE": "1",
     "HUB_OUTBOX_FIRE_CARDS": "0",
-    # SEQUENCE family: outbox posts museum ENTER NOW FIRE (engine was silent).
+    # SEQUENCE family: forensic countdown card fires as the call (printed secs = outcome).
     "SEQUENCE_FAMILY_WAKE": "1",
     "SEQUENCE_OUTBOX_FIRE": "1",
+    "FORENSIC_AS_FIRE": "1",
+    "FORENSIC_COUNTDOWN_SECS": "28.5",
     # FIRE↔RESULT law: every FIRE gets RESULT card template skin (outbox guarantee).
     "HUB_OUTBOX_RESULT_CARDS": "1",
     "FIRE_RESULT_LAW": "1",
@@ -210,6 +212,8 @@ def apply() -> dict:
     )
     keys["SEQUENCE_FAMILY_WAKE"] = "1"
     keys["SEQUENCE_OUTBOX_FIRE"] = "1"
+    keys["FORENSIC_AS_FIRE"] = "1"
+    keys["FORENSIC_COUNTDOWN_SECS"] = "28.5"
     # Numeric id bypasses ResolveUsername FloodWait / UsernameNotOccupied
     gid = ""
     for id_key in (
