@@ -2,7 +2,7 @@
 # Instant bring-up after a crash — heals state + picks the real DB, then starts
 # babysitter/supervisor. Use when pgrep is empty.
 #   curl -fsSL -o /tmp/UP.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UP_NOW.sh?v=20260824b'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_UP_NOW.sh?v=20260825a'
 #   bash /tmp/UP.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
@@ -10,7 +10,7 @@ cd "$ROOT"
 PY="${PY:-python3}"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}/replit_elite_stack_patch"
-V="20260824b"
+V="20260825a"
 mkdir -p logs bot/data
 
 unset PORT REPLIT_SOCKET REPLIT_SOCKETS REPLIT_PORT 2>/dev/null || true

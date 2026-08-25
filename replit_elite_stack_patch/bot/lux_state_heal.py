@@ -34,6 +34,15 @@ GETATTR_END = "# --- end LUXURY_STATE_GETATTR ---"
 
 STRUCTURAL = {"client", "me", "running", "engine", "learner", "bind", "on"}
 
+# Live engine handles. A cold-start default is fine, but the runtime sweep must
+# NEVER retype these: coercing them to {} every 15s wiped the prediction state
+# the engine had built, so coalition never reached a decision and no consensus
+# row was ever written.
+NEVER_COERCE_AT_RUNTIME = {
+    "_color_markov",
+    "_markov_engine",
+}
+
 # Always dicts — signal_handler does state._rooms.get(chat_id).
 ALWAYS_DICT = {
     "_rooms",
@@ -68,8 +77,12 @@ ALWAYS_DICT = {
     "_room_scan_time",
 }
 
+SET_NAMES = {n for n in ALWAYS_DICT if n.endswith(("_ids", "_seen", "_cids"))}
+
 GET_RX = re.compile(r"\bstate\.([A-Za-z_][A-Za-z0-9_]*)\.get\s*\(")
 ITEM_RX = re.compile(r"\bstate\.([A-Za-z_][A-Za-z0-9_]*)\[")
+
+_MISSING = object()
 
 
 def _root() -> Path:
@@ -309,32 +322,43 @@ def heal(root: Path | None = None) -> dict:
 
 
 def ensure_runtime_maps(state_mod: object | None = None, *, silent: bool = False) -> dict:
-    """Coerce None maps on the live state module. Call at every boot."""
+    """Fill in missing/None maps on the live state module. Call at every boot.
+
+    Only None or absent names are healed. A live dict/set/list/engine that the
+    megafile already populated is left exactly as it is — retyping it is what
+    killed the propose path.
+    """
     if state_mod is None:
         try:
             import state as state_mod  # type: ignore
         except Exception as exc:
             return {"ok": False, "error": repr(exc)}
-    coerced: list[str] = []
+    healed: list[str] = []
+    kept: list[str] = []
     for name in ALWAYS_DICT:
-        cur = getattr(state_mod, name, None)
-        if not isinstance(cur, dict):
-            setattr(state_mod, name, {})
-            coerced.append(name)
+        cur = getattr(state_mod, name, _MISSING)
+        if cur is _MISSING or cur is None:
+            if name in NEVER_COERCE_AT_RUNTIME:
+                continue
+            setattr(state_mod, name, set() if name in SET_NAMES else {})
+            healed.append(name)
+        elif not isinstance(cur, dict):
+            kept.append(f"{name}:{type(cur).__name__}")
     rooms = getattr(state_mod, "_rooms", None)
     ok = isinstance(rooms, dict)
-    if coerced or not silent:
+    if healed or not silent:
         print(
             "[STATE-MAPS]",
             "OK" if ok else "FAIL",
-            f"coerced={coerced or 'none'}",
-            f"rooms={type(rooms).__name__}",
+            f"healed={healed or 'none'}",
+            f"rooms={type(rooms).__name__}(n={len(rooms) if isinstance(rooms, dict) else '?'})",
+            f"kept_live={kept or 'none'}",
         )
-    return {"ok": ok, "coerced": coerced}
+    return {"ok": ok, "healed": healed, "kept_live": kept}
 
 
 def start_maps_sweep() -> None:
-    """Megafile may assign `_rooms = None` after heal. Keep it a dict."""
+    """Megafile may assign `_rooms = None` after heal. Heal that, touch nothing else."""
     try:
         import threading
         import time
