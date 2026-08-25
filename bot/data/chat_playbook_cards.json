@@ -1,0 +1,159 @@
+{
+  "generated_for": "profit_chat_bundle_g1_apex",
+  "cards": [
+    {
+      "id": "APEX",
+      "peer": "UNIQUE_g1",
+      "title": "APEX — #1 most important chat (takes Mr_iv4's place)",
+      "becomes": "the first chat that fires every primary ENTER + clock + gale",
+      "identity": "existence + essence + impact + results — proven by delivery, not label",
+      "why_it_makes_money": "One primary surface humans can trust every round. Zero Mr_iv4 dependency.",
+      "human_return": [
+        "ENTER",
+        "TTB clock",
+        "gale",
+        "RESULT comprovation"
+      ],
+      "signals": [
+        "ENTER",
+        "ENTRY",
+        "SINAL",
+        "GALE",
+        "PROTECAO",
+        "PROTEÇÃO",
+        "RESULT",
+        "VITÓRIA",
+        "DERROTA",
+        "CLOCK",
+        "TTB"
+      ],
+      "never": [
+        "delay bet window",
+        "route to Mr_iv4",
+        "vanity proof without RESULT"
+      ]
+    },
+    {
+      "id": "PRECISION",
+      "peer": "UNIQUE_g2",
+      "title": "PRECISION — sniper / FLASH / ULTRA_TIE",
+      "becomes": "the chat that fires only when assertiveness is extreme",
+      "identity": "precision + assertiveness + WR focus",
+      "why_it_makes_money": "Protects APEX from noise while still monetizing high-conviction fragments.",
+      "human_return": [
+        "FLASH ENTER",
+        "ULTRA_TIE",
+        "high-assertiveness ENTRY"
+      ],
+      "signals": [
+        "FLASH",
+        "ULTRA_TIE",
+        "SNIPER",
+        "PRECISE"
+      ],
+      "never": [
+        "flood with medium-conviction noise"
+      ]
+    },
+    {
+      "id": "VOLUME",
+      "peer": "UNIQUE_g3",
+      "title": "VOLUME — density / overflow / secondary ENTER",
+      "becomes": "the chat that absorbs profitable overflow without delaying APEX",
+      "identity": "volume + existence + continuous presence",
+      "why_it_makes_money": "More honest chances per hour when APEX is at soft-cap.",
+      "human_return": [
+        "secondary ENTER",
+        "density clocks",
+        "overflow RESULT"
+      ],
+      "signals": [
+        "ENTER",
+        "ENTRY",
+        "CLOCK",
+        "RESULT"
+      ],
+      "never": [
+        "steal the primary APEX slot"
+      ]
+    },
+    {
+      "id": "ASSERTIVE",
+      "peer": "UNIQUE_g4",
+      "title": "ASSERTIVE — gale / recovery / protection",
+      "becomes": "the chat that owns recovery when the first shot needs a second chance",
+      "identity": "assertiveness + impact + recovery WR",
+      "why_it_makes_money": "Gale/protection is where bankroll is defended and recovered.",
+      "human_return": [
+        "GALE 1/2",
+        "PROTEÇÃO",
+        "recovery RESULT"
+      ],
+      "signals": [
+        "GALE",
+        "PROTECAO",
+        "PROTEÇÃO",
+        "RECOVERY"
+      ],
+      "never": [
+        "hide recovery from humans"
+      ]
+    },
+    {
+      "id": "IMPACT",
+      "peer": "UNIQUE_g5",
+      "title": "IMPACT — RESULT comprovation / ops / proof",
+      "becomes": "the chat that proves every stated effect with RESULT",
+      "identity": "impact + results + essence proof",
+      "why_it_makes_money": "Proof compounds trust → humans stay → more volume captured honestly.",
+      "human_return": [
+        "RESULT GREEN/LOSS",
+        "PL",
+        "session proof"
+      ],
+      "signals": [
+        "RESULT",
+        "VITÓRIA",
+        "DERROTA",
+        "GREEN",
+        "LOSS",
+        "PL"
+      ],
+      "never": [
+        "claim without comprovation"
+      ]
+    },
+    {
+      "id": "ELASTIC",
+      "peer": "UNIQUE_g6+",
+      "title": "ELASTIC — mint under pressure, never delay",
+      "becomes": "the overflow that appears only when keepers need more room",
+      "identity": "existence under load — created when needed",
+      "why_it_makes_money": "Soft-cap never becomes a delay. Extra honest chances still fire.",
+      "human_return": [
+        "spill ENTER",
+        "spill RESULT"
+      ],
+      "signals": [
+        "any keeper overflow"
+      ],
+      "never": [
+        "delay the bet window to wait for capacity"
+      ]
+    },
+    {
+      "id": "EXCLUDED",
+      "peer": "Mr_iv4",
+      "title": "REMOVED from the live equation",
+      "becomes": "history only — not a live money surface",
+      "identity": "former money king; replaced by UNIQUE_g1 APEX",
+      "why_it_makes_money": "N/A — excluded. TELEGRAM_EXCLUDE_PEERS blocks Mr_iv4 + 6774605259.",
+      "human_return": [],
+      "signals": [],
+      "never": [
+        "route any live signal here",
+        "scrape again for live path"
+      ]
+    }
+  ]
+}

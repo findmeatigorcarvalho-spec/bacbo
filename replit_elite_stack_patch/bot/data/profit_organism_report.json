@@ -1,0 +1,478 @@
+{
+  "generated_at": "2026-07-22T03:51:53.046574+00:00",
+  "organism": "PROFIT_ORGANISM_v1",
+  "db_path": "/workspace/replit_exports/db/bot/bacbo.db",
+  "mission": {
+    "max_wr": true,
+    "max_g0": true,
+    "max_volume": true,
+    "zero_missed_winners": true,
+    "each_floor_ge_peak_day": true,
+    "usd_day_target": [
+      5000,
+      20000
+    ],
+    "user_friendly_dual_chat": true
+  },
+  "vitals": {
+    "floors_ranked": 32,
+    "volume_gap_floors": [
+      "LIVE",
+      "ELITE_V2",
+      "MAY19",
+      "APR20",
+      "MAY10",
+      "ULTIMATE",
+      "MAY01",
+      "AITEST_LIVE",
+      "JUN10",
+      "JUN08",
+      "JUN20",
+      "JUN19",
+      "JUN27"
+    ],
+    "silent_floors": [
+      "AITEST_ULTIMATE",
+      "AITEST_APR20_MAX",
+      "APR20_MAX",
+      "MAY11",
+      "APR30"
+    ],
+    "gates_not_peak_locked": [
+      "MAR19",
+      "MAR20",
+      "APR26",
+      "APR27",
+      "APR29",
+      "MAR21",
+      "APR22",
+      "APR28",
+      "AITEST_MAR21",
+      "MAY04",
+      "JUN26"
+    ],
+    "zero_miss": {
+      "fired_resolved": 1713,
+      "fired_wins": 1318,
+      "fired_g0": 1290,
+      "blocked_total": 374,
+      "blocked_wins_misses": 163,
+      "blocked_losses": 147,
+      "win_capture_rate_pct": 88.99
+    },
+    "vault_perfect_0L_patterns": 36,
+    "lane_scan_msgs": 536853,
+    "lane_scan_stats": {
+      "cd_timer_fire": 26753,
+      "money_fire_no_timer": 77297,
+      "result_winish": 331597,
+      "result_lossish": 133741,
+      "floor_tagged": 7890
+    }
+  },
+  "strength_top10": [
+    {
+      "rank": 1,
+      "floor": "LIVE",
+      "strength_score": 473.37,
+      "peak_day": "2026-05-19",
+      "peak_n": 18786,
+      "peak_wr": 81.13,
+      "historical_g0_wr": 77.57,
+      "gate": "ELITE_V2",
+      "fidelity": "VOLUME_GAP_VS_PEAK",
+      "assertiveness": 85.32,
+      "blocked_wins": 1
+    },
+    {
+      "rank": 2,
+      "floor": "ELITE_V2",
+      "strength_score": 423.58,
+      "peak_day": "2026-05-19",
+      "peak_n": 8522,
+      "peak_wr": 80.42,
+      "historical_g0_wr": 79.99,
+      "gate": "ELITE_V2",
+      "fidelity": "VOLUME_GAP_VS_PEAK",
+      "assertiveness": 100.0,
+      "blocked_wins": 0
+    },
+    {
+      "rank": 3,
+      "floor": "MAR19",
+      "strength_score": 393.83,
+      "peak_day": "2026-06-08",
+      "peak_n": 12057,
+      "peak_wr": 72.28,
+      "historical_g0_wr": 69.94,
+      "gate": "MAR19",
+      "fidelity": "GATE_NOT_PEAK_LOCKED",
+      "assertiveness": 59.77,
+      "blocked_wins": 0
+    },
+    {
+      "rank": 4,
+      "floor": "MAY19",
+      "strength_score": 343.77,
+      "peak_day": "2026-05-19",
+      "peak_n": 3427,
+      "peak_wr": 78.28,
+      "historical_g0_wr": 77.78,
+      "gate": "MAY19_peak",
+      "fidelity": "VOLUME_GAP_VS_PEAK",
+      "assertiveness": null,
+      "blocked_wins": 0
+    },
+    {
+      "rank": 5,
+      "floor": "AITEST_ULTIMATE",
+      "strength_score": 334.11,
+      "peak_day": "2026-05-19",
+      "peak_n": 49,
+      "peak_wr": 93.75,
+      "historical_g0_wr": 93.75,
+      "gate": "ULTIMATE",
+      "fidelity": "NO_LIVE_ATTRIBUTION",
+      "assertiveness": null,
+      "blocked_wins": 0
+    },
+    {
+      "rank": 6,
+      "floor": "APR20",
+      "strength_score": 329.33,
+      "peak_day": "2026-05-20",
+      "peak_n": 115,
+      "peak_wr": 81.48,
+      "historical_g0_wr": 81.48,
+      "gate": "APR20_perfect",
+      "fidelity": "VOLUME_GAP_VS_PEAK",
+      "assertiveness": 100.0,
+      "blocked_wins": 6
+    },
+    {
+      "rank": 7,
+      "floor": "AITEST_APR20_MAX",
+      "strength_score": 329.31,
+      "peak_day": "2026-05-19",
+      "peak_n": 93,
+      "peak_wr": 92.13,
+      "historical_g0_wr": 92.13,
+      "gate": "APR20_perfect",
+      "fidelity": "NO_LIVE_ATTRIBUTION",
+      "assertiveness": null,
+      "blocked_wins": 0
+    },
+    {
+      "rank": 8,
+      "floor": "MAY10",
+      "strength_score": 325.5,
+      "peak_day": "2026-05-10",
+      "peak_n": 1461,
+      "peak_wr": 74.12,
+      "historical_g0_wr": 73.9,
+      "gate": "MAY10_peak",
+      "fidelity": "VOLUME_GAP_VS_PEAK",
+      "assertiveness": 77.78,
+      "blocked_wins": 0
+    },
+    {
+      "rank": 9,
+      "floor": "MAR20",
+      "strength_score": 323.01,
+      "peak_day": "2026-05-11",
+      "peak_n": 2637,
+      "peak_wr": 70.64,
+      "historical_g0_wr": 67.45,
+      "gate": "MAR20",
+      "fidelity": "GATE_NOT_PEAK_LOCKED",
+      "assertiveness": 54.55,
+      "blocked_wins": 0
+    },
+    {
+      "rank": 10,
+      "floor": "APR26",
+      "strength_score": 316.99,
+      "peak_day": "2026-05-08",
+      "peak_n": 101,
+      "peak_wr": 79.57,
+      "historical_g0_wr": 77.42,
+      "gate": "APR27",
+      "fidelity": "GATE_NOT_PEAK_LOCKED",
+      "assertiveness": 100.0,
+      "blocked_wins": 7
+    }
+  ],
+  "vault_perfect_top": [
+    {
+      "keys": [
+        "dow",
+        "lead"
+      ],
+      "values": [
+        4,
+        "robobacbodados"
+      ],
+      "W": 56,
+      "L": 0,
+      "recent_W": 56,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "lead"
+      ],
+      "values": [
+        14,
+        "robobacbodados"
+      ],
+      "W": 47,
+      "L": 0,
+      "recent_W": 47,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "hour"
+      ],
+      "values": [
+        "SEQUENCE",
+        7
+      ],
+      "W": 37,
+      "L": 0,
+      "recent_W": 37,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "hour"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        9
+      ],
+      "W": 35,
+      "L": 0,
+      "recent_W": 8,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "dow",
+        "lead"
+      ],
+      "values": [
+        "SEQUENCE",
+        5,
+        "robobacbodados"
+      ],
+      "W": 35,
+      "L": 0,
+      "recent_W": 35,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "dow",
+        "lead"
+      ],
+      "values": [
+        6,
+        5,
+        "robobacbodados"
+      ],
+      "W": 28,
+      "L": 0,
+      "recent_W": 28,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "blue",
+        0,
+        6
+      ],
+      "W": 27,
+      "L": 0,
+      "recent_W": 2,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "lead"
+      ],
+      "values": [
+        6,
+        "isadados"
+      ],
+      "W": 24,
+      "L": 0,
+      "recent_W": 4,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "lead"
+      ],
+      "values": [
+        8,
+        "isadados"
+      ],
+      "W": 23,
+      "L": 0,
+      "recent_W": 2,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "red",
+        10,
+        5
+      ],
+      "W": 22,
+      "L": 0,
+      "recent_W": 12,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "GOLDEN",
+        "blue",
+        15,
+        2
+      ],
+      "W": 20,
+      "L": 0,
+      "recent_W": 19,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "lead"
+      ],
+      "values": [
+        "SEQUENCE",
+        "isadados"
+      ],
+      "W": 20,
+      "L": 0,
+      "recent_W": 20,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "lead"
+      ],
+      "values": [
+        "SEQUENCE",
+        "m8sinais"
+      ],
+      "W": 20,
+      "L": 0,
+      "recent_W": 20,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "dow"
+      ],
+      "values": [
+        13,
+        5
+      ],
+      "W": 20,
+      "L": 0,
+      "recent_W": 3,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "blue",
+        8,
+        6
+      ],
+      "W": 19,
+      "L": 0,
+      "recent_W": 0,
+      "recent_L": 0
+    }
+  ],
+  "dollar_projection": {
+    "assumptions": {
+      "peak_g0_reference_day": 635.0,
+      "win_capture_rate": 0.95,
+      "multi_floor_uplift": 2.28,
+      "stake_per_g0_unit_usd": 10.0,
+      "note": "Projection of G0 density \u00d7 stake. Not a guarantee. Losses/bankroll mgmt separate."
+    },
+    "expected_g0_per_day": 1375.4,
+    "expected_usd_per_day_g0_only": 13754.1,
+    "band_usd": {
+      "conservative": 6877.05,
+      "target_low": 5000,
+      "target_high": 20000,
+      "hits_5k": true,
+      "hits_20k": false,
+      "stake_needed_for_5k": 3.64,
+      "stake_needed_for_20k": 14.54
+    }
+  },
+  "directives": [
+    "DUAL_LANE: money fires (no timer) \u2192 Mr_iv4 coalition; countdown-seconds fires \u2192 Gunique + CD result glue",
+    "V2_PROPOSERS: every live floor must propose (close VOLUME_GAP / NO_LIVE_ATTRIBUTION)",
+    "ZERO_MISS: blocked_wins must trend to 0 except HARD_BLOCK floors",
+    "VAULT_FORCE: promote 0-loss vault patterns into propose score / whitelist",
+    "RESULT_TRUTH: loss on red \u21d2 blue was right; weight coalition toward actual color learners",
+    "PEAK_LOCK: finish gate aliases for GATE_NOT_PEAK_LOCKED floors",
+    "USER_UX: one money chat + one countdown chat; result always under its fire; no AUTO relay spam",
+    "STAKE: set unit stake so expected_g0_per_day \u00d7 stake enters $5k\u2013$20k band when capture\u22650.9"
+  ],
+  "next_build": [
+    "Wire dual_lane_router into telegram_outbox (TELEGRAM_COUNTDOWN_PEER=Gunique)",
+    "v2 floor proposers feeding money-lane coalition",
+    "Score proposers with vault_perfect + peak_fidelity strength_score",
+    "Live zero_miss hooks on every BLOCK/SEND/RESOLVE",
+    "Full room-post pattern mine with holdout (promote only durable edges)"
+  ],
+  "hard_block": [
+    "JUN12A",
+    "JUN12B"
+  ]
+}

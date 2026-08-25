@@ -1,0 +1,316 @@
+{
+  "generated_at": "2026-07-23T03:09:10Z",
+  "volume_mode": "SAFE_MERGE",
+  "v2_proposers_enabled": false,
+  "architecture": {
+    "v1": "LIVE proposes \u2192 N floors score \u2192 merge \u22641",
+    "v2": "N floors propose \u2192 referee by VOLUME_MODE \u2192 outbox",
+    "user_worry": "36 peak floors installed but volume not exploding \u2014 correct: they are scorers, not free proposers yet"
+  },
+  "proposer_floors": 32,
+  "floors": [
+    {
+      "floor": "JUN10",
+      "gate": "JUN10_peak",
+      "peak_day": "2026-06-10",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "AITEST_ULTIMATE",
+      "gate": "ULTIMATE",
+      "peak_day": "2026-05-19",
+      "lane": "PRECISION",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "AITEST_APR20_MAX",
+      "gate": "APR20_perfect",
+      "peak_day": "2026-05-19",
+      "lane": "PRECISION",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "MAY01",
+      "gate": "MAY01_peak",
+      "peak_day": "2026-05-20",
+      "lane": "BALANCED",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "APR20",
+      "gate": "APR20_perfect",
+      "peak_day": "2026-05-20",
+      "lane": "BALANCED",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "LIVE",
+      "gate": "ELITE_V2",
+      "peak_day": "2026-05-19",
+      "lane": "BALANCED",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "JUN20",
+      "gate": "JUN20_peak",
+      "peak_day": "2026-06-20",
+      "lane": "BALANCED",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "APR27",
+      "gate": "APR27",
+      "peak_day": "2026-05-20",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "ELITE_V2",
+      "gate": "ELITE_V2",
+      "peak_day": "2026-05-19",
+      "lane": "BALANCED",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "ULTIMATE",
+      "gate": "ULTIMATE",
+      "peak_day": "2026-05-16",
+      "lane": "BALANCED",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "AITEST_LIVE",
+      "gate": "ELITE_V2",
+      "peak_day": "2026-05-19",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "APR22",
+      "gate": "APR22",
+      "peak_day": "2026-05-08",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "APR26",
+      "gate": "APR27",
+      "peak_day": "2026-05-08",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "JUN19",
+      "gate": "JUN19_peak",
+      "peak_day": "2026-06-19",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "APR20_MAX",
+      "gate": "APR20_perfect",
+      "peak_day": "2026-05-20",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "JUN26",
+      "gate": "JUN26",
+      "peak_day": "2026-06-26",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "MAY19",
+      "gate": "MAY19_peak",
+      "peak_day": "2026-05-19",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "MAY10",
+      "gate": "MAY10_peak",
+      "peak_day": "2026-05-10",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "MAR21",
+      "gate": "MAR21",
+      "peak_day": "2026-05-15",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "JUN27",
+      "gate": "JUN27_peak",
+      "peak_day": "2026-06-27",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "APR29",
+      "gate": "APR29",
+      "peak_day": "2026-05-15",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "ELITE_V2_PEAK",
+      "gate": "ELITE_V2_PEAK",
+      "peak_day": "2026-05-30",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "MAR19",
+      "gate": "MAR19",
+      "peak_day": "2026-06-08",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "MAY11",
+      "gate": "MAY11_peak",
+      "peak_day": "2026-06-13",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "MAR20",
+      "gate": "MAR20",
+      "peak_day": "2026-05-11",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "AITEST_MAR21",
+      "gate": "MAR21",
+      "peak_day": "2026-05-20",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "JUN08",
+      "gate": "JUN08_peak",
+      "peak_day": "2026-06-08",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "APR30",
+      "gate": "APR30_peak",
+      "peak_day": "2026-05-15",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "APR28",
+      "gate": "APR28_complex",
+      "peak_day": "2026-05-08",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "AITEST_APR20",
+      "gate": "APR20_perfect",
+      "peak_day": "2026-05-18",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "MAY04",
+      "gate": "MAY04",
+      "peak_day": "2026-05-15",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    },
+    {
+      "floor": "APR19",
+      "gate": "APR19_golden",
+      "peak_day": "2026-05-15",
+      "lane": "VOLUME",
+      "role": "PROPOSER"
+    }
+  ],
+  "fidelity_gaps": {
+    "floors_ranked": 32,
+    "gap_or_silent": 18,
+    "gap_floors": [
+      "LIVE",
+      "ELITE_V2",
+      "MAY19",
+      "AITEST_ULTIMATE",
+      "APR20",
+      "AITEST_APR20_MAX",
+      "MAY10",
+      "ULTIMATE",
+      "MAY01",
+      "AITEST_LIVE",
+      "APR20_MAX",
+      "JUN10",
+      "MAY11",
+      "JUN08",
+      "APR30",
+      "JUN20",
+      "JUN19",
+      "JUN27"
+    ],
+    "note": "Gaps mean peak machines are installed but not freely proposing their peak-day stream (v1 single LIVE mouth)."
+  },
+  "should_volume": {
+    "floors_with_peak_n": 31,
+    "peak_sum_signals": 51338,
+    "top10": [
+      [
+        "MAR19",
+        12057
+      ],
+      [
+        "ELITE_V2",
+        8522
+      ],
+      [
+        "JUN08",
+        5281
+      ],
+      [
+        "JUN10",
+        4249
+      ],
+      [
+        "MAY19",
+        3427
+      ],
+      [
+        "JUN27",
+        3056
+      ],
+      [
+        "JUN20",
+        3003
+      ],
+      [
+        "JUN19",
+        2908
+      ],
+      [
+        "MAR20",
+        2637
+      ],
+      [
+        "JUN26",
+        2637
+      ]
+    ],
+    "interpretation": "SHOULD \u2248 sum of independent peak-day free-fires. IS under v1 \u2248 single LIVE stream (merge \u22641). VOLUME_MODE=SAFE_MERGE."
+  },
+  "next": [
+    "Wire engine room events into per-floor peak-gate evaluate()",
+    "enqueue_proposal({floor, color, kind, score, window_id, lane})",
+    "Set VOLUME_MODE=EXPLOSION for peak-sum free-fire",
+    "Outbox drain referee(kept) with dual-lane + result glue",
+    "KPI: each floor live_n/day \u2265 peak_n/day"
+  ]
+}

@@ -1,0 +1,2163 @@
+{
+  "generated_at": "2026-07-23T03:43:32.776798+00:00",
+  "source_csv": "/workspace/vany_video_telegram_chat_history.csv",
+  "understanding": {
+    "clock_a": "🟢 1s 🟢 / JANELA: 1s para apostar = seconds YOU HAVE TO PLACE THE BET (entry urgency). NOT 'when the casino hit arrives'.",
+    "start_axis": "WITH_TIMING vs NO_TIMING on EVERY fire+result template that ever fired — Intervalo 31.3s, 200s, 400s, rodadas·Ns, countdown durations — PT or EN. Good or bad, n=1 counts."
+  },
+  "stats": {
+    "skip_short": 1156,
+    "scanned": 535697,
+    "NO_TIMING": 499476,
+    "WITH_TIMING": 36221,
+    "CLOCK_A_ENTRY": 20350
+  },
+  "clock_a_without_other_duration": 17578,
+  "role_timing": {
+    "FIRE|NO_TIMING": 43200,
+    "OTHER|NO_TIMING": 435311,
+    "RESULT|NO_TIMING": 19942,
+    "OTHER|WITH_TIMING": 10537,
+    "FIRE|WITH_TIMING": 4301,
+    "RESULT|WITH_TIMING": 19495,
+    "MIXED|WITH_TIMING": 1888,
+    "MIXED|NO_TIMING": 1023
+  },
+  "duration_buckets": {
+    "60-120s": 15312,
+    "15-30s": 13179,
+    "30-60s": 7070,
+    "5-15s": 11778,
+    "0-5s": 9620,
+    "120-200s": 1537,
+    "200-400s": 2361,
+    "400s+": 2746
+  },
+  "template_counts": {
+    "with_timing": 4225,
+    "no_timing": 14856,
+    "total_fingerprints": 19081
+  },
+  "top_with_timing_templates": [
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 1376,
+      "fingerprint": "7809fbcb8232|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔮 | ORACLE CARD #48003 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🏛 | FLOOR CAMADA | : MAR19 |  | 🎯 | TIER / KIND | : SOLO_ELITE |  | 📊 | TOTAL SCORE | : 0.00 |  | ⏱ | TIMING DELAY | : 1.5s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎲 | PREDICTED OUTCOME | : ❌ LOSS (RED) |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "duration_examples": [
+        1.5,
+        1.9,
+        1.7,
+        1.1,
+        0.8
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 1348,
+      "fingerprint": "c2f76fa78ea7|🔥🔥🔥",
+      "sample_head": "🔥🔥🔥 | SEQUÊNCIA 112x 🔵 AZUL |  🔥🔥🔥 |  | ━━━━━━━━━━━━━━━━ |  | ⚡ | APOSTE AGORA: |  | 👉 | 🔵 AZUL |  👈 |  | 📊 Últimos: 🔵 🔵 🔵 🔵 🔵 🔵 |  | ⏱ | 11s |  · janela fecha 14:21h EDT |  | ━━━━━━━━━━━━━━━━ |  | 📋 | COMO JOGAR |  | ━━━━━━━━━━━━━━━━ |  | 1️⃣ Aposte | $10 |  no 🔵 | AZUL |  | 2️⃣ Aposte | $1 |  no 🟡 | EMPATE |  _(proteção)_ |  | 3️⃣ Aguarde o resultado",
+      "duration_examples": [
+        11.0,
+        1.0,
+        15.0,
+        22.0,
+        2.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 926,
+      "fingerprint": "89dc6147007d|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔮 | ORACLE CARD #48004 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🏛 | FLOOR CAMADA | : MAR19 |  | 🎯 | TIER / KIND | : SOLO_ELITE |  | 📊 | TOTAL SCORE | : 0.00 |  | ⏱ | TIMING DELAY | : 29.2s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎲 | PREDICTED OUTCOME | : ❌ LOSS (BLUE) |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "duration_examples": [
+        29.2,
+        1.0,
+        1.8,
+        0.9,
+        25.8
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 787,
+      "fingerprint": "595f192abd23|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔮 | ORACLE CARD #48017 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🏛 | FLOOR CAMADA | : MAR19 |  | 🎯 | TIER / KIND | : GOLDEN |  | 📊 | TOTAL SCORE | : 0.00 |  | ⏱ | TIMING DELAY | : 4.2s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎲 | PREDICTED OUTCOME | : ✅ G0 WIN (RED) |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "duration_examples": [
+        4.2,
+        2.1,
+        3.2,
+        6.7,
+        2.4
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 710,
+      "fingerprint": "d2f7fab1615a|🚨",
+      "sample_head": "🚨 | [DELIVERY AUDIT] |  1 CRITICAL issue(s) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ❌ | ROOMS_SILENT(0 [Recv] in 60 s) — rooms disconnected or no activity |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 recv=0/60s · flood=0/2min · stale=0/60s · quiet=0/5min · tasks=64 |  | _DeliveryAudit v6.14 — 60 s cycle — 16:24 UT",
+      "duration_examples": [
+        60.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 641,
+      "fingerprint": "c0abee604242|🚨",
+      "sample_head": "🚨 | [DELIVERY AUDIT] |  1 CRITICAL issue(s) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ❌ | DB_WRITE_FAILED — cannot INSERT into bacbo.db (DB locked, full, or corrupt) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 recv=0/60s · flood=0/2min · stale=0/60s · quiet=0/5min · tasks=63 |  | _DeliveryAudit v6.14 — 60 s cycle —",
+      "duration_examples": [
+        60.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 566,
+      "fingerprint": "90e3dd3d3675|🚨",
+      "sample_head": "🚨 | [DELIVERY AUDIT] |  1 CRITICAL issue(s) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ❌ | ROOMS_SILENT(0 [Recv] in 60 s) — rooms disconnected or no activity |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ⚠️ | WALL_STATE_STALE(db=1 s ago, wall=999999 s ago) — _last_signal_wall not updated |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ",
+      "duration_examples": [
+        60.0,
+        1.0,
+        21.0,
+        4.0,
+        8.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 516,
+      "fingerprint": "a7fff8e96a6d|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔮 | ORACLE CARD #48001 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🏛 | FLOOR CAMADA | : MAR20 |  | 🎯 | TIER / KIND | : GOLDEN |  | 📊 | TOTAL SCORE | : 0.00 |  | ⏱ | TIMING DELAY | : 6.2s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎲 | PREDICTED OUTCOME | : ✅ G0 WIN (BLUE) |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "duration_examples": [
+        6.2,
+        2.6,
+        3.6,
+        3.4,
+        35.2
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 475,
+      "fingerprint": "91be444be867|⚡",
+      "sample_head": "⚡ | ELITE ANALISANDO |  ⚡ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏰⏰⏰ | 09:43 — EDT |   ⏰⏰⏰ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔍 | @rigosinais |  | _1 sala elite analisando — sinal esperado em breve_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏱ ~15s para o sinal — aguarde / wait |  | 📱 | Abra a plataforma, sinal chegando / signal in",
+      "duration_examples": [
+        15.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 467,
+      "fingerprint": "251094d1de3e|🚨",
+      "sample_head": "🚨 | [DELIVERY AUDIT] |  1 CRITICAL issue(s) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ❌ | DB_WRITE_FAILED — cannot INSERT into bacbo.db (DB locked, full, or corrupt) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ⚠️ | WALL_STATE_STALE(db=54 s ago, wall=999999 s ago) — _last_signal_wall not updated |  | ━━━━━━━━━━━━━━━━━",
+      "duration_examples": [
+        54.0,
+        9999.0,
+        57.0,
+        51.0,
+        22.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 420,
+      "fingerprint": "30df09f30c11|⚡",
+      "sample_head": "⚡ | ELITE ANALISANDO |  ⚡ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔍 | @rigosinais |  | _Sinal elite esperado em breve_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏱ Aguarde 30-60s para o sinal |  | ⏰ 20:33:33 | Bac Bo Royal |  | 📱 | Abra a plataforma, aguarde o sinal",
+      "duration_examples": [
+        60.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 338,
+      "fingerprint": "70cea7af9649|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔮 | ORACLE CARD #48006 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🏛 | FLOOR CAMADA | : MAR19 |  | 🎯 | TIER / KIND | : SEQUENCE |  | 📊 | TOTAL SCORE | : 0.00 |  | ⏱ | TIMING DELAY | : 2.0s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎲 | PREDICTED OUTCOME | : ❌ LOSS (RED) |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "duration_examples": [
+        2.0,
+        14.3,
+        29.8,
+        1.9,
+        26.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 324,
+      "fingerprint": "00df711cdfe4|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰ | 07:05 BRT  ·  06:05 EDT |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 | ✅ GANHOU |   ·  #5008 |  | 🎲 Apostou: 🔴 VERMELHO (Banker)  →  Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 | SINAL #5008 — RESUMIDO FORENSE |  |   Tipo: | SOLO_ELITE |  · Cor: | VERMELHO (Banker) |  |   Disparado: | 2026-05-07 10",
+      "duration_examples": [
+        19.0,
+        10.6,
+        11.0,
+        30.6,
+        31.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 282,
+      "fingerprint": "43c1c907be51|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 14:30 BRT  ·  13:30 EDT |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔔 | ✅ GANHOU |   ·  #4389 |  | 🎲 Apostou: 🔵 AZUL (Player)  →  Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 | SINAL #4389 — RESUMIDO FORENSE |  |   Tipo: | SOLO_ELITE |  · Cor: | AZUL (Player) |  |   Disparado: | 2026-05-04 17:29:43 |  UTC | ",
+      "duration_examples": [
+        25.1,
+        25.0,
+        19.3,
+        19.0,
+        12.7,
+        13.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 256,
+      "fingerprint": "c5272e74dd6b|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰ | 19:51 BRT  ·  18:51 EDT |  ⏰ |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 | ✅ GANHOU |   ·  #15154 |  | 🎲 | Apostou: 🔴 VERMELHO (Banker) |   → | Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 _#15154 · SOLO_ELITE · VERMELHO (Banker) · ⏱34s · ✅ G0 WIN_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ✅  G",
+      "duration_examples": [
+        34.0,
+        36.0,
+        39.0,
+        64.0,
+        49.0
+      ]
+    },
+    {
+      "role": "FIRE",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": true,
+      "n": 250,
+      "fingerprint": "7a8efa42a8fd|⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T",
+      "sample_head": "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 🔵 | AZUL CHEGOU — G0 🔴 FALHOU |  | ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 👉👉👉 | 🔵 G1 — AZUL (Player) — $20 |  👈👈👈 |  | ⏱ | Janela G1: 1s — aposte agora! |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ✅ Markov confirma 🔵 cor OPOSTA | | 60% |  — estratégia alinhada |  | 📊 Sequência: 🔵 🔵 🔵 🔵 🔵 🔵 → 🔵 |  | ━━━━━━━━━━━━━━━━━━━",
+      "duration_examples": [
+        1.0,
+        14.0,
+        11.0,
+        18.0,
+        10.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 241,
+      "fingerprint": "ca0369116b67|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰ | 05:37 BRT  ·  04:37 EDT |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 | ❌ PERDEU |   ·  #5165 |  | 🎲 Apostou: 🔴 VERMELHO (Banker)  →  Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 | SINAL #5165 — RESUMIDO FORENSE |  |   Tipo: | SOLO_ELITE |  · Cor: | VERMELHO (Banker) |  |   Disparado: | 2026-05-08 08:36:",
+      "duration_examples": [
+        13.8,
+        14.0,
+        36.8,
+        37.0,
+        15.7,
+        16.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 237,
+      "fingerprint": "91cbf9ff9bb5|⚡",
+      "sample_head": "⚡ | ELITE ANALISANDO |  ⚡ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏰⏰⏰ | 13:57 — Brasília |   ⏰⏰⏰ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔍 | @rigosinais |  | _1 sala elite analisando — sinal esperado em breve_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏱ ~15s para o sinal — aguarde / wait |  | 📱 | Abra a plataforma, sinal chegando / sign",
+      "duration_examples": [
+        15.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 226,
+      "fingerprint": "3449086cb9f9|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 19:56 BRT  ·  18:56 EDT |  ⏰ |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔔 | ✅ GANHOU |   ·  #15155 |  | 🎲 | Apostou: 🔵 AZUL (Player) |   → | Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 _#15155 · SOLO_ELITE · AZUL (Player) · ⏱94s · ✅ G0 WIN_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ✅  GANHOU NO G0 | ",
+      "duration_examples": [
+        94.0,
+        34.0,
+        36.0,
+        39.0,
+        191.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 222,
+      "fingerprint": "68857e9120ee|⚡",
+      "sample_head": "⚡ | ELITE ANALISANDO |  ⚡ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏰⏰⏰ | 09:50 — EDT |   ⏰⏰⏰ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔍 | @isadados |  | _1 sala elite analisando — sinal esperado em breve_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏱ ~15s para o sinal — aguarde / wait |  | 📱 | Abra a plataforma, sinal chegando / signal inco",
+      "duration_examples": [
+        15.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 216,
+      "fingerprint": "8fceb1ee43b7|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 19:27 BRT  ·  18:27 EDT |  ⏰ |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔔 | ✅ GANHOU |   ·  #15133 |  | 🎲 | Apostou: 🔵 AZUL (Player) |   → | Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 _#15133 · SEQUENCE · AZUL (Player) · ⏱65s · ✅ G0 WIN_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ✅  GANHOU NO G0 |  | ━",
+      "duration_examples": [
+        65.0,
+        183.0,
+        15.0,
+        20.0,
+        24.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 215,
+      "fingerprint": "43432a4573ca|🔐🔐🔐",
+      "sample_head": "🔐🔐🔐 | TRIPLE LOCK CHEGANDO |  🔐🔐🔐 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏰⏰⏰ | 09:46 — EDT |   ⏰⏰⏰ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔍 | @coringadados |  + | @isadados |  + | @rigosinais |  | _3 salas elite analisando — maior sinal iminente!_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏱ ~10s para o sinal — esteja pronto / be ready |  | ",
+      "duration_examples": [
+        10.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 214,
+      "fingerprint": "7223a5f8719d|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 01:49 BRT  ·  00:49 EDT |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔔 | ❌ PERDEU |   ·  #5123 |  | 🎲 Apostou: 🔵 AZUL (Player)  →  Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 | SINAL #5123 — RESUMIDO FORENSE |  |   Tipo: | SOLO_ELITE |  · Cor: | AZUL (Player) |  |   Disparado: | 2026-05-08 04:48:53 |  ",
+      "duration_examples": [
+        12.1,
+        12.0,
+        71.0,
+        25.2,
+        25.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 213,
+      "fingerprint": "93c93c21c744|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔮 | ORACLE CARD #48009 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🏛 | FLOOR CAMADA | : MAR20 |  | 🎯 | TIER / KIND | : PLATINUM |  | 📊 | TOTAL SCORE | : 0.00 |  | ⏱ | TIMING DELAY | : 16.0s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎲 | PREDICTED OUTCOME | : ✅ G0 WIN (RED) |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "duration_examples": [
+        16.0,
+        1.6,
+        22.0,
+        19.0,
+        16.6
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 197,
+      "fingerprint": "7549636c6285|🔍",
+      "sample_head": "🔍 | HEALTH MONITOR — 14:20 UTC |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⚠️ | SCORE DISTRIBUTION |  |   • Score clustering: 72% dos bloqueios em ±1.0 da mediana (4.6) — possível threshold drift |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | _30-min monitor · 5.67s · /gate_audit para análise completa_",
+      "duration_examples": [
+        5.67,
+        3.72,
+        15.21,
+        5.02,
+        15.9
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 197,
+      "fingerprint": "ecc5ae7d88c2|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰ | 20:07 BRT  ·  19:07 EDT |  ⏰ |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 | ❌ PERDEU |   ·  #15160 |  | 🎲 | Apostou: 🔴 VERMELHO (Banker) |   → | Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 _#15160 · SOLO_ELITE · VERMELHO (Banker) · ⏱239s · ❌ LOSS_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ❌  PE",
+      "duration_examples": [
+        239.0,
+        30.0,
+        228.0,
+        490.0,
+        73.0
+      ]
+    },
+    {
+      "role": "FIRE",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": true,
+      "n": 192,
+      "fingerprint": "8db725552d22|⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T",
+      "sample_head": "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 🔴 | VERMELHO CHEGOU — G0 🔵 FALHOU |  | ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 👉👉👉 | 🔴 G1 — VERMELHO (Banker) — $20 |  👈👈👈 |  | ⏱ | Janela G1: 11s — aposte agora! |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ✅ Markov confirma 🔴 cor OPOSTA | | 60% |  — estratégia alinhada |  | 📊 Sequência: 🔴 🔴 🔴 🔴 🔴 🔴 → 🔴 |  | ━━━━━━━━━━",
+      "duration_examples": [
+        11.0,
+        1.0,
+        9.0,
+        12.0,
+        4.0
+      ]
+    },
+    {
+      "role": "MIXED",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": true,
+      "n": 181,
+      "fingerprint": "4f388dc02420|⛔",
+      "sample_head": "⛔ | DO NOT BET — ROUND PASSED |  ⛔ |  | 🕐 | 12:22:26 EDT |  · | 13:22:26 BRT |  | ▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰ |  | 🏛️ | Motor Live |  · configuração dinâmica |  | 📌 | CONFIG: |  SOLO ELITE |  | 🏅 | RANK #6 de 8 |  · ELITE PADRÃO |  | 📊 | WR HISTÓRICO: |  78%+ WR · ⭐⭐⭐ |  | 🔵 | COR DA APOSTA: AZUL |  | 🔴 | JANELA: |  1s para apostar |  | 🛡 | SEGURANÇA",
+      "duration_examples": [
+        1.0,
+        22.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 178,
+      "fingerprint": "c01a97131748|🔴🔴🔴 🕐",
+      "sample_head": "🔴🔴🔴 🕐 | 09:55 BRT · 08:55 EDT |  🔴🔴🔴 |  | 🔔 | ✅ GANHOU |   ·  #41465 |  | 🎲 Apostou: 🔴 VERMELHO (Banker)  →  Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 #41465 · SOLO_ELITE · ⏱ 19.3s · ✅ G0 WIN |  | ━━━━━━━━━━━━━━━━ |  | 📋 | ✅  GANHOU NO G0 |  | ━━━━━━━━━━━━━━━━ |  |   ✅ | G0  $10 |   ·  GANHOU",
+      "duration_examples": [
+        19.3,
+        19.0,
+        34.9,
+        35.0,
+        50.4,
+        50.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 178,
+      "fingerprint": "760e8279e3f6|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔮 | ORACLE CARD #48002 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🏛 | FLOOR CAMADA | : MAR19 |  | 🎯 | TIER / KIND | : SEQUENCE |  | 📊 | TOTAL SCORE | : 0.00 |  | ⏱ | TIMING DELAY | : 1.3s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎲 | PREDICTED OUTCOME | : ✅ G0 WIN (BLUE) |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "duration_examples": [
+        1.3,
+        1.7,
+        1.9,
+        19.9,
+        0.5
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 177,
+      "fingerprint": "21a3ee55fc87|✅✅✅",
+      "sample_head": "✅✅✅ | GANHOU / WIN — G0! |  ✅✅✅ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔖 | Sinal #1997 / Signal #1997 |  | 🎯 Previsto / Predicted: 🔵 AZUL / BLUE (Player) |  | 🏆 | Primeira tentativa / First try — G0 |  — Perfeito / Perfect! |  | ⏱ Rodadas / Rounds: | 1 |  | Tempo / Time: | 25s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ℹ️ _Resultado",
+      "duration_examples": [
+        25.0,
+        17.0,
+        24.0,
+        30.0,
+        37.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 172,
+      "fingerprint": "fd085bcb1b53|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰ | 19:28 BRT  ·  18:28 EDT |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 | ✅ GANHOU |   ·  #4780 |  | 🎲 Apostou: 🔴 VERMELHO (Banker)  →  Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 | SINAL #4780 — RESUMIDO FORENSE |  |   Tipo: | GOLDEN |  · Cor: | VERMELHO (Banker) |  |   Disparado: | 2026-05-05 22:27:",
+      "duration_examples": [
+        15.1,
+        15.0,
+        16.0,
+        17.1,
+        17.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 165,
+      "fingerprint": "0ea5b6a934e4|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔮 | ORACLE CARD #5 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🏛 | FLOOR CAMADA | : None |  | 🎯 | TIER / KIND | : SOLO_ELITE |  | 📊 | TOTAL SCORE | : 0.00 |  | ⏱ | TIMING INTERVAL | : 6439787.0s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎲 | PREDICTED OUTCOME | : ✅ G0 WIN (RED) |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "duration_examples": [
+        9787.0,
+        8003.0,
+        7059.0,
+        6532.0,
+        6339.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 161,
+      "fingerprint": "53a5da1db9f5|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 10:39 BRT  ·  09:39 EDT |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔔 | ✅ GANHOU |   ·  #4868 |  | 🎲 Apostou: 🔵 AZUL (Player)  →  Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 | SINAL #4868 — RESUMIDO FORENSE |  |   Tipo: | GOLDEN |  · Cor: | AZUL (Player) |  |   Disparado: | 2026-05-06 13:38:46 |  UTC |  |   R",
+      "duration_examples": [
+        28.3,
+        28.0,
+        12.3,
+        12.0,
+        14.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 158,
+      "fingerprint": "4d0f5bcf80f1|⚠T",
+      "sample_head": "⚠️ | G0 NÃO FOI — ENTRE NO G1 AGORA |  | 👉 | 🔴 VERMELHO (Banker) |  👈 |  | ⏱ | Janela G1: 11s — aposte agora! |  | ━━━━━━━━━━━━━━━━ |  | Sinal era: 🔴 VERMELHO (Banker)  ·  Veio: 🔵 AZUL (Player) |  | 🔮 Markov: próxima cor → 🔵 | 60% |  | ━━━━━━━━━━━━━━━━ |  | 📋 | G1 — MANTER COR ORIGINAL: |  | ① Aposte | $20 |  em 🔴 | VERMELHO (Ba",
+      "duration_examples": [
+        11.0,
+        1.0,
+        22.0,
+        6.0,
+        4.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": true,
+      "n": 156,
+      "fingerprint": "59c71bfe4867|🔥",
+      "sample_head": "🔥 | WIN_1S |  | 🎯 | RED |  | ⏰ Janela: 1s",
+      "duration_examples": [
+        1.0,
+        3.0,
+        4.0,
+        0.0,
+        2.0
+      ]
+    },
+    {
+      "role": "FIRE",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": true,
+      "n": 153,
+      "fingerprint": "c3fa229c6683|⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T",
+      "sample_head": "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 🔴 | VERMELHO CHEGOU — G0 🔴 FALHOU |  | ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 👉👉👉 | 🔵 G1 — AZUL (Player) — $20 |  👈👈👈 |  | ⏱ | Janela G1: 11s — aposte agora! |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 Estratégia: cor OPOSTA 🔵 AZUL _(Markov diverge: 🔴 60% — estratégia prevalece)_ |  | 📊 Sequência: 🔴 🔴 🔴 🔴 🔴 ",
+      "duration_examples": [
+        11.0,
+        1.0,
+        18.0,
+        3.0,
+        5.0
+      ]
+    },
+    {
+      "role": "MIXED",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 148,
+      "fingerprint": "7b4a72527c64|⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T",
+      "sample_head": "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | ⚠️ | G0 MISS — G1 AGORA |  | ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 👉👉👉 | 🔴 VERMELHO (Banker) |  👈👈👈 |  | ⏱ | Janela G1: 15s — aposte agora! |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | Sinal era: 🔴 VERMELHO (Banker)  ·  Veio: 🔵 AZUL (Player) |  | 🔮 Markov: próxima cor → 🔵 | 60% |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | G1 —",
+      "duration_examples": [
+        15.0,
+        8.0,
+        11.0,
+        1.0,
+        22.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 146,
+      "fingerprint": "d0587b91cfc7|🔴 [entry_confirmed_hour_block  ] saved=T blocked_wins=T net=",
+      "sample_head": "🔴 [entry_confirmed_hour_block  ] saved=345 blocked_wins=381 net=-36 (47.5% prevent) |  |   🔴 [bad_coalition_pair          ] saved=272 blocked_wins=386 net=-114 (41.3% prevent) |  |   🔴 [dynamic_threshold_bad_hour  ] saved=296 blocked_wins=298 net=-2 (49.8% prevent) |  |   ✅ [g0_recovery_gate",
+      "duration_examples": [
+        24.0,
+        28.0,
+        29.0,
+        26.0,
+        25.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 145,
+      "fingerprint": "078c9355f250|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔮 | ORACLE CARD #7 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🏛 | FLOOR CAMADA | : None |  | 🎯 | TIER / KIND | : SOLO_ELITE |  | 📊 | TOTAL SCORE | : 0.00 |  | ⏱ | TIMING INTERVAL | : 6437553.0s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎲 | PREDICTED OUTCOME | : ✅ G0 WIN (BLUE) |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "duration_examples": [
+        7553.0,
+        6559.0,
+        4527.0,
+        4109.0,
+        2798.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 144,
+      "fingerprint": "632f43212090|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰ | 19:37 BRT  ·  18:37 EDT |  ⏰ |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 | ❌ PERDEU |   ·  #15136 |  | 🎲 | Apostou: 🔴 VERMELHO (Banker) |   → | Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 _#15136 · SOLO_ELITE · VERMELHO (Banker) · ⏱40s · ❌ LOSS_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ❌  PERDEU | ",
+      "duration_examples": [
+        40.0,
+        19.0,
+        37.0,
+        28.0,
+        34.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 140,
+      "fingerprint": "ebb5d6384611|🔮🔮",
+      "sample_head": "🔮🔮 | DUPLO ELITE ANALISANDO |  🔮🔮 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏰⏰⏰ | 10:35 — EDT |   ⏰⏰⏰ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔍 | @isadados |  + | @rigosinais |  | _2 salas elite analisando — PLATINUM iminente!_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏱ ~10s para o PLATINUM — esteja pronto / be ready |  | 🚨 | ABRA A PLATAFOR",
+      "duration_examples": [
+        10.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 140,
+      "fingerprint": "3d100c879fad|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔮 | ORACLE CARD #48005 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🏛 | FLOOR CAMADA | : MAR20 |  | 🎯 | TIER / KIND | : PLATINUM |  | 📊 | TOTAL SCORE | : 0.00 |  | ⏱ | TIMING DELAY | : 3.1s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎲 | PREDICTED OUTCOME | : ❌ LOSS (BLUE) |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "duration_examples": [
+        3.1,
+        54.9,
+        32.9,
+        1.5,
+        2.1
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 138,
+      "fingerprint": "08e202191540|⚡",
+      "sample_head": "⚡ | ELITE ANALISANDO |  ⚡ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔍 | @isadados |  | _Sinal elite esperado em breve_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏱ Aguarde 30-60s para o sinal |  | ⏰ 20:51:46 | Bac Bo Royal |  | 📱 | Abra a plataforma, aguarde o sinal",
+      "duration_examples": [
+        60.0
+      ]
+    },
+    {
+      "role": "MIXED",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 136,
+      "fingerprint": "8ac5cd532ab4|⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T",
+      "sample_head": "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | ⚠️ | G0 MISS — G1 AGORA |  | ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 👉👉👉 | 🔵 AZUL (Player) |  👈👈👈 |  | ⏱ | Janela G1: 11s — aposte agora! |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | Sinal era: 🔵 AZUL (Player)  ·  Veio: 🔴 VERMELHO (Banker) |  | 🔮 Markov: próxima cor → 🔴 | 60% |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | G1 — MAN",
+      "duration_examples": [
+        11.0,
+        1.0,
+        15.0,
+        16.0,
+        12.0
+      ]
+    },
+    {
+      "role": "FIRE",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": true,
+      "n": 131,
+      "fingerprint": "b3a45fd4663e|⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T",
+      "sample_head": "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 🔵 | AZUL CHEGOU — G0 🔵 FALHOU |  | ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 👉👉👉 | 🔴 G1 — VERMELHO (Banker) — $20 |  👈👈👈 |  | ⏱ | Janela G1: 1s — aposte agora! |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 Estratégia: cor OPOSTA 🔴 VERMELHO _(Markov diverge: 🔵 60% — estratégia prevalece)_ |  | 📊 Sequência: 🔵 🔵 🔵 🔵",
+      "duration_examples": [
+        1.0,
+        2.0,
+        11.0,
+        13.0,
+        12.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 131,
+      "fingerprint": "67972dd6e59f|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰ | 10:59 BRT  ·  09:59 EDT |  ⏰ |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 | ❌ PERDEU |   ·  #17333 |  | 🎲 | Apostou: 🔴 VERMELHO (Banker) |   → | Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 _#17333 · SOLO_ELITE · VERMELHO (Banker) · ⏱139s · ❌ LOSS_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ❌  PE",
+      "duration_examples": [
+        139.0,
+        64.0,
+        3.0,
+        308.0,
+        666.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 131,
+      "fingerprint": "cbb422064f1e|🔵🔵🔵 🕐",
+      "sample_head": "🔵🔵🔵 🕐 | 09:33 BRT · 08:33 EDT |  🔵🔵🔵 |  | 🔔 | ✅ GANHOU |   ·  #41448 |  | 🎲 Apostou: 🔵 AZUL (Player)  →  Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 #41448 · SOLO_ELITE · ⏱ 19.5s · ✅ G0 WIN |  | ━━━━━━━━━━━━━━━━ |  | 📋 | ✅  GANHOU NO G0 |  | ━━━━━━━━━━━━━━━━ |  |   ✅ | G0  $10 |   ·  GANHOU |  |   ⏸ | G1",
+      "duration_examples": [
+        19.5,
+        20.0,
+        36.3,
+        36.0,
+        21.9,
+        22.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 130,
+      "fingerprint": "eda8e7d5f73b|🔴 [bad_coalition_pair          ] saved=T blocked_wins=T net=",
+      "sample_head": "🔴 [bad_coalition_pair          ] saved=272 blocked_wins=386 net=-114 (41.3% prevent) |  |   🔴 [dynamic_threshold_bad_hour  ] saved=294 blocked_wins=297 net=-3 (49.7% prevent) |  |   ✅ [g0_recovery_gate            ] saved=297 blocked_wins=287 net=10 (50.9% prevent) |  |   🔴 [timing_gate      ",
+      "duration_examples": [
+        25.0,
+        29.0,
+        24.0,
+        28.0,
+        27.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 130,
+      "fingerprint": "4dfbd6ed9b08|⚠T",
+      "sample_head": "⚠️ | G0 NÃO FOI — ENTRE NO G1 AGORA |  | 👉 | 🔵 AZUL (Player) |  👈 |  | ⏱ | Janela G1: 11s — aposte agora! |  | ━━━━━━━━━━━━━━━━ |  | Sinal era: 🔵 AZUL (Player)  ·  Veio: 🔴 VERMELHO (Banker) |  | 🔮 Markov: próxima cor → 🔴 | 60% |  | ━━━━━━━━━━━━━━━━ |  | 📋 | G1 — MANTER COR ORIGINAL: |  | ① Aposte | $20 |  em 🔵 | AZUL (Player) |  (",
+      "duration_examples": [
+        11.0,
+        1.0,
+        15.0,
+        22.0,
+        2.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 128,
+      "fingerprint": "a82d7e88c22a|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 20:47 BRT  ·  19:47 EDT |  ⏰ |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔔 | ❌ PERDEU |   ·  #15191 |  | 🎲 | Apostou: 🔵 AZUL (Player) |   → | Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 _#15191 · SOLO_ELITE · AZUL (Player) · ⏱50s · ❌ LOSS_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ❌  PERDEU |  | ━━━",
+      "duration_examples": [
+        50.0,
+        16.0,
+        147.0,
+        73.0,
+        28.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 125,
+      "fingerprint": "5b55dc55bef0|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 08:31 BRT  ·  07:31 EDT |  ⏰ |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔔 | ✅ GANHOU |   ·  #8943 |  | 🎲 Apostou: 🔵 AZUL (Player)  →  Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 _#8943 · GOLDEN · AZUL (Player) · ⏱20s · ✅ G0 WIN_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ✅  GANHOU NO G0 |  | ━━━━━",
+      "duration_examples": [
+        20.0,
+        29.0,
+        22.0,
+        16.0,
+        24.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 121,
+      "fingerprint": "e51e8562b940|🔍",
+      "sample_head": "🔍 | HEALTH MONITOR — 08:29 UTC |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⚠️ | WR MOMENTUM |  |   • WR 6h baixo: 37.1% (n=35) |  | ⚠️ | SCORE DISTRIBUTION |  |   • Score clustering: 58% dos bloqueios em ±1.0 da mediana (6.5) — possível threshold drift |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | _30-min monitor · 1.36s · /gate_a",
+      "duration_examples": [
+        1.36,
+        2.12,
+        22.29,
+        1.33,
+        1.43
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 121,
+      "fingerprint": "be9f54ed6483|🚨",
+      "sample_head": "🚨 | [DELIVERY AUDIT] |  1 CRITICAL issue(s) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ❌ | RATE_LOCK_STUCK — _throttle_send() never released |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 recv=0/60s · flood=0/2min · stale=0/60s · quiet=0/5min · tasks=66 |  | _DeliveryAudit v6.14 — 60 s cycle — 06:31 UTC_",
+      "duration_examples": [
+        60.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 121,
+      "fingerprint": "51783038853b|🚨",
+      "sample_head": "🚨 | [DELIVERY AUDIT] |  1 CRITICAL issue(s) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ❌ | DB_WRITE_FAILED — cannot INSERT into bacbo.db (DB locked, full, or corrupt) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ⚠️ | QUIET_WINDOW_ACTIVE(219s remaining — send_quiet suppressed until window expires) |  | ━━━━━━━━━━━━━━━━━",
+      "duration_examples": [
+        219.0,
+        60.0,
+        266.0,
+        66.0,
+        202.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 118,
+      "fingerprint": "29663854650a|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰ | 08:18 BRT  ·  07:18 EDT |  ⏰ |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 | ✅ GANHOU |   ·  #8920 |  | 🎲 Apostou: 🔴 VERMELHO (Banker)  →  Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 _#8920 · GOLDEN · VERMELHO (Banker) · ⏱25s · ✅ G0 WIN_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ✅  GANHOU ",
+      "duration_examples": [
+        25.0,
+        65.0,
+        15.0,
+        40.0,
+        24.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 117,
+      "fingerprint": "ca7561261331|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔵 SUA APOSTA / YOUR BET: AZUL (PLAYER) |  | 💙💙💙💙💙💙💙💙💙💙💙💙 |  | ⚠️⚠️⚠️ | G0 MISS — ENTRAR G1 / ENTER G1 |   ⚠️⚠️⚠️ |  | 💙💙💙💙💙💙💙💙💙💙💙💙 |  | 🔖 | Sinal #2807 / Signal #2807 |  | 🎯 Apostado / Bet: 🔵 AZUL / BLUE (Player) |  | ❌ | G0 |  missed  →  🔁 entering | G1 |  (recovery) |  | ⏱ | 0 |  round(s) · | 27s |  | ━━━━━━━━━━━━",
+      "duration_examples": [
+        27.0,
+        44.0,
+        16.0,
+        30.0,
+        7.0
+      ]
+    },
+    {
+      "role": "FIRE",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": true,
+      "n": 116,
+      "fingerprint": "ab0d34e1159d|♻T♻T♻T",
+      "sample_head": "♻️♻️♻️ | CORREÇÃO / CORRECTION |  ♻️♻️♻️ |  | _O resultado anterior do sinal #15444 foi atualizado / Previous result for signal #15444 was updated_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 🔵 | AZUL CHEGOU — G0 🔴 FALHOU |  | ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 👉👉👉 | 🔵 G1 — AZUL (Player) — $15 |  👈👈👈 |  | ⏱ | ",
+      "duration_examples": [
+        11.0,
+        1.0,
+        15.0,
+        22.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 112,
+      "fingerprint": "fb47d0973884|🚨",
+      "sample_head": "🚨 | [DELIVERY AUDIT] |  2 CRITICAL issue(s) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ❌ | ROOMS_SILENT(0 [Recv] in 60 s) — rooms disconnected or no activity |  |   ❌ | DB_WRITE_FAILED — cannot INSERT into bacbo.db (DB locked, full, or corrupt) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 recv=0/60s · flood=0/2min · st",
+      "duration_examples": [
+        60.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 111,
+      "fingerprint": "6f5b24a6014c|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰  03:56 BRT  ·  02:56 EDT |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 ✅ G0 WIN  ·  #47797 |  | 🎲 Apostou: 🔴 RED  →  Saiu: 🔴 RED |  | 🔍 SINAL #47797 — RESUMIDO FORENSE |  |   Tipo: SOLO_ELITE · Cor: RED |  |   Disparado: 2026-06-27 06:56:06 UTC |  |   Resolvido: 2026-06-27 06:56:23 UTC |  |   ⏱ Intervalo: 17.2s |  |   Resul",
+      "duration_examples": [
+        17.2,
+        1.1,
+        1.2,
+        28.0,
+        1.5
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 106,
+      "fingerprint": "ccf24c667201|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 19:42 BRT  ·  18:42 EDT |  ⏰ |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔔 | ❌ PERDEU |   ·  #15138 |  | 🎲 | Apostou: 🔵 AZUL (Player) |   → | Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 _#15138 · SEQUENCE · AZUL (Player) · ⏱75s · ❌ LOSS_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ❌  PERDEU |  | ━━━━━",
+      "duration_examples": [
+        75.0,
+        15.0,
+        39.0,
+        14.0,
+        29.0
+      ]
+    },
+    {
+      "role": "FIRE",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 105,
+      "fingerprint": "9766e35f6e6c|⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡",
+      "sample_head": "⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡ |  | 🟡 | RÁPIDO — 6s RESTANTES |  🟡 |  | ⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡ |  | 🔵🔵🔵🔵🔵 AZUL / BLUE 🔵🔵🔵🔵🔵 |  | 🏆 | GOLDEN SIGNAL |  🏆 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎯 | ENTRAR / BET: |  🔵 AZUL / BLUE (Player) |  | 🟡 | + PROTEÇÃO / COVER: |  Empate/Tie _Empate_ |  | 🤝 | Corroboration bonus: |  +0.45 _(reliable historical pairs)_ |  | ━━━━━━",
+      "duration_examples": [
+        6.0,
+        5.0,
+        10.0,
+        11.0,
+        8.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 105,
+      "fingerprint": "2c80a579fcba|🔍",
+      "sample_head": "🔍 | HEALTH MONITOR — 14:09 UTC |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⚠️ | SCORE DISTRIBUTION |  |   • Score clustering: 42% dos bloqueios em ±1.0 da mediana (11.7) — possível threshold drift |  | ⚠️ | COLOR BIAS |  |   • Color bias: 🔵 blue = 78% dos sinais 24h (red=143, blue=520) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ | ",
+      "duration_examples": [
+        18.77,
+        22.49,
+        15.67,
+        15.53,
+        19.3
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 104,
+      "fingerprint": "ae2536d54898|⚡",
+      "sample_head": "⚡ | ELITE ANALISANDO |  ⚡ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏰⏰⏰ | 13:45 — Brasília |   ⏰⏰⏰ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔍 | @isadados |  | _1 sala elite analisando — sinal esperado em breve_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏱ ~15s para o sinal — aguarde / wait |  | 📱 | Abra a plataforma, sinal chegando / signal",
+      "duration_examples": [
+        15.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 103,
+      "fingerprint": "0115a0b55eed|❌",
+      "sample_head": "❌ | PERDEU / LOSS — G0 |  ❌ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔖 | Sinal #2142 / Signal #2142 |  | 🎯 Previsto / Predicted: 🔵 AZUL / BLUE (Player) |  | ⛔ | Perdeu / Lost — G0 | Aguardar próximo sinal / Wait for next signal |  | ⏱ Rodadas / Rounds: | 3 |  | Tempo / Time: | 430s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ℹ️ _Resu",
+      "duration_examples": [
+        430.0,
+        30.0,
+        27.0,
+        31.0,
+        347.0
+      ]
+    },
+    {
+      "role": "FIRE",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": true,
+      "n": 103,
+      "fingerprint": "b2e496e81e43|♻T♻T♻T",
+      "sample_head": "♻️♻️♻️ | CORREÇÃO / CORRECTION |  ♻️♻️♻️ |  | _O resultado anterior do sinal #20022 foi atualizado / Previous result for signal #20022 was updated_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 🔴 | VERMELHO CHEGOU — G0 🔴 FALHOU |  | ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 👉👉👉 | 🔵 G1 — AZUL (Player) — $20 |  👈👈👈",
+      "duration_examples": [
+        1.0,
+        15.0,
+        11.0,
+        22.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 98,
+      "fingerprint": "6e957428a04e|🚨",
+      "sample_head": "🚨 | [DELIVERY AUDIT] |  1 CRITICAL issue(s) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ❌ | RATE_LOCK_STUCK — _throttle_send() never released |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ⚠️ | WALL_STATE_STALE(db=3 s ago, wall=999999 s ago) — _last_signal_wall not updated |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 recv=0/60s · fl",
+      "duration_examples": [
+        3.0,
+        9999.0,
+        0.0,
+        25.0,
+        20.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 98,
+      "fingerprint": "d347a220ace1|📊",
+      "sample_head": "📊 | Weekly Truth Report |  (last 7 days, real data) |  | Total: | 2065 |  signals · | 71.1% |  WR (1408W-573L-84T) |  | By day: |  | Sun: 564 sigs, 63.9% WR (341W-193L-30T) |  | Mon: 150 sigs, 79.6% WR (113W-29L-8T) |  | Tue: 96 sigs, 69.9% WR (65W-28L-3T) |  | Wed: 328 sigs, 80.7% WR (255W-61L-12T) |  | Thu: 572 sigs,",
+      "duration_examples": [
+        600.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 97,
+      "fingerprint": "5040525332e6|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 19:07 BRT  ·  18:07 EDT |  ⏰ |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔔 | ✅ GANHOU |   ·  #6513 |  | 🎲 Apostou: 🔵 AZUL (Player)  →  Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 | SINAL #6513 — RESUMIDO FORENSE |  |   Tipo: | GOLDEN |  · Cor: | AZUL (Player) |  |   Disparado: | 2026-05-09 22:07:32 | ",
+      "duration_examples": [
+        14.1,
+        14.0,
+        12.7,
+        13.0,
+        47.9,
+        48.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 96,
+      "fingerprint": "253274a5a61d|✅✅✅",
+      "sample_head": "✅✅✅ | GANHOU / WIN — G0! |  ✅✅✅ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔖 | Sinal #2002 / Signal #2002 |  | 🎯 Previsto / Predicted: 🔴 VERMELHO / RED (Banker) |  | 🏆 | Primeira tentativa / First try — G0 |  — Perfeito / Perfect! |  | ⏱ Rodadas / Rounds: | 1 |  | Tempo / Time: | 28s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ℹ️ _Result",
+      "duration_examples": [
+        28.0,
+        18.0,
+        16.0,
+        21.0,
+        22.0
+      ]
+    },
+    {
+      "role": "MIXED",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 96,
+      "fingerprint": "c0c23b21509b|⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T⚠T",
+      "sample_head": "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | ⚠️ | G0 MISS — G1 AGORA |  | ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ |  | 👉👉👉 | 🔴 VERMELHO (Banker) |  👈👈👈 |  | ⏱ | Janela G1: 1s — aposte agora! |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | Sinal era: 🔴 VERMELHO (Banker)  ·  Veio: 🔵 AZUL (Player) |  | 🔮 Markov: próxima cor → 🔴 | 60% |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | G1 — ",
+      "duration_examples": [
+        1.0,
+        11.0,
+        2.0,
+        16.0,
+        15.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 95,
+      "fingerprint": "2d265016a059|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 09:00 BRT  ·  08:00 EDT |  ⏰ |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔔 | ✅ GANHOU |   ·  #8978 |  | 🎲 Apostou: 🔵 AZUL (Player)  →  Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 _#8978 · SOLO_ELITE · AZUL (Player) · ⏱15s · ✅ G0 WIN_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ✅  GANHOU NO G0 |  | ━",
+      "duration_examples": [
+        15.0,
+        21.0,
+        30.0,
+        17.0,
+        31.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 94,
+      "fingerprint": "f88c1fffa8b3|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 08:03 BRT  ·  07:03 EDT |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔔 | ❌ PERDEU |   ·  #5014 |  | 🎲 Apostou: 🔵 AZUL (Player)  →  Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 | SINAL #5014 — RESUMIDO FORENSE |  |   Tipo: | GOLDEN |  · Cor: | AZUL (Player) |  |   Disparado: | 2026-05-07 11:02:55 |  UTC | ",
+      "duration_examples": [
+        31.0,
+        20.4,
+        20.0,
+        11.4,
+        11.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 92,
+      "fingerprint": "8c7d1a8dd1ce|🔮🔮",
+      "sample_head": "🔮🔮 | DUPLO ELITE ANALISANDO |  🔮🔮 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏰⏰⏰ | 15:37 — EDT |   ⏰⏰⏰ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🔍 | @coringadados |  + | @isadados |  | _2 salas elite analisando — PLATINUM iminente!_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⏱ ~10s para o PLATINUM — esteja pronto / be ready |  | 🚨 | ABRA A PLATAF",
+      "duration_examples": [
+        10.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 91,
+      "fingerprint": "1e7996226f1e|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰ | 19:41 BRT  ·  18:41 EDT |  ⏰ |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 | ✅ GANHOU |   ·  #6557 |  | 🎲 Apostou: 🔴 VERMELHO (Banker)  →  Saiu: 🔴 VERMELHO (Banker) |  | 📊 Últimas 8: 🔴 🔴 🔴 🔴 🔴 🔴 🔴 🔴  (🔴8/8) |  | 🔍 | SINAL #6557 — RESUMIDO FORENSE |  |   Tipo: | GOLDEN |  · Cor: | VERMELHO (Banker) |  |   Disparado: | 2026-05-",
+      "duration_examples": [
+        28.1,
+        28.0,
+        17.4,
+        17.0,
+        21.5,
+        22.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 90,
+      "fingerprint": "248e460062fc|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰ | 20:32 BRT  ·  19:32 EDT |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 | ❌ PERDEU |   ·  #5059 |  | 🎲 Apostou: 🔴 VERMELHO (Banker)  →  Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 | SINAL #5059 — RESUMIDO FORENSE |  |   Tipo: | GOLDEN |  · Cor: | VERMELHO (Banker) |  |   Disparado: | 2026-05-07 23:32:21 |  ",
+      "duration_examples": [
+        26.6,
+        27.0,
+        82.1,
+        82.0,
+        238.1,
+        238.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 89,
+      "fingerprint": "693e2437f67e|💙💙💙💙💙💙💙💙💙💙💙💙",
+      "sample_head": "💙💙💙💙💙💙💙💙💙💙💙💙 |  | ⚠️⚠️⚠️ | G0 MISS — ENTRAR G1 / ENTER G1 |   ⚠️⚠️⚠️ |  | 💙💙💙💙💙💙💙💙💙💙💙💙 |  | 🔖 | Sinal #2715 / Signal #2715 |  | 🎯 Apostado / Bet: 🔵 AZUL / BLUE (Player) |  | ❌ | G0 |  missed  →  🔁 entering | G1 |  (recovery) |  | ⏱ | 0 |  round(s) · | 27s |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 WR G1: | 73.6% |  (n=261) — recuperação pr",
+      "duration_examples": [
+        27.0,
+        30.0,
+        29.0,
+        33.0,
+        34.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 88,
+      "fingerprint": "fc9028c518a1|🚨",
+      "sample_head": "🚨 | [DELIVERY AUDIT] |  1 CRITICAL issue(s) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ❌ | ROOMS_SILENT(0 [Recv] in 60 s) — rooms disconnected or no activity |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ⚠️ | QUIET_WINDOW_ACTIVE(319s remaining — send_quiet suppressed until window expires) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ | ",
+      "duration_examples": [
+        60.0,
+        319.0,
+        116.0,
+        245.0,
+        296.0
+      ]
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 87,
+      "fingerprint": "13caa716fcc6|🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "sample_head": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | ⏰ | 21:54 BRT  ·  20:54 EDT |  ⏰ |  | 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴 |  | 🔔 | ❌ PERDEU |   ·  #15342 |  | 🎲 | Apostou: 🔴 VERMELHO (Banker) |   → | Saiu: 🔵 AZUL (Player) |  | 📊 Últimas 8: 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵  (🔵8/8) |  | 🔍 _#15342 · SOLO_ELITE · VERMELHO (Banker) · ⏱230s · ❌ LOSS_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 | ❌  PERDA ",
+      "duration_examples": [
+        230.0,
+        281.0,
+        24.0,
+        132.0,
+        493.0
+      ]
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "WITH_TIMING",
+      "clock_a_entry": false,
+      "n": 86,
+      "fingerprint": "c993a9bd245f|🔍",
+      "sample_head": "🔍 | HEALTH MONITOR — 07:00 UTC |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | ⚠️ | WR MOMENTUM |  |   • WR 6h baixo: 31.3% (n=32) |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | _30-min monitor · 1.48s · /gate_audit para análise completa_",
+      "duration_examples": [
+        1.48,
+        1.4,
+        1.39,
+        2.08,
+        1.53
+      ]
+    }
+  ],
+  "top_no_timing_templates": [
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 25965,
+      "fingerprint": "697129f49638|GT Unique pinned this message",
+      "sample_head": "G1 Unique pinned this message",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 16711,
+      "fingerprint": "233cb21314c4|📡",
+      "sample_head": "📡 | @martinswinbacbo |  — 20/03/2026 14:43:44 |  | 🚨 ANALISANDO 🚨 📱 Mesa: Bac Bo",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 14926,
+      "fingerprint": "0fd4ce05d59a|📡",
+      "sample_head": "📡 | @robobacbodados |  — 20/03/2026 14:42:35 |  | 🚨 ANALISANDO 🚨 📱 Mesa: Bac Bo",
+      "duration_examples": []
+    },
+    {
+      "role": "FIRE",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": true,
+      "n": 12217,
+      "fingerprint": "021444c9dca4|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 03:57 BRT  ·  02:57 EDT |  ⏰ |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 |  | 🔥 | SEQUÊNCIA 7x 🔵 AZUL |  | 📊 Últimos: 🔵 🔵 🔵 🔵 🔵 🔵 |  | 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 👉👉👉 | 🔵 AZUL |  👈👈👈 |  | 👉👉 | APOSTAR AZUL AGORA |  👈👈 |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 PASSO A PASSO — GUIA AO VIVO |  | ━━━━━━━━━━━━━━━━",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 11331,
+      "fingerprint": "6df5af2747b1|📡",
+      "sample_head": "📡 | @rqdados |  — 19/03/2026 21:10:01 |  | ➡Estamos a 6 vitórias seguidas!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 11284,
+      "fingerprint": "5337916db9f9|📡",
+      "sample_head": "📡 | @RQDADOS1 |  — 20/03/2026 14:43:11 |  | ➡Estamos a 7 vitórias seguidas!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 8748,
+      "fingerprint": "8405020319ee|📡",
+      "sample_head": "📡 | @robobacbodados |  — 20/03/2026 14:42:35 |  | 🥇13 GREENS SEGUIDOS ✅",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 7738,
+      "fingerprint": "cc708c581c16|📡",
+      "sample_head": "📡 | @bacboaovivovip |  — 08/05/2026 09:30:27 |  | ➡️ Estamos a 1 vitórias seguidas!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 7391,
+      "fingerprint": "273e2ff55bb8|📡",
+      "sample_head": "📡 | @bacbobrasileiro01 |  — 08/05/2026 09:30:20 |  | ➡Estamos a 1 vitórias seguidas!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 6922,
+      "fingerprint": "ebd960cb513e|📡",
+      "sample_head": "📡 | @BACCARAT_B |  — 23/03/2026 13:07:51 |  | ► PLACAR GERAL = ✅248 | 🟡50 | 🚫26  ► Consecutivas = 0 ► Assertividade = 91.98%",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 6783,
+      "fingerprint": "d410427a2d0f|📡",
+      "sample_head": "📡 | @IsaDados |  — 19/03/2026 17:49:53 |  | 🚨 ANALISANDO 🚨 📱 Mesa: Bac Bo",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 6665,
+      "fingerprint": "597f00de8ab1|📡",
+      "sample_head": "📡 | @BACCARAT_B |  — 23/03/2026 13:08:23 |  | ⚠️ ANALISANDO, FIQUE ATENTO!!!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 6408,
+      "fingerprint": "3fb03a500f97|📡",
+      "sample_head": "📡 | @BACCARAT_A |  — 09/05/2026 20:35:50 |  | ► PLACAR GERAL = ✅0 | 🟡1 | 🚫0  ► Consecutivas = 1 ► Assertividade = 100.00%",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 6307,
+      "fingerprint": "feb07e8992a4|📅 CYCLE SUMMARY",
+      "sample_head": "📅 CYCLE SUMMARY | @robofreebacbo24horass |  — 08/05/2026 09:30:34 |  | ↗ RELATÓRIO DE OPERAÇÕES FREE ↗  ✅ 103 GREENS!!! ❌ 8 LOSS!  🥇 Estamos a 8 greens seguidos...",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 6185,
+      "fingerprint": "20ed011e20ea|📡",
+      "sample_head": "📡 | @CoringaDados |  — 19/03/2026 17:49:53 |  | 🚨 ANALISANDO 🚨 📱 Mesa: Bac Bo",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 5553,
+      "fingerprint": "811942ffaa87|📅 CYCLE SUMMARY",
+      "sample_head": "📅 CYCLE SUMMARY | @umgalesalabacbo123 |  — 08/05/2026 10:10:32 |  | ↗ RELATÓRIO DE OPERAÇÕES VIP ↗  ✅ 179 GREENS!!! ❌ 32 LOSS!  🥇 Estamos a 25 greens seguidos...",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 5510,
+      "fingerprint": "1338ec0b58b6|📡",
+      "sample_head": "📡 | @martinswinbacbo |  — 20/03/2026 15:00:52 |  | 🥇5 GREENS SEGUIDOS ✅",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 5475,
+      "fingerprint": "d80a12b1403f|📡",
+      "sample_head": "📡 | @BACCARAT_A |  — 09/05/2026 20:37:20 |  | ⚠️ ANALISANDO, FIQUE ATENTO!!!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 5225,
+      "fingerprint": "70eff9c59cd0|📡",
+      "sample_head": "📡 | @rigosinais |  — 19/03/2026 21:10:33 |  | 🚨 ANALISANDO 🚨 📱 Mesa: Bac Bo",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 4955,
+      "fingerprint": "61d30ddaab6c|📡",
+      "sample_head": "📡 | @RQDADOS1 |  — 17/06/2026 04:00:45 |  | 🔥 5 vitórias seguidas!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 4767,
+      "fingerprint": "9603a6b68f0d|📡",
+      "sample_head": "📡 | @umgalesalabacbo123 |  — 08/05/2026 10:10:32 |  | 🤩 Estamos a 25 Greens Consecutivos!✅",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 4428,
+      "fingerprint": "476f84a59333|📡",
+      "sample_head": "📡 | @bacboBRL01 |  — 08/05/2026 13:04:42 |  | 🚨 ANALISANDO OPORTUNIDADE 🎲 Bac Bo  📊 Prepare-se, validando entrada.  📜 InfoPub – Port. 827 SPA/MF 🔞 Jogue com responsabilidade.",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 4426,
+      "fingerprint": "05d8ef6f838f|🟡",
+      "sample_head": "🟡 | ALERTA DE EMPATE / TIE ALERT |  🟡 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | Empate detectado — | 15.9% |  de chance no PRÓXIMO ROUND / NEXT ROUND |  | Tie detected — | 15.9% |  chance | 4.5× acima do normal / above normal |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 💰 | APOSTAR / BET: |  | 🟡 | EMPATE / TIE |  — 10% da banca / of ba",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 4354,
+      "fingerprint": "f6a119af9f2f|📡",
+      "sample_head": "📡 | @IsaDados |  — 19/03/2026 18:13:23 |  | 🪧 Placar: ✅ 158 | ⛔️ 9 📊 Acertamos 94.61% das vezes 💵 Estamos com 5 Greens seguidos!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 4313,
+      "fingerprint": "1c37667da588|⚠T",
+      "sample_head": "⚠️ | LOSS COOLDOWN ACTIVATED |  | 3 consecutive losses — thresholds raised by +0.3 for 30min. |  | /cooldown for details.",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 4184,
+      "fingerprint": "901c79b1121c|📡",
+      "sample_head": "📡 | @CoringaDados |  — 19/03/2026 18:13:26 |  | 🪧 Placar: ✅ 158 | ⛔️ 9 📊 Acertamos 94.61% das vezes 💵 Estamos com 5 Greens seguidos!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 4091,
+      "fingerprint": "f4ee8df0aaa2|📡",
+      "sample_head": "📡 | @RQDADOS1 |  — 08/05/2026 09:30:33 |  | ➡️ Vamos para o 1ª gale",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 4048,
+      "fingerprint": "bc9910245509|📡",
+      "sample_head": "📡 | @bacbob2xbet |  — 22/05/2026 17:26:11 |  | 🤩🚀 ESTAMOS A 8 GREENS SEGUIDOS 🚀🤩  TESTE NOSSO VIP GRÁTIS TAMBÉM 💎",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 3705,
+      "fingerprint": "7f62c2627b9d|📡",
+      "sample_head": "📡 | @rqdados |  — 16/06/2026 15:41:14 |  | 🔥 3 vitórias seguidas!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 3485,
+      "fingerprint": "40d3d0b5cc76|📡",
+      "sample_head": "📡 | @bacbobrasileiro01 |  — 16/06/2026 06:28:15 |  | 🔥 10 vitórias seguidas!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 3449,
+      "fingerprint": "bc338321ed16|📡",
+      "sample_head": "📡 | @rigosinais |  — 19/03/2026 21:17:17 |  | 🪧 Placar: ✅ 183 | ⛔️ 10 📊 Acertamos 94.82% das vezes 💵 Estamos com 16 Greens seguidos!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 3238,
+      "fingerprint": "b1f0034a9e8a|📡",
+      "sample_head": "📡 | @rqdados |  — 19/03/2026 21:12:49 |  | ➡️ Vamos para o 1ª gale",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 3158,
+      "fingerprint": "d6c3b51a7448|📡",
+      "sample_head": "📡 | @sinal_bac_bo |  — 05/06/2026 20:50:24 |  | 🤩🚀 ESTAMOS A 7 GREENS SEGUIDOS 🚀🤩  TESTE NOSSO VIP GRÁTIS TAMBÉM 💎",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 3072,
+      "fingerprint": "7698ffc46ef9|📡",
+      "sample_head": "📡 | @robobacbodados |  — 20/03/2026 14:47:40 |  | 🔁 Estamos no 1° gale",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 3065,
+      "fingerprint": "8c5a6238b1a7|📡",
+      "sample_head": "📡 | @umgalesalabacbo123 |  — 08/05/2026 10:20:53 |  | 🎲 ATENÇÃO, POSSÍVEL ENTRADA ! 🎲",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 3017,
+      "fingerprint": "fb9682cf81f5|📡",
+      "sample_head": "📡 | @robofreebacbo24horass |  — 08/05/2026 09:33:55 |  | 🎲 ATENÇÃO, POSSÍVEL ENTRADA ! 🎲",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 2678,
+      "fingerprint": "d10fcc184dde|📡",
+      "sample_head": "📡 | @martinswinbacbo |  — 20/03/2026 14:42:36 |  | 🔁 Estamos no 1° gale",
+      "duration_examples": []
+    },
+    {
+      "role": "FIRE",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 2603,
+      "fingerprint": "373bd42d2df0|🟢",
+      "sample_head": "🟢 | BacBo Royal UserBot ONLINE |  🟢 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📡 | 35 salas |  / rooms monitored |  | 🧠 | Real WR / WR real: |  GOLDEN ~60% · SOLO ~66% · PLATINUM ~73% |  |    _(based on 6,603 resolved fires)_ |  | Sinais por nível / Signal tiers: |  | 💎 SOLO ELITE → sala elite sozinha / single elite room | ",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 2443,
+      "fingerprint": "e7b733970023|📡",
+      "sample_head": "📡 | @bacboaovivovip |  — 08/05/2026 09:50:41 |  | ➡️ Vamos para o 1ª gale",
+      "duration_examples": []
+    },
+    {
+      "role": "FIRE",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": true,
+      "n": 2395,
+      "fingerprint": "4d19bec532d1|🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "sample_head": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ⏰ | 04:20 BRT  ·  03:20 EDT |  ⏰ |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 |  | 🔥 | SEQUÊNCIA 4x 🔵 AZUL |  | 📊 Últimos: 🔴 🔴 🔵 🔵 🔵 🔵 |  | 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | 👉👉👉 | 🔵 AZUL |  👈👈👈 |  | 👉👉 | APOSTAR AZUL AGORA |  👈👈 |  | 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📋 PASSO A PASSO — GUIA AO VIVO |  | ━━━━━━━━━━━━━━━━",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 2331,
+      "fingerprint": "fb80f6bfcbea|📡",
+      "sample_head": "📡 | @robofootballstudiofree |  — 08/05/2026 09:34:08 |  | 🚨 ANALISANDO 🚨 📱 Mesa: FOOTBALL STUDIO",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 2277,
+      "fingerprint": "68544611daad|📡",
+      "sample_head": "📡 | @BACCARAT_B |  — 09/05/2026 20:36:04 |  | ⚠️ Vamos para o 1ª GALE",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 2207,
+      "fingerprint": "88a0b81467b7|📡",
+      "sample_head": "📡 | @BACCARAT_A |  — 09/05/2026 20:35:13 |  | ⚠️ Vamos para o 1ª GALE",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1979,
+      "fingerprint": "c8ead70d8cb0|📡",
+      "sample_head": "📡 | @bacboBRL |  — 08/05/2026 13:04:47 |  | 🚨 ANALISANDO OPORTUNIDADE 🎲 Bac Bo  📊 Prepare-se, validando entrada.  📜 InfoPub – Port. 827 SPA/MF 🔞 Jogue com responsabilidade.",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1907,
+      "fingerprint": "8c72baead189|📡",
+      "sample_head": "📡 | @speedbaccarat_a |  — 08/05/2026 11:18:44 |  | ➡Estamos a 27 vitórias seguidas!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1877,
+      "fingerprint": "8d1c82819844|📡",
+      "sample_head": "📡 | @bacbobrasileiro01 |  — 08/05/2026 09:41:16 |  | ➡️ Vamos para o 1ª gale",
+      "duration_examples": []
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1841,
+      "fingerprint": "760d33f07ff7|✅",
+      "sample_head": "✅ | WIN — SOLO_ELITE |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎯 Previsto: 🔴 VERMELHO (Player) |  | 🏆 G1 — Recuperado no gale 1! |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 Hoje: 17✅  2❌  2🟡  —  85.7% acerto",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1756,
+      "fingerprint": "6a25cf18e3e9|🔥🔥🔥",
+      "sample_head": "🔥🔥🔥 | SEQUÊNCIA QUENTE |  🔥🔥🔥 |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  |   ✅✅ 2 vitórias consecutivas |  |   📊 WR em sequência quente: | 83.8% |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 💡 | Manter disciplina: |  |   → Aposta | normal |  — não aumentar stake |  |   → Aceitar próximo sinal normalmente |  |   → G2 Reserve ativo se G0 falha",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1709,
+      "fingerprint": "22dbef5e8226|📡",
+      "sample_head": "📡 | @speedbaccarat_a_01 |  — 09/05/2026 20:33:54 |  | ⚠️ ANALISANDO, FIQUE ATENTO!!!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1695,
+      "fingerprint": "80325a882320|📡",
+      "sample_head": "📡 | @IsaDados |  — 19/03/2026 18:00:15 |  | 🔰 HORÁRIOS EMPATES 🔰",
+      "duration_examples": []
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1694,
+      "fingerprint": "e92f48bb9a09|✅",
+      "sample_head": "✅ | WIN — SOLO_ELITE |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎯 Previsto: 🔴 VERMELHO (Player) |  | 🏆 G0 — Acertou de primeira! |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 Hoje: 17✅  2❌  2🟡  —  85.7% acerto",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1674,
+      "fingerprint": "fc816960e10e|♻T GREEN · GT · T BRT",
+      "sample_head": "♻️ GREEN · G1 · 08:21 BRT |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 💚💚💚💚💚💚💚💚💚💚💚💚 |  | ♻️ | RECUPERADO NO G1 | ! |  | 💚💚💚💚💚💚💚💚💚💚💚💚 |  | 1️⃣ | ENCERRE |  a aposta — recuperado no G1 |  | 2️⃣ | Não continue |  nesta sequência |  | 3️⃣ | Aguarde |  o próximo sinal limpo do bot |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 Hoje: 536✅  167❌  66🟡  — | 7",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1656,
+      "fingerprint": "9e162719bdd2|📡",
+      "sample_head": "📡 | @CoringaDados |  — 19/03/2026 18:00:19 |  | 🔰 HORÁRIOS EMPATES 🔰",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1653,
+      "fingerprint": "47e91a317621|📡",
+      "sample_head": "📡 | @speedbaccarat_a_01 |  — 09/05/2026 20:34:23 |  | ► PLACAR GERAL = ✅0 | 🟡1 | 🚫0  ► Consecutivas = 1 ► Assertividade = 100.00%",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1567,
+      "fingerprint": "debb57ad97db|📡",
+      "sample_head": "📡 | @robofreebacbo24horass |  — 08/05/2026 10:04:13 |  | ♻️ Gale 1 ✨ Tenha Gerenciamento!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1508,
+      "fingerprint": "082ca5e9c32e|📡",
+      "sample_head": "📡 | @bacboaovivovip |  — 08/05/2026 09:46:19 |  | [🎭 Sticker posted]",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1466,
+      "fingerprint": "a90faa9df24a|✅",
+      "sample_head": "✅ | Cooldown cancelled |  — WIN recorded. Thresholds back to normal.",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1431,
+      "fingerprint": "4847868e55d7|📡",
+      "sample_head": "📡 | @donbacbo |  — 26/06/2026 13:22:36 |  | ✅ 303 ⛔️ 35 🎯 ACERTIVIDADE GERAL 89.64%",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1394,
+      "fingerprint": "b03d9ed1950b|📡",
+      "sample_head": "📡 | @rigosinais |  — 19/03/2026 21:10:23 |  | 🔰 HORÁRIOS EMPATES 🔰",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1386,
+      "fingerprint": "8485aba3102b|📡",
+      "sample_head": "📡 | @roletamilionaria3 |  — 23/03/2026 13:07:27 |  | ✅ 335 ⛔️ 57 🎯 Acertamos 90.31%",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1335,
+      "fingerprint": "945d25e92dcf|📡",
+      "sample_head": "📡 | @IsaDados |  — 19/03/2026 17:52:06 |  | 🔁 Estamos no 1° gale",
+      "duration_examples": []
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1325,
+      "fingerprint": "562f0a0acceb|✅",
+      "sample_head": "✅ | WIN — SOLO_ELITE |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎯 Previsto: 🔵 AZUL (Banker) |  | 🏆 G1 — Recuperado no gale 1! |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 Hoje: 110✅  40❌  18🟡  —  70.8% acerto",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1303,
+      "fingerprint": "8f749f4c5cbd|✅ AUTO WIN",
+      "sample_head": "✅ AUTO WIN | @bacbobrasileiro01 |  — 08/05/2026 09:48:34 |  | ✅",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1226,
+      "fingerprint": "67b8ef0edf41|📡",
+      "sample_head": "📡 | @umgalesalabacbo123 |  — 08/05/2026 10:16:26 |  | ♻️ Gale 1 ✨ Tenha Gerenciamento!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1224,
+      "fingerprint": "24322a3d5fa9|📡",
+      "sample_head": "📡 | @CoringaDados |  — 19/03/2026 17:52:06 |  | 🔁 Estamos no 1° gale",
+      "duration_examples": []
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1193,
+      "fingerprint": "7bb8ffb6ba41|✅",
+      "sample_head": "✅ | WIN — SOLO_ELITE |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎯 Previsto: 🔵 AZUL (Banker) |  | 🏆 G0 — Acertou de primeira! |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 Hoje: 17✅  2❌  2🟡  —  85.7% acerto",
+      "duration_examples": []
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1171,
+      "fingerprint": "4b71e6b6448b|❌",
+      "sample_head": "❌ | LOSS — G0 FALHOU |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 🎯 Previsto: 🔴 VERMELHO (Player) |  | 🔁 | → GALE 1 A CAMINHO |  | _Aguardando próxima entrada confirmada pelas salas_ |  | _Limite: máx. 3 gales — restam 2 retentativa(s)_ |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 📊 Hoje: 161✅  53❌  23🟡  —  72.8% acerto",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1146,
+      "fingerprint": "f5685e529409|📡",
+      "sample_head": "📡 | @roletamilionaria3 |  — 23/03/2026 13:08:38 |  | 🚀 ESTAMOS EM UMA SEQUÊNCIA DE 4 WINS!",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1083,
+      "fingerprint": "baf9f5771385|✅ AUTO WIN",
+      "sample_head": "✅ AUTO WIN | @martinswinbacbo |  — 21/03/2026 14:31:04 |  | GREEN ✅🤑",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1041,
+      "fingerprint": "e83ea1213bb9|✅ AUTO WIN",
+      "sample_head": "✅ AUTO WIN | @RQDADOS1 |  — 20/03/2026 14:43:10 |  | ✅",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1027,
+      "fingerprint": "5fa28d8783be|📡",
+      "sample_head": "📡 | @umgalesalabacbo123 |  — 08/05/2026 10:14:07 |  | ❌ ESSA FICOU COM A CASA! VAMOS BUSCAR COM JUROS  🖐🏼 AGUARDE O PRÓXIMO SINAL.",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1025,
+      "fingerprint": "47ac8164db5e|📡",
+      "sample_head": "📡 | @robofootballstudiofree |  — 08/05/2026 09:30:27 |  | 🥇12 GREENS SEGUIDOS ✅",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1018,
+      "fingerprint": "4a34c1eaf55b|📡",
+      "sample_head": "📡 | @IsaDados |  — 19/03/2026 17:46:17 |  | 🆘🆘🆘  ⚡⚡⚡⚡⚡  🆘🆘🆘  ⚠️ QUER CONVIDAR OS AMIGOS PARA NOSSO GRUPO ❓             ⬇️LINK ABAIXO⬇️ 🔗 https://t.me/RIGOSINAIS 🔗",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1015,
+      "fingerprint": "4e446a89d30e|📡",
+      "sample_head": "📡 | @sinaisbacboangola |  — 08/05/2026 10:09:53 |  | 🚨 ANALISANDO 🚨 🚥 Sequência: 🟠  🖥JOGUE AQUI",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 1008,
+      "fingerprint": "5a2ff9bbbc11|📡",
+      "sample_head": "📡 | @CoringaDados |  — 19/03/2026 17:46:17 |  | 🆘🆘🆘  ⚡⚡⚡⚡⚡  🆘🆘🆘  ⚠️ QUER CONVIDAR OS AMIGOS PARA NOSSO GRUPO ❓             ⬇️LINK ABAIXO⬇️ 🔗 https://t.me/RIGOSINAIS 🔗",
+      "duration_examples": []
+    },
+    {
+      "role": "RESULT",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 985,
+      "fingerprint": "342c83a9b8db|✅ GREEN · GT · T BRT",
+      "sample_head": "✅ GREEN · G0 · 08:17 BRT |  | ━━━━━━━━━━━━━━━━━━━━━━━━━ |  | 💚💚💚💚💚💚💚💚💚💚💚💚 |  | 🎉 | GANHOU NO G0 |  — lucro máximo! |  | 💚💚💚💚💚💚💚💚💚💚💚💚 |  | 1️⃣ | ENCERRE |  a aposta — 🔵 AZUL confirmou |  |    _Apostou $10 · retorno ~$20 (+$9.5)_ |  | 2️⃣ | NÃO entre |  em nova aposta sem sinal |  | 3️⃣ | Aguarde |  o próximo sinal do bot |  | ━━━━━",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 966,
+      "fingerprint": "7b4aae77dd64|📡",
+      "sample_head": "📡 | @roletamilionaria3 |  — 23/03/2026 13:07:25 |  | [🎭 Sticker posted]",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 929,
+      "fingerprint": "882722836eb3|✅ AUTO WIN",
+      "sample_head": "✅ AUTO WIN | @bacboaovivovip |  — 08/05/2026 09:41:50 |  | ✅ ganhou",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 911,
+      "fingerprint": "88d455528c99|📡",
+      "sample_head": "📡 | @rigosinais |  — 19/03/2026 21:15:41 |  | 🔁 Estamos no 1° gale",
+      "duration_examples": []
+    },
+    {
+      "role": "OTHER",
+      "timing_axis": "NO_TIMING",
+      "clock_a_entry": false,
+      "n": 903,
+      "fingerprint": "47debf7cde11|📡",
+      "sample_head": "📡 | @donbacbo |  — 26/06/2026 13:25:07 |  | 🚀 ESTAMOS A 5 GREENS SEGUIDOS 🚀",
+      "duration_examples": []
+    }
+  ],
+  "top_days_with_timing_msgs": [
+    [
+      "28.06.2026",
+      6405
+    ],
+    [
+      "24.04.2026",
+      884
+    ],
+    [
+      "27.04.2026",
+      855
+    ],
+    [
+      "10.05.2026",
+      769
+    ],
+    [
+      "11.05.2026",
+      704
+    ],
+    [
+      "08.06.2026",
+      683
+    ],
+    [
+      "19.05.2026",
+      677
+    ],
+    [
+      "01.05.2026",
+      642
+    ],
+    [
+      "08.05.2026",
+      624
+    ],
+    [
+      "04.05.2026",
+      599
+    ],
+    [
+      "27.05.2026",
+      568
+    ],
+    [
+      "10.06.2026",
+      563
+    ],
+    [
+      "18.05.2026",
+      562
+    ],
+    [
+      "09.05.2026",
+      561
+    ],
+    [
+      "29.04.2026",
+      540
+    ],
+    [
+      "30.04.2026",
+      540
+    ],
+    [
+      "15.05.2026",
+      508
+    ],
+    [
+      "12.05.2026",
+      505
+    ],
+    [
+      "02.05.2026",
+      483
+    ],
+    [
+      "24.05.2026",
+      481
+    ],
+    [
+      "06.06.2026",
+      475
+    ],
+    [
+      "26.05.2026",
+      472
+    ],
+    [
+      "10.07.2026",
+      472
+    ],
+    [
+      "12.06.2026",
+      454
+    ],
+    [
+      "21.04.2026",
+      452
+    ]
+  ],
+  "top_days_timed_fireish": [
+    [
+      "19.05.2026",
+      2419
+    ],
+    [
+      "20.05.2026",
+      1967
+    ],
+    [
+      "27.05.2026",
+      1700
+    ],
+    [
+      "26.05.2026",
+      1625
+    ],
+    [
+      "22.05.2026",
+      1445
+    ],
+    [
+      "21.05.2026",
+      1335
+    ],
+    [
+      "24.05.2026",
+      1259
+    ],
+    [
+      "30.05.2026",
+      718
+    ],
+    [
+      "31.05.2026",
+      668
+    ],
+    [
+      "17.05.2026",
+      643
+    ],
+    [
+      "23.05.2026",
+      574
+    ],
+    [
+      "18.05.2026",
+      497
+    ],
+    [
+      "01.06.2026",
+      465
+    ],
+    [
+      "25.05.2026",
+      435
+    ],
+    [
+      "27.04.2026",
+      388
+    ],
+    [
+      "29.05.2026",
+      354
+    ],
+    [
+      "15.05.2026",
+      336
+    ],
+    [
+      "16.05.2026",
+      243
+    ],
+    [
+      "24.04.2026",
+      235
+    ],
+    [
+      "21.04.2026",
+      219
+    ],
+    [
+      "11.05.2026",
+      208
+    ],
+    [
+      "28.05.2026",
+      202
+    ],
+    [
+      "12.05.2026",
+      200
+    ],
+    [
+      "14.05.2026",
+      195
+    ],
+    [
+      "22.04.2026",
+      172
+    ]
+  ],
+  "examples": {
+    "FIRE|NO_TIMING": [
+      "🟢\nBacBo Royal UserBot ONLINE\n 🟢\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📡\n6 salas\n monitoradas\n\n🧠\nModelo:\n Probabilidade adaptativa por sala\n\nSinais por score de probabilidade:\n\n💎 SOLO ELITE → sala elite confirmou sozinha (score ≥ 2.0)\n\n🏆 GOLDEN → consenso confirmado (score ≥ 3.0)\n\n📡 EMERGINDO → cor se formando (score ≥ 1.8)\n\n👁 ALERTA → formação inicial, aguarde\n\n⚪🔴⚪ ULTRA TIE → especialista confirmou empate\n",
+      "🟢\nBacBo Royal UserBot ONLINE\n 🟢\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📡\n6 salas\n monitoradas\n\n🧠\nModelo:\n Probabilidade adaptativa por sala\n\nSinais por score de probabilidade:\n\n💎 SOLO ELITE → sala elite confirmou sozinha (score ≥ 2.0)\n\n🏆 GOLDEN → consenso confirmado (score ≥ 3.0)\n\n📡 EMERGINDO → cor se formando (score ≥ 1.8)\n\n👁 ALERTA → formação inicial, aguarde\n\n⚪🔴⚪ ULTRA TIE → especialista confirmou empate\n",
+      "🟢\nBacBo Royal UserBot ONLINE\n 🟢\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📡\n6 salas\n monitoradas\n\n🧠\nModelo:\n Probabilidade adaptativa por sala\n\nSinais por score de probabilidade:\n\n💎 SOLO ELITE → sala elite confirmou sozinha (score ≥ 2.0)\n\n🏆 GOLDEN → consenso confirmado (score ≥ 3.0)\n\n📡 EMERGINDO → cor se formando (score ≥ 1.8)\n\n👁 ALERTA → formação inicial, aguarde\n\n⚪🔴⚪ ULTRA TIE → especialista confirmou empate\n"
+    ],
+    "OTHER|NO_TIMING": [
+      "💓\nBot Ativo\n | 17/03/2026 16:13:41\n\n📡 6 salas | 🧠 Pesos adaptativos ativos\n\n📊 Sem sinais com resultado hoje.",
+      "📡\n@CoringaDados\n — 19/03/2026 17:46:17\n\n🆘🆘🆘  ⚡⚡⚡⚡⚡  🆘🆘🆘  ⚠️ QUER CONVIDAR OS AMIGOS PARA NOSSO GRUPO ❓             ⬇️LINK ABAIXO⬇️ 🔗 https://t.me/RIGOSINAIS 🔗",
+      "📡\n@IsaDados\n — 19/03/2026 17:46:17\n\n🆘🆘🆘  ⚡⚡⚡⚡⚡  🆘🆘🆘  ⚠️ QUER CONVIDAR OS AMIGOS PARA NOSSO GRUPO ❓             ⬇️LINK ABAIXO⬇️ 🔗 https://t.me/RIGOSINAIS 🔗"
+    ],
+    "RESULT|NO_TIMING": [
+      "✅\nWIN — SOLO_ELITE\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔵 AZUL\n\n🏆 G0 — Acertou de primeira!\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  0❌  2🟡  —  94.7% acerto",
+      "✅\nWIN — GOLDEN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔵 AZUL\n\n🏆 G0 — Acertou de primeira!\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 16✅  0❌  2🟡  —  94.4% acerto",
+      "❌\nLOSS — GOLDEN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔴 VERMELHO\n\n🔁 Gale 1 — aguarde próxima entrada\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  1❌  2🟡  —  90.0% acerto"
+    ],
+    "OTHER|WITH_TIMING": [
+      "⚡\nELITE ANALISANDO\n ⚡\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔍\n@rigosinais\n\n_Sinal elite esperado em breve_\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏱ Aguarde 30-60s para o GOLDEN/PLATINUM\n\n⏰ 17:41:04 | Bac Bo Royal\n\n📱\nAbra a plataforma, aguarde o sinal",
+      "⚡\nELITE ANALISANDO\n ⚡\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔍\n@rigosinais\n\n_Sinal elite esperado em breve_\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏱ Aguarde 30-60s para o GOLDEN/PLATINUM\n\n⏰ 17:44:17 | Bac Bo Royal\n\n📱\nAbra a plataforma, aguarde o sinal",
+      "⚡\nELITE ANALISANDO\n ⚡\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔍\n@rigosinais\n\n_Sinal elite esperado em breve_\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏱ Aguarde 30-60s para o GOLDEN/PLATINUM\n\n⏰ 17:52:02 | Bac Bo Royal\n\n📱\nAbra a plataforma, aguarde o sinal"
+    ],
+    "FIRE|WITH_TIMING": [
+      "💎\nSOLO ELITE SIGNAL\n 💎\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔮\nNEXT RESULT:\n 🔴 Vermelho (Player)\n\n🎯\nEnter:\n 🔴 Vermelho (Player)\n\n   └ _Primary bet — full bankroll_\n\n🟡\n+ Tie\n _Tie_ as protection\n\n   └ _Side bet — 10% of bankroll_\n\n🏆\nRoom:\n\n@sinaisbacbosemgale\n 🔥🔥\n\n📊\nScore:\n 3.90 | Weight 2.00 | WR 100.0%\n\n📜\nRecent history:\n ✅ ✅ ✅\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⚡\nG0 FIRST HIT\n — 🎯 Gale 1 opcional se errar\n\n⏰ Fir",
+      "💎\nSOLO ELITE SIGNAL\n 💎\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔮\nNEXT RESULT:\n 🔴 Vermelho (Banker)\n\n🎯\nEnter:\n 🔴 Vermelho (Banker)\n\n   └ _Primary bet — full bankroll_\n\n🟡\n+ Tie\n _Empate_ as protection\n\n   └ _Side bet — 10% of bankroll_\n\n🏆\nRoom:\n\n@rigosinais\n 🔥🔥\n\n📊\nScore:\n 3.90 | Weight 2.00 | WR 87.3%\n\n📜\nRecent history:\n ✅ ✅ ✅ ✅ ✅\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊\nNível atual: G0\n — entrada inicial\n\n🔁 Gales disponí",
+      "💎\nSOLO ELITE SIGNAL\n 💎\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔮\nNEXT RESULT:\n 🔴 Vermelho (Banker)\n\n🎯\nEnter:\n 🔴 Vermelho (Banker)\n\n   └ _Primary bet — full bankroll_\n\n🟡\n+ Tie\n _Empate_ as protection\n\n   └ _Side bet — 10% of bankroll_\n\n🏆\nRoom:\n\n@rigosinais\n 🔥🔥\n\n📊\nScore:\n 2.98 | Weight 1.53 | WR 86.3%\n\n📜\nRecent history:\n ✅ ✅ ❌ ❌ ❌\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊\nNível atual: G0\n — entrada inicial\n\n🔁 Gales disponí"
+    ],
+    "RESULT|WITH_TIMING": [
+      "❌❌❌\nLOSS — SINAL ENCERRADO\n ❌❌❌\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔵 AZUL (Player)\n\n⛔\n3 tentativas esgotadas — resetando\n\n☕ _Faça uma pausa — próximo sinal em breve_\n\n⏱ Rodadas:\n2\n | Tempo:\n103s\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 61✅  33❌  3🟡  —  64.4% acerto\n\n📈 Sessão: 23✅ · 1❌  (96% acerto)",
+      "❌❌❌\nLOSS — SINAL ENCERRADO\n ❌❌❌\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔵 AZUL (Player)\n\n⛔\n3 tentativas esgotadas — resetando\n\n☕ _Faça uma pausa — próximo sinal em breve_\n\n⏱ Rodadas:\n0\n | Tempo:\n10s\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 94✅  54❌  6🟡  —  63.0% acerto\n\n📈 Sessão: 55✅ · 3🟡 · 2❌  (94% acerto)",
+      "❌❌❌\nLOSS — SINAL ENCERRADO\n ❌❌❌\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔴 VERMELHO (Banker)\n\n⛔\n3 tentativas esgotadas — resetando\n\n☕ _Faça uma pausa — próximo sinal em breve_\n\n⏱ Rodadas:\n0\n | Tempo:\n4s\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 94✅  61❌  6🟡  —  60.2% acerto\n\n📈 Sessão: 55✅ · 3🟡 · 3❌  (93% acerto)"
+    ],
+    "MIXED|WITH_TIMING": [
+      "⛔\nDO NOT BET — ROUND PASSED\n ⛔\n\n🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵\n\n      BLUE — BANKER\n\n🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🏆\nGOLDEN SIGNAL\n\n🎰 CERT    🏆 GRADE A  ·  G0=75.3% historical (n=615)  ·  3-room convergence\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 BET     🔵 AZUL / BLUE (Player)\n\n🛡 COVER   🟡 Tie  _Empate_  (10% stake)\n\n⚡ DEPTH   G0 only — single entry, no retry\n\n⏱ CLOSES  16:23 UTC  (6s)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "⚡\nRUSH — 11s LEFT — ACT NOW\n ⚡\n\n💎\nSOLO ELITE\n 💎\n\n🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵\n\n      BLUE — PLAYER\n\n🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 BET     🔵 AZUL / BLUE (Player)\n\n🛡 COVER   🟡 Tie  _Empate_  (10% stake)\n\n⚡ DEPTH   G0 only — single entry, no retry\n\n⏱ CLOSES  01:50 UTC  (11s)\n\n🎰 CERT    G0=92.6% all-time (n=476) — top signal\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📡 ROOM\n@CoringaDados\n  WR 99.6%\n\n📜 RECENT  —\n\n━━━━",
+      "💎\nSOLO ELITE\n 💎\n\n🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵\n\n      BLUE — PLAYER\n\n🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 BET     🔵 AZUL / BLUE (Player)\n\n🛡 COVER   🟡 Tie  _Empate_  (10% stake)\n\n⚡ DEPTH   G0 only — single entry, no retry\n\n⏱ CLOSES  02:06 UTC  (12s)\n\n🎰 CERT    G0=92.6% all-time (n=476) — top signal\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📡 ROOM\n@bacbobrasileiro01\n  WR 97.4%\n\n📜 RECENT  ✅ ✅ ✅ 🟡 🟡\n\n━━━━━━━━━━━━━━━━━━━━━━━"
+    ],
+    "MIXED|NO_TIMING": [
+      "⏰\n06:00 — BRT\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔮\nPREVISÃO — SOLO_ELITE\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔥\nMUITO FORTE — G0 WIN esperado\n\n🎯 G0: 🔵 AZUL  →\n99% de WIN\n\n─────────────────────────\n\n  💡 Apostar confiante no G0.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊\nFatores:\n\n  🗂 Slot [Sab+H09+AZUL]:\n100%\n WR (8 sinais)\n\n  🤖 Conf IA:\n73%\n\n  📐 Score:\n5.7\n\n  ➖ Momentum:\nNEUTRAL\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n① G0 — APOSTAR 🔵 AZ",
+      "⏰\n06:02 — BRT\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔮\nPREVISÃO — SOLO_ELITE\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔥\nMUITO FORTE — G0 WIN esperado\n\n🎯 G0: 🔵 AZUL  →\n99% de WIN\n\n─────────────────────────\n\n  💡 Apostar confiante no G0.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊\nFatores:\n\n  🗂 Slot [Sab+H09+AZUL]:\n100%\n WR (9 sinais)\n\n  🤖 Conf IA:\n71%\n\n  📐 Score:\n4.9\n\n  ➖ Momentum:\nNEUTRAL\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n① G0 — APOSTAR 🔵 AZ",
+      "⏰\n06:10 — BRT\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔮\nPREVISÃO — SOLO_ELITE\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔥\nMUITO FORTE — G0 WIN esperado\n\n🎯 G0: 🔴 VERMELHO  →\n99% de WIN\n\n─────────────────────────\n\n  💡 Apostar confiante no G0.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊\nFatores:\n\n  🗂 Slot [Sab+H09+VERM]:\n100%\n WR (6 sinais)\n\n  🤖 Conf IA:\n75%\n\n  📐 Score:\n6.7\n\n  ➖ Momentum:\nNEUTRAL\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📐\nProfundidade "
+    ]
+  },
+  "next": [
+    "Use WITH_TIMING fire templates as countdown-value family (historical binge days)",
+    "Use NO_TIMING fires as ENTER NOW / plain color-coming family",
+    "Map each WITH_TIMING system secs→implied rounds (secs/30) = true G0 lag",
+    "Re-run g0_offset_oracle per kind×floor for offset 1..6"
+  ]
+}

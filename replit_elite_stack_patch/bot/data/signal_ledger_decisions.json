@@ -1,0 +1,512 @@
+{
+  "schema_version": 1,
+  "instructions": "These skins already posted in production. More than 10 sends, a 24h back-to-back run, or a peak day above 50 means the skin is working. PENDING_REVIEW is not a valid state for that history. RETIRE only if the operator retired that system.",
+  "families": {
+    "FIRE_EMERGINDO": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_CONFIRMED_ENTER": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=13 (> 10)",
+      "historical_sends": 13,
+      "already_working": true
+    },
+    "FIRE_SOLO_ELITE_ENTER": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=11228 (> 10)",
+      "historical_sends": 11228,
+      "already_working": true
+    },
+    "FIRE_GOLDEN_ENTER": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=2964 (> 10)",
+      "historical_sends": 2964,
+      "already_working": true
+    },
+    "FIRE_SEQUENCE_ENTER": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=109 (> 10)",
+      "historical_sends": 109,
+      "already_working": true
+    },
+    "FIRE_PLATINUM_ENTER": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=1377 (> 10)",
+      "historical_sends": 1377,
+      "already_working": true
+    },
+    "RESULT_AUTO_TIE": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=1295 (> 10)",
+      "historical_sends": 1295,
+      "already_working": true
+    },
+    "RESULT_WIN_TIER": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=10904 (> 10)",
+      "historical_sends": 10904,
+      "already_working": true
+    },
+    "RESULT_LOSS_TIER": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=2961 (> 10)",
+      "historical_sends": 2961,
+      "already_working": true
+    },
+    "FIRE_GALE_ENTRE_NOVAMENTE": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=402 (> 10)",
+      "historical_sends": 402,
+      "already_working": true
+    },
+    "RESULT_EMPATE": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=675 (> 10)",
+      "historical_sends": 675,
+      "already_working": true
+    },
+    "FIRE_GALE_RETENTATIVA": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=1248 (> 10)",
+      "historical_sends": 1248,
+      "already_working": true
+    },
+    "RESULT_GREEN_LEGACY_G0": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=518 (> 10)",
+      "historical_sends": 518,
+      "already_working": true
+    },
+    "RESULT_GREEN_LEGACY_G1": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=141 (> 10)",
+      "historical_sends": 141,
+      "already_working": true
+    },
+    "FIRE_JANELA_TIMED": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=747 (> 10)",
+      "historical_sends": 747,
+      "already_working": true
+    },
+    "FIRE_ULTRA_TIE": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_TIMED_WINDOW": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=638 (> 10)",
+      "historical_sends": 638,
+      "already_working": true
+    },
+    "FIRE_EMPATE_DIRETO_G0": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=803 (> 10)",
+      "historical_sends": 803,
+      "already_working": true
+    },
+    "FIRE_G0_DIRETO": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=167 (> 10)",
+      "historical_sends": 167,
+      "already_working": true
+    },
+    "FIRE_PREPARE_G1": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=227 (> 10)",
+      "historical_sends": 227,
+      "already_working": true
+    },
+    "RESULT_FLASH_WIN": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=14 (> 10)",
+      "historical_sends": 14,
+      "already_working": true
+    },
+    "RESULT_GREEN_COMPACT_G0": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=1588 (> 10)",
+      "historical_sends": 1588,
+      "already_working": true
+    },
+    "RESULT_GREEN_COMPACT_G1": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=1674 (> 10)",
+      "historical_sends": 1674,
+      "already_working": true
+    },
+    "FIRE_COMPACT_HASH": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=309 (> 10)",
+      "historical_sends": 309,
+      "already_working": true
+    },
+    "RESULT_COMPACT_LOSS_HASH": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=83 (> 10)",
+      "historical_sends": 83,
+      "already_working": true
+    },
+    "RESULT_COMPACT_WIN_HASH": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=174 (> 10)",
+      "historical_sends": 174,
+      "already_working": true
+    },
+    "RESULT_COMPACT_TIE_HASH": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=12 (> 10)",
+      "historical_sends": 12,
+      "already_working": true
+    },
+    "FIRE_SOLO_APOSTAR": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=82 (> 10)",
+      "historical_sends": 82,
+      "already_working": true
+    },
+    "FIRE_SEQUENCE_APOSTAR": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=739 (> 10)",
+      "historical_sends": 739,
+      "already_working": true
+    },
+    "FIRE_GOLDEN_APOSTAR": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=31 (> 10)",
+      "historical_sends": 31,
+      "already_working": true
+    },
+    "FIRE_PLATINUM_APOSTAR": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=60 (> 10)",
+      "historical_sends": 60,
+      "already_working": true
+    },
+    "FIRE_FLASH_APOSTAR": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_SEQUENCIA_ENTER_NOW": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_SINAL_RETIDO_LIBERADO": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=175 (> 10)",
+      "historical_sends": 175,
+      "already_working": true
+    },
+    "CD_FIRE_TIMER_BRT_EDT_APOSTAR": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "CD_FIRE_QUANTUM_LOCK": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "CD_FIRE_RUSH_NS_LEFT": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_FORENSIC_INTERVALO": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_BELL_GANHOU": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=883 (> 10)",
+      "historical_sends": 883,
+      "already_working": true
+    },
+    "FIRE_GOD_TIER": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=105 (> 10)",
+      "historical_sends": 105,
+      "already_working": true
+    },
+    "FIRE_GOLDEN_ENTRE_AGORA": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=818 (> 10)",
+      "historical_sends": 818,
+      "already_working": true
+    },
+    "FIRE_G0_MISS_ENTRE_G1": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=329 (> 10)",
+      "historical_sends": 329,
+      "already_working": true
+    },
+    "RESULT_ORACLE_CARD": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_COLOR_BANNER": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=39377 (> 10)",
+      "historical_sends": 39377,
+      "already_working": true
+    },
+    "FIRE_ENTER_NOW_GENERIC": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_ENTRE_AGORA_GENERIC": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "already working: historical_sends=285 (> 10)",
+      "historical_sends": 285,
+      "already_working": true
+    },
+    "FIRE_APOSTE_AGORA": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_G0_ENTRADA_DIRETA": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_DEPTH_G0_ONLY": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_INVERTED_CONTRARIO": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_ORACLE_LOCK": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_CERTIFIED_ELITE": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_GRADE_BANNER": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_HOT_STREAK": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_DOUBLE_TIE_LOCK": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_GALE_1_FACA_AGORA": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_G0_ACERTOU_PRIMEIRA": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_GALE_RECOVERED_CHAIN": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_EMPATE_DINHEIRO_DEVOLVIDO": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_EMPATE_PROTECAO": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "CD_RES_GREEN_G_BRT": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "CD_RES_RODADAS_TEMPO": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "CD_RES_BELL_GANHOU": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_APOSTAR_EMPATE": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_NAMED_EDGE_BANNER": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_G2_RESERVE": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_G2_RESERVE_WIN": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "FIRE_FLASH_CONFIRMADO": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_AUTO_WIN": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_AUTO_LOSS": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    },
+    "RESULT_FINAL_LOSS_AFTER_G3": {
+      "decision": "G1_APEX",
+      "shelf": "UNIQUE_g1",
+      "paired_result_family": "",
+      "review_note": "canonical FIRE/RESULT — operator did not retire this system"
+    }
+  },
+  "free_volume": true,
+  "reality_law": {
+    "printed_secs_are_outcome": true,
+    "already_working_min_sends": 10,
+    "peak_day_min": 50,
+    "museum_templates_over_min_sends": 382,
+    "peak_floors_over_min": 21
+  }
+}
