@@ -177,6 +177,61 @@ def lag_shape(conn: sqlite3.Connection) -> dict:
     }
 
 
+def by_era(conn: sqlite3.Connection) -> list[dict]:
+    """Per month: how much of the grading was instant, and what forward WR was.
+
+    If the result-before-play mechanism arrived late, the instant share should
+    be small early and large late, and the early months are then the cleanest
+    forward sample in the DB.
+    """
+    rows = conn.execute(
+        f"""
+        SELECT substr(fired_at, 1, 7) AS era,
+               {_bucket_case()} AS bucket,
+               COUNT(*) AS n,
+               SUM(outcome='win') AS wins,
+               SUM(outcome='tie') AS ties
+        FROM consensus_signals
+        WHERE outcome IN ('win','loss','tie') AND fired_at IS NOT NULL
+        GROUP BY era, bucket
+        ORDER BY era
+        """
+    ).fetchall()
+
+    agg: dict[str, dict] = {}
+    for r in rows:
+        e = agg.setdefault(
+            r["era"], {"era": r["era"], "graded": 0, "buckets": {}}
+        )
+        decided = int(r["n"]) - int(r["ties"] or 0)
+        e["buckets"][r["bucket"]] = {
+            "n": int(r["n"]),
+            "decided": decided,
+            "wins": int(r["wins"] or 0),
+            "wr_pct": round(100.0 * int(r["wins"] or 0) / decided, 2) if decided else None,
+        }
+        e["graded"] += int(r["n"])
+
+    out = []
+    for e in agg.values():
+        fwd = e["buckets"].get("FORWARD") or {}
+        inst = e["buckets"].get("INSTANT") or {}
+        e["instant_pct"] = (
+            round(100.0 * inst.get("n", 0) / e["graded"], 2) if e["graded"] else None
+        )
+        e["forward_n"] = fwd.get("decided", 0)
+        e["forward_wr_pct"] = fwd.get("wr_pct")
+        e["instant_wr_pct"] = inst.get("wr_pct")
+        e["forward_ci95"] = (
+            _wilson(fwd.get("wins", 0), fwd["decided"])
+            if fwd.get("decided", 0) >= MIN_N
+            else None
+        )
+        out.append(e)
+    out.sort(key=lambda e: e["era"])
+    return out
+
+
 def derived_color_check(conn: sqlite3.Connection) -> dict:
     """If 'actual' colour is derived from the win label, wins mirror the call exactly."""
     row = conn.execute(
@@ -230,6 +285,7 @@ def build_report(db_path: str = DB_PATH) -> dict:
             "ground_truth": ground_truth(conn),
             "lag_shape": lag_shape(conn),
             "by_kind": kinds,
+            "by_era": by_era(conn),
             "derived_color_check": derived_color_check(conn),
         }
 
@@ -273,18 +329,37 @@ def render(rep: dict) -> str:
     add(f"FORWARD      : {lag['forward']:,} ({lag['forward_pct']}%)  pinned to its round")
     add(f"STRAY        : {lag['stray']:,} ({lag['stray_pct']}%)  matched to a later round")
     add("")
-    add("-- per system: overall WR vs forward-only WR --")
-    add(f"{'system':<14}{'graded':>8}{'overall':>9}{'fwd n':>8}{'fwd WR':>8}  {'fwd 95% CI':<18}verdict")
+    add("-- per system: WR inside each lag bucket --")
+    add("   if INSTANT WR far exceeds FORWARD WR, the labels depend on the lag")
+    add(f"{'system':<14}{'graded':>8}{'instWR':>8}{'fwdWR':>8}{'strayWR':>9}{'fwd n':>8}  {'fwd 95% CI':<18}verdict")
     for k in rep["by_kind"]:
-        fwd = k["buckets"].get("FORWARD") or {}
+        b = k["buckets"]
+        fwd = b.get("FORWARD") or {}
         ci = fwd.get("wr_ci95")
         ci_txt = f"{ci[0]}–{ci[1]}%" if ci else "—"
+        cell = lambda name: (  # noqa: E731
+            f"{(b.get(name) or {}).get('wr_pct')}%"
+            if (b.get(name) or {}).get("wr_pct") is not None
+            else "—"
+        )
         add(
             f"{k['signal_kind']:<14}{k['total']:>8,}"
-            f"{(str(k['overall_wr_pct']) + '%') if k['overall_wr_pct'] is not None else '—':>9}"
-            f"{k['forward_n']:>8,}"
-            f"{(str(k['forward_wr_pct']) + '%') if k['forward_wr_pct'] is not None else '—':>8}"
-            f"  {ci_txt:<18}{k['verdict']}"
+            f"{cell('INSTANT'):>8}{cell('FORWARD'):>8}{cell('STRAY'):>9}"
+            f"{k['forward_n']:>8,}  {ci_txt:<18}{k['verdict']}"
+        )
+    add("")
+    add("-- per month: did the instant-result mechanism arrive late? --")
+    add(f"{'era':<9}{'graded':>8}{'instant%':>10}{'instWR':>8}{'fwd n':>8}{'fwdWR':>8}  fwd 95% CI")
+    for e in rep["by_era"]:
+        ci = e["forward_ci95"]
+        ci_txt = f"{ci[0]}–{ci[1]}%" if ci else "—"
+        add(
+            f"{e['era']:<9}{e['graded']:>8,}"
+            f"{(str(e['instant_pct']) + '%') if e['instant_pct'] is not None else '—':>10}"
+            f"{(str(e['instant_wr_pct']) + '%') if e['instant_wr_pct'] is not None else '—':>8}"
+            f"{e['forward_n']:>8,}"
+            f"{(str(e['forward_wr_pct']) + '%') if e['forward_wr_pct'] is not None else '—':>8}"
+            f"  {ci_txt}"
         )
     add("")
     add(f"breakeven for an even-money bet: {rep['conclusion']['breakeven_wr_pct']}%")

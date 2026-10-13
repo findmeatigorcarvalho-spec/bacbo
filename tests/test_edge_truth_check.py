@@ -110,6 +110,35 @@ class EdgeTruthCheckTest(unittest.TestCase):
         self.assertIn("consensus_signals missing", rep["error"])
         self.assertIn("[EDGE-TRUTH] ERROR", self.mod.render(rep))
 
+    def test_era_breakdown_locates_when_instant_grading_appeared(self):
+        rows = [("S", "blue", "win", 20.0, "2026-03-15 12:00:00")] * 100
+        rows += [("S", "blue", "win", 1.0, "2026-08-15 12:00:00")] * 100
+        conn = sqlite3.connect(self.db)
+        conn.execute(
+            "CREATE TABLE consensus_signals("
+            "id INTEGER PRIMARY KEY, signal_kind TEXT, color TEXT, outcome TEXT,"
+            " secs_to_result REAL, fired_at TEXT)"
+        )
+        conn.executemany(
+            "INSERT INTO consensus_signals(signal_kind,color,outcome,secs_to_result,fired_at)"
+            " VALUES(?,?,?,?,?)",
+            rows,
+        )
+        conn.commit()
+        conn.close()
+        eras = {e["era"]: e for e in self.mod.build_report(self.db)["by_era"]}
+        self.assertEqual(eras["2026-03"]["instant_pct"], 0.0)
+        self.assertEqual(eras["2026-08"]["instant_pct"], 100.0)
+        self.assertEqual(eras["2026-03"]["forward_n"], 100)
+        self.assertEqual(eras["2026-08"]["forward_n"], 0)
+
+    def test_bucket_win_rates_are_reported_separately(self):
+        rows = [("S", "blue", "win", 1.0)] * 50 + [("S", "blue", "loss", 20.0)] * 50
+        _make_db(self.db, rows)
+        buckets = self.mod.build_report(self.db)["by_kind"][0]["buckets"]
+        self.assertEqual(buckets["INSTANT"]["wr_pct"], 100.0)
+        self.assertEqual(buckets["FORWARD"]["wr_pct"], 0.0)
+
     def test_db_is_never_written(self):
         rows = [("X", "blue", "win", 20.0)] * 40
         _make_db(self.db, rows)

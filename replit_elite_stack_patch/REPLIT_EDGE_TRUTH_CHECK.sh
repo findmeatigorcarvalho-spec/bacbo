@@ -6,7 +6,7 @@
 # JSON report under bot/data.
 #
 #   curl -fsSL -o /tmp/EDGE.sh \
-#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_EDGE_TRUTH_CHECK.sh?v=20261013a'
+#     'https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/cursor/add-engine-gate-registry-d5ba/replit_elite_stack_patch/REPLIT_EDGE_TRUTH_CHECK.sh?v=20261013b'
 #   bash /tmp/EDGE.sh
 set -euo pipefail
 ROOT="${ROOT:-/home/runner/workspace}"
@@ -14,7 +14,7 @@ cd "$ROOT"
 PY="${PY:-python3}"
 BRANCH="${BRANCH:-cursor/add-engine-gate-registry-d5ba}"
 RAW="https://raw.githubusercontent.com/findmeatigorcarvalho-spec/bacbo/${BRANCH}/replit_elite_stack_patch"
-V="20261013a"
+V="20261013b"
 mkdir -p bot/data
 
 echo "========== EDGE TRUTH CHECK ${V} =========="
