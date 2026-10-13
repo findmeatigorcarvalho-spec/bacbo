@@ -1,0 +1,42 @@
+{
+  "mode": "luxury_peak_lock",
+  "generated_from": "replit litterbox exports 2026-07-20",
+  "notes": [
+    "Logical floor names stay in EdgePolicy/floor_tracker.",
+    "Gate modules use *_peak / golden / perfect aliases via gate_alias_resolve.",
+    "JUN12A/JUN12B remain hard-blocked.",
+    "Historical WR for JUN*/MAY* comes from seed/Telegram peaks; live DB is truncated."
+  ],
+  "blocked_floors": ["JUN12A", "JUN12B"],
+  "towers": {
+    "LIVE": {"gate": "ELITE_V2", "peak_day": null, "role": "live_core"},
+    "ELITE_V2": {"gate": "ELITE_V2", "peak_day": null, "role": "live_core"},
+    "ELITE_V2_PEAK": {"gate": "ELITE_V2_PEAK", "peak_day": null, "role": "live_core"},
+    "ULTIMATE": {"gate": "ULTIMATE", "peak_day": null, "role": "live_core"},
+    "MAR19": {"gate": "MAR19", "peak_day": "2026-03-19", "role": "historical_peak"},
+    "MAR20": {"gate": "MAR20", "peak_day": "2026-03-20", "role": "historical_peak"},
+    "MAR21": {"gate": "MAR21", "peak_day": "2026-03-21", "role": "historical_peak"},
+    "APR19": {"gate": "APR19_golden", "peak_day": "2026-04-19", "role": "historical_peak"},
+    "APR20": {"gate": "APR20_perfect", "peak_day": "2026-04-20", "role": "historical_peak"},
+    "APR30": {"gate": "APR30_peak", "peak_day": "2026-04-30", "role": "historical_peak"},
+    "MAY01": {"gate": "MAY01_peak", "peak_day": "2026-05-01", "role": "historical_peak"},
+    "MAY10": {"gate": "MAY10_peak", "peak_day": "2026-05-10", "role": "historical_peak"},
+    "MAY11": {"gate": "MAY11_peak", "peak_day": "2026-05-11", "role": "historical_peak"},
+    "MAY19": {"gate": "MAY19_peak", "peak_day": "2026-05-19", "role": "historical_peak"},
+    "MAY20": {"gate": "MAY20_peak", "peak_day": "2026-05-20", "role": "historical_peak"},
+    "MAY21": {"gate": "MAY21_peak", "peak_day": "2026-05-21", "role": "historical_peak"},
+    "MAY22": {"gate": "MAY22_peak", "peak_day": "2026-05-22", "role": "historical_peak"},
+    "MAY23": {"gate": "MAY23_peak", "peak_day": "2026-05-23", "role": "historical_peak"},
+    "MAY24": {"gate": "MAY24_peak", "peak_day": "2026-05-24", "role": "historical_peak"},
+    "MAY25": {"gate": "MAY25_peak", "peak_day": "2026-05-25", "role": "historical_peak"},
+    "MAY26": {"gate": "MAY26_peak", "peak_day": "2026-05-26", "role": "historical_peak"},
+    "MAY27": {"gate": "MAY27_peak", "peak_day": "2026-05-27", "role": "historical_peak"},
+    "JUN06": {"gate": "JUN06_peak", "peak_day": "2026-06-06", "role": "historical_peak"},
+    "JUN08": {"gate": "JUN08_peak", "peak_day": "2026-06-08", "role": "historical_peak"},
+    "JUN10": {"gate": "JUN10_peak", "peak_day": "2026-06-10", "role": "historical_peak"},
+    "JUN19": {"gate": "JUN19_peak", "peak_day": "2026-06-19", "role": "telegram_peak"},
+    "JUN20": {"gate": "JUN20_peak", "peak_day": "2026-06-20", "role": "telegram_peak"},
+    "JUN26": {"gate": "JUN26", "peak_day": "2026-06-26", "role": "historical_peak"},
+    "JUN27": {"gate": "JUN27_peak", "peak_day": "2026-06-27", "role": "historical_peak"}
+  }
+}

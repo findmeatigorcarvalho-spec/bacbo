@@ -1,0 +1,51 @@
+{
+  "applied_at": "2026-07-28T22:25:49Z",
+  "locks": {
+    "config_separate_peak_volume": true,
+    "no_shrink_gates": true,
+    "original_card_skins": true,
+    "gunique_first_24_7": true,
+    "real_countdown_release_lte_30s": true
+  },
+  "chat_priority": [
+    "UNIQUE_g1",
+    "6774605259",
+    "SOLO",
+    "GOLDEN",
+    "SEQUENCE",
+    "MIX",
+    "OPS"
+  ],
+  "env_path": "/workspace/replit_elite_stack_patch/bot/luxury_building.env",
+  "env_keys": {
+    "HUB_MAX": "1",
+    "VOLUME_MODE": "EXPLOSION",
+    "V2_PROPOSERS": "1",
+    "TELEGRAM_MIRROR_MONEY_TO_GUNIQUE": "0",
+    "TELEGRAM_SINGLE_OUTBOX": "1",
+    "TELEGRAM_COUNTDOWN_PEER": "UNIQUE_g1",
+    "GUNIQUE_PEER": "UNIQUE_g1",
+    "PACKER_REAL_COUNTDOWN_MAX": "30",
+    "PACKER_HUB_CHAT": "PLAY",
+    "HUB_CHAT_PRIORITY": "UNIQUE_g1,6774605259,SOLO,GOLDEN,SEQUENCE,MIX,OPS",
+    "HUB_GUNIQUE_FIRST": "1",
+    "HUB_CONFIG_SEPARATE": "1",
+    "HUB_NO_SHRINK_GATES": "1",
+    "HUB_ORIGINAL_CARD_SKINS": "1",
+    "HUB_STRIP_NOISE_ONLY": "1",
+    "LUXURY_TOWER_MERGE": "1",
+    "FALLBACKS_ENABLED": "1",
+    "TELEGRAM_TARGET_PEER": "6774605259"
+  },
+  "packer_ok": true,
+  "packer_demo": {
+    "long": "HOLD_UNTIL_REAL",
+    "solo": "ALLOW"
+  },
+  "next": [
+    "Gunique (#1) fills first 24/7",
+    "Money chat (#2) next",
+    "Specialists cascade \u2014 elastic spawn if >~3/min",
+    "Each config fires like its own best volume day"
+  ]
+}

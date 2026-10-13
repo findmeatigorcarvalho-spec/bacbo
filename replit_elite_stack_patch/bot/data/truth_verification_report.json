@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-06-18T21:10:33.114202+00:00",
+  "days": 7,
+  "truth_levels": {
+    "direct_casino_rows_total": 0,
+    "direct_casino_rows_recent": 0,
+    "signal_truth_matches_total": 0,
+    "inferred_from_bot_db_recent": 3650
+  },
+  "consensus_recent": {
+    "total": 3658,
+    "wins": 2513,
+    "losses": 936,
+    "ties": 201,
+    "pending": 2,
+    "early_20s": 528,
+    "avg_secs_to_result": 16.1
+  },
+  "verdict": "BOT_DB_INFERRED_ONLY",
+  "required_to_confirm_100pct_claim": [
+    "Capture Twin225 round_id/player_total/banker_total/actual_color directly.",
+    "Store every direct result in casino_round_results.",
+    "Match consensus_signals.id to casino_round_results.round_id before counting verified WR.",
+    "Require signal_time < betting_closed_at for early-result oracle claims."
+  ]
+}

@@ -1,0 +1,864 @@
+{
+  "rev": "6.8-custom-preserve",
+  "generated_at_utc": "2026-07-20T07:08:05",
+  "rules": {
+    "vault_min_alltime_W": 8,
+    "vault_max_alltime_L": 1,
+    "vault_min_recent_W": 2,
+    "block_min_alltime_L": 10,
+    "block_min_recent_L": 2,
+    "recent_days": 14
+  },
+  "universe": {
+    "alltime_W": 1315,
+    "alltime_L": 277,
+    "recent_W": 451,
+    "recent_L": 100
+  },
+  "vault_patterns": [
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "blue",
+        0,
+        6
+      ],
+      "alltime_W": 27,
+      "alltime_L": 0,
+      "recent_W": 2,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "red",
+        10,
+        5
+      ],
+      "alltime_W": 22,
+      "alltime_L": 0,
+      "recent_W": 12,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "blue",
+        8,
+        6
+      ],
+      "alltime_W": 19,
+      "alltime_L": 0,
+      "recent_W": 0,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "red",
+        7,
+        5
+      ],
+      "alltime_W": 17,
+      "alltime_L": 0,
+      "recent_W": 1,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "blue",
+        5,
+        5
+      ],
+      "alltime_W": 15,
+      "alltime_L": 0,
+      "recent_W": 0,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "blue",
+        7,
+        5
+      ],
+      "alltime_W": 15,
+      "alltime_L": 0,
+      "recent_W": 0,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "GOLDEN",
+        "red",
+        8,
+        5
+      ],
+      "alltime_W": 21,
+      "alltime_L": 1,
+      "recent_W": 2,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "blue",
+        22,
+        5
+      ],
+      "alltime_W": 21,
+      "alltime_L": 1,
+      "recent_W": 9,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "GOLDEN",
+        "blue",
+        4,
+        2
+      ],
+      "alltime_W": 17,
+      "alltime_L": 1,
+      "recent_W": 2,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "GOLDEN",
+        "blue",
+        13,
+        1
+      ],
+      "alltime_W": 17,
+      "alltime_L": 0,
+      "recent_W": 17,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "blue",
+        6,
+        5
+      ],
+      "alltime_W": 17,
+      "alltime_L": 1,
+      "recent_W": 3,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "blue",
+        10,
+        6
+      ],
+      "alltime_W": 17,
+      "alltime_L": 1,
+      "recent_W": 0,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "red",
+        21,
+        5
+      ],
+      "alltime_W": 17,
+      "alltime_L": 1,
+      "recent_W": 5,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "GOLDEN",
+        "red",
+        13,
+        2
+      ],
+      "alltime_W": 16,
+      "alltime_L": 1,
+      "recent_W": 4,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "GOLDEN",
+        "red",
+        0,
+        5
+      ],
+      "alltime_W": 15,
+      "alltime_L": 1,
+      "recent_W": 2,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "blue",
+        1,
+        6
+      ],
+      "alltime_W": 15,
+      "alltime_L": 1,
+      "recent_W": 2,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "red",
+        9,
+        5
+      ],
+      "alltime_W": 15,
+      "alltime_L": 1,
+      "recent_W": 3,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "blue",
+        10,
+        5
+      ],
+      "alltime_W": 14,
+      "alltime_L": 1,
+      "recent_W": 6,
+      "recent_L": 1,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "GOLDEN",
+        "blue",
+        15,
+        2
+      ],
+      "alltime_W": 20,
+      "alltime_L": 0,
+      "recent_W": 19,
+      "recent_L": 0,
+      "_custom": true
+    },
+    {
+      "keys": [
+        "dow",
+        "lead"
+      ],
+      "values": [
+        4,
+        "robobacbodados"
+      ],
+      "alltime_W": 56,
+      "alltime_L": 0,
+      "recent_W": 56,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "lead"
+      ],
+      "values": [
+        14,
+        "robobacbodados"
+      ],
+      "alltime_W": 47,
+      "alltime_L": 0,
+      "recent_W": 47,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "hour"
+      ],
+      "values": [
+        "SEQUENCE",
+        7
+      ],
+      "alltime_W": 37,
+      "alltime_L": 0,
+      "recent_W": 37,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "hour"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        9
+      ],
+      "alltime_W": 35,
+      "alltime_L": 0,
+      "recent_W": 8,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "dow",
+        "lead"
+      ],
+      "values": [
+        "SEQUENCE",
+        5,
+        "robobacbodados"
+      ],
+      "alltime_W": 35,
+      "alltime_L": 0,
+      "recent_W": 35,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "dow",
+        "lead"
+      ],
+      "values": [
+        6,
+        5,
+        "robobacbodados"
+      ],
+      "alltime_W": 28,
+      "alltime_L": 0,
+      "recent_W": 28,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "lead"
+      ],
+      "values": [
+        6,
+        "isadados"
+      ],
+      "alltime_W": 24,
+      "alltime_L": 0,
+      "recent_W": 4,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        8,
+        5
+      ],
+      "alltime_W": 24,
+      "alltime_L": 1,
+      "recent_W": 5,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "lead"
+      ],
+      "values": [
+        8,
+        "isadados"
+      ],
+      "alltime_W": 23,
+      "alltime_L": 0,
+      "recent_W": 2,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "lead"
+      ],
+      "values": [
+        "SEQUENCE",
+        "isadados"
+      ],
+      "alltime_W": 20,
+      "alltime_L": 0,
+      "recent_W": 20,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "lead"
+      ],
+      "values": [
+        "SEQUENCE",
+        "m8sinais"
+      ],
+      "alltime_W": 20,
+      "alltime_L": 0,
+      "recent_W": 20,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "dow"
+      ],
+      "values": [
+        13,
+        5
+      ],
+      "alltime_W": 20,
+      "alltime_L": 0,
+      "recent_W": 3,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "lead"
+      ],
+      "values": [
+        "SEQUENCE",
+        "dadosbacbobr"
+      ],
+      "alltime_W": 16,
+      "alltime_L": 0,
+      "recent_W": 16,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "color",
+        "lead"
+      ],
+      "values": [
+        "red",
+        "coringadados"
+      ],
+      "alltime_W": 16,
+      "alltime_L": 0,
+      "recent_W": 7,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "lead"
+      ],
+      "values": [
+        14,
+        "baccarat_b"
+      ],
+      "alltime_W": 16,
+      "alltime_L": 1,
+      "recent_W": 13,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "lead"
+      ],
+      "values": [
+        9,
+        "rigosinais"
+      ],
+      "alltime_W": 16,
+      "alltime_L": 0,
+      "recent_W": 2,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "lead"
+      ],
+      "values": [
+        9,
+        "isadados"
+      ],
+      "alltime_W": 16,
+      "alltime_L": 0,
+      "recent_W": 3,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "lead"
+      ],
+      "values": [
+        14,
+        "isadados"
+      ],
+      "alltime_W": 16,
+      "alltime_L": 0,
+      "recent_W": 16,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "hour"
+      ],
+      "values": [
+        "SEQUENCE",
+        8
+      ],
+      "alltime_W": 15,
+      "alltime_L": 0,
+      "recent_W": 15,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "color",
+        "hour",
+        "lead"
+      ],
+      "values": [
+        "blue",
+        6,
+        "rigosinais"
+      ],
+      "alltime_W": 14,
+      "alltime_L": 0,
+      "recent_W": 2,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "lead"
+      ],
+      "values": [
+        "PLATINUM",
+        "rqdados"
+      ],
+      "alltime_W": 12,
+      "alltime_L": 0,
+      "recent_W": 2,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "lead"
+      ],
+      "values": [
+        "SEQUENCE",
+        "martinswinbacbo"
+      ],
+      "alltime_W": 11,
+      "alltime_L": 0,
+      "recent_W": 11,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "lead"
+      ],
+      "values": [
+        "SEQUENCE",
+        "rigosinais"
+      ],
+      "alltime_W": 11,
+      "alltime_L": 0,
+      "recent_W": 11,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "lead"
+      ],
+      "values": [
+        "SOLO_ELITE",
+        "robofreebacbo24horass"
+      ],
+      "alltime_W": 11,
+      "alltime_L": 0,
+      "recent_W": 11,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "dow",
+        "lead"
+      ],
+      "values": [
+        "SEQUENCE",
+        5,
+        "bacbobrasileiro01"
+      ],
+      "alltime_W": 11,
+      "alltime_L": 0,
+      "recent_W": 11,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "dow",
+        "lead"
+      ],
+      "values": [
+        "SEQUENCE",
+        4,
+        "baccarat_b"
+      ],
+      "alltime_W": 11,
+      "alltime_L": 0,
+      "recent_W": 11,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "dow"
+      ],
+      "values": [
+        12,
+        5
+      ],
+      "alltime_W": 9,
+      "alltime_L": 1,
+      "recent_W": 2,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "color",
+        "hour"
+      ],
+      "values": [
+        "PLATINUM",
+        "red",
+        14
+      ],
+      "alltime_W": 9,
+      "alltime_L": 0,
+      "recent_W": 9,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "dow",
+        "lead"
+      ],
+      "values": [
+        6,
+        5,
+        "rigosinais"
+      ],
+      "alltime_W": 9,
+      "alltime_L": 0,
+      "recent_W": 2,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "color",
+        "lead"
+      ],
+      "values": [
+        "red",
+        "baccarat_b"
+      ],
+      "alltime_W": 8,
+      "alltime_L": 1,
+      "recent_W": 4,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "hour",
+        "lead"
+      ],
+      "values": [
+        7,
+        "m8sinais"
+      ],
+      "alltime_W": 8,
+      "alltime_L": 0,
+      "recent_W": 8,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "kind",
+        "dow",
+        "lead"
+      ],
+      "values": [
+        "GOLDEN",
+        4,
+        "coringadados"
+      ],
+      "alltime_W": 8,
+      "alltime_L": 1,
+      "recent_W": 2,
+      "recent_L": 0
+    },
+    {
+      "keys": [
+        "color",
+        "hour",
+        "dow"
+      ],
+      "values": [
+        "red",
+        13,
+        4
+      ],
+      "alltime_W": 8,
+      "alltime_L": 0,
+      "recent_W": 8,
+      "recent_L": 0
+    }
+  ],
+  "block_patterns": []
+}

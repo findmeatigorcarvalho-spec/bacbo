@@ -1,0 +1,2780 @@
+{
+  "total_distinct_types": 39271,
+  "product_looking_types": 10423,
+  "mapped_product_types": 1651,
+  "unmapped_product_types": 8772,
+  "map_rate_product": 0.1584,
+  "product_msgs": 133709,
+  "mapped_msgs": 119335,
+  "unmapped_msgs": 14374,
+  "map_rate_msgs": 0.8925,
+  "by_first_chat_types": {
+    "mr_iv4": 39257,
+    "UNIQUE_g1": 14
+  },
+  "by_first_chat_msg_counts": {
+    "mr_iv4": 537139,
+    "UNIQUE_g1": 27
+  },
+  "by_role_type_rows": {
+    "ONLINE": 1,
+    "UNKNOWN": 19460,
+    "ROOM_RELAY": 13812,
+    "FIRE": 83,
+    "OPS": 329,
+    "RESULT": 5584,
+    "EMPTY": 1,
+    "MEDIA": 1
+  },
+  "family_msg_hits_top": [
+    [
+      "RESULT_COLOR_BANNER",
+      35251
+    ],
+    [
+      "OPS_SEQUENCE_PREDICTION",
+      11474
+    ],
+    [
+      "FIRE_SOLO_ELITE_ENTER",
+      11228
+    ],
+    [
+      "RESULT_WIN_TIER",
+      10918
+    ],
+    [
+      "OPS_TIE_ALERT",
+      6990
+    ],
+    [
+      "OPS_LOSS_COOLDOWN",
+      5779
+    ],
+    [
+      "OPS_GATE_BLOCK_LOG",
+      4223
+    ],
+    [
+      "OPS_SEQ_EMPATES",
+      3945
+    ],
+    [
+      "FIRE_GOLDEN_ENTER",
+      2964
+    ],
+    [
+      "RESULT_LOSS_TIER",
+      2961
+    ],
+    [
+      "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+      2434
+    ],
+    [
+      "OPS_GALE_SATURATION",
+      2281
+    ],
+    [
+      "CD_RES_RODADAS_TEMPO",
+      1799
+    ],
+    [
+      "CD_FIRE_QUANTUM_LOCK",
+      1493
+    ],
+    [
+      "FIRE_JANELA_TIMED",
+      1473
+    ],
+    [
+      "FIRE_PLATINUM_ENTER",
+      1377
+    ],
+    [
+      "RESULT_AUTO_TIE",
+      1295
+    ],
+    [
+      "FIRE_GALE_RETENTATIVA",
+      1248
+    ],
+    [
+      "OPS_STREAK_BANNER",
+      1109
+    ],
+    [
+      "RESULT_FORENSIC_INTERVALO",
+      883
+    ],
+    [
+      "FIRE_GOLDEN_ENTRE_AGORA",
+      818
+    ],
+    [
+      "FIRE_EMPATE_DIRETO_G0",
+      803
+    ],
+    [
+      "FIRE_SEQUENCE_APOSTAR",
+      739
+    ],
+    [
+      "RESULT_EMPATE",
+      675
+    ],
+    [
+      "OPS_G2_MISS",
+      591
+    ],
+    [
+      "OPS_G2_ATINGIDO_PARE",
+      560
+    ],
+    [
+      "CD_RES_GREEN_G_BRT",
+      539
+    ],
+    [
+      "FIRE_GALE_ENTRE_NOVAMENTE",
+      402
+    ],
+    [
+      "OPS_JANELA_PRIME",
+      359
+    ],
+    [
+      "FIRE_COMPACT_HASH",
+      309
+    ],
+    [
+      "CD_FIRE_RUSH_NS_LEFT",
+      302
+    ],
+    [
+      "FIRE_G0_MISS_ENTRE_G1",
+      287
+    ],
+    [
+      "OPS_SELF_CARE_GUARD",
+      240
+    ],
+    [
+      "FIRE_PREPARE_G1",
+      227
+    ],
+    [
+      "OPS_PARE_3_PERDAS",
+      220
+    ],
+    [
+      "CD_RES_BELL_GANHOU",
+      195
+    ],
+    [
+      "FIRE_SINAL_RETIDO_LIBERADO",
+      175
+    ],
+    [
+      "OPS_AUDIT_360",
+      130
+    ],
+    [
+      "FIRE_SEQUENCE_ENTER",
+      109
+    ],
+    [
+      "FIRE_GOD_TIER",
+      105
+    ],
+    [
+      "RESULT_TIMED_WINDOW",
+      90
+    ],
+    [
+      "FIRE_SOLO_APOSTAR",
+      82
+    ],
+    [
+      "OPS_TIER_LEGEND",
+      65
+    ],
+    [
+      "FIRE_PLATINUM_APOSTAR",
+      60
+    ],
+    [
+      "RESULT_BELL_GANHOU",
+      41
+    ],
+    [
+      "FIRE_GOLDEN_APOSTAR",
+      31
+    ],
+    [
+      "OPS_G1_EXPIROU",
+      21
+    ],
+    [
+      "FIRE_CONFIRMED_ENTER",
+      13
+    ],
+    [
+      "FIRE_ULTRA_TIE",
+      6
+    ],
+    [
+      "OPS_JANELA_PEAK",
+      4
+    ],
+    [
+      "FIRE_SEQUENCIA_ENTER_NOW",
+      4
+    ],
+    [
+      "FIRE_ENTRE_AGORA_GENERIC",
+      3
+    ],
+    [
+      "FIRE_FLASH_APOSTAR",
+      2
+    ],
+    [
+      "OPS_G3_ATINGIDO",
+      1
+    ],
+    [
+      "OPS_TRIPLE_LOCK",
+      1
+    ],
+    [
+      "FIRE_APOSTE_AGORA",
+      1
+    ]
+  ],
+  "registry_families": 118,
+  "registry_never_seen_in_this_tg_dump": [
+    "CARD_BODY_LINE",
+    "CODE_FRAGMENT",
+    "FIRE_APOSTAR_EMPATE",
+    "FIRE_CERTIFIED_ELITE",
+    "FIRE_DEPTH_G0_ONLY",
+    "FIRE_DOUBLE_TIE_LOCK",
+    "FIRE_ENTER_NOW_GENERIC",
+    "FIRE_FLASH_CONFIRMADO",
+    "FIRE_G0_DIRETO",
+    "FIRE_G0_ENTRADA_DIRETA",
+    "FIRE_G2_RESERVE",
+    "FIRE_GALE_1_FACA_AGORA",
+    "FIRE_GRADE_BANNER",
+    "FIRE_HOT_STREAK",
+    "FIRE_INVERTED_CONTRARIO",
+    "FIRE_NAMED_EDGE_BANNER",
+    "FIRE_ORACLE_LOCK",
+    "OPS_AUTO_EXPIRED",
+    "OPS_CAMADAS_DO_DIA",
+    "OPS_COMMAND_HELP",
+    "OPS_CORRECAO",
+    "OPS_DELIVERY_WINDOW_LOG",
+    "OPS_DIVERGENCIA_SALAS",
+    "OPS_DO_NOT_BET_YET",
+    "OPS_DUPLO_ELITE",
+    "OPS_ELITE_ANALISANDO",
+    "OPS_G1_REGISTRADO_CALC_G2",
+    "OPS_G2_RESERVE_MISS",
+    "OPS_G2_STOP_IF_G1_LOST",
+    "OPS_GATE_ALLOW_LOG",
+    "OPS_KIND_DOWNGRADE_LOG",
+    "OPS_NEGATIVE_WINDOW_BLOCK",
+    "OPS_NEXT_CERTIFIED_WINDOW",
+    "OPS_OPEN_PLATFORM_NOW",
+    "OPS_PREALERT_3BOLT",
+    "OPS_PREALERT_FORMING",
+    "OPS_PREPARE_PLATFORM",
+    "OPS_RADAR_PARTIAL_CONSENSUS",
+    "OPS_SEQ_FRIA",
+    "OPS_SEQ_QUENTE",
+    "OPS_STAT_LINE",
+    "OPS_TIE_AUDIT",
+    "RESULT_AUTO_LOSS",
+    "RESULT_AUTO_WIN",
+    "RESULT_COMPACT_LOSS_HASH",
+    "RESULT_COMPACT_TIE_HASH",
+    "RESULT_COMPACT_WIN_HASH",
+    "RESULT_EMPATE_DINHEIRO_DEVOLVIDO",
+    "RESULT_EMPATE_PROTECAO",
+    "RESULT_FINAL_LOSS_AFTER_G3",
+    "RESULT_FLASH_WIN",
+    "RESULT_G0_ACERTOU_PRIMEIRA",
+    "RESULT_G2_RESERVE_WIN",
+    "RESULT_GALE_RECOVERED_CHAIN",
+    "RESULT_GREEN_COMPACT_G0",
+    "RESULT_GREEN_COMPACT_G1",
+    "RESULT_GREEN_LEGACY_G0",
+    "RESULT_GREEN_LEGACY_G1",
+    "RESULT_ORACLE_CARD"
+  ],
+  "registry_never_seen_count": 59,
+  "alias_rescue_hits": {
+    "OPS_LOSS_COOLDOWN": 1,
+    "RESULT_COLOR_BANNER": 4,
+    "CD_RES_RODADAS_TEMPO": 1,
+    "CD_FIRE_RUSH_NS_LEFT": 1,
+    "RESULT_BELL_GANHOU": 1,
+    "FIRE_JANELA_TIMED": 63,
+    "OPS_G2_MISS": 3
+  },
+  "unmapped_product_top": [
+    {
+      "tg_type_id": "FIRE_EMPTY",
+      "role": "FIRE",
+      "lane": "COUNTDOWN",
+      "first_line": "⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-21 08:24:45",
+      "count": 460,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_BACBOBRASILEIRO01_SOLO_ELITE_A",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 📡 bacbobrasileiro01 — SOLO ELITE AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 21:45:51",
+      "count": 378,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_CORINGADADOS_SOLO_ELITE_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 🃏 CoringaDados — SOLO ELITE AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 16:54:38",
+      "count": 143,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_TOP_10_PAIRS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "▲ TOP-10 PAIRS:",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-06 10:43:33",
+      "count": 98,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_AZUL",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "🔵🔵🔵🔵🔵 AZUL 🔵🔵🔵🔵🔵",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-03 17:48:52",
+      "count": 86,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BACBOBRL16_H17_100_0_H12_100_0_H23_77_8_",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "@bacboBRL16                    ▲H17=100.0% H12=100.0% H23=77.8% ▼H22=42.9% H11=63.6% H23=77.8%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-13 10:03:50",
+      "count": 82,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_UNIDADOSOFC_BAC_BO_SEM_GALE",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "@unidadosofc                     (BAC BO SEM GALE)",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-05 00:39:09",
+      "count": 72,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_CLUSTER_DE_EMPATE_DETECTADO",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🟡🟡🟡 CLUSTER DE EMPATE DETECTADO 🟡🟡🟡",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-20 15:36:51",
+      "count": 68,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BACBOBRASILEIRO01_RIGOSINAIS_N_57_WR_94_",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "bacbobrasileiro01     +rigosinais              n= 57 WR=94.7%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-17 22:41:50",
+      "count": 53,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_POST_TIE_COLOR_ENTRY",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🟡→🎯 POST-TIE COLOR ENTRY",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-22 16:35:38",
+      "count": 50,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_VERMELHO",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "🔴🔴🔴🔴🔴 VERMELHO 🔴🔴🔴🔴🔴",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-03 17:50:46",
+      "count": 50,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_MARKET_STATUS_LOSS_CONFIRMED",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📊 Market Status — ❌ Loss confirmed",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-22 12:04:13",
+      "count": 49,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_ISADADOS_PLATINUM_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 👑 IsaDados — PLATINUM AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 19:13:51",
+      "count": 46,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_RIGOSINAIS_PLATINUM_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 ⭐ rigosinais — PLATINUM AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 19:13:52",
+      "count": 44,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BACCARAT_B_ROBOFREEBACBO24HORASS_N_24_WR",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "baccarat_b            +robofreebacbo24horass   n= 24 WR=91.7%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-03 10:54:31",
+      "count": 42,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_RQDADOS1_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 💎 RQDADOS1 — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 21:13:33",
+      "count": 39,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_RQDADOS_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 💎 rqdados — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 21:13:34",
+      "count": 39,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BACBOBRL16_H17_100_0_H12_100_0_H23_80_0_",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "@bacboBRL16                    ▲H17=100.0% H12=100.0% H23=80.0% ▼H11=75.0% H23=80.0% H12=100.0%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-09 23:53:15",
+      "count": 38,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GOLDEN_RED_H17_OVERALL_WR_55_0_N_411",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "GOLDEN     /red/H17  overall_WR=55.0%  n=411",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 20:05:24",
+      "count": 31,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_DUPLA_CONFIRMA_O_DE_EMPATE",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴🔴🔴 *DUPLA CONFIRMAÇÃO DE EMPATE* 🔴🔴🔴",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-22 15:35:57",
+      "count": 29,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_DADOSBACBOBR_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 📊 DadosBacBoBR — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 20:44:32",
+      "count": 28,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_UMGALESALABACBO123_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 🔥 umgalesalabacbo123 — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 20:44:31",
+      "count": 28,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BOTTOM_10_PAIRS_CONSIDER_BLOCKING",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "▼ BOTTOM-10 PAIRS (consider blocking):",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-02 19:33:04",
+      "count": 28,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GOLDEN_RED_H18_OVERALL_WR_45_3_N_276",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "GOLDEN     /red/H18  overall_WR=45.3%  n=276",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-03 18:14:47",
+      "count": 28,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_BACBOAOVIVOVIP_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 🌊 bacboaovivovip — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 21:13:33",
+      "count": 27,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BACBOBRL16_H17_100_0_H12_100_0_H23_71_4_",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "@bacboBRL16                    ▲H17=100.0% H12=100.0% H23=71.4% ▼H22=20.0% H11=70.0% H23=71.4%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-11 11:36:59",
+      "count": 27,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_GOLDEN_ENTRADA_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 🤖 GOLDEN — ENTRADA AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 09:23:13",
+      "count": 25,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_SELF_CARE_GUARD_REMOVIDO_GOLDEN",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "✅✅ SELF-CARE GUARD REMOVIDO — GOLDEN ✅✅",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-03 12:24:16",
+      "count": 25,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_3_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 3 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-01 02:28:55",
+      "count": 24,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_RIGOSINAIS_UMGALESALABACBO123_N_30_WR_96",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "rigosinais            +umgalesalabacbo123      n= 30 WR=96.7%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-17 23:23:44",
+      "count": 24,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GOLDEN_RED_H17_OVERALL_WR_55_5_N_438",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "GOLDEN     /red/H17  overall_WR=55.5%  n=438",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-17 23:23:46",
+      "count": 24,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_SELF_CARE_GUARD_REMOVIDO_SOLO_ELITE",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "✅✅ SELF-CARE GUARD REMOVIDO — SOLO_ELITE ✅✅",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-05 01:26:56",
+      "count": 24,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_CORINGADADOS_PLATINUM_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 🃏 CoringaDados — PLATINUM AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 19:13:52",
+      "count": 22,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_EMPATE",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🟡🟡 EMPATE 🟡🟡",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-03 19:53:36",
+      "count": 21,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_EMERG_NCIA_13_PERDAS_SEGUIDAS",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "🚨 EMERGÊNCIA — 13 PERDAS SEGUIDAS 🚨",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 06:22:10",
+      "count": 21,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_P1_P2_TOP_COALITION_PAIRS_N_10_BY_WR_THE",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "P1/P2. TOP COALITION PAIRS (n≥10, by WR ↓ then ↑)",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-05 22:28:52",
+      "count": 20,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_BACCARAT_A_UMGALESALABACBO123_N_20_WR_45_0",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "baccarat_a            +umgalesalabacbo123      n= 20 WR=45.0%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 21:08:44",
+      "count": 20,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_03_12_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 03:12:03",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 07:12:43",
+      "count": 20,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_09_49_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 09:49:32",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 13:50:13",
+      "count": 20,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_ROBOFREEBACBO24HORASS_GOLDEN_A",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 🤖 robofreebacbo24horass — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 20:44:36",
+      "count": 19,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BACBOAOVIVOVIP_SINAISBACBOANGOLA_N_11_WR",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "bacboaovivovip        +sinaisbacboangola       n= 11 WR=100.0%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 20:56:22",
+      "count": 19,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GALE_1_SEGUNDA_ENTRADA",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "♻️♻️ GALE 1 — SEGUNDA ENTRADA ♻️♻️",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-20 09:14:45",
+      "count": 19,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_GANHOU_WIN_G1",
+      "role": "RESULT",
+      "lane": "COUNTDOWN_HINT",
+      "first_line": "✅✅ GANHOU / WIN — G1! ✅✅",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-21 12:07:24",
+      "count": 18,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GOLDEN_RED_H18_OVERALL_WR_45_1_N_275",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "GOLDEN     /red/H18  overall_WR=45.1%  n=275",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-03 12:23:30",
+      "count": 18,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_PERFORMANCE_GUARDIAN_ATEN_O",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "⚠️ *PERFORMANCE GUARDIAN — ATENÇÃO*",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-08 06:08:43",
+      "count": 17,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GOLDEN_BLUE_H19_OVERALL_WR_60_4_N_493",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "GOLDEN     /blue/H19  overall_WR=60.4%  n=493",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 20:56:24",
+      "count": 17,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BACBOAOVIVOVIP_UMGALESALABACBO123_N_25_W",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "bacboaovivovip        +umgalesalabacbo123      n= 25 WR=92.0%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-03 12:23:28",
+      "count": 16,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BACCARAT_B_SPEEDBACCARAT_A_01_N_11_WR_10",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "baccarat_b            +speedbaccarat_a_01      n= 11 WR=100.0%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-05 09:18:44",
+      "count": 16,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GOLDEN_BLUE_H12_OVERALL_WR_56_7_N_416",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "GOLDEN     /blue/H12  overall_WR=56.7%  n=416",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-04 17:45:06",
+      "count": 16,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GOLDEN_RED_H16_OVERALL_WR_52_2_N_408",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "GOLDEN     /red/H16  overall_WR=52.2%  n=408",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 17:07:13",
+      "count": 16,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_25_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 25 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-15 00:48:27",
+      "count": 15,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_09_58_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 09:58:26",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 13:59:52",
+      "count": 15,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_CORINGADADOS_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 🃏 CoringaDados — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-20 01:18:25",
+      "count": 13,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_ROBOBACBODADOS_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 🤖 robobacbodados — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 04:29:27",
+      "count": 13,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_SINAISBACBOANGOLA_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 📡 sinaisbacboangola — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 22:44:17",
+      "count": 13,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BACBOBRL16_H17_100_0_H12_100_0_H11_75_0_",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "@bacboBRL16                    ▲H17=100.0% H12=100.0% H11=75.0% ▼H11=75.0% H12=100.0% H17=100.0%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-09 23:17:53",
+      "count": 13,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_SELF_CARE_GUARD_REMOVIDO_PLATINUM",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "✅✅ SELF-CARE GUARD REMOVIDO — PLATINUM ✅✅",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-11 00:48:53",
+      "count": 13,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_SOLO_ELITE",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "💎 SOLO ELITE 💎",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-25 20:06:16",
+      "count": 13,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_RIGOSINAIS_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 ⭐ rigosinais — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 17:42:32",
+      "count": 12,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CACADORDEEMPATE_CA_ADOR_DE_EMPATE_TURBO_BAC_BO",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "@cacadordeempate                 (CAÇADOR DE EMPATE TURBO - Bac Bo 🎲)",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-03 11:30:20",
+      "count": 12,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_07_56_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 07:56:36",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 11:56:36",
+      "count": 12,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_07_24_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 07:24:43",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 11:24:43",
+      "count": 12,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_07_45_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 07:45:42",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 11:45:43",
+      "count": 12,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_14_03_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 14:03:38",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 18:03:38",
+      "count": 12,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_ENTRY_CONFIRMED_HOUR_BLOCK_N_90_W_49_L_38_T_3_SWR_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "🔴 entry_confirmed_hour_block          n=  90 W= 49/L= 38/T= 3  sWR= 57.8%  net=-11",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-11 21:26:32",
+      "count": 12,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_LOSS_SINAL_ENCERRADO",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "❌❌❌ LOSS — SINAL ENCERRADO ❌❌❌",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-03 20:25:35",
+      "count": 12,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_RESULTADO_PERDEU",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "🔔 RESULTADO: ❌ PERDEU",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-02 10:13:04",
+      "count": 12,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_RIGOSINAIS_UMGALESALABACBO123_N_30_WR_96_7",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "rigosinais            +umgalesalabacbo123      n= 30 WR=96.7%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 11:20:55",
+      "count": 12,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_GANHOU_WIN_G0",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "✅✅✅ GANHOU / WIN — G0! ✅✅✅",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-21 12:23:26",
+      "count": 11,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GOLDEN_RED_H16_OVERALL_WR_52_6_N_428",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "GOLDEN     /red/H16  overall_WR=52.6%  n=428",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 14:05:25",
+      "count": 11,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_MARTINSWINBACBO_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 🏆 martinswinbacbo — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 11:44:36",
+      "count": 10,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_23_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 23 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-14 23:48:27",
+      "count": 10,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_24_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 24 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-14 23:40:53",
+      "count": 10,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_RIGOSINAIS_UMGALESALABACBO123_N_17_WR_94",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "rigosinais            +umgalesalabacbo123      n= 17 WR=94.1%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-04 14:52:46",
+      "count": 10,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_14_12_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 14:12:14",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 18:13:03",
+      "count": 10,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_M8SINAIS_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 🎯 M8SINAIS — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 20:44:31",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_ROBOBACBODADOS_PLATINUM_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 🤖 robobacbodados — PLATINUM AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-20 16:31:09",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_RQDADOS1_PLATINUM_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 💎 RQDADOS1 — PLATINUM AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 21:16:05",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_26_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 26 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-15 13:04:52",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_30_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 30 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-15 02:19:53",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_SATURA_O_G3_DETECTADA",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🚨 Saturação G3 detectada",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-27 18:16:07",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_WIN_DROP_SCANNER_22_52_EDT",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🎯 WIN-DROP SCANNER — 22:52 EDT",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-25 03:00:09",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_07_40_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 07:40:15",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 11:40:16",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_09_29_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 09:29:00",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 13:29:01",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_10_10_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 10:10:49",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 14:10:49",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_17_08_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 17:08:01",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 21:08:01",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_07_33_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 07:33:43",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 11:33:43",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_16_53_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 16:53:20",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 20:53:20",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_20_04_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 20:04:59",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 00:04:59",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_20_15_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 20:15:22",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 00:15:22",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_21_02_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 21:02:28",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 01:02:28",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_21_06_2026_01_31_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 21/06/2026 01:31:39",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 05:31:39",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_EMERG_NCIA_23_PERDAS_SEGUIDAS",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "🚨 EMERGÊNCIA — 23 PERDAS SEGUIDAS 🚨",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 01:37:28",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_HACKERBACBOZEROGALE_HACK_BAC_BO_SEM_GALE",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "@hackerbacbozerogale             (HACK BAC BO SEM GALE)",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 09:56:25",
+      "count": 9,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_SALABACBO123_SOLO_ELITE_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 📡 salabacbo123 — SOLO ELITE AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-10 02:55:08",
+      "count": 8,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_AGUARDANDO_G3_LTIMA_CHANCE_LAST_CHANCE",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🚨 AGUARDANDO G3 — ÚLTIMA CHANCE / LAST CHANCE 🚨",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-21 11:57:21",
+      "count": 8,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BACBOBRL04_H17_100_0_H12_100_0_H11_77_8_",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "@bacboBRL04                    ▲H17=100.0% H12=100.0% H11=77.8% ▼H11=77.8% H12=100.0% H17=100.0%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-08 18:02:25",
+      "count": 8,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_BACBOBRL08_H12_100_0_H11_88_9_H17_80_0_H",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "@bacboBRL08                    ▲H12=100.0% H11=88.9% H17=80.0% ▼H17=80.0% H11=88.9% H12=100.0%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-08 12:32:43",
+      "count": 8,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_28_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 28 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-15 01:18:47",
+      "count": 8,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_REICASSINOFS_RQDADOS1_N_13_WR_100_0",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "reicassinofs          +rqdados1                n= 13 WR=100.0%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-05 00:39:01",
+      "count": 8,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GOLDEN_BLUE_H16_OVERALL_WR_50_3_N_382",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "GOLDEN     /blue/H16  overall_WR=50.3%  n=382",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-04 14:52:48",
+      "count": 8,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GOLDEN_SCORE_7_N_26_BLOCKED_BUT_WR_46_2",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "🔴 GOLDEN       score=<7      n=  26  blocked-but-WR= 46.2%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 19:19:54",
+      "count": 8,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "OPS_AUTOINTELLIGENCE_2026_05_24_11_33_UTC",
+      "role": "OPS",
+      "lane": "",
+      "first_line": "🧠 *AutoIntelligence* — 2026-05-24 11:33 UTC",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-24 11:43:13",
+      "count": 7,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_BACBOBRASILEIRO01_PLATINUM_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 📡 bacbobrasileiro01 — PLATINUM AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-18 21:16:05",
+      "count": 7,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_DAILY_AUDIT_2026_05_31_11_35_UTC",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "📋 DAILY AUDIT — 2026-05-31 11:35 UTC",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-31 11:36:47",
+      "count": 7,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_29_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 29 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-09 15:27:41",
+      "count": 7,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_32_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 32 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-08 04:25:14",
+      "count": 7,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_34_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 34 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-08 13:54:45",
+      "count": 7,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_GANHOU_WIN_G3",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "✅ GANHOU / WIN — G3! ✅ 🔥",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-21 11:57:35",
+      "count": 7,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_07_12_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 07:12:55",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 11:12:56",
+      "count": 7,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_ACCUM_SOLO_TIER_N_6_W_6_L_0_T_",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 accum_solo_tier                     n=   6 W=  6/L=  0/T= 0  sWR=100.0%  net=-6",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-08 12:11:34",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_BACBOAOVIVOVIP_SOLO_ELITE_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔴 🌊 bacboaovivovip — SOLO ELITE AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-10 00:31:54",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_G1_EMPATE_IGNORANDO",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🟡 G1 EMPATE — ignorando",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-27 14:00:56",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_WIN_08_04_BRT_07_04_EDT",
+      "role": "RESULT",
+      "lane": "COUNTDOWN_HINT",
+      "first_line": "🔵🔵🔵 🕐 08:04 BRT · 07:04 EDT 🔵🔵🔵",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-16 11:06:15",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_WIN_18_21_BRT_17_21_EDT",
+      "role": "RESULT",
+      "lane": "COUNTDOWN_HINT",
+      "first_line": "🔵🔵🔵 🕐 18:21 BRT · 17:21 EDT 🔵🔵🔵",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-10 21:21:05",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_WIN_19_45_BRT_18_45_EDT",
+      "role": "RESULT",
+      "lane": "COUNTDOWN_HINT",
+      "first_line": "🔵🔵🔵 🕐 19:45 BRT · 18:45 EDT 🔵🔵🔵",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-12 22:45:24",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_WIN_19_55_BRT_18_55_EDT",
+      "role": "RESULT",
+      "lane": "COUNTDOWN_HINT",
+      "first_line": "🔴🔴🔴 🕐 19:55 BRT · 18:55 EDT 🔴🔴🔴",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-04 22:55:46",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_27_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 27 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-16 20:40:46",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_5_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 5 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-01 01:49:36",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_REICASSINOFS_RQDADOS1_N_15_WR_100_0",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "reicassinofs          +rqdados1                n= 15 WR=100.0%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-05 07:39:32",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_RESULTADO_PERDEU",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔔 RESULTADO: ❌ PERDEU",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-30 10:41:33",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_10_05_2026_00_24_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 10/05/2026 00:24:09",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-10 04:24:09",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_00_57_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 00:57:19",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 04:57:19",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_02_49_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 02:49:43",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 06:49:43",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_04_34_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 04:34:25",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 08:34:25",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_09_35_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 09:35:58",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 13:35:59",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_10_04_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 10:04:01",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 14:04:01",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_14_16_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 14:16:48",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 18:16:49",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_14_38_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 14:38:32",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 18:38:32",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_14_44_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 14:44:03",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 18:44:03",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_16_45_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 16:45:30",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 20:45:30",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_04_29_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 04:29:09",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 08:29:10",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_06_28_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 06:28:32",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 10:28:32",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_06_38_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 06:38:39",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 10:38:39",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_06_50_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 06:50:16",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 10:50:16",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_06_55_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 06:55:08",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 10:55:08",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_08_17_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 08:17:50",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 12:17:50",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_08_28_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 08:28:20",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 12:28:20",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_11_12_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 11:12:39",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 15:12:39",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_12_46_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 12:46:15",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 16:46:15",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_14_31_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 14:31:53",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 18:31:54",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_14_50_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 14:50:34",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 18:50:34",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_16_21_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 16:21:15",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 20:21:15",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_16_28_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 16:28:41",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 20:28:41",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_16_38_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 16:38:26",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 20:38:26",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_16_44_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 16:44:16",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 20:44:16",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_17_03_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 17:03:42",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 21:03:42",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_18_58_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 18:58:22",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 22:58:22",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_19_26_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 19:26:39",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 23:26:40",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_20_25_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 20:25:03",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 00:25:04",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_20_47_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 20:47:06",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 00:47:06",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_21_08_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 21:08:20",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 01:08:20",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_21_06_2026_00_17_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 21/06/2026 00:17:40",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 04:17:40",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_21_06_2026_00_53_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 21/06/2026 00:53:24",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 04:53:24",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_21_06_2026_01_09_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 21/06/2026 01:09:20",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 05:09:20",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_21_06_2026_01_59_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 21/06/2026 01:59:34",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 05:59:34",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_21_06_2026_02_58_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 21/06/2026 02:58:49",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 06:58:49",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_26_06_2026_13_25_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 26/06/2026 13:25:00",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-26 17:25:00",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_26_06_2026_13_47_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 26/06/2026 13:47:18",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-26 17:47:18",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_26_06_2026_14_16_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 26/06/2026 14:16:28",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-26 18:16:28",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_GOLDEN_SCORE_7_N_23_BLOCKED_BUT_WR_47_8",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "🔴 GOLDEN       score=<7      n=  23  blocked-but-WR= 47.8%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 21:09:02",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_RIGOSINAIS_UMGALESALABACBO123_N_32_WR_96_9",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "rigosinais            +umgalesalabacbo123      n= 32 WR=96.9%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-26 11:34:58",
+      "count": 6,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_LOSS_08_17_BRT_07_17_EDT",
+      "role": "RESULT",
+      "lane": "COUNTDOWN_HINT",
+      "first_line": "🔴🔴🔴 🕐 08:17 BRT · 07:17 EDT 🔴🔴🔴",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-05 11:17:45",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_LOSS_18_43_BRT_17_43_EDT",
+      "role": "RESULT",
+      "lane": "COUNTDOWN_HINT",
+      "first_line": "🔵🔵🔵 🕐 18:43 BRT · 17:43 EDT 🔵🔵🔵",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-12 21:43:39",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_ISADADOS_GOLDEN_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 👑 IsaDados — GOLDEN AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-20 03:10:28",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_TIE_RQDADOS_PLATINUM_AI",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔵 💎 rqdados — PLATINUM AI",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-20 16:31:13",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_WIN_07_29_BRT_06_29_EDT",
+      "role": "RESULT",
+      "lane": "COUNTDOWN_HINT",
+      "first_line": "🔵🔵🔵 🕐 07:29 BRT · 06:29 EDT 🔵🔵🔵",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-15 10:29:48",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_WIN_09_02_BRT_08_02_EDT",
+      "role": "RESULT",
+      "lane": "COUNTDOWN_HINT",
+      "first_line": "🔵🔵🔵 🕐 09:02 BRT · 08:02 EDT 🔵🔵🔵",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-16 12:02:33",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_WIN_15_32_BRT_14_32_EDT",
+      "role": "RESULT",
+      "lane": "COUNTDOWN_HINT",
+      "first_line": "🔴🔴🔴 🕐 15:32 BRT · 14:32 EDT 🔴🔴🔴",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-12 18:32:03",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_BANNER_WIN_EMPATE_GANHOU_17_04_BRT",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🟡 EMPATE = GANHOU · 17:04 BRT",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-11 20:04:18",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_DAILY_AUDIT_2026_05_26_11_57_UTC",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "📋 DAILY AUDIT — 2026-05-26 11:57 UTC",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-26 11:57:52",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_33_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 33 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-08 03:51:33",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_FULL_AUDIT_36_FINDINGS",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🛡 FULL AUDIT — 36 findings",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-08 13:05:06",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_G2_FALHOU_N_O_VEIO",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "❌ G2 FALHOU — 🔵 não veio",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-27 20:22:08",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_MONITORAMENTO_DE_SINAIS_13_53_EDT",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🔍 MONITORAMENTO DE SINAIS — 13:53 EDT",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-11 17:53:18",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "RESULT_GALE_WIN_DROP_SCANNER_19_06_EDT",
+      "role": "RESULT",
+      "lane": "MONEY_HINT",
+      "first_line": "🎯 WIN-DROP SCANNER — 19:06 EDT",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-27 23:06:23",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_01_06_2026_01_22_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 01/06/2026 01:22:58",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-01 05:22:58",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_01_06_2026_05_39_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 01/06/2026 05:39:08",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-01 09:39:09",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_06_06_2026_01_11_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 06/06/2026 01:11:55",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-06 05:12:10",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_07_06_2026_07_20_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 07/06/2026 07:20:07",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-07 11:20:07",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_09_06_2026_08_49_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 09/06/2026 08:49:26",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-09 12:49:27",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_11_05_2026_03_15_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 11/05/2026 03:15:09",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-11 07:15:09",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_18_06_2026_22_03_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 18/06/2026 22:03:08",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 02:03:08",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_05_2026_11_30_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/05/2026 11:30:50",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-19 15:30:50",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_01_00_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 01:00:03",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 05:00:25",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_19_06_2026_15_14_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 19/06/2026 15:14:35",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 19:15:54",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_05_2026_07_14_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/05/2026 07:14:19",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-20 11:14:19",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_05_2026_16_54_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/05/2026 16:54:54",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-20 20:54:54",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_05_2026_21_53_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/05/2026 21:53:44",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-21 01:53:44",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_04_34_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 04:34:06",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 08:34:06",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_20_06_2026_15_36_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 20/06/2026 15:36:45",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-20 19:36:46",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_21_05_2026_12_01_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 21/05/2026 12:01:12",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-21 16:01:13",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_21_05_2026_13_04_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 21/05/2026 13:04:35",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-21 17:06:13",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_21_06_2026_02_27_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 21/06/2026 02:27:37",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-21 06:27:37",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_24_05_2026_14_14_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 24/05/2026 14:14:06",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-24 18:16:19",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_24_05_2026_18_20_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 24/05/2026 18:20:42",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-24 22:20:42",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_24_05_2026_21_04_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 24/05/2026 21:04:39",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-25 01:04:39",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_25_05_2026_01_40_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 25/05/2026 01:40:03",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-25 05:48:31",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_25_05_2026_20_23_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 25/05/2026 20:23:14",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-26 00:23:14",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    },
+    {
+      "tg_type_id": "UNKNOWN_CYCLE_SUMMARY_UMGALESALABACBO123_26_05_2026_15_14_",
+      "role": "UNKNOWN",
+      "lane": "",
+      "first_line": "📅 CYCLE SUMMARY @umgalesalabacbo123 — 26/05/2026 15:14:51",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-26 19:14:51",
+      "count": 5,
+      "classified_as": "UNKNOWN"
+    }
+  ],
+  "mapped_family_examples": [
+    {
+      "family_id": "FIRE_CONFIRMED_ENTER",
+      "tg_type_id": "FIRE_SIGNAL_CONFIRMED_ENTER_NOW",
+      "first_line": "🏆 SIGNAL CONFIRMED — ENTER NOW 🏆",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-19 21:51:34",
+      "count": 13
+    },
+    {
+      "family_id": "FIRE_SOLO_ELITE_ENTER",
+      "tg_type_id": "FIRE_SOLO_ELITE_SIGNAL",
+      "first_line": "💎 SOLO ELITE SIGNAL 💎",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-19 21:55:33",
+      "count": 11228
+    },
+    {
+      "family_id": "OPS_SEQUENCE_PREDICTION",
+      "tg_type_id": "OPS_MANUAL_RESULT_HINT",
+      "first_line": "📊 SEQUENCE PREDICTION",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-19 22:54:09",
+      "count": 11474
+    },
+    {
+      "family_id": "FIRE_GOLDEN_ENTER",
+      "tg_type_id": "FIRE_GOLDEN_SIGNAL_ENTER_NOW",
+      "first_line": "🏆 GOLDEN SIGNAL — ENTER NOW 🏆",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-19 22:57:45",
+      "count": 2964
+    },
+    {
+      "family_id": "RESULT_AUTO_TIE",
+      "tg_type_id": "RESULT_BANNER_TIE_AUTO_TIE_CORINGADADOS_19_03_20",
+      "first_line": "⚪ AUTO TIE @CoringaDados — 19/03/2026 18:58:45",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-19 22:58:45",
+      "count": 3
+    },
+    {
+      "family_id": "RESULT_WIN_TIER",
+      "tg_type_id": "RESULT_WIN_SOLO_ELITE",
+      "first_line": "✅ WIN — SOLO_ELITE",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-19 23:52:41",
+      "count": 6054
+    },
+    {
+      "family_id": "RESULT_LOSS_TIER",
+      "tg_type_id": "RESULT_LOSS_GOLDEN",
+      "first_line": "❌ LOSS — GOLDEN",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-19 23:55:31",
+      "count": 173
+    },
+    {
+      "family_id": "FIRE_GALE_ENTRE_NOVAMENTE",
+      "tg_type_id": "UNKNOWN_GALE_1_ENTRE_NOVAMENTE",
+      "first_line": "🔁 GALE 1 — Entre novamente",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-19 23:55:32",
+      "count": 401
+    },
+    {
+      "family_id": "OPS_G2_ATINGIDO_PARE",
+      "tg_type_id": "UNKNOWN_PARE_G2_ATINGIDO",
+      "first_line": "⛔ PARE — G2 ATINGIDO",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-19 23:55:32",
+      "count": 560
+    },
+    {
+      "family_id": "RESULT_EMPATE",
+      "tg_type_id": "RESULT_EMPATE_SOLO_ELITE",
+      "first_line": "🟡 EMPATE — SOLO_ELITE",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-20 00:21:42",
+      "count": 328
+    },
+    {
+      "family_id": "OPS_LOSS_COOLDOWN",
+      "tg_type_id": "UNKNOWN_LOSS_COOLDOWN_ACTIVATED",
+      "first_line": "⚠️ LOSS COOLDOWN ACTIVATED",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-20 00:34:50",
+      "count": 4313
+    },
+    {
+      "family_id": "FIRE_SEQUENCE_ENTER",
+      "tg_type_id": "FIRE_SEQUENCE",
+      "first_line": "📊 SEQUENCE SIGNAL — ENTER NOW 📊",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-20 00:45:09",
+      "count": 109
+    },
+    {
+      "family_id": "FIRE_GALE_RETENTATIVA",
+      "tg_type_id": "FIRE_GALE_1_RETENTATIVA_SOLO_ELITE",
+      "first_line": "♻️ GALE 1 — RETENTATIVA (1 room at G1)",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-20 00:48:58",
+      "count": 798
+    },
+    {
+      "family_id": "FIRE_GOLDEN_ENTRE_AGORA",
+      "tg_type_id": "UNKNOWN_GOLDEN_SIGNAL_ENTRE_AGORA",
+      "first_line": "🏆🏆🏆 GOLDEN SIGNAL — ENTRE AGORA 🏆🏆🏆",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-20 09:09:00",
+      "count": 818
+    },
+    {
+      "family_id": "OPS_TIER_LEGEND",
+      "tg_type_id": "RESULT_BANNER_TIE_EMPATE_PROTE_O_ATIVADA",
+      "first_line": "🟡🟡 EMPATE — PROTEÇÃO ATIVADA 🟡🟡",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-20 10:54:59",
+      "count": 25
+    },
+    {
+      "family_id": "OPS_TIE_ALERT",
+      "tg_type_id": "RESULT_BANNER_TIE_PRESS_O_DE_EMPATE_ALERTA_AUTOM",
+      "first_line": "🟡⚡🟡 PRESSÃO DE EMPATE — ALERTA AUTOMÁTICO 🟡⚡🟡",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-20 19:33:41",
+      "count": 454
+    },
+    {
+      "family_id": "FIRE_PLATINUM_ENTER",
+      "tg_type_id": "FIRE_PLATINUM",
+      "first_line": "💠💠💠 PLATINUM SIGNAL — PAR DE OURO 💠💠💠",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-20 21:29:53",
+      "count": 1377
+    },
+    {
+      "family_id": "FIRE_JANELA_TIMED",
+      "tg_type_id": "UNKNOWN_JANELA_FECHADA_N_O_ENTRE_NESTE_ROUND",
+      "first_line": "⛔ JANELA FECHADA — NÃO ENTRE NESTE ROUND",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-21 15:45:36",
+      "count": 516
+    },
+    {
+      "family_id": "FIRE_ULTRA_TIE",
+      "tg_type_id": "RESULT_BANNER_TIE_ULTRA_TIE_EMPATE_CONFIRMADO",
+      "first_line": "🟡🟡🟡 ULTRA TIE — EMPATE CONFIRMADO 🟡🟡🟡",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-22 00:06:34",
+      "count": 6
+    },
+    {
+      "family_id": "OPS_GALE_SATURATION",
+      "tg_type_id": "UNKNOWN_MARKET_STATUS_GALE_1_DETECTED",
+      "first_line": "📊 Market Status — ⚡ Gale 1 detected",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-22 04:37:19",
+      "count": 1055
+    },
+    {
+      "family_id": "CD_RES_BELL_GANHOU",
+      "tg_type_id": "CD_RES_BELL_GANHOU",
+      "first_line": "⚡ SINAL SE FORMANDO ⚡",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-23 17:23:15",
+      "count": 195
+    },
+    {
+      "family_id": "RESULT_COLOR_BANNER",
+      "tg_type_id": "RESULT_BANNER_TIE_VERMELHO",
+      "first_line": "🔴🔴🔴🔴🔴 VERMELHO 🔴🔴🔴🔴🔴",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-27 22:23:44",
+      "count": 49
+    },
+    {
+      "family_id": "OPS_GATE_BLOCK_LOG",
+      "tg_type_id": "UNKNOWN_DBG_SINAISBACBOSEMGALE_BLUE_CONF_ENTRY_TRUST_2_24_",
+      "first_line": "🔧 [DBG] @sinaisbacbosemgale → blue conf=entry trust=2.24 streak=1.3 score=1.96 agree=1",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-03-30 11:42:32",
+      "count": 9
+    },
+    {
+      "family_id": "CD_RES_RODADAS_TEMPO",
+      "tg_type_id": "CD_RES_RODADAS_TEMPO",
+      "first_line": "✅✅ WIN na 2ª tentativa! ✅✅",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-04 09:44:07",
+      "count": 1799
+    },
+    {
+      "family_id": "OPS_JANELA_PRIME",
+      "tg_type_id": "UNKNOWN_JANELA_PRIME_SINAIS_ATIVOS",
+      "first_line": "🟢🟢 JANELA PRIME — SINAIS ATIVOS 🟢🟢",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-04 14:00:25",
+      "count": 350
+    },
+    {
+      "family_id": "FIRE_GOD_TIER",
+      "tg_type_id": "FIRE_GOD_TIER_SYNC_APERTADO_3_SALAS_TOP_CONF_75",
+      "first_line": "💎 GOD-TIER — Sync apertado + ≥3 salas top + conf≥75%",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-22 12:42:56",
+      "count": 105
+    },
+    {
+      "family_id": "FIRE_SINAL_RETIDO_LIBERADO",
+      "tg_type_id": "FIRE_SINAL_RETIDO_LIBERADO",
+      "first_line": "⏳ *Sinal Retido → Liberado* _(recuperação concluída)_",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-23 19:22:10",
+      "count": 63
+    },
+    {
+      "family_id": "CD_FIRE_RUSH_NS_LEFT",
+      "tg_type_id": "CD_FIRE_RUSH_NS_LEFT",
+      "first_line": "⚡ RUSH — 9s LEFT — ACT NOW ⚡",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-25 16:15:50",
+      "count": 302
+    },
+    {
+      "family_id": "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+      "tg_type_id": "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+      "first_line": "⛔ DO NOT BET — ROUND PASSED ⛔",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-25 16:23:37",
+      "count": 2434
+    },
+    {
+      "family_id": "FIRE_ENTRE_AGORA_GENERIC",
+      "tg_type_id": "RESULT_GALE_G3_ENTRE_AGORA",
+      "first_line": "⚡⚡⚡ G3 — ENTRE AGORA ⚡⚡⚡",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-27 22:52:36",
+      "count": 3
+    },
+    {
+      "family_id": "CD_FIRE_QUANTUM_LOCK",
+      "tg_type_id": "CD_FIRE_QUANTUM_LOCK",
+      "first_line": "⏱️⏱️ H21 UTC em 7 min · 5:00 PM EDT ⏱️⏱️",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-28 20:53:12",
+      "count": 1493
+    },
+    {
+      "family_id": "OPS_JANELA_PEAK",
+      "tg_type_id": "UNKNOWN_PR_XIMA_JANELA_PEAK_NEXT_PEAK_WINDOW",
+      "first_line": "🕐 PRÓXIMA JANELA PEAK / NEXT PEAK WINDOW",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-29 17:00:43",
+      "count": 2
+    },
+    {
+      "family_id": "RESULT_BELL_GANHOU",
+      "tg_type_id": "RESULT_GALE_RESULTADO_GANHOU",
+      "first_line": "🔔 RESULTADO: ✅ GANHOU",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-30 10:37:07",
+      "count": 41
+    },
+    {
+      "family_id": "OPS_SEQ_EMPATES",
+      "tg_type_id": "RESULT_BANNER_TIE_SEQU_NCIA_DE_EMPATES",
+      "first_line": "🟡🟡 SEQUÊNCIA DE EMPATES 🟡🟡",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-30 10:37:28",
+      "count": 3945
+    },
+    {
+      "family_id": "CD_RES_GREEN_G_BRT",
+      "tg_type_id": "CD_RES_GREEN_G_BRT",
+      "first_line": "🕐 16:37:04 EDT  ·  ~12s window",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-04-30 20:37:04",
+      "count": 539
+    },
+    {
+      "family_id": "RESULT_TIMED_WINDOW",
+      "tg_type_id": "RESULT_GALE_01_05_36_EDT_14S_WINDOW",
+      "first_line": "🕐 01:05:36 EDT  ·  ~14s window",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-01 05:05:36",
+      "count": 1
+    },
+    {
+      "family_id": "FIRE_EMPATE_DIRETO_G0",
+      "tg_type_id": "UNKNOWN_EMPATE_DIRETO_G0",
+      "first_line": "🎯🟡 EMPATE DIRETO — G0",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-01 09:40:24",
+      "count": 802
+    },
+    {
+      "family_id": "FIRE_PREPARE_G1",
+      "tg_type_id": "UNKNOWN_PREPARE_O_G1_PROV_VEL_PRECISAR_DE_1_GALE",
+      "first_line": "♟ PREPARE O G1 — Provável precisar de 1 gale",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-01 10:13:46",
+      "count": 227
+    },
+    {
+      "family_id": "OPS_SELF_CARE_GUARD",
+      "tg_type_id": "UNKNOWN_SELF_CARE_GUARD_ATIVO_GOLDEN",
+      "first_line": "⚕️⚕️ SELF-CARE GUARD ATIVO — GOLDEN ⚕️⚕️",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-03 11:16:05",
+      "count": 88
+    },
+    {
+      "family_id": "RESULT_FORENSIC_INTERVALO",
+      "tg_type_id": "RESULT_FORENSIC_INTERVALO",
+      "first_line": "🔔 ✅ GANHOU  ·  #4168",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-03 15:56:49",
+      "count": 883
+    },
+    {
+      "family_id": "OPS_STREAK_BANNER",
+      "tg_type_id": "UNKNOWN_SEQU_NCIA_2X_VERMELHO",
+      "first_line": "🎰 SEQUÊNCIA 2x 🔴 VERMELHO",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-05 12:19:43",
+      "count": 238
+    },
+    {
+      "family_id": "OPS_PARE_3_PERDAS",
+      "tg_type_id": "UNKNOWN_PARE_DE_APOSTAR_3_PERDAS_SEGUIDAS",
+      "first_line": "⛔ PARE DE APOSTAR — 3 PERDAS SEGUIDAS",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-05-05 12:59:24",
+      "count": 220
+    },
+    {
+      "family_id": "OPS_AUDIT_360",
+      "tg_type_id": "RESULT_GALE_AUDIT_360_GPT_4O_17_19_BRT",
+      "first_line": "🧠 AUDIT 360° — GPT-4o | 17:19 BRT",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-02 20:24:25",
+      "count": 1
+    },
+    {
+      "family_id": "FIRE_G0_MISS_ENTRE_G1",
+      "tg_type_id": "RESULT_GALE_G0_N_O_FOI_ENTRE_NO_G1_AGORA",
+      "first_line": "⚠️ G0 NÃO FOI — ENTRE NO G1 AGORA",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-12 11:52:07",
+      "count": 287
+    },
+    {
+      "family_id": "OPS_G2_MISS",
+      "tg_type_id": "RESULT_GALE_G1_N_O_FOI_G2_OPCIONAL_RISCO_ALTO",
+      "first_line": "🟠 G1 NÃO FOI — G2 OPCIONAL (RISCO ALTO)",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-12 11:52:20",
+      "count": 368
+    },
+    {
+      "family_id": "OPS_G1_EXPIROU",
+      "tg_type_id": "RESULT_GALE_G1_EXPIROU_VERIFIQUE_SUA_MESA",
+      "first_line": "⏰ G1 EXPIROU — VERIFIQUE SUA MESA",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-13 07:22:36",
+      "count": 21
+    },
+    {
+      "family_id": "OPS_G3_ATINGIDO",
+      "tg_type_id": "RESULT_GALE_PARE_G3_ATINGIDO",
+      "first_line": "🛑🛑🛑 PARE — G3 ATINGIDO 🛑🛑🛑",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-06-19 09:13:42",
+      "count": 1
+    },
+    {
+      "family_id": "FIRE_COMPACT_HASH",
+      "tg_type_id": "UNKNOWN_SIGNAL_51250_SOLO_ELITE_RED_ROOMS_BACBOAOVIVOVIP",
+      "first_line": "🔵 SIGNAL #51250 -- SOLO_ELITE red | rooms: @bacboaovivovip",
+      "first_chat": "UNIQUE_g1",
+      "first_date_utc": "2026-07-05 16:50:40",
+      "count": 1
+    },
+    {
+      "family_id": "OPS_TRIPLE_LOCK",
+      "tg_type_id": "UNKNOWN_47_SIGNAL_3_ROOM_PRE_ALERT_10S_COUNTDOWN_DISTINCT_",
+      "first_line": "[47] signal (3-room pre-alert, ~10s countdown, distinct from TRIPLE LOCK — CERTEZA MÁXIMA)",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-06 16:58:04",
+      "count": 1
+    },
+    {
+      "family_id": "FIRE_APOSTE_AGORA",
+      "tg_type_id": "UNKNOWN_49_SIGNAL_EXACT_SECOND_COUNTDOWN_WRAPPER_APOSTE_AG",
+      "first_line": "[49] signal (exact-second countdown wrapper, \"APOSTE AGORA\" wording variant)",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-06 16:58:08",
+      "count": 1
+    },
+    {
+      "family_id": "FIRE_SOLO_APOSTAR",
+      "tg_type_id": "UNKNOWN_SOLO_ELITE_APOSTAR_AGORA",
+      "first_line": "⚡ SOLO ELITE — APOSTAR AGORA",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-11 23:40:15",
+      "count": 82
+    },
+    {
+      "family_id": "FIRE_SEQUENCE_APOSTAR",
+      "tg_type_id": "UNKNOWN_SEQUENCE_APOSTAR_AGORA",
+      "first_line": "⚡ SEQUENCE — APOSTAR AGORA",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-11 23:49:21",
+      "count": 739
+    },
+    {
+      "family_id": "FIRE_GOLDEN_APOSTAR",
+      "tg_type_id": "UNKNOWN_GOLDEN_APOSTAR_AGORA",
+      "first_line": "⚡ GOLDEN — APOSTAR AGORA",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-15 13:35:41",
+      "count": 31
+    },
+    {
+      "family_id": "FIRE_PLATINUM_APOSTAR",
+      "tg_type_id": "UNKNOWN_PLATINUM_APOSTAR_AGORA",
+      "first_line": "⚡ PLATINUM — APOSTAR AGORA",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-17 02:24:16",
+      "count": 60
+    },
+    {
+      "family_id": "FIRE_FLASH_APOSTAR",
+      "tg_type_id": "UNKNOWN_FLASH_APOSTAR_AGORA",
+      "first_line": "⚡ FLASH — APOSTAR AGORA",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-17 06:00:24",
+      "count": 2
+    },
+    {
+      "family_id": "FIRE_SEQUENCIA_ENTER_NOW",
+      "tg_type_id": "FIRE_SEQU_NCIA_ENTER_NOW",
+      "first_line": "🔥 SEQUÊNCIA — ENTER NOW 🔥",
+      "first_chat": "mr_iv4",
+      "first_date_utc": "2026-07-28 23:10:01",
+      "count": 4
+    }
+  ],
+  "coverage_note": "first_chat = chat where type FIRST appeared. Duplicate later posts on UNIQUE_g1 of the same type_id still count under mr_iv4 first_chat. Re-run dual-chat scan with per_chat_counts for true Gunique volume."
+}

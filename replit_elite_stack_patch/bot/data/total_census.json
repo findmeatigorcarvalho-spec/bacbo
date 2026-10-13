@@ -1,0 +1,215 @@
+{
+  "generated_at": "2026-10-13T16:34:00.185795+00:00",
+  "question": "Which fire systems, out of everything ever built in 6 months, have a profitable win rate that survives independent verification?",
+  "answer": "None are verified. Infrastructure to verify exists (casino_round_results, signal_truth_matches) and holds zero rows, so every win rate below is the bot grading its own labels.",
+  "inventory": {
+    "telegram_scan": {
+      "chats": [
+        "Mr_iv4",
+        "UNIQUE_g1",
+        "UNIQUE_museum_chrono"
+      ],
+      "messages_scanned": 537166,
+      "oldest": "2026-03-17 08:37:17",
+      "newest": "2026-08-03 20:52:41",
+      "complete_to_first_day": true,
+      "distinct_type_fingerprints": 39271,
+      "by_role": {
+        "UNKNOWN": 93704,
+        "RESULT": 75281,
+        "FIRE": 22079,
+        "OPS": 22583,
+        "EMPTY": 25993,
+        "ONLINE": 3533,
+        "ROOM_RELAY": 293992,
+        "MEDIA": 1
+      }
+    },
+    "floors": {
+      "total": 154,
+      "created_in_code": 120,
+      "seen_in_telegram": 103,
+      "reached_database": 13,
+      "created_only_never_seen": 44,
+      "by_band": {
+        "PENTHOUSE": 2,
+        "UPPER": 42,
+        "MID": 31,
+        "BASEMENT": 29,
+        "CREATED_ONLY": 44,
+        "NOISE": 6
+      },
+      "by_role": {
+        "FIRE": 58,
+        "RESULT": 70,
+        "OPS": 19,
+        "ONLINE": 2,
+        "UNKNOWN": 4,
+        "ROOM_RELAY": 1
+      }
+    },
+    "registry_families": {
+      "total": 120,
+      "by_role": {
+        "ONLINE": 2,
+        "FIRE": 43,
+        "OPS": 44,
+        "RESULT": 28,
+        "ROOM_RELAY": 1,
+        "UNKNOWN": 2
+      },
+      "eras": 25
+    },
+    "museum_templates": {
+      "total": 827,
+      "by_role": {
+        "ONLINE": 1,
+        "UNKNOWN": 550,
+        "ROOM_RELAY": 8,
+        "FIRE": 34,
+        "OPS": 25,
+        "RESULT": 209
+      },
+      "with_existence_date": 781,
+      "never_fired": 46,
+      "fires_with_original_result": 4,
+      "triage_keep": 777,
+      "triage_trash": 50
+    }
+  },
+  "systems_that_fired": [
+    {
+      "db_kind": "SOLO_ELITE",
+      "floor_id": "FIRE_SOLO_ELITE_ENTER",
+      "label": "FIRE SOLO ELITE",
+      "rank_band": "PENTHOUSE",
+      "telegram_cards": 11228,
+      "first_fired": "2026-03-19 21:55:33",
+      "fired": 1058,
+      "graded_outcomes": 1058,
+      "graded_wins": 832,
+      "claimed_wr_pct": 78.64
+    },
+    {
+      "db_kind": "SEQUENCE",
+      "floor_id": "FIRE_SEQUENCE_ENTER",
+      "label": "FIRE SEQUENCE ENTER NOW",
+      "rank_band": "UPPER",
+      "telegram_cards": 109,
+      "first_fired": "2026-03-19 22:54:09",
+      "fired": 560,
+      "graded_outcomes": 560,
+      "graded_wins": 414,
+      "claimed_wr_pct": 73.93
+    },
+    {
+      "db_kind": "GOLDEN",
+      "floor_id": "FIRE_GOLDEN_ENTER",
+      "label": "FIRE GOLDEN ENTER NOW",
+      "rank_band": "UPPER",
+      "telegram_cards": 2964,
+      "first_fired": "2026-03-19 22:57:45",
+      "fired": 338,
+      "graded_outcomes": 338,
+      "graded_wins": 265,
+      "claimed_wr_pct": 78.4
+    },
+    {
+      "db_kind": "PLATINUM",
+      "floor_id": "FIRE_PLATINUM_ENTER",
+      "label": "FIRE PLATINUM",
+      "rank_band": "UPPER",
+      "telegram_cards": 1377,
+      "first_fired": "2026-03-20 21:29:53",
+      "fired": 229,
+      "graded_outcomes": 229,
+      "graded_wins": 174,
+      "claimed_wr_pct": 75.98
+    },
+    {
+      "db_kind": "FLASH",
+      "floor_id": "FIRE_FLASH_APOSTAR",
+      "label": "FIRE FLASH APOSTAR AGORA",
+      "rank_band": "MID",
+      "telegram_cards": 2,
+      "first_fired": "2026-07-17 06:00:20",
+      "fired": 48,
+      "graded_outcomes": 48,
+      "graded_wins": 45,
+      "claimed_wr_pct": 93.75
+    },
+    {
+      "db_kind": "EMERGING",
+      "floor_id": "SIGNAL_KIND_EMERGING",
+      "label": "SIGNAL_KIND_EMERGING",
+      "rank_band": "BASEMENT",
+      "telegram_cards": 0,
+      "first_fired": "2026-07-17 01:41:12",
+      "fired": 3,
+      "graded_outcomes": 3,
+      "graded_wins": 3,
+      "claimed_wr_pct": 100.0
+    },
+    {
+      "db_kind": "ULTRA_TIE",
+      "floor_id": "FIRE_ULTRA_TIE",
+      "label": "FIRE ULTRA TIE",
+      "rank_band": "BASEMENT",
+      "telegram_cards": 6,
+      "first_fired": "2026-07-17 01:33:54",
+      "fired": 1,
+      "graded_outcomes": 1,
+      "graded_wins": 1,
+      "claimed_wr_pct": 100.0
+    }
+  ],
+  "systems_that_fired_totals": {
+    "distinct_db_kinds": 7,
+    "graded_outcomes": 2237,
+    "graded_wins": 1734,
+    "claimed_wr_pct": 77.51,
+    "verified_wr_pct": null
+  },
+  "verification": {
+    "verdict": "BOT_DB_INFERRED_ONLY",
+    "direct_casino_rows": 0,
+    "signal_truth_matches": 0,
+    "labels_inferred_from_bot_db": 3650,
+    "actual_color_rule": "actual_color(predicted, outcome) returns `predicted` whenever outcome=='win', so a WIN card's 'Saiu'/'TRUTH THIS ROUND' field cannot disagree with the call.",
+    "actual_color_definitions": [
+      "bot/telegram_outbox.py:actual_color",
+      "bot/fallback_result_sender.py:actual_color",
+      "bot/peak_fidelity_ranker.py:actual_color",
+      "bot/config/emanation_laws.py:factual_color_from_outcome"
+    ],
+    "resolve_lag": {
+      "avg_secs": 16.1,
+      "min_secs": 0.0,
+      "max_secs": 6560.8,
+      "oracle_safe_n": 526,
+      "oracle_safe_pct": 15.6,
+      "late_risk_n": 2417,
+      "fastest_cell": {
+        "signal_kind": "SEQUENCE",
+        "floor": "LIVE",
+        "n": 324,
+        "secs_median": 0.6,
+        "min_n": 50
+      },
+      "note": "A ~30s table round with a 0.0s minimum and a 6560s maximum resolve lag means the grader matched some fires to rounds far outside the round they named."
+    },
+    "martingale": {
+      "g0_wr": 71.15,
+      "final_wr": 72.86,
+      "recovery_wr": 5.93,
+      "losses": 936,
+      "ties": 201
+    },
+    "required_to_verify": [
+      "Capture Twin225 round_id/player_total/banker_total/actual_color directly.",
+      "Store every direct result in casino_round_results.",
+      "Match consensus_signals.id to casino_round_results.round_id before counting verified WR.",
+      "Require signal_time < betting_closed_at for early-result oracle claims."
+    ]
+  }
+}

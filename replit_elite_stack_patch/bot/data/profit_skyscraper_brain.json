@@ -1,0 +1,1929 @@
+{
+  "version": 1,
+  "built_at": "2026-08-06T00:25:45.076230+00:00",
+  "name": "PROFIT_SKYSCRAPER_OS",
+  "mission": "Understand every Telegram-bound skin/template/gate; distribute KEEP across Mr_iv4 (money penthouse) → UNIQUE_g1 (countdown) → UNIQUE_gN (overflow, never delay); block TRASH; kid-simple play rules so every chat is fully usable even at 5 signals/day.",
+  "honesty": "Dollar outcomes depend on platform stakes, volume, and WR — not guaranteed. This OS maximizes capture of every real ENTER/GALE window at minimum stake and keeps every chat readable and actionable.",
+  "inventory": {
+    "museum_templates": 827,
+    "keep": 777,
+    "trash": 50,
+    "registry_skins": 120,
+    "registry_by_role": {
+      "ONLINE": 2,
+      "FIRE": 43,
+      "OPS": 44,
+      "RESULT": 28,
+      "ROOM_RELAY": 1,
+      "UNKNOWN": 2
+    },
+    "keep_by_role": {
+      "ROOM_RELAY": 8,
+      "RESULT": 207,
+      "UNKNOWN": 505,
+      "OPS": 22,
+      "FIRE": 34,
+      "ONLINE": 1
+    },
+    "keep_by_reason_top": {
+      "result_indication": 287,
+      "tier_signal": 62,
+      "gale_ops_edge": 49,
+      "color_indication": 47,
+      "fire_enter_edge": 34,
+      "room_info": 32,
+      "gate_audit_value": 30,
+      "stats_edge": 28,
+      "schedule_audit_value": 26,
+      "timing_indication": 26,
+      "ops_system_value": 22,
+      "timing_or_entry_edge": 22,
+      "floor_ops_value": 21,
+      "signal_forming": 19,
+      "ops_health_value": 15,
+      "system_health": 11,
+      "market_regime_edge": 10,
+      "room_info_edge_ai_filter": 8,
+      "volume_presence": 8,
+      "pair_room_stats_edge": 5,
+      "ops_recovery_value": 4,
+      "risk_audit_value": 4,
+      "hour_forecast_edge": 3,
+      "ops_silence_alive": 2,
+      "boot_menu_system": 1
+    },
+    "live_floors": [
+      "JUN10",
+      "AITEST_ULTIMATE",
+      "AITEST_APR20_MAX",
+      "MAY01",
+      "APR20",
+      "LIVE",
+      "JUN20",
+      "APR27",
+      "ELITE_V2",
+      "ULTIMATE",
+      "AITEST_LIVE",
+      "APR22",
+      "APR26",
+      "JUN19",
+      "APR20_MAX",
+      "JUN26",
+      "MAY19",
+      "MAY10",
+      "MAR21",
+      "JUN27",
+      "APR29",
+      "ELITE_V2_PEAK",
+      "MAR19",
+      "MAY11",
+      "MAR20",
+      "AITEST_MAR21",
+      "JUN08",
+      "APR30",
+      "APR28",
+      "AITEST_APR20",
+      "MAY04",
+      "APR19"
+    ],
+    "gate_aliases": {
+      "LIVE": "ELITE_V2",
+      "JUN19": "JUN19_peak",
+      "JUN20": "JUN20_peak",
+      "JUN08": "JUN08_peak",
+      "JUN10": "JUN10_peak",
+      "JUN26": "JUN26",
+      "JUN27": "JUN27_peak",
+      "JUN06": "JUN06_peak",
+      "MAY19": "MAY19_peak",
+      "MAY10": "MAY10_peak",
+      "MAY11": "MAY11_peak",
+      "MAY01": "MAY01_peak",
+      "MAY20": "MAY20_peak",
+      "MAY21": "MAY21_peak",
+      "MAY22": "MAY22_peak",
+      "MAY23": "MAY23_peak",
+      "MAY24": "MAY24_peak",
+      "MAY25": "MAY25_peak",
+      "MAY26": "MAY26_peak",
+      "MAY27": "MAY27_peak",
+      "APR19": "APR19_golden",
+      "APR20": "APR20_perfect",
+      "APR30": "APR30_peak",
+      "JUN12A": "JUN12_avalanche",
+      "JUN12B": "JUN12_eliteguard",
+      "ELITE_V2_PEAK": "ELITE_V2_PEAK",
+      "ELITE_V2": "ELITE_V2",
+      "ULTIMATE": "ULTIMATE",
+      "MAR19": "MAR19",
+      "MAR20": "MAR20",
+      "MAR21": "MAR21",
+      "APR22": "APR22",
+      "APR26": "APR27",
+      "APR27": "APR27",
+      "APR28": "APR28_complex",
+      "APR29": "APR29",
+      "AITEST_ULTIMATE": "ULTIMATE",
+      "AITEST_APR20_MAX": "APR20_perfect",
+      "AITEST_LIVE": "ELITE_V2",
+      "AITEST_APR20": "APR20_perfect",
+      "AITEST_MAR21": "MAR21",
+      "APR20_MAX": "APR20_perfect",
+      "MAY04": "MAY04"
+    },
+    "blocked_floors": [
+      "JUN12A",
+      "JUN12B"
+    ]
+  },
+  "chat_map": {
+    "mr_iv4": {
+      "id": "6774605259",
+      "username": "Mr_iv4",
+      "title": "Mr_iv4 — MONEY PENTHOUSE",
+      "job": "Biggest money chat. ENTER NOW colors, gale retries, WIN/LOSS, ops.",
+      "priority": 1
+    },
+    "unique_g1": {
+      "id": "5855678138",
+      "username": "UNIQUE_g1",
+      "title": "UNIQUE_g1 — COUNTDOWN / SNIPER",
+      "job": "Timed windows (JANELA / Sinal Retido / FLASH). Bet in the seconds.",
+      "priority": 2
+    },
+    "overflow": {
+      "pattern": "UNIQUE_g{N}",
+      "start_n": 2,
+      "title": "UNIQUE_g2…gN — OVERFLOW",
+      "job": "Only when Mr_iv4 or g1 is too busy. Same rules. Never wait.",
+      "priority": 3
+    },
+    "rules": {
+      "never_delay": true,
+      "soft_cap_spills_only": true,
+      "results_glue_to_parent_chat": true,
+      "money_penthouse": "Mr_iv4",
+      "countdown_primary": "UNIQUE_g1"
+    },
+    "play_rules": [
+      {
+        "when": "ENTER NOW / APOSTE AGORA / ENTRE AGORA + color (🔴/🔵)",
+        "do": "Bet the MINIMUM on that color NOW.",
+        "stop": "Wait for WIN / LOSS / gale card for this signal."
+      },
+      {
+        "when": "JANELA / 🟢 Ns 🟢 / Sinal Retido→Liberado",
+        "do": "Same: minimum bet on the color before the seconds hit 0.",
+        "stop": "If it says RODADA JÁ PASSOU / DO NOT BET — skip."
+      },
+      {
+        "when": "GALE / RETENTATIVA / Entre novamente / AGUARDANDO G1",
+        "do": "Same color, MINIMUM bet again (G1). Then G2 only if the card says so.",
+        "stop": "Never invent G3+ unless the chat posts it."
+      },
+      {
+        "when": "✅ WIN / GREEN / GANHOU",
+        "do": "Round over. Bank the win. Wait for next ENTER.",
+        "stop": "Do not re-bet the same round."
+      },
+      {
+        "when": "❌ LOSS / PERDEU + no gale card",
+        "do": "Round over. Next signal only.",
+        "stop": "Do not chase with your own gales."
+      },
+      {
+        "when": "DO NOT BET / NÃO APOSTE / RODADA PASSOU / EXPIROU / G2 MISS",
+        "do": "Skip. Zero bet.",
+        "stop": "This protects the bankroll."
+      },
+      {
+        "when": "OPS only (quarantine, schedule, grounded, hot/cold)",
+        "do": "Read. Do not bet from ops alone.",
+        "stop": "Bet only from ENTER / JANELA / GALE cards."
+      }
+    ],
+    "stake_policy": {
+      "mode": "MINIMUM_ALWAYS",
+      "rule": "Always the platform minimum unit. Volume of correct windows > size of bet.",
+      "gale_ladder": "G0 = 1u, G1 = 1u (same min), G2 = 1u only if card says enter G2.",
+      "never": "Never raise stake to 'recover'. Never bet without a card.",
+      "worst_case_5_signals": "Even if a chat only posts 5 ENTER days: play all 5 with min stake + official gales. Skip DO-NOT-BET. That chat is still fully used."
+    }
+  },
+  "distribution": {
+    "FIRE_money_enter": {
+      "shelf": "SHELF_PENTHOUSE_MONEY / SHELF_UPPER_MONEY",
+      "chat": "Mr_iv4",
+      "spill": "UNIQUE_g2…gN",
+      "user": "Bet min on color"
+    },
+    "FIRE_countdown_sniper": {
+      "shelf": "SHELF_COUNTDOWN / SHELF_SNIPER",
+      "chat": "UNIQUE_g1",
+      "spill": "UNIQUE_g2…gN",
+      "user": "Bet min before timer ends"
+    },
+    "FIRE_gale": {
+      "shelf": "SHELF_GALE",
+      "chat": "Mr_iv4 (or parent if glued)",
+      "spill": "UNIQUE_g2…gN",
+      "user": "Same color min again"
+    },
+    "RESULT": {
+      "shelf": "parent",
+      "chat": "exact chat of the FIRE",
+      "user": "Stop round on WIN/LOSS; follow gale if posted"
+    },
+    "OPS_health": {
+      "shelf": "SHELF_OPS / overflow",
+      "chat": "Mr_iv4",
+      "user": "Read only — no bet"
+    },
+    "ROOM_RELAY": {
+      "shelf": "AI-filter later; keep for edge",
+      "chat": "Mr_iv4 / ops",
+      "user": "Do not bet from raw relay alone"
+    },
+    "TRASH": {
+      "shelf": "blocked",
+      "chat": "nowhere",
+      "user": "Ignored"
+    }
+  },
+  "registry_skins": [
+    {
+      "family_id": "ONLINE_BANNER",
+      "role": "ONLINE",
+      "era": "0",
+      "label": "ONLINE banner",
+      "default_lane": null,
+      "example_first_line": "🟢 BacBo Royal UserBot ONLINE 🟢",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_EMERGINDO",
+      "role": "FIRE",
+      "era": "0",
+      "label": "FIRE EMERGINDO (forming color)",
+      "default_lane": "MONEY",
+      "example_first_line": "📡 EMERGINDO → cor se formando (score ≥ 1.8)",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_ALERTA_FORMACAO",
+      "role": "OPS",
+      "era": "0",
+      "label": "OPS ALERTA formação",
+      "default_lane": null,
+      "example_first_line": "👁 ALERTA → formação inicial, aguarde",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_CONFIRMED_ENTER",
+      "role": "FIRE",
+      "era": "1",
+      "label": "FIRE confirmed ENTER NOW",
+      "default_lane": "MONEY",
+      "example_first_line": "🏆 SIGNAL CONFIRMED — ENTER NOW 🏆",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_SOLO_ELITE_ENTER",
+      "role": "FIRE",
+      "era": "1",
+      "label": "FIRE SOLO ELITE",
+      "default_lane": "MONEY",
+      "example_first_line": "💎 SOLO ELITE SIGNAL 💎",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_GOLDEN_ENTER",
+      "role": "FIRE",
+      "era": "1",
+      "label": "FIRE GOLDEN ENTER NOW",
+      "default_lane": "MONEY",
+      "example_first_line": "🏆 GOLDEN SIGNAL — ENTER NOW 🏆",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_SEQUENCE_ENTER",
+      "role": "FIRE",
+      "era": "1",
+      "label": "FIRE SEQUENCE ENTER NOW",
+      "default_lane": "MONEY",
+      "example_first_line": "📊 SEQUENCE SIGNAL — ENTER NOW 📊",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_PLATINUM_ENTER",
+      "role": "FIRE",
+      "era": "1",
+      "label": "FIRE PLATINUM",
+      "default_lane": "MONEY",
+      "example_first_line": "💠 PLATINUM SIGNAL — PAR DE OURO",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_AUTO_TIE",
+      "role": "RESULT",
+      "era": "1b",
+      "label": "RESULT AUTO TIE banner",
+      "default_lane": null,
+      "example_first_line": "⚪ AUTO TIE @…",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_WIN_TIER",
+      "role": "RESULT",
+      "era": "1b",
+      "label": "RESULT WIN — kind",
+      "default_lane": null,
+      "example_first_line": "✅ WIN — SOLO_ELITE",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_LOSS_TIER",
+      "role": "RESULT",
+      "era": "1b",
+      "label": "RESULT LOSS — kind",
+      "default_lane": null,
+      "example_first_line": "❌ LOSS — GOLDEN",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_GALE_ENTRE_NOVAMENTE",
+      "role": "FIRE",
+      "era": "1b",
+      "label": "FIRE gale Entre novamente",
+      "default_lane": "MONEY",
+      "example_first_line": "🔁 GALE 1 — Entre novamente",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_EMPATE",
+      "role": "RESULT",
+      "era": "1b",
+      "label": "RESULT EMPATE — kind",
+      "default_lane": null,
+      "example_first_line": "🟡 EMPATE — SOLO_ELITE",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_GALE_RETENTATIVA",
+      "role": "FIRE",
+      "era": "1b",
+      "label": "FIRE gale RETENTATIVA",
+      "default_lane": "MONEY",
+      "example_first_line": "♻️ GALE 1 — RETENTATIVA",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_GREEN_LEGACY_G0",
+      "role": "RESULT",
+      "era": "1b",
+      "label": "RESULT GREEN legacy G0",
+      "default_lane": null,
+      "example_first_line": "✅✅✅ GREEN — VITÓRIA NO G0!",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_GREEN_LEGACY_G1",
+      "role": "RESULT",
+      "era": "1b",
+      "label": "RESULT GREEN legacy G1",
+      "default_lane": null,
+      "example_first_line": "♻️♻️♻️ GREEN — RECUPERADO NO G1!",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_LOSS_COOLDOWN",
+      "role": "OPS",
+      "era": "2",
+      "label": "OPS loss cooldown",
+      "default_lane": null,
+      "example_first_line": "⚠️ LOSS COOLDOWN ACTIVATED",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_PREALERT_FORMING",
+      "role": "OPS",
+      "era": "2",
+      "label": "PREALERT forming",
+      "default_lane": null,
+      "example_first_line": "⚡ SINAL SE FORMANDO ⚡",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_DUPLO_ELITE",
+      "role": "OPS",
+      "era": "2",
+      "label": "OPS duplo elite",
+      "default_lane": null,
+      "example_first_line": "🔮 DUPLO ELITE ANALISANDO",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_JANELA_TIMED",
+      "role": "FIRE",
+      "era": "2",
+      "label": "TIMED JANELA (any N)",
+      "default_lane": "COUNTDOWN",
+      "example_first_line": "⛔ JANELA FECHADA — NÃO ENTRE… / JANELA: Ns",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_ULTRA_TIE",
+      "role": "FIRE",
+      "era": "2",
+      "label": "FIRE ULTRA TIE",
+      "default_lane": "MONEY",
+      "example_first_line": "🟡 ULTRA TIE — EMPATE CONFIRMADO",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_TRIPLE_LOCK",
+      "role": "OPS",
+      "era": "2",
+      "label": "OPS triple lock",
+      "default_lane": null,
+      "example_first_line": "🔐🔐🔐 TRIPLE LOCK CHEGANDO",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_SEQ_QUENTE",
+      "role": "OPS",
+      "era": "3",
+      "label": "OPS sequência quente",
+      "default_lane": null,
+      "example_first_line": "🔥🔥🔥 SEQUÊNCIA QUENTE",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_SEQ_FRIA",
+      "role": "OPS",
+      "era": "3",
+      "label": "OPS sequência fria",
+      "default_lane": null,
+      "example_first_line": "🧊🧊🧊 SEQUÊNCIA FRIA — PAUSAR",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_SEQ_EMPATES",
+      "role": "OPS",
+      "era": "3",
+      "label": "OPS sequência empates",
+      "default_lane": null,
+      "example_first_line": "🟡🟡🟡 SEQUÊNCIA DE EMPATES",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_TIMED_WINDOW",
+      "role": "RESULT",
+      "era": "3",
+      "label": "RESULT timed ~Ns window",
+      "default_lane": null,
+      "example_first_line": "🕐 HH:MM:SS EDT · … · ~Ns window",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_PREALERT_3BOLT",
+      "role": "OPS",
+      "era": "3",
+      "label": "PREALERT 3-bolt",
+      "default_lane": null,
+      "example_first_line": "⚡⚡⚡ SINAL FORMANDO",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_EMPATE_DIRETO_G0",
+      "role": "FIRE",
+      "era": "3",
+      "label": "FIRE EMPATE DIRETO G0",
+      "default_lane": "MONEY",
+      "example_first_line": "🎯🟡 EMPATE DIRETO — G0",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_AUDIT_360",
+      "role": "OPS",
+      "era": "3",
+      "label": "OPS AUDIT 360",
+      "default_lane": null,
+      "example_first_line": "📊 AUDIT 360° (DB only)",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_G0_DIRETO",
+      "role": "FIRE",
+      "era": "3",
+      "label": "FIRE G0 DIRETO",
+      "default_lane": "MONEY",
+      "example_first_line": "⚡ G0 DIRETO — Entre com confiança",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_PREPARE_G1",
+      "role": "FIRE",
+      "era": "3",
+      "label": "FIRE PREPARE G1",
+      "default_lane": "MONEY",
+      "example_first_line": "♟ PREPARE O G1 — Provável…",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_STREAK_BANNER",
+      "role": "OPS",
+      "era": "3",
+      "label": "STREAK banner",
+      "default_lane": null,
+      "example_first_line": "🎰 SEQUÊNCIA Nx 🔴 VERMELHO",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_CAMADAS_DO_DIA",
+      "role": "OPS",
+      "era": "3",
+      "label": "CAMADAS DO DIA",
+      "default_lane": null,
+      "example_first_line": "🏆 CAMADAS DO DIA — DD/MM/YYYY",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_FLASH_WIN",
+      "role": "RESULT",
+      "era": "4",
+      "label": "RESULT FLASH WIN",
+      "default_lane": null,
+      "example_first_line": "✅ WIN — FLASH",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_GREEN_COMPACT_G0",
+      "role": "RESULT",
+      "era": "4",
+      "label": "RESULT GREEN compact G0",
+      "default_lane": null,
+      "example_first_line": "✅ GREEN · G0 · HH:MM BRT",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_GREEN_COMPACT_G1",
+      "role": "RESULT",
+      "era": "4",
+      "label": "RESULT GREEN compact G1",
+      "default_lane": null,
+      "example_first_line": "♻️ GREEN · G1 · HH:MM BRT",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_COMPACT_HASH",
+      "role": "FIRE",
+      "era": "5",
+      "label": "COMPACT SIGNAL #",
+      "default_lane": "MONEY",
+      "example_first_line": "🔵 SIGNAL #51250 -- SOLO_ELITE red | rooms: @…",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_COMPACT_LOSS_HASH",
+      "role": "RESULT",
+      "era": "5",
+      "label": "COMPACT LOSS #",
+      "default_lane": null,
+      "example_first_line": "❌ LOSS #51250 G0",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_COMPACT_WIN_HASH",
+      "role": "RESULT",
+      "era": "5",
+      "label": "COMPACT WIN #",
+      "default_lane": null,
+      "example_first_line": "✅ WIN #51252 G0",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_COMPACT_TIE_HASH",
+      "role": "RESULT",
+      "era": "5",
+      "label": "COMPACT TIE #",
+      "default_lane": null,
+      "example_first_line": "➖ TIE #51257 G0",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_SOLO_APOSTAR",
+      "role": "FIRE",
+      "era": "6",
+      "label": "FIRE SOLO APOSTAR AGORA",
+      "default_lane": "MONEY",
+      "example_first_line": "⚡ SOLO ELITE — APOSTAR AGORA",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_SEQUENCE_APOSTAR",
+      "role": "FIRE",
+      "era": "6",
+      "label": "FIRE SEQUENCE APOSTAR AGORA",
+      "default_lane": "MONEY",
+      "example_first_line": "⚡ SEQUENCE — APOSTAR AGORA",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_GOLDEN_APOSTAR",
+      "role": "FIRE",
+      "era": "6",
+      "label": "FIRE GOLDEN APOSTAR AGORA",
+      "default_lane": "MONEY",
+      "example_first_line": "⚡ GOLDEN — APOSTAR AGORA",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_PLATINUM_APOSTAR",
+      "role": "FIRE",
+      "era": "6",
+      "label": "FIRE PLATINUM APOSTAR AGORA",
+      "default_lane": "MONEY",
+      "example_first_line": "⚡ PLATINUM — APOSTAR AGORA",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_FLASH_APOSTAR",
+      "role": "FIRE",
+      "era": "6",
+      "label": "FIRE FLASH APOSTAR AGORA",
+      "default_lane": "MONEY",
+      "example_first_line": "⚡ FLASH — APOSTAR AGORA",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "ONLINE_LUXURY_OUTBOX",
+      "role": "ONLINE",
+      "era": "6",
+      "label": "ONLINE luxury outbox",
+      "default_lane": null,
+      "example_first_line": "LUXURY OUTBOX ONLINE",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_SEQUENCIA_ENTER_NOW",
+      "role": "FIRE",
+      "era": "6",
+      "label": "FIRE SEQUência ENTER NOW",
+      "default_lane": "MONEY",
+      "example_first_line": "🔥 SEQUência — ENTER NOW 🔥",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_ELITE_ANALISANDO",
+      "role": "OPS",
+      "era": "6",
+      "label": "OPS ELITE ANALISANDO",
+      "default_lane": null,
+      "example_first_line": "⚡ ELITE ANALISANDO",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_DIVERGENCIA_SALAS",
+      "role": "OPS",
+      "era": "6",
+      "label": "OPS divergência de salas",
+      "default_lane": null,
+      "example_first_line": "🟠 DIVERGÊNCIA DE SALAS",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_SINAL_RETIDO_LIBERADO",
+      "role": "FIRE",
+      "era": "cd",
+      "label": "FIRE Sinal Retido→Liberado (countdown peak)",
+      "default_lane": "COUNTDOWN",
+      "example_first_line": "⏳ Sinal Retido → Liberado",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+      "role": "FIRE",
+      "era": "cd",
+      "label": "CD_FIRE timer BRT/EDT apostar",
+      "default_lane": "COUNTDOWN",
+      "example_first_line": "🟢 HH UTC · EDT · apostar",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "CD_FIRE_QUANTUM_LOCK",
+      "role": "FIRE",
+      "era": "cd",
+      "label": "CD_FIRE quantum lock",
+      "default_lane": "COUNTDOWN",
+      "example_first_line": "🔒 QUANTUM LOCK",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "CD_FIRE_RUSH_NS_LEFT",
+      "role": "FIRE",
+      "era": "cd",
+      "label": "CD_FIRE rush Ns left",
+      "default_lane": "COUNTDOWN",
+      "example_first_line": "RUSH · Ns left",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_FORENSIC_INTERVALO",
+      "role": "RESULT",
+      "era": "forensic",
+      "label": "RESULT resumido forense (G0/G1/G2)",
+      "default_lane": null,
+      "example_first_line": "🔍 SINAL #N — RESUMIDO FORENSE",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_BELL_GANHOU",
+      "role": "RESULT",
+      "era": "forensic",
+      "label": "RESULT bell GANHOU/PERDEU",
+      "default_lane": null,
+      "example_first_line": "🔔 ✅ GANHOU  ·  #N",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_G1_EXPIROU",
+      "role": "OPS",
+      "era": "ops_result",
+      "label": "OPS G1 EXPIROU — verificar mesa",
+      "default_lane": null,
+      "example_first_line": "⏰ G1 EXPIROU — VERIFICAR SUA MESA",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_G2_MISS",
+      "role": "OPS",
+      "era": "ops_result",
+      "label": "OPS G2 MISS — perda total",
+      "default_lane": null,
+      "example_first_line": "🛑 G2 MISS — PERDA TOTAL — PARE AGORA",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_GOD_TIER",
+      "role": "FIRE",
+      "era": "elite",
+      "label": "FIRE GOD-TIER sync/conf",
+      "default_lane": "MONEY",
+      "example_first_line": "💎 GOD-TIER — Sync apertado + ≥3 salas top + conf≥75%",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_GOLDEN_ENTRE_AGORA",
+      "role": "FIRE",
+      "era": "1",
+      "label": "FIRE GOLDEN ENTRE AGORA (PT)",
+      "default_lane": "MONEY",
+      "example_first_line": "🏆🏆🏆 GOLDEN SIGNAL — ENTRE AGORA 🏆🏆🏆",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_G0_MISS_ENTRE_G1",
+      "role": "FIRE",
+      "era": "1b",
+      "label": "FIRE G0 miss → enter G1 now",
+      "default_lane": "MONEY",
+      "example_first_line": "⚠️ G0 NÃO FOI — ENTRE NO G1 AGORA",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_ORACLE_CARD",
+      "role": "RESULT",
+      "era": "oracle",
+      "label": "RESULT ORACLE CARD",
+      "default_lane": null,
+      "example_first_line": "🔮 ORACLE CARD #N",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_TIE_ALERT",
+      "role": "OPS",
+      "era": "2",
+      "label": "OPS alerta de empate / tie alert",
+      "default_lane": null,
+      "example_first_line": "🟡 ALERTA DE EMPATE / TIE ALERT 🟡",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_CORRECAO",
+      "role": "OPS",
+      "era": "ops_result",
+      "label": "OPS correção / correction",
+      "default_lane": null,
+      "example_first_line": "♻️♻️♻️ CORREÇÃO / CORRECTION ♻️♻️♻️",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_JANELA_PRIME",
+      "role": "OPS",
+      "era": "cd",
+      "label": "OPS janela prime — sinais ativos",
+      "default_lane": null,
+      "example_first_line": "🟢🟢 JANELA PRIME — SINAIS ATIVOS 🟢🟢",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_COLOR_BANNER",
+      "role": "RESULT",
+      "era": "forensic",
+      "label": "RESULT color-bar header (forensic / bell lead-in)",
+      "default_lane": null,
+      "example_first_line": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_SEQUENCE_PREDICTION",
+      "role": "OPS",
+      "era": "ops",
+      "label": "OPS SEQUENCE PREDICTION hint",
+      "default_lane": null,
+      "example_first_line": "📊 SEQUENCE PREDICTION",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_GALE_SATURATION",
+      "role": "OPS",
+      "era": "ops",
+      "label": "OPS gale saturation / market status",
+      "default_lane": null,
+      "example_first_line": "⚡⚡ SATURAÇÃO DE GALE ⚡⚡",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_SELF_CARE_GUARD",
+      "role": "OPS",
+      "era": "ops",
+      "label": "OPS self-care guard ativo",
+      "default_lane": null,
+      "example_first_line": "⚕️⚕️ SELF-CARE GUARD ATIVO — GOLDEN ⚕️⚕️",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_PARE_3_PERDAS",
+      "role": "OPS",
+      "era": "ops",
+      "label": "OPS pare de apostar — 3 perdas seguidas",
+      "default_lane": null,
+      "example_first_line": "⛔ PARE DE APOSTAR — 3 PERDAS SEGUIDAS",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_ENTER_NOW_GENERIC",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE plain ENTER NOW (gate-era)",
+      "default_lane": "MONEY",
+      "example_first_line": "⚡ **ENTER NOW**",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_ENTRE_AGORA_GENERIC",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE ENTRE AGORA (virada/streak)",
+      "default_lane": "MONEY",
+      "example_first_line": "⚡ **ENTRE AGORA — VIRADA DETECTADA**",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_APOSTE_AGORA",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE APOSTE AGORA block",
+      "default_lane": "MONEY",
+      "example_first_line": "⚡ **APOSTE AGORA:**",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_G0_ENTRADA_DIRETA",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE G0 entrada direta / primeira entrada",
+      "default_lane": "MONEY",
+      "example_first_line": "⚡⚡⚡ **G0 — ENTRADA DIRETA** ⚡⚡⚡",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_DEPTH_G0_ONLY",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE depth G0 only (no retry)",
+      "default_lane": "MONEY",
+      "example_first_line": "⚡ DEPTH G0 only — single entry, no retry",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_INVERTED_CONTRARIO",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE inverted / contrário signal",
+      "default_lane": "MONEY",
+      "example_first_line": "🔴 CONTRÁRIO ← sinal invertido ativo",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_ORACLE_LOCK",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE ORACLE LOCK hour/color WR",
+      "default_lane": "MONEY",
+      "example_first_line": "🔮🔮🔮 **ORACLE LOCK — H07 SOLO ELITE 100% WR** 🔮🔮🔮",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_CERTIFIED_ELITE",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE certified elite 100% G0",
+      "default_lane": "MONEY",
+      "example_first_line": "🏆🏆 **CERTIFIED ELITE — 100% G0 HISTÓRICO** 🏆🏆",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_GRADE_BANNER",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE grade A/B historical G0 banner",
+      "default_lane": "MONEY",
+      "example_first_line": "💠 GRADE A · G0=76.1% historical (n=46) · elite pair",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_HOT_STREAK",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE hot table / win-streak banner",
+      "default_lane": "MONEY",
+      "example_first_line": "🔥🔥 PERFECT 5/5 WIN STREAK · G0=87.1% historical",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_DOUBLE_TIE_LOCK",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE double tie lock",
+      "default_lane": "MONEY",
+      "example_first_line": "🟡🟡 DOUBLE TIE LOCK · G0=94.1% after 2 consecutive ties (n=17)",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_GALE_1_FACA_AGORA",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE gale 1 — faça agora",
+      "default_lane": "MONEY",
+      "example_first_line": "🔁 **GALE 1 — FAÇA AGORA:**",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_DO_NOT_BET_YET",
+      "role": "OPS",
+      "era": "code",
+      "label": "OPS do not bet yet — waiting rooms",
+      "default_lane": null,
+      "example_first_line": "⛔ **DO NOT BET YET** — waiting for more rooms",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_PREPARE_PLATFORM",
+      "role": "OPS",
+      "era": "code",
+      "label": "OPS prepare platform — signal in seconds",
+      "default_lane": null,
+      "example_first_line": "⏳ Prepare a plataforma — **o sinal de entrada chegará em segundos**",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_NEXT_CERTIFIED_WINDOW",
+      "role": "OPS",
+      "era": "code",
+      "label": "OPS next certified window",
+      "default_lane": null,
+      "example_first_line": "🏆 **Próxima janela certificada / Next certified window:**",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_JANELA_PEAK",
+      "role": "OPS",
+      "era": "code",
+      "label": "OPS janela peak / max precision",
+      "default_lane": null,
+      "example_first_line": "⚡⚡ **JANELA PEAK / PEAK WINDOW — PRECISÃO MÁXIMA** ⚡⚡",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_G1_REGISTRADO_CALC_G2",
+      "role": "OPS",
+      "era": "ops_result",
+      "label": "OPS G1 recorded — calculating G2",
+      "default_lane": null,
+      "example_first_line": "📊 **G1 registrado / G1 recorded** — calculando G2...",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_G2_STOP_IF_G1_LOST",
+      "role": "OPS",
+      "era": "ops_result",
+      "label": "OPS G2 (if G1 lost) → STOP",
+      "default_lane": null,
+      "example_first_line": "⛔ G2 _(se perder G1)_ → STOP — aguarde novo sinal",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_G3_ATINGIDO",
+      "role": "OPS",
+      "era": "ops_result",
+      "label": "OPS G3 reached — signal closed (MAR20/21 era)",
+      "default_lane": null,
+      "example_first_line": "⛔ **G3 ATINGIDO — SINAL ENCERRADO**",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_G0_ACERTOU_PRIMEIRA",
+      "role": "RESULT",
+      "era": "code",
+      "label": "RESULT G0 acertou de primeira",
+      "default_lane": null,
+      "example_first_line": "🏆 G0 — Acertou de primeira!",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_GALE_RECOVERED_CHAIN",
+      "role": "RESULT",
+      "era": "code",
+      "label": "RESULT gale recovery chain",
+      "default_lane": null,
+      "example_first_line": "❌ G0 → ✅ **G1** RECUPERADO / RECOVERED!",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_EMPATE_DINHEIRO_DEVOLVIDO",
+      "role": "RESULT",
+      "era": "code",
+      "label": "RESULT empate = dinheiro devolvido",
+      "default_lane": null,
+      "example_first_line": "✅ **EMPATE = DINHEIRO DEVOLVIDO**",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_EMPATE_PROTECAO",
+      "role": "RESULT",
+      "era": "code",
+      "label": "RESULT empate — proteção ativada",
+      "default_lane": null,
+      "example_first_line": "🟡🟡 **EMPATE — PROTEÇÃO ATIVADA** 🟡🟡",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "CD_RES_GREEN_G_BRT",
+      "role": "RESULT",
+      "era": "cd",
+      "label": "CD result GREEN G BRT",
+      "default_lane": null,
+      "example_first_line": "🟢 G0 · BRT",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "CD_RES_RODADAS_TEMPO",
+      "role": "RESULT",
+      "era": "cd",
+      "label": "CD result rodadas·tempo",
+      "default_lane": null,
+      "example_first_line": "⏱ N rodada(s) · Ns",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "CD_RES_BELL_GANHOU",
+      "role": "RESULT",
+      "era": "cd",
+      "label": "CD result bell ganhou",
+      "default_lane": null,
+      "example_first_line": "🔔 ✅ GANHOU",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "ROOM_RELAY",
+      "role": "ROOM_RELAY",
+      "era": "noise",
+      "label": "Room relay / placar",
+      "default_lane": null,
+      "example_first_line": "📡 @room …",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_GATE_BLOCK_LOG",
+      "role": "OPS",
+      "era": "internal",
+      "label": "Internal gate block / momentum log line",
+      "default_lane": null,
+      "example_first_line": "⛔ MomentumBlock L-L-L: G0=34.4% historically —",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_GATE_ALLOW_LOG",
+      "role": "OPS",
+      "era": "internal",
+      "label": "Internal gate allow / bypass log line",
+      "default_lane": null,
+      "example_first_line": "⚡ [accum_solo_gale/DISABLED] gate disabled → ALLOW",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_KIND_DOWNGRADE_LOG",
+      "role": "OPS",
+      "era": "internal",
+      "label": "Internal tier downgrade log",
+      "default_lane": null,
+      "example_first_line": "⛔ PLATINUM coalition unrescuable after stripping toxic rooms — downgrading to GOLDEN.",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "CODE_FRAGMENT",
+      "role": "UNKNOWN",
+      "era": "internal",
+      "label": "Source-code literal (not a card)",
+      "default_lane": null,
+      "example_first_line": "GOLDEN\", \"SOLO_ELITE\", \"PLATINUM\", \"EMERGING\"",
+      "in_keep_registry": false
+    },
+    {
+      "family_id": "OPS_G2_ATINGIDO_PARE",
+      "role": "OPS",
+      "era": "ops_result",
+      "label": "OPS G2 atingido — pare / signal closed",
+      "default_lane": null,
+      "example_first_line": "⛔ **PARE — G2 ATINGIDO**",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_APOSTAR_EMPATE",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE bet the tie (next rounds)",
+      "default_lane": "MONEY",
+      "example_first_line": "🎯 **Aposte no EMPATE (🟠 Tie)** nas próximas rodadas.",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_NAMED_EDGE_BANNER",
+      "role": "FIRE",
+      "era": "code",
+      "label": "FIRE named formation / zone edge banner",
+      "default_lane": "MONEY",
+      "example_first_line": "🏆 APEX TRIO · isadados+rigosinais+rqdados · G0=90.3% (n=31)",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_NEGATIVE_WINDOW_BLOCK",
+      "role": "OPS",
+      "era": "code",
+      "label": "OPS named bad day/hour block banner",
+      "default_lane": null,
+      "example_first_line": "⛔ BLUE TUESDAY ⛔ · G0=36.5% historically (n=159)",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_TIER_LEGEND",
+      "role": "OPS",
+      "era": "0",
+      "label": "OPS tier legend / glossary line",
+      "default_lane": null,
+      "example_first_line": "💎 SOLO ELITE → sala elite sozinha / single elite room",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_G2_RESERVE",
+      "role": "FIRE",
+      "era": "g2reserve",
+      "label": "FIRE G2 RESERVE — always red loop",
+      "default_lane": "MONEY",
+      "example_first_line": "🔁 **G2 RESERVE — SEMPRE VERMELHO / ALWAYS RED**",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_G2_RESERVE_WIN",
+      "role": "RESULT",
+      "era": "g2reserve",
+      "label": "RESULT G2 RESERVE recovery win",
+      "default_lane": null,
+      "example_first_line": "🏆🏆🏆 **G2 RESERVE — RECUPERAÇÃO WIN!** 🏆🏆🏆",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_G2_RESERVE_MISS",
+      "role": "OPS",
+      "era": "g2reserve",
+      "label": "OPS G2 RESERVE miss — chain closed",
+      "default_lane": null,
+      "example_first_line": "🛑🛑 **G2 RESERVE MISS — CADEIA ENCERRADA** 🛑🛑",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_TIE_AUDIT",
+      "role": "OPS",
+      "era": "audit",
+      "label": "OPS tie audit report (empates)",
+      "default_lane": null,
+      "example_first_line": "🟡🟡🟡 **AUDITORIA COMPLETA — EMPATES** 🟡🟡🟡",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_COMMAND_HELP",
+      "role": "OPS",
+      "era": "help",
+      "label": "OPS command help / keyword glossary",
+      "default_lane": null,
+      "example_first_line": "🟡 **`empate`** · **`tie`** · **`pressao`**",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_STAT_LINE",
+      "role": "OPS",
+      "era": "audit",
+      "label": "OPS combined WR stat line",
+      "default_lane": null,
+      "example_first_line": "📊 **87.8% WR** combinado · TRUE G2 · n=115",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_RADAR_PARTIAL_CONSENSUS",
+      "role": "OPS",
+      "era": "radar",
+      "label": "OPS radar — partial consensus",
+      "default_lane": null,
+      "example_first_line": "👁 **RADAR — PARTIAL CONSENSUS** 👁",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_OPEN_PLATFORM_NOW",
+      "role": "OPS",
+      "era": "prealert",
+      "label": "OPS open the platform — signal in seconds",
+      "default_lane": null,
+      "example_first_line": "🚨 **ABRA A PLATAFORMA AGORA — SINAL EM SEGUNDOS!** 🚨",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "FIRE_FLASH_CONFIRMADO",
+      "role": "FIRE",
+      "era": "flash",
+      "label": "FIRE flash confirmed",
+      "default_lane": "COUNTDOWN",
+      "example_first_line": "⚡⚡ **FLASH CONFIRMADO** —",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_AUTO_WIN",
+      "role": "RESULT",
+      "era": "auto",
+      "label": "RESULT auto-detected WIN",
+      "default_lane": null,
+      "example_first_line": "✅ AUTO WIN",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_AUTO_LOSS",
+      "role": "RESULT",
+      "era": "auto",
+      "label": "RESULT auto-detected LOSS",
+      "default_lane": null,
+      "example_first_line": "❌ AUTO LOSS",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_AUTO_EXPIRED",
+      "role": "OPS",
+      "era": "auto",
+      "label": "OPS signal auto-expired by kind",
+      "default_lane": null,
+      "example_first_line": "🏆 GOLDEN: auto-expired",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "RESULT_FINAL_LOSS_AFTER_G3",
+      "role": "RESULT",
+      "era": "g3",
+      "label": "RESULT final loss after G3",
+      "default_lane": null,
+      "example_first_line": "❌ FINAL LOSS after G3 —",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "OPS_DELIVERY_WINDOW_LOG",
+      "role": "OPS",
+      "era": "internal",
+      "label": "OPS delivery-audit window line",
+      "default_lane": null,
+      "example_first_line": "| ⚠️  MISSED WIN — gate=",
+      "in_keep_registry": true
+    },
+    {
+      "family_id": "CARD_BODY_LINE",
+      "role": "UNKNOWN",
+      "era": "internal",
+      "label": "Card body fragment (not a header)",
+      "default_lane": null,
+      "example_first_line": "└ _Primary bet — full bankroll_",
+      "in_keep_registry": false
+    }
+  ],
+  "top_keep_by_volume": [
+    {
+      "chrono_order": 12,
+      "role": "ROOM_RELAY",
+      "label": "📡 @x8sinais — 19/03/2026 18:28:29",
+      "tg_count": 137438,
+      "reason": "room_info_edge_ai_filter",
+      "registry_family": "ROOM_RELAY",
+      "family_id": "RELAY_OTHER"
+    },
+    {
+      "chrono_order": 5,
+      "role": "ROOM_RELAY",
+      "label": "📡 @CoringaDados — 19/03/2026 17:49:53",
+      "tg_count": 76296,
+      "reason": "room_info_edge_ai_filter",
+      "registry_family": "ROOM_RELAY",
+      "family_id": "RELAY_ANALISANDO"
+    },
+    {
+      "chrono_order": 11,
+      "role": "ROOM_RELAY",
+      "label": "📡 @IsaDados — 19/03/2026 18:13:23",
+      "tg_count": 59810,
+      "reason": "room_info_edge_ai_filter",
+      "registry_family": "ROOM_RELAY",
+      "family_id": "RELAY_AUTO"
+    },
+    {
+      "chrono_order": 281,
+      "role": "RESULT",
+      "label": "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵",
+      "tg_count": 20569,
+      "reason": "result_indication",
+      "registry_family": "RESULT_COLOR_BANNER",
+      "family_id": "RESULT__308a433a6bf4"
+    },
+    {
+      "chrono_order": 353,
+      "role": "UNKNOWN",
+      "label": "📅 CYCLE SUMMARY @robofreebacbo24horass — 08/05/2026 09:30:34",
+      "tg_count": 12919,
+      "reason": "room_info",
+      "registry_family": "",
+      "family_id": "UNKNOWN__b5c2ff0c2381"
+    },
+    {
+      "chrono_order": 13,
+      "role": "OPS",
+      "label": "📊 SEQUENCE PREDICTION",
+      "tg_count": 11474,
+      "reason": "ops_system_value",
+      "registry_family": "OPS_SEQUENCE_PREDICTION",
+      "family_id": "OPS__8f5ee3836b9b"
+    },
+    {
+      "chrono_order": 9,
+      "role": "FIRE",
+      "label": "💎 SOLO ELITE SIGNAL 💎",
+      "tg_count": 11228,
+      "reason": "fire_enter_edge",
+      "registry_family": "FIRE_SOLO_ELITE_ENTER",
+      "family_id": "FIRE__1bc98bfe92f5"
+    },
+    {
+      "chrono_order": 7,
+      "role": "ROOM_RELAY",
+      "label": "📡 @CoringaDados — 19/03/2026 17:52:06",
+      "tg_count": 9978,
+      "reason": "room_info_edge_ai_filter",
+      "registry_family": "ROOM_RELAY",
+      "family_id": "RELAY_GALE"
+    },
+    {
+      "chrono_order": 216,
+      "role": "UNKNOWN",
+      "label": "⚡⚡⚡ SINAL FORMANDO ⚡⚡⚡",
+      "tg_count": 6828,
+      "reason": "signal_forming",
+      "registry_family": "OPS_PREALERT_3BOLT",
+      "family_id": "UNKNOWN__5b507cd41dab"
+    },
+    {
+      "chrono_order": 91,
+      "role": "RESULT",
+      "label": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "tg_count": 6464,
+      "reason": "result_indication",
+      "registry_family": "RESULT_COLOR_BANNER",
+      "family_id": "RESULT__50015abcc82d"
+    },
+    {
+      "chrono_order": 18,
+      "role": "RESULT",
+      "label": "✅ WIN — SOLO_ELITE",
+      "tg_count": 6054,
+      "reason": "result_indication",
+      "registry_family": "RESULT_WIN_TIER",
+      "family_id": "RESULT__4df1c26e3a94"
+    },
+    {
+      "chrono_order": 67,
+      "role": "OPS",
+      "label": "🔒 Auto-quarantine: @rqdados muted for 2h after 5 consecutive losses. Use /unmute",
+      "tg_count": 5720,
+      "reason": "ops_system_value",
+      "registry_family": "",
+      "family_id": "OPS__2f794af54831"
+    },
+    {
+      "chrono_order": 120,
+      "role": "RESULT",
+      "label": "🟡 ALERTA DE EMPATE / TIE ALERT 🟡",
+      "tg_count": 5256,
+      "reason": "result_indication",
+      "registry_family": "OPS_TIE_ALERT",
+      "family_id": "RESULT__267eb0b8ca6b"
+    },
+    {
+      "chrono_order": 10,
+      "role": "ROOM_RELAY",
+      "label": "📡 @IsaDados — 19/03/2026 18:00:15",
+      "tg_count": 4780,
+      "reason": "room_info_edge_ai_filter",
+      "registry_family": "ROOM_RELAY",
+      "family_id": "RELAY_HORARIOS"
+    },
+    {
+      "chrono_order": 188,
+      "role": "RESULT",
+      "label": "🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨",
+      "tg_count": 4342,
+      "reason": "result_indication",
+      "registry_family": "RESULT_COLOR_BANNER",
+      "family_id": "RESULT__5a8078203355"
+    },
+    {
+      "chrono_order": 27,
+      "role": "UNKNOWN",
+      "label": "⚠️ LOSS COOLDOWN ACTIVATED",
+      "tg_count": 4313,
+      "reason": "result_indication",
+      "registry_family": "OPS_LOSS_COOLDOWN",
+      "family_id": "UNKNOWN__18e5bbc6ae06"
+    },
+    {
+      "chrono_order": 92,
+      "role": "UNKNOWN",
+      "label": "🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢",
+      "tg_count": 4291,
+      "reason": "color_indication",
+      "registry_family": "RESULT_COLOR_BANNER",
+      "family_id": "UNKNOWN__bf53965c70ba"
+    },
+    {
+      "chrono_order": 218,
+      "role": "RESULT",
+      "label": "🟡🟡 SEQUÊNCIA DE EMPATES 🟡🟡",
+      "tg_count": 3945,
+      "reason": "result_indication",
+      "registry_family": "OPS_SEQ_EMPATES",
+      "family_id": "RESULT__b4c1272f8620"
+    },
+    {
+      "chrono_order": 292,
+      "role": "RESULT",
+      "label": "🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴",
+      "tg_count": 3711,
+      "reason": "result_indication",
+      "registry_family": "RESULT_COLOR_BANNER",
+      "family_id": "RESULT__e0b68677ce4f"
+    },
+    {
+      "chrono_order": 1,
+      "role": "ONLINE",
+      "label": "🟢 BacBo Royal UserBot ONLINE 🟢",
+      "tg_count": 3533,
+      "reason": "boot_menu_system",
+      "registry_family": "ONLINE_BANNER",
+      "family_id": "ONLINE__d9e9fb9e227f"
+    },
+    {
+      "chrono_order": 4,
+      "role": "ROOM_RELAY",
+      "label": "📡 @CoringaDados — 19/03/2026 17:46:17",
+      "tg_count": 3267,
+      "reason": "room_info_edge_ai_filter",
+      "registry_family": "ROOM_RELAY",
+      "family_id": "RELAY_PROMO"
+    },
+    {
+      "chrono_order": 334,
+      "role": "OPS",
+      "label": "🚨 [DELIVERY AUDIT] 2 CRITICAL issue(s)",
+      "tg_count": 3265,
+      "reason": "ops_system_value",
+      "registry_family": "OPS_GATE_BLOCK_LOG",
+      "family_id": "OPS__46e2bd205367"
+    },
+    {
+      "chrono_order": 15,
+      "role": "FIRE",
+      "label": "🏆 GOLDEN SIGNAL — ENTER NOW 🏆",
+      "tg_count": 2964,
+      "reason": "fire_enter_edge",
+      "registry_family": "FIRE_GOLDEN_ENTER",
+      "family_id": "FIRE__28fcc45f0d48"
+    },
+    {
+      "chrono_order": 152,
+      "role": "FIRE",
+      "label": "⛔ DO NOT BET — ROUND PASSED ⛔",
+      "tg_count": 2531,
+      "reason": "fire_enter_edge",
+      "registry_family": "",
+      "family_id": "FIRE__91e74d42b3ff"
+    },
+    {
+      "chrono_order": 243,
+      "role": "UNKNOWN",
+      "label": "🛡 FULL AUDIT — 27 findings",
+      "tg_count": 2231,
+      "reason": "schedule_audit_value",
+      "registry_family": "",
+      "family_id": "UNKNOWN__c456f5218aea"
+    },
+    {
+      "chrono_order": 223,
+      "role": "UNKNOWN",
+      "label": "🔍 MONITORAMENTO DE SINAIS — 09:44 EDT",
+      "tg_count": 2199,
+      "reason": "timing_indication",
+      "registry_family": "",
+      "family_id": "UNKNOWN__d6bad512c1cd"
+    },
+    {
+      "chrono_order": 38,
+      "role": "RESULT",
+      "label": "❌ LOSS — G0 FALHOU",
+      "tg_count": 1956,
+      "reason": "result_indication",
+      "registry_family": "RESULT_LOSS_TIER",
+      "family_id": "RESULT__af35e3ffc0af"
+    },
+    {
+      "chrono_order": 19,
+      "role": "RESULT",
+      "label": "✅ WIN — GOLDEN",
+      "tg_count": 1924,
+      "reason": "result_indication",
+      "registry_family": "RESULT_WIN_TIER",
+      "family_id": "RESULT__90975b735ef3"
+    },
+    {
+      "chrono_order": 157,
+      "role": "UNKNOWN",
+      "label": "📅 *GRADE DE JOGO — BacBo Royal*",
+      "tg_count": 1892,
+      "reason": "schedule_audit_value",
+      "registry_family": "",
+      "family_id": "UNKNOWN__d781c234e42e"
+    },
+    {
+      "chrono_order": 17,
+      "role": "UNKNOWN",
+      "label": "❌ AUTO LOSS @IsaDados — 19/03/2026 19:17:14",
+      "tg_count": 1828,
+      "reason": "result_indication",
+      "registry_family": "",
+      "family_id": "UNKNOWN__22de332427b2"
+    },
+    {
+      "chrono_order": 102,
+      "role": "OPS",
+      "label": "🔓 Quarantine ended: @CoringaDados reactivated.",
+      "tg_count": 1821,
+      "reason": "ops_system_value",
+      "registry_family": "",
+      "family_id": "OPS__c0268eeb8928"
+    },
+    {
+      "chrono_order": 103,
+      "role": "RESULT",
+      "label": "✅✅ WIN na 2ª tentativa! ✅✅",
+      "tg_count": 1799,
+      "reason": "result_indication",
+      "registry_family": "",
+      "family_id": "RESULT__4ff003ce1205"
+    },
+    {
+      "chrono_order": 44,
+      "role": "UNKNOWN",
+      "label": "🔍 @rqdados — 20/03/2026 08:26:30",
+      "tg_count": 1765,
+      "reason": "room_info",
+      "registry_family": "",
+      "family_id": "UNKNOWN__1d7e21e5685e"
+    },
+    {
+      "chrono_order": 202,
+      "role": "UNKNOWN",
+      "label": "🔥🔥🔥 SEQUÊNCIA QUENTE 🔥🔥🔥",
+      "tg_count": 1762,
+      "reason": "market_regime_edge",
+      "registry_family": "OPS_SEQ_QUENTE",
+      "family_id": "UNKNOWN__901ae899252c"
+    },
+    {
+      "chrono_order": 41,
+      "role": "ROOM_RELAY",
+      "label": "📡 @x8sinais — 20/03/2026 06:19:31",
+      "tg_count": 1761,
+      "reason": "room_info_edge_ai_filter",
+      "registry_family": "ROOM_RELAY",
+      "family_id": "RELAY_ROOM"
+    },
+    {
+      "chrono_order": 52,
+      "role": "UNKNOWN",
+      "label": "⚡ ELITE ANALISANDO ⚡",
+      "tg_count": 1737,
+      "reason": "tier_signal",
+      "registry_family": "OPS_ELITE_ANALISANDO",
+      "family_id": "UNKNOWN__3b760a4b4089"
+    },
+    {
+      "chrono_order": 194,
+      "role": "UNKNOWN",
+      "label": "📌 BacBo Royal — 18:00 UTC",
+      "tg_count": 1727,
+      "reason": "timing_indication",
+      "registry_family": "",
+      "family_id": "UNKNOWN__7b482daad97f"
+    },
+    {
+      "chrono_order": 397,
+      "role": "UNKNOWN",
+      "label": "♻️ GREEN · G1 · 08:21 BRT",
+      "tg_count": 1674,
+      "reason": "result_indication",
+      "registry_family": "RESULT_GREEN_COMPACT_G1",
+      "family_id": "UNKNOWN__eafa158acf69"
+    },
+    {
+      "chrono_order": 30,
+      "role": "RESULT",
+      "label": "✅ WIN — SEQUENCE",
+      "tg_count": 1613,
+      "reason": "result_indication",
+      "registry_family": "RESULT_WIN_TIER",
+      "family_id": "RESULT__4af1be1223b5"
+    },
+    {
+      "chrono_order": 396,
+      "role": "UNKNOWN",
+      "label": "✅ GREEN · G0 · 08:15 BRT",
+      "tg_count": 1579,
+      "reason": "result_indication",
+      "registry_family": "RESULT_GREEN_COMPACT_G0",
+      "family_id": "UNKNOWN__57a3596f384a"
+    },
+    {
+      "chrono_order": 198,
+      "role": "FIRE",
+      "label": "⏱️⏱️ H21 UTC em 7 min · 5:00 PM EDT ⏱️⏱️",
+      "tg_count": 1493,
+      "reason": "fire_enter_edge",
+      "registry_family": "",
+      "family_id": "FIRE__0c9db76ff82b"
+    },
+    {
+      "chrono_order": 28,
+      "role": "UNKNOWN",
+      "label": "✅ Cooldown cancelled — WIN recorded. Thresholds back to normal.",
+      "tg_count": 1466,
+      "reason": "result_indication",
+      "registry_family": "",
+      "family_id": "UNKNOWN__22e9e3a10449"
+    },
+    {
+      "chrono_order": 83,
+      "role": "UNKNOWN",
+      "label": "🔧 [DBG] @BACCARAT_B → blue conf=entry trust=1.36 streak=1.3 score=0.00 agree=0",
+      "tg_count": 1461,
+      "reason": "color_indication",
+      "registry_family": "OPS_GATE_BLOCK_LOG",
+      "family_id": "UNKNOWN__3c9235e81805"
+    },
+    {
+      "chrono_order": 241,
+      "role": "UNKNOWN",
+      "label": "🎯 WIN-DROP SCANNER — 08:02 EDT",
+      "tg_count": 1445,
+      "reason": "result_indication",
+      "registry_family": "",
+      "family_id": "UNKNOWN__a544e8f6c63e"
+    },
+    {
+      "chrono_order": 51,
+      "role": "FIRE",
+      "label": "💠💠💠 PLATINUM SIGNAL — PAR DE OURO 💠💠💠",
+      "tg_count": 1377,
+      "reason": "fire_enter_edge",
+      "registry_family": "FIRE_PLATINUM_ENTER",
+      "family_id": "FIRE__6aa6422db701"
+    },
+    {
+      "chrono_order": 242,
+      "role": "UNKNOWN",
+      "label": "🔍 HEALTH MONITOR — 13:37 UTC",
+      "tg_count": 1377,
+      "reason": "timing_indication",
+      "registry_family": "",
+      "family_id": "UNKNOWN__96c351a87ed6"
+    },
+    {
+      "chrono_order": 58,
+      "role": "UNKNOWN",
+      "label": "📊 Market Status — ⚡ Gale 1 detected",
+      "tg_count": 1310,
+      "reason": "gale_ops_edge",
+      "registry_family": "OPS_GALE_SATURATION",
+      "family_id": "UNKNOWN__920f2326d81a"
+    },
+    {
+      "chrono_order": 26,
+      "role": "RESULT",
+      "label": "🟡 AUTO TIE @x8sinais — 19/03/2026 20:21:42",
+      "tg_count": 1292,
+      "reason": "result_indication",
+      "registry_family": "RESULT_AUTO_TIE",
+      "family_id": "RESULT__374be32ecf3c"
+    },
+    {
+      "chrono_order": 297,
+      "role": "UNKNOWN",
+      "label": "⚠️ *COBERTURA DE SETUPS*",
+      "tg_count": 1264,
+      "reason": "system_health",
+      "registry_family": "",
+      "family_id": "UNKNOWN__11ec0646a31d"
+    },
+    {
+      "chrono_order": 31,
+      "role": "FIRE",
+      "label": "♻️ GALE 1 — RETENTATIVA (1 room at G1)",
+      "tg_count": 1248,
+      "reason": "fire_enter_edge",
+      "registry_family": "FIRE_GALE_RETENTATIVA",
+      "family_id": "FIRE__5213ac8ea21e"
+    },
+    {
+      "chrono_order": 82,
+      "role": "UNKNOWN",
+      "label": "🔧 [DBG] @BACCARAT_B → red conf=entry trust=1.23 streak=1.0 score=0.00 agree=0",
+      "tg_count": 1228,
+      "reason": "color_indication",
+      "registry_family": "OPS_GATE_BLOCK_LOG",
+      "family_id": "UNKNOWN__04c59acdf764"
+    },
+    {
+      "chrono_order": 328,
+      "role": "UNKNOWN",
+      "label": "📋 MegaAudit · MediumAudit (60-min)",
+      "tg_count": 1209,
+      "reason": "schedule_audit_value",
+      "registry_family": "",
+      "family_id": "UNKNOWN__38f4d95edabc"
+    },
+    {
+      "chrono_order": 244,
+      "role": "RESULT",
+      "label": "📋 DAILY AUDIT — 2026-05-02 14:57 UTC",
+      "tg_count": 1161,
+      "reason": "result_indication",
+      "registry_family": "",
+      "family_id": "RESULT__099eecdde639"
+    },
+    {
+      "chrono_order": 225,
+      "role": "UNKNOWN",
+      "label": "🟢🟢 H14 UTC · 10h EDT",
+      "tg_count": 1061,
+      "reason": "timing_indication",
+      "registry_family": "",
+      "family_id": "UNKNOWN__d1d920a3d47a"
+    },
+    {
+      "chrono_order": 339,
+      "role": "UNKNOWN",
+      "label": "🏆 CAMADAS DO DIA — 07/05/2026 🏆",
+      "tg_count": 1022,
+      "reason": "volume_presence",
+      "registry_family": "OPS_CAMADAS_DO_DIA",
+      "family_id": "UNKNOWN__c8536276568a"
+    },
+    {
+      "chrono_order": 248,
+      "role": "UNKNOWN",
+      "label": "🔬 DEEP SYSTEM AUDIT 2026-05-02 15:37 UTC",
+      "tg_count": 996,
+      "reason": "timing_indication",
+      "registry_family": "",
+      "family_id": "UNKNOWN__9de2e06babf7"
+    },
+    {
+      "chrono_order": 233,
+      "role": "UNKNOWN",
+      "label": "⚠️⚠️ SALA EM QUEDA ⚠️⚠️",
+      "tg_count": 995,
+      "reason": "market_regime_edge",
+      "registry_family": "",
+      "family_id": "UNKNOWN__1b25bbe84369"
+    },
+    {
+      "chrono_order": 327,
+      "role": "UNKNOWN",
+      "label": "🔍 MegaAudit · QuickPulse",
+      "tg_count": 971,
+      "reason": "schedule_audit_value",
+      "registry_family": "",
+      "family_id": "UNKNOWN__a95fc3d7cd30"
+    },
+    {
+      "chrono_order": 279,
+      "role": "RESULT",
+      "label": "🔔 ✅ GANHOU  ·  #4168",
+      "tg_count": 883,
+      "reason": "result_indication",
+      "registry_family": "RESULT_BELL_GANHOU",
+      "family_id": "RESULT__e0c067cf6d0c"
+    },
+    {
+      "chrono_order": 37,
+      "role": "UNKNOWN",
+      "label": "🏆🏆🏆 GOLDEN SIGNAL — ENTRE AGORA 🏆🏆🏆",
+      "tg_count": 818,
+      "reason": "timing_or_entry_edge",
+      "registry_family": "FIRE_GOLDEN_ENTRE_AGORA",
+      "family_id": "UNKNOWN__e5c427438d84"
+    }
+  ],
+  "runtime": {
+    "PROFIT_SKYSCRAPER": "1",
+    "HUB_MONEY_FIRST": "1",
+    "TELEGRAM_TRASH_BLOCK": "1",
+    "TELEGRAM_SKIN_GATE": "1",
+    "never_delay": true,
+    "soft_cap_spills_to": "UNIQUE_g2…gN"
+  },
+  "play_rules": [
+    {
+      "when": "ENTER NOW / APOSTE AGORA / ENTRE AGORA + color (🔴/🔵)",
+      "do": "Bet the MINIMUM on that color NOW.",
+      "stop": "Wait for WIN / LOSS / gale card for this signal."
+    },
+    {
+      "when": "JANELA / 🟢 Ns 🟢 / Sinal Retido→Liberado",
+      "do": "Same: minimum bet on the color before the seconds hit 0.",
+      "stop": "If it says RODADA JÁ PASSOU / DO NOT BET — skip."
+    },
+    {
+      "when": "GALE / RETENTATIVA / Entre novamente / AGUARDANDO G1",
+      "do": "Same color, MINIMUM bet again (G1). Then G2 only if the card says so.",
+      "stop": "Never invent G3+ unless the chat posts it."
+    },
+    {
+      "when": "✅ WIN / GREEN / GANHOU",
+      "do": "Round over. Bank the win. Wait for next ENTER.",
+      "stop": "Do not re-bet the same round."
+    },
+    {
+      "when": "❌ LOSS / PERDEU + no gale card",
+      "do": "Round over. Next signal only.",
+      "stop": "Do not chase with your own gales."
+    },
+    {
+      "when": "DO NOT BET / NÃO APOSTE / RODADA PASSOU / EXPIROU / G2 MISS",
+      "do": "Skip. Zero bet.",
+      "stop": "This protects the bankroll."
+    },
+    {
+      "when": "OPS only (quarantine, schedule, grounded, hot/cold)",
+      "do": "Read. Do not bet from ops alone.",
+      "stop": "Bet only from ENTER / JANELA / GALE cards."
+    }
+  ],
+  "stake_policy": {
+    "mode": "MINIMUM_ALWAYS",
+    "rule": "Always the platform minimum unit. Volume of correct windows > size of bet.",
+    "gale_ladder": "G0 = 1u, G1 = 1u (same min), G2 = 1u only if card says enter G2.",
+    "never": "Never raise stake to 'recover'. Never bet without a card.",
+    "worst_case_5_signals": "Even if a chat only posts 5 ENTER days: play all 5 with min stake + official gales. Skip DO-NOT-BET. That chat is still fully used."
+  }
+}

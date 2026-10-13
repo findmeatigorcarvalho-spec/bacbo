@@ -1,0 +1,255 @@
+"""
+fallback_result_sender.py - rich Telegram result cards from resolved DB signals.
+
+Watches consensus_signals for newly resolved rows and sends a forensic result
+card with Pawtucket, Rhode Island time and exact secs_to_result interval.
+"""
+from __future__ import annotations
+
+import asyncio
+import os
+import sqlite3
+import sys
+from pathlib import Path
+
+from telethon import TelegramClient
+from telethon.sessions import StringSession
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:
+    import lux_sqlite_harden  # noqa: F401,E402
+except Exception:
+    pass
+import config  # noqa: E402
+from card_timezone import pawtucket_banner, pawtucket_forensic  # noqa: E402
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent
+try:
+    from lux_live_db import resolve_db as _live_resolve_db
+
+    DB = _live_resolve_db(log=True)
+except Exception:
+    DB = HERE / "bacbo.db"
+STATE = HERE / "data/fallback_result_sender_state.txt"
+
+
+def _db_ro() -> sqlite3.Connection:
+    uri = f"file:{DB}?mode=ro&cache=shared"
+    try:
+        conn = sqlite3.connect(uri, uri=True, timeout=60.0)
+    except Exception:
+        conn = sqlite3.connect(str(DB), timeout=60.0)
+    conn.row_factory = sqlite3.Row
+    try:
+        conn.execute("PRAGMA busy_timeout=60000")
+        conn.execute("PRAGMA query_only=ON")
+    except Exception:
+        pass
+    return conn
+
+
+def load_env() -> None:
+    env = ROOT / ".env"
+    if not env.exists():
+        return
+    for line in env.read_text(errors="ignore").splitlines():
+        if "=" in line and not line.strip().startswith("#"):
+            key, value = line.split("=", 1)
+            os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+
+
+def read_state() -> int:
+    try:
+        return int(STATE.read_text().strip())
+    except Exception:
+        return 0
+
+
+def write_state(value: int) -> None:
+    STATE.parent.mkdir(parents=True, exist_ok=True)
+    STATE.write_text(str(value))
+
+
+def actual_color(predicted: str, outcome: str) -> str:
+    predicted = (predicted or "").lower()
+    outcome = (outcome or "").lower()
+    if outcome == "tie":
+        return "tie"
+    if outcome == "win":
+        return predicted
+    if outcome == "loss":
+        if predicted == "blue":
+            return "red"
+        if predicted == "red":
+            return "blue"
+    return "unknown"
+
+
+def color_icon(color: str) -> str:
+    if color == "blue":
+        return "🔵"
+    if color == "red":
+        return "🔴"
+    if color == "tie":
+        return "🟡"
+    return "⚪"
+
+
+def fmt(row: sqlite3.Row) -> str:
+    predicted = (row["color"] or "").lower()
+    outcome = (row["outcome"] or "").lower()
+    actual = actual_color(predicted, outcome)
+    local_time = pawtucket_banner(row["fired_at"])
+    secs = row["secs_to_result"]
+    secs_txt = f"{float(secs):.1f}s" if secs is not None else "-"
+    gale = int(row["won_at_gale"] or 0)
+
+    pred_icon = color_icon(predicted)
+    actual_icon = color_icon(actual)
+    result_icon = "✅" if outcome == "win" else "❌" if outcome == "loss" else "🟡"
+    if outcome == "win":
+        result_label = "G0 WIN" if gale == 0 else f"G{gale} WIN"
+    elif outcome == "loss":
+        result_label = "LOSS"
+    else:
+        result_label = "TIE"
+
+    banner = actual_icon * 10
+    return (
+        f"{banner}\n"
+        f"⏰  {local_time}\n"
+        f"{banner}\n"
+        f"🔔 {result_icon} {result_label}  ·  #{row['id']}\n"
+        f"🎲 Apostou: {pred_icon} {predicted.upper()}  →  Saiu: {actual_icon} {actual.upper()}\n"
+        f"🔍 SINAL #{row['id']} — RESUMIDO FORENSE\n"
+        f"  Tipo: {row['signal_kind']} · Cor: {predicted.upper()}\n"
+        f"  Disparado: {pawtucket_forensic(row['fired_at'])} (Pawtucket, RI)\n"
+        f"  Resolvido: {pawtucket_forensic(row['resolved_at'])} (Pawtucket, RI)\n"
+        f"  ⏱ Intervalo: {secs_txt}\n"
+        f"  Resultado: {result_icon} {result_label}\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"🏁 Aguarde o próximo sinal do bot"
+    )
+
+
+def _load_telegram_session() -> str:
+    for key in (
+        "TELEGRAM_SESSION_STRING",
+        "TELEGRAM_STRING_SESSION",
+        "STRING_SESSION",
+        "TG_SESSION_STRING",
+    ):
+        value = (os.environ.get(key) or "").strip()
+        if len(value) > 50:
+            return value
+    for path in (ROOT / ".telegram_session_string", HERE / ".telegram_session_string"):
+        if path.exists():
+            value = path.read_text(errors="ignore").strip()
+            if len(value) > 50:
+                return value
+    raise FileNotFoundError(
+        "Telegram session missing. Set Replit Secret TELEGRAM_SESSION_STRING "
+        "or create /home/runner/workspace/.telegram_session_string"
+    )
+
+
+async def _resolve_target(client, target):
+    """Resolve Telegram target without hammering ResolveUsername (FloodWait)."""
+    import json
+
+    cache = HERE / "data" / "telegram_target_entity.json"
+    cache.parent.mkdir(parents=True, exist_ok=True)
+
+    if target is None:
+        raise RuntimeError("TARGET missing in config")
+    if isinstance(target, int) or (isinstance(target, str) and str(target).lstrip("-").isdigit()):
+        return await client.get_entity(int(target))
+
+    peer = os.environ.get("TELEGRAM_TARGET_PEER") or os.environ.get("TARGET_PEER_ID")
+    if peer and str(peer).lstrip("-").isdigit():
+        return await client.get_entity(int(peer))
+
+    if cache.exists():
+        try:
+            data = json.loads(cache.read_text())
+            if data.get("target") == str(target) and data.get("id") is not None:
+                return await client.get_entity(int(data["id"]))
+        except Exception:
+            pass
+
+    tnorm = str(target).lstrip("@").lower()
+    try:
+        async for dialog in client.iter_dialogs():
+            ent = dialog.entity
+            uname = (getattr(ent, "username", None) or "").lower()
+            title = (getattr(ent, "title", None) or getattr(ent, "first_name", None) or "").lower()
+            if uname == tnorm or title == tnorm or (tnorm and tnorm in uname):
+                try:
+                    cache.write_text(json.dumps({"target": str(target), "id": int(ent.id)}))
+                except Exception:
+                    pass
+                return ent
+    except Exception as exc:
+        print("[Fallback] dialogs scan failed:", exc)
+
+    try:
+        from telethon.errors import FloodWaitError
+    except Exception:  # pragma: no cover
+        FloodWaitError = Exception  # type: ignore
+    try:
+        ent = await client.get_entity(target)
+        try:
+            cache.write_text(json.dumps({"target": str(target), "id": int(ent.id)}))
+        except Exception:
+            pass
+        return ent
+    except FloodWaitError as exc:
+        print(
+            "[Fallback] FloodWait on ResolveUsername — set TELEGRAM_TARGET_PEER "
+            f"to numeric chat id. seconds={getattr(exc, 'seconds', '?')}"
+        )
+        raise
+
+
+async def main() -> None:
+    load_env()
+    api_id = os.getenv("TELEGRAM_API_ID")
+    api_hash = os.getenv("TELEGRAM_API_HASH")
+    session = _load_telegram_session()
+    target = getattr(config, "TARGET", None)
+
+    client = TelegramClient(StringSession(session), int(api_id), api_hash)
+    await client.connect()
+    entity = await _resolve_target(client, target)
+    print(f"[FallbackResultSender] started target={target}")
+
+    while True:
+        try:
+            conn = _db_ro()
+            rows = conn.execute(
+                """
+                SELECT id, fired_at, resolved_at, signal_kind, color, outcome,
+                       won_at_gale, secs_to_result
+                FROM consensus_signals
+                WHERE id > ?
+                  AND outcome IN ('win','loss','tie')
+                  AND fired_at >= datetime('now','-24 hours')
+                ORDER BY id ASC
+                LIMIT 20
+                """,
+                (read_state(),),
+            ).fetchall()
+            conn.close()
+
+            for row in rows:
+                await client.send_message(entity, fmt(row))
+                write_state(row["id"])
+                print("[FallbackResultSender] sent result", row["id"], row["outcome"], row["secs_to_result"])
+        except Exception as exc:
+            print("[FallbackResultSender] error:", repr(exc))
+        await asyncio.sleep(5)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

@@ -1,0 +1,2199 @@
+{
+  "generated_at": "2026-06-22T18:27:01.713263+00:00",
+  "train_days": 9999,
+  "score_days": 7,
+  "scored_n": 500,
+  "verdict_counts": {
+    "BLOCK_LOSS_RISK": 182,
+    "WAIT": 265,
+    "SHADOW_COLOR": 32,
+    "FIRE_COLOR_G0": 17,
+    "SHADOW_TIE": 4
+  },
+  "verdict_stats": {
+    "BLOCK_LOSS_RISK": {
+      "win": 86,
+      "loss": 95,
+      "tie": 1,
+      "n": 182,
+      "win_pct": 47.25,
+      "loss_pct": 52.2,
+      "tie_pct": 0.55
+    },
+    "WAIT": {
+      "win": 220,
+      "loss": 35,
+      "tie": 10,
+      "n": 265,
+      "win_pct": 83.02,
+      "loss_pct": 13.21,
+      "tie_pct": 3.77
+    },
+    "SHADOW_COLOR": {
+      "win": 29,
+      "loss": 2,
+      "tie": 1,
+      "n": 32,
+      "win_pct": 90.62,
+      "loss_pct": 6.25,
+      "tie_pct": 3.12
+    },
+    "FIRE_COLOR_G0": {
+      "win": 16,
+      "loss": 1,
+      "tie": 0,
+      "n": 17,
+      "win_pct": 94.12,
+      "loss_pct": 5.88,
+      "tie_pct": 0.0
+    },
+    "SHADOW_TIE": {
+      "win": 2,
+      "loss": 2,
+      "tie": 0,
+      "n": 4,
+      "win_pct": 50.0,
+      "loss_pct": 50.0,
+      "tie_pct": 0.0
+    }
+  },
+  "top_fire_candidates": [
+    {
+      "id": 44964,
+      "fired_at": "2026-06-18 17:31:19",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "robofreebacbo24horass",
+      "win_score": 58.7,
+      "loss_risk_score": 19.02,
+      "tie_risk_score": 52.48,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44814,
+      "fired_at": "2026-06-18 09:51:32",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "robofreebacbo24horass",
+      "win_score": 58.02,
+      "loss_risk_score": 20.02,
+      "tie_risk_score": 58.06,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44812,
+      "fired_at": "2026-06-18 09:40:24",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "robobacbodados",
+      "win_score": 58.02,
+      "loss_risk_score": 20.02,
+      "tie_risk_score": 58.06,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44810,
+      "fired_at": "2026-06-18 09:40:22",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "robobacbodados",
+      "win_score": 58.02,
+      "loss_risk_score": 20.02,
+      "tie_risk_score": 58.06,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44771,
+      "fired_at": "2026-06-18 09:17:09",
+      "outcome": "loss",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "robobacbodados",
+      "win_score": 58.02,
+      "loss_risk_score": 20.02,
+      "tie_risk_score": 58.06,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44770,
+      "fired_at": "2026-06-18 09:17:07",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "robobacbodados",
+      "win_score": 58.02,
+      "loss_risk_score": 20.02,
+      "tie_risk_score": 58.06,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44769,
+      "fired_at": "2026-06-18 09:17:05",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "robobacbodados",
+      "win_score": 58.02,
+      "loss_risk_score": 20.02,
+      "tie_risk_score": 58.06,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44768,
+      "fired_at": "2026-06-18 09:17:02",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "robobacbodados",
+      "win_score": 58.02,
+      "loss_risk_score": 20.02,
+      "tie_risk_score": 58.06,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44766,
+      "fired_at": "2026-06-18 09:16:59",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "sinaisbacboangola",
+      "win_score": 58.02,
+      "loss_risk_score": 20.02,
+      "tie_risk_score": 58.06,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44727,
+      "fired_at": "2026-06-18 08:31:40",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "rqdados1",
+      "win_score": 58.24,
+      "loss_risk_score": 18.98,
+      "tie_risk_score": 59.16,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44593,
+      "fired_at": "2026-06-17 19:52:19",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "robobacbodados",
+      "win_score": 58.48,
+      "loss_risk_score": 18.57,
+      "tie_risk_score": 57.49,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=19 win+0.7 loss-2.1 tie-1.7",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44587,
+      "fired_at": "2026-06-17 19:43:54",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "robobacbodados",
+      "win_score": 58.48,
+      "loss_risk_score": 18.57,
+      "tie_risk_score": 57.49,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=19 win+0.7 loss-2.1 tie-1.7",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44581,
+      "fired_at": "2026-06-17 19:09:13",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "dadosbacbobr",
+      "win_score": 58.48,
+      "loss_risk_score": 18.57,
+      "tie_risk_score": 57.49,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=19 win+0.7 loss-2.1 tie-1.7",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44580,
+      "fired_at": "2026-06-17 19:09:09",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "sinaisbacboangola",
+      "win_score": 58.48,
+      "loss_risk_score": 18.57,
+      "tie_risk_score": 57.49,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=19 win+0.7 loss-2.1 tie-1.7",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44532,
+      "fired_at": "2026-06-17 17:50:02",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "bacbobrl",
+      "win_score": 58.7,
+      "loss_risk_score": 19.02,
+      "tie_risk_score": 52.48,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44525,
+      "fired_at": "2026-06-17 17:41:14",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "sinaisbacboangola",
+      "win_score": 58.7,
+      "loss_risk_score": 19.02,
+      "tie_risk_score": 52.48,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44520,
+      "fired_at": "2026-06-17 17:33:11",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "martinswinbacbo",
+      "win_score": 58.7,
+      "loss_risk_score": 19.02,
+      "tie_risk_score": 52.48,
+      "verdict": "FIRE_COLOR_G0",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    }
+  ],
+  "top_tie_candidates": [
+    {
+      "id": 44952,
+      "fired_at": "2026-06-18 16:42:56",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "JUN12B",
+      "color": "blue",
+      "room": "",
+      "win_score": 49.1,
+      "loss_risk_score": 45.63,
+      "tie_risk_score": 80.28,
+      "verdict": "SHADOW_TIE",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=JUN12B win-6.9 loss+16.2 tie+31.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "confidence=80-89 win+1.0 loss-3.5 tie-0.2",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44929,
+      "fired_at": "2026-06-18 16:04:35",
+      "outcome": "loss",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "JUN12B",
+      "color": "blue",
+      "room": "",
+      "win_score": 49.1,
+      "loss_risk_score": 45.63,
+      "tie_risk_score": 80.28,
+      "verdict": "SHADOW_TIE",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=JUN12B win-6.9 loss+16.2 tie+31.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "confidence=80-89 win+1.0 loss-3.5 tie-0.2",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44906,
+      "fired_at": "2026-06-18 14:58:45",
+      "outcome": "win",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "LIVE",
+      "color": "blue",
+      "room": "rqdados1",
+      "win_score": 57.62,
+      "loss_risk_score": 18.89,
+      "tie_risk_score": 68.19,
+      "verdict": "SHADOW_TIE",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=LIVE win+1.0 loss-4.4 tie+3.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=14 win-0.1 loss-1.8 tie+9.0",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=1 win+1.5 loss-6.1 tie+2.9"
+      ]
+    },
+    {
+      "id": 44518,
+      "fired_at": "2026-06-17 17:33:04",
+      "outcome": "loss",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "JUN12B",
+      "color": "blue",
+      "room": "",
+      "win_score": 49.9,
+      "loss_risk_score": 43.69,
+      "tie_risk_score": 76.82,
+      "verdict": "SHADOW_TIE",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=JUN12B win-6.9 loss+16.2 tie+31.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "confidence=80-89 win+1.0 loss-3.5 tie-0.2",
+        "secs=<5s win+3.6 loss-12.5 tie-0.1",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    }
+  ],
+  "blocked_loss_risk": [
+    {
+      "id": 44978,
+      "fired_at": "2026-06-18 18:23:53",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "bacbobrasileiro01",
+      "win_score": 41.92,
+      "loss_risk_score": 80.01,
+      "tie_risk_score": 42.7,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "confidence=80-89 win+1.0 loss-3.5 tie-0.2",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44975,
+      "fired_at": "2026-06-18 17:47:21",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "umgalesalabacbo123",
+      "win_score": 20.9,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 9.1,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44974,
+      "fired_at": "2026-06-18 17:46:32",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "robofreebacbo24horass",
+      "win_score": 19.38,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 4.64,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44973,
+      "fired_at": "2026-06-18 17:39:37",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "bacbobrasileiro01",
+      "win_score": 47.1,
+      "loss_risk_score": 63.11,
+      "tie_risk_score": 37.88,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44972,
+      "fired_at": "2026-06-18 17:39:36",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "bacbobrasileiro01",
+      "win_score": 47.1,
+      "loss_risk_score": 63.11,
+      "tie_risk_score": 37.88,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44971,
+      "fired_at": "2026-06-18 17:39:16",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "robofreebacbo24horass",
+      "win_score": 41.75,
+      "loss_risk_score": 82.46,
+      "tie_risk_score": 35.13,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44970,
+      "fired_at": "2026-06-18 17:37:35",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAY10",
+      "color": "red",
+      "room": "bacboaovivovip",
+      "win_score": 20.72,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 6.46,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44969,
+      "fired_at": "2026-06-18 17:36:54",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "bacboaovivovip",
+      "win_score": 19.38,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 4.64,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44968,
+      "fired_at": "2026-06-18 17:31:42",
+      "outcome": "loss",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "",
+      "win_score": 22.74,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 12.31,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "confidence=80-89 win+1.0 loss-3.5 tie-0.2",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44959,
+      "fired_at": "2026-06-18 17:05:35",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "bacboaovivovip",
+      "win_score": 43.28,
+      "loss_risk_score": 76.04,
+      "tie_risk_score": 39.59,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=17 win+0.9 loss-1.6 tie-6.7",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44957,
+      "fired_at": "2026-06-18 16:52:49",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "bacboaovivovip",
+      "win_score": 38.62,
+      "loss_risk_score": 92.39,
+      "tie_risk_score": 39.17,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "secs=90s+ win-8.5 loss+29.9 tie-1.4",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44954,
+      "fired_at": "2026-06-18 16:49:47",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "umgalesalabacbo123",
+      "win_score": 46.3,
+      "loss_risk_score": 65.05,
+      "tie_risk_score": 41.33,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44946,
+      "fired_at": "2026-06-18 16:40:31",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "umgalesalabacbo123",
+      "win_score": 18.58,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 8.09,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44945,
+      "fired_at": "2026-06-18 16:34:35",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAY10",
+      "color": "blue",
+      "room": "bacboaovivovip",
+      "win_score": 39.96,
+      "loss_risk_score": 87.26,
+      "tie_risk_score": 40.99,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "secs=90s+ win-8.5 loss+29.9 tie-1.4",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44944,
+      "fired_at": "2026-06-18 16:31:46",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "bacboaovivovip",
+      "win_score": 20.1,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 12.56,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44943,
+      "fired_at": "2026-06-18 16:24:20",
+      "outcome": "loss",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "",
+      "win_score": 45.84,
+      "loss_risk_score": 64.35,
+      "tie_risk_score": 50.72,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "confidence=80-89 win+1.0 loss-3.5 tie-0.2",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44939,
+      "fired_at": "2026-06-18 16:23:28",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "bacboaovivovip",
+      "win_score": 46.3,
+      "loss_risk_score": 65.05,
+      "tie_risk_score": 41.33,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44938,
+      "fired_at": "2026-06-18 16:19:52",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "umgalesalabacbo123",
+      "win_score": 40.95,
+      "loss_risk_score": 84.4,
+      "tie_risk_score": 38.58,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44936,
+      "fired_at": "2026-06-18 16:06:57",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "bacboaovivovip",
+      "win_score": 40.95,
+      "loss_risk_score": 84.4,
+      "tie_risk_score": 38.58,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44935,
+      "fired_at": "2026-06-18 16:06:41",
+      "outcome": "loss",
+      "signal_kind": "GOLDEN",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "rqdados",
+      "win_score": 46.28,
+      "loss_risk_score": 62.96,
+      "tie_risk_score": 50.04,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=GOLDEN win-0.8 loss+1.6 tie+4.5",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44922,
+      "fired_at": "2026-06-18 16:01:43",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAY10",
+      "color": "red",
+      "room": "umgalesalabacbo123",
+      "win_score": 46.12,
+      "loss_risk_score": 66.35,
+      "tie_risk_score": 38.69,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44921,
+      "fired_at": "2026-06-18 16:00:44",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "umgalesalabacbo123",
+      "win_score": 44.78,
+      "loss_risk_score": 71.47,
+      "tie_risk_score": 36.87,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=16 win+0.1 loss+0.3 tie-3.2",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44920,
+      "fired_at": "2026-06-18 15:35:51",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "robofreebacbo24horass",
+      "win_score": 20.73,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 8.84,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=15 win+0.8 loss-1.0 tie-7.0",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44914,
+      "fired_at": "2026-06-18 15:29:36",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "umgalesalabacbo123",
+      "win_score": 45.41,
+      "loss_risk_score": 70.19,
+      "tie_risk_score": 33.15,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=15 win+0.8 loss-1.0 tie-7.0",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44911,
+      "fired_at": "2026-06-18 15:04:22",
+      "outcome": "loss",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "",
+      "win_score": 22.57,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 12.05,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=15 win+0.8 loss-1.0 tie-7.0",
+        "confidence=80-89 win+1.0 loss-3.5 tie-0.2",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44910,
+      "fired_at": "2026-06-18 15:04:22",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "bacbobrasileiro01",
+      "win_score": 19.21,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 4.38,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=15 win+0.8 loss-1.0 tie-7.0",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44907,
+      "fired_at": "2026-06-18 14:58:54",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "umgalesalabacbo123",
+      "win_score": 44.5,
+      "loss_risk_score": 69.4,
+      "tie_risk_score": 49.12,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=14 win-0.1 loss-1.8 tie+9.0",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44905,
+      "fired_at": "2026-06-18 14:42:35",
+      "outcome": "loss",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "",
+      "win_score": 21.66,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 28.02,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=14 win-0.1 loss-1.8 tie+9.0",
+        "confidence=80-89 win+1.0 loss-3.5 tie-0.2",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44904,
+      "fired_at": "2026-06-18 14:42:34",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "bacbobrasileiro01",
+      "win_score": 18.3,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 20.34,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=14 win-0.1 loss-1.8 tie+9.0",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44901,
+      "fired_at": "2026-06-18 14:41:34",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAY10",
+      "color": "blue",
+      "room": "robofreebacbo24horass",
+      "win_score": 21.17,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 26.63,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=14 win-0.1 loss-1.8 tie+9.0",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44900,
+      "fired_at": "2026-06-18 14:40:22",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "robofreebacbo24horass",
+      "win_score": 19.83,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 24.81,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=14 win-0.1 loss-1.8 tie+9.0",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44897,
+      "fired_at": "2026-06-18 14:06:33",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "bacbob2xbet",
+      "win_score": 36.82,
+      "loss_risk_score": 96.73,
+      "tie_risk_score": 46.96,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=14 win-0.1 loss-1.8 tie+9.0",
+        "secs=90s+ win-8.5 loss+29.9 tie-1.4",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44896,
+      "fired_at": "2026-06-18 14:05:29",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "bacbob2xbet",
+      "win_score": 40.68,
+      "loss_risk_score": 82.32,
+      "tie_risk_score": 50.83,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=14 win-0.1 loss-1.8 tie+9.0",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44895,
+      "fired_at": "2026-06-18 13:28:20",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "bacboaovivovip",
+      "win_score": 22.58,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 16.15,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=13 win+1.3 loss-4.5 tie-0.6",
+        "confidence=80-89 win+1.0 loss-3.5 tie-0.2",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44894,
+      "fired_at": "2026-06-18 13:13:15",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "sinaisbacboangola",
+      "win_score": 21.29,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 15.16,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=13 win+1.3 loss-4.5 tie-0.6",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44893,
+      "fired_at": "2026-06-18 12:44:33",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "dadosbacbobr",
+      "win_score": 19.98,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 13.54,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=12 win+0.0 loss+0.5 tie-2.2",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44891,
+      "fired_at": "2026-06-18 12:13:29",
+      "outcome": "loss",
+      "signal_kind": "PLATINUM",
+      "source_floor": "MAR20",
+      "color": "red",
+      "room": "rqdados1",
+      "win_score": 17.56,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 0.44,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=PLATINUM win-1.1 loss+6.8 tie-11.9",
+        "floor=MAR20 win-2.5 loss+9.0 tie-1.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=12 win+0.0 loss+0.5 tie-2.2",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44889,
+      "fired_at": "2026-06-18 12:10:43",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "robofreebacbo24horass",
+      "win_score": 46.18,
+      "loss_risk_score": 65.22,
+      "tie_risk_score": 42.32,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=12 win+0.0 loss+0.5 tie-2.2",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44888,
+      "fired_at": "2026-06-18 12:05:23",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAY10",
+      "color": "red",
+      "room": "bacbobrasileiro01",
+      "win_score": 42.17,
+      "loss_risk_score": 79.44,
+      "tie_risk_score": 41.39,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=12 win+0.0 loss+0.5 tie-2.2",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44886,
+      "fired_at": "2026-06-18 12:01:57",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "robofreebacbo24horass",
+      "win_score": 40.84,
+      "loss_risk_score": 84.56,
+      "tie_risk_score": 39.57,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=12 win+0.0 loss+0.5 tie-2.2",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44880,
+      "fired_at": "2026-06-18 11:47:15",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "bacbobrasileiro01",
+      "win_score": 42.0,
+      "loss_risk_score": 79.62,
+      "tie_risk_score": 43.15,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=11 win-0.3 loss+2.0 tie-3.1",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44879,
+      "fired_at": "2026-06-18 11:45:49",
+      "outcome": "loss",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "JUN12B",
+      "color": "blue",
+      "room": "",
+      "win_score": 40.41,
+      "loss_risk_score": 75.32,
+      "tie_risk_score": 82.98,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=JUN12B win-6.9 loss+16.2 tie+31.5",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=11 win-0.3 loss+2.0 tie-3.1",
+        "confidence=80-89 win+1.0 loss-3.5 tie-0.2",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44878,
+      "fired_at": "2026-06-18 11:45:49",
+      "outcome": "loss",
+      "signal_kind": "SEQUENCE",
+      "source_floor": "JUN12A",
+      "color": "blue",
+      "room": "",
+      "win_score": 41.12,
+      "loss_risk_score": 79.08,
+      "tie_risk_score": 57.65,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SEQUENCE win+1.3 loss-5.2 tie+2.5",
+        "floor=JUN12A win-6.2 loss+20.0 tie+6.2",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=11 win-0.3 loss+2.0 tie-3.1",
+        "confidence=80-89 win+1.0 loss-3.5 tie-0.2",
+        "secs=20-90s win-4.6 loss+15.5 tie+2.5",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44866,
+      "fired_at": "2026-06-18 11:31:51",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "robofreebacbo24horass",
+      "win_score": 44.3,
+      "loss_risk_score": 73.11,
+      "tie_risk_score": 36.97,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=11 win-0.3 loss+2.0 tie-3.1",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44867,
+      "fired_at": "2026-06-18 11:31:51",
+      "outcome": "win",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "robofreebacbo24horass",
+      "win_score": 45.82,
+      "loss_risk_score": 66.69,
+      "tie_risk_score": 41.44,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=11 win-0.3 loss+2.0 tie-3.1",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44865,
+      "fired_at": "2026-06-18 11:27:33",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "sinaisbacboangola",
+      "win_score": 36.62,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 34.81,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=11 win-0.3 loss+2.0 tie-3.1",
+        "secs=90s+ win-8.5 loss+29.9 tie-1.4",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44864,
+      "fired_at": "2026-06-18 11:22:04",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "blue",
+      "room": "umgalesalabacbo123",
+      "win_score": 19.62,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 12.66,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=blue win+0.5 loss-2.3 tie+1.6",
+        "hour=11 win-0.3 loss+2.0 tie-3.1",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44859,
+      "fired_at": "2026-06-18 11:02:27",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "m8sinais",
+      "win_score": 44.3,
+      "loss_risk_score": 73.11,
+      "tie_risk_score": 36.97,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=11 win-0.3 loss+2.0 tie-3.1",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44858,
+      "fired_at": "2026-06-18 11:02:26",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "m8sinais",
+      "win_score": 44.3,
+      "loss_risk_score": 73.11,
+      "tie_risk_score": 36.97,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=11 win-0.3 loss+2.0 tie-3.1",
+        "secs=5-20s win-0.8 loss+2.6 tie+0.8",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    },
+    {
+      "id": 44857,
+      "fired_at": "2026-06-18 11:01:22",
+      "outcome": "loss",
+      "signal_kind": "SOLO_ELITE",
+      "source_floor": "MAR19",
+      "color": "red",
+      "room": "umgalesalabacbo123",
+      "win_score": 18.1,
+      "loss_risk_score": 100.0,
+      "tie_risk_score": 8.2,
+      "verdict": "BLOCK_LOSS_RISK",
+      "reasons": [
+        "kind=SOLO_ELITE win-0.7 loss+3.7 tie-4.2",
+        "floor=MAR19 win-1.9 loss+6.9 tie-0.6",
+        "color=red win-1.0 loss+4.1 tie-2.9",
+        "hour=11 win-0.3 loss+2.0 tie-3.1",
+        "secs=null win-27.0 loss+101.2 tie-28.0",
+        "rooms_count=0 win-0.6 loss+2.7 tie-1.8"
+      ]
+    }
+  ],
+  "feature_table": {
+    "kind": [
+      {
+        "value": "SEQUENCE",
+        "n": 17259,
+        "win_lift": 1.0471226268600586,
+        "loss_lift": 0.8138128670245249,
+        "tie_lift": 1.0878628485846642,
+        "win_pct": 77.14,
+        "loss_pct": 17.18,
+        "tie_pct": 5.68
+      },
+      {
+        "value": "FLASH",
+        "n": 249,
+        "win_lift": 0.9813194323318951,
+        "loss_lift": 0.8561081861868146,
+        "tie_lift": 1.8447293667610107,
+        "win_pct": 72.29,
+        "loss_pct": 18.07,
+        "tie_pct": 9.64
+      },
+      {
+        "value": "SOLO_ELITE",
+        "n": 16812,
+        "win_lift": 0.973305206894162,
+        "loss_lift": 1.1304647536183063,
+        "tie_lift": 0.8492591075653421,
+        "win_pct": 71.7,
+        "loss_pct": 23.86,
+        "tie_pct": 4.44
+      },
+      {
+        "value": "GOLDEN",
+        "n": 8973,
+        "win_lift": 0.9726195592858679,
+        "loss_lift": 1.0558635826517422,
+        "tie_lift": 1.1603312767189506,
+        "win_pct": 71.65,
+        "loss_pct": 22.29,
+        "tie_pct": 6.06
+      },
+      {
+        "value": "PLATINUM",
+        "n": 1331,
+        "win_lift": 0.9607493255234354,
+        "loss_lift": 1.242117997960103,
+        "tie_lift": 0.575178577915717,
+        "win_pct": 70.77,
+        "loss_pct": 26.22,
+        "tie_pct": 3.01
+      },
+      {
+        "value": "GOLDEN_G1",
+        "n": 24,
+        "win_lift": 0.5090594555221706,
+        "loss_lift": 2.9607074772294006,
+        "tie_lift": 0.0,
+        "win_pct": 37.5,
+        "loss_pct": 62.5,
+        "tie_pct": 0.0
+      },
+      {
+        "value": "STREAK_RIDER",
+        "n": 26,
+        "win_lift": 0.3132673572444127,
+        "loss_lift": 3.643947664282339,
+        "tie_lift": 0.0,
+        "win_pct": 23.08,
+        "loss_pct": 76.92,
+        "tie_pct": 0.0
+      }
+    ],
+    "floor": [
+      {
+        "value": "AITEST_ULTIMATE",
+        "n": 49,
+        "win_lift": 1.2466762176053159,
+        "loss_lift": 0.290028487565329,
+        "tie_lift": 0.3905932077580711,
+        "win_pct": 91.84,
+        "loss_pct": 6.12,
+        "tie_pct": 2.04
+      },
+      {
+        "value": "AITEST_APR20_MAX",
+        "n": 93,
+        "win_lift": 1.1969283255288312,
+        "loss_lift": 0.35655831983837943,
+        "tie_lift": 0.8231856851675478,
+        "win_pct": 88.17,
+        "loss_pct": 7.53,
+        "tie_pct": 4.3
+      },
+      {
+        "value": "ELITE_V2",
+        "n": 8522,
+        "win_lift": 1.0505349633634407,
+        "loss_lift": 0.8927286943779239,
+        "tie_lift": 0.7209153443823868,
+        "win_pct": 77.39,
+        "loss_pct": 18.85,
+        "tie_pct": 3.77
+      },
+      {
+        "value": "MAY01",
+        "n": 101,
+        "win_lift": 1.0483600668179356,
+        "loss_lift": 0.7504367467036896,
+        "tie_lift": 1.3264700025843406,
+        "win_pct": 77.23,
+        "loss_pct": 15.84,
+        "tie_pct": 6.93
+      },
+      {
+        "value": "APR20",
+        "n": 115,
+        "win_lift": 1.0387763961959655,
+        "loss_lift": 0.823849037142094,
+        "tie_lift": 1.164986697921899,
+        "win_pct": 76.52,
+        "loss_pct": 17.39,
+        "tie_pct": 6.09
+      },
+      {
+        "value": "LIVE",
+        "n": 18786,
+        "win_lift": 1.0365092913176501,
+        "loss_lift": 0.8414675483031627,
+        "tie_lift": 1.1257675521165103,
+        "win_pct": 76.35,
+        "loss_pct": 17.76,
+        "tie_pct": 5.88
+      },
+      {
+        "value": "AITEST_LIVE",
+        "n": 498,
+        "win_lift": 1.035837178572556,
+        "loss_lift": 0.922694378445789,
+        "tie_lift": 0.807069097957942,
+        "win_pct": 76.31,
+        "loss_pct": 19.48,
+        "tie_pct": 4.22
+      },
+      {
+        "value": "ULTIMATE",
+        "n": 407,
+        "win_lift": 1.0239557925982399,
+        "loss_lift": 0.884575010395811,
+        "tie_lift": 1.1285936420724612,
+        "win_pct": 75.43,
+        "loss_pct": 18.67,
+        "tie_pct": 5.9
+      },
+      {
+        "value": "APR22",
+        "n": 58,
+        "win_lift": 1.0064163948254408,
+        "loss_lift": 0.8984215792971973,
+        "tie_lift": 1.3199356675962404,
+        "win_pct": 74.14,
+        "loss_pct": 18.97,
+        "tie_pct": 6.9
+      },
+      {
+        "value": "APR27",
+        "n": 23,
+        "win_lift": 1.0033635645074666,
+        "loss_lift": 0.823849037142094,
+        "tie_lift": 1.6642667113169987,
+        "win_pct": 73.91,
+        "loss_pct": 17.39,
+        "tie_pct": 8.7
+      },
+      {
+        "value": "ELITE_V2_PEAK",
+        "n": 23,
+        "win_lift": 1.0033635645074666,
+        "loss_lift": 1.235773555713141,
+        "tie_lift": 0.0,
+        "win_pct": 73.91,
+        "loss_pct": 26.09,
+        "tie_pct": 0.0
+      },
+      {
+        "value": "APR26",
+        "n": 101,
+        "win_lift": 0.9945980121093234,
+        "loss_lift": 0.8911436367106315,
+        "tie_lift": 1.5159657172392462,
+        "win_pct": 73.27,
+        "loss_pct": 18.81,
+        "tie_pct": 7.92
+      },
+      {
+        "value": "MAY10",
+        "n": 312,
+        "win_lift": 0.9789604913887896,
+        "loss_lift": 1.0628180687490156,
+        "tie_lift": 1.0428337886617731,
+        "win_pct": 72.12,
+        "loss_pct": 22.44,
+        "tie_pct": 5.45
+      },
+      {
+        "value": "MAR21",
+        "n": 390,
+        "win_lift": 0.978090304285333,
+        "loss_lift": 1.0688913148561527,
+        "tie_lift": 1.0305651558539877,
+        "win_pct": 72.05,
+        "loss_pct": 22.56,
+        "tie_pct": 5.38
+      },
+      {
+        "value": "APR29",
+        "n": 34,
+        "win_lift": 0.9582295633358506,
+        "loss_lift": 1.114619285545186,
+        "tie_lift": 1.1258274811850284,
+        "win_pct": 70.59,
+        "loss_pct": 23.53,
+        "tie_pct": 5.88
+      },
+      {
+        "value": "MAR19",
+        "n": 12057,
+        "win_lift": 0.9311153569806421,
+        "loss_lift": 1.2458692424708537,
+        "tie_lift": 0.9778274349315434,
+        "win_pct": 68.59,
+        "loss_pct": 26.3,
+        "tie_pct": 5.11
+      },
+      {
+        "value": "MAR20",
+        "n": 2637,
+        "win_lift": 0.9116868115077883,
+        "loss_lift": 1.3221574232784763,
+        "tie_lift": 0.9435262546146806,
+        "win_pct": 67.16,
+        "loss_pct": 27.91,
+        "tie_pct": 4.93
+      },
+      {
+        "value": "AITEST_MAR21",
+        "n": 96,
+        "win_lift": 0.8908540471637986,
+        "loss_lift": 1.3323183647532302,
+        "tie_lift": 1.1961916987590928,
+        "win_pct": 65.62,
+        "loss_pct": 28.12,
+        "tie_pct": 6.25
+      },
+      {
+        "value": "APR28",
+        "n": 20,
+        "win_lift": 0.8823697229050957,
+        "loss_lift": 1.4211395890701122,
+        "tie_lift": 0.9569533590072743,
+        "win_pct": 65.0,
+        "loss_pct": 30.0,
+        "tie_pct": 5.0
+      },
+      {
+        "value": "APR30",
+        "n": 28,
+        "win_lift": 0.8726733523237211,
+        "loss_lift": 1.3534662753048687,
+        "tie_lift": 1.3670762271532488,
+        "win_pct": 64.29,
+        "loss_pct": 28.57,
+        "tie_pct": 7.14
+      }
+    ],
+    "color": [
+      {
+        "value": "blue",
+        "n": 28808,
+        "win_lift": 1.0196268164943745,
+        "loss_lift": 0.9174000008588074,
+        "tie_lift": 1.0570069384758216,
+        "win_pct": 75.11,
+        "loss_pct": 19.37,
+        "tie_pct": 5.52
+      },
+      {
+        "value": "red",
+        "n": 15906,
+        "win_lift": 0.9652479051017644,
+        "loss_lift": 1.1466087048744567,
+        "tie_lift": 0.8976325987921873,
+        "win_pct": 71.11,
+        "loss_pct": 24.2,
+        "tie_pct": 4.69
+      }
+    ],
+    "hour": [
+      {
+        "value": "13",
+        "n": 2408,
+        "win_lift": 1.0474335197787297,
+        "loss_lift": 0.8400146795860159,
+        "tie_lift": 0.9776184647665676,
+        "win_pct": 77.16,
+        "loss_pct": 17.73,
+        "tie_pct": 5.11
+      },
+      {
+        "value": "7",
+        "n": 2303,
+        "win_lift": 1.040959905574935,
+        "loss_lift": 0.8330605493897748,
+        "tie_lift": 1.0969851792354337,
+        "win_pct": 76.68,
+        "loss_pct": 17.59,
+        "tie_pct": 5.73
+      },
+      {
+        "value": "17",
+        "n": 2389,
+        "win_lift": 1.033603069172405,
+        "loss_lift": 0.941874291625929,
+        "tie_lift": 0.7610763424503227,
+        "win_pct": 76.14,
+        "loss_pct": 19.88,
+        "tie_pct": 3.98
+      },
+      {
+        "value": "15",
+        "n": 1884,
+        "win_lift": 1.027485893240786,
+        "loss_lift": 0.9655300817461485,
+        "tie_lift": 0.7517468000694086,
+        "win_pct": 75.69,
+        "loss_pct": 20.38,
+        "tie_pct": 3.93
+      },
+      {
+        "value": "19",
+        "n": 1955,
+        "win_lift": 1.0255833804688779,
+        "loss_lift": 0.9256186240831763,
+        "tie_lift": 0.9398212016848935,
+        "win_pct": 75.55,
+        "loss_pct": 19.54,
+        "tie_pct": 4.91
+      },
+      {
+        "value": "3",
+        "n": 1679,
+        "win_lift": 1.0251933922606509,
+        "loss_lift": 0.9846688834335302,
+        "tie_lift": 0.7067433979565337,
+        "win_pct": 75.52,
+        "loss_pct": 20.79,
+        "tie_pct": 3.69
+      },
+      {
+        "value": "8",
+        "n": 2604,
+        "win_lift": 1.0170762905517203,
+        "loss_lift": 0.9405135273287866,
+        "tie_lift": 0.9995826177034508,
+        "win_pct": 74.92,
+        "loss_pct": 19.85,
+        "tie_pct": 5.22
+      },
+      {
+        "value": "5",
+        "n": 1670,
+        "win_lift": 1.0136481293990367,
+        "loss_lift": 0.9417531807809926,
+        "tie_lift": 1.0429072535288857,
+        "win_pct": 74.67,
+        "loss_pct": 19.88,
+        "tie_pct": 5.45
+      },
+      {
+        "value": "9",
+        "n": 2292,
+        "win_lift": 1.0092348018729247,
+        "loss_lift": 0.9776018406488701,
+        "tie_lift": 0.9602935103476138,
+        "win_pct": 74.35,
+        "loss_pct": 20.64,
+        "tie_pct": 5.02
+      },
+      {
+        "value": "16",
+        "n": 2272,
+        "win_lift": 1.0049741833195904,
+        "loss_lift": 1.011227553842436,
+        "tie_lift": 0.8845079462655264,
+        "win_pct": 74.03,
+        "loss_pct": 21.35,
+        "tie_pct": 4.62
+      },
+      {
+        "value": "0",
+        "n": 2162,
+        "win_lift": 1.0039914515941422,
+        "loss_lift": 1.0298112964276176,
+        "tie_lift": 0.8232808731514941,
+        "win_pct": 73.96,
+        "loss_pct": 21.74,
+        "tie_pct": 4.3
+      },
+      {
+        "value": "6",
+        "n": 1919,
+        "win_lift": 1.0009645712195538,
+        "loss_lift": 0.9997594816282707,
+        "tie_lift": 0.9873724079387197,
+        "win_pct": 73.74,
+        "loss_pct": 21.1,
+        "tie_pct": 5.16
+      },
+      {
+        "value": "12",
+        "n": 1644,
+        "win_lift": 1.0007786862820287,
+        "loss_lift": 1.017157897286597,
+        "tie_lift": 0.9196997002624654,
+        "win_pct": 73.72,
+        "loss_pct": 21.47,
+        "tie_pct": 4.81
+      },
+      {
+        "value": "4",
+        "n": 1287,
+        "win_lift": 0.9988693175436323,
+        "loss_lift": 0.9864423980077442,
+        "tie_lift": 1.070717045043104,
+        "win_pct": 73.58,
+        "loss_pct": 20.82,
+        "tie_pct": 5.59
+      },
+      {
+        "value": "10",
+        "n": 1681,
+        "win_lift": 0.9981320436651244,
+        "loss_lift": 0.955316915912687,
+        "tie_lift": 1.2068656282542662,
+        "win_pct": 73.53,
+        "loss_pct": 20.17,
+        "tie_pct": 6.31
+      },
+      {
+        "value": "14",
+        "n": 2765,
+        "win_lift": 0.9951667427061505,
+        "loss_lift": 0.9371469020148903,
+        "tie_lift": 1.3220838449937748,
+        "win_pct": 73.31,
+        "loss_pct": 19.78,
+        "tie_pct": 6.91
+      },
+      {
+        "value": "18",
+        "n": 1364,
+        "win_lift": 0.9932381947431599,
+        "loss_lift": 1.0245263410940448,
+        "tie_lift": 0.9962417667084527,
+        "win_pct": 73.17,
+        "loss_pct": 21.63,
+        "tie_pct": 5.21
+      },
+      {
+        "value": "11",
+        "n": 1767,
+        "win_lift": 0.9879652289024884,
+        "loss_lift": 1.0696749595151382,
+        "tie_lift": 0.8881740287334068,
+        "win_pct": 72.78,
+        "loss_pct": 22.58,
+        "tie_pct": 4.64
+      },
+      {
+        "value": "20",
+        "n": 1341,
+        "win_lift": 0.9778800577368467,
+        "loss_lift": 1.0597610656749532,
+        "tie_lift": 1.0704176275249153,
+        "win_pct": 72.04,
+        "loss_pct": 22.37,
+        "tie_pct": 5.59
+      },
+      {
+        "value": "2",
+        "n": 1723,
+        "win_lift": 0.9627713749631921,
+        "loss_lift": 1.1217352531255675,
+        "tie_lift": 1.0330430921378584,
+        "win_pct": 70.92,
+        "loss_pct": 23.68,
+        "tie_pct": 5.4
+      }
+    ],
+    "confidence": [
+      {
+        "value": "80-89",
+        "n": 9558,
+        "win_lift": 1.0365113779454003,
+        "loss_lift": 0.8742729424285688,
+        "tie_lift": 0.993197041363482,
+        "win_pct": 76.35,
+        "loss_pct": 18.46,
+        "tie_pct": 5.19
+      },
+      {
+        "value": "70-79",
+        "n": 3821,
+        "win_lift": 1.0118128443354388,
+        "loss_lift": 0.8926288965632738,
+        "tie_lift": 1.2672556913312765,
+        "win_pct": 74.54,
+        "loss_pct": 18.84,
+        "tie_pct": 6.62
+      },
+      {
+        "value": "90+",
+        "n": 30494,
+        "win_lift": 0.9902737227512023,
+        "loss_lift": 1.044393591888936,
+        "tie_lift": 0.957769283036073,
+        "win_pct": 72.95,
+        "loss_pct": 22.05,
+        "tie_pct": 5.0
+      },
+      {
+        "value": "<70",
+        "n": 855,
+        "win_lift": 0.8859420699613917,
+        "loss_lift": 1.3020187268283678,
+        "tie_lift": 1.387862181484234,
+        "win_pct": 65.26,
+        "loss_pct": 27.49,
+        "tie_pct": 7.25
+      }
+    ],
+    "secs": [
+      {
+        "value": "<5s",
+        "n": 24981,
+        "win_lift": 1.12839033333791,
+        "loss_lift": 0.5529593213146587,
+        "tie_lift": 0.9959884445854502,
+        "win_pct": 83.12,
+        "loss_pct": 11.67,
+        "tie_pct": 5.2
+      },
+      {
+        "value": "5-20s",
+        "n": 7802,
+        "win_lift": 0.9714018423242856,
+        "loss_lift": 1.0929040674725292,
+        "tie_lift": 1.0278478785543397,
+        "win_pct": 71.56,
+        "loss_pct": 23.07,
+        "tie_pct": 5.37
+      },
+      {
+        "value": "20-90s",
+        "n": 7347,
+        "win_lift": 0.8347826759399907,
+        "loss_lift": 1.5545426928215782,
+        "tie_lift": 1.0888975202532751,
+        "win_pct": 61.49,
+        "loss_pct": 32.82,
+        "tie_pct": 5.69
+      },
+      {
+        "value": "90s+",
+        "n": 4027,
+        "win_lift": 0.6971177578146504,
+        "loss_lift": 2.0691867702792215,
+        "tie_lift": 0.9505372326866395,
+        "win_pct": 51.35,
+        "loss_pct": 43.68,
+        "tie_pct": 4.97
+      },
+      {
+        "value": "null",
+        "n": 571,
+        "win_lift": 0.03566090756722736,
+        "loss_lift": 4.61268891723866,
+        "tie_lift": 0.0,
+        "win_pct": 2.63,
+        "loss_pct": 97.37,
+        "tie_pct": 0.0
+      }
+    ],
+    "rooms_count": [
+      {
+        "value": "1",
+        "n": 13428,
+        "win_lift": 1.0552204541238044,
+        "loss_lift": 0.7817608304486567,
+        "tie_lift": 1.1031901993917639,
+        "win_pct": 77.73,
+        "loss_pct": 16.5,
+        "tie_pct": 5.76
+      },
+      {
+        "value": "0",
+        "n": 30130,
+        "win_lift": 0.9771869039336526,
+        "loss_lift": 1.0953733285818643,
+        "tie_lift": 0.9363088291913192,
+        "win_pct": 71.98,
+        "loss_pct": 23.12,
+        "tie_pct": 4.89
+      },
+      {
+        "value": "3",
+        "n": 689,
+        "win_lift": 0.961474656196688,
+        "loss_lift": 1.0656828074787974,
+        "tie_lift": 1.277789681112761,
+        "win_pct": 70.83,
+        "loss_pct": 22.5,
+        "tie_pct": 6.68
+      },
+      {
+        "value": "2",
+        "n": 405,
+        "win_lift": 0.9552720646835794,
+        "loss_lift": 0.9474263927134082,
+        "tie_lift": 1.8430212840140097,
+        "win_pct": 70.37,
+        "loss_pct": 20.0,
+        "tie_pct": 9.63
+      },
+      {
+        "value": "4",
+        "n": 50,
+        "win_lift": 0.8687948040911712,
+        "loss_lift": 1.515882228341453,
+        "tie_lift": 0.7655626872058194,
+        "win_pct": 64.0,
+        "loss_pct": 32.0,
+        "tie_pct": 4.0
+      }
+    ]
+  }
+}
