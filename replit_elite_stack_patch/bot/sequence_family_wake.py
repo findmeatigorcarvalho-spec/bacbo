@@ -166,26 +166,15 @@ def sequence_outbox_owns_fire(row: Any = None, *, signal_kind: str | None = None
 
 
 def skip_after_resolve_forensic(row: Any = None, *, signal_kind: str | None = None) -> bool:
-    """Do not re-post the same countdown card after SQLite outcome.
+    """Never suppress a result card.
 
-    The FIRE already carried Apostou→Saiu and the printed interval. A second
-    identical copy after resolve is what got misread as 'already happened.'
-
-    A G0 win is identical to what the FIRE already said, so it is dropped.
-    Anything else (loss, tie, or a gale recovery) is NOT identical, so the
-    room still gets that card — a bankroll must never go silent on a miss.
+    This used to drop G0 wins, because the FIRE already printed the win and the
+    second copy was redundant. The FIRE no longer claims an outcome, so the
+    result card is the only card that reports what happened and must always
+    post — a room that only ever shows calls cannot be audited.
     """
-    if not (forensic_as_fire() and is_sequence_family(row, signal_kind=signal_kind)):
-        return False
-    outcome = str(_get(row, "outcome") or "").strip().lower()
-    if outcome and outcome != "win":
-        return False
-    try:
-        if int(_get(row, "won_at_gale") or 0) != 0:
-            return False
-    except (TypeError, ValueError):
-        pass
-    return True
+    _ = (row, signal_kind)
+    return False
 
 
 def is_sequence_museum_body(text: str | None) -> bool:
@@ -194,8 +183,12 @@ def is_sequence_museum_body(text: str | None) -> bool:
 
 
 def is_forensic_fire_body(text: str | None) -> bool:
-    t = str(text or "")
-    return "RESUMIDO FORENSE" in t.upper() and "APOSTOU:" in t.upper()
+    t = str(text or "").upper()
+    if "RESUMIDO FORENSE" not in t:
+        return False
+    # "APOSTAR:" is the live pending FIRE; "APOSTOU:" is the historical card
+    # and the settled result card, both of which share this layout.
+    return "APOSTAR:" in t or "APOSTOU:" in t
 
 
 def forensic_is_live_fire(text: str | None) -> bool:
@@ -353,8 +346,11 @@ def fmt_forensic_countdown_fire(
 ) -> str:
     """Live UNIQUE_g1 family: forensic countdown card as the FIRE.
 
-    Apostou and Saiu are the predicted color. Intervalo is the outcome timer.
-    Production already proved that color materializes in that countdown.
+    Same layout as the historical forensic card, but every field is scoped to
+    what is known at fire time: the call, and the window it is being made for.
+    The outcome fields stay pending because the round has not happened yet —
+    actual_color() derives "Saiu" from the win label, so printing it here would
+    restate the call as its own confirmation. The result card fills them in.
     """
     _ = (floor, trust)
     predicted = str(_get(row, "color") or "blue").strip().lower() or "blue"
@@ -375,45 +371,33 @@ def fmt_forensic_countdown_fire(
         disparado = pawtucket_forensic(fired)
         dt = _parse_fired(row)
         if dt is not None:
-            resolvido = pawtucket_forensic(
+            previsto = pawtucket_forensic(
                 (dt + timedelta(seconds=n)).strftime("%Y-%m-%d %H:%M:%S")
             )
         else:
-            resolvido = pawtucket_forensic(fired)
+            previsto = "—"
     except Exception:
         local_time = f"{_clock(row)[:5]} Pawtucket, RI"
         disparado = str(fired or "—")
-        resolvido = disparado
+        previsto = "—"
     banner = icon * 10
-    gale = 0
-    try:
-        gale = int(_get(row, "won_at_gale") or 0)
-    except (TypeError, ValueError):
-        gale = 0
-    result_label = "G0 WIN" if gale == 0 else f"G{gale} WIN"
-    try:
-        from fire_origin import truth_from_outcome
-
-        truth_line = truth_from_outcome(predicted, "win")["line"]
-    except Exception:
-        truth_line = f"BET {word} → OUT {word} · WIN · TRUTH THIS ROUND = {word}"
     secs_txt = f"{n:.1f}s"
     return (
         f"{banner}\n"
         f"⏰  {local_time}\n"
         f"{banner}\n"
-        f"🔔 ✅ {result_label}  ·  #{sid}\n"
-        f"🎲 Apostou: {icon} {word}  →  Saiu: {icon} {word}\n"
-        f"🧭 {truth_line}\n"
+        f"🔔 ⏳ ENTRADA ABERTA  ·  #{sid}\n"
+        f"🎲 Apostar: {icon} {word}  →  Saiu: ⏳ aguardando\n"
+        f"🧭 BET {word} → OUT ? · PENDENTE · TRUTH THIS ROUND = ?\n"
         f"🔍 SINAL #{sid} — RESUMIDO FORENSE\n"
         f"  Tipo: {kind} · Cor prevista: {word}\n"
-        f"  Cor que SAIU: {word}\n"
+        f"  Cor que SAIU: ⏳ aguardando resultado\n"
         f"  Disparado: {disparado} (Pawtucket, RI)\n"
-        f"  Resolvido: {resolvido} (Pawtucket, RI)\n"
-        f"  ⏱ Intervalo (Clock C — fire→resolve): {secs_txt}\n"
-        f"  Resultado: ✅ {result_label}\n"
+        f"  Janela prevista: {previsto} (Pawtucket, RI)\n"
+        f"  ⏱ Contagem (Clock C — fire→janela): {secs_txt}\n"
+        f"  Resultado: ⏳ pendente\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"🏁 Aguarde o próximo sinal do bot"
+        f"🏁 Aguarde o resultado deste sinal"
     )
 
 
@@ -451,23 +435,22 @@ def main() -> int:
     assert is_sequence_family(demo)
     assert sequence_outbox_owns_fire(demo)
     assert forensic_as_fire()
-    assert skip_after_resolve_forensic(demo)
-    assert skip_after_resolve_forensic(R(signal_kind="SEQUENCE", outcome="win"))
-    # A miss or a gale recovery is not what the FIRE said — that card still posts.
-    assert not skip_after_resolve_forensic(R(signal_kind="SEQUENCE", outcome="loss"))
-    assert not skip_after_resolve_forensic(R(signal_kind="SEQUENCE", outcome="tie"))
-    assert not skip_after_resolve_forensic(
-        R(signal_kind="SEQUENCE", outcome="win", won_at_gale=1)
-    )
+    # Every result card posts, including the G0 wins that used to be suppressed.
+    for outcome in ("win", "loss", "tie"):
+        assert not skip_after_resolve_forensic(R(signal_kind="SEQUENCE", outcome=outcome))
     assert "LIVE" in peak_floors()
     fire = fmt_live_sequence_fire(demo, floor="LIVE")
     assert is_forensic_fire_body(fire)
     assert "RESUMIDO FORENSE" in fire
-    assert "Apostou: 🔵 BLUE" in fire
-    assert "Saiu: 🔵 BLUE" in fire
+    assert "Apostar: 🔵 BLUE" in fire
     assert "28.5s" in fire
-    assert "Tipo: SEQUENCE" in fire
+    assert "Tipo: SEQUENCE · Cor prevista: BLUE" in fire
     assert "BAC BO SIGNAL" not in fire
+    # The FIRE must not report an outcome it cannot know yet.
+    assert "WIN" not in fire.upper()
+    assert "Saiu: 🔵 BLUE" not in fire
+    assert "Resolvido:" not in fire
+    assert "pendente" in fire
     museum = fmt_sequence_enter_now(demo, floor="LIVE")
     assert HEADER in museum
     print("SEQUENCE_FORENSIC_FIRE_OK")

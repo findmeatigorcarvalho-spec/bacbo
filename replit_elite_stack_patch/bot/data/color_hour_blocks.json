@@ -1,0 +1,11 @@
+{
+  "rev": "luxury-no-hour-blocks",
+  "updated_at": "2026-10-13T16:44:52.417840+00:00",
+  "note": "Hour blocks disabled for peak-volume FIRE. Dynamic AutoCHB lists emptied.",
+  "dynamic_additions": {
+    "GOLDEN": [],
+    "SOLO_ELITE": [],
+    "FLASH": [],
+    "PLATINUM": []
+  }
+}
