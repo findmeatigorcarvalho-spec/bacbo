@@ -1,0 +1,527 @@
+{
+  "generated_at": "2026-10-13T17:07:06.277287+00:00",
+  "scope": "Every distinct card type the Telegram archaeology catalogued, classified on body content rather than signal_kind.",
+  "totals": {
+    "card_types": 827,
+    "distinct_designs": 597,
+    "designs_with_one_variant": 520,
+    "card_types_that_fired": 781,
+    "card_types_never_fired": 46,
+    "card_types_instructing_a_bet": 71,
+    "card_types_with_paired_result": 4,
+    "by_role": {
+      "ONLINE": 1,
+      "UNKNOWN": 550,
+      "ROOM_RELAY": 8,
+      "FIRE": 34,
+      "OPS": 25,
+      "RESULT": 209
+    },
+    "by_claim_verdict": {
+      "NO_CLAIM": 699,
+      "CLAIM_WITHOUT_SAMPLE_SIZE": 47,
+      "CLAIM_WITHIN_NOISE": 5,
+      "CLAIM_ON_THIN_SAMPLE": 62,
+      "CLAIM_SURVIVES_ITS_OWN_SAMPLE": 14
+    }
+  },
+  "claims": {
+    "cards_with_claim_and_sample": 81,
+    "by_sample_size": [
+      {
+        "bucket": "n<=15",
+        "cards": 27,
+        "mean_wr_pct": 83.1,
+        "max_wr_pct": 100.0,
+        "min_wr_pct": 36.4
+      },
+      {
+        "bucket": "n=16-30",
+        "cards": 22,
+        "mean_wr_pct": 71.3,
+        "max_wr_pct": 100.0,
+        "min_wr_pct": 25.0
+      },
+      {
+        "bucket": "n=31-60",
+        "cards": 11,
+        "mean_wr_pct": 73.0,
+        "max_wr_pct": 95.0,
+        "min_wr_pct": 47.4
+      },
+      {
+        "bucket": "n=61-150",
+        "cards": 4,
+        "mean_wr_pct": 70.7,
+        "max_wr_pct": 87.8,
+        "min_wr_pct": 57.4
+      },
+      {
+        "bucket": "n>150",
+        "cards": 17,
+        "mean_wr_pct": 63.1,
+        "max_wr_pct": 78.9,
+        "min_wr_pct": 36.5
+      }
+    ],
+    "mean_wr_drop_smallest_to_largest_bucket": 20.0,
+    "perfect_claims": [
+      {
+        "n": 6,
+        "first_line": "🔴 accum_solo_tier                     n=   6 W=  6/L=  0/T= 0  sWR=100.0%  net=-",
+        "tg_count": 6
+      },
+      {
+        "n": 10,
+        "first_line": "🔴 hard_fva_ceiling                    n=  10 W= 10/L=  0/T= 0  sWR=100.0%  net=-",
+        "tg_count": 1
+      },
+      {
+        "n": 10,
+        "first_line": "bacbob2xbet           +rigosinais              n= 10 WR=100.0%",
+        "tg_count": 23
+      },
+      {
+        "n": 10,
+        "first_line": "bacbobrl              +robobacbodados          n= 10 WR=100.0%",
+        "tg_count": 6
+      },
+      {
+        "n": 11,
+        "first_line": "reicassinofs          +rqdados1                n= 11 WR=100.0%",
+        "tg_count": 18
+      },
+      {
+        "n": 11,
+        "first_line": "baccarat_b            +speedbaccarat_a_01      n= 11 WR=100.0%",
+        "tg_count": 16
+      },
+      {
+        "n": 11,
+        "first_line": "bacboaovivovip        +sinaisbacboangola       n= 11 WR=100.0%",
+        "tg_count": 23
+      },
+      {
+        "n": 11,
+        "first_line": "bacboaovivovip        +sinaisbacboangola       n= 11 WR=100.0%",
+        "tg_count": 28
+      },
+      {
+        "n": 12,
+        "first_line": "coringadados          +sinal_bac_bo            n= 12 WR=100.0%",
+        "tg_count": 4
+      },
+      {
+        "n": 13,
+        "first_line": "isadados              +umgalesalabacbo123      n= 13 WR=100.0%",
+        "tg_count": 4
+      },
+      {
+        "n": 15,
+        "first_line": "reicassinofs          +rqdados1                n= 15 WR=100.0%",
+        "tg_count": 62
+      },
+      {
+        "n": 20,
+        "first_line": "rqdados               +speedbaccarat_a         n= 20 WR=100.0%",
+        "tg_count": 2
+      }
+    ],
+    "perfect_claims_max_n": 20,
+    "claims_with_credible_n": 19,
+    "claims_surviving_own_sample": [
+      {
+        "n": 274,
+        "wr": 59.1,
+        "first_line": "GOLDEN     /red/H14  overall_WR=59.1%  n=274"
+      },
+      {
+        "n": 133,
+        "wr": 79.7,
+        "first_line": "@footballstudiodice01              n= 133 W=100 L= 27 T= 6 WR= 79.7% | b=86.4%(n"
+      },
+      {
+        "n": 197,
+        "wr": 76.1,
+        "first_line": "@footballstudiodice01              n= 197 W=140 L= 47 T=10 WR= 76.1% | b=73.9%(n"
+      },
+      {
+        "n": 625,
+        "wr": 54.1,
+        "first_line": "🔴 solo_proven_room_main               n= 625 W=297/L=287/T=41  sWR= 54.1%  net=-"
+      },
+      {
+        "n": 1085,
+        "wr": 78.9,
+        "first_line": "@martinswinbacbo                   n=1085 W=800 L=229 T=56 WR= 78.9% | - | last="
+      },
+      {
+        "n": 391,
+        "wr": 78.8,
+        "first_line": "SOLO_ELITE /red/H05  T≥2.70  WR=78.8%  n=391/total391"
+      },
+      {
+        "n": 250,
+        "wr": 78.4,
+        "first_line": "SOLO_ELITE /blue/H18  T≥3.81  WR=78.4%  n=250/total344"
+      },
+      {
+        "n": 3113,
+        "wr": 61.2,
+        "first_line": "🔴 GOLDEN       score=11-13   n=3113  blocked-but-WR= 61.2%"
+      },
+      {
+        "n": 263,
+        "wr": 61.6,
+        "first_line": "🔴 GOLDEN       score=7-8     n= 263  blocked-but-WR= 61.6%"
+      },
+      {
+        "n": 837,
+        "wr": 64.6,
+        "first_line": "SOLO_ELITE /red/H00  overall_WR=64.6%  n=837"
+      },
+      {
+        "n": 347,
+        "wr": 62.2,
+        "first_line": "SOLO_ELITE /blue/H13  overall_WR=62.2%  n=347"
+      },
+      {
+        "n": 302,
+        "wr": 72.5,
+        "first_line": "🟡 SOLO_ELITE   score=7-8     n= 302  blocked-but-WR= 72.5%"
+      },
+      {
+        "n": 965,
+        "wr": 77.5,
+        "first_line": "@robobacbodados                    n= 965 W=724 L=217 T=24 WR= 77.5% | - | last="
+      },
+      {
+        "n": 115,
+        "wr": 87.8,
+        "first_line": "📊 **87.8% WR** combinado · TRUE G2 · n=115"
+      }
+    ],
+    "min_credible_n": 100
+  },
+  "selection_math": {
+    "source_rooms_in_corpus": 59,
+    "candidate_pairs": 1711,
+    "baseline_label_win_rate": 0.775,
+    "perfect_cells_observed": 12,
+    "typical_n_behind_a_perfect_cell": 11,
+    "perfect_cells_expected_by_chance": 103.6,
+    "verdict": "FEWER_PERFECT_CELLS_THAN_CHANCE_PRODUCES",
+    "note": "Expected count is candidate_pairs * baseline**n — how many pairs reach a spotless record on n observations with no skill at all. Pairs with fewer than n shared signals cannot produce a cell, so the true expected count is lower than this ceiling; the comparison is still the right order of magnitude for pricing the search."
+  },
+  "coverage": {
+    "distinct_tg_types": 39271,
+    "product_looking_types": 10423,
+    "mapped_types": 1651,
+    "unmapped_types": 8772,
+    "type_map_rate_pct": 15.84,
+    "product_msgs": 133709,
+    "mapped_msgs": 119335,
+    "msg_map_rate_pct": 89.25,
+    "by_chat_msgs": {
+      "mr_iv4": 537139,
+      "UNIQUE_g1": 27
+    },
+    "registry_never_seen": 59,
+    "note": "Type ids were fingerprinted from rendered text including the statistics, so one template renders a new 'type' for every number it prints. Unmapped types are mostly that long tail, which is why message coverage is far higher than type coverage."
+  },
+  "top_designs": [
+    {
+      "skeleton_first_line": "🔧 [DBG] <ROOM> → blue conf=entry trust=<N> streak=<N> score=<N> agree=<N>",
+      "variants": 60,
+      "tg_count": 7259,
+      "roles": [
+        "OPS",
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "OPS_GATE_BLOCK_LOG",
+      "chrono_first": 82
+    },
+    {
+      "skeleton_first_line": "<ROOM>+<ROOM> n=<N> WR=<N>%",
+      "variants": 33,
+      "tg_count": 424,
+      "roles": [
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": true,
+      "example_family": "",
+      "chrono_first": 264
+    },
+    {
+      "skeleton_first_line": "🔵 SIGNAL #<N> -- SOLO_ELITE red | rooms:@…",
+      "variants": 21,
+      "tg_count": 309,
+      "roles": [
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "FIRE_COMPACT_HASH",
+      "chrono_first": 611
+    },
+    {
+      "skeleton_first_line": "📡 <ROOM> — <N>/<N>/<N> <TIME>",
+      "variants": 8,
+      "tg_count": 293992,
+      "roles": [
+        "ROOM_RELAY"
+      ],
+      "instructs_bet": false,
+      "example_family": "ROOM_RELAY",
+      "chrono_first": 4
+    },
+    {
+      "skeleton_first_line": "🎰 SEQUÊNCIA Nx 🔴 VERMELHO",
+      "variants": 8,
+      "tg_count": 1711,
+      "roles": [
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "OPS_STREAK_BANNER",
+      "chrono_first": 309
+    },
+    {
+      "skeleton_first_line": "💎 SOLO ELITE → sala elite sozinha / single elite room",
+      "variants": 8,
+      "tg_count": 65,
+      "roles": [
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "OPS_TIER_LEGEND",
+      "chrono_first": 43
+    },
+    {
+      "skeleton_first_line": "🔴🔴🔴🔴🔴 VERMELHO 🔴🔴🔴🔴🔴",
+      "variants": 7,
+      "tg_count": 39510,
+      "roles": [
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "RESULT_COLOR_BANNER",
+      "chrono_first": 80
+    },
+    {
+      "skeleton_first_line": "🟡⚡🟡 PRESSÃO DE EMPATE — ALERTA AUTOMÁTICO 🟡⚡🟡",
+      "variants": 5,
+      "tg_count": 6990,
+      "roles": [
+        "RESULT"
+      ],
+      "instructs_bet": false,
+      "example_family": "OPS_TIE_ALERT",
+      "chrono_first": 49
+    },
+    {
+      "skeleton_first_line": "✅ WIN — SOLO_ELITE",
+      "variants": 4,
+      "tg_count": 10119,
+      "roles": [
+        "RESULT"
+      ],
+      "instructs_bet": false,
+      "example_family": "RESULT_WIN_TIER",
+      "chrono_first": 18
+    },
+    {
+      "skeleton_first_line": "⛔ DO NOT BET — ROUND PASSED ⛔",
+      "variants": 4,
+      "tg_count": 3045,
+      "roles": [
+        "FIRE",
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": true,
+      "example_family": "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+      "chrono_first": 152
+    },
+    {
+      "skeleton_first_line": "❌ LOSS — G<N> FALHOU",
+      "variants": 4,
+      "tg_count": 2363,
+      "roles": [
+        "RESULT"
+      ],
+      "instructs_bet": false,
+      "example_family": "RESULT_LOSS_TIER",
+      "chrono_first": 20
+    },
+    {
+      "skeleton_first_line": "🟡 EMPATE — SOLO_ELITE",
+      "variants": 4,
+      "tg_count": 621,
+      "roles": [
+        "RESULT"
+      ],
+      "instructs_bet": false,
+      "example_family": "RESULT_EMPATE",
+      "chrono_first": 25
+    },
+    {
+      "skeleton_first_line": "📊 AUDIT <N>° (DB only)",
+      "variants": 4,
+      "tg_count": 446,
+      "roles": [
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "OPS_AUDIT_360",
+      "chrono_first": 234
+    },
+    {
+      "skeleton_first_line": "⚡ **ENTRE AGORA — VIRADA DETECTADA**",
+      "variants": 4,
+      "tg_count": 285,
+      "roles": [
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": true,
+      "example_family": "FIRE_ENTRE_AGORA_GENERIC",
+      "chrono_first": 69
+    },
+    {
+      "skeleton_first_line": "📊 Market Status — ⚡ Gale <N> detected",
+      "variants": 3,
+      "tg_count": 2281,
+      "roles": [
+        "UNKNOWN"
+      ],
+      "instructs_bet": true,
+      "example_family": "OPS_GALE_SATURATION",
+      "chrono_first": 58
+    },
+    {
+      "skeleton_first_line": "✅✅ WIN na <N>ª tentativa! ✅✅",
+      "variants": 3,
+      "tg_count": 1820,
+      "roles": [
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "CD_RES_RODADAS_TEMPO",
+      "chrono_first": 95
+    },
+    {
+      "skeleton_first_line": "⏱️⏱️ H<N> UTC em <N> min · <TIME> PM EDT ⏱️⏱️",
+      "variants": 3,
+      "tg_count": 1500,
+      "roles": [
+        "FIRE",
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "CD_FIRE_QUANTUM_LOCK",
+      "chrono_first": 198
+    },
+    {
+      "skeleton_first_line": "🕐 HH:MM:SS EDT · … · ~Ns window",
+      "variants": 3,
+      "tg_count": 638,
+      "roles": [
+        "FIRE",
+        "RESULT"
+      ],
+      "instructs_bet": false,
+      "example_family": "RESULT_TIMED_WINDOW",
+      "chrono_first": 226
+    },
+    {
+      "skeleton_first_line": "⚡ RUSH — <N>s LEFT — ACT NOW ⚡",
+      "variants": 3,
+      "tg_count": 303,
+      "roles": [
+        "FIRE",
+        "RESULT"
+      ],
+      "instructs_bet": true,
+      "example_family": "CD_FIRE_RUSH_NS_LEFT",
+      "chrono_first": 151
+    },
+    {
+      "skeleton_first_line": "⚕️⚕️ SELF-CARE GUARD ATIVO — SOLO_ELITE ⚕️⚕️",
+      "variants": 3,
+      "tg_count": 240,
+      "roles": [
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "OPS_SELF_CARE_GUARD",
+      "chrono_first": 271
+    },
+    {
+      "skeleton_first_line": "<ROOM> n=<N> W=<N> L=<N> T=<N> WR=<N>% | b=<N>%(n<N>) r=<N>%(n<N>) | last=<N>-<N>-<N>",
+      "variants": 3,
+      "tg_count": 211,
+      "roles": [
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "",
+      "chrono_first": 349
+    },
+    {
+      "skeleton_first_line": "🛡 FULL AUDIT — <N> findings",
+      "variants": 2,
+      "tg_count": 2380,
+      "roles": [
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "",
+      "chrono_first": 243
+    },
+    {
+      "skeleton_first_line": "🔍 MONITORAMENTO DE SINAIS — <TIME> EDT",
+      "variants": 2,
+      "tg_count": 2360,
+      "roles": [
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "",
+      "chrono_first": 223
+    },
+    {
+      "skeleton_first_line": "🎯 WIN-DROP SCANNER — <TIME> EDT",
+      "variants": 2,
+      "tg_count": 2004,
+      "roles": [
+        "RESULT",
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "",
+      "chrono_first": 241
+    },
+    {
+      "skeleton_first_line": "🔥🔥🔥 SEQUÊNCIA QUENTE",
+      "variants": 2,
+      "tg_count": 1763,
+      "roles": [
+        "UNKNOWN"
+      ],
+      "instructs_bet": false,
+      "example_family": "OPS_SEQ_QUENTE",
+      "chrono_first": 202
+    }
+  ],
+  "cards_csv": "replit_elite_stack_patch/bot/data/card_content_atlas.csv"
+}

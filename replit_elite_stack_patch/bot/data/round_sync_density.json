@@ -2,7 +2,8 @@
   "by_chat_round": {
     "UNIQUE_g1#0": 1,
     "UNIQUE_g2#0": 1,
-    "UNIQUE_g3#0": 1
+    "UNIQUE_g3#0": 1,
+    "UNIQUE_g4#0": 1
   },
   "fires": [
     {
@@ -25,6 +26,13 @@
       "fire_key": "UNIQUE_g3:0:1b3190d",
       "score": 0.0,
       "at": 1791909892.4427369
+    },
+    {
+      "chat": "UNIQUE_g4",
+      "round_id": 0,
+      "fire_key": "UNIQUE_g4:0:22f46a81",
+      "score": 0.0,
+      "at": 1791911248.571296
     }
   ]
 }
