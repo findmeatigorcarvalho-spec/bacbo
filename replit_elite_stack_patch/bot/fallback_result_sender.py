@@ -216,12 +216,19 @@ async def main() -> None:
     load_env()
     api_id = os.getenv("TELEGRAM_API_ID")
     api_hash = os.getenv("TELEGRAM_API_HASH")
-    session = _load_telegram_session()
     target = getattr(config, "TARGET", None)
 
-    client = TelegramClient(StringSession(session), int(api_id), api_hash)
-    await client.connect()
-    entity = await _resolve_target(client, target)
+    import botapi_client
+    use_bot = botapi_client.enabled()
+    if use_bot:
+        client = botapi_client.BotApiClient()
+        entity = botapi_client.chat_id()
+        target = f"botapi:{entity}"
+    else:
+        session = _load_telegram_session()
+        client = TelegramClient(StringSession(session), int(api_id), api_hash)
+        await client.connect()
+        entity = await _resolve_target(client, target)
     print(f"[FallbackResultSender] started target={target}")
 
     while True:
@@ -243,7 +250,10 @@ async def main() -> None:
             conn.close()
 
             for row in rows:
-                await client.send_message(entity, fmt(row))
+                if use_bot:
+                    await client.send_message(entity, fmt(row), reply_to=botapi_client.lookup(row["id"]))
+                else:
+                    await client.send_message(entity, fmt(row))
                 write_state(row["id"])
                 print("[FallbackResultSender] sent result", row["id"], row["outcome"], row["secs_to_result"])
         except Exception as exc:

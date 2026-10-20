@@ -231,12 +231,19 @@ async def main() -> None:
     load_env()
     api_id = os.getenv("TELEGRAM_API_ID")
     api_hash = os.getenv("TELEGRAM_API_HASH")
-    session = _load_telegram_session()
     target = getattr(config, "TARGET", None)
 
-    client = TelegramClient(StringSession(session), int(api_id), api_hash)
-    await client.connect()
-    entity = await _resolve_target(client, target)
+    import botapi_client
+    use_bot = botapi_client.enabled()
+    if use_bot:
+        client = botapi_client.BotApiClient()
+        entity = botapi_client.chat_id()
+        target = f"botapi:{entity}"
+    else:
+        session = _load_telegram_session()
+        client = TelegramClient(StringSession(session), int(api_id), api_hash)
+        await client.connect()
+        entity = await _resolve_target(client, target)
     print(
         f"[FallbackSender] started target={target} send_blocked={SEND_BLOCKED} "
         f"min_blocked_score={MIN_BLOCKED_SCORE} blocked_lookback_h={BLOCKED_LOOKBACK_HOURS}"
@@ -276,7 +283,9 @@ async def main() -> None:
             conn.close()
 
             for row in rows:
-                await client.send_message(entity, fmt_consensus(row))
+                msg = await client.send_message(entity, fmt_consensus(row))
+                if use_bot:
+                    botapi_client.remember(row["id"], msg)
                 write_int(STATE, row["id"])
                 print("[FallbackSender] sent consensus", row["id"], row["signal_kind"], row["color"])
 
