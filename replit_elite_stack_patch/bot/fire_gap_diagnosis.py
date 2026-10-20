@@ -9,6 +9,7 @@ inside the gap, using only bot.log and the consensus_signals table:
 
   DOWN/STALLED  bot.log had no lines for a long stretch (process dead, frozen
                 connection, or the Replit workspace was asleep)
+  DEAF          connected, but Telegram sent no messages; watchdog restarted it
   RESTARTED     the bot booted again inside the gap (rooms banner)
   FLOODWAIT     Telegram rate limit hit inside the gap
   RECONNECT     freeze watchdog / reconnect fired inside the gap
@@ -30,6 +31,8 @@ from pathlib import Path
 TS_RE = re.compile(r"^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})")
 ROOMS_RE = re.compile(r"✅ (\d+) rooms")
 FLOOD_RE = re.compile(r"FloodWait|A wait of \d+ seconds", re.I)
+SYNTHETIC_FLOOD_RE = re.compile(r"ResolveUsernameRequest")
+DEAF_RE = re.compile(r"ConnFreeze\] no message|recv-silence|silence .{0,6}reconnect did not restore", re.I)
 RECONNECT_RE = re.compile(r"ConnFreeze|Watchdog|sem mensagens|Reconectando|soft reconnect", re.I)
 CRASH_RE = re.compile(r"Traceback|Bus error|disk I/O error|database is locked|Killed", re.I)
 FMT = "%Y-%m-%d %H:%M:%S"
@@ -72,8 +75,10 @@ def classify(log, start: datetime, end: datetime):
     for _, ln in inside:
         if ROOMS_RE.search(ln):
             counts["restart"] += 1
-        if FLOOD_RE.search(ln):
+        if FLOOD_RE.search(ln) and not SYNTHETIC_FLOOD_RE.search(ln):
             counts["flood"] += 1
+        if DEAF_RE.search(ln):
+            counts["deaf"] += 1
         if RECONNECT_RE.search(ln):
             counts["reconnect"] += 1
         if CRASH_RE.search(ln):
@@ -86,6 +91,8 @@ def classify(log, start: datetime, end: datetime):
 def verdict(counts: Counter, silence: float, span: float) -> str:
     if silence >= max(SILENCE_S, span * 0.5):
         return f"DOWN/STALLED (log silent {int(silence // 60)}m{int(silence % 60):02d}s)"
+    if counts["deaf"]:
+        return f"DEAF x{counts['deaf']} (connected but Telegram sent no messages; watchdog restart)"
     if counts["restart"]:
         return f"RESTARTED x{counts['restart']}"
     if counts["flood"]:
@@ -144,7 +151,10 @@ def main(argv=None) -> int:
     kinds = Counter(k for _, k in fires)
     print("fires by kind:", dict(kinds) or "none")
     print("restarts in window:", sum(1 for _, ln in log if ROOMS_RE.search(ln)))
-    print("floodwait lines   :", sum(1 for _, ln in log if FLOOD_RE.search(ln)))
+    real = sum(1 for _, ln in log if FLOOD_RE.search(ln) and not SYNTHETIC_FLOOD_RE.search(ln))
+    fake = sum(1 for _, ln in log if FLOOD_RE.search(ln) and SYNTHETIC_FLOOD_RE.search(ln))
+    print(f"floodwait lines   : {real} real, {fake} local-guard (ResolveUsername, harmless)")
+    print("deaf/no-message   :", sum(1 for _, ln in log if DEAF_RE.search(ln)))
     print("reconnect lines   :", sum(1 for _, ln in log if RECONNECT_RE.search(ln)))
 
     points = [(since, "window start")] + fires + [(now, "now")]
