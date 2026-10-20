@@ -32,6 +32,7 @@ try:
 except Exception:
     DB = HERE / "bacbo.db"
 STATE = HERE / "data/fallback_result_sender_state.txt"
+MAX_RESULT_AGE_S = int(os.environ.get("FALLBACK_MAX_RESULT_AGE_S", "90"))
 
 
 def _db_ro() -> sqlite3.Connection:
@@ -237,19 +238,24 @@ async def main() -> None:
             rows = conn.execute(
                 """
                 SELECT id, fired_at, resolved_at, signal_kind, color, outcome,
-                       won_at_gale, secs_to_result
+                       won_at_gale, secs_to_result,
+                       CAST((julianday('now') - julianday(COALESCE(resolved_at, fired_at))) * 86400 AS INTEGER) AS age_s
                 FROM consensus_signals
                 WHERE id > ?
                   AND outcome IN ('win','loss','tie')
                   AND fired_at >= datetime('now','-24 hours')
                 ORDER BY id ASC
-                LIMIT 20
+                LIMIT 200
                 """,
                 (read_state(),),
             ).fetchall()
             conn.close()
 
             for row in rows:
+                if row["age_s"] is None or row["age_s"] > MAX_RESULT_AGE_S:
+                    write_state(row["id"])
+                    print("[FallbackResultSender] skipped stale result", row["id"], f"age={row['age_s']}s")
+                    continue
                 if use_bot:
                     await client.send_message(entity, fmt(row), reply_to=botapi_client.lookup(row["id"]))
                 else:

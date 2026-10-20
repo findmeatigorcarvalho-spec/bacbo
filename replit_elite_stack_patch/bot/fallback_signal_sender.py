@@ -50,6 +50,7 @@ def _db_ro() -> sqlite3.Connection:
     return conn
 STATE = HERE / "data/fallback_sender_state.txt"
 BLOCK_STATE = HERE / "data/fallback_blocked_sender_state.txt"
+MAX_SIGNAL_AGE_S = int(os.environ.get("FALLBACK_MAX_SIGNAL_AGE_S", "20"))
 
 MIN_BLOCKED_SCORE = float(os.environ.get("FALLBACK_MIN_BLOCKED_SCORE", "4.0"))
 SEND_BLOCKED = os.environ.get("FALLBACK_SEND_BLOCKED", "0").strip() == "1"
@@ -256,11 +257,12 @@ async def main() -> None:
             last_id = read_int(STATE)
             rows = conn.execute(
                 """
-                SELECT id, fired_at, signal_kind, color, rooms_agreed, source_floor, total_score
+                SELECT id, fired_at, signal_kind, color, rooms_agreed, source_floor, total_score,
+                       CAST((julianday('now') - julianday(fired_at)) * 86400 AS INTEGER) AS age_s
                 FROM consensus_signals
                 WHERE id > ? AND fired_at >= datetime('now','-2 hours')
                 ORDER BY id ASC
-                LIMIT 20
+                LIMIT 200
                 """,
                 (last_id,),
             ).fetchall()
@@ -283,6 +285,10 @@ async def main() -> None:
             conn.close()
 
             for row in rows:
+                if row["age_s"] is None or row["age_s"] > MAX_SIGNAL_AGE_S:
+                    write_int(STATE, row["id"])
+                    print("[FallbackSender] skipped stale signal", row["id"], f"age={row['age_s']}s")
+                    continue
                 msg = await client.send_message(entity, fmt_consensus(row))
                 if use_bot:
                     botapi_client.remember(row["id"], msg)
