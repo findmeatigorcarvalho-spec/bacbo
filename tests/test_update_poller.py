@@ -146,6 +146,110 @@ class UpdatePollerTest(unittest.TestCase):
             self.assertIn("not found", self.up.install(p))
             self.assertEqual(p.read_text(), "async def resolve_room(handle):\n    pass\n")
 
+    def test_silence_action_escalates_probe_then_reconnect_with_cooldown(self):
+        a = self.up.silence_action
+        self.assertEqual(a(10, 1e9, 1e9), "none")
+        self.assertEqual(a(70, 1e9, 1e9), "probe")
+        self.assertEqual(a(70, 10, 1e9), "none")
+        self.assertEqual(a(70, 10, 1e9, probe_failed=True), "reconnect")
+        self.assertEqual(a(160, 10, 1e9), "reconnect")
+        self.assertEqual(a(160, 1e9, 10), "probe")
+        self.assertEqual(a(160, 10, 10, probe_failed=True), "none")
+
+    def _silence_scenario(self, probe_ok, seconds=1.2):
+        from types import SimpleNamespace
+        from telethon import TelegramClient, functions, types
+        self.up.SILENCE_TICK_S = 0.05
+        self.up.SILENCE_PROBE_S = 0.2
+        self.up.SILENCE_RECONNECT_S = 0.6
+        self.up.RECONNECT_COOLDOWN_S = 100.0
+        self.up.PROBE_TIMEOUT_S = 0.1
+        net = _FakeNet()
+        calls = {"state": 0, "reconnect": 0}
+
+        async def main():
+            client, mb = _make_client([71, 72], net)
+            orig = TelegramClient.__call__
+
+            async def call(self_, request, *a, **k):
+                if isinstance(request, functions.updates.GetStateRequest):
+                    calls["state"] += 1
+                    if not probe_ok:
+                        await asyncio.sleep(5)
+                    return types.updates.State(pts=1, qts=0, date=None, seq=0, unread_count=0)
+                return await orig(self_, request, *a, **k)
+
+            type(client).__call__ = call
+            client._sender = SimpleNamespace(_start_reconnect=lambda err: calls.__setitem__("reconnect", calls["reconnect"] + 1))
+            loop = asyncio.get_running_loop()
+            update_task = loop.create_task(client._update_loop())
+            task = loop.create_task(self.up.silence_loop(client))
+            await asyncio.sleep(seconds)
+            task.cancel()
+            update_task.cancel()
+            await asyncio.gather(task, update_task, return_exceptions=True)
+
+        asyncio.run(main())
+        return calls, net
+
+    def test_silence_with_dead_connection_reconnects_in_process_once(self):
+        calls, _ = self._silence_scenario(probe_ok=False)
+        self.assertGreaterEqual(calls["state"], 1)
+        self.assertEqual(calls["reconnect"], 1, "reconnect once, then cooldown")
+
+    def test_silence_with_live_connection_probes_and_catches_up_then_reconnects_late(self):
+        calls, net = self._silence_scenario(probe_ok=True)
+        self.assertGreaterEqual(calls["state"], 2)
+        self.assertTrue(set(net.polled) & {71, 72}, "silence must force a catch-up on idle rooms")
+        self.assertEqual(calls["reconnect"], 1)
+
+    def test_message_updates_reset_the_silence_clock(self):
+        from types import SimpleNamespace
+        from telethon import TelegramClient, types
+        self.up.SILENCE_TICK_S = 0.05
+        self.up.SILENCE_PROBE_S = 0.3
+        self.up.SILENCE_RECONNECT_S = 0.6
+        calls = {"reconnect": 0}
+
+        async def main():
+            client, mb = _make_client([81], _FakeNet())
+            client._sender = SimpleNamespace(_start_reconnect=lambda err: calls.__setitem__("reconnect", 1))
+            task = asyncio.get_running_loop().create_task(self.up.silence_loop(client))
+            await asyncio.sleep(0.05)
+            handler = client.list_event_handlers()[0][0]
+            for _ in range(15):
+                await handler(type('UpdateNewChannelMessage', (), {})())
+                await asyncio.sleep(0.1)
+            task.cancel()
+            await asyncio.gather(task, return_exceptions=True)
+
+        asyncio.run(main())
+        self.assertEqual(calls["reconnect"], 0)
+
+    def test_non_message_updates_do_not_count_as_traffic(self):
+        from types import SimpleNamespace
+        from telethon import types
+        self.up.SILENCE_TICK_S = 0.05
+        self.up.SILENCE_PROBE_S = 0.2
+        self.up.SILENCE_RECONNECT_S = 0.4
+        self.up.PROBE_TIMEOUT_S = 0.1
+        calls = {"reconnect": 0}
+
+        async def main():
+            client, mb = _make_client([91], _FakeNet())
+            client._sender = SimpleNamespace(_start_reconnect=lambda err: calls.__setitem__("reconnect", 1))
+            task = asyncio.get_running_loop().create_task(self.up.silence_loop(client))
+            await asyncio.sleep(0.05)
+            handler = client.list_event_handlers()[0][0]
+            for _ in range(10):
+                await handler(types.UpdateUserStatus(user_id=1, status=types.UserStatusOnline(expires=1)))
+                await asyncio.sleep(0.1)
+            task.cancel()
+            await asyncio.gather(task, return_exceptions=True)
+
+        asyncio.run(main())
+        self.assertEqual(calls["reconnect"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

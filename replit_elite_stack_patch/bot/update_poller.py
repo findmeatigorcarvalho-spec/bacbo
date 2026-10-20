@@ -13,6 +13,13 @@ does. Rooms that are being pushed normally are never polled.
 It backs off for FLOOD_PAUSE_S if Telethon reports a FloodWait while fetching
 differences.
 
+A second task watches for the whole account going silent (no room message at
+all). After SILENCE_PROBE_S it checks the connection with a state request, forces
+a catch-up on the most idle rooms and logs what it saw. After SILENCE_RECONNECT_S
+(or at once if the probe times out) it runs Telethon's own in-process reconnect,
+which re-establishes the socket and catches up without restarting the bot. This
+acts minutes before the 7 to 9 minute watchdog restart would.
+
 Usage:
     python update_poller.py --install    # one-time edit of utils.py (idempotent)
     (the bot starts the loop via ensure_started(), hooked in resolve_room)
@@ -31,6 +38,13 @@ BATCH = 6
 FLOOD_PAUSE_S = 600.0
 REPORT_EVERY_S = 300.0
 _FALLBACK_NO_UPDATES_TIMEOUT = 15 * 60
+
+SILENCE_TICK_S = 5.0
+SILENCE_PROBE_S = 60.0
+SILENCE_RECONNECT_S = 150.0
+RECONNECT_COOLDOWN_S = 300.0
+PROBE_TIMEOUT_S = 15.0
+SILENCE_ARM_LIMIT = 30
 
 _started = False
 
@@ -131,6 +145,98 @@ async def poller_loop(client):
             await asyncio.sleep(30)
 
 
+def silence_action(silence, since_probe, since_reconnect, probe_failed=False):
+    """Decide what to do when no room message has arrived for `silence` seconds.
+
+    Returns "none", "probe" or "reconnect".
+    """
+    if silence < SILENCE_PROBE_S:
+        return "none"
+    can_reconnect = since_reconnect >= RECONNECT_COOLDOWN_S
+    if can_reconnect and (probe_failed or silence >= SILENCE_RECONNECT_S):
+        return "reconnect"
+    if since_probe >= SILENCE_PROBE_S:
+        return "probe"
+    return "none"
+
+
+_MESSAGE_UPDATES = ("UpdateNewChannelMessage", "UpdateNewMessage",
+                    "UpdateEditChannelMessage", "UpdateEditMessage")
+
+
+class _LastMessage:
+    def __init__(self, now):
+        self.at = now
+        self.silent_for = 0.0
+
+    def seen(self, now):
+        self.silent_for = now - self.at
+        self.at = now
+
+
+async def silence_loop(client):
+    from telethon import events, functions
+    from telethon.tl import types
+
+    loop = asyncio.get_running_loop()
+    last = _LastMessage(loop.time())
+
+    async def on_update(update):
+        if type(update).__name__ in _MESSAGE_UPDATES:
+            now = loop.time()
+            if now - last.at >= SILENCE_PROBE_S:
+                log.info("[Silence] messages flowing again after %ds", int(now - last.at))
+            last.seen(now)
+
+    client.add_event_handler(on_update, events.Raw())
+    last_probe = last_reconnect = -1e9
+    probe_failed = False
+    while True:
+        await asyncio.sleep(SILENCE_TICK_S)
+        try:
+            now = loop.time()
+            if not client.is_connected():
+                continue
+            silence = now - last.at
+            if silence < SILENCE_PROBE_S:
+                probe_failed = False
+                continue
+            action = silence_action(silence, now - last_probe, now - last_reconnect, probe_failed)
+            if action == "probe":
+                last_probe = now
+                started = loop.time()
+                try:
+                    await asyncio.wait_for(client(functions.updates.GetStateRequest()), PROBE_TIMEOUT_S)
+                    rtt = "%.2fs" % (loop.time() - started)
+                    probe_failed = False
+                except Exception as exc:
+                    rtt = "FAILED (%s)" % type(exc).__name__
+                    probe_failed = True
+                armed = 0
+                mb = getattr(client, "_message_box", None)
+                queue = getattr(client, "_updates_queue", None)
+                if mb is not None and queue is not None and not mb.getting_diff_for:
+                    batch = due_entries(mb, loop.time(), poll_every=0.0, limit=SILENCE_ARM_LIMIT)
+                    armed = arm(mb, batch)
+                    if armed:
+                        queue.put_nowait(types.UpdatesTooLong())
+                log.warning("[Silence] no room message for %ds | state probe %s | forced catch-up on %d rooms",
+                            int(silence), rtt, armed)
+            elif action == "reconnect":
+                last_reconnect = now
+                last_probe = now
+                probe_failed = False
+                sender = getattr(client, "_sender", None)
+                if sender is None or not hasattr(sender, "_start_reconnect"):
+                    log.warning("[Silence] no sender to reconnect")
+                    continue
+                log.error("[Silence] no room message for %ds — in-process reconnect (no restart)", int(silence))
+                sender._start_reconnect(None)
+        except Exception as exc:
+            log.warning("[Silence] tick failed: %s", exc)
+            await asyncio.sleep(30)
+
+
 def ensure_started():
     global _started
     if _started:
@@ -140,7 +246,9 @@ def ensure_started():
         client = getattr(state, "client", None)
         if client is None:
             return
-        asyncio.get_running_loop().create_task(poller_loop(client))
+        loop = asyncio.get_running_loop()
+        loop.create_task(poller_loop(client))
+        loop.create_task(silence_loop(client))
         _started = True
         log.info("[UpdatePoller] started (idle>=%ds, <=%d rooms/%ds tick)",
                  int(POLL_EVERY_S), BATCH, int(TICK_S))
