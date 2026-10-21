@@ -52,6 +52,14 @@ _SETISH_FRAGMENTS = (
     "BAD_DOW",
     "DOW_BLOCK",
     "HOUR_DOW",
+    "BAD_HOUR",
+    "DANGEROUS_HOUR",
+    "DEATH_HOUR",
+    "WEAK_HOUR",
+    "HOUR_RULES",
+    "BLACKOUT",
+    "BAD_CELLS",
+    "BAD_DAYS",
 )
 
 
