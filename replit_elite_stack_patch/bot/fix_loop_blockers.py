@@ -77,6 +77,70 @@ def patch_perfect_g0(text):
     return new
 
 
+_HM_CONNECT = '            _db = _sq3.connect("bacbo.db", timeout=5)'
+_HM_CLOSE = "            _db.close()"
+_HM_AWAIT = ("            _recent, _today, _blocked_today = await asyncio.to_thread("
+             "_signal_health_queries, _WINDOW_MIN, _MIN_N, _WR_LEAK)")
+
+
+def patch_background(text):
+    """Lift the health monitor's DB block into a thread-run helper.
+
+    periodic_signal_health_monitor does all of its sqlite work in one
+    self-contained block (own connection, three read queries, close) and
+    nothing after it touches _db — the rest is arithmetic, registry file IO
+    and one awaited send. The block is moved verbatim (dedented) into
+    _signal_health_queries(), whose parameters keep the original names
+    (_WINDOW_MIN/_MIN_N/_WR_LEAK) so the moved code is unchanged, and the
+    monitor awaits it via asyncio.to_thread.
+    """
+    if "await asyncio.to_thread(_signal_health_queries" in text:
+        return text
+    if "def _signal_health_queries" in text:
+        raise ValueError("_signal_health_queries already exists but monitor not wired - layout changed")
+    if not re.search(r"^import asyncio\b", text, re.M):
+        raise ValueError("asyncio not imported in background.py - not patching blind")
+    lines = text.splitlines(keepends=True)
+    fn = None
+    for i, ln in enumerate(lines):
+        if ln.startswith("async def periodic_signal_health_monitor("):
+            fn = i
+            break
+    if fn is None:
+        raise ValueError("periodic_signal_health_monitor not found")
+    conn = close = None
+    for j in range(fn, min(len(lines), fn + 500)):
+        stripped = lines[j].rstrip("\n")
+        if conn is None and stripped == _HM_CONNECT:
+            conn = j
+        elif conn is not None and stripped == _HM_CLOSE:
+            close = j
+            break
+    if conn is None or close is None:
+        raise ValueError("health monitor DB block anchors not found (connect/close)")
+    block = lines[conn:close + 1]
+    dedented = []
+    for ln in block:
+        body = ln.rstrip("\n")
+        if body.strip():
+            if not body.startswith(" " * 8):
+                raise ValueError("unexpected indentation in health monitor DB block")
+            dedented.append(body[8:] + "\n")
+        else:
+            dedented.append("\n")
+    helper = (
+        "def _signal_health_queries(_WINDOW_MIN, _MIN_N, _WR_LEAK):\n"
+        "    import sqlite3 as _sq3\n"
+        + "".join(dedented)
+        + "    return _recent, _today, _blocked_today\n"
+        "\n\n"
+    )
+    new_lines = lines[:fn] + [helper] + lines[fn:conn] + [_HM_AWAIT + "\n"] + lines[close + 1:]
+    new = "".join(new_lines)
+    ast.parse(new)
+    return new
+
+
 def health_monitor_snippet(text, max_lines=220):
     """The full periodic_signal_health_monitor function, numbered."""
     lines = text.splitlines()
@@ -118,10 +182,27 @@ def install(bot_dir):
                 out.append("perfect_g0_finder.py: patched - mine_perfect_cells now runs "
                            "in a worker thread (backup %s)" % bak.name)
     bg = bot_dir / "background.py"
-    if bg.is_file():
-        snippet = health_monitor_snippet(bg.read_text(encoding="utf-8", errors="ignore"))
-        if snippet:
-            out.append("background.py periodic_signal_health_monitor (for the next patch - paste this back):\n" + snippet)
+    if not bg.is_file():
+        out.append("background.py not found: %s" % bg)
+    else:
+        src = bg.read_text(encoding="utf-8", errors="ignore")
+        try:
+            new = patch_background(src)
+        except ValueError as exc:
+            out.append("background.py: NOT patched (%s)" % exc)
+            snippet = health_monitor_snippet(src)
+            if snippet:
+                out.append("background.py periodic_signal_health_monitor (paste this back):\n" + snippet)
+        else:
+            if new == src:
+                out.append("background.py: already fixed")
+            else:
+                bak = Path(str(bg) + ".bak_loopblock")
+                if not bak.exists():
+                    bak.write_text(src, encoding="utf-8")
+                bg.write_text(new, encoding="utf-8")
+                out.append("background.py: patched - health monitor DB block now runs "
+                           "in a worker thread (backup %s)" % bak.name)
     return "\n".join(out)
 
 

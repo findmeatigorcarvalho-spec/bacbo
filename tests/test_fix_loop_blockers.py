@@ -27,12 +27,35 @@ async def periodic_mining_task():
         await asyncio.sleep(600)
 '''
 
-BG_SAMPLE = '''async def periodic_signal_health_monitor():
-    _db = get_db()
-    _today = _db.execute("""
-        SELECT COUNT(*) FROM signals WHERE date(fired_at) = date('now')
-    """).fetchone()
-    return _today
+BG_SAMPLE = '''import asyncio
+
+
+async def periodic_signal_health_monitor():
+    import sqlite3 as _sq3
+    _WINDOW_MIN = 60
+    _MIN_N = 3
+    _WR_LEAK = 75.0
+    await asyncio.sleep(120)
+    while True:
+        try:
+            _db = _sq3.connect("bacbo.db", timeout=5)
+            _db.execute("PRAGMA busy_timeout=3000")
+            _recent = _db.execute("""
+                SELECT gate_reason FROM blocked_signals
+                WHERE blocked_at >= datetime('now',?)
+            """, (f"-{_WINDOW_MIN} minutes",)).fetchall()
+            _today = _db.execute("""
+                SELECT COUNT(*) FROM consensus_signals
+            """).fetchone()
+            _blocked_today = _db.execute("""
+                SELECT COUNT(*) FROM blocked_signals
+            """).fetchone()[0]
+            _db.close()
+            _n_fired = _today[0] or 0
+            print(_recent, _n_fired, _blocked_today)
+        except Exception:
+            pass
+        await asyncio.sleep(300)
 '''
 
 
@@ -84,6 +107,44 @@ def one_off():
         new = self.f.patch_perfect_g0(src)
         self.assertEqual(new.count("await asyncio.to_thread(mine_perfect_cells)"), 1)
         self.assertIn("return mine_perfect_cells()", new)
+
+    def test_background_db_block_offloaded(self):
+        new = self.f.patch_background(BG_SAMPLE)
+        compile(new, "background.py", "exec")
+        self.assertIn("def _signal_health_queries(_WINDOW_MIN, _MIN_N, _WR_LEAK):", new)
+        self.assertIn("await asyncio.to_thread(_signal_health_queries, _WINDOW_MIN, _MIN_N, _WR_LEAK)", new)
+        self.assertIn("    return _recent, _today, _blocked_today", new)
+        monitor = new.split("async def periodic_signal_health_monitor", 1)[1]
+        self.assertNotIn('_sq3.connect("bacbo.db"', monitor)
+        self.assertIn("_db.execute", new.split("async def periodic_signal_health_monitor", 1)[0])
+
+    def test_background_idempotent(self):
+        once = self.f.patch_background(BG_SAMPLE)
+        self.assertEqual(self.f.patch_background(once), once)
+
+    def test_background_refuses_without_anchors(self):
+        with self.assertRaises(ValueError):
+            self.f.patch_background("import asyncio\n\n\nasync def periodic_signal_health_monitor():\n    pass\n")
+
+    def test_background_helper_actually_runs_queries(self):
+        import sqlite3, tempfile, os
+        src = self.f.patch_background(BG_SAMPLE)
+        with tempfile.TemporaryDirectory() as d:
+            old = os.getcwd()
+            os.chdir(d)
+            try:
+                conn = sqlite3.connect("bacbo.db")
+                conn.execute("CREATE TABLE blocked_signals (gate_reason TEXT, blocked_at TEXT)")
+                conn.execute("CREATE TABLE consensus_signals (id INTEGER)")
+                conn.commit(); conn.close()
+                ns = {}
+                exec(compile(src, "background.py", "exec"), ns)
+                recent, today, blocked = ns["_signal_health_queries"](60, 3, 75.0)
+                self.assertEqual(recent, [])
+                self.assertEqual(today[0], 0)
+                self.assertEqual(blocked, 0)
+            finally:
+                os.chdir(old)
 
     def test_health_monitor_snippet_locates_execute(self):
         snippet = self.f.health_monitor_snippet(BG_SAMPLE)
