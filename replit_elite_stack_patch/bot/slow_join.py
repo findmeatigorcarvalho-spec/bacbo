@@ -140,6 +140,17 @@ async def slow_join_loop(client):
                 log.warning("[SlowJoin] FloodWait %ss on @%s - pausing joiner", wait, handle)
             except (errors.UsernameNotOccupiedError, errors.UsernameInvalidError):
                 st["skip"][handle] = "username does not exist"
+            except ValueError as exc:
+                # Telethon's get_entity raises ValueError("No user has ...")
+                # for dead handles instead of UsernameNotOccupiedError.
+                # Without this, a dead room sits at the head of the queue
+                # and is retried every hour forever, blocking all joins.
+                if "No user has" in str(exc) or "username" in str(exc).lower():
+                    st["skip"][handle] = "username does not exist"
+                    log.info("[SlowJoin] @%s -> skip (username does not exist)", handle)
+                else:
+                    st["not_before"] = time.time() + UNKNOWN_ERROR_PAUSE_S
+                    log.warning("[SlowJoin] @%s error: %s - pausing 1h", handle, exc)
             except errors.ChannelPrivateError:
                 st["skip"][handle] = "private / banned"
             except errors.ChannelsTooMuchError:
