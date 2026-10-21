@@ -49,6 +49,9 @@ _SETISH_FRAGMENTS = (
     "BAD_HOURS",
     "HOUR_BLOCK",
     "BLOCKED_HOURS",
+    "BAD_DOW",
+    "DOW_BLOCK",
+    "HOUR_DOW",
 )
 
 
@@ -159,6 +162,9 @@ _INSTANCE_ATTR_FRAGMENTS = (
     "bad_hour",
     "blocked_hour",
     "hour_block",
+    "bad_dow",
+    "dow_block",
+    "hour_dow",
 )
 
 _AUDITOR_NAME_FRAGMENTS = (
@@ -363,7 +369,7 @@ def clear_persist_json(data_dir: Path | None = None) -> dict[str, Any]:
                 raw[key] = []
         for key in list(raw.keys()):
             lk = str(key).lower()
-            if "bad_hr" in lk or "bad_hour" in lk or "hour_block" in lk:
+            if "bad_hr" in lk or "bad_hour" in lk or "hour_block" in lk or "bad_dow" in lk or "dow_block" in lk:
                 val = raw[key]
                 if val:
                     cleared.append(str(key))
