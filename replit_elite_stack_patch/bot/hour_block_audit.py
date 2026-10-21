@@ -86,6 +86,8 @@ def scan_state_files(bot_dir):
             continue
         for key, val in blob.items():
             lk = str(key).lower()
+            if lk.startswith("lux_"):
+                continue  # neutraliser's own marker keys, not block lists
             if any(f in lk for f in ("bad_hr", "bad_hour", "hour_block", "blocked_hour",
                                      "bad_dow", "dow_block", "dynamic_addition", "suspended")):
                 n = len(val) if isinstance(val, (list, dict, set)) else (1 if val else 0)
