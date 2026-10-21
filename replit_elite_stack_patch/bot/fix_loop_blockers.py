@@ -12,11 +12,13 @@ and watchdogs for minutes — the same failure that refresh_all_room_dna had.
 Running it with asyncio.to_thread keeps the loop responsive (sqlite
 connections in this codebase are thread-local, so the worker gets its own).
 
-This installer patches perfect_g0_finder.py (exact call-site anchor, AST
-validated). For background.py's health monitor it does NOT guess: it prints
-the lines around the first _db.execute in periodic_signal_health_monitor so
-the offload patch for it can be written against the real code — paste that
-snippet back.
+This installer patches perfect_g0_finder.py: every mine_perfect_cells() call
+site that sits inside an async function is rewritten, by line, to
+await asyncio.to_thread(...) (AST-located, compile-validated; call sites in
+sync functions are left untouched and reported). For background.py's health
+monitor it does NOT guess: it prints the whole periodic_signal_health_monitor
+function so the offload patch for it can be written against the real code —
+paste that back.
 
 Usage:
     python fix_loop_blockers.py --install   # takes effect on next start
@@ -26,33 +28,57 @@ import re
 import sys
 from pathlib import Path
 
-_CALL_RE = re.compile(r"^([ \t]*)summary = mine_perfect_cells\(\)[ \t]*$", re.M)
+_CALL = "mine_perfect_cells()"
+
+
+def _call_sites(text):
+    """(async_lines, sync_lines): 1-based lines calling mine_perfect_cells()."""
+    tree = ast.parse(text)
+    async_lines, sync_lines = set(), set()
+
+    def visit(node, in_async):
+        for child in ast.iter_child_nodes(node):
+            now_async = in_async or isinstance(child, ast.AsyncFunctionDef)
+            if (isinstance(child, ast.Call) and isinstance(child.func, ast.Name)
+                    and child.func.id == "mine_perfect_cells"):
+                (async_lines if now_async else sync_lines).add(child.lineno)
+            visit(child, now_async)
+
+    visit(tree, False)
+    return sorted(async_lines), sorted(sync_lines)
 
 
 def patch_perfect_g0(text):
-    if "await asyncio.to_thread(mine_perfect_cells)" in text:
-        return text
-    tree = ast.parse(text)
-    async_fn = None
-    for node in ast.walk(tree):
-        if isinstance(node, ast.AsyncFunctionDef):
-            for sub in ast.walk(node):
-                if (isinstance(sub, ast.Call) and isinstance(sub.func, ast.Name)
-                        and sub.func.id == "mine_perfect_cells"):
-                    async_fn = node.name
-    if async_fn is None:
-        raise ValueError("mine_perfect_cells() is not called from any async function")
     if not re.search(r"^import asyncio\b", text, re.M):
         raise ValueError("asyncio not imported in perfect_g0_finder.py - not patching blind")
-    new, n = _CALL_RE.subn(r"\g<1>summary = await asyncio.to_thread(mine_perfect_cells)", text)
-    if n != 1:
-        raise ValueError("expected exactly one 'summary = mine_perfect_cells()' call, found %d" % n)
+    async_lines, sync_lines = _call_sites(text)
+    if not async_lines and not sync_lines:
+        if "asyncio.to_thread(mine_perfect_cells)" in text:
+            return text  # already patched
+        raise ValueError("no mine_perfect_cells() call sites found")
+    lines = text.splitlines(keepends=True)
+    patched = 0
+    for lineno in async_lines:
+        line = lines[lineno - 1]
+        if "asyncio.to_thread(mine_perfect_cells)" in line:
+            continue
+        if _CALL not in line:
+            raise ValueError("call site line %d does not contain %r - layout changed" % (lineno, _CALL))
+        lines[lineno - 1] = line.replace(
+            _CALL, "await asyncio.to_thread(mine_perfect_cells)", 1)
+        patched += 1
+    new = "".join(lines)
     ast.parse(new)
+    if sync_lines:
+        print("note: left %d sync-context call site(s) untouched at line(s) %s"
+              % (len(sync_lines), sync_lines))
+    if patched == 0 and "asyncio.to_thread(mine_perfect_cells)" not in new:
+        raise ValueError("nothing patched (async sites: %s, sync sites: %s)" % (async_lines, sync_lines))
     return new
 
 
-def health_monitor_snippet(text, context=18):
-    """Lines around the first _db.execute inside periodic_signal_health_monitor."""
+def health_monitor_snippet(text, max_lines=220):
+    """The full periodic_signal_health_monitor function, numbered."""
     lines = text.splitlines()
     start = None
     for i, ln in enumerate(lines):
@@ -61,12 +87,12 @@ def health_monitor_snippet(text, context=18):
             break
     if start is None:
         return None
-    for j in range(start, min(len(lines), start + 400)):
-        if "_db.execute" in lines[j] or ".execute(" in lines[j]:
-            lo = max(start, j - 4)
-            hi = min(len(lines), j + context)
-            return "\n".join("%d: %s" % (k + 1, lines[k]) for k in range(lo, hi))
-    return "\n".join("%d: %s" % (k + 1, lines[k]) for k in range(start, min(len(lines), start + 30)))
+    end = min(len(lines), start + max_lines)
+    for j in range(start + 1, end):
+        if re.match(r"^(async def|def|class)\s", lines[j]):
+            end = j
+            break
+    return "\n".join("%d: %s" % (k + 1, lines[k]) for k in range(start, end))
 
 
 def install(bot_dir):

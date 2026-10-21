@@ -63,6 +63,28 @@ class FixLoopBlockersTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.f.patch_perfect_g0("import asyncio\n\n\nasync def other():\n    pass\n")
 
+    def test_patches_two_async_call_sites(self):
+        src = SAMPLE + '''
+
+async def periodic_mining_task_b():
+    summary = mine_perfect_cells()
+    print(summary)
+'''
+        new = self.f.patch_perfect_g0(src)
+        self.assertEqual(new.count("await asyncio.to_thread(mine_perfect_cells)"), 2)
+        self.assertNotIn("summary = mine_perfect_cells()", new)
+        compile(new, "perfect_g0_finder.py", "exec")
+
+    def test_sync_site_left_untouched(self):
+        src = SAMPLE + '''
+
+def one_off():
+    return mine_perfect_cells()
+'''
+        new = self.f.patch_perfect_g0(src)
+        self.assertEqual(new.count("await asyncio.to_thread(mine_perfect_cells)"), 1)
+        self.assertIn("return mine_perfect_cells()", new)
+
     def test_health_monitor_snippet_locates_execute(self):
         snippet = self.f.health_monitor_snippet(BG_SAMPLE)
         self.assertIn("periodic_signal_health_monitor", snippet)
