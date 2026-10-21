@@ -13,28 +13,41 @@ def _load(name):
     return mod
 
 
+MAIN_SNIPPET = '''import os
+
+def f():
+    import sys
+    return sys.argv
+
+# ── Hour-advisory layer ─────────────────────────────────────────
+import hour_advisory as _hour_adv
+print(_hour_adv)
+'''
+
+
 class FixWireHourBlocksTest(unittest.TestCase):
     def setUp(self):
         self.fix = _load("fix_wire_hour_blocks")
 
-    def test_hook_inserted_after_last_import(self):
-        src = "import os\nimport sys\n\nX = 1\n"
-        out = self.fix.patch_main(src)
+    def test_hook_goes_before_hour_advisory_not_inside_function(self):
+        out = self.fix.patch_main(MAIN_SNIPPET)
         self.assertIn("import lux_no_hour_blocks", out)
-        self.assertLess(out.index("import lux_no_hour_blocks"), out.index("X = 1"))
-        import ast
-        ast.parse(out)
+        self.assertLess(out.index("import lux_no_hour_blocks"),
+                        out.index("Hour-advisory layer"))
+        self.assertGreater(out.index("import lux_no_hour_blocks"),
+                           out.index("def f():"))
+        compile(out, "main.py", "exec")
 
-    def test_idempotent(self):
-        src = "import os\n"
-        once = self.fix.patch_main(src)
-        self.assertEqual(once, self.fix.patch_main(once))
+    def test_refuses_without_anchor(self):
+        with self.assertRaises(ValueError):
+            self.fix.patch_main("import os\nprint(1)\n")
 
-    def test_install_and_backup(self):
+    def test_idempotent_and_install(self):
         with tempfile.TemporaryDirectory() as d:
             d = Path(d)
-            (d / "main.py").write_text("import os\nprint('hi')\n")
+            (d / "main.py").write_text(MAIN_SNIPPET)
             self.assertIn("wired", self.fix.install(d))
+            compile((d / "main.py").read_text(), "main.py", "exec")
             self.assertTrue((d / "main.py.bak_hourwire").exists())
             self.assertIn("already wired", self.fix.install(d))
 

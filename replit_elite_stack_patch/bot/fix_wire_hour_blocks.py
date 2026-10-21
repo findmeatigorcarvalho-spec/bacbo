@@ -1,19 +1,20 @@
 """Wire lux_no_hour_blocks into main.py so hour/DOW blocks stay dead 24/7.
 
-main.py currently relies on the boot-time HourAdvisory, which empties the
-hour/DOW constants once at startup. lux_no_hour_blocks does that too, but
-also: no-ops the auditors that re-learn bad hours, empties the persisted
-JSON (accuracy_blocks.json blocked_hours etc.), and re-sweeps every 20s
-for the life of the process. Importing it once near the top of main.py
-(after the regular imports, before the _gates_* floors load) is enough -
-its import hook sweeps gate modules as they are imported later.
+v2: the v1 installer inserted the hook after the last import line in the
+first 200 lines, which could land inside a function/try block and corrupt
+main.py ('return' outside function - ast.parse does not catch that, only
+compile() does). v2 inserts at a top-level anchor instead: immediately
+before the Hour-advisory layer block (all gate modules are already
+imported by then, so the sweep sees them), and validates with compile().
+
+If v1 already corrupted main.py, restore the backup first:
+    cp main.py.bak_hourwire main.py
 
 Idempotent. Takes effect on next bot start.
 
 Usage:
     python fix_wire_hour_blocks.py --install
 """
-import ast
 import sys
 from pathlib import Path
 
@@ -22,22 +23,21 @@ HOOK = (
     "    import lux_no_hour_blocks  # noqa: F401  (24/7: hour/DOW blocks stay empty)\n"
     "except Exception:\n"
     "    pass\n"
+    "\n"
 )
+
+_ANCHORS = ("Hour-advisory layer", "Background task imports")
 
 
 def patch_main(text):
     if "lux_no_hour_blocks" in text:
         return text
     lines = text.splitlines(keepends=True)
-    last_import = -1
-    for i, ln in enumerate(lines[:200]):
-        s = ln.strip()
-        if s.startswith("import ") or s.startswith("from "):
-            last_import = i
-    if last_import < 0:
-        raise ValueError("no import lines found in first 200 lines of main.py")
-    lines.insert(last_import + 1, HOOK)
-    return "".join(lines)
+    for i, ln in enumerate(lines):
+        if any(a in ln for a in _ANCHORS):
+            lines.insert(i, HOOK)
+            return "".join(lines)
+    raise ValueError("no top-level anchor found (Hour-advisory / Background task imports)")
 
 
 def install(bot_dir):
@@ -51,7 +51,10 @@ def install(bot_dir):
         return "main.py: NOT patched (%s)" % exc
     if new == src:
         return "main.py: already wired"
-    ast.parse(new)
+    try:
+        compile(new, str(path), "exec")
+    except SyntaxError as exc:
+        return "main.py: NOT patched (would not compile: %s)" % exc
     bak = Path(str(path) + ".bak_hourwire")
     if not bak.exists():
         bak.write_text(src, encoding="utf-8")
