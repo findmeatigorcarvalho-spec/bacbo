@@ -1,0 +1,637 @@
+{
+  "generated_at": "2026-07-23T03:43:32.791933+00:00",
+  "db_path": "/workspace/replit_exports/db/bot/bacbo.db",
+  "round_secs_assumed": 30.0,
+  "cells": [
+    {
+      "signal_kind": "SEQUENCE",
+      "floor": "LIVE",
+      "n": 324,
+      "secs_avg": 4.6,
+      "secs_median": 0.6,
+      "secs_p90": 17.9,
+      "secs_max": 96.9,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 317,
+        "2": 6,
+        "3": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "MAR19",
+      "n": 52,
+      "secs_avg": 19.6,
+      "secs_median": 10.9,
+      "secs_p90": 43.0,
+      "secs_max": 243.4,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 47,
+        "2": 4,
+        "8": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "GOLDEN",
+      "floor": "MAR19",
+      "n": 31,
+      "secs_avg": 27.8,
+      "secs_median": 17.6,
+      "secs_p90": 35.8,
+      "secs_max": 279.3,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 28,
+        "2": 1,
+        "3": 1,
+        "9": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "MAR20",
+      "n": 27,
+      "secs_avg": 18.9,
+      "secs_median": 21.9,
+      "secs_p90": 33.5,
+      "secs_max": 50.1,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 26,
+        "2": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "LIVE",
+      "n": 24,
+      "secs_avg": 26.3,
+      "secs_median": 20.9,
+      "secs_p90": 52.1,
+      "secs_max": 77.2,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 19,
+        "2": 4,
+        "3": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "MAR21",
+      "n": 24,
+      "secs_avg": 23.4,
+      "secs_median": 25.8,
+      "secs_p90": 35.5,
+      "secs_max": 50.1,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 23,
+        "2": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "GOLDEN",
+      "floor": "LIVE",
+      "n": 11,
+      "secs_avg": 13.6,
+      "secs_median": 12.7,
+      "secs_p90": 29.0,
+      "secs_max": 30.9,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 11
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "LIVE",
+      "n": 9,
+      "secs_avg": 18.1,
+      "secs_median": 22.2,
+      "secs_p90": 32.2,
+      "secs_max": 32.2,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 9
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "GOLDEN",
+      "floor": "MAY10",
+      "n": 7,
+      "secs_avg": 15.0,
+      "secs_median": 4.0,
+      "secs_p90": 56.4,
+      "secs_max": 56.4,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 6,
+        "2": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "FLASH",
+      "floor": "LIVE",
+      "n": 6,
+      "secs_avg": 6.6,
+      "secs_median": 8.1,
+      "secs_p90": 12.7,
+      "secs_max": 12.7,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 6
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "AITEST_APR20",
+      "n": 6,
+      "secs_avg": 17.2,
+      "secs_median": 21.9,
+      "secs_p90": 25.8,
+      "secs_max": 25.8,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 6
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "MAR20",
+      "n": 4,
+      "secs_avg": 26.4,
+      "secs_median": 31.0,
+      "secs_p90": 45.9,
+      "secs_max": 45.9,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 3,
+        "2": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SEQUENCE",
+      "floor": "MAR19",
+      "n": 4,
+      "secs_avg": 21.2,
+      "secs_median": 37.0,
+      "secs_p90": 41.2,
+      "secs_max": 41.2,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 4
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "APR28",
+      "n": 3,
+      "secs_avg": 1.2,
+      "secs_median": 0.7,
+      "secs_p90": 2.7,
+      "secs_max": 2.7,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 3
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "GOLDEN",
+      "floor": "MAR20",
+      "n": 3,
+      "secs_avg": 16.1,
+      "secs_median": 17.0,
+      "secs_p90": 23.8,
+      "secs_max": 23.8,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 3
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "ULTIMATE",
+      "n": 3,
+      "secs_avg": 1.6,
+      "secs_median": 1.9,
+      "secs_p90": 2.7,
+      "secs_max": 2.7,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 3
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "APR19",
+      "n": 3,
+      "secs_avg": 17.8,
+      "secs_median": 21.8,
+      "secs_p90": 26.1,
+      "secs_max": 26.1,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 3
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "AITEST_APR30",
+      "n": 3,
+      "secs_avg": 15.6,
+      "secs_median": 15.3,
+      "secs_p90": 23.7,
+      "secs_max": 23.7,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 3
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "APR19",
+      "n": 3,
+      "secs_avg": 23.2,
+      "secs_median": 23.7,
+      "secs_p90": 31.9,
+      "secs_max": 31.9,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 3
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "GOLDEN",
+      "floor": "AITEST_APR30",
+      "n": 3,
+      "secs_avg": 7.8,
+      "secs_median": 1.4,
+      "secs_p90": 21.8,
+      "secs_max": 21.8,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 3
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SEQUENCE",
+      "floor": "ELITE_V2_PEAK",
+      "n": 3,
+      "secs_avg": 5.3,
+      "secs_median": 0.5,
+      "secs_p90": 15.0,
+      "secs_max": 15.0,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 3
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "ELITE_V2",
+      "n": 2,
+      "secs_avg": 2.6,
+      "secs_median": 2.7,
+      "secs_p90": 2.7,
+      "secs_max": 2.7,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 2
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "AITEST_APR20",
+      "n": 2,
+      "secs_avg": 21.1,
+      "secs_median": 33.6,
+      "secs_p90": 33.6,
+      "secs_max": 33.6,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 2
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "AITEST_APR24",
+      "n": 2,
+      "secs_avg": 22.9,
+      "secs_median": 31.9,
+      "secs_p90": 31.9,
+      "secs_max": 31.9,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 2
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "MAR21",
+      "n": 2,
+      "secs_avg": 4.9,
+      "secs_median": 8.9,
+      "secs_p90": 8.9,
+      "secs_max": 8.9,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 2
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "AITEST_APR30",
+      "n": 2,
+      "secs_avg": 26.8,
+      "secs_median": 27.4,
+      "secs_p90": 27.4,
+      "secs_max": 27.4,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 2
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "APR24",
+      "n": 2,
+      "secs_avg": 24.0,
+      "secs_median": 26.1,
+      "secs_p90": 26.1,
+      "secs_max": 26.1,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 2
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "MAY10",
+      "n": 2,
+      "secs_avg": 8.6,
+      "secs_median": 10.0,
+      "secs_p90": 10.0,
+      "secs_max": 10.0,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 2
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "JUN10",
+      "n": 1,
+      "secs_avg": 4.6,
+      "secs_median": 4.6,
+      "secs_p90": 4.6,
+      "secs_max": 4.6,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "GOLDEN",
+      "floor": "AITEST_APR20",
+      "n": 1,
+      "secs_avg": 224.4,
+      "secs_median": 224.4,
+      "secs_p90": 224.4,
+      "secs_max": 224.4,
+      "implied_round_mode": 7,
+      "implied_round_dist": {
+        "7": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "GOLDEN",
+      "floor": "AITEST_APR21",
+      "n": 1,
+      "secs_avg": 7.8,
+      "secs_median": 7.8,
+      "secs_p90": 7.8,
+      "secs_max": 7.8,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "AITEST_APR22",
+      "n": 1,
+      "secs_avg": 20.8,
+      "secs_median": 20.8,
+      "secs_p90": 20.8,
+      "secs_max": 20.8,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "AITEST_APR26",
+      "n": 1,
+      "secs_avg": 26.4,
+      "secs_median": 26.4,
+      "secs_p90": 26.4,
+      "secs_max": 26.4,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "APR20",
+      "n": 1,
+      "secs_avg": 26.1,
+      "secs_median": 26.1,
+      "secs_p90": 26.1,
+      "secs_max": 26.1,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "APR26",
+      "n": 1,
+      "secs_avg": 26.1,
+      "secs_median": 26.1,
+      "secs_p90": 26.1,
+      "secs_max": 26.1,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "APR29",
+      "n": 1,
+      "secs_avg": 26.1,
+      "secs_median": 26.1,
+      "secs_p90": 26.1,
+      "secs_max": 26.1,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "APR28",
+      "n": 1,
+      "secs_avg": 26.1,
+      "secs_median": 26.1,
+      "secs_p90": 26.1,
+      "secs_max": 26.1,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "APR27",
+      "n": 1,
+      "secs_avg": 26.1,
+      "secs_median": 26.1,
+      "secs_p90": 26.1,
+      "secs_max": 26.1,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "AITEST_APR22",
+      "n": 1,
+      "secs_avg": 5.6,
+      "secs_median": 5.6,
+      "secs_p90": 5.6,
+      "secs_max": 5.6,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "AITEST_APR25",
+      "n": 1,
+      "secs_avg": 2.3,
+      "secs_median": 2.3,
+      "secs_p90": 2.3,
+      "secs_max": 2.3,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "SOLO_ELITE",
+      "floor": "AITEST_APR21",
+      "n": 1,
+      "secs_avg": 1.4,
+      "secs_median": 1.4,
+      "secs_p90": 1.4,
+      "secs_max": 1.4,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "GOLDEN",
+      "floor": "AITEST_APR28",
+      "n": 1,
+      "secs_avg": 1.4,
+      "secs_median": 1.4,
+      "secs_p90": 1.4,
+      "secs_max": 1.4,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "PLATINUM",
+      "floor": "AITEST_APR28",
+      "n": 1,
+      "secs_avg": 6.9,
+      "secs_median": 6.9,
+      "secs_p90": 6.9,
+      "secs_max": 6.9,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    },
+    {
+      "signal_kind": "GOLDEN",
+      "floor": "MAY21",
+      "n": 1,
+      "secs_avg": 1.2,
+      "secs_median": 1.2,
+      "secs_p90": 1.2,
+      "secs_max": 1.2,
+      "implied_round_mode": 1,
+      "implied_round_dist": {
+        "1": 1
+      },
+      "note": "If mode\u22653, labeled G0 often resolved ~3+ table rounds after fire (assuming ~30s/round)."
+    }
+  ],
+  "insight": "Systems with high median secs_to_result are profitable-as-labeled-G0 but mechanically delayed \u2014 true hit may be round +3/+5, not next round."
+}

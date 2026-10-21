@@ -1,0 +1,828 @@
+chrono_order,role,registry_family,era,first_chat,existence_at,tg_count,never_fired,had_original_result,instructs_bet,reports_outcome,has_color_call,has_countdown,mentions_gale,room_pair,claims_wr_pct,claims_n,claim_verdict,lines,first_line
+1,ONLINE,ONLINE_BANNER,,mr_iv4,2026-03-17 08:37:17,3533,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🟢 BacBo Royal UserBot ONLINE 🟢
+2,UNKNOWN,,,mr_iv4,2026-03-17 08:43:46,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,More
+3,UNKNOWN,,,mr_iv4,2026-03-17 20:13:42,9,False,False,False,False,False,False,False,,,,NO_CLAIM,1,💓 Bot Ativo | 17/03/2026 16:13:41
+4,ROOM_RELAY,ROOM_RELAY,,mr_iv4,2026-03-19 21:46:17,3267,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📡 @CoringaDados — 19/03/2026 17:46:17
+5,ROOM_RELAY,ROOM_RELAY,,mr_iv4,2026-03-19 21:49:53,76296,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📡 @CoringaDados — 19/03/2026 17:49:53
+6,FIRE,FIRE_CONFIRMED_ENTER,,mr_iv4,2026-03-19 21:51:34,13,False,False,True,False,False,False,False,,,,NO_CLAIM,1,🏆 SIGNAL CONFIRMED — ENTER NOW 🏆
+7,ROOM_RELAY,ROOM_RELAY,,mr_iv4,2026-03-19 21:52:06,9978,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📡 @CoringaDados — 19/03/2026 17:52:06
+8,ROOM_RELAY,ROOM_RELAY,,mr_iv4,2026-03-19 21:53:06,662,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📡 @CoringaDados — 19/03/2026 17:53:06
+9,FIRE,FIRE_SOLO_ELITE_ENTER,,mr_iv4,2026-03-19 21:55:33,11228,False,True,True,True,True,False,False,,58.3,,CLAIM_WITHOUT_SAMPLE_SIZE,27,💎 SOLO ELITE SIGNAL 💎
+10,ROOM_RELAY,ROOM_RELAY,,mr_iv4,2026-03-19 22:00:16,4780,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📡 @IsaDados — 19/03/2026 18:00:15
+11,ROOM_RELAY,ROOM_RELAY,,mr_iv4,2026-03-19 22:13:23,59810,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📡 @IsaDados — 19/03/2026 18:13:23
+12,ROOM_RELAY,ROOM_RELAY,,mr_iv4,2026-03-19 22:28:29,137438,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📡 @x8sinais — 19/03/2026 18:28:29
+13,OPS,OPS_SEQUENCE_PREDICTION,,mr_iv4,2026-03-19 22:54:09,11474,False,False,False,False,True,False,False,,,,NO_CLAIM,1,📊 SEQUENCE PREDICTION
+14,UNKNOWN,,,mr_iv4,2026-03-19 22:56:41,591,False,False,False,False,True,False,False,,,,NO_CLAIM,1,📅 CYCLE CLOSE 🔴 @x8sinais — 19/03/2026 18:56:41
+15,FIRE,FIRE_GOLDEN_ENTER,,mr_iv4,2026-03-19 22:57:45,2964,False,True,True,True,True,False,False,,10.0,,CLAIM_WITHOUT_SAMPLE_SIZE,34,🏆 GOLDEN SIGNAL — ENTER NOW 🏆
+16,RESULT,RESULT_AUTO_TIE,,mr_iv4,2026-03-19 22:58:45,3,False,False,False,True,False,False,False,,,,NO_CLAIM,5,⚪ AUTO TIE @CoringaDados — 19/03/2026 18:58:45
+17,UNKNOWN,,,mr_iv4,2026-03-19 23:17:14,1828,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ AUTO LOSS @IsaDados — 19/03/2026 19:17:14
+18,RESULT,RESULT_WIN_TIER,,mr_iv4,2026-03-19 23:52:41,6054,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN — SOLO_ELITE
+19,RESULT,RESULT_WIN_TIER,,mr_iv4,2026-03-19 23:52:41,1924,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN — GOLDEN
+20,RESULT,RESULT_LOSS_TIER,,mr_iv4,2026-03-19 23:55:31,173,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS — GOLDEN
+21,RESULT,RESULT_LOSS_TIER,,mr_iv4,2026-03-19 23:55:32,592,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS — SOLO_ELITE
+22,UNKNOWN,OPS_G2_ATINGIDO_PARE,,mr_iv4,2026-03-19 23:55:32,560,False,False,False,False,False,False,True,,,,NO_CLAIM,1,⛔ PARE — G2 ATINGIDO
+23,UNKNOWN,FIRE_GALE_ENTRE_NOVAMENTE,,mr_iv4,2026-03-19 23:55:32,401,False,False,True,False,False,False,True,,,,NO_CLAIM,1,🔁 GALE 1 — Entre novamente
+24,UNKNOWN,,,mr_iv4,2026-03-20 00:00:13,689,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📅 CYCLE OPEN 🟢 @x8sinais — 19/03/2026 20:00:13
+25,RESULT,RESULT_EMPATE,,mr_iv4,2026-03-20 00:21:42,328,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 EMPATE — SOLO_ELITE
+26,RESULT,RESULT_AUTO_TIE,,mr_iv4,2026-03-20 00:21:42,1292,False,False,False,True,False,False,False,,,,NO_CLAIM,5,🟡 AUTO TIE @x8sinais — 19/03/2026 20:21:42
+27,UNKNOWN,OPS_LOSS_COOLDOWN,,mr_iv4,2026-03-20 00:34:50,4313,False,False,False,True,False,False,False,,,,NO_CLAIM,1,⚠️ LOSS COOLDOWN ACTIVATED
+28,UNKNOWN,,,mr_iv4,2026-03-20 00:41:35,1466,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ Cooldown cancelled — WIN recorded. Thresholds back to normal.
+29,FIRE,FIRE_SEQUENCE_ENTER,,mr_iv4,2026-03-20 00:45:09,109,False,True,True,True,True,False,False,,,,NO_CLAIM,20,📊 SEQUENCE SIGNAL — ENTER NOW 📊
+30,RESULT,RESULT_WIN_TIER,,mr_iv4,2026-03-20 00:45:09,1613,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN — SEQUENCE
+31,FIRE,FIRE_GALE_RETENTATIVA,,mr_iv4,2026-03-20 00:48:58,1248,False,True,True,True,True,False,True,,10.0,,CLAIM_WITHOUT_SAMPLE_SIZE,33,♻️ GALE 1 — RETENTATIVA (1 room at G1)
+32,UNKNOWN,FIRE_GALE_ENTRE_NOVAMENTE,,mr_iv4,2026-03-20 01:20:17,1,False,False,True,False,False,False,True,,,,NO_CLAIM,1,🔁 GALE 2 — Última chance
+33,RESULT,RESULT_EMPATE,,mr_iv4,2026-03-20 01:50:17,158,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 EMPATE — SEQUENCE
+34,RESULT,RESULT_EMPATE,,mr_iv4,2026-03-20 01:58:13,114,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 EMPATE — GOLDEN
+35,RESULT,RESULT_LOSS_TIER,,mr_iv4,2026-03-20 02:04:37,182,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS — SEQUENCE
+36,UNKNOWN,,,mr_iv4,2026-03-20 03:00:00,4,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📋 RELATÓRIO DIÁRIO AUTOMÁTICO
+37,UNKNOWN,FIRE_GOLDEN_ENTRE_AGORA,,mr_iv4,2026-03-20 09:09:00,818,False,False,True,False,False,False,False,,,,NO_CLAIM,5,🏆🏆🏆 GOLDEN SIGNAL — ENTRE AGORA 🏆🏆🏆
+38,RESULT,RESULT_LOSS_TIER,,mr_iv4,2026-03-20 09:10:40,1956,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS — G0 FALHOU
+39,UNKNOWN,,,mr_iv4,2026-03-20 09:14:45,19,False,False,True,False,False,False,True,,,,NO_CLAIM,1,♻️♻️ GALE 1 — SEGUNDA ENTRADA ♻️♻️
+40,UNKNOWN,RESULT_GREEN_LEGACY_G0,,mr_iv4,2026-03-20 10:17:11,518,False,False,False,True,False,False,False,,,,NO_CLAIM,5,✅✅✅ GREEN — VITÓRIA NO G0! ✅✅✅
+41,ROOM_RELAY,ROOM_RELAY,,mr_iv4,2026-03-20 10:19:31,1761,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📡 @x8sinais — 20/03/2026 06:19:31
+42,UNKNOWN,RESULT_GREEN_LEGACY_G1,,mr_iv4,2026-03-20 10:21:23,141,False,False,False,True,False,False,True,,,,NO_CLAIM,1,✅✅ GREEN — RECUPERADO NO G1! ✅✅
+43,RESULT,OPS_TIER_LEGEND,,mr_iv4,2026-03-20 10:54:59,25,False,False,False,True,False,False,False,,,,NO_CLAIM,5,🟡🟡 EMPATE — PROTEÇÃO ATIVADA 🟡🟡
+44,UNKNOWN,,,mr_iv4,2026-03-20 12:26:30,1765,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔍 @rqdados — 20/03/2026 08:26:30
+45,UNKNOWN,,,mr_iv4,2026-03-20 18:42:58,20,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📡 BacBo Royal — Room Auto-Update
+46,UNKNOWN,,,mr_iv4,2026-03-20 18:50:34,17,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🛑 Circuit Breaker ATIVADO
+47,UNKNOWN,,,mr_iv4,2026-03-20 19:00:01,80,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚠️ Mismatch: @sinal_bac_bo is not Bac Bo — muted.
+48,UNKNOWN,,,mr_iv4,2026-03-20 19:33:04,12,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔥 Engine em ALTA performance!
+49,RESULT,OPS_TIE_ALERT,,mr_iv4,2026-03-20 19:33:41,454,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡⚡🟡 PRESSÃO DE EMPATE — ALERTA AUTOMÁTICO 🟡⚡🟡
+50,UNKNOWN,OPS_PREALERT_FORMING,,mr_iv4,2026-03-20 20:25:16,66,False,False,False,False,False,False,False,,,,NO_CLAIM,5,⚡ SINAL SE FORMANDO ⚡
+51,FIRE,FIRE_PLATINUM_ENTER,,mr_iv4,2026-03-20 21:29:53,1377,False,False,False,False,False,False,False,,,,NO_CLAIM,1,💠💠💠 PLATINUM SIGNAL — PAR DE OURO 💠💠💠
+52,UNKNOWN,OPS_ELITE_ANALISANDO,,mr_iv4,2026-03-20 21:41:04,1737,False,False,False,False,False,False,False,,,,NO_CLAIM,5,⚡ ELITE ANALISANDO ⚡
+53,UNKNOWN,,,mr_iv4,2026-03-20 21:49:59,2,False,False,True,True,False,False,True,,,,NO_CLAIM,1,❌ AUTO LOSS 📸 @sinaisbacbosemgale — 20/03/2026 17:49:59
+54,UNKNOWN,OPS_DUPLO_ELITE,,mr_iv4,2026-03-20 22:43:38,329,False,False,False,False,False,False,False,,,,NO_CLAIM,5,🔮🔮 DUPLO ELITE ANALISANDO 🔮🔮
+55,RESULT,,,mr_iv4,2026-03-21 13:14:56,2,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 AUTO TIE 📸 @sinaisbacborobo — 21/03/2026 09:14:56
+56,UNKNOWN,FIRE_JANELA_TIMED,,mr_iv4,2026-03-21 15:45:36,516,False,False,True,False,False,True,False,,,,NO_CLAIM,1,⛔ JANELA FECHADA — NÃO ENTRE NESTE ROUND
+57,RESULT,FIRE_ULTRA_TIE,,mr_iv4,2026-03-22 00:06:34,6,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡🟡🟡 ULTRA TIE — EMPATE CONFIRMADO 🟡🟡🟡
+58,UNKNOWN,OPS_GALE_SATURATION,,mr_iv4,2026-03-22 04:37:19,1310,False,False,True,False,False,False,True,,,,NO_CLAIM,1,📊 Market Status — ⚡ Gale 1 detected
+59,UNKNOWN,,,mr_iv4,2026-03-22 04:40:11,292,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📊 Market Status — 🚫 Signal suppressed — not a good time
+60,UNKNOWN,,,mr_iv4,2026-03-22 12:04:13,49,False,False,False,True,False,False,False,,,,NO_CLAIM,1,📊 Market Status — ❌ Loss confirmed
+61,RESULT,,,mr_iv4,2026-03-22 16:35:38,50,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡→🎯 POST-TIE COLOR ENTRY
+62,UNKNOWN,,,mr_iv4,2026-03-22 17:33:54,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,For each signals that a room is going to show or showed make sure of all ones that are rigth and let me now 1 round before the nunber comes out so it gets it be
+63,UNKNOWN,,,mr_iv4,2026-03-22 17:50:20,1,False,False,True,False,False,False,True,,,,NO_CLAIM,1,I. The same signals you fire let me know if it’s going to be gale 1 gale 2 or rigth away first hit
+64,UNKNOWN,,,mr_iv4,2026-03-22 18:27:00,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,⚠️ Alerta de Win Rate BAIXO
+65,UNKNOWN,,,mr_iv4,2026-03-22 18:57:37,297,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 @rigosinais went offline — will retry every 5min.
+66,UNKNOWN,,,mr_iv4,2026-03-22 19:02:46,201,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🟢 @rigosinais is back online and monitoring.
+67,OPS,,,mr_iv4,2026-03-22 20:21:46,5720,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🔒 Auto-quarantine: @rqdados muted for 2h after 5 consecutive losses. Use /unmute to release early.
+68,UNKNOWN,,,mr_iv4,2026-03-22 20:22:30,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,I lost again
+69,UNKNOWN,FIRE_ENTRE_AGORA_GENERIC,,mr_iv4,2026-03-22 23:04:23,42,False,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡ ENTRE AGORA — G1 ⚡
+70,UNKNOWN,,,mr_iv4,2026-03-23 10:25:32,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,/same_table
+71,UNKNOWN,,,mr_iv4,2026-03-23 10:25:32,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔍 SAME TABLE SCAN
+72,UNKNOWN,OPS_OPEN_PLATFORM_NOW,,mr_iv4,2026-03-23 11:00:26,24,False,False,False,False,False,False,False,,,,NO_CLAIM,5,🟢🟢 AGORA É A HORA — ENTRE EM JOGO 🟢🟢
+73,UNKNOWN,,,mr_iv4,2026-03-23 14:00:09,32,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴🔴 PARE AGORA — HORA RUIM 🔴🔴
+74,UNKNOWN,,,mr_iv4,2026-03-23 15:01:51,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,When I says tabela the horarios it should show it
+75,UNKNOWN,,,mr_iv4,2026-03-23 16:00:49,29,False,False,False,True,False,False,False,,,,NO_CLAIM,1,📅 TABELA DE HORÁRIOS — WIN RATE HISTÓRICO
+76,RESULT,OPS_PREALERT_FORMING,,mr_iv4,2026-03-23 17:23:15,195,False,False,False,False,False,False,False,,,,NO_CLAIM,5,⚡ SINAL SE FORMANDO ⚡
+77,UNKNOWN,OPS_RADAR_PARTIAL_CONSENSUS,,mr_iv4,2026-03-23 18:34:27,552,False,False,False,False,False,False,False,,,,NO_CLAIM,5,👁 RADAR — CONSENSO PARCIAL 👁
+78,UNKNOWN,,,mr_iv4,2026-03-23 23:00:23,7,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🟡 Hora razoável — jogue com cautela 🟡
+79,UNKNOWN,,,mr_iv4,2026-03-27 01:13:33,55,False,False,False,False,False,False,False,,60.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,⚠️ @rqdados auto-muted — rolling WR 55.0% < 60% over last 20 signals (60min cooldown)
+80,RESULT,,,mr_iv4,2026-03-27 22:23:44,83,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴🔴🔴🔴🔴 VERMELHO 🔴🔴🔴🔴🔴
+81,RESULT,,,mr_iv4,2026-03-28 00:11:16,82,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵🔵🔵🔵🔵 AZUL 🔵🔵🔵🔵🔵
+82,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-03-29 22:00:14,1228,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔧 [DBG] @BACCARAT_B → red conf=entry trust=1.23 streak=1.0 score=0.00 agree=0
+83,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-03-29 22:00:14,1461,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔧 [DBG] @BACCARAT_B → blue conf=entry trust=1.36 streak=1.3 score=0.00 agree=0
+84,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-03-29 22:00:30,5,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔧 [DBG] @M8SINAIS → red conf=neutral trust=1.00 streak=1.0 score=0.00 agree=0
+85,UNKNOWN,,,mr_iv4,2026-03-29 22:10:03,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔧 Session check — bot alive from dev environment
+86,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-03-30 09:00:11,11,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔧 [DBG] @M8SINAIS → blue conf=neutral trust=1.00 streak=1.0 score=0.87 agree=1
+87,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-03-30 19:47:55,1,False,False,True,False,False,False,True,,,,NO_CLAIM,1,🔧 [DBG] @sinaisbacbosemgale → None conf=neutral trust=2.00 streak=1.3 score=0.00 agree=0
+88,UNKNOWN,OPS_TRIPLE_LOCK,,mr_iv4,2026-03-31 18:21:06,241,False,False,False,False,False,False,False,,,,NO_CLAIM,5,🔐🔐🔐 TRIPLE LOCK CHEGANDO 🔐🔐🔐
+89,UNKNOWN,,,mr_iv4,2026-04-01 10:08:21,1,False,False,True,False,False,False,False,,,,NO_CLAIM,1,🚫 RODADA JÁ PASSOU — NÃO APOSTE!
+90,UNKNOWN,FIRE_APOSTE_AGORA,,mr_iv4,2026-04-01 11:12:44,5,False,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡ RÁPIDO — APOSTE AGORA!
+91,RESULT,RESULT_COLOR_BANNER,,mr_iv4,2026-04-01 15:13:09,6464,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+92,UNKNOWN,RESULT_COLOR_BANNER,,mr_iv4,2026-04-03 09:23:15,4291,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢
+93,UNKNOWN,,,mr_iv4,2026-04-03 17:48:51,145,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ Não entrou — tentativa 1 de 3
+94,UNKNOWN,,,mr_iv4,2026-04-03 17:48:52,86,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵🔵🔵🔵🔵 AZUL 🔵🔵🔵🔵🔵
+95,UNKNOWN,,,mr_iv4,2026-04-03 17:50:12,21,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅✅ WIN na 2ª tentativa! ✅✅
+96,UNKNOWN,,,mr_iv4,2026-04-03 17:50:46,50,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴🔴🔴🔴🔴 VERMELHO 🔴🔴🔴🔴🔴
+97,UNKNOWN,,,mr_iv4,2026-04-03 18:05:49,61,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅✅✅ WIN! ✅✅✅
+98,RESULT,,,mr_iv4,2026-04-03 19:53:36,21,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡🟡 EMPATE 🟡🟡
+99,UNKNOWN,,,mr_iv4,2026-04-03 20:25:35,12,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌❌❌ LOSS — SINAL ENCERRADO ❌❌❌
+100,UNKNOWN,,,mr_iv4,2026-04-03 20:25:35,12,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🛑🛑🛑 PARE 🛑🛑🛑
+101,UNKNOWN,,,mr_iv4,2026-04-03 20:28:40,5,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN na 3ª tentativa! ✅
+102,OPS,,,mr_iv4,2026-04-04 00:42:30,1821,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔓 Quarantine ended: @CoringaDados reactivated.
+103,RESULT,,,mr_iv4,2026-04-04 09:44:07,1799,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅✅ WIN na 2ª tentativa! ✅✅
+104,UNKNOWN,,,mr_iv4,2026-04-04 13:04:53,274,False,False,False,False,False,False,False,,100.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,📅 TABELA DE HORÁRIOS — GATES v2 (100% WR)
+105,UNKNOWN,OPS_JANELA_PRIME,,mr_iv4,2026-04-04 14:00:25,350,False,False,False,False,False,True,False,,,,NO_CLAIM,1,🟢🟢 JANELA PRIME — SINAIS ATIVOS 🟢🟢
+106,UNKNOWN,,,mr_iv4,2026-04-04 14:37:41,3,False,False,False,False,False,True,False,,,,NO_CLAIM,1,⚠️⚠️ ÚLTIMA CHAMADA — 5s ⚠️⚠️
+107,UNKNOWN,,,mr_iv4,2026-04-04 17:00:21,81,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🟡 Hora ativa — sinais menos frequentes 🟡
+108,UNKNOWN,,,mr_iv4,2026-04-05 03:24:07,37,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS ❌
+109,UNKNOWN,,,mr_iv4,2026-04-17 01:00:17,42,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 Hora de baixo volume 🔴
+110,UNKNOWN,,,mr_iv4,2026-04-17 06:07:19,5,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅✅✅ WIN G0! ✅✅✅
+111,RESULT,,,mr_iv4,2026-04-18 11:21:43,3,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡🔀🟡 CONFLICT TIE — MERCADO DIVIDIDO 🟡🔀🟡
+112,RESULT,OPS_TIER_LEGEND,,mr_iv4,2026-04-18 18:04:18,3,False,False,False,True,False,False,False,,,,NO_CLAIM,5,🟡🟡 EMPATE — PROTEÇÃO 🟡🟡
+113,UNKNOWN,FIRE_G0_MISS_ENTRE_G1,,mr_iv4,2026-04-19 06:20:42,1,False,False,True,False,False,False,True,,,,NO_CLAIM,1,⚠️ G0 MISS — RASTREANDO G1 ⚠️
+114,RESULT,,,mr_iv4,2026-04-19 07:01:33,3,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 EMPATE NO G0 — PROTEÇÃO 🟡
+115,UNKNOWN,,,mr_iv4,2026-04-19 07:38:58,42,False,False,False,False,False,False,True,,,,NO_CLAIM,1,⏳ AGUARDANDO G1... ⏳
+116,UNKNOWN,,,mr_iv4,2026-04-19 08:19:02,19,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏳ Silêncio prolongado detectado
+117,UNKNOWN,,,mr_iv4,2026-04-19 10:56:51,1,False,False,False,False,False,False,True,,,,NO_CLAIM,1,Why last signal was 1 hour again and even worst some are hitting on g3? And g2 but can I trust that?
+118,UNKNOWN,,,mr_iv4,2026-04-19 12:08:13,3,False,False,False,True,False,False,True,,,,NO_CLAIM,1,✅✅ RECUPERAÇÃO G1! ✅✅
+119,RESULT,,,mr_iv4,2026-04-20 15:36:51,68,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡🟡🟡 CLUSTER DE EMPATE DETECTADO 🟡🟡🟡
+120,RESULT,OPS_TIE_ALERT,,mr_iv4,2026-04-20 21:36:54,5256,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 ALERTA DE EMPATE / TIE ALERT 🟡
+121,UNKNOWN,,,mr_iv4,2026-04-21 07:48:33,301,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📅 HORÁRIOS — DADOS REAIS / REAL DATA
+122,FIRE,,,mr_iv4,2026-04-21 08:24:45,460,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡
+123,UNKNOWN,,,mr_iv4,2026-04-21 08:24:59,164,False,False,False,False,False,False,True,,,,NO_CLAIM,1,⏳ AGUARDANDO G1... / WAITING FOR G1... ⏳
+124,RESULT,RESULT_EMPATE,,mr_iv4,2026-04-21 08:42:57,50,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 EMPATE — PROTEÇÃO ATIVADA / TIE — COVER HIT 🟡
+125,RESULT,,,mr_iv4,2026-04-21 09:28:47,6,False,False,False,True,False,False,True,,,,NO_CLAIM,1,🟡 EMPATE G1 — PROTEÇÃO / TIE — COVER 🟡
+126,UNKNOWN,,,mr_iv4,2026-04-21 11:42:06,5,False,False,False,True,False,False,True,,,,NO_CLAIM,1,✅✅ GANHOU / WIN — G1! ✅✅
+127,RESULT,,,mr_iv4,2026-04-21 11:57:21,8,False,False,False,False,False,False,True,,,,NO_CLAIM,1,🚨 AGUARDANDO G3 — ÚLTIMA CHANCE / LAST CHANCE 🚨
+128,UNKNOWN,,,mr_iv4,2026-04-21 11:57:21,2,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅✅✅ GANHOU / WIN — G0! ✅✅✅
+129,RESULT,,,mr_iv4,2026-04-21 11:57:35,7,False,False,False,True,False,False,True,,,,NO_CLAIM,1,✅ GANHOU / WIN — G3! ✅ 🔥
+130,UNKNOWN,,,mr_iv4,2026-04-21 11:57:35,2,False,False,False,True,False,False,True,,,,NO_CLAIM,1,✅ GANHOU / WIN — G2! ✅
+131,RESULT,,,mr_iv4,2026-04-21 12:06:04,4,False,False,False,True,False,False,True,,,,NO_CLAIM,1,✅ GANHOU / WIN — G2! ✅
+132,RESULT,,,mr_iv4,2026-04-21 12:07:24,18,False,False,False,True,False,False,True,,,,NO_CLAIM,1,✅✅ GANHOU / WIN — G1! ✅✅
+133,RESULT,,,mr_iv4,2026-04-21 12:23:26,11,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅✅✅ GANHOU / WIN — G0! ✅✅✅
+134,UNKNOWN,,,mr_iv4,2026-04-21 13:13:52,3,False,False,False,True,False,False,True,,,,NO_CLAIM,1,❌❌❌ PERDEU / LOSS — G2 ❌❌❌
+135,UNKNOWN,,,mr_iv4,2026-04-21 13:16:14,4,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ PERDEU / LOSS — G0 ❌
+136,UNKNOWN,,,mr_iv4,2026-04-21 16:45:35,2,False,False,False,True,False,False,True,,,,NO_CLAIM,1,❌❌ PERDEU / LOSS — G1 ❌❌
+137,UNKNOWN,,,mr_iv4,2026-04-21 17:20:01,5,False,False,False,False,False,False,True,,,,NO_CLAIM,1,🚨 AGUARDANDO G3 — ÚLTIMA CHANCE / LAST CHANCE 🚨
+138,FIRE,FIRE_GOD_TIER,,mr_iv4,2026-04-22 12:42:56,105,False,False,False,True,False,False,False,,75.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,💎 GOD-TIER — Sync apertado + ≥3 salas top + conf≥75%
+139,UNKNOWN,OPS_DIVERGENCIA_SALAS,,mr_iv4,2026-04-22 14:25:39,418,False,False,False,False,False,False,False,,,,NO_CLAIM,5,🟠🟠🟠 *DIVERGÊNCIA DE SALAS* 🟠🟠🟠
+140,RESULT,,,mr_iv4,2026-04-22 15:35:57,29,False,False,False,True,True,False,False,,,,NO_CLAIM,1,🔴🔴🔴 *DUPLA CONFIRMAÇÃO DE EMPATE* 🔴🔴🔴
+141,UNKNOWN,,,mr_iv4,2026-04-22 18:44:16,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Best next time to play?
+142,UNKNOWN,,,mr_iv4,2026-04-23 08:12:09,716,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚠️ Alerta de sala em queda
+143,UNKNOWN,,,mr_iv4,2026-04-23 15:15:41,9,False,False,False,True,False,False,True,,,,NO_CLAIM,1,❌ G0 ❌ G1 — entrando G2 / entering G2
+144,UNKNOWN,FIRE_G0_MISS_ENTRE_G1,,mr_iv4,2026-04-23 15:21:53,41,False,False,False,True,False,False,True,,,,NO_CLAIM,1,❌ G0 MISS — entrando G1 / entering G1
+145,UNKNOWN,,,mr_iv4,2026-04-23 15:57:57,2,False,False,False,True,False,False,True,,,,NO_CLAIM,1,❌ G0 ❌ G1 ❌ G2 — entrando G3 / entering G3
+146,FIRE,FIRE_SINAL_RETIDO_LIBERADO,,mr_iv4,2026-04-23 19:22:10,63,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏳ *Sinal Retido → Liberado* _(recuperação concluída)_
+147,UNKNOWN,,,mr_iv4,2026-04-24 07:00:23,62,False,False,False,False,False,False,False,,,,NO_CLAIM,1,ℹ️ *Recovery Insight*
+148,UNKNOWN,OPS_CORRECAO,,mr_iv4,2026-04-24 17:52:58,339,False,False,False,False,False,False,False,,,,NO_CLAIM,5,♻️♻️♻️ CORREÇÃO / CORRECTION ♻️♻️♻️
+149,UNKNOWN,,,mr_iv4,2026-04-25 04:06:20,3,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🎉🎉🎉 VIP ROOM RETURNED! 🎉🎉🎉
+150,UNKNOWN,,,mr_iv4,2026-04-25 08:53:37,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Tell me all setups that we had in system am was working extremely well amd set it up i. System rn
+151,FIRE,,,mr_iv4,2026-04-25 16:15:50,302,False,False,True,False,False,True,False,,,,NO_CLAIM,1,⚡ RUSH — 9s LEFT — ACT NOW ⚡
+152,FIRE,,,mr_iv4,2026-04-25 16:23:37,2531,False,False,True,False,False,False,False,,,,NO_CLAIM,1,⛔ DO NOT BET — ROUND PASSED ⛔
+153,UNKNOWN,,,mr_iv4,2026-04-25 18:40:59,67,False,False,True,False,False,False,False,,,,NO_CLAIM,1,⛔ DO NOT BET — ROUND PASSED ⛔
+154,UNKNOWN,OPS_GALE_SATURATION,,mr_iv4,2026-04-25 19:24:28,515,False,False,True,False,False,False,True,,,,NO_CLAIM,1,⚡ Saturação de gale detectada
+155,UNKNOWN,,,mr_iv4,2026-04-25 19:50:21,127,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⛔ Sinal obsoleto bloqueado automaticamente
+156,UNKNOWN,,,mr_iv4,2026-04-25 19:56:37,366,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🌀 Mercado instável detectado
+157,UNKNOWN,,,mr_iv4,2026-04-25 19:56:40,1892,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📅 *GRADE DE JOGO — BacBo Royal*
+158,UNKNOWN,,,mr_iv4,2026-04-25 20:06:16,13,False,False,False,False,False,False,False,,,,NO_CLAIM,1,💎 SOLO ELITE 💎
+159,UNKNOWN,,,mr_iv4,2026-04-25 20:20:55,127,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ Sinais retomados
+160,UNKNOWN,,,mr_iv4,2026-04-25 21:00:22,55,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🌙 Hora desfavorável iniciando
+161,UNKNOWN,,,mr_iv4,2026-04-25 23:28:38,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔧 SETUP SESSION 4 — ATIVO
+162,RESULT,,,mr_iv4,2026-04-26 04:05:34,1,False,False,True,False,False,True,False,,,,NO_CLAIM,1,⚡ RUSH — 8s LEFT — ACT NOW ⚡
+163,UNKNOWN,FIRE_JANELA_TIMED,,mr_iv4,2026-04-27 10:16:05,230,False,False,True,False,False,True,False,,,,NO_CLAIM,1,⚡ JANELA FECHADA — TEMPO ESGOTADO
+164,UNKNOWN,FIRE_ENTRE_AGORA_GENERIC,,mr_iv4,2026-04-27 10:26:16,179,False,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡⚡⚡ ENTRE AGORA ⚡⚡⚡
+165,UNKNOWN,,,mr_iv4,2026-04-27 11:59:22,9,False,False,False,True,False,False,True,,,,NO_CLAIM,1,✅ G1 CONFIRMADO
+166,UNKNOWN,,,mr_iv4,2026-04-27 11:59:22,48,False,False,False,False,False,False,True,,,,NO_CLAIM,1,🔮 G1 PREVISTO
+167,UNKNOWN,,,mr_iv4,2026-04-27 11:59:41,7,False,False,False,True,False,False,True,,,,NO_CLAIM,1,✅ G2 CONFIRMADO — SEQUÊNCIA COMPLETA
+168,UNKNOWN,,,mr_iv4,2026-04-27 12:01:12,94,False,False,False,False,False,False,True,,59.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,📉 G1 — CONFIANÇA BAIXA (59%)
+169,UNKNOWN,,,mr_iv4,2026-04-27 12:21:04,6,False,False,False,True,False,False,True,,,,NO_CLAIM,1,❌ G2 QUEBRADO — PARE
+170,UNKNOWN,,,mr_iv4,2026-04-27 13:17:12,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,I want you to notice something and use it it our advantage i notice that a list of time g0 is a collie but the other color comes forst and that prediction happe
+171,UNKNOWN,,,mr_iv4,2026-04-27 13:37:20,90,False,False,False,True,True,False,True,,,,NO_CLAIM,1,❌ G1 FALHOU — 🔵 não veio
+172,RESULT,,,mr_iv4,2026-04-27 13:37:30,8,False,False,False,True,False,False,True,,,,NO_CLAIM,1,🟡 G2 EMPATE — ignorando
+173,UNKNOWN,,,mr_iv4,2026-04-27 13:37:50,56,False,False,False,False,True,False,True,,,,NO_CLAIM,1,♻️ G2 RECUPERADO — 🔵 voltou!
+174,UNKNOWN,FIRE_ENTRE_AGORA_GENERIC,,mr_iv4,2026-04-27 16:08:56,61,False,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡⚡⚡ G1 — ENTRE AGORA ⚡⚡⚡
+175,UNKNOWN,,,mr_iv4,2026-04-27 16:57:52,4,False,False,False,True,False,False,True,,,,NO_CLAIM,1,❌ G3 FALHOU — PERDA TOTAL
+176,UNKNOWN,,,mr_iv4,2026-04-27 17:45:14,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,"experience. By limiting the loss alerts to 3 and 5 rounds, you've kept the ""surgical"" nature of the bot intact while removing the noise. It still gives you the"
+177,RESULT,,,mr_iv4,2026-04-27 18:16:07,9,False,False,False,False,False,False,True,,,,NO_CLAIM,1,🚨 Saturação G3 detectada
+178,UNKNOWN,,,mr_iv4,2026-04-27 18:41:13,20,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🚨 G0 Cool-Down — Quarentena Ativada
+179,UNKNOWN,,,mr_iv4,2026-04-27 18:53:48,2,False,False,False,False,True,False,False,,,,NO_CLAIM,1,♻️ G5 — 🔴 APARECEU
+180,RESULT,,,mr_iv4,2026-04-27 20:22:08,5,False,False,False,True,True,False,True,,,,NO_CLAIM,1,❌ G2 FALHOU — 🔵 não veio
+181,UNKNOWN,,,mr_iv4,2026-04-27 20:42:58,7,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🚨 SALA EM G7 — 7 DERROTAS SEGUIDAS
+182,RESULT,,,mr_iv4,2026-04-27 22:27:40,2,False,False,False,False,True,False,True,,,,NO_CLAIM,1,♻️ G3 RECUPERADO — 🔴 voltou!
+183,RESULT,FIRE_ENTRE_AGORA_GENERIC,,mr_iv4,2026-04-27 22:52:36,3,False,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡⚡⚡ G3 — ENTRE AGORA ⚡⚡⚡
+184,RESULT,,,mr_iv4,2026-04-27 22:52:37,2,False,False,False,True,False,False,True,,,,NO_CLAIM,1,❌ G3 FALHOU — PERDA TOTAL
+185,UNKNOWN,,,mr_iv4,2026-04-27 22:52:38,2,False,False,False,False,True,False,False,,,,NO_CLAIM,1,📊 PERDA REAL — 🔴 ausente em 6 rounds
+186,UNKNOWN,,,mr_iv4,2026-04-27 23:10:30,4,False,False,False,False,True,False,False,,,,NO_CLAIM,1,♻️ G4 — 🔵 APARECEU
+187,UNKNOWN,,,mr_iv4,2026-04-28 00:50:31,601,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⛔ Sinal bloqueado
+188,RESULT,RESULT_COLOR_BANNER,,mr_iv4,2026-04-28 01:48:06,4342,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨
+189,RESULT,OPS_JANELA_PRIME,,mr_iv4,2026-04-28 02:00:29,9,False,False,False,False,False,True,False,,,,NO_CLAIM,1,🟢🟢 JANELA PRIME — SINAIS ATIVOS 🟢🟢
+190,UNKNOWN,,,mr_iv4,2026-04-28 04:00:59,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏳ PAUSA — 70 min sem sinal
+191,UNKNOWN,,,mr_iv4,2026-04-28 04:34:26,11,False,False,False,False,False,True,False,,,,NO_CLAIM,1,⏱ 12s PARA ENTRAR [██░░░░░░░░]
+192,UNKNOWN,,,mr_iv4,2026-04-28 06:06:08,2,False,False,False,False,True,False,True,,,,NO_CLAIM,1,♻️ G3 RECUPERADO — 🔴 voltou!
+193,RESULT,,,mr_iv4,2026-04-28 06:14:16,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 2º EMPATE SEGUIDO — encerrando tracker
+194,UNKNOWN,,,mr_iv4,2026-04-28 18:00:00,1727,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📌 BacBo Royal — 18:00 UTC
+195,UNKNOWN,,,mr_iv4,2026-04-28 19:20:06,3,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🟢🟢 H19 UTC — 3:00 PM EDT
+196,UNKNOWN,OPS_GALE_SATURATION,,mr_iv4,2026-04-28 19:35:29,456,False,False,True,False,False,False,True,,,,NO_CLAIM,1,⚡⚡ SATURAÇÃO DE GALE ⚡⚡
+197,UNKNOWN,,,mr_iv4,2026-04-28 20:34:20,146,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🌀🌀 MERCADO INSTÁVEL 🌀🌀
+198,FIRE,,,mr_iv4,2026-04-28 20:53:12,1493,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏱️⏱️ H21 UTC em 7 min · 5:00 PM EDT ⏱️⏱️
+199,UNKNOWN,,,mr_iv4,2026-04-28 21:00:20,14,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🌙🌙 HORA DESFAVORÁVEL 🌙🌙
+200,UNKNOWN,,,mr_iv4,2026-04-28 22:53:15,7,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏱️⏱️ H23 UTC em 7 min · 7:00 PM EDT ⏱️⏱️
+201,UNKNOWN,,,mr_iv4,2026-04-28 23:00:15,17,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🟢🟢 H23 UTC · 7:00 PM EDT
+202,UNKNOWN,OPS_SEQ_QUENTE,,mr_iv4,2026-04-29 06:49:47,1762,False,False,False,False,False,False,False,,,,NO_CLAIM,5,🔥🔥🔥 SEQUÊNCIA QUENTE 🔥🔥🔥
+203,UNKNOWN,,,mr_iv4,2026-04-29 10:53:00,4,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏱️⏱️ H11 UTC em 7 min · 7:00 AM EDT ⏱️⏱️
+204,UNKNOWN,,,mr_iv4,2026-04-29 11:03:56,21,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🟢🟢 H11 UTC · 7:00 AM EDT
+205,UNKNOWN,,,mr_iv4,2026-04-29 12:24:54,5,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🛡️🛡️ SINAL OBSOLETO BLOQUEADO 🛡️🛡️
+206,RESULT,OPS_TIE_ALERT,,mr_iv4,2026-04-29 12:39:58,206,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 AVISO DE EMPATE 🟡
+207,UNKNOWN,OPS_SEQ_FRIA,,mr_iv4,2026-04-29 13:18:29,601,False,False,False,False,False,False,False,,,,NO_CLAIM,5,🧊🧊🧊 SEQUÊNCIA FRIA — PAUSAR 🧊🧊🧊
+208,UNKNOWN,OPS_SEQ_FRIA,,mr_iv4,2026-04-29 13:24:29,346,False,False,False,False,False,False,False,,,,NO_CLAIM,5,✅✅ SEQUÊNCIA FRIA ENCERRADA ✅✅
+209,RESULT,OPS_TIE_ALERT,,mr_iv4,2026-04-29 14:34:13,578,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🔴🔴🔴 EMPATE CRÍTICO 🔴🔴🔴
+210,UNKNOWN,,,mr_iv4,2026-04-29 17:00:28,1,False,False,False,False,False,True,False,,,,NO_CLAIM,1,janela
+211,UNKNOWN,OPS_JANELA_PEAK,,mr_iv4,2026-04-29 17:00:43,2,False,False,False,True,False,True,False,,,,NO_CLAIM,5,🕐 PRÓXIMA JANELA PEAK / NEXT PEAK WINDOW
+212,UNKNOWN,,,mr_iv4,2026-04-29 17:00:47,2,False,False,False,False,False,True,False,,,,NO_CLAIM,1,peak  janela
+213,UNKNOWN,,,mr_iv4,2026-04-29 17:09:16,13,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🟢🟢 H17 UTC · 14h BRT
+214,UNKNOWN,,,mr_iv4,2026-04-29 17:53:10,6,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏱️⏱️ H18 UTC em 7 min · 15h BRT ⏱️⏱️
+215,UNKNOWN,,,mr_iv4,2026-04-29 21:27:43,4,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📭📭 SECA DE SINAIS 📭📭
+216,UNKNOWN,OPS_PREALERT_3BOLT,,mr_iv4,2026-04-30 10:14:34,6828,False,False,False,False,False,False,False,,,,NO_CLAIM,5,⚡⚡⚡ SINAL FORMANDO ⚡⚡⚡
+217,RESULT,,,mr_iv4,2026-04-30 10:37:07,41,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🔔 RESULTADO: ✅ GANHOU
+218,RESULT,OPS_SEQ_EMPATES,,mr_iv4,2026-04-30 10:37:28,3945,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡🟡 SEQUÊNCIA DE EMPATES 🟡🟡
+219,RESULT,,,mr_iv4,2026-04-30 10:41:33,6,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🔔 RESULTADO: ❌ PERDEU
+220,RESULT,,,mr_iv4,2026-04-30 11:04:56,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏆🏆 CERTIFIED GOLDEN 🏆🏆
+221,RESULT,OPS_TIER_LEGEND,,mr_iv4,2026-04-30 11:30:19,6,False,False,False,True,False,False,False,,,,NO_CLAIM,5,🔔 RESULTADO: 🟡 EMPATE — COVER
+222,UNKNOWN,,,mr_iv4,2026-04-30 11:32:12,11,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔍 MONITORAMENTO DE SINAIS — 08:32 BRT
+223,UNKNOWN,,,mr_iv4,2026-04-30 13:44:09,2199,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔍 MONITORAMENTO DE SINAIS — 09:44 EDT
+224,UNKNOWN,,,mr_iv4,2026-04-30 13:53:19,240,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏱️⏱️ H14 UTC em 7 min · 10h EDT ⏱️⏱️
+225,UNKNOWN,,,mr_iv4,2026-04-30 14:05:40,1061,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🟢🟢 H14 UTC · 10h EDT
+226,RESULT,RESULT_TIMED_WINDOW,,mr_iv4,2026-04-30 20:37:04,551,False,False,False,True,False,True,False,,,,NO_CLAIM,5,🕐 16:37:04 EDT  ·  ~12s window
+227,UNKNOWN,OPS_TIER_LEGEND,,mr_iv4,2026-05-01 06:58:40,22,False,False,False,True,False,False,False,,,,NO_CLAIM,5,🔔 RESULTADO: 🟡 EMPATE — COVER
+228,UNKNOWN,FIRE_EMPATE_DIRETO_G0,,mr_iv4,2026-05-01 09:40:24,802,False,False,False,True,False,False,False,,,,NO_CLAIM,5,🎯🟡 EMPATE DIRETO — G0
+229,UNKNOWN,FIRE_G0_DIRETO,,mr_iv4,2026-05-01 09:52:45,167,False,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡ G0 DIRETO — Entre com confiança
+230,UNKNOWN,FIRE_PREPARE_G1,,mr_iv4,2026-05-01 10:13:46,227,False,False,False,False,False,False,True,,,,NO_CLAIM,5,♟ PREPARE O G1 — Provável precisar de 1 gale
+231,UNKNOWN,,,mr_iv4,2026-05-01 12:41:49,31,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Im not getting signals
+232,UNKNOWN,,,mr_iv4,2026-05-01 13:41:58,68,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Im not getting signals. Why?
+233,UNKNOWN,,,mr_iv4,2026-05-01 13:45:09,995,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚠️⚠️ SALA EM QUEDA ⚠️⚠️
+234,UNKNOWN,OPS_AUDIT_360,,mr_iv4,2026-05-01 13:52:09,310,False,False,False,False,False,False,False,,,,NO_CLAIM,5,🧠 AUDIT 360° — GPT-4o | 10:52 BRT
+235,RESULT,FIRE_SINAL_RETIDO_LIBERADO,,mr_iv4,2026-05-01 14:39:27,112,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏳ *Sinal Retido → Liberado* _(recuperação concluída)_
+236,UNKNOWN,,,mr_iv4,2026-05-02 05:04:39,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Why system not firing accurate signals?
+237,UNKNOWN,,,mr_iv4,2026-05-02 06:02:01,24,False,False,False,False,False,False,True,,,,NO_CLAIM,1,⚠️ PODE IR ATÉ G2 — Gerencie a banca
+238,RESULT,,,mr_iv4,2026-05-02 06:56:35,7,False,False,True,False,False,False,False,,,,NO_CLAIM,1,⛔ DO NOT BET — ROUND PASSED ⛔  ·  🕐 02:56:35 EDT
+239,RESULT,,,mr_iv4,2026-05-02 08:57:39,45,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏰ 05:57 — BRT
+240,UNKNOWN,,,mr_iv4,2026-05-02 10:13:04,12,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🔔 RESULTADO: ❌ PERDEU
+241,UNKNOWN,,,mr_iv4,2026-05-02 12:02:12,1445,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🎯 WIN-DROP SCANNER — 08:02 EDT
+242,UNKNOWN,,,mr_iv4,2026-05-02 13:37:02,1377,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔍 HEALTH MONITOR — 13:37 UTC
+243,UNKNOWN,,,mr_iv4,2026-05-02 14:53:13,2231,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🛡 FULL AUDIT — 27 findings
+244,RESULT,,,mr_iv4,2026-05-02 14:57:54,1161,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📋 DAILY AUDIT — 2026-05-02 14:57 UTC
+245,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-02 14:57:56,1,False,False,False,True,True,False,False,,49.7,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [dynamic_threshold_bad_hour  ] saved=294 blocked_wins=297 net=-3 (49.7% prevent)
+246,UNKNOWN,,,mr_iv4,2026-05-02 15:06:27,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Every single time make a post in the bottom Thats a resume
+247,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-02 15:14:46,15,False,False,False,True,True,False,False,,49.7,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [dynamic_threshold_bad_hour  ] saved=294 blocked_wins=297 net=-3 (49.7% prevent)
+248,UNKNOWN,,,mr_iv4,2026-05-02 15:38:11,996,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔬 DEEP SYSTEM AUDIT 2026-05-02 15:37 UTC
+249,UNKNOWN,,,mr_iv4,2026-05-02 15:38:16,4,False,False,False,False,False,False,False,,50.9,330,CLAIM_WITHIN_NOISE,1,🟢 hard_block_strip_insufficient       n= 330 W=149/L=162/T=19  sWR= 50.9%  net=+13
+250,UNKNOWN,,,mr_iv4,2026-05-02 15:38:18,23,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@grupobacbopremium               (ROBÔ BAC BO PREMIUM 🎲)
+251,UNKNOWN,,,mr_iv4,2026-05-02 15:58:00,2,False,False,False,False,False,False,False,,54.0,237,CLAIM_WITHIN_NOISE,1,🟢 solo_proven_room_main               n= 237 W= 96/L=109/T=32  sWR= 54.0%  net=+13
+252,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-02 16:32:40,244,False,False,False,False,True,False,False,,,,NO_CLAIM,1,⚠️ [Watchdog] 25min sem mensagens do Telegram. Reconectando...
+253,UNKNOWN,,,mr_iv4,2026-05-02 17:39:03,2,False,False,False,True,True,False,False,,54.8,270,CLAIM_WITHIN_NOISE,1,🔴 post_loss_cooldown                  n= 270 W=135/L=122/T=13  sWR= 54.8%  net=-13
+254,UNKNOWN,,,mr_iv4,2026-05-02 19:08:39,393,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@lightningbacbog2                  silent (no fires in 30d)
+255,RESULT,,,mr_iv4,2026-05-02 19:33:04,28,False,False,False,False,False,False,False,,,,NO_CLAIM,1,▼ BOTTOM-10 PAIRS (consider blocking):
+256,UNKNOWN,,,mr_iv4,2026-05-02 19:33:11,31,False,False,False,False,False,False,False,,,,NO_CLAIM,1,err: unsupported operand type(s) for *: 'NoneType' and 'int'
+257,UNKNOWN,,,mr_iv4,2026-05-02 20:39:04,18,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@parisbacbohack                  (HACK BAC BO PARIS)
+258,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-02 21:19:19,181,False,False,False,True,True,False,False,,41.3,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [bad_coalition_pair          ] saved=272 blocked_wins=386 net=-114 (41.3% prevent)
+259,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-02 21:19:22,44,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[40] DEAD ROOMS: 412 rooms silent 24h — verify subscriptions
+260,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-03 05:51:18,53,False,False,False,False,True,False,False,,,,NO_CLAIM,1,⚠️ [Watchdog] Bot perdeu conexão com Telegram por 28 min sem recuperação.
+261,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-03 05:54:30,5,False,False,False,False,True,False,False,,,,NO_CLAIM,1,⚠️ [MegaWatchdog] Telethon corruption detected (123 sec errors/60s)
+262,UNKNOWN,,,mr_iv4,2026-05-03 05:55:27,254,False,False,False,True,True,False,False,,,,NO_CLAIM,1,🧪 win_predictor SHADOW AUDIT (24h)
+263,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-03 07:01:24,77,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[75] BLEED CELL: H03/red 30d WR=55.9% n=34 — add to color-hour block
+264,RESULT,,,mr_iv4,2026-05-03 08:14:02,4,False,False,False,False,False,False,False,baccarat_a+isadados,91.3,23,CLAIM_ON_THIN_SAMPLE,1,baccarat_a            +isadados                n= 23 WR=91.3%
+265,UNKNOWN,,,mr_iv4,2026-05-03 08:14:31,6,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚖️ OPTIMAL cells (top 10 by WR×volume):
+266,UNKNOWN,,,mr_iv4,2026-05-03 08:35:33,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🩺 STATUS DO SISTEMA — BacBo Royal
+267,RESULT,,,mr_iv4,2026-05-03 08:57:55,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔧🔧🔧 PREVIEW · FORECAST PANEL (rev 6.10.12) 🔧🔧🔧
+268,RESULT,,,mr_iv4,2026-05-03 10:54:31,42,False,False,False,False,False,False,False,baccarat_b+robofreebacbo24horass,91.7,24,CLAIM_ON_THIN_SAMPLE,1,baccarat_b            +robofreebacbo24horass   n= 24 WR=91.7%
+269,UNKNOWN,,,mr_iv4,2026-05-03 10:54:33,137,False,False,False,False,True,False,False,,59.1,274,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,GOLDEN     /red/H14  overall_WR=59.1%  n=274
+270,UNKNOWN,,,mr_iv4,2026-05-03 10:54:39,38,False,False,True,False,False,False,False,,,,NO_CLAIM,1,@grupofreedadobacbo              (MINUTOS RTPS - RENDA BET ⏰🔥 #5)
+271,UNKNOWN,OPS_SELF_CARE_GUARD,,mr_iv4,2026-05-03 11:16:05,88,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚕️⚕️ SELF-CARE GUARD ATIVO — GOLDEN ⚕️⚕️
+272,UNKNOWN,,,mr_iv4,2026-05-03 11:30:20,12,False,False,False,True,False,False,False,,,,NO_CLAIM,1,@cacadordeempate                 (CAÇADOR DE EMPATE TURBO - Bac Bo 🎲)
+273,UNKNOWN,,,mr_iv4,2026-05-03 12:03:04,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,— grade completa / full schedule
+274,UNKNOWN,,,mr_iv4,2026-05-03 12:03:10,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,horario · schedule
+275,RESULT,,,mr_iv4,2026-05-03 12:23:28,16,False,False,True,False,False,False,True,bacboaovivovip+umgalesalabacbo123,92.0,25,CLAIM_ON_THIN_SAMPLE,1,bacboaovivovip        +umgalesalabacbo123      n= 25 WR=92.0%
+276,UNKNOWN,,,mr_iv4,2026-05-03 12:24:16,25,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅✅ SELF-CARE GUARD REMOVIDO — GOLDEN ✅✅
+277,UNKNOWN,OPS_TIER_LEGEND,,mr_iv4,2026-05-03 13:10:24,1,False,False,False,True,False,False,False,,,,NO_CLAIM,5,🔔 🟡 EMPATE — cover protegeu  ·  #4155
+278,UNKNOWN,,,mr_iv4,2026-05-03 15:42:50,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Are you sure every single accurate signs is being fire from every single setup at its max?
+279,RESULT,RESULT_BELL_GANHOU,,mr_iv4,2026-05-03 15:56:49,883,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🔔 ✅ GANHOU  ·  #4168
+280,RESULT,,,mr_iv4,2026-05-04 09:31:42,447,False,False,True,False,False,False,False,,,,NO_CLAIM,1,⛔ DO NOT BET — ROUND PASSED ⛔
+281,RESULT,RESULT_COLOR_BANNER,,mr_iv4,2026-05-04 09:31:56,20569,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵
+282,RESULT,RESULT_TIMED_WINDOW,,mr_iv4,2026-05-04 09:41:24,78,False,False,False,True,False,True,False,,,,NO_CLAIM,5,🕐 05:41:24 EDT · 06:41:24 BRT  ·  ~12s window
+283,RESULT,,,mr_iv4,2026-05-04 11:36:44,2,False,False,True,False,False,False,False,bacbob2xbet+baccarat_b,93.3,45,CLAIM_ON_THIN_SAMPLE,1,bacbob2xbet           +baccarat_b              n= 45 WR=93.3%
+284,UNKNOWN,,,mr_iv4,2026-05-04 11:37:47,66,False,False,False,False,True,False,False,,51.8,340,CLAIM_WITHIN_NOISE,1,GOLDEN     /blue/H14  overall_WR=51.8%  n=340
+285,UNKNOWN,,,mr_iv4,2026-05-04 11:38:17,21,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@bacBoj                          (BAC BO DO JC FREE)
+286,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-04 12:12:17,187,False,False,False,True,True,False,False,,47.5,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [entry_confirmed_hour_block  ] saved=345 blocked_wins=381 net=-36 (47.5% prevent)
+287,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-04 12:12:19,22,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [hard_block_strip_insufficient] net negative (-6) — blocks more wins than losses; loosen or remove
+288,UNKNOWN,,,mr_iv4,2026-05-04 13:07:52,442,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚠️ *ALERTA*: Nenhum sinal há 6 minutos.
+289,UNKNOWN,,,mr_iv4,2026-05-04 14:03:23,116,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🚨 *CONEXÃO CONGELADA*
+290,RESULT,,,mr_iv4,2026-05-04 14:52:46,34,False,False,True,False,False,False,True,rigosinais+umgalesalabacbo123,94.1,17,CLAIM_ON_THIN_SAMPLE,1,rigosinais            +umgalesalabacbo123      n= 17 WR=94.1%
+291,UNKNOWN,,,mr_iv4,2026-05-04 14:52:50,33,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@BacboLucas                      (LUCAS APOSTAS 🚀 | BAC BO GRÁTIS)
+292,RESULT,RESULT_COLOR_BANNER,,mr_iv4,2026-05-04 16:20:07,3711,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+293,UNKNOWN,,,mr_iv4,2026-05-04 17:45:08,30,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@welldadosfree                   (Sub Bac bo)
+294,RESULT,,,mr_iv4,2026-05-04 18:53:33,57,False,False,False,False,False,False,False,bacbobrasileiro01+rigosinais,96.6,29,CLAIM_ON_THIN_SAMPLE,1,bacbobrasileiro01     +rigosinais              n= 29 WR=96.6%
+295,UNKNOWN,,,mr_iv4,2026-05-04 19:07:18,122,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🛡️ *ACCURACY GUARDIAN — AÇÃO AUTOMÁTICA*
+296,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-04 20:09:51,75,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [solo_global_hour_block] net negative (-39) — blocks more wins than losses; loosen or remove
+297,UNKNOWN,,,mr_iv4,2026-05-04 20:34:00,1264,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚠️ *COBERTURA DE SETUPS*
+298,RESULT,,,mr_iv4,2026-05-04 22:32:31,18,False,False,False,False,False,False,False,reicassinofs+rqdados1,100.0,11,CLAIM_ON_THIN_SAMPLE,1,reicassinofs          +rqdados1                n= 11 WR=100.0%
+299,RESULT,,,mr_iv4,2026-05-04 23:50:33,4,False,False,True,False,False,False,True,isadados+umgalesalabacbo123,100.0,13,CLAIM_ON_THIN_SAMPLE,1,isadados              +umgalesalabacbo123      n= 13 WR=100.0%
+300,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-05 00:39:07,142,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🚫 BLOCKED cells (worst 10 by total volume — no threshold rescues them):
+301,UNKNOWN,,,mr_iv4,2026-05-05 00:39:09,72,False,False,True,False,False,False,True,,,,NO_CLAIM,1,@unidadosofc                     (BAC BO SEM GALE)
+302,UNKNOWN,OPS_SELF_CARE_GUARD,,mr_iv4,2026-05-05 01:10:49,97,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚕️⚕️ SELF-CARE GUARD ATIVO — SOLO_ELITE ⚕️⚕️
+303,UNKNOWN,,,mr_iv4,2026-05-05 01:26:56,24,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅✅ SELF-CARE GUARD REMOVIDO — SOLO_ELITE ✅✅
+304,RESULT,,,mr_iv4,2026-05-05 03:05:00,3,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔬 GATE DRIFT AUDIT — 2026-05-05
+305,UNKNOWN,,,mr_iv4,2026-05-05 04:18:09,43,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚠️ *PERFORMANCE GUARDIAN — ATENÇÃO*
+306,RESULT,,,mr_iv4,2026-05-05 09:18:44,16,False,False,False,False,False,False,False,baccarat_b+speedbaccarat_a_01,100.0,11,CLAIM_ON_THIN_SAMPLE,1,baccarat_b            +speedbaccarat_a_01      n= 11 WR=100.0%
+307,UNKNOWN,,,mr_iv4,2026-05-05 09:30:07,481,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚠️ ATENÇÃO — 2 PERDAS SEGUIDAS
+308,OPS,,,mr_iv4,2026-05-05 11:31:03,185,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🧠 *AutoIntelligence* — 2026-05-05 11:31 UTC
+309,UNKNOWN,OPS_STREAK_BANNER,,mr_iv4,2026-05-05 12:19:43,238,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🎰 SEQUÊNCIA 2x 🔴 VERMELHO
+310,UNKNOWN,OPS_STREAK_BANNER,,mr_iv4,2026-05-05 12:21:18,233,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🎰 SEQUÊNCIA 2x 🔵 AZUL
+311,UNKNOWN,OPS_STREAK_BANNER,,mr_iv4,2026-05-05 12:21:22,197,False,False,False,False,True,False,False,,,,NO_CLAIM,5,⚠️ SEQUÊNCIA 4x 🔵 — CUIDADO
+312,UNKNOWN,OPS_STREAK_BANNER,,mr_iv4,2026-05-05 12:21:22,165,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔥 SEQUÊNCIA 3x 🔵 AZUL
+313,UNKNOWN,OPS_STREAK_BANNER,,mr_iv4,2026-05-05 12:21:23,287,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🚨 SEQUÊNCIA 5x 🔵 — REVERSÃO ESPERADA
+314,UNKNOWN,OPS_STREAK_BANNER,,mr_iv4,2026-05-05 12:27:19,161,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔥 SEQUÊNCIA 3x 🔴 VERMELHO
+315,UNKNOWN,OPS_STREAK_BANNER,,mr_iv4,2026-05-05 12:37:01,118,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🚨 SEQUÊNCIA 8x 🔴 — REVERSÃO ESPERADA
+316,UNKNOWN,OPS_PARE_3_PERDAS,,mr_iv4,2026-05-05 12:59:24,220,False,False,True,False,False,False,False,,,,NO_CLAIM,1,⛔ PARE DE APOSTAR — 3 PERDAS SEGUIDAS
+317,RESULT,,,mr_iv4,2026-05-05 22:28:52,20,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"P1/P2. TOP COALITION PAIRS (n≥10, by WR ↓ then ↑)"
+318,UNKNOWN,,,mr_iv4,2026-05-05 22:48:18,26,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@kkgsqy                          (MATch Bac Bo🎯🎲)
+319,UNKNOWN,,,mr_iv4,2026-05-05 22:50:26,3,False,False,True,False,False,False,True,,,,NO_CLAIM,1,⚡ ANTI-GALE — AVISO ESTATÍSTICO
+320,OPS,,,mr_iv4,2026-05-05 23:23:23,95,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🤖 *AutoAuditor* — 2026-05-05 23:23 UTC
+321,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-05 23:57:49,54,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [peak_minute_gate] net negative (-53) — blocks more wins than losses; loosen or remove
+322,UNKNOWN,OPS_SELF_CARE_GUARD,,mr_iv4,2026-05-06 00:42:51,55,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚕️⚕️ SELF-CARE GUARD ATIVO — PLATINUM ⚕️⚕️
+323,UNKNOWN,,,mr_iv4,2026-05-06 01:31:34,40,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@roletamilionaria3               (DADOS BAC BO 🥇)
+324,UNKNOWN,,,mr_iv4,2026-05-06 01:43:11,1,False,False,True,True,False,False,True,,,,NO_CLAIM,1,❌❌❌ G0 PERDEU — ENTRE NO G1 AGORA ❌❌❌
+325,RESULT,,,mr_iv4,2026-05-06 10:43:33,98,False,False,False,False,False,False,False,,,,NO_CLAIM,1,▲ TOP-10 PAIRS:
+326,RESULT,,,mr_iv4,2026-05-06 13:28:55,559,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🎯 WIN-DROP SCANNER — 09:28 EDT
+327,UNKNOWN,,,mr_iv4,2026-05-06 16:39:22,971,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔍 MegaAudit · QuickPulse
+328,UNKNOWN,,,mr_iv4,2026-05-06 17:13:00,1209,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📋 MegaAudit · MediumAudit (60-min)
+329,UNKNOWN,,,mr_iv4,2026-05-06 17:56:17,30,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@R10DADOS                        (R10 DADOS - BAC BO 🎲2026 e nosso 🎲💰💰🚀🇧🇷🇧)
+330,UNKNOWN,,,mr_iv4,2026-05-07 00:12:13,21,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@zeusbacbo                       (MT BAC BO FREE 🎲🎲)
+331,UNKNOWN,,,mr_iv4,2026-05-07 06:15:14,331,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔬 MegaAudit · DeepAudit (6h)
+332,UNKNOWN,,,mr_iv4,2026-05-07 09:00:43,31,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@reicassinodados                 (🟦 BAC BO 🟥 DADOS 🎲 24h GRÁTIS | CASHBET.)
+333,FIRE,,,mr_iv4,2026-05-07 16:06:24,10,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏰⏰⏰⏰⏰⏰⏰⏰⏰⏰⏰⏰⏰⏰⏰⏰
+334,OPS,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-07 16:17:28,3265,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🚨 [DELIVERY AUDIT] 2 CRITICAL issue(s)
+335,RESULT,OPS_TIE_ALERT,,mr_iv4,2026-05-07 16:18:52,496,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡⚡ JANELA DE EMPATE ATIVA 🟡⚡
+336,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-07 19:50:15,10,False,False,False,True,True,False,False,,41.2,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [coalition_dedup             ] saved=320 blocked_wins=457 net=-137 (41.2% prevent)
+337,FIRE,RESULT_TIMED_WINDOW,,mr_iv4,2026-05-07 20:43:06,9,False,False,False,True,False,True,False,,,,NO_CLAIM,5,🕐 16:43:06 EDT · 17:43:06 BRT  ·  ~14s window
+338,UNKNOWN,,,mr_iv4,2026-05-07 22:28:41,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏆 SALAS DO DIA 🏆
+339,UNKNOWN,OPS_CAMADAS_DO_DIA,,mr_iv4,2026-05-07 22:38:50,1022,False,False,False,False,False,False,False,,,,NO_CLAIM,5,🏆 CAMADAS DO DIA — 07/05/2026 🏆
+340,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-07 23:09:27,28,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [timing_gate] net negative (-78) — blocks more wins than losses; loosen or remove
+341,RESULT,,,mr_iv4,2026-05-08 01:13:49,161,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔍 MONITORAMENTO DE SINAIS — 21:13 EDT
+342,RESULT,,,mr_iv4,2026-05-08 01:58:34,149,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🛡 FULL AUDIT — 37 findings
+343,UNKNOWN,OPS_CAMADAS_DO_DIA,,mr_iv4,2026-05-08 04:00:25,636,False,False,False,False,False,False,False,,,,NO_CLAIM,5,🏆🏆 CAMADAS DO DIA — 08/05/2026 🏆🏆
+344,RESULT,,,mr_iv4,2026-05-08 06:08:42,375,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🧠 *AutoIntelligence* — 2026-05-08 06:08 UTC
+345,RESULT,,,mr_iv4,2026-05-08 06:08:43,17,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚠️ *PERFORMANCE GUARDIAN — ATENÇÃO*
+346,UNKNOWN,,,mr_iv4,2026-05-08 09:50:59,9,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@G7sinais                        (G7 SINAIS - BAC BO)
+347,UNKNOWN,,,mr_iv4,2026-05-08 10:26:38,772,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🚨 EMERGÊNCIA — 8 PERDAS SEGUIDAS 🚨
+348,RESULT,,,mr_iv4,2026-05-08 12:11:34,6,False,False,False,True,True,False,False,,100.0,6,CLAIM_ON_THIN_SAMPLE,1,🔴 accum_solo_tier                     n=   6 W=  6/L=  0/T= 0  sWR=100.0%  net=-6
+349,UNKNOWN,,,mr_iv4,2026-05-08 12:32:41,57,False,False,False,False,False,False,False,,80.0,10,CLAIM_ON_THIN_SAMPLE,1,@footballstudiodice01              n=  10 W=  8 L=  2 T= 0 WR= 80.0% | b=100.0%(n5) r=66.7%(n3) | last=2026-05-08
+350,RESULT,,,mr_iv4,2026-05-08 12:32:43,179,False,False,False,False,False,False,False,,100.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,@bacboBRL08                    ▲H12=100.0% H11=88.9% H17=80.0% ▼H17=80.0% H11=88.9% H12=100.0%
+351,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-08 12:53:36,69,False,False,True,True,True,False,True,,47.9,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [gale_filter                 ] saved=413 blocked_wins=450 net=-37 (47.9% prevent)
+352,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-08 12:53:38,9,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [g0_recovery_gate] net negative (-20) — blocks more wins than losses; loosen or remove
+353,UNKNOWN,,,mr_iv4,2026-05-08 13:30:36,12919,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📅 CYCLE SUMMARY @robofreebacbo24horass — 08/05/2026 09:30:34
+354,RESULT,RESULT_WIN_TIER,,mr_iv4,2026-05-08 13:33:50,528,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN — PLATINUM
+355,RESULT,,,mr_iv4,2026-05-08 13:51:37,4,False,False,False,False,True,False,False,,76.9,13,CLAIM_ON_THIN_SAMPLE,1,🔴 poison_room_coalition_df            n=  13 W=  9/L=  3/T= 1  sWR= 76.9%  net=-6
+356,RESULT,RESULT_LOSS_TIER,,mr_iv4,2026-05-08 14:15:12,52,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS — PLATINUM
+357,UNKNOWN,,,mr_iv4,2026-05-08 14:21:25,16,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@MASSAODADOS                     (MASSAO DADOS 🎲 LIVES BAC BO)
+358,UNKNOWN,,,mr_iv4,2026-05-08 14:37:44,674,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚠️⚠️ SALAS EM QUEDA (2) ⚠️⚠️
+359,UNKNOWN,,,mr_iv4,2026-05-08 15:38:43,6,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏆 Floor WR Leaderboard — 2026-05-08 15:37 UTC
+360,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-08 15:38:45,516,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🚨 [FLOOR WARDEN] 1 issue(s)
+361,UNKNOWN,,,mr_iv4,2026-05-08 18:02:28,2,False,False,False,False,False,False,False,,40.0,25,CLAIM_ON_THIN_SAMPLE,1,🟢 timing_gate_accum                   n=  25 W=  6/L= 15/T= 4  sWR= 40.0%  net=+9
+362,RESULT,RESULT_EMPATE,,mr_iv4,2026-05-08 18:10:38,21,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 EMPATE — PLATINUM
+363,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-09 13:57:49,18,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [coalition_dedup] net negative (-134) — blocks more wins than losses; loosen or remove
+364,RESULT,RESULT_FLASH_WIN,,mr_iv4,2026-05-09 14:33:26,14,False,False,False,True,False,False,False,,,,NO_CLAIM,5,✅ WIN — FLASH
+365,UNKNOWN,,,mr_iv4,2026-05-09 17:27:17,10,False,False,False,False,True,False,False,,81.2,16,CLAIM_ON_THIN_SAMPLE,1,🔴 hard_fva_ceiling                    n=  16 W= 13/L=  3/T= 0  sWR= 81.2%  net=-10
+366,UNKNOWN,,,mr_iv4,2026-05-09 20:58:34,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@DADOS_BAC_BO_BACBO_ROBO_SINAIS  (DADOS BAC BO BACBO ROBO SINAIS 🎲)
+367,UNKNOWN,,,mr_iv4,2026-05-09 22:45:15,2,False,False,False,False,True,False,False,,75.0,24,CLAIM_ON_THIN_SAMPLE,1,🔴 room_hour_block                     n=  24 W= 16/L=  6/T= 2  sWR= 75.0%  net=-10
+368,UNKNOWN,,,mr_iv4,2026-05-09 23:53:18,4,False,False,False,False,True,False,False,,81.2,32,CLAIM_ON_THIN_SAMPLE,1,🔴 room_quality_gate                   n=  32 W= 15/L=  6/T=11  sWR= 81.2%  net=-9
+369,UNKNOWN,,,mr_iv4,2026-05-09 23:53:20,140,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🆕 69 JOINED Bac Bo channels NOT in DB:
+370,UNKNOWN,,,mr_iv4,2026-05-10 00:07:05,60,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏢 ANDAR FRIO — APR28 🏢
+371,UNKNOWN,,,mr_iv4,2026-05-10 01:13:49,5,False,False,False,False,True,False,False,,77.8,18,CLAIM_ON_THIN_SAMPLE,1,🔴 streak_gate                         n=  18 W= 13/L=  4/T= 1  sWR= 77.8%  net=-9
+372,UNKNOWN,,,mr_iv4,2026-05-10 01:58:59,11,False,False,False,False,True,False,False,,72.2,18,CLAIM_ON_THIN_SAMPLE,1,🔴 hard_solo_block                     n=  18 W= 13/L=  5/T= 0  sWR= 72.2%  net=-8
+373,UNKNOWN,,,mr_iv4,2026-05-10 02:14:26,14,False,False,False,True,False,False,False,,11.9,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🤝 EMPATE POSSÍVEL — 11.9%
+374,UNKNOWN,,,mr_iv4,2026-05-10 04:33:53,25,False,False,False,True,False,False,False,,20.7,,CLAIM_WITHOUT_SAMPLE_SIZE,1,⚠️🟡 EMPATE PROVÁVEL — 20.7%
+375,UNKNOWN,,,mr_iv4,2026-05-10 07:22:31,15,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚕️ SLOT GUARD ATIVO — GOLDEN H03 ⚕️
+376,UNKNOWN,,,mr_iv4,2026-05-10 07:30:17,2,False,False,False,True,False,False,False,,44.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔥🟡 EMPATE MUITO PROVÁVEL — 44.0%
+377,UNKNOWN,,,mr_iv4,2026-05-10 09:54:48,22,False,False,False,False,True,False,False,,57.4,68,CLAIM_ON_THIN_SAMPLE,1,🔴 duplicate_color_guard               n=  68 W= 37/L= 29/T= 2  sWR= 57.4%  net=-8
+378,UNKNOWN,,,mr_iv4,2026-05-10 10:19:18,14,False,False,False,False,False,False,False,,79.7,133,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,@footballstudiodice01              n= 133 W=100 L= 27 T= 6 WR= 79.7% | b=86.4%(n44) r=78.1%(n32) | last=2026-05-10
+379,UNKNOWN,,,mr_iv4,2026-05-10 12:01:06,2,False,False,False,False,True,False,False,,58.6,58,CLAIM_ON_THIN_SAMPLE,1,🔴 same_round_gate                     n=  58 W= 31/L= 24/T= 3  sWR= 58.6%  net=-7
+380,UNKNOWN,,,mr_iv4,2026-05-11 00:27:16,5,False,False,False,False,False,False,False,,,,NO_CLAIM,1,💓 BOT ATIVO · 10/05/2026 20:27:16
+381,UNKNOWN,,,mr_iv4,2026-05-11 00:48:53,13,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅✅ SELF-CARE GUARD REMOVIDO — PLATINUM ✅✅
+382,UNKNOWN,,,mr_iv4,2026-05-11 03:21:11,140,False,False,False,False,False,False,False,,76.1,197,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,@footballstudiodice01              n= 197 W=140 L= 47 T=10 WR= 76.1% | b=73.9%(n69) r=78.3%(n46) | last=2026-05-11
+383,UNKNOWN,,,mr_iv4,2026-05-11 04:00:03,14,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔄🔄 RELATÓRIO DA SESSÃO — 11/05/2026 🔄🔄
+384,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-11 08:57:40,9,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [entry_confirmed_hour_block] net negative (-50) — blocks more wins than losses; loosen or remove
+385,UNKNOWN,,,mr_iv4,2026-05-11 09:35:03,4,False,False,False,False,True,False,False,,76.9,13,CLAIM_ON_THIN_SAMPLE,1,🔴 sniper_weight                       n=  13 W= 10/L=  3/T= 0  sWR= 76.9%  net=-7
+386,UNKNOWN,,,mr_iv4,2026-05-11 10:05:57,18,False,False,False,True,False,False,True,,,,NO_CLAIM,1,✅ GREEN  ·  G1 recuperado  ·  06:05:02
+387,UNKNOWN,,,mr_iv4,2026-05-11 10:08:22,5,False,False,False,True,False,False,True,,,,NO_CLAIM,1,❌ LOSS  ·  G1  ·  06:08:22
+388,UNKNOWN,RESULT_GREEN_COMPACT_G0,,mr_iv4,2026-05-11 10:15:16,9,False,False,False,True,False,False,False,,,,NO_CLAIM,5,✅ GREEN  ·  G0  ·  06:15:16
+389,RESULT,,,mr_iv4,2026-05-11 10:20:43,205,False,False,False,False,False,False,False,,,,NO_CLAIM,1,💎 SOLO ELITE  ·  06:19:59
+390,RESULT,,,mr_iv4,2026-05-11 10:21:00,260,False,False,False,False,False,False,False,,,,NO_CLAIM,1,💠 PLATINUM  ·  06:21:00
+391,RESULT,,,mr_iv4,2026-05-11 10:22:46,501,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏆 GOLDEN  ·  06:22:46  ·  3 salas
+392,UNKNOWN,,,mr_iv4,2026-05-11 10:36:49,41,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚕️ SLOT GUARD ATIVO — SOLO_ELITE H10 ⚕️
+393,RESULT,RESULT_EMPATE,,mr_iv4,2026-05-11 10:40:07,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 EMPATE — proteção cobriu  ·  06:40:07
+394,RESULT,RESULT_EMPATE,,mr_iv4,2026-05-11 11:02:23,3,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 EMPATE — Proteção cobriu!  ·  07:02:16
+395,RESULT,,,mr_iv4,2026-05-11 11:15:16,308,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 EMPATE = GANHOU · 08:15 BRT
+396,UNKNOWN,RESULT_GREEN_COMPACT_G0,,mr_iv4,2026-05-11 11:15:40,1579,False,False,False,True,False,False,False,,,,NO_CLAIM,5,✅ GREEN · G0 · 08:15 BRT
+397,UNKNOWN,RESULT_GREEN_COMPACT_G1,,mr_iv4,2026-05-11 11:21:44,1674,False,False,False,True,False,False,True,,,,NO_CLAIM,5,♻️ GREEN · G1 · 08:21 BRT
+398,UNKNOWN,,,mr_iv4,2026-05-11 11:37:03,727,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS · G0 · 08:37 BRT
+399,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-11 13:22:29,16,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [coalition_dedup] net negative (-134) — blocks more wins than losses; loosen or remove
+400,UNKNOWN,,,mr_iv4,2026-05-11 20:08:29,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Schedule
+401,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-11 21:00:26,7,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [timing_gate] net negative (-131) — blocks more wins than losses; loosen or remove
+402,UNKNOWN,,,mr_iv4,2026-05-11 21:26:32,12,False,False,False,False,True,False,False,,57.8,90,CLAIM_ON_THIN_SAMPLE,1,🔴 entry_confirmed_hour_block          n=  90 W= 49/L= 38/T= 3  sWR= 57.8%  net=-11
+403,UNKNOWN,,,mr_iv4,2026-05-12 00:51:09,13,False,False,False,False,False,False,False,,60.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,"📊 [Calibração/Bins] Previsões em lt60, 70-80 com WR < 60% — modelo superestimando nestas faixas."
+404,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-12 08:06:49,66,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [g0_recovery_gate] net negative (-31) — blocks more wins than losses; loosen or remove
+405,UNKNOWN,,,mr_iv4,2026-05-12 10:50:09,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,I
+406,UNKNOWN,,,mr_iv4,2026-05-12 13:23:40,3,False,False,False,False,True,False,False,,54.1,625,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,🔴 solo_proven_room_main               n= 625 W=297/L=287/T=41  sWR= 54.1%  net=-10
+407,UNKNOWN,,,mr_iv4,2026-05-12 13:46:07,12,False,False,False,False,False,False,False,,60.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,📊 [Calibração/Bins] Previsões em 70-80 com WR < 60% — modelo superestimando nestas faixas.
+408,UNKNOWN,,,mr_iv4,2026-05-12 20:26:28,5,False,False,False,False,False,False,False,,60.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,"📊 [Calibração/Bins] Previsões em lt60, 70-80, 80-90 com WR < 60% — modelo superestimando nestas faixas."
+409,UNKNOWN,,,mr_iv4,2026-05-13 00:50:29,1,False,False,False,False,False,False,False,,60.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,"📊 [Calibração/Bins] Previsões em 60-70, 70-80 com WR < 60% — modelo superestimando nestas faixas."
+410,UNKNOWN,OPS_AUDIT_360,,mr_iv4,2026-05-13 08:28:15,6,False,False,False,False,False,False,False,,,,NO_CLAIM,5,📊 AUDIT 360° (DB only) — 05:28 BRT
+411,UNKNOWN,,,mr_iv4,2026-05-13 10:26:18,19,False,False,False,False,False,False,False,,60.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,📊 [Calibração/Bins] Previsões em lt60 com WR < 60% — modelo superestimando nestas faixas.
+412,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-14 12:47:07,48,False,False,False,True,True,False,False,,41.5,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [timing_gate                 ] saved=344 blocked_wins=484 net=-140 (41.5% prevent)
+413,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-14 12:47:09,2,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [platinum_dupe_guard] net negative (-76) — blocks more wins than losses; loosen or remove
+414,UNKNOWN,,,mr_iv4,2026-05-14 17:07:49,9,False,False,False,False,False,False,False,,34.5,29,CLAIM_ON_THIN_SAMPLE,1,🟢 peak_minute_gate                    n=  29 W= 10/L= 19/T= 0  sWR= 34.5%  net=+9
+415,UNKNOWN,,,mr_iv4,2026-05-14 19:03:57,1,False,False,False,False,True,False,False,,100.0,10,CLAIM_ON_THIN_SAMPLE,1,🔴 hard_fva_ceiling                    n=  10 W= 10/L=  0/T= 0  sWR=100.0%  net=-10
+416,UNKNOWN,,,mr_iv4,2026-05-14 19:03:59,5,False,False,False,False,False,False,False,,,,NO_CLAIM,1,💤 @leobacbo                          last seen: NEVER
+417,UNKNOWN,,,mr_iv4,2026-05-14 22:40:42,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚕️ SLOT GUARD ATIVO — PLATINUM H22 ⚕️
+418,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-14 23:11:28,50,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [post_loss_cooldown] net negative (-119) — blocks more wins than losses; loosen or remove
+419,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-15 11:10:20,35,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [dynamic_threshold_bad_hour] net negative (-7) — blocks more wins than losses; loosen or remove
+420,UNKNOWN,,,mr_iv4,2026-05-15 11:51:36,2,False,False,False,False,False,False,False,,49.0,51,CLAIM_ON_THIN_SAMPLE,1,🟢 streak_reversal                     n=  51 W= 21/L= 26/T= 4  sWR= 49.0%  net=+5
+421,UNKNOWN,,,mr_iv4,2026-05-15 12:40:59,10,False,False,False,False,True,False,False,,77.8,9,CLAIM_ON_THIN_SAMPLE,1,🔴 momentum_lll                        n=   9 W=  7/L=  2/T= 0  sWR= 77.8%  net=-5
+422,UNKNOWN,,,mr_iv4,2026-05-15 14:28:40,2,False,False,False,False,True,False,False,,62.2,45,CLAIM_ON_THIN_SAMPLE,1,🔴 golden_coal_penalty                 n=  45 W= 22/L= 17/T= 6  sWR= 62.2%  net=-5
+423,UNKNOWN,,,mr_iv4,2026-05-15 18:06:57,2,False,False,False,False,True,False,False,,55.6,45,CLAIM_ON_THIN_SAMPLE,1,🔴 pending_signal_exists               n=  45 W= 24/L= 20/T= 1  sWR= 55.6%  net=-4
+424,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-15 19:05:43,44,False,False,False,True,True,False,False,,44.6,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [platinum_dupe_guard         ] saved=371 blocked_wins=461 net=-90 (44.6% prevent)
+425,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-15 20:06:35,60,False,False,False,False,False,False,False,,,,NO_CLAIM,1,💰 [EV Positivo] EV médio = +R$5.44/R$10 aposta nos últimos sinais — condições favoráveis.
+426,UNKNOWN,,,mr_iv4,2026-05-15 20:18:06,4,False,False,False,False,False,False,False,,37.5,16,CLAIM_ON_THIN_SAMPLE,1,🟢 solo_conf_floor                     n=  16 W=  6/L= 10/T= 0  sWR= 37.5%  net=+4
+427,UNKNOWN,,,mr_iv4,2026-05-15 23:20:36,8,False,False,False,False,False,False,False,,46.7,15,CLAIM_ON_THIN_SAMPLE,1,🟢 seq_flip_back                       n=  15 W=  3/L=  8/T= 4  sWR= 46.7%  net=+5
+428,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-16 01:21:51,3,False,False,False,False,False,False,False,,51.3,,CLAIM_WITHOUT_SAMPLE_SIZE,1,⚠️ [EV Negativo] EV médio = R$-1.03/R$10 — sinais recentes abaixo do ponto de equilíbrio (51.3%).
+429,UNKNOWN,,,mr_iv4,2026-05-16 09:29:32,5,False,False,False,False,False,False,False,,36.4,11,CLAIM_ON_THIN_SAMPLE,1,🟢 solo_dow_dead                       n=  11 W=  3/L=  7/T= 1  sWR= 36.4%  net=+4
+430,UNKNOWN,,,mr_iv4,2026-05-16 15:56:06,21,False,False,False,False,True,False,False,,77.8,9,CLAIM_ON_THIN_SAMPLE,1,🔴 solo_elite_death_minute_gate        n=   9 W=  7/L=  2/T= 0  sWR= 77.8%  net=-5
+431,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-16 23:29:37,5,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [rate_limit_global] net negative (-54) — blocks more wins than losses; loosen or remove
+432,UNKNOWN,,,mr_iv4,2026-05-17 04:00:00,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚖️⚖️ RELATÓRIO DA SESSÃO — 17/05/2026 ⚖️⚖️
+433,UNKNOWN,,,mr_iv4,2026-05-17 11:53:52,70,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏢 ANDAR FRIO — MAY02 🏢
+434,UNKNOWN,,,mr_iv4,2026-05-17 21:55:14,14,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚕️ SLOT GUARD ATIVO — SEQUENCE H17 ⚕️
+435,UNKNOWN,,,mr_iv4,2026-05-17 22:41:48,232,False,False,False,True,False,False,False,,78.9,1085,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,@martinswinbacbo                   n=1085 W=800 L=229 T=56 WR= 78.9% | - | last=2026-05-17
+436,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-17 23:23:48,12,False,False,False,False,True,False,False,,,,NO_CLAIM,1,@sinal_bac_bo                    (BAC BO 🎲 AO VIVO [G1] 🎯)
+437,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-17 23:23:50,13,False,False,False,False,True,False,False,,,,NO_CLAIM,1,@bacbocvips                      (BACBO [VIP])
+438,UNKNOWN,,,mr_iv4,2026-05-18 09:13:36,16,False,False,False,True,False,False,False,,,,NO_CLAIM,1,@bacbogreenbetss                 (Bac Bo - Greenbets FREE)
+439,RESULT,,,mr_iv4,2026-05-18 09:23:13,25,False,False,True,False,True,False,False,,,,NO_CLAIM,1,🔵 🤖 GOLDEN — ENTRADA AI
+440,UNKNOWN,,,mr_iv4,2026-05-18 09:56:25,9,False,False,True,False,False,False,True,,,,NO_CLAIM,1,@hackerbacbozerogale             (HACK BAC BO SEM GALE)
+441,UNKNOWN,,,mr_iv4,2026-05-18 11:20:55,22,False,False,True,False,False,False,True,rigosinais+umgalesalabacbo123,96.7,30,CLAIM_ON_THIN_SAMPLE,1,rigosinais            +umgalesalabacbo123      n= 30 WR=96.7%
+442,UNKNOWN,,,mr_iv4,2026-05-18 11:21:02,10,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@bacboBRL01                      (BAC BO TIPS 💎)
+443,UNKNOWN,,,mr_iv4,2026-05-18 12:45:23,9,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@Babacbo                         (Bac Bo BA DADOS 💎)
+444,UNKNOWN,,,mr_iv4,2026-05-18 13:54:39,6,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@MASSAOBACBO                     (MASSAO BAC BO BOT PREMIUM (BAC BO))
+445,RESULT,,,mr_iv4,2026-05-18 20:44:31,9,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 🎯 M8SINAIS — GOLDEN AI
+446,RESULT,,,mr_iv4,2026-05-18 20:44:31,28,False,False,True,False,True,False,True,,,,NO_CLAIM,1,🔴 🔥 umgalesalabacbo123 — GOLDEN AI
+447,RESULT,,,mr_iv4,2026-05-18 20:44:32,28,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 📊 DadosBacBoBR — GOLDEN AI
+448,RESULT,,,mr_iv4,2026-05-18 20:44:36,19,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 🤖 robofreebacbo24horass — GOLDEN AI
+449,RESULT,,,mr_iv4,2026-05-18 21:13:33,27,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 🌊 bacboaovivovip — GOLDEN AI
+450,RESULT,,,mr_iv4,2026-05-18 21:13:33,39,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 💎 RQDADOS1 — GOLDEN AI
+451,RESULT,,,mr_iv4,2026-05-18 21:13:34,39,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 💎 rqdados — GOLDEN AI
+452,RESULT,,,mr_iv4,2026-05-18 21:16:04,2,False,False,True,False,True,False,True,,,,NO_CLAIM,1,🔵 🔥 umgalesalabacbo123 — PLATINUM AI
+453,RESULT,,,mr_iv4,2026-05-18 21:16:05,7,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 📡 bacbobrasileiro01 — PLATINUM AI
+454,RESULT,,,mr_iv4,2026-05-18 21:16:05,9,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 💎 RQDADOS1 — PLATINUM AI
+455,RESULT,,,mr_iv4,2026-05-18 21:45:51,378,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 📡 bacbobrasileiro01 — SOLO ELITE AI
+456,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-18 22:00:27,1,False,False,False,True,True,False,False,,,,NO_CLAIM,1,[80] GATE [g3_predictor_hard] net negative (-115) — blocks more wins than losses; loosen or remove
+457,RESULT,,,mr_iv4,2026-05-18 22:44:17,13,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 📡 sinaisbacboangola — GOLDEN AI
+458,RESULT,,,mr_iv4,2026-05-19 01:33:03,4,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 🇧🇷 bacbobrasileiro01 — GOLDEN AI
+459,RESULT,,,mr_iv4,2026-05-19 02:42:31,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔬 MegaAudit · DeepAudit (6h)
+460,UNKNOWN,,,mr_iv4,2026-05-19 04:06:00,10,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔬 GATE DRIFT AUDIT — 2026-05-19
+461,RESULT,,,mr_iv4,2026-05-19 04:29:27,13,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 🤖 robobacbodados — GOLDEN AI
+462,UNKNOWN,,,mr_iv4,2026-05-19 10:35:02,4,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📊 *PERFORMANCE GUARDIAN*
+463,UNKNOWN,,,mr_iv4,2026-05-19 10:36:50,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Fix
+464,RESULT,,,mr_iv4,2026-05-19 11:44:36,10,False,False,False,True,True,False,False,,,,NO_CLAIM,1,🔴 🏆 martinswinbacbo — GOLDEN AI
+465,RESULT,,,mr_iv4,2026-05-19 16:54:38,143,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 🃏 CoringaDados — SOLO ELITE AI
+466,RESULT,,,mr_iv4,2026-05-19 17:42:32,12,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 ⭐ rigosinais — GOLDEN AI
+467,UNKNOWN,,,mr_iv4,2026-05-19 18:20:17,1,False,False,False,False,False,False,False,,60.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,"📊 [Calibração/Bins] Previsões em lt60, ge90 com WR < 60% — modelo superestimando nestas faixas."
+468,RESULT,,,mr_iv4,2026-05-19 19:13:51,46,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 👑 IsaDados — PLATINUM AI
+469,RESULT,,,mr_iv4,2026-05-19 19:13:52,44,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 ⭐ rigosinais — PLATINUM AI
+470,RESULT,,,mr_iv4,2026-05-19 19:13:52,22,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 🃏 CoringaDados — PLATINUM AI
+471,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-19 20:51:51,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [bad_coalition_pair] net negative (-160) — blocks more wins than losses; loosen or remove
+472,RESULT,,,mr_iv4,2026-05-19 20:56:22,23,False,False,False,False,False,False,False,bacboaovivovip+sinaisbacboangola,100.0,11,CLAIM_ON_THIN_SAMPLE,1,bacboaovivovip        +sinaisbacboangola       n= 11 WR=100.0%
+473,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-19 22:08:19,16,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [post_loss_cooldown] net negative (-120) — blocks more wins than losses; loosen or remove
+474,RESULT,,,mr_iv4,2026-05-19 22:50:36,3,False,False,False,True,True,False,False,,,,NO_CLAIM,1,🔴 🏆 martinswinbacbo — PLATINUM AI
+475,RESULT,,,mr_iv4,2026-05-20 01:18:25,13,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 🃏 CoringaDados — GOLDEN AI
+476,RESULT,,,mr_iv4,2026-05-20 03:10:28,5,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 👑 IsaDados — GOLDEN AI
+477,RESULT,,,mr_iv4,2026-05-20 03:14:28,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 💎 RQDADOS1 — SOLO ELITE AI
+478,UNKNOWN,,,mr_iv4,2026-05-20 10:47:57,28,False,False,False,False,False,False,False,bacboaovivovip+sinaisbacboangola,100.0,11,CLAIM_ON_THIN_SAMPLE,1,bacboaovivovip        +sinaisbacboangola       n= 11 WR=100.0%
+479,RESULT,,,mr_iv4,2026-05-20 16:31:09,9,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 🤖 robobacbodados — PLATINUM AI
+480,RESULT,,,mr_iv4,2026-05-20 16:31:13,5,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 💎 rqdados — PLATINUM AI
+481,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-21 10:58:29,6,False,False,True,True,True,False,True,,47.7,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [gale_filter                 ] saved=418 blocked_wins=458 net=-40 (47.7% prevent)
+482,UNKNOWN,,,mr_iv4,2026-05-22 10:45:17,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏢 ANDAR FRIO — MAR20 🏢
+483,UNKNOWN,,,mr_iv4,2026-05-23 10:40:57,49,False,False,False,False,True,False,False,,78.8,391,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,SOLO_ELITE /red/H05  T≥2.70  WR=78.8%  n=391/total391
+484,UNKNOWN,,,mr_iv4,2026-05-23 11:08:57,62,False,False,False,False,False,False,False,reicassinofs+rqdados1,100.0,15,CLAIM_ON_THIN_SAMPLE,1,reicassinofs          +rqdados1                n= 15 WR=100.0%
+485,RESULT,,,mr_iv4,2026-05-23 11:12:19,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 🤖 robofreebacbo24horass — PLATINUM AI
+486,UNKNOWN,,,mr_iv4,2026-05-23 18:08:42,56,False,False,False,False,True,False,False,,78.4,250,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,SOLO_ELITE /blue/H18  T≥3.81  WR=78.4%  n=250/total344
+487,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-23 23:21:02,4,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [golden_coal_penalty] net negative (-89) — blocks more wins than losses; loosen or remove
+488,UNKNOWN,,,mr_iv4,2026-05-24 04:13:31,6,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏆🏆 RELATÓRIO DA SESSÃO — 24/05/2026 🏆🏆
+489,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-24 11:26:32,16,False,False,False,True,True,False,False,,41.4,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [coalition_dedup             ] saved=334 blocked_wins=473 net=-139 (41.4% prevent)
+490,UNKNOWN,,,mr_iv4,2026-05-25 03:27:44,23,False,False,True,False,False,False,False,bacbob2xbet+rigosinais,100.0,10,CLAIM_ON_THIN_SAMPLE,1,bacbob2xbet           +rigosinais              n= 10 WR=100.0%
+491,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-25 06:40:48,20,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [rate_limit_global] net negative (-48) — blocks more wins than losses; loosen or remove
+492,RESULT,,,mr_iv4,2026-05-25 11:00:08,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 📡 sinaisbacboangola — PLATINUM AI
+493,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-25 23:20:27,7,False,False,False,True,True,False,False,,47.1,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [entry_confirmed_hour_block  ] saved=372 blocked_wins=418 net=-46 (47.1% prevent)
+494,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-26 18:06:11,10,False,False,False,True,True,False,False,,40.1,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [g3_predictor_hard           ] saved=270 blocked_wins=403 net=-133 (40.1% prevent)
+495,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-27 08:10:35,5,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [platinum_cold_pair] net negative (-53) — blocks more wins than losses; loosen or remove
+496,UNKNOWN,,,mr_iv4,2026-05-27 09:45:42,8,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@BACBACFREEE                     (BAC BO 24 HORAS FREE)
+497,UNKNOWN,,,mr_iv4,2026-05-27 10:42:49,3,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🚨 *ALERTA SISTEMA*
+498,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-27 15:48:51,1,False,False,True,True,False,False,True,,,,NO_CLAIM,1,[80] GATE [gale_filter] net negative (-44) — blocks more wins than losses; loosen or remove
+499,UNKNOWN,,,mr_iv4,2026-05-27 20:08:13,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@bacbodadosfreeturbo             (Turbo Free | Bac Bo: Dados)
+500,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-27 22:46:52,2,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [platinum_pair_hour_block] net negative (-83) — blocks more wins than losses; loosen or remove
+501,UNKNOWN,,,mr_iv4,2026-05-30 03:44:34,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@bacbo                      @bacbo_sinais
+502,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-30 05:43:44,30,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🌐 [URLMonitor] Site migrado detectado!
+503,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-30 06:47:52,1,False,False,False,True,True,False,False,,43.1,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [golden_coal_penalty         ] saved=276 blocked_wins=365 net=-89 (43.1% prevent)
+504,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-30 06:48:04,5,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [timing_gate_accum] net negative (-34) — blocks more wins than losses; loosen or remove
+505,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-30 10:26:26,7,False,False,False,True,True,False,False,,40.5,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [golden_hour_block           ] saved=257 blocked_wins=378 net=-121 (40.5% prevent)
+506,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-30 10:29:06,3,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [entry_confirmed_hour_block] net negative (-11) — blocks more wins than losses; loosen or remove
+507,OPS,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-30 10:55:58,20,False,False,False,False,True,False,False,,,,NO_CLAIM,1,⚠️ [WebWatchdog] API server offline >5 min
+508,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-30 21:41:12,3,False,False,False,True,True,False,False,,40.5,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [golden_hour_block           ] saved=257 blocked_wins=378 net=-121 (40.5% prevent)
+509,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-05-30 21:43:50,17,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [golden_loss_contagion] net negative (-49) — blocks more wins than losses; loosen or remove
+510,OPS,,,mr_iv4,2026-05-31 11:12:41,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"made the bot do now, on its own:"
+511,UNKNOWN,,,mr_iv4,2026-05-31 12:34:55,76,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📅 *HORÁRIOS — GRADE COMPLETA*
+512,UNKNOWN,,,mr_iv4,2026-05-31 12:41:40,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,that time inest?
+513,UNKNOWN,,,mr_iv4,2026-05-31 12:42:21,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,make sure shedules are always set time
+514,UNKNOWN,,,mr_iv4,2026-05-31 12:50:46,29,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🌐 *GRADE POR TIPO — BacBo Royal*
+515,UNKNOWN,,,mr_iv4,2026-05-31 13:18:43,177,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔍 MONITORAMENTO DE SINAIS — 08:18 EST
+516,UNKNOWN,,,mr_iv4,2026-05-31 14:03:02,23,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🟢🟢 H14 UTC · 09h EST
+517,UNKNOWN,,,mr_iv4,2026-05-31 20:35:33,18,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⛔ HORA BLOQUEADA · H20 UTC
+518,UNKNOWN,,,mr_iv4,2026-05-31 20:35:33,15,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🎯 WIN-DROP SCANNER — 15:35 EST
+519,RESULT,,,mr_iv4,2026-06-01 01:46:30,24,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🎯 WIN-DROP SCANNER — 20:44 EST
+520,RESULT,,,mr_iv4,2026-06-01 01:46:30,15,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔍 MONITORAMENTO DE SINAIS — 20:45 EST
+521,UNKNOWN,,,mr_iv4,2026-06-01 09:45:16,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📅 *GRADE ATUALIZADA — 09:00 UTC / 04h EST*
+522,UNKNOWN,,,mr_iv4,2026-06-01 11:56:56,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⏱️⏱️ H12 UTC em 7 min · 07h EST ⏱️⏱️
+523,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-01 11:56:57,18,False,False,False,False,True,False,False,,,,NO_CLAIM,1,⚠️ [InputWatchdog] @rqdados silent 180 min — re-join attempt
+524,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-01 17:58:46,4,False,False,False,False,True,False,False,,,,NO_CLAIM,1,⚠️ [InputWatchdog] @martinswinbacbo silent 28 min
+525,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-01 17:58:56,2,False,False,False,False,True,False,False,,,,NO_CLAIM,1,⚠️ [InputWatchdog/FloorCensus] 3 floor(s) sent 0 signals in last 24h:
+526,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-01 19:53:26,14,False,False,False,False,True,False,False,,,,NO_CLAIM,1,⚠️ [LiveWatchdog] Desconectado há 925s
+527,UNKNOWN,,,mr_iv4,2026-06-02 01:27:20,5,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔍 *Gate Auditor AI* — 2026-06-02 01:27 UTC
+528,UNKNOWN,,,mr_iv4,2026-06-02 03:39:48,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,👁️ *Shadow Watchdog AI* — 2026-06-02 03:38 UTC
+529,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-02 03:39:48,2,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 *[VolumeOpt] WR crítico — SOLO_ELITE*
+530,UNKNOWN,,,mr_iv4,2026-06-02 07:40:39,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,find everything thatsnot okk in all dimensions
+531,UNKNOWN,,,mr_iv4,2026-06-02 09:05:55,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📅 *GRADE ATUALIZADA — 09:00 UTC / 05h EDT*
+532,RESULT,OPS_AUDIT_360,,mr_iv4,2026-06-02 20:24:25,7,False,False,False,False,False,False,False,,,,NO_CLAIM,5,🧠 AUDIT 360° — GPT-4o | 17:19 BRT
+533,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-02 20:24:27,2,False,False,False,False,True,False,False,,,,NO_CLAIM,1,⚠️ *[VolumeOpt] Volume baixo!*
+534,UNKNOWN,,,mr_iv4,2026-06-03 00:22:22,158,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔬 *Forensics Divergence Alert*
+535,RESULT,OPS_AUDIT_360,,mr_iv4,2026-06-03 02:59:33,123,False,False,False,False,False,False,False,,,,NO_CLAIM,5,📊 AUDIT 360° (DB only) — 23:59 BRT
+536,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-04 21:18:11,4,False,False,False,True,True,False,False,,42.4,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [rate_limit_global           ] saved=180 blocked_wins=245 net=-65 (42.4% prevent)
+537,UNKNOWN,,,mr_iv4,2026-06-06 00:33:25,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"git reset --hard $(git log --all --before=""2026-05-08 18:15:00"" -n 1 --format=""%H"")"
+538,UNKNOWN,,,mr_iv4,2026-06-06 00:56:54,6,False,False,False,False,False,False,False,bacbobrl+robobacbodados,100.0,10,CLAIM_ON_THIN_SAMPLE,1,bacbobrl              +robobacbodados          n= 10 WR=100.0%
+539,UNKNOWN,,,mr_iv4,2026-06-06 00:57:07,4,False,False,False,False,True,False,False,,61.2,3113,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,🔴 GOLDEN       score=11-13   n=3113  blocked-but-WR= 61.2%
+540,UNKNOWN,,,mr_iv4,2026-06-06 05:44:41,2,False,False,False,False,True,False,False,,61.6,263,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,🔴 GOLDEN       score=7-8     n= 263  blocked-but-WR= 61.6%
+541,UNKNOWN,,,mr_iv4,2026-06-07 05:43:05,4,False,False,False,False,False,False,False,rigosinais+sinaisbacboangola,95.0,60,CLAIM_ON_THIN_SAMPLE,1,rigosinais            +sinaisbacboangola       n= 60 WR=95.0%
+542,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-07 06:02:39,13,False,False,False,True,True,False,False,,41.2,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [platinum_pair_hour_block    ] saved=189 blocked_wins=270 net=-81 (41.2% prevent)
+543,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-08 07:43:11,2,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [kind_suspended] net negative (-51) — blocks more wins than losses; loosen or remove
+544,UNKNOWN,,,mr_iv4,2026-06-08 13:50:10,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@bacbo                           (Grupo VIP | BacBo 🎰💰)
+545,UNKNOWN,,,mr_iv4,2026-06-08 13:50:11,9,False,False,False,False,True,False,False,,64.6,837,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,SOLO_ELITE /red/H00  overall_WR=64.6%  n=837
+546,UNKNOWN,,,mr_iv4,2026-06-09 07:59:39,2,False,False,False,False,False,False,False,bacboaovivogratis+baccarat_b,94.1,17,CLAIM_ON_THIN_SAMPLE,1,bacboaovivogratis     +baccarat_b              n= 17 WR=94.1%
+547,UNKNOWN,,,mr_iv4,2026-06-09 13:50:58,4,False,False,False,False,False,False,False,baccarat_b+grupodobacbo24hon,94.6,37,CLAIM_ON_THIN_SAMPLE,1,baccarat_b            +grupodobacbo24hon       n= 37 WR=94.6%
+548,UNKNOWN,,,mr_iv4,2026-06-10 19:53:10,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,ok
+549,UNKNOWN,,,mr_iv4,2026-06-10 23:09:35,4,False,False,False,False,False,False,False,coringadados+sinal_bac_bo,100.0,12,CLAIM_ON_THIN_SAMPLE,1,coringadados          +sinal_bac_bo            n= 12 WR=100.0%
+550,UNKNOWN,,,mr_iv4,2026-06-10 23:09:38,7,False,False,False,False,True,False,False,,62.2,347,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,SOLO_ELITE /blue/H13  overall_WR=62.2%  n=347
+551,UNKNOWN,,,mr_iv4,2026-06-11 00:00:08,4,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@kbsinais                        (KBSINAIS BAC BO)
+552,UNKNOWN,,,mr_iv4,2026-06-11 10:30:19,2,False,False,False,False,False,False,False,rqdados+speedbaccarat_a,100.0,20,CLAIM_ON_THIN_SAMPLE,1,rqdados               +speedbaccarat_a         n= 20 WR=100.0%
+553,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-11 18:36:39,1,False,False,False,True,True,False,False,,36.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [platinum_cold_pair          ] saved=169 blocked_wins=300 net=-131 (36.0% prevent)
+554,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-11 18:36:43,6,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [golden_hour_block] net negative (-79) — blocks more wins than losses; loosen or remove
+555,UNKNOWN,,,mr_iv4,2026-06-12 10:36:59,2,False,False,False,False,False,False,False,isadados+sinal_bac_bo,91.7,12,CLAIM_ON_THIN_SAMPLE,1,isadados              +sinal_bac_bo            n= 12 WR=91.7%
+556,UNKNOWN,,,mr_iv4,2026-06-12 11:31:26,2,False,False,False,False,False,False,False,bacbobrasileiro01+m8sinais,91.7,24,CLAIM_ON_THIN_SAMPLE,1,bacbobrasileiro01     +m8sinais                n= 24 WR=91.7%
+557,RESULT,FIRE_G0_MISS_ENTRE_G1,,mr_iv4,2026-06-12 11:52:07,287,False,False,True,False,False,False,True,,,,NO_CLAIM,1,⚠️ G0 NÃO FOI — ENTRE NO G1 AGORA
+558,RESULT,,,mr_iv4,2026-06-12 11:52:20,368,False,False,False,False,False,False,True,,,,NO_CLAIM,1,🟠 G1 NÃO FOI — G2 OPCIONAL (RISCO ALTO)
+559,RESULT,,,mr_iv4,2026-06-12 11:52:46,676,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴🔴🔴 🕐 08:52 BRT · 07:52 EDT 🔴🔴🔴
+560,RESULT,,,mr_iv4,2026-06-12 11:53:45,644,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵🔵🔵 🕐 08:53 BRT · 07:53 EDT 🔵🔵🔵
+561,UNKNOWN,,,mr_iv4,2026-06-12 12:38:18,5,False,False,False,False,False,False,False,,,,NO_CLAIM,1,▼ BOTTOM-10 PAIRS (consider blocking):
+562,RESULT,,,mr_iv4,2026-06-12 13:51:50,217,False,False,False,False,False,False,True,,,,NO_CLAIM,1,🛑 G2 NÃO FOI — PERDA TOTAL — PARE AGORA
+563,UNKNOWN,,,mr_iv4,2026-06-12 14:16:04,8,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"T2. SCORE × OUTCOME (blocked, 30d) — find under-utilized buckets"
+564,UNKNOWN,,,mr_iv4,2026-06-12 15:37:59,6,False,False,False,False,False,False,False,,,,NO_CLAIM,1,@bacboppe                        (DECOLOU COM PEDRIN 1 VIP)
+565,RESULT,OPS_STREAK_BANNER,,mr_iv4,2026-06-12 18:36:15,312,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔥🔥🔥 SEQUÊNCIA 17x 🔵 AZUL 🔥🔥🔥
+566,UNKNOWN,,,mr_iv4,2026-06-13 00:13:57,2,False,False,False,False,False,False,False,isadados+speedbaccarat_a,91.7,12,CLAIM_ON_THIN_SAMPLE,1,isadados              +speedbaccarat_a         n= 12 WR=91.7%
+567,UNKNOWN,,,mr_iv4,2026-06-13 04:14:05,2,False,False,False,False,False,False,False,m8sinais+sinal_bac_bo,91.7,12,CLAIM_ON_THIN_SAMPLE,1,m8sinais              +sinal_bac_bo            n= 12 WR=91.7%
+568,RESULT,OPS_G1_EXPIROU,,mr_iv4,2026-06-13 07:22:36,27,False,False,False,False,False,False,True,,,,NO_CLAIM,1,⏰ G1 EXPIROU — VERIFIQUE SUA MESA
+569,RESULT,,,mr_iv4,2026-06-13 10:45:29,2,False,False,False,False,False,False,False,m8sinais+sinal_bac_bo,91.7,12,CLAIM_ON_THIN_SAMPLE,1,m8sinais              +sinal_bac_bo            n= 12 WR=91.7%
+570,UNKNOWN,,,mr_iv4,2026-06-14 11:09:49,2,False,False,True,False,False,False,False,bacbob2xbet+baccarat_a,25.0,16,CLAIM_ON_THIN_SAMPLE,1,bacbob2xbet           +baccarat_a              n= 16 WR=25.0%
+571,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-14 22:10:44,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [streak_reversal] net negative (-80) — blocks more wins than losses; loosen or remove
+572,RESULT,,,mr_iv4,2026-06-14 23:43:56,4,False,False,True,False,False,False,True,baccarat_a+umgalesalabacbo123,45.0,20,CLAIM_ON_THIN_SAMPLE,1,baccarat_a            +umgalesalabacbo123      n= 20 WR=45.0%
+573,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-15 11:41:25,6,False,False,False,True,True,False,False,,40.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [golden_loss_contagion       ] saved=104 blocked_wins=156 net=-52 (40.0% prevent)
+574,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-15 23:20:29,8,False,False,False,True,True,False,False,,37.2,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [timing_gate_accum           ] saved=84 blocked_wins=142 net=-58 (37.2% prevent)
+575,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-15 23:22:12,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [streak_gate] net negative (-89) — blocks more wins than losses; loosen or remove
+576,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-16 14:10:16,8,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[80] GATE [pending_signal_exists] net negative (-24) — blocks more wins than losses; loosen or remove
+577,UNKNOWN,,,mr_iv4,2026-06-16 19:54:01,4,False,False,False,False,False,False,False,baccarat_a+isadados,42.9,14,CLAIM_ON_THIN_SAMPLE,1,baccarat_a            +isadados                n= 14 WR=42.9%
+578,UNKNOWN,,,mr_iv4,2026-06-19 00:46:38,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ TEST: confirming delivery pipeline works
+579,UNKNOWN,,,mr_iv4,2026-06-19 02:16:30,2,False,False,False,False,False,False,False,,72.5,302,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,🟡 SOLO_ELITE   score=7-8     n= 302  blocked-but-WR= 72.5%
+580,RESULT,OPS_G3_ATINGIDO,,mr_iv4,2026-06-19 09:13:42,1,False,False,False,False,False,False,True,,,,NO_CLAIM,5,🛑🛑🛑 PARE — G3 ATINGIDO 🛑🛑🛑
+581,UNKNOWN,,,mr_iv4,2026-06-19 21:08:44,20,False,False,True,False,False,False,True,baccarat_a+umgalesalabacbo123,45.0,20,CLAIM_ON_THIN_SAMPLE,1,baccarat_a            +umgalesalabacbo123      n= 20 WR=45.0%
+582,UNKNOWN,,,mr_iv4,2026-06-19 21:09:02,16,False,False,False,False,True,False,False,,47.8,23,CLAIM_ON_THIN_SAMPLE,1,🔴 GOLDEN       score=<7      n=  23  blocked-but-WR= 47.8%
+583,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-21 06:04:36,9,False,False,False,True,True,False,False,,31.3,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [streak_reversal             ] saved=65 blocked_wins=143 net=-78 (31.3% prevent)
+584,UNKNOWN,,,mr_iv4,2026-06-23 23:51:02,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,"✅ BacBo output test — if you see this, Telegram send target works."
+585,UNKNOWN,,,mr_iv4,2026-06-23 23:53:04,601,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🚨 BAC BO SIGNAL 🚨
+586,UNKNOWN,,,mr_iv4,2026-06-24 01:00:03,53,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🚨 BAC BO VOLUME SIGNAL 🚨
+587,UNKNOWN,,,mr_iv4,2026-06-26 09:30:57,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,nhza
+588,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-26 17:24:32,4,False,False,False,True,True,False,False,,24.0,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [streak_gate                 ] saved=49 blocked_wins=155 net=-106 (24.0% prevent)
+589,UNKNOWN,,,mr_iv4,2026-06-26 18:11:29,18,False,False,False,False,False,False,False,,77.5,965,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,@robobacbodados                    n= 965 W=724 L=217 T=24 WR= 77.5% | - | last=2026-06-26
+590,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-27 06:15:34,77,False,False,False,True,True,False,False,,34.4,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [post_loss_cooldown          ] saved=72 blocked_wins=137 net=-65 (34.4% prevent)
+591,UNKNOWN,,,mr_iv4,2026-06-27 08:56:53,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,1
+592,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-06-27 20:41:44,19,False,False,False,True,True,False,False,,34.2,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [streak_reversal             ] saved=76 blocked_wins=146 net=-70 (34.2% prevent)
+593,RESULT,,,mr_iv4,2026-06-27 20:47:21,1,False,False,True,False,False,False,False,bacbob2xbet+baccarat_a,45.8,24,CLAIM_ON_THIN_SAMPLE,1,bacbob2xbet           +baccarat_a              n= 24 WR=45.8%
+594,RESULT,,,mr_iv4,2026-06-28 08:43:38,2,False,False,False,False,False,False,False,baccarat_a+sinal_bac_bo,47.4,38,CLAIM_ON_THIN_SAMPLE,1,baccarat_a            +sinal_bac_bo            n= 38 WR=47.4%
+595,UNKNOWN,,,mr_iv4,2026-06-28 14:25:11,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,cd /home/runner/workspace
+596,UNKNOWN,,,mr_iv4,2026-07-01 15:14:00,19,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏢 SKYSCRAPER STATUS  ·  01 Jul · 14:50 UTC
+597,UNKNOWN,,,mr_iv4,2026-07-01 15:14:01,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🏢 Skyscraper — relay test 2 ✅
+598,UNKNOWN,,,mr_iv4,2026-07-01 15:14:01,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏢 Skyscraper test
+599,UNKNOWN,,,UNIQUE_g1,2026-07-01 20:27:54,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ SKYSCRAPER RELAY TEST
+600,UNKNOWN,,,UNIQUE_g1,2026-07-02 01:21:36,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,curl -s -X POST https://364b2048-292b-4abe-8d51-1e2183f5fad5-00-1ltvkfz0gmxs1.janeway.replit.dev/api/skyscraper/push \
+601,UNKNOWN,,,UNIQUE_g1,2026-07-02 01:24:19,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,~/workspace$ curl -s -X POST https://364b2048-292b-4abe-8d51-1e2183f5fad5-00-1ltvkfz0gmxs1.janeway.replit.dev/api/skyscraper/push \
+602,UNKNOWN,,,UNIQUE_g1,2026-07-02 18:00:43,1,False,False,False,True,True,False,False,,,,NO_CLAIM,1,✅ RELAY RESTORED
+603,UNKNOWN,,,UNIQUE_g1,2026-07-02 18:03:20,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ RELAY NOW RUNNING AS A WORKFLOW
+604,UNKNOWN,,,mr_iv4,2026-07-03 13:41:12,1,False,False,False,False,False,False,True,,,,NO_CLAIM,1,⏰ G2 EXPIROU — VERIFIQUE SUA MESA
+605,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-04 01:55:06,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[7/3/2026 9:36 PM] G1 Unique: 📡 @rqdados — 03/07/2026 21:06:01
+606,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-04 06:31:10,4,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[70] COLOR BIAS: GOLDEN favors RED by 11.0pp — review RED score weights
+607,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-04 16:46:21,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[TEST] Bot fix verification message — please ignore.
+608,UNKNOWN,,,mr_iv4,2026-07-04 17:57:10,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🚨 *ALERTA CRÍTICO*: Nenhum sinal há 88 min!
+609,UNKNOWN,,,mr_iv4,2026-07-04 23:58:48,2,False,False,False,False,False,False,False,,50.0,6,CLAIM_ON_THIN_SAMPLE,1,🟡 room_breaker_60m:@coringadados      n=   6 W=  3/L=  3/T= 0  sWR= 50.0%  net=+0
+610,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-05 10:50:41,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[65] SCORE BUCKET 11-13: 10 blocked at 100.0% sWR — likely too tight
+611,UNKNOWN,FIRE_COMPACT_HASH,,UNIQUE_g1,2026-07-05 16:50:40,83,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔵 SIGNAL #51250 -- SOLO_ELITE red | rooms: @bacboaovivovip
+612,UNKNOWN,RESULT_COMPACT_LOSS_HASH,,UNIQUE_g1,2026-07-05 16:56:28,83,False,False,False,True,False,False,False,,,,NO_CLAIM,5,❌ LOSS #51250 G0
+613,UNKNOWN,RESULT_COMPACT_WIN_HASH,,mr_iv4,2026-07-05 17:16:10,174,False,False,False,True,False,False,False,,,,NO_CLAIM,5,✅ WIN #51252 G0
+614,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-05 17:46:21,83,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔵 SIGNAL #51256 -- SOLO_ELITE blue | rooms: @robofootballstudiofree
+615,UNKNOWN,RESULT_COMPACT_TIE_HASH,,mr_iv4,2026-07-05 17:48:03,12,False,False,False,True,False,False,False,,,,NO_CLAIM,5,➖ TIE #51257 G0
+616,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-05 17:52:51,25,False,False,False,False,True,False,False,,,,NO_CLAIM,5,"🔵 SIGNAL #51262 -- GOLDEN red | rooms: @baccarat_b, @dadosbacbobr, @bacbob2xbet"
+617,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-05 18:03:36,27,False,False,False,False,True,False,False,,,,NO_CLAIM,5,"🔵 SIGNAL #51281 -- GOLDEN blue | rooms: @rqdados, @robofreebacbo24horass, @rqdados1"
+618,UNKNOWN,,,mr_iv4,2026-07-05 18:10:26,33,False,False,False,False,False,False,False,,,,NO_CLAIM,1,☠️ New risk flag
+619,UNKNOWN,,,mr_iv4,2026-07-05 18:16:36,170,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"📊 Weekly Truth Report (last 7 days, real data)"
+620,UNKNOWN,,,mr_iv4,2026-07-05 18:21:05,110,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"⏱️ Hourly Pulse (last 60 min, real data)"
+621,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-05 22:07:42,2,False,False,False,False,True,False,False,,,,NO_CLAIM,5,"🔵 SIGNAL #51359 -- GOLDEN red | rooms: @baccarat_b, @bacbobrl06, @bacbobrl12, @bacbobrl11, @bacbobrl01, @bacbobrl04, @bacbobrl02, @bacbobrl09, @bacbobrl05, @bac"
+622,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-05 22:08:08,2,False,False,False,False,True,False,False,,,,NO_CLAIM,5,"🔵 SIGNAL #51360 -- GOLDEN red | rooms: @grupodobacbo24hon, @bacbobrl14, @bacbobrl16, @bacbobrl15, @bacbobrl10, @bacbobrl07, @speedbaccarat_a"
+623,UNKNOWN,,,mr_iv4,2026-07-06 00:13:35,306,False,False,False,False,False,False,False,,,,NO_CLAIM,1,☠️ Risk flag worsened
+624,UNKNOWN,,,mr_iv4,2026-07-06 02:15:53,54,False,False,False,True,True,False,False,,,,NO_CLAIM,1,🔵 ❌ LOSS #51497 G0
+625,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-06 03:13:01,16,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔴 SIGNAL #51501 -- SOLO_ELITE red | rooms: @bacbobrasileiro01
+626,UNKNOWN,,,mr_iv4,2026-07-06 03:13:11,32,False,False,False,True,True,False,False,,,,NO_CLAIM,1,🔴 ✅ WIN #51501 G0
+627,UNKNOWN,,,mr_iv4,2026-07-06 03:17:58,24,False,False,False,True,True,False,False,,,,NO_CLAIM,1,🔴 ❌ LOSS #51502 G0
+628,UNKNOWN,,,mr_iv4,2026-07-06 12:14:26,45,False,False,False,True,True,False,False,,,,NO_CLAIM,1,🔵 ✅ WIN #51508 G0
+629,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-06 14:06:09,26,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔴 SIGNAL #51532 -- SOLO_ELITE [MAR19] red | rooms: @m8sinais
+630,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-06 14:07:00,2,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔴 SIGNAL #51534 -- SOLO_ELITE [ELITE_V2] red | rooms: @m8sinais
+631,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-06 14:07:00,3,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔴 SIGNAL #51535 -- SOLO_ELITE [MAY10] red | rooms: @m8sinais
+632,UNKNOWN,,,mr_iv4,2026-07-06 16:49:58,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🧪 TEMPLATE ARCHAEOLOGY PREVIEW — 19 cards incoming
+633,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:50:02,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[2/19] result (WIN) — R8_current_WIN_tier
+634,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:50:06,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[4/19] result (legacy banner) — R1_legacy_GREEN_VITORIA_G0
+635,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:50:11,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[7/19] signal — 4_GOLDEN_SIGNAL_portuguese
+636,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:50:15,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[9/19] signal (Apr countdown wrapper) — 5_GOLDEN_countdown_wrapper
+637,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:50:21,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[12/19] result (legacy G1 recovery) — R5_legacy_RECUPERADO_G1
+638,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:50:26,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[15/19] signal (tie protection alert) — 8_TIE_ALERT
+639,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:50:28,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[16/19] result (current TIE outcome) — R10_current_TIE_tier
+640,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:50:30,1,False,False,False,False,False,False,False,signal+result,,,NO_CLAIM,1,"[17/19] signal+result self-contained (buggy debug format, TOTAL SCORE always 0.00) — 9_ORACLE_CARD"
+641,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:50:32,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[18/19] result (current LOSS outcome, bonus) — R9_current_LOSS_tier"
+642,UNKNOWN,,,mr_iv4,2026-07-06 16:50:36,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🧪 END OF PREVIEW — all templates sent. Let me know which ones you want revived/upgraded.
+643,UNKNOWN,,,mr_iv4,2026-07-06 16:53:53,4,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🧪 TEMPLATE PREVIEW — PART 2 (22 more found)
+644,UNKNOWN,OPS_SEQ_QUENTE,,mr_iv4,2026-07-06 16:53:59,1,False,False,False,False,False,False,False,,,,NO_CLAIM,5,[22] SIG_🔥🔥🔥 SEQUÊNCIA QUENTE 🔥🔥🔥
+645,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:03,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[25] result (current, WIN tier=GOLDEN)"
+646,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:05,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[26] result (current, LOSS tier=GOLDEN)"
+647,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:06,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[27] result (current, WIN tier=SEQUENCE)"
+648,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:08,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[28] result (current, LOSS tier=SEQUENCE)"
+649,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:10,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[29] result (current, WIN tier=PLATINUM)"
+650,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:12,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[30] result (current, TIE tier=GOLDEN)"
+651,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:14,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[31] result (current, TIE tier=SEQUENCE)"
+652,UNKNOWN,OPS_LOSS_COOLDOWN,,mr_iv4,2026-07-06 16:55:16,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,[32] RES_⚠️ LOSS COOLDOWN ACTIVATED
+653,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:18,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[33] RES_✅ Cooldown cancelled — WIN rec
+654,UNKNOWN,OPS_TIER_LEGEND,,mr_iv4,2026-07-06 16:55:19,1,False,False,False,True,False,False,False,,,,NO_CLAIM,5,[34] RES_🟡🟡 EMPATE — PROTEÇÃO ATIVADA 🟡
+655,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:27,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[38] result (legacy, single-check G2+/G3 variant)"
+656,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:29,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[39] result (legacy, fire-emoji streak variant)"
+657,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:31,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[40] RES_✅ AUTO WIN @rqdados — N/N/N N:
+658,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:55:48,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[41] result (separate subsystem: per-room auto-monitor LOSS)
+659,UNKNOWN,,,mr_iv4,2026-07-06 16:55:50,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"🧪 END OF PART 2 — 22 additional templates sent. Combined with part 1 (19), that is 41 total distinct templates found across the full archive."
+660,UNKNOWN,,,mr_iv4,2026-07-06 16:57:53,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🧪 TEMPLATE PREVIEW — PART 3 (8 timer/countdown templates you asked about)
+661,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:57:55,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[42] result/ops (round-timeout alert — bot missed the outcome, banner style)"
+662,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:57:57,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"[43] result/ops (round-timeout alert — same purpose, different header wording)"
+663,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:57:59,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[44] signal (pre-alert: signal forming, score/room format)"
+664,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 16:58:00,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[45] signal (pre-alert: signal forming, EDT time + step instructions)"
+665,UNKNOWN,OPS_TRIPLE_LOCK,,mr_iv4,2026-07-06 16:58:04,1,False,False,False,False,False,False,False,,,,NO_CLAIM,5,"[47] signal (3-room pre-alert, ~10s countdown, distinct from TRIPLE LOCK — CERTEZA MÁXIMA)"
+666,UNKNOWN,FIRE_APOSTE_AGORA,,mr_iv4,2026-07-06 16:58:08,1,False,False,True,False,False,False,False,,,,NO_CLAIM,5,"[49] signal (exact-second countdown wrapper, ""APOSTE AGORA"" wording variant)"
+667,UNKNOWN,,,mr_iv4,2026-07-06 16:58:10,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🧪 END OF PART 3 — 8 timer/countdown templates sent. Running total: 49 distinct templates across all 3 parts.
+668,UNKNOWN,,,mr_iv4,2026-07-06 17:04:58,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🧪 END OF PART 4 — 5 forensic/intervalo templates sent. Running total: 54 distinct templates across all 4 parts.
+669,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 17:20:27,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[55] signal (G0 missed, G1 gale window OPEN, exact ""0 round(s)·27s"" timer)"
+670,UNKNOWN,FIRE_JANELA_TIMED,,mr_iv4,2026-07-06 17:20:38,1,False,False,False,True,False,True,False,,,,NO_CLAIM,1,[61] signal (standalone bilingual WINDOW CLOSED / JANELA FECHADA alert)
+671,UNKNOWN,FIRE_EMPATE_DIRETO_G0,,mr_iv4,2026-07-06 17:20:42,1,False,False,False,True,False,False,False,,,,NO_CLAIM,5,"[63] signal (EMPATE DIRETO G0 -- direct tie-bet signal with probability calc, ""G0 apenas sem gale"")"
+672,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 17:20:48,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[66] signal (G1 BET ORDER -- explicit gale-1 re-entry instruction block)
+673,UNKNOWN,,,mr_iv4,2026-07-06 17:20:49,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🧪 END OF PART 5 — 12 timed SIGNAL cards sent. Running total: 66 distinct templates across all 5 parts.
+674,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 17:24:50,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[70] signal (G1 NAO FOI -> G2 OPCIONAL, marked RISCO ALTO)"
+675,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 17:24:55,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[73] signal (simple ""BAC BO SIGNAL"" bare-bones format)"
+676,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 17:24:57,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[74] signal (""BAC BO VOLUME SIGNAL"" variant)"
+677,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 17:24:59,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[75] result (VERDE / WIN G0 -- PERFEITO! banner)
+678,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 17:25:03,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[77] signal (short ""GALE 1 -- Entre novamente"" ping)"
+679,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 17:25:28,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[78] result (G2 NAO FOI -- PERDA TOTAL -- PARE AGORA, full loss stop)"
+680,RESULT,OPS_G2_MISS,,mr_iv4,2026-07-06 17:25:30,1,False,False,False,False,False,False,True,,,,NO_CLAIM,1,"[79] result (G2 MISS -- PERDA TOTAL -- PARE AGORA, EN-labeled variant)"
+681,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 17:25:32,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[80] result (LOSS -- PLATINUM tier, not sent before)"
+682,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-06 17:25:37,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,"[83] result (EMPATE -- PLATINUM tier, not sent before)"
+683,UNKNOWN,,,mr_iv4,2026-07-06 17:25:41,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🧪 END OF PART 6 — 18 more cards sent. Running total: 84 distinct templates across all 6 parts.
+684,UNKNOWN,,,mr_iv4,2026-07-06 17:44:31,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"🔎 FULL AUDIT — are the 92 cards + ""good days"" still active?"
+685,UNKNOWN,,,mr_iv4,2026-07-06 17:44:36,1,False,False,False,True,False,True,False,,,,NO_CLAIM,1,"🏢 FLOOR / ""GOOD DAY"" STATUS (30-day window)"
+686,UNKNOWN,,,mr_iv4,2026-07-06 17:44:38,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"🚨 LIVE RISK FLAGS (pulled straight from your /patterns endpoint, real-time — this is the most actionable part)"
+687,UNKNOWN,,,mr_iv4,2026-07-06 17:53:29,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,💰 PROFITABLE FLOORS — who's actually firing right now?
+688,UNKNOWN,,,mr_iv4,2026-07-06 17:53:31,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ STILL ALIVE AND PROFITABLE (no action needed)
+689,UNKNOWN,,,mr_iv4,2026-07-06 17:53:34,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"🚨 PROFITABLE BUT ACTIVELY BLEEDING RIGHT NOW (still firing, getting worse)"
+690,UNKNOWN,,,mr_iv4,2026-07-06 17:53:36,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,💀 PROFITABLE BUT COMPLETELY DEAD — batch 1: the Jun 27-28 die-off
+691,UNKNOWN,,,mr_iv4,2026-07-06 17:53:38,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,💀 PROFITABLE BUT COMPLETELY DEAD — batch 2: the May 28 - Jun 1 die-off (AITEST rescue floors)
+692,UNKNOWN,,,mr_iv4,2026-07-06 17:58:22,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🔎 BATCH 10 — SHELL FORENSICS RESULT (final)
+693,UNKNOWN,,,mr_iv4,2026-07-06 17:58:23,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"BUT: I found something useful. Earlier in this project's history, a previous session had temporary access to the real bot files (via you) and ran diagnostics ag"
+694,UNKNOWN,,,mr_iv4,2026-07-06 17:58:24,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Revised diagnosis: the Jun27-28 and May28-Jun1 die-offs are NOT explained by Oracle or RoomMomentum — those are working as designed. The pattern (multiple unrel
+695,UNKNOWN,,,mr_iv4,2026-07-06 17:58:25,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"To finish this without more guessing, I need ONE of:"
+696,UNKNOWN,,,mr_iv4,2026-07-06 18:08:53,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,⚡ ACTIVATION SCRIPT READY
+697,UNKNOWN,,,mr_iv4,2026-07-06 18:08:54,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"HOW TO RUN IT (on the bot's own Repl, not this dashboard):"
+698,OPS,,,mr_iv4,2026-07-06 18:08:55,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"If the dry run shows commented-out lines for these floors, re-run with the fix applied:"
+699,UNKNOWN,,,mr_iv4,2026-07-06 18:08:56,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"This won't fix everything blind — some floors may be firing but silently starved by something other than main.py wiring (e.g. a runtime disable flag, a crashed"
+700,UNKNOWN,,,mr_iv4,2026-07-06 19:32:20,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,RESULTS FROM SCRIPT 11:
+701,UNKNOWN,,,mr_iv4,2026-07-06 19:32:21,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"Before restoring those 7, I found something important: ai_parallel.py has a dedicated _AITEST_DISABLED_FLOORS kill-list specifically for AITEST floors. That cou"
+702,UNKNOWN,,,mr_iv4,2026-07-06 19:32:22,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Next script: backups/bot-side-scripts/12_investigate_missing_floors.sh
+703,UNKNOWN,,,mr_iv4,2026-07-06 19:49:11,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,IMPORTANT CORRECTION on the AITEST floors:
+704,UNKNOWN,,,mr_iv4,2026-07-06 19:49:12,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,"New real question: is that AI rescue system actually running and healthy right now, and is its floor list in sync with what's currently active?"
+705,UNKNOWN,,,mr_iv4,2026-07-06 19:49:13,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Same routine to create it:
+706,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-06 20:55:16,21,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔵 SIGNAL #51539 -- SOLO_ELITE [MAR19] blue | rooms: @footballstudiodice01
+707,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-07 02:33:46,4,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔵 SIGNAL #51561 -- SOLO_ELITE [MAY10] blue | rooms: @coringadados
+708,RESULT,,,mr_iv4,2026-07-07 09:53:43,3,False,False,False,True,True,False,False,,,,NO_CLAIM,1,🔵 ➖ TIE #51577 G0
+709,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-07 09:54:31,5,False,False,False,False,True,False,False,,,,NO_CLAIM,5,"🔵 SIGNAL #51578 -- GOLDEN [MAR19] blue | rooms: @martinswinbacbo, @rqdados1, @robofreebacbo24horass"
+710,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-07 09:54:39,1,False,False,False,False,True,False,False,,,,NO_CLAIM,5,"🔵 SIGNAL #51579 -- GOLDEN [MAR19] blue | rooms: @martinswinbacbo, @rqdados1, @robofreebacbo24horass, @grupodobacbo24hon"
+711,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-07 10:32:12,3,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔵 SIGNAL #51592 -- SOLO_ELITE [ELITE_V2] blue | rooms: @bacbobrasileiro01
+712,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-07 10:38:43,1,False,False,False,False,True,False,False,,,,NO_CLAIM,5,"🔵 SIGNAL #51595 -- GOLDEN [ELITE_V2] blue | rooms: @baccarat_a, @speedbaccarat_a, @dadosbacbobr"
+713,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-07 10:38:48,1,False,False,False,False,True,False,False,,,,NO_CLAIM,5,"🔵 SIGNAL #51596 -- GOLDEN [MAY10] blue | rooms: @baccarat_a, @speedbaccarat_a, @dadosbacbobr"
+714,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-07 11:06:05,1,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔴 SIGNAL #51607 -- SOLO_ELITE [JUN12A] red | rooms: @coringadados
+715,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-07 12:19:43,1,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔵 SIGNAL #51622 -- SOLO_ELITE [ULTIMATE] blue | rooms: @bacboaovivovip
+716,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-07 12:19:43,1,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔵 SIGNAL #51621 -- SOLO_ELITE [LIVE] blue | rooms: @bacboaovivovip
+717,UNKNOWN,,,UNIQUE_g1,2026-07-07 17:32:00,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Yo
+718,UNKNOWN,,,UNIQUE_g1,2026-07-07 17:32:05,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Hers the message
+719,UNKNOWN,,,mr_iv4,2026-07-07 18:05:11,3,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 SINAL — VERMELHO
+720,UNKNOWN,,,mr_iv4,2026-07-07 18:05:12,4,False,False,False,True,True,False,False,,,,NO_CLAIM,1,🔴 ✅ GREEN — G0
+721,UNKNOWN,,,mr_iv4,2026-07-07 18:23:25,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🎯 2 SINAIS — ENTRAR AGORA
+722,UNKNOWN,FIRE_COMPACT_HASH,,mr_iv4,2026-07-08 16:12:50,1,False,False,False,False,True,False,False,,,,NO_CLAIM,5,🔴 SIGNAL #51637 -- SOLO_ELITE [JUN12B] red | rooms: @speedbaccarat_a
+723,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-09 19:34:10,48,False,False,False,True,True,False,False,,37.4,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [timing_gate                 ] saved=61 blocked_wins=102 net=-41 (37.4% prevent)
+724,RESULT,,,mr_iv4,2026-07-10 00:31:54,6,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔴 🌊 bacboaovivovip — SOLO ELITE AI
+725,RESULT,,,mr_iv4,2026-07-10 02:55:08,8,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 📡 salabacbo123 — SOLO ELITE AI
+726,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-10 20:43:30,44,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[70] COLOR BIAS: SOLO_ELITE favors BLUE by 8.8pp — review BLUE score weights
+727,RESULT,,,mr_iv4,2026-07-10 23:05:17,2,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 📡 BACCARAT_B — GOLDEN AI
+728,UNKNOWN,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-11 06:52:25,18,False,False,False,False,True,False,False,,,,NO_CLAIM,1,[65] SCORE BUCKET <7: 32 blocked at 90.6% sWR — likely too tight
+729,UNKNOWN,FIRE_SOLO_APOSTAR,,mr_iv4,2026-07-11 23:40:15,82,False,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡ SOLO ELITE — APOSTAR AGORA
+730,RESULT,RESULT_WIN_TIER,,mr_iv4,2026-07-11 23:41:28,29,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN — SOLO ELITE #53476
+731,UNKNOWN,FIRE_SEQUENCE_APOSTAR,,mr_iv4,2026-07-11 23:49:21,739,False,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡ SEQUENCE — APOSTAR AGORA
+732,RESULT,RESULT_WIN_TIER,,mr_iv4,2026-07-11 23:49:53,736,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN — SEQUENCE #53477
+733,RESULT,RESULT_LOSS_TIER,,mr_iv4,2026-07-12 12:48:37,4,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS — SOLO ELITE #53481
+734,RESULT,OPS_GATE_BLOCK_LOG,,mr_iv4,2026-07-12 19:52:00,7,False,False,False,True,True,False,False,,31.7,,CLAIM_WITHOUT_SAMPLE_SIZE,1,🔴 [post_loss_cooldown          ] saved=46 blocked_wins=99 net=-53 (31.7% prevent)
+735,RESULT,RESULT_LOSS_TIER,,mr_iv4,2026-07-15 13:16:44,2,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS — SEQUENCE #53485
+736,FIRE,,,mr_iv4,2026-07-15 13:32:26,163,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🔥 WIN_1S
+737,UNKNOWN,,,mr_iv4,2026-07-15 13:32:26,33,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN_1S WIN
+738,UNKNOWN,FIRE_GOLDEN_APOSTAR,,mr_iv4,2026-07-15 13:35:41,31,False,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡ GOLDEN — APOSTAR AGORA
+739,RESULT,RESULT_WIN_TIER,,mr_iv4,2026-07-15 13:49:47,19,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN — GOLDEN #53529
+740,RESULT,OPS_TIER_LEGEND,,mr_iv4,2026-07-17 02:20:20,6,False,False,False,True,False,False,False,,,,NO_CLAIM,5,🟡 TIE — SOLO ELITE #1129
+741,UNKNOWN,FIRE_PLATINUM_APOSTAR,,mr_iv4,2026-07-17 02:24:16,60,False,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡ PLATINUM — APOSTAR AGORA
+742,RESULT,RESULT_WIN_TIER,,mr_iv4,2026-07-17 02:24:51,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN — PLATINUM #1132
+743,RESULT,OPS_TIER_LEGEND,,mr_iv4,2026-07-17 02:34:49,1,False,False,False,True,False,False,False,,,,NO_CLAIM,5,🟡 TIE — PLATINUM #1137
+744,UNKNOWN,,,mr_iv4,2026-07-17 05:51:52,5,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS G0 — GOLDEN #1142
+745,UNKNOWN,,,mr_iv4,2026-07-17 05:51:53,20,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS G0 — SOLO ELITE #1143
+746,UNKNOWN,,,mr_iv4,2026-07-17 05:53:23,21,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN G0 — SOLO ELITE #1146
+747,UNKNOWN,,,mr_iv4,2026-07-17 05:55:48,13,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN G0 — GOLDEN #1150
+748,UNKNOWN,FIRE_FLASH_APOSTAR,,mr_iv4,2026-07-17 06:00:24,2,False,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡ FLASH — APOSTAR AGORA
+749,UNKNOWN,,,mr_iv4,2026-07-17 06:00:29,2,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN G0 — FLASH #1156
+750,UNKNOWN,,,mr_iv4,2026-07-17 06:00:39,161,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN G0 — SEQUENCE #1158
+751,RESULT,,,mr_iv4,2026-07-17 06:03:57,12,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 TIE G0 — SEQUENCE #1164
+752,RESULT,,,mr_iv4,2026-07-17 06:10:23,6,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 TIE G0 — SOLO ELITE #1175
+753,UNKNOWN,,,mr_iv4,2026-07-17 06:11:53,22,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS G0 — PLATINUM #1178
+754,UNKNOWN,,,mr_iv4,2026-07-17 06:11:53,33,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ WIN G0 — PLATINUM #1181
+755,UNKNOWN,,,mr_iv4,2026-07-17 06:38:06,11,False,False,False,False,False,False,False,,,,NO_CLAIM,1,📋 DAILY AUDIT — 2026-07-17 06:38 UTC
+756,UNKNOWN,,,mr_iv4,2026-07-17 06:53:45,1,False,False,False,False,False,False,False,,53.8,13,CLAIM_ON_THIN_SAMPLE,1,▼ worst hours tomorrow: H05=53.8%(n=13) H06=71.0%(n=62) H02=83.3%(n=24)
+757,UNKNOWN,,,mr_iv4,2026-07-17 07:00:10,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,Y. Next 24h Forecast (per-hour expected WR from 30d):
+758,UNKNOWN,,,mr_iv4,2026-07-17 14:10:48,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,top blockers (24h): solo_proven_room_m=31 rate_limit_global=24 duplicate_color_gu=13 platinum_cold_pair=6 platinum_dupe_guar=5
+759,RESULT,,,mr_iv4,2026-07-17 14:19:11,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 📡 BACCARAT_B — SOLO ELITE AI
+760,RESULT,,,mr_iv4,2026-07-17 14:27:33,3,False,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 TIE G0 — PLATINUM #1330
+761,RESULT,,,mr_iv4,2026-07-17 14:29:36,1,False,False,False,False,True,False,False,,,,NO_CLAIM,1,🔵 ⭐ rigosinais — SOLO ELITE AI
+762,UNKNOWN,,,mr_iv4,2026-07-18 06:29:59,6,False,False,False,False,False,False,False,rqdados+rqdados1,76.9,13,CLAIM_ON_THIN_SAMPLE,1,rqdados               +rqdados1                n= 13 WR=76.9%
+763,UNKNOWN,,,mr_iv4,2026-07-18 06:37:53,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,❌ LOSS G0 — SEQUENCE #1491
+764,UNKNOWN,,,mr_iv4,2026-07-18 07:36:17,6,False,False,False,True,False,False,False,,,,NO_CLAIM,1,"• @martinswinbacbo,@robobacbodados,@rqdados1"
+765,RESULT,,,mr_iv4,2026-07-18 09:45:34,2,False,False,False,False,False,False,False,rigosinais+robobacbodados,81.8,11,CLAIM_ON_THIN_SAMPLE,1,rigosinais            +robobacbodados          n= 11 WR=81.8%
+766,UNKNOWN,,,mr_iv4,2026-07-18 09:45:39,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,R6. DEAD/SILENT ROOMS (no signals in last 24h)
+767,UNKNOWN,,,mr_iv4,2026-07-21 00:06:52,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,LUXURY TEST PING
+768,OPS,,,mr_iv4,2026-07-21 04:12:33,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,LUXURY TEST PING
+769,UNKNOWN,ONLINE_LUXURY_OUTBOX,,mr_iv4,2026-07-21 04:12:36,18,False,False,False,False,False,False,False,,,,NO_CLAIM,1,LUXURY OUTBOX ONLINE
+770,UNKNOWN,ONLINE_LUXURY_OUTBOX,,UNIQUE_g1,2026-07-23 03:30:55,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,LUXURY OUTBOX ONLINE — TIMED/COUNTDOWN LANE
+771,UNKNOWN,ONLINE_LUXURY_OUTBOX,,mr_iv4,2026-07-23 03:30:55,2,False,False,False,False,False,False,False,,,,NO_CLAIM,1,LUXURY OUTBOX ONLINE — MONEY LANE
+772,RESULT,,,mr_iv4,2026-07-23 04:11:28,5,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏛 MUSEUM #1/5 — RESULT CARD (historical)
+773,UNKNOWN,,,mr_iv4,2026-07-23 04:11:28,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏛 MUSEUM PACK — FIRST 5 FIRE→RESULT PAIRS EVER (day-one DNA)
+774,UNKNOWN,,,mr_iv4,2026-07-23 04:11:34,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ MUSEUM #1–5 posted.
+775,UNKNOWN,,,mr_iv4,2026-07-23 04:41:11,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏛 MUSEUM CHRONO — ALL SIGNALS FIRST→LAST
+776,RESULT,,,mr_iv4,2026-07-23 04:41:12,4,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏛 CHRONO #6 — RESULT (historical)
+777,UNKNOWN,,,mr_iv4,2026-07-23 04:41:14,1,False,False,False,False,False,False,False,,,,NO_CLAIM,1,🏛 CHRONO #8 — RESULT (historical)
+778,UNKNOWN,,,mr_iv4,2026-07-23 04:41:17,1,False,False,False,True,False,False,False,,,,NO_CLAIM,1,✅ Chrono batch #6–#10 done.
+779,UNKNOWN,ONLINE_LUXURY_OUTBOX,,mr_iv4,2026-07-28 23:09:53,15,False,False,False,False,False,False,False,,,,NO_CLAIM,1,LUXURY OUTBOX ONLINE — MONEY CHAT (#2)
+780,FIRE,FIRE_SEQUENCIA_ENTER_NOW,,mr_iv4,2026-07-28 23:10:01,4,False,False,True,False,False,False,False,,,,NO_CLAIM,1,🔥 SEQUÊNCIA — ENTER NOW 🔥
+781,UNKNOWN,ONLINE_LUXURY_OUTBOX,,UNIQUE_g1,2026-07-28 23:23:09,14,False,False,False,False,False,False,False,,,,NO_CLAIM,1,LUXURY OUTBOX ONLINE — GUNIQUE (#1) TRUST-FIRST
+782,FIRE,FIRE_EMERGINDO,0,,,0,True,False,False,False,False,False,False,,,,NO_CLAIM,6,📡 EMERGINDO → cor se formando (score ≥ 1.8)
+783,OPS,OPS_ALERTA_FORMACAO,0,,,0,True,False,False,False,False,False,False,,,,NO_CLAIM,6,"👁 ALERTA → formação inicial, aguarde"
+784,FIRE,CD_FIRE_TIMER_BRT_EDT_APOSTAR,cd,,,0,True,False,True,False,False,False,False,,,,NO_CLAIM,1,🟢 HH UTC · EDT · apostar
+785,FIRE,CD_FIRE_QUANTUM_LOCK,cd,,,0,True,False,False,False,False,False,False,,,,NO_CLAIM,1,🔒 QUANTUM LOCK
+786,FIRE,CD_FIRE_RUSH_NS_LEFT,cd,,,0,True,False,True,False,False,True,False,,,,NO_CLAIM,1,RUSH · Ns left
+787,RESULT,RESULT_FORENSIC_INTERVALO,forensic,,,0,True,False,False,True,False,False,False,,,,NO_CLAIM,1,🔍 SINAL #N — RESUMIDO FORENSE
+788,RESULT,RESULT_ORACLE_CARD,oracle,,,0,True,False,False,False,False,False,False,,,,NO_CLAIM,5,🔮 ORACLE CARD #N
+789,FIRE,FIRE_ENTER_NOW_GENERIC,code,,,0,True,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡ **ENTER NOW**
+790,FIRE,FIRE_G0_ENTRADA_DIRETA,code,,,0,True,False,True,False,False,False,False,,,,NO_CLAIM,5,⚡⚡⚡ **G0 — ENTRADA DIRETA** ⚡⚡⚡
+791,FIRE,FIRE_DEPTH_G0_ONLY,code,,,0,True,False,False,False,False,False,False,,,,NO_CLAIM,5,"⚡ DEPTH G0 only — single entry, no retry"
+792,FIRE,FIRE_INVERTED_CONTRARIO,code,,,0,True,False,False,False,True,False,False,,,,NO_CLAIM,5,🔴 CONTRÁRIO ← sinal invertido ativo
+793,FIRE,FIRE_ORACLE_LOCK,code,,,0,True,False,False,False,False,False,False,,100.0,,CLAIM_WITHOUT_SAMPLE_SIZE,5,🔮🔮🔮 **ORACLE LOCK — H07 SOLO ELITE 100% WR** 🔮🔮🔮
+794,FIRE,FIRE_CERTIFIED_ELITE,code,,,0,True,False,False,False,False,False,False,,100.0,,CLAIM_WITHOUT_SAMPLE_SIZE,5,🏆🏆 **CERTIFIED ELITE — 100% G0 HISTÓRICO** 🏆🏆
+795,FIRE,FIRE_GRADE_BANNER,code,,,0,True,False,False,False,False,False,False,,76.1,46,CLAIM_ON_THIN_SAMPLE,5,💠 GRADE A · G0=76.1% historical (n=46) · elite pair
+796,FIRE,FIRE_HOT_STREAK,code,,,0,True,False,False,True,False,False,False,,87.1,,CLAIM_WITHOUT_SAMPLE_SIZE,5,🔥🔥 PERFECT 5/5 WIN STREAK · G0=87.1% historical
+797,FIRE,FIRE_DOUBLE_TIE_LOCK,code,,,0,True,False,False,True,False,False,False,,94.1,17,CLAIM_ON_THIN_SAMPLE,5,🟡🟡 DOUBLE TIE LOCK · G0=94.1% after 2 consecutive ties (n=17)
+798,FIRE,FIRE_GALE_1_FACA_AGORA,code,,,0,True,False,True,False,False,False,True,,,,NO_CLAIM,5,🔁 **GALE 1 — FAÇA AGORA:**
+799,OPS,OPS_DO_NOT_BET_YET,code,,,0,True,False,True,False,False,False,False,,,,NO_CLAIM,5,⛔ **DO NOT BET YET** — waiting for more rooms
+800,OPS,OPS_PREPARE_PLATFORM,code,,,0,True,False,True,False,False,False,False,,,,NO_CLAIM,5,⏳ Prepare a plataforma — **o sinal de entrada chegará em segundos**
+801,OPS,OPS_NEXT_CERTIFIED_WINDOW,code,,,0,True,False,False,True,False,True,False,,,,NO_CLAIM,5,🏆 **Próxima janela certificada / Next certified window:**
+802,OPS,OPS_G1_REGISTRADO_CALC_G2,ops_result,,,0,True,False,False,False,False,False,True,,,,NO_CLAIM,5,📊 **G1 registrado / G1 recorded** — calculando G2...
+803,OPS,OPS_G2_STOP_IF_G1_LOST,ops_result,,,0,True,False,False,False,False,False,True,,,,NO_CLAIM,5,⛔ G2 _(se perder G1)_ → STOP — aguarde novo sinal
+804,RESULT,RESULT_G0_ACERTOU_PRIMEIRA,code,,,0,True,False,False,False,False,False,False,,,,NO_CLAIM,1,🏆 G0 — Acertou de primeira!
+805,RESULT,RESULT_GALE_RECOVERED_CHAIN,code,,,0,True,False,True,True,True,False,True,,,,NO_CLAIM,5,❌ G0 → ✅ **G1** RECUPERADO / RECOVERED!
+806,RESULT,RESULT_EMPATE_DINHEIRO_DEVOLVIDO,code,,,0,True,False,False,True,False,False,False,,,,NO_CLAIM,5,✅ **EMPATE = DINHEIRO DEVOLVIDO**
+807,RESULT,RESULT_EMPATE_PROTECAO,code,,,0,True,False,False,True,False,False,False,,,,NO_CLAIM,5,🟡🟡 **EMPATE — PROTEÇÃO ATIVADA** 🟡🟡
+808,RESULT,CD_RES_GREEN_G_BRT,cd,,,0,True,False,False,True,False,True,False,,,,NO_CLAIM,1,🟢 G0 · BRT
+809,RESULT,CD_RES_RODADAS_TEMPO,cd,,,0,True,False,False,True,False,False,False,,,,NO_CLAIM,1,⏱ N rodada(s) · Ns
+810,RESULT,CD_RES_BELL_GANHOU,cd,,,0,True,False,False,False,False,False,False,,,,NO_CLAIM,1,🔔 ✅ GANHOU
+811,OPS,OPS_GATE_ALLOW_LOG,internal,,,0,True,False,True,False,False,False,True,,,,NO_CLAIM,1,⚡ [accum_solo_gale/DISABLED] gate disabled → ALLOW
+812,OPS,OPS_KIND_DOWNGRADE_LOG,internal,,,0,True,False,False,False,False,False,False,,,,NO_CLAIM,1,⛔ PLATINUM coalition unrescuable after stripping toxic rooms — downgrading to GOLDEN.
+813,FIRE,FIRE_APOSTAR_EMPATE,code,,,0,True,False,True,True,False,False,False,,,,NO_CLAIM,5,🎯 **Aposte no EMPATE (🟠 Tie)** nas próximas rodadas.
+814,FIRE,FIRE_NAMED_EDGE_BANNER,code,,,0,True,False,False,False,False,False,False,isadados+rigosinais,90.3,31,CLAIM_ON_THIN_SAMPLE,5,🏆 APEX TRIO · isadados+rigosinais+rqdados · G0=90.3% (n=31)
+815,OPS,OPS_NEGATIVE_WINDOW_BLOCK,code,,,0,True,False,False,True,True,True,False,,36.5,159,CLAIM_WITHIN_NOISE,5,⛔ BLUE TUESDAY ⛔ · G0=36.5% historically (n=159)
+816,FIRE,FIRE_G2_RESERVE,g2reserve,,,0,True,False,False,False,True,False,True,,,,NO_CLAIM,5,🔁 **G2 RESERVE — SEMPRE VERMELHO / ALWAYS RED**
+817,RESULT,RESULT_G2_RESERVE_WIN,g2reserve,,,0,True,False,False,True,False,False,True,,,,NO_CLAIM,5,🏆🏆🏆 **G2 RESERVE — RECUPERAÇÃO WIN!** 🏆🏆🏆
+818,OPS,OPS_G2_RESERVE_MISS,g2reserve,,,0,True,False,False,False,False,False,True,,,,NO_CLAIM,5,🛑🛑 **G2 RESERVE MISS — CADEIA ENCERRADA** 🛑🛑
+819,OPS,OPS_TIE_AUDIT,audit,,,0,True,False,False,True,False,False,False,,,,NO_CLAIM,5,🟡🟡🟡 **AUDITORIA COMPLETA — EMPATES** 🟡🟡🟡
+820,OPS,OPS_COMMAND_HELP,help,,,0,True,False,False,True,False,False,False,,,,NO_CLAIM,1,🟡 **`empate`** · **`tie`** · **`pressao`**
+821,OPS,OPS_STAT_LINE,audit,,,0,True,False,False,False,False,False,True,,87.8,115,CLAIM_SURVIVES_ITS_OWN_SAMPLE,1,📊 **87.8% WR** combinado · TRUE G2 · n=115
+822,FIRE,FIRE_FLASH_CONFIRMADO,flash,,,0,True,False,False,False,False,False,False,,,,NO_CLAIM,5,⚡⚡ **FLASH CONFIRMADO** —
+823,RESULT,RESULT_AUTO_WIN,auto,,,0,True,False,False,True,False,False,False,,,,NO_CLAIM,5,✅ AUTO WIN
+824,RESULT,RESULT_AUTO_LOSS,auto,,,0,True,False,False,True,False,False,False,,,,NO_CLAIM,5,❌ AUTO LOSS
+825,OPS,OPS_AUTO_EXPIRED,auto,,,0,True,False,False,False,True,False,False,,,,NO_CLAIM,5,🏆 GOLDEN: auto-expired
+826,RESULT,RESULT_FINAL_LOSS_AFTER_G3,g3,,,0,True,False,False,True,False,False,True,,,,NO_CLAIM,5,❌ FINAL LOSS after G3 —
+827,OPS,OPS_DELIVERY_WINDOW_LOG,internal,,,0,True,False,False,True,False,False,False,,,,NO_CLAIM,1,| ⚠️  MISSED WIN — gate=

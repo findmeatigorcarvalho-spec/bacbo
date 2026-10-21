@@ -1,0 +1,595 @@
+{
+  "generated_at": "2026-08-04T05:17:17.574672+00:00",
+  "fetch_url": "https://litter.catbox.moe/16a5od.zip",
+  "replit": {
+    "unique_keys": 78978,
+    "floors_distilled": 8423,
+    "filesystem_files": 11400,
+    "has_strings": true,
+    "has_signal_handler": true,
+    "db_path": "bot/bacbo.db",
+    "db_kinds_raw": 13,
+    "git_blobs": 400
+  },
+  "db_signal_kind_volume": [
+    {
+      "kind": "GOLDEN",
+      "n": 530520,
+      "shelf": "SHELF_UPPER_MONEY",
+      "canonical": "SIGNAL_KIND_GOLDEN"
+    },
+    {
+      "kind": "SOLO_ELITE",
+      "n": 317672,
+      "shelf": "SHELF_PENTHOUSE_MONEY",
+      "canonical": "SIGNAL_KIND_SOLO_ELITE"
+    },
+    {
+      "kind": "PLATINUM",
+      "n": 171512,
+      "shelf": "SHELF_UPPER_MONEY",
+      "canonical": "SIGNAL_KIND_PLATINUM"
+    },
+    {
+      "kind": "FLASH",
+      "n": 37905,
+      "shelf": "SHELF_SNIPER",
+      "canonical": "SIGNAL_KIND_FLASH"
+    },
+    {
+      "kind": "SEQUENCE",
+      "n": 37314,
+      "shelf": "SHELF_UPPER_MONEY",
+      "canonical": "SIGNAL_KIND_SEQUENCE"
+    },
+    {
+      "kind": "EMERGING",
+      "n": 34498,
+      "shelf": "SHELF_SNIPER",
+      "canonical": "SIGNAL_KIND_EMERGING"
+    },
+    {
+      "kind": "ULTRA_TIE",
+      "n": 10397,
+      "shelf": "SHELF_SNIPER",
+      "canonical": "SIGNAL_KIND_ULTRA_TIE"
+    }
+  ],
+  "registered_families": 66,
+  "tg_type_aliases": 48,
+  "product_floors": [
+    {
+      "family_id": "ONLINE_BANNER",
+      "role": "ONLINE",
+      "era": "0",
+      "lane": null,
+      "shelf": "SHELF_OVERFLOW",
+      "example": "🟢 BacBo Royal UserBot ONLINE 🟢"
+    },
+    {
+      "family_id": "FIRE_CONFIRMED_ENTER",
+      "role": "FIRE",
+      "era": "1",
+      "lane": "MONEY",
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🏆 SIGNAL CONFIRMED — ENTER NOW 🏆"
+    },
+    {
+      "family_id": "FIRE_SOLO_ELITE_ENTER",
+      "role": "FIRE",
+      "era": "1",
+      "lane": "MONEY",
+      "shelf": "SHELF_PENTHOUSE_MONEY",
+      "example": "💎 SOLO ELITE SIGNAL 💎"
+    },
+    {
+      "family_id": "FIRE_GOLDEN_ENTER",
+      "role": "FIRE",
+      "era": "1",
+      "lane": "MONEY",
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🏆 GOLDEN SIGNAL — ENTER NOW 🏆"
+    },
+    {
+      "family_id": "FIRE_SEQUENCE_ENTER",
+      "role": "FIRE",
+      "era": "1",
+      "lane": "MONEY",
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "📊 SEQUENCE SIGNAL — ENTER NOW 📊"
+    },
+    {
+      "family_id": "FIRE_PLATINUM_ENTER",
+      "role": "FIRE",
+      "era": "1",
+      "lane": "MONEY",
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "💠 PLATINUM SIGNAL — PAR DE OURO"
+    },
+    {
+      "family_id": "RESULT_AUTO_TIE",
+      "role": "RESULT",
+      "era": "1b",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "⚪ AUTO TIE @…"
+    },
+    {
+      "family_id": "RESULT_WIN_TIER",
+      "role": "RESULT",
+      "era": "1b",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "✅ WIN — SOLO_ELITE"
+    },
+    {
+      "family_id": "RESULT_LOSS_TIER",
+      "role": "RESULT",
+      "era": "1b",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "❌ LOSS — GOLDEN"
+    },
+    {
+      "family_id": "FIRE_GALE_ENTRE_NOVAMENTE",
+      "role": "FIRE",
+      "era": "1b",
+      "lane": "MONEY",
+      "shelf": "SHELF_GALE",
+      "example": "🔁 GALE 1 — Entre novamente"
+    },
+    {
+      "family_id": "RESULT_EMPATE",
+      "role": "RESULT",
+      "era": "1b",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🟡 EMPATE — SOLO_ELITE"
+    },
+    {
+      "family_id": "FIRE_GALE_RETENTATIVA",
+      "role": "FIRE",
+      "era": "1b",
+      "lane": "MONEY",
+      "shelf": "SHELF_GALE",
+      "example": "♻️ GALE 1 — RETENTATIVA"
+    },
+    {
+      "family_id": "RESULT_GREEN_LEGACY_G0",
+      "role": "RESULT",
+      "era": "1b",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "✅✅✅ GREEN — VITÓRIA NO G0!"
+    },
+    {
+      "family_id": "RESULT_GREEN_LEGACY_G1",
+      "role": "RESULT",
+      "era": "1b",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "♻️♻️♻️ GREEN — RECUPERADO NO G1!"
+    },
+    {
+      "family_id": "OPS_LOSS_COOLDOWN",
+      "role": "OPS",
+      "era": "2",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "⚠️ LOSS COOLDOWN ACTIVATED"
+    },
+    {
+      "family_id": "OPS_PREALERT_FORMING",
+      "role": "OPS",
+      "era": "2",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "⚡ SINAL SE FORMANDO ⚡"
+    },
+    {
+      "family_id": "OPS_DUPLO_ELITE",
+      "role": "OPS",
+      "era": "2",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "🔮 DUPLO ELITE ANALISANDO"
+    },
+    {
+      "family_id": "FIRE_JANELA_TIMED",
+      "role": "FIRE",
+      "era": "2",
+      "lane": "COUNTDOWN",
+      "shelf": "SHELF_COUNTDOWN",
+      "example": "⛔ JANELA FECHADA — NÃO ENTRE… / JANELA: Ns"
+    },
+    {
+      "family_id": "FIRE_ULTRA_TIE",
+      "role": "FIRE",
+      "era": "2",
+      "lane": "MONEY",
+      "shelf": "SHELF_SNIPER",
+      "example": "🟡 ULTRA TIE — EMPATE CONFIRMADO"
+    },
+    {
+      "family_id": "OPS_TRIPLE_LOCK",
+      "role": "OPS",
+      "era": "2",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "🔐🔐🔐 TRIPLE LOCK CHEGANDO"
+    },
+    {
+      "family_id": "OPS_SEQ_QUENTE",
+      "role": "OPS",
+      "era": "3",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "🔥🔥🔥 SEQUÊNCIA QUENTE"
+    },
+    {
+      "family_id": "OPS_SEQ_FRIA",
+      "role": "OPS",
+      "era": "3",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "🧊🧊🧊 SEQUÊNCIA FRIA — PAUSAR"
+    },
+    {
+      "family_id": "OPS_SEQ_EMPATES",
+      "role": "OPS",
+      "era": "3",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "🟡🟡🟡 SEQUÊNCIA DE EMPATES"
+    },
+    {
+      "family_id": "RESULT_TIMED_WINDOW",
+      "role": "RESULT",
+      "era": "3",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🕐 HH:MM:SS EDT · … · ~Ns window"
+    },
+    {
+      "family_id": "OPS_PREALERT_3BOLT",
+      "role": "OPS",
+      "era": "3",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "⚡⚡⚡ SINAL FORMANDO"
+    },
+    {
+      "family_id": "FIRE_EMPATE_DIRETO_G0",
+      "role": "FIRE",
+      "era": "3",
+      "lane": "MONEY",
+      "shelf": "SHELF_SNIPER",
+      "example": "🎯🟡 EMPATE DIRETO — G0"
+    },
+    {
+      "family_id": "OPS_AUDIT_360",
+      "role": "OPS",
+      "era": "3",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "📊 AUDIT 360° (DB only)"
+    },
+    {
+      "family_id": "FIRE_G0_DIRETO",
+      "role": "FIRE",
+      "era": "3",
+      "lane": "MONEY",
+      "shelf": "SHELF_SNIPER",
+      "example": "⚡ G0 DIRETO — Entre com confiança"
+    },
+    {
+      "family_id": "FIRE_PREPARE_G1",
+      "role": "FIRE",
+      "era": "3",
+      "lane": "MONEY",
+      "shelf": "SHELF_GALE",
+      "example": "♟ PREPARE O G1 — Provável…"
+    },
+    {
+      "family_id": "OPS_STREAK_BANNER",
+      "role": "OPS",
+      "era": "3",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "🎰 SEQUÊNCIA Nx 🔴 VERMELHO"
+    },
+    {
+      "family_id": "OPS_CAMADAS_DO_DIA",
+      "role": "OPS",
+      "era": "3",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "🏆 CAMADAS DO DIA — DD/MM/YYYY"
+    },
+    {
+      "family_id": "RESULT_FLASH_WIN",
+      "role": "RESULT",
+      "era": "4",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "✅ WIN — FLASH"
+    },
+    {
+      "family_id": "RESULT_GREEN_COMPACT_G0",
+      "role": "RESULT",
+      "era": "4",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "✅ GREEN · G0 · HH:MM BRT"
+    },
+    {
+      "family_id": "RESULT_GREEN_COMPACT_G1",
+      "role": "RESULT",
+      "era": "4",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "♻️ GREEN · G1 · HH:MM BRT"
+    },
+    {
+      "family_id": "FIRE_COMPACT_HASH",
+      "role": "FIRE",
+      "era": "5",
+      "lane": "MONEY",
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🔵 SIGNAL #51250 -- SOLO_ELITE red | rooms: @…"
+    },
+    {
+      "family_id": "RESULT_COMPACT_LOSS_HASH",
+      "role": "RESULT",
+      "era": "5",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "❌ LOSS #51250 G0"
+    },
+    {
+      "family_id": "RESULT_COMPACT_WIN_HASH",
+      "role": "RESULT",
+      "era": "5",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "✅ WIN #51252 G0"
+    },
+    {
+      "family_id": "RESULT_COMPACT_TIE_HASH",
+      "role": "RESULT",
+      "era": "5",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "➖ TIE #51257 G0"
+    },
+    {
+      "family_id": "FIRE_SOLO_APOSTAR",
+      "role": "FIRE",
+      "era": "6",
+      "lane": "MONEY",
+      "shelf": "SHELF_PENTHOUSE_MONEY",
+      "example": "⚡ SOLO ELITE — APOSTAR AGORA"
+    },
+    {
+      "family_id": "FIRE_SEQUENCE_APOSTAR",
+      "role": "FIRE",
+      "era": "6",
+      "lane": "MONEY",
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "⚡ SEQUENCE — APOSTAR AGORA"
+    },
+    {
+      "family_id": "FIRE_GOLDEN_APOSTAR",
+      "role": "FIRE",
+      "era": "6",
+      "lane": "MONEY",
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "⚡ GOLDEN — APOSTAR AGORA"
+    },
+    {
+      "family_id": "FIRE_PLATINUM_APOSTAR",
+      "role": "FIRE",
+      "era": "6",
+      "lane": "MONEY",
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "⚡ PLATINUM — APOSTAR AGORA"
+    },
+    {
+      "family_id": "FIRE_FLASH_APOSTAR",
+      "role": "FIRE",
+      "era": "6",
+      "lane": "MONEY",
+      "shelf": "SHELF_SNIPER",
+      "example": "⚡ FLASH — APOSTAR AGORA"
+    },
+    {
+      "family_id": "ONLINE_LUXURY_OUTBOX",
+      "role": "ONLINE",
+      "era": "6",
+      "lane": null,
+      "shelf": "SHELF_OVERFLOW",
+      "example": "LUXURY OUTBOX ONLINE"
+    },
+    {
+      "family_id": "FIRE_SEQUENCIA_ENTER_NOW",
+      "role": "FIRE",
+      "era": "6",
+      "lane": "MONEY",
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🔥 SEQUência — ENTER NOW 🔥"
+    },
+    {
+      "family_id": "OPS_ELITE_ANALISANDO",
+      "role": "OPS",
+      "era": "6",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "⚡ ELITE ANALISANDO"
+    },
+    {
+      "family_id": "OPS_DIVERGENCIA_SALAS",
+      "role": "OPS",
+      "era": "6",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "🟠 DIVERGÊNCIA DE SALAS"
+    },
+    {
+      "family_id": "FIRE_SINAL_RETIDO_LIBERADO",
+      "role": "FIRE",
+      "era": "cd",
+      "lane": "COUNTDOWN",
+      "shelf": "SHELF_COUNTDOWN",
+      "example": "⏳ Sinal Retido → Liberado"
+    },
+    {
+      "family_id": "CD_FIRE_TIMER_BRT_EDT_APOSTAR",
+      "role": "FIRE",
+      "era": "cd",
+      "lane": "COUNTDOWN",
+      "shelf": "SHELF_COUNTDOWN",
+      "example": "🟢 HH UTC · EDT · apostar"
+    },
+    {
+      "family_id": "CD_FIRE_QUANTUM_LOCK",
+      "role": "FIRE",
+      "era": "cd",
+      "lane": "COUNTDOWN",
+      "shelf": "SHELF_COUNTDOWN",
+      "example": "🔒 QUANTUM LOCK"
+    },
+    {
+      "family_id": "CD_FIRE_RUSH_NS_LEFT",
+      "role": "FIRE",
+      "era": "cd",
+      "lane": "COUNTDOWN",
+      "shelf": "SHELF_COUNTDOWN",
+      "example": "RUSH · Ns left"
+    },
+    {
+      "family_id": "RESULT_FORENSIC_INTERVALO",
+      "role": "RESULT",
+      "era": "forensic",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🔍 SINAL #N — RESUMIDO FORENSE"
+    },
+    {
+      "family_id": "RESULT_BELL_GANHOU",
+      "role": "RESULT",
+      "era": "forensic",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🔔 ✅ GANHOU  ·  #N"
+    },
+    {
+      "family_id": "OPS_G1_EXPIROU",
+      "role": "OPS",
+      "era": "ops_result",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "⏰ G1 EXPIROU — VERIFICAR SUA MESA"
+    },
+    {
+      "family_id": "OPS_G2_MISS",
+      "role": "OPS",
+      "era": "ops_result",
+      "lane": null,
+      "shelf": "SHELF_OPS_EXPIRE",
+      "example": "🛑 G2 MISS — PERDA TOTAL — PARE AGORA"
+    },
+    {
+      "family_id": "FIRE_GOD_TIER",
+      "role": "FIRE",
+      "era": "elite",
+      "lane": "MONEY",
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "💎 GOD-TIER — Sync apertado + ≥3 salas top + conf≥75%"
+    },
+    {
+      "family_id": "FIRE_GOLDEN_ENTRE_AGORA",
+      "role": "FIRE",
+      "era": "1",
+      "lane": "MONEY",
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🏆🏆🏆 GOLDEN SIGNAL — ENTRE AGORA 🏆🏆🏆"
+    },
+    {
+      "family_id": "FIRE_G0_MISS_ENTRE_G1",
+      "role": "FIRE",
+      "era": "1b",
+      "lane": "MONEY",
+      "shelf": "SHELF_GALE",
+      "example": "⚠️ G0 NÃO FOI — ENTRE NO G1 AGORA"
+    },
+    {
+      "family_id": "RESULT_ORACLE_CARD",
+      "role": "RESULT",
+      "era": "oracle",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🔮 ORACLE CARD #N"
+    },
+    {
+      "family_id": "OPS_TIE_ALERT",
+      "role": "OPS",
+      "era": "2",
+      "lane": null,
+      "shelf": "SHELF_OVERFLOW",
+      "example": "🟡 ALERTA DE EMPATE / TIE ALERT 🟡"
+    },
+    {
+      "family_id": "OPS_CORRECAO",
+      "role": "OPS",
+      "era": "ops_result",
+      "lane": null,
+      "shelf": "SHELF_OVERFLOW",
+      "example": "♻️♻️♻️ CORREÇÃO / CORRECTION ♻️♻️♻️"
+    },
+    {
+      "family_id": "OPS_JANELA_PRIME",
+      "role": "OPS",
+      "era": "cd",
+      "lane": null,
+      "shelf": "SHELF_COUNTDOWN",
+      "example": "🟢🟢 JANELA PRIME — SINAIS ATIVOS 🟢🟢"
+    },
+    {
+      "family_id": "CD_RES_GREEN_G_BRT",
+      "role": "RESULT",
+      "era": "cd",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🟢 G0 · BRT"
+    },
+    {
+      "family_id": "CD_RES_RODADAS_TEMPO",
+      "role": "RESULT",
+      "era": "cd",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "⏱ N rodada(s) · Ns"
+    },
+    {
+      "family_id": "CD_RES_BELL_GANHOU",
+      "role": "RESULT",
+      "era": "cd",
+      "lane": null,
+      "shelf": "SHELF_UPPER_MONEY",
+      "example": "🔔 ✅ GANHOU"
+    },
+    {
+      "family_id": "ROOM_RELAY",
+      "role": "ROOM_RELAY",
+      "era": "noise",
+      "lane": null,
+      "shelf": "SHELF_SINK",
+      "example": "📡 @room …"
+    }
+  ],
+  "still_need": [
+    "bot/strings.py content (path confirmed; not in this zip — re-run FIND_ALL after patch that packs sources)",
+    "signal_handler.py + .bak* content",
+    "optional: LITERALLY_EVERYTHING.sh for full bot_sources tree"
+  ]
+}

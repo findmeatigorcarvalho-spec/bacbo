@@ -1,0 +1,57 @@
+{
+  "ttb_fires_delivered": 4,
+  "prep_invests_held": 0,
+  "late_burns_prevented": 0,
+  "gap_chats_filled": 3,
+  "trash_blocked": 0,
+  "results_aligned": 0,
+  "events": [
+    {
+      "at": 1791909277.019514,
+      "kind": "ttb_fire",
+      "detail": "TTB 3.0s < 3s \u2014 too late to bet",
+      "chat": "UNIQUE_g1",
+      "ttb": 2.986
+    },
+    {
+      "at": 1791909364.0972228,
+      "kind": "ttb_fire",
+      "detail": "TTB 5.9s in [3,12] \u2014 FIRE NOW",
+      "chat": "UNIQUE_g2",
+      "ttb": 5.904
+    },
+    {
+      "at": 1791909364.097371,
+      "kind": "gap_fill",
+      "detail": "filled quiet chat UNIQUE_g2",
+      "chat": "UNIQUE_g2"
+    },
+    {
+      "at": 1791909892.4431381,
+      "kind": "ttb_fire",
+      "detail": "TTB 7.6s in [3,12] \u2014 FIRE NOW",
+      "chat": "UNIQUE_g3",
+      "ttb": 7.558
+    },
+    {
+      "at": 1791909892.443281,
+      "kind": "gap_fill",
+      "detail": "filled quiet chat UNIQUE_g3",
+      "chat": "UNIQUE_g3"
+    },
+    {
+      "at": 1791911248.5717506,
+      "kind": "ttb_fire",
+      "detail": "TTB 1.4s < 3s \u2014 too late to bet",
+      "chat": "UNIQUE_g4",
+      "ttb": 1.43
+    },
+    {
+      "at": 1791911248.5719168,
+      "kind": "gap_fill",
+      "detail": "filled quiet chat UNIQUE_g4",
+      "chat": "UNIQUE_g4"
+    }
+  ],
+  "updated_at": 1791911248.5719259
+}

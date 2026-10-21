@@ -1,0 +1,110 @@
+{
+  "mode": "MUSEUM_FIRST5_COMPLETE_PAIRS",
+  "note": "First 5 chronological FIRE→RESULT pairs with no fire between and gap<=2h. Day-one early fires often had no glued result yet.",
+  "pairs": [
+    {
+      "index": 1,
+      "fire_at": "19.03.2026 19:52:03 UTC-05:00",
+      "fire_message_id": "874",
+      "fire_text": "🏆\nGOLDEN SIGNAL — ENTER NOW\n 🏆\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nEnter:\n 🔵 Azul\n\n   └ _Primary bet — full bankroll_\n\n🟡\n+ Tie\n _Empate_ as protection\n\n   └ _Side bet — 10% of bankroll_\n\n📊\nTotal score:\n ██████████ ✅ 219%\n\n🏛\nRooms in consensus (2):\n\n  🟢\n@CoringaDados\n — CONFIRMED ENTRY _(score 1.78)_\n\n  🟢\n@IsaDados\n — CONFIRMED ENTRY _(score 3.69)_\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 19:52:03 | Evolution Bac Bo\n\n⚡\nENTER NOW — 2 ROOM(S) CONFIRMED\n\n_After result: /win · /loss · /tie_",
+      "result_at": "19.03.2026 19:52:41 UTC-05:00",
+      "result_message_id": "877",
+      "result_text": "✅\nWIN — SOLO_ELITE\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔵 AZUL\n\n🏆 G0 — Acertou de primeira!\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  0❌  2🟡  —  94.7% acerto",
+      "gap_secs": 38.0
+    },
+    {
+      "index": 2,
+      "fire_at": "19.03.2026 20:05:57 UTC-05:00",
+      "fire_message_id": "911",
+      "fire_text": "🏆\nGOLDEN SIGNAL — ENTER NOW\n 🏆\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nEnter:\n 🔵 Azul\n\n   └ _Primary bet — full bankroll_\n\n🟡\n+ Tie\n _Empate_ as protection\n\n   └ _Side bet — 10% of bankroll_\n\n📊\nTotal score:\n ██████████ ✅ 179%\n\n🏛\nRooms in consensus (2):\n\n  🟢\n@IsaDados\n — CONFIRMED ENTRY _(score 3.00)_\n\n  🟢\n@CoringaDados\n — CONFIRMED ENTRY _(score 1.47)_\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 20:05:57 | Evolution Bac Bo\n\n⚡\nENTER NOW — 2 ROOM(S) CONFIRMED\n\n_After result: /win · /loss · /tie_",
+      "result_at": "19.03.2026 20:07:05 UTC-05:00",
+      "result_message_id": "915",
+      "result_text": "✅\nWIN — GOLDEN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔵 AZUL\n\n🏆 G0 — Acertou de primeira!\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  2❌  2🟡  —  85.7% acerto",
+      "gap_secs": 68.0
+    },
+    {
+      "index": 3,
+      "fire_at": "19.03.2026 20:11:30 UTC-05:00",
+      "fire_message_id": "925",
+      "fire_text": "🏆\nGOLDEN SIGNAL — ENTER NOW\n 🏆\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nEnter:\n 🔴 Vermelho (Player)\n\n   └ _Primary bet — full bankroll_\n\n🟡\n+ Tie\n _Empate_ as protection\n\n   └ _Side bet — 10% of bankroll_\n\n📊\nTotal score:\n ██████████ ✅ 215%\n\n🏛\nRooms in consensus (2):\n\n  🟢\n@CoringaDados\n — CONFIRMED ENTRY _(score 1.77)_\n\n  🟢\n@IsaDados\n — CONFIRMED ENTRY _(score 3.60)_\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 20:11:30 | Evolution Bac Bo\n\n⚡\nENTER NOW — 2 ROOM(S) CONFIRMED\n\n_After result: /win · /loss · /tie_",
+      "result_at": "19.03.2026 20:12:06 UTC-05:00",
+      "result_message_id": "928",
+      "result_text": "✅\nWIN — GOLDEN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔴 VERMELHO (Player)\n\n🏆 G0 — Acertou de primeira!\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  2❌  2🟡  —  85.7% acerto",
+      "gap_secs": 36.0
+    },
+    {
+      "index": 4,
+      "fire_at": "19.03.2026 20:15:26 UTC-05:00",
+      "fire_message_id": "939",
+      "fire_text": "🏆\nGOLDEN SIGNAL — ENTER NOW\n 🏆\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nEnter:\n 🔴 Vermelho (Player)\n\n   └ _Primary bet — full bankroll_\n\n🟡\n+ Tie\n _Empate_ as protection\n\n   └ _Side bet — 10% of bankroll_\n\n📊\nTotal score:\n ██████████ ✅ 225%\n\n🏛\nRooms in consensus (2):\n\n  🟢\n@CoringaDados\n — CONFIRMED ENTRY _(score 2.01)_\n\n  🟢\n@IsaDados\n — CONFIRMED ENTRY _(score 3.60)_\n\n🤖\nML Coalition:\n 🟡 Above-average joint history (1.15×)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 20:15:26 | Evolution Bac Bo\n\n⚡\nENTER NOW — 2 ROOM(S) CONFIRMED\n\n_After result: /win · /loss · /tie_",
+      "result_at": "19.03.2026 20:16:38 UTC-05:00",
+      "result_message_id": "943",
+      "result_text": "✅\nWIN — GOLDEN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔴 VERMELHO (Player)\n\n🏆 G0 — Acertou de primeira!\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  2❌  2🟡  —  85.7% acerto",
+      "gap_secs": 72.0
+    },
+    {
+      "index": 5,
+      "fire_at": "19.03.2026 20:18:13 UTC-05:00",
+      "fire_message_id": "952",
+      "fire_text": "🏆\nGOLDEN SIGNAL — ENTER NOW\n 🏆\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nEnter:\n 🔵 Azul (Banker)\n\n   └ _Primary bet — full bankroll_\n\n🟡\n+ Tie\n _Empate_ as protection\n\n   └ _Side bet — 10% of bankroll_\n\n📊\nTotal score:\n ██████████ ✅ 241%\n\n🏛\nRooms in consensus (2):\n\n  🟢\n@IsaDados\n — CONFIRMED ENTRY _(score 3.90)_\n\n  🟢\n@CoringaDados\n — CONFIRMED ENTRY _(score 2.11)_\n\n🤖\nML Coalition:\n 🟡 Above-average joint history (1.17×)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 20:18:13 | Evolution Bac Bo\n\n⚡\nENTER NOW — 2 ROOM(S) CONFIRMED\n\n_After result: /win · /loss · /tie_",
+      "result_at": "19.03.2026 20:18:31 UTC-05:00",
+      "result_message_id": "955",
+      "result_text": "✅\nWIN — GOLDEN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔵 AZUL (Banker)\n\n🏆 G0 — Acertou de primeira!\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  2❌  2🟡  —  85.7% acerto",
+      "gap_secs": 18.0
+    }
+  ],
+  "appendix_day1_first5_fires_no_glue": [
+    {
+      "at": "19.03.2026 17:51:34 UTC-05:00",
+      "id": "659",
+      "text": "🏆\nSIGNAL CONFIRMED — ENTER NOW\n 🏆\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nColor:\n 🔴 Vermelho\n\n🛡\nProtection:\n Tie / Empate _(10% of bet)_\n\n📊\nScore:\n ████████░░ 79%\n\n🏛\nRooms detecting (2):\n\n  🟢\n@CoringaDados\n — CONFIRMED ENTRY _(score 0.40)_\n\n  🟢\n@IsaDados\n — CONFIRMED ENTRY _(score 1.57)_\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 17:51:34 | Evolution Bac Bo\n\n⚡\nENTER NOW\n\n_After result: /win · /loss · /tie_"
+    },
+    {
+      "at": "19.03.2026 17:55:33 UTC-05:00",
+      "id": "671",
+      "text": "💎\nSOLO ELITE SIGNAL\n 💎\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nColor:\n 🔴 Vermelho\n\n🛡\nProtection:\n Tie / Empate _(10% of bet)_\n\n🏆\nRoom:\n\n@IsaDados\n\n📊\nScore:\n 1.57 | Weight 1.05\n\n📜\nRecent history:\n no history\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 17:55:33 | Evolution Bac Bo\n\n⚡\nENTER NOW — HIGH-PERFORMANCE ROOM CONFIRMED\n\n_After result: /win · /loss · /tie_"
+    },
+    {
+      "at": "19.03.2026 18:05:01 UTC-05:00",
+      "id": "682",
+      "text": "🏆\nSIGNAL CONFIRMED — ENTER NOW\n 🏆\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nColor:\n 🔴 Vermelho\n\n🛡\nProtection:\n Tie / Empate _(10% of bet)_\n\n📊\nScore:\n ████████░░ 75%\n\n🏛\nRooms detecting (2):\n\n  🟢\n@CoringaDados\n — CONFIRMED ENTRY _(score 0.38)_\n\n  🟢\n@IsaDados\n — CONFIRMED ENTRY _(score 1.50)_\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 18:05:01 | Evolution Bac Bo\n\n⚡\nENTER NOW\n\n_After result: /win · /loss · /tie_"
+    },
+    {
+      "at": "19.03.2026 18:08:46 UTC-05:00",
+      "id": "686",
+      "text": "🏆\nSIGNAL CONFIRMED — ENTER NOW\n 🏆\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nColor:\n 🔴 Vermelho\n\n🛡\nProtection:\n Tie / Empate _(10% of bet)_\n\n📊\nScore:\n ████████░░ 75%\n\n🏛\nRooms detecting (2):\n\n  🟢\n@CoringaDados\n — CONFIRMED ENTRY _(score 0.38)_\n\n  🟢\n@IsaDados\n — CONFIRMED ENTRY _(score 1.50)_\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 18:08:46 | Evolution Bac Bo\n\n⚡\nENTER NOW\n\n_After result: /win · /loss · /tie_"
+    },
+    {
+      "at": "19.03.2026 18:12:25 UTC-05:00",
+      "id": "690",
+      "text": "🏆\nSIGNAL CONFIRMED — ENTER NOW\n 🏆\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯\nColor:\n 🔴 Vermelho\n\n🛡\nProtection:\n Tie / Empate _(10% of bet)_\n\n📊\nScore:\n ████████░░ 75%\n\n🏛\nRooms detecting (2):\n\n  🟢\n@CoringaDados\n — CONFIRMED ENTRY _(score 0.38)_\n\n  🟢\n@IsaDados\n — CONFIRMED ENTRY _(score 1.50)_\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ 18:12:25 | Evolution Bac Bo\n\n⚡\nENTER NOW\n\n_After result: /win · /loss · /tie_"
+    }
+  ],
+  "appendix_first5_results_ever": [
+    {
+      "at": "19.03.2026 19:52:41 UTC-05:00",
+      "id": "877",
+      "text": "✅\nWIN — SOLO_ELITE\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔵 AZUL\n\n🏆 G0 — Acertou de primeira!\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  0❌  2🟡  —  94.7% acerto"
+    },
+    {
+      "at": "19.03.2026 19:52:41 UTC-05:00",
+      "id": "878",
+      "text": "✅\nWIN — GOLDEN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔵 AZUL\n\n🏆 G0 — Acertou de primeira!\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 16✅  0❌  2🟡  —  94.4% acerto"
+    },
+    {
+      "at": "19.03.2026 19:55:31 UTC-05:00",
+      "id": "886",
+      "text": "❌\nLOSS — GOLDEN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔴 VERMELHO\n\n🔁 Gale 1 — aguarde próxima entrada\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  1❌  2🟡  —  90.0% acerto"
+    },
+    {
+      "at": "19.03.2026 19:55:32 UTC-05:00",
+      "id": "890",
+      "text": "❌\nLOSS — SOLO_ELITE\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔴 VERMELHO\n\n⛔ G2 atingido — sinal encerrado e resetado\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  2❌  2🟡  —  85.7% acerto"
+    },
+    {
+      "at": "19.03.2026 20:07:05 UTC-05:00",
+      "id": "915",
+      "text": "✅\nWIN — GOLDEN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🎯 Previsto: 🔵 AZUL\n\n🏆 G0 — Acertou de primeira!\n\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Hoje: 17✅  2❌  2🟡  —  85.7% acerto"
+    }
+  ]
+}
