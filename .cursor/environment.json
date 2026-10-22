@@ -1,0 +1,4 @@
+{
+  "name": "bacbo bot",
+  "install": "for d in bot tests; do [ -d \"$d\" ] && python3 -m compileall -q \"$d\"; done; true"
+}
