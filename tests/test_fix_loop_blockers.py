@@ -50,6 +50,9 @@ async def periodic_signal_health_monitor():
             _blocked_today = _db.execute("""
                 SELECT COUNT(*) FROM blocked_signals
             """).fetchone()[0]
+            _persistent = _db.execute("""
+                SELECT gate_reason FROM blocked_signals
+            """).fetchall()
             _db.close()
             _n_fired = _today[0] or 0
             print(_recent, _n_fired, _blocked_today)
@@ -118,6 +121,18 @@ def one_off():
         self.assertNotIn('_sq3.connect("bacbo.db"', monitor)
         self.assertIn("_db.execute", new.split("async def periodic_signal_health_monitor", 1)[0])
 
+    def test_background_repairs_v3_persistent_bug(self):
+        good = self.f.patch_background(BG_SAMPLE)
+        buggy = good.replace(
+            "return _recent, _today, _blocked_today, _persistent",
+            "return _recent, _today, _blocked_today").replace(
+            "_recent, _today, _blocked_today, _persistent = await",
+            "_recent, _today, _blocked_today = await")
+        self.assertNotEqual(buggy, good)
+        repaired = self.f.patch_background(buggy)
+        self.assertEqual(repaired, good)
+        compile(repaired, "background.py", "exec")
+
     def test_background_idempotent(self):
         once = self.f.patch_background(BG_SAMPLE)
         self.assertEqual(self.f.patch_background(once), once)
@@ -139,10 +154,11 @@ def one_off():
                 conn.commit(); conn.close()
                 ns = {}
                 exec(compile(src, "background.py", "exec"), ns)
-                recent, today, blocked = ns["_signal_health_queries"](60, 3, 75.0)
+                recent, today, blocked, persistent = ns["_signal_health_queries"](60, 3, 75.0)
                 self.assertEqual(recent, [])
                 self.assertEqual(today[0], 0)
                 self.assertEqual(blocked, 0)
+                self.assertEqual(persistent, [])
             finally:
                 os.chdir(old)
 

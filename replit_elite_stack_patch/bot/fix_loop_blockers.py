@@ -79,8 +79,12 @@ def patch_perfect_g0(text):
 
 _HM_CONNECT = '            _db = _sq3.connect("bacbo.db", timeout=5)'
 _HM_CLOSE = "            _db.close()"
-_HM_AWAIT = ("            _recent, _today, _blocked_today = await asyncio.to_thread("
+_HM_AWAIT = ("            _recent, _today, _blocked_today, _persistent = await asyncio.to_thread("
              "_signal_health_queries, _WINDOW_MIN, _MIN_N, _WR_LEAK)")
+_HM_RETURN_BUGGY = "    return _recent, _today, _blocked_today\n"
+_HM_RETURN = "    return _recent, _today, _blocked_today, _persistent\n"
+_HM_AWAIT_BUGGY = ("            _recent, _today, _blocked_today = await asyncio.to_thread("
+                   "_signal_health_queries, _WINDOW_MIN, _MIN_N, _WR_LEAK)")
 
 
 def patch_background(text):
@@ -95,7 +99,22 @@ def patch_background(text):
     monitor awaits it via asyncio.to_thread.
     """
     if "await asyncio.to_thread(_signal_health_queries" in text:
-        return text
+        # Repair the v3 bug: the lifted block also computes _persistent
+        # (all-time gate audit) but the helper only returned three values,
+        # so the monitor died with "name '_persistent' is not defined".
+        if _HM_RETURN in text and _HM_AWAIT in text:
+            return text
+        if _HM_RETURN_BUGGY not in text or "_persistent = _db.execute" not in text:
+            raise ValueError("helper present but _persistent repair anchors not found")
+        new = text.replace(_HM_RETURN_BUGGY, _HM_RETURN, 1)
+        if _HM_AWAIT in new:
+            pass
+        elif _HM_AWAIT_BUGGY in new:
+            new = new.replace(_HM_AWAIT_BUGGY, _HM_AWAIT, 1)
+        else:
+            raise ValueError("monitor await line not recognised for _persistent repair")
+        ast.parse(new)
+        return new
     if "def _signal_health_queries" in text:
         raise ValueError("_signal_health_queries already exists but monitor not wired - layout changed")
     if not re.search(r"^import asyncio\b", text, re.M):
@@ -132,8 +151,8 @@ def patch_background(text):
         "def _signal_health_queries(_WINDOW_MIN, _MIN_N, _WR_LEAK):\n"
         "    import sqlite3 as _sq3\n"
         + "".join(dedented)
-        + "    return _recent, _today, _blocked_today\n"
-        "\n\n"
+        + _HM_RETURN
+        + "\n\n"
     )
     new_lines = lines[:fn] + [helper] + lines[fn:conn] + [_HM_AWAIT + "\n"] + lines[close + 1:]
     new = "".join(new_lines)
