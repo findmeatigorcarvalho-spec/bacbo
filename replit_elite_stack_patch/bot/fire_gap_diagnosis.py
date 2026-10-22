@@ -35,6 +35,7 @@ SYNTHETIC_FLOOD_RE = re.compile(r"ResolveUsernameRequest")
 DEAF_RE = re.compile(r"ConnFreeze\] no message|recv-silence|silence .{0,6}reconnect did not restore", re.I)
 RECONNECT_RE = re.compile(r"ConnFreeze|Watchdog|sem mensagens|Reconectando|soft reconnect", re.I)
 CRASH_RE = re.compile(r"Traceback|Bus error|disk I/O error|database is locked|Killed", re.I)
+LAG_RE = re.compile(r"\[LoopLag\] event loop blocked", re.I)
 FMT = "%Y-%m-%d %H:%M:%S"
 SILENCE_S = 180
 
@@ -83,6 +84,8 @@ def classify(log, start: datetime, end: datetime):
             counts["reconnect"] += 1
         if CRASH_RE.search(ln):
             counts["crash"] += 1
+        if LAG_RE.search(ln):
+            counts["lag"] += 1
     marks = [start] + [t for t, _ in inside] + [end]
     silence = max(((b - a).total_seconds() for a, b in zip(marks, marks[1:])), default=0.0)
     return counts, silence
@@ -91,6 +94,8 @@ def classify(log, start: datetime, end: datetime):
 def verdict(counts: Counter, silence: float, span: float) -> str:
     if silence >= max(SILENCE_S, span * 0.5):
         return f"DOWN/STALLED (log silent {int(silence // 60)}m{int(silence % 60):02d}s)"
+    if counts["lag"]:
+        return f"LOOP-BLOCKED x{counts['lag']} (sync work froze the event loop; see [LoopLag] stack)"
     if counts["deaf"]:
         return f"DEAF x{counts['deaf']} (connected but Telegram sent no messages; watchdog restart)"
     if counts["restart"]:

@@ -249,6 +249,11 @@ def ensure_started():
         loop = asyncio.get_running_loop()
         loop.create_task(poller_loop(client))
         loop.create_task(silence_loop(client))
+        try:
+            import loop_lag_watch
+            loop_lag_watch.start(loop)
+        except Exception:
+            pass
         _started = True
         log.info("[UpdatePoller] started (idle>=%ds, <=%d rooms/%ds tick)",
                  int(POLL_EVERY_S), BATCH, int(TICK_S))
